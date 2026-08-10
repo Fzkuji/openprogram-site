@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786402037" data-alt-lang-url="/docs/README.zh.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink active" href="/docs/README.html" data-title-zh="一次性:发 prompt、打印答案、退出(可重定向或接管道)" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/start/features.html" data-title-zh="功能详解" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html">Features</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="第一步">First steps</div>
+<a class="navlink" href="/docs/start/GETTING_STARTED.html" data-title-zh="快速上手" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html">Getting Started</a>
+<a class="navlink" href="/docs/start/daily-use.html" data-title-zh="日常操作" data-href-en="/docs/start/daily-use.html" data-href-zh="/docs/start/daily-use.zh.html">Daily Use</a>
+<a class="navlink" href="/docs/start/faq.html" data-title-zh="常见问题" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html">FAQ</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="一次性:发 prompt、打印答案、退出(可重定向或接管道)">Overview</span></nav><p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/logo-lockup.gif">
+    <source media="(prefers-color-scheme: light)" srcset="images/logo-lockup-light.gif">
+    <img src="images/logo-lockup.gif" alt="OpenProgram" width="440">
+  </picture>
+</p>
+<p align="center">
+  <b>Open-Source, General-Purpose Agent Harness — Build Your Workflows in Python.</b><br/>
+  Any LLM · Any Platform
+</p>
+<p align="center">
+  <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
+  <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.5.0"><img alt="Release" src="https://img.shields.io/github/v/release/Fzkuji/OpenProgram?style=flat-square&color=blue"></a>
+  <a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square"></a>
+  <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square"></a>
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey?style=flat-square">
+  <a href="https://github.com/Fzkuji/OpenProgram/actions/workflows/ci.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Fzkuji/OpenProgram/ci.yml?branch=main&style=flat-square&label=build"></a>
+  <a href="https://github.com/Fzkuji/GUI-Agent-Harness"><img alt="OSWorld" src="https://img.shields.io/badge/OSWorld_Multi--Apps-79.8%25-brightgreen?style=flat-square"></a>
+  <a href="https://github.com/Fzkuji/OpenProgram/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Fzkuji/OpenProgram?style=flat-square"></a>
+</p>
+<p align="center">
+  <a href="/docs/start/GETTING_STARTED.html">Getting Started</a> &middot;
+  <a href="/docs/reference/API.html">API Reference</a> &middot;
+  <a href="/docs/capabilities/agentic-programming/philosophy.html">Philosophy</a> &middot;
+  <a href="/docs/README.zh.html">中文</a>
+</p>
+<hr />
+<blockquote>
+<p><em>&quot;The more constraints one imposes, the more one frees oneself.&quot;</em>
+— <strong>Igor Stravinsky</strong>, <em>Poetics of Music</em></p>
+</blockquote>
+<p><strong>We propose <em>Agentic Programming</em>.</strong> An LLM is flexible; code is deterministic. Let the model run everything and you get chaos — unpredictable execution, context explosion, no output guarantees; hard-code everything and you lose the intelligence. A <strong>harness</strong> balances the two, interleaved moment to moment — <strong>Python for the flow you want fixed, the LLM for the judgement you can't script.</strong> (<a href="/docs/capabilities/agentic-programming/philosophy.html">the full rationale →</a>)</p>
+<blockquote>
+<p>🎉 <strong>Paper:</strong> <a href="https://arxiv.org/abs/2606.15874"><em>LLM-as-Code: Agentic Programming for Agent Harness</em></a> — accepted at the <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong>.</p>
+</blockquote>
+<h2 id="what-makes-it-different">What makes it different<a class="header-anchor" href="#what-makes-it-different">#</a></h2>
+<p>Multi-platform, multi-provider, multi-channel — table stakes; OpenProgram has them (macOS / Linux / Windows, any LLM, terminal / browser / chat). What sets it apart are <strong>three mechanisms in the harness itself — each one the foundation for a class of agent you can build on top.</strong></p>
+<h3 id="①-dag-context-for-native-multi-agent-systems">① DAG Context — for native multi-agent systems<a class="header-anchor" href="#①-dag-context-for-native-multi-agent-systems">#</a></h3>
+<p align="center">
+  <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
+</p>
+<p>Every user turn, LLM call, and function call is <strong>one node on a single flat DAG</strong>. Two edges give it meaning: <code>caller</code> (who invoked whom) and <code>reads</code> (whose output fed this prompt) — so context is assembled from the graph, not hand-stitched. Each <code>@agentic_function</code> is <strong>programmable context in one line</strong>: <code>expose</code> controls what a call reveals to its parent, and <code>render_range</code> controls how much history a call pulls in (<code>{&quot;callers&quot;: 0}</code> gives a throwaway, self-isolated scratch context that's reclaimed when it returns — no unbounded prompt growth).</p>
+<p>Because context is an <strong>addressable node rather than a per-agent buffer</strong>, multi-agent stops being a bolt-on: fork a branch, <code>spawn</code> a clean sub-agent, <code>send_message</code> across sessions, or run a file-touching branch in an isolated <code>git worktree</code> — each is just &quot;select a different node set as context&quot; on the same DAG.</p>
+<h3 id="②-agentic-workflow-for-trustworthy-self-evolving-agents">② Agentic Workflow — for trustworthy &amp; self-evolving agents<a class="header-anchor" href="#②-agentic-workflow-for-trustworthy-self-evolving-agents">#</a></h3>
+<p align="center">
+  <img src="images/highlights/02-agentic-workflow.png" alt="Agentic Workflow — Python drives the flow and code gates enforce the critical steps; a failed validation makes the model re-decide so it cannot skip checks; the agent writes and hot-loads its own @agentic_functions" width="900">
+</p>
+<p><strong>Python drives the flow; the LLM reasons only when asked.</strong> Critical steps become <strong>code gates</strong> — the model's choice is parsed and validated by code, and a failed check makes it <em>re-decide</em> instead of quietly moving on, so validation can't be skipped. Every call is a retryable, observable DAG node. That's what makes execution <em>trustworthy</em>: the guarantees live in code, not in the model's goodwill.</p>
+<p><em>Self-evolving</em> is a mechanism, not a black box: the agent writes and fixes its own <code>@agentic_function</code>s with <strong>ordinary file-edit tools</strong>, a file watcher hot-loads them, and the new tool is live on the next turn — no dedicated <code>create()</code> / <code>fix()</code> machinery.</p>
+<h3 id="③-event-infrastructure-for-proactive-agents">③ Event Infrastructure — for proactive agents<a class="header-anchor" href="#③-event-infrastructure-for-proactive-agents">#</a></h3>
+<p align="center">
+  <img src="images/highlights/03-event-infrastructure.png" alt="Event Infrastructure — a unified process-wide event bus that the agent loop, auth, context, channels, and memory all emit onto; anything can subscribe by event type, and a proactive policy layer builds on top" width="900">
+</p>
+<p>One <strong>process-wide event bus</strong> is the substrate under everything: the agent loop, auth, context, channels, and memory all emit onto it, and any component can subscribe by event type (every event is a uniform <code>Event(type, payload, ts)</code> envelope with <code>id</code> / <code>origin</code> / <code>metadata</code>). This is deliberately a <strong>foundation</strong> — a proactive policy layer that watches the stream and acts is the bus's first intended consumer. The plumbing is in place; the proactivity is yours to build on it.</p>
+<h2 id="quick-start">Quick Start<a class="header-anchor" href="#quick-start">#</a></h2>
+<h3 id="1-install">1. Install<a class="header-anchor" href="#1-install">#</a></h3>
+<p><strong>macOS / Linux:</strong></p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Fzkuji/OpenProgram/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="language-powershell"><span class="nb">iwr </span><span class="n">-useb</span> <span class="n">https</span><span class="p">://</span><span class="n">raw</span><span class="p">.</span><span class="n">githubusercontent</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Fzkuji</span><span class="p">/</span><span class="n">OpenProgram</span><span class="p">/</span><span class="n">main</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+</code></pre>
+<p>More options — flags, unattended / AI-agent install, installing from a checkout: <strong><a href="/docs/install/install.html">install.md</a></strong>.</p>
+<h3 id="2-run">2. Run<a class="header-anchor" href="#2-run">#</a></h3>
+<pre><code class="language-bash">openprogram
+</code></pre>
+<p>First run sets up your provider, then asks which surface to open. Skip the prompt with <code>openprogram tui</code> (terminal) or <code>openprogram web</code> (browser → http://localhost:18100).</p>
+<h3 id="3-add-a-harness">3. Add a harness<a class="header-anchor" href="#3-add-a-harness">#</a></h3>
+<p>Harnesses are programs under <code>openprogram/functions/agentics/</code>. Install them with <code>openprogram programs install &lt;name-or-git-source&gt;</code>: the command clones or verifies the repository, records its owner-approved source, and makes it available after the next worker restart. A directory copied there without this install step is not imported.</p>
+<table>
+<thead>
+<tr>
+<th>Harness</th>
+<th>Install</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>
+<td><code>openprogram programs install gui</code> (pulls PyTorch), then its installer for the detector/OCR assets — <strong><a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">guide</a></strong></td>
+<td>Drives desktop apps &amp; OSWorld VMs by vision.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
+<td><code>openprogram programs install research</code></td>
+<td>Literature survey → experiments → paper draft.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
+<td><code>openprogram programs install wiki</code></td>
+<td>Turns notes / docs / chats into an Obsidian vault with <code>[[wikilinks]]</code>.</td>
+</tr>
+<tr>
+<td><strong>Any third-party harness</strong></td>
+<td><code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code> (or a full git URL)</td>
+<td>Same flow — clone, deps, contract check, and owner source registration.</td>
+</tr>
+</tbody>
+</table>
+<p>Writing your own installable harness is one layout contract away — the
+full guide (install, manage, author, test, publish) is
+<strong><a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a></strong>.</p>
+<blockquote>
+<p>Need a workflow of your own? Just ask the agent in chat — the bundled <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> handles the rest.</p>
+</blockquote>
+<h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
+<p>Two diagnostic commands cover most &quot;it broke and I don't know why&quot; situations:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>rescue<span class="w">          </span><span class="c1"># 12 platform-agnostic probes, each with a fix command</span>
+openprogram<span class="w"> </span>doctor<span class="w">          </span><span class="c1"># quick &quot;is the install healthy?&quot; check</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w">       </span><span class="c1"># follow the worker log live</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w"> </span><span class="c1"># OAuth tokens — expiring? refresh wired?</span>
+</code></pre>
+<p><code>rescue</code> is the one to reach for first when something doesn't work — it doesn't depend on an LLM being reachable, walks through provider config, ports, dependencies, build artefacts, and prints the exact command to fix each finding. Case-by-case docs live in <a href="/docs/server/troubleshooting.html">troubleshooting.md</a>.</p>
+<p>For platform-builder topics (<code>Runtime</code> retry semantics, the full <code>@agentic_function</code> decorator API, the flat-DAG context model) see <a href="/docs/reference/API.html">API.md</a> and the per-topic notes under <a href="/docs/reference/README.html">reference/api/</a>.</p>
+<h3 id="power-user-commands">Power-user commands<a class="header-anchor" href="#power-user-commands">#</a></h3>
+<pre><code class="language-bash">openprogram<span class="w"> </span>logs<span class="w"> </span>list<span class="w">                </span><span class="c1"># all log files with size + age</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>worker<span class="w"> </span>-f<span class="w">      </span><span class="c1"># follow worker.log</span>
+openprogram<span class="w"> </span>completion<span class="w"> </span>bash<span class="w">          </span><span class="c1"># autocomplete: bash | zsh | powershell</span>
+openprogram<span class="w"> </span>secrets<span class="w"> </span>list<span class="w">             </span><span class="c1"># same as `providers list` (openclaw-style alias)</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;prov&gt;<span class="w"> </span><span class="o">[</span>profile<span class="o">]</span><span class="w">  </span><span class="c1"># pick which account a provider runs on</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>&lt;prov&gt;<span class="w"> </span>--account<span class="w"> </span>work<span class="w">  </span><span class="c1"># add a second account</span>
+openprogram<span class="w"> </span>worker<span class="w"> </span>status<span class="w">            </span><span class="c1"># is the backend up? on what port?</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>&lt;id&gt;<span class="w">    </span><span class="c1"># continue a previous chat headlessly</span>
+</code></pre>
+<p><strong>Providers &amp; models</strong> live in <strong>Settings → Providers</strong> (web UI). Each provider takes multiple accounts and multiple API keys under one credential pool — keys auto-rotate, cooling off a rate-limited one. Need a provider that isn't in the built-in list? <strong>Add custom provider</strong> takes just a <strong>Name</strong> and <strong>Base URL</strong> (id auto-generated) for any OpenAI-compatible endpoint; browse its models from the provider's <code>/models</code> endpoint or add a model by id, same multi-key management as the rest.</p>
+<hr />
+<h2 id="how-to-use">How to use<a class="header-anchor" href="#how-to-use">#</a></h2>
+<p>Two ways to interact day-to-day — same backend, same sessions, switch freely.</p>
+<h3 id="web-ui-openprogram-web">Web UI — <code>openprogram web</code><a class="header-anchor" href="#web-ui-openprogram-web">#</a></h3>
+<p>Opens at <code>http://localhost:18100</code>. The full surface: a live <strong>mini-DAG</strong> of the session on the right rail, <strong>branch / merge / attach</strong> on any node, <strong>multi-agent</strong> rows tagged by producer, and drag-and-drop <strong>file attachments</strong>. Best when you want to <em>see and steer</em> the execution tree, or for longer, branching work.</p>
+<p align="center">
+  <img src="images/chat_hero.png" alt="OpenProgram web UI — agentic function call tree, streamed thinking, and the conversation DAG on the right rail" width="880">
+</p>
+<h3 id="terminal-ui-openprogram">Terminal UI — <code>openprogram</code><a class="header-anchor" href="#terminal-ui-openprogram">#</a></h3>
+<p>The same backend without the browser — same commands, same chat history. Picks the native renderer per OS: <strong>Ink</strong> on macOS / Linux, <strong>Rich</strong> on Windows. Best for staying in the terminal or over SSH. One-shot, no UI: <code>openprogram --print &quot;…&quot;</code>.</p>
+<p align="center">
+  <img src="images/tui_hero.png" alt="OpenProgram terminal UI — welcome screen listing the model, agents, sessions, and the registered skills / providers / tools / applications" width="570">
+</p>
+<blockquote>
+<p>Sessions live in <code>~/.openprogram/</code> and are shared by both — start in the terminal, pick it up in the browser tab, and vice versa.</p>
+</blockquote>
+<hr />
+<h2 id="cli-use">CLI use<a class="header-anchor" href="#cli-use">#</a></h2>
+<p>Beyond the chat UIs, the <code>openprogram</code> command runs headless — script it, pipe it, automate it.</p>
+<pre><code class="language-bash"><span class="c1"># One-shot: send a prompt, print the answer, exit (redirect or pipe it)</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;summarise CHANGELOG.md&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
+
+<span class="c1"># Run a specific agentic function with key=value args</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">&quot;state-space models&quot;</span>
+
+<span class="c1"># Continue an earlier session by id (headless; combine with --print)</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">&quot;and now?&quot;</span>
+</code></pre>
+<p>Same backend and sessions as the UIs (<code>~/.openprogram/</code>) — a <code>--print</code> run or a resumed session shows up in the web / terminal UI too.</p>
+<h2 id="detailed-features">Detailed features<a class="header-anchor" href="#detailed-features">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>One-line summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Automatic context</strong></td>
+<td>Every <code>@agentic_function</code> call is a tree node; the runtime threads it through nested LLM calls — no manual prompt assembly.</td>
+</tr>
+<tr>
+<td><strong>Deep work</strong></td>
+<td><code>deep_work(task, level)</code> runs an autonomous plan → execute → evaluate → revise loop until the output meets the chosen quality bar. State persists to disk.</td>
+</tr>
+<tr>
+<td><strong>Functions that author functions</strong></td>
+<td>New / fixed <code>@agentic_function</code>s are written by the agent itself via ordinary file-editing tools, guided by the <code>agentic-programming</code> skill. No dedicated <code>create()</code> / <code>fix()</code> calls.</td>
+</tr>
+<tr>
+<td><strong>Conversation as a git DAG</strong></td>
+<td>Sessions are commits + branches + merges, with the right sidebar exposing the operations. File-touching branches run in isolated git worktrees.</td>
+</tr>
+<tr>
+<td><strong>Memory that writes itself</strong></td>
+<td>Markdown under <code>~/.openprogram/memory/</code>: <code>core.md</code> (always loaded), <code>topics/</code> (one file per subject, every paragraph citing its source), <code>sources/</code> (the conversations those citations point at). Conversations are folded into topics in the background, and every write lands whole or not at all.</td>
+</tr>
+<tr>
+<td><strong>Mini-DAG execution view</strong></td>
+<td>The right rail draws every node + edge of the active session and scrolls with the chat.</td>
+</tr>
+<tr>
+<td><strong>Multi-agent + multi-channel</strong></td>
+<td>Every row tagged with its producer agent; channel layer wires external transports (Telegram, Discord, Slack, WeChat).</td>
+</tr>
+</tbody>
+</table>
+<p>The detailed tour of each one — code samples, design rationale, where to look in the codebase — lives in <a href="/docs/start/features.html"><strong>features.md</strong></a>.</p>
+<h2 id="integration">Integration<a class="header-anchor" href="#integration">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Guide</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/docs/start/GETTING_STARTED.html">Getting Started</a></td>
+<td>3-minute setup and runnable examples</td>
+</tr>
+<tr>
+<td><a href="/docs/integrations/claude-code.html">Claude Code</a></td>
+<td>Use without API key via Claude Code CLI</td>
+</tr>
+<tr>
+<td><a href="/docs/integrations/openclaw.html">OpenClaw</a></td>
+<td>Use as OpenClaw skill</td>
+</tr>
+<tr>
+<td><a href="/docs/reference/API.html">API Reference</a></td>
+<td>Full API documentation</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary><strong>Project Structure</strong></summary>
+<pre><code>openprogram/
+├── __init__.py                      # agentic_function re-export
+├── cli.py                           # `openprogram` command entry point
+├── agentic_programming/             # engine — paradigm-essential primitives
+│   ├── function.py                  #   @agentic_function decorator
+│   ├── runtime.py                   #   Runtime (exec + retry + DAG context)
+│   ├── session.py                   #   session lifecycle
+│   └── skills.py                    #   SKILL.md discovery
+├── context/                         # flat-DAG context model — nodes, storage, render, compute_reads
+├── providers/                       # Anthropic, OpenAI, Gemini, Claude Code, Codex, Gemini CLI
+├── functions/
+│   ├── _registry.py                 #   unified registry for tools + agentic functions
+│   ├── tools/                       #   @function leaves — bash, read, edit, grep, semble_search, web_search, …
+│   └── agentics/                    #   @agentic_function modules (each its own dir, code in __init__.py)
+│       ├── ask_user/                #     ask the user a clarifying question
+│       ├── deep_work/               #     autonomous plan-execute-evaluate loop
+│       ├── extract_pdf_figures/     #     PDF figure extraction
+│       ├── …                        #     other agentics …
+│       ├── GUI-Agent-Harness/       #     GUI agent (separate repo, cloned in)
+│       ├── Research-Agent-Harness/  #     Research agent (separate repo, cloned in)
+│       └── Wiki-Agent-Harness/      #     Wiki agent (separate repo, cloned in)
+└── webui/                           # `openprogram web` — browser UI
+skills/                              # SKILL.md files for agent integration
+examples/                            # runnable demos
+tests/                               # pytest suite
+</code></pre>
+</details>
+<h2 id="contributing">Contributing<a class="header-anchor" href="#contributing">#</a></h2>
+<p>This is a <strong>paradigm proposal</strong> with a reference implementation. We welcome discussions, alternative implementations in other languages, use cases that validate or challenge the approach, and bug reports.</p>
+<p>See <a href="https://github.com/Fzkuji/OpenProgram/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
+<h2 id="acknowledgements">Acknowledgements<a class="header-anchor" href="#acknowledgements">#</a></h2>
+<p>OpenProgram stands on shoulders. The tool framework, provider abstraction, and
+several tool implementations were ported or adapted from the projects below —
+each under its own license. Enormous thanks to their authors.</p>
+<ul>
+<li><a href="https://github.com/openclaw/openclaw"><strong>OpenClaw</strong></a> (MIT) — layout of the
+tool registry (<code>name / description / parameters / execute</code>), provider
+abstraction with <code>check_fn</code> + <code>requires_env</code> gating, <code>TOOLSETS</code> presets,
+skill loading via SKILL.md frontmatter + late-bound <code>read</code>. Our full clone
+lives under <code>references/openclaw/</code> (gitignored) for browsing.</li>
+<li><a href="https://github.com/himanshuishere/hermes-agent"><strong>hermes-agent</strong></a>
+(MIT) — starting point for <code>execute_code</code> (we trimmed the
+Docker / Modal layers), <code>mixture_of_agents</code>, and the general shape of the
+multi-provider <code>web_search</code> / <code>image_generate</code> / <code>image_analyze</code> tools.</li>
+<li><a href="https://github.com/mariozechner/pi-coding-agent"><strong>pi-coding-agent</strong></a>
+(MIT) — via OpenClaw's import, the canonical AgentSkill shape
+(<code>&lt;available_skills&gt;</code> XML formatter, name / description / location).</li>
+<li><a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> — overall ergonomics
+of the <code>DEFAULT_TOOLS</code> set (bash + read / write / edit + glob / grep / list
+<ul>
+<li>apply_patch + the todo planning board) and the todo tools' JSON schema.</li>
+</ul>
+</li>
+<li><strong>Anthropic / OpenAI / Google SDKs</strong> — provider HTTP contracts; our
+providers call the raw HTTP APIs to keep SDK dependencies optional.</li>
+</ul>
+<p>Individual tool files call out their direct inspirations in file-level
+docstrings where the lineage is more specific. These MIT-licensed components
+keep their original MIT terms; the combined work is distributed under
+AGPL-3.0.</p>
+<h2 id="citation">Citation<a class="header-anchor" href="#citation">#</a></h2>
+<p>Using OpenProgram in your work, or building on the code? Please cite our paper — and under the AGPL, any derivative you <strong>distribute or run as a network service</strong> must itself be open-sourced under the AGPL, with attribution preserved (see <a href="#license">License</a>).</p>
+<blockquote>
+<p><em>LLM-as-Code: Agentic Programming for Agent Harness</em> — accepted at the <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong>. <a href="https://arxiv.org/abs/2606.15874">arXiv:2606.15874</a></p>
+</blockquote>
+<pre><code class="language-bibtex"><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">qi2026llmascode</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{LLM-as-Code: Agentic Programming for Agent Harness}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Qi, Junjia and Fu, Zichuan and Gao, Jingtong and Zhang, Wenlin and Yan, Hanyu and Wu, Xian and Zhao, Xiangyu}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">eprint</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{2606.15874}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">archivePrefix</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{arXiv}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://arxiv.org/abs/2606.15874}</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id="license">License<a class="header-anchor" href="#license">#</a></h2>
+<p><a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE">AGPL-3.0</a> © 2026 Fzkuji. Free to use, study, modify, and share — but any derivative you distribute <strong>or run as a network service</strong> must also be released under the AGPL, with attribution preserved.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#what-makes-it-different">What makes it different</a>
+<a class="lvl-3" href="#①-dag-context-for-native-multi-agent-systems">① DAG Context — for native multi-agent systems</a>
+<a class="lvl-3" href="#②-agentic-workflow-for-trustworthy-self-evolving-agents">② Agentic Workflow — for trustworthy &amp; self-evolving agents</a>
+<a class="lvl-3" href="#③-event-infrastructure-for-proactive-agents">③ Event Infrastructure — for proactive agents</a>
+<a class="" href="#quick-start">Quick Start</a>
+<a class="lvl-3" href="#1-install">1. Install</a>
+<a class="lvl-3" href="#2-run">2. Run</a>
+<a class="lvl-3" href="#3-add-a-harness">3. Add a harness</a>
+<a class="" href="#troubleshooting">Troubleshooting</a>
+<a class="lvl-3" href="#power-user-commands">Power-user commands</a>
+<a class="" href="#how-to-use">How to use</a>
+<a class="lvl-3" href="#web-ui-openprogram-web">Web UI — openprogram web</a>
+<a class="lvl-3" href="#terminal-ui-openprogram">Terminal UI — openprogram</a>
+<a class="" href="#cli-use">CLI use</a>
+<a class="" href="#detailed-features">Detailed features</a>
+<a class="" href="#integration">Integration</a>
+<a class="" href="#contributing">Contributing</a>
+<a class="" href="#acknowledgements">Acknowledgements</a>
+<a class="" href="#citation">Citation</a>
+<a class="" href="#license">License</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

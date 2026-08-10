@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786402037" data-alt-lang-url="/docs/capabilities/commit-push-pr.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commit, push, PR（提交、推送、开 PR） · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Agentic Programming</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/README.html" data-title-zh="指南" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html">Guide</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/philosophy.html" data-title-zh="设计哲学" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html">Philosophy</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-title-zh="嵌入到你自己的技术栈" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">Embedding in your own stack</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="纯 Python" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Pure Python</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="选择下一步">Choosing the next step</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-title-zh="工具调用循环" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">Tool-call loop</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-title-zh="固定顺序调用" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">Fixed-order calls</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-title-zh="下一步决策" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">Next-step decision</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Agentic Workflows</div>
+<a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
+<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
+<a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="扩展">Extending</div>
+<a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
+<a class="navlink" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
+<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
+<a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
+<a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
+<a class="navlink" href="/docs/capabilities/tools.html" data-title-zh="内置工具" data-href-en="/docs/capabilities/tools.html" data-href-zh="/docs/capabilities/tools.zh.html">Built-in tools</a>
+<a class="navlink" href="/docs/capabilities/lsp.html" data-title-zh="Language server 工具" data-href-en="/docs/capabilities/lsp.html" data-href-zh="/docs/capabilities/lsp.zh.html">Language server tools</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink active" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Commit, push, PR（提交、推送、开 PR）">Commit, push, PR</span></nav><h1 id="commit-push-pr提交推送开-pr">Commit, push, PR（提交、推送、开 PR）<a class="header-anchor" href="#commit-push-pr提交推送开-pr">#</a></h1>
+<p>agent 能把做完的活从工作区一路送到可评审的 pull request：从默认分支切出话题分支、只暂存你要的改动、写提交信息、推送、再用 <code>gh</code> 开 PR。没有新机制，整条流程就是普通的 <code>git</code> 和 <code>gh</code> 走 shell，由内置的 <code>commit-push-pr</code> skill 引导。</p>
+<h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
+<p>自然语言说，或者用 slash command：</p>
+<pre><code>/commit-push-pr
+</code></pre>
+<p>会命中的常见说法还有：&quot;提交并推送&quot;、&quot;给这些改动开个 PR&quot;、&quot;推上去&quot;、&quot;发个 pull request&quot;。</p>
+<h2 id="它做什么">它做什么<a class="header-anchor" href="#它做什么">#</a></h2>
+<ol>
+<li><strong>先切分支。</strong> 先探测仓库的默认分支（<code>git symbolic-ref refs/remotes/origin/HEAD</code>，失败退到 <code>git remote show origin</code>，没有 remote 时按 <code>main</code>/<code>master</code> 算）。如果 HEAD 就在默认分支上，先建话题分支再提交。绝不往默认分支上提交。</li>
+<li><strong>按路径暂存。</strong> 先读 <code>git status --short -uall</code>，只 add 这次请求涉及的文件。不对没看过的工作区做无差别 <code>git add -A</code>；你没提到的文件保持未暂存状态并如实汇报。</li>
+<li><strong>写提交信息</strong>用 <code>/commit-message</code>：它读暂存区 diff，返回一句祈使式标题，必要时带正文。</li>
+<li><strong>从消息文件提交</strong>（<code>git commit -F</code>），不用容易被引号折断的行内 <code>-m</code>。钩子一律执行，不加 <code>--no-verify</code>。pre-commit 钩子改写了文件就 amend 一次然后停下，不进入循环。</li>
+<li><strong>推送</strong>用 <code>git push -u origin &lt;branch&gt;</code>。被判 non-fast-forward 就 rebase 后重试一次。强推必须你明确要求，而且用 <code>--force-with-lease</code>。</li>
+<li><strong>开 PR</strong> 用 <code>gh pr create --base &lt;default&gt; --head &lt;branch&gt; --title ... --body-file ...</code>，之前先查 <code>gh auth status</code>。PR 正文由该分支的提交和相对基线的 diff 生成，分为摘要、改了什么、怎么测三节。</li>
+</ol>
+<h2 id="ai-署名">AI 署名<a class="header-anchor" href="#ai-署名">#</a></h2>
+<p>agent 写的提交带一条 git trailer，把模型记为共同作者：</p>
+<pre><code>Co-Authored-By: Claude Opus 5 &lt;noreply@openprogram.dev&gt;
+</code></pre>
+<p>知道模型显示名就用它，否则用通用身份 <code>OpenProgram</code>。这条 trailer 是幂等的：重跑流程不会重复追加，而且遇到已有的 trailer 块（比如 <code>Signed-off-by:</code>）会并进那一块，不另起一段。</p>
+<p>生成的 PR 正文结尾固定一行：</p>
+<pre><code>Generated with OpenProgram
+</code></pre>
+<p>用 <code>git.co_author</code> 设置关掉提交 trailer：</p>
+<pre><code>openprogram config set git.co_author false
+</code></pre>
+<p>关掉之后 OpenProgram 不再往提交里加任何署名 trailer。PR 结尾那行不受这个开关影响。</p>
+<p>这些辅助函数可以直接 import，自己复现完全一样的字符串：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_trailers</span><span class="p">,</span> <span class="n">co_author_trailer</span><span class="p">,</span> <span class="n">pr_body</span>
+</code></pre>
+<h2 id="审批与安全">审批与安全<a class="header-anchor" href="#审批与安全">#</a></h2>
+<p>每一步都是 <code>bash</code> 调用，所以 <code>git push</code> 和 <code>gh pr create</code> 走会话原有的审批档位，默认档位下你会逐条看到并批准。OpenProgram 不会为了让流程安静就把你切到绕过档位。</p>
+<p>被 spawn 出来的子 agent 完全拿不到 <code>bash</code>，因此无法提交或推送。这条流程属于顶层会话；活派给了子 agent 的话，子 agent 把分支交回来由你来发。</p>
+<h2 id="什么时候会停">什么时候会停<a class="header-anchor" href="#什么时候会停">#</a></h2>
+<p>出现下列情况 agent 停下汇报，不自作主张：工作区里有它无法归因到你请求的改动、钩子反复改写文件、推送连续两次被拒、<code>gh</code> 缺失或未登录。最后一种情况下分支已经推上去了，你可以在网页上开 PR，或者跑 <code>gh auth login</code> 之后再让它来一遍。</p>
+<h2 id="相关">相关<a class="header-anchor" href="#相关">#</a></h2>
+<ul>
+<li><a href="/docs/capabilities/skills.zh.html">Skills</a>——这条流程所在的 <code>SKILL.md</code> 注册表</li>
+<li><a href="/docs/capabilities/tools.zh.html">内置工具</a>——每一步都经过的 shell 工具</li>
+<li><a href="/docs/reference/config-keys.html">配置项</a>——<code>git.co_author</code> 及其他</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Language server tools</span></a><a class="pn-link pn-next" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Interfaces</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#怎么用">怎么用</a>
+<a class="" href="#它做什么">它做什么</a>
+<a class="" href="#ai-署名">AI 署名</a>
+<a class="" href="#审批与安全">审批与安全</a>
+<a class="" href="#什么时候会停">什么时候会停</a>
+<a class="" href="#相关">相关</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

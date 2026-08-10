@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786402037">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tailwind CSS v3 → v4 升级 · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/README.html" data-title-zh="概览" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/docs/reference/API.html" data-title-zh="API Reference" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/docs/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="Providers" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/docs/reference/config.html" data-title-zh="配置" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/docs/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/docs/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/docs/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/docs/reference/claude-code-compaction.html" data-href-zh="/docs/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/docs/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/docs/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/docs/reference/cli/config.html">config</a>
+<a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/docs/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/docs/reference/cli/status.html">status</a>
+<a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/docs/reference/cli/update.html">update</a>
+<a class="navlink" href="/docs/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/docs/reference/cli/web.html">web</a>
+<a class="navlink" href="/docs/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink active" href="/docs/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Specs</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Tailwind CSS v3 → v4 升级</span></nav><h1 id="tailwind-css-v3-v4-升级">Tailwind CSS v3 → v4 升级<a class="header-anchor" href="#tailwind-css-v3-v4-升级">#</a></h1>
+<p><strong>日期</strong>: 2026-07-22
+<strong>范围</strong>: <code>web/</code> 前端
+<strong>目标</strong>: 升级到 Tailwind v4,保留全站视觉零变化,着眼未来。</p>
+<h2 id="背景">背景<a class="header-anchor" href="#背景">#</a></h2>
+<p>菜单阴影 bug 暴露了一个语法陷阱:项目跑在 Tailwind <strong>v3</strong>,但代码里零星写了 v4-only 的圆括号任意值语法 <code>shadow-(--shadow-popover)</code>,在 v3 下被静默丢弃 → <code>box-shadow: none</code> → 菜单全无阴影(context 面板用内联 style 幸免)。已用方括号 <code>shadow-[var(...)]</code> 修复。</p>
+<p>借此升到 v4:v4 是官方新默认(cal.com、Supabase 等活跃项目已迁),圆括号语法原生可用,面向未来。</p>
+<h2 id="现状调研">现状调研<a class="header-anchor" href="#现状调研">#</a></h2>
+<ul>
+<li><strong>版本</strong>: <code>tailwindcss ^3.4.1</code>,<code>postcss ^8</code>,插件 <code>tailwindcss-animate ^1.0.7</code>。</li>
+<li><strong>配置</strong>: <code>web/tailwind.config.ts</code>(139 行)—— 把 <code>app/styles/base.css</code> 的所有 CSS 变量 token 映射成 utility 别名(颜色 <code>text-bright</code>/<code>bg-hover</code>/<code>accent-*</code>、圆角、字号 <code>fs-*</code>、间距 <code>composer-*</code>/<code>sidebar-w</code>、动画 accordion/spin-refresh)。</li>
+<li><strong>入口</strong>: <code>web/app/globals.css</code> —— <code>@tailwind base/components/utilities</code> 三行 + <code>@import</code> 字体 + shadcn token bridge (<code>:root</code>)。</li>
+<li><strong><code>@apply</code> 用量</strong>: <strong>0 处</strong>(省掉 v4 最大迁移坑)。</li>
+<li><strong>shadcn/ui</strong>: 组件源码复制进 <code>components/ui/*.tsx</code>,非依赖,v4 兼容,不存在版本冲突。</li>
+<li><strong>暗色模式</strong>: <code>darkMode: [&quot;class&quot;]</code>。</li>
+</ul>
+<h2 id="迁移步骤">迁移步骤<a class="header-anchor" href="#迁移步骤">#</a></h2>
+<h3 id="1-依赖">1. 依赖<a class="header-anchor" href="#1-依赖">#</a></h3>
+<ul>
+<li><code>tailwindcss</code>: <code>^3.4.1</code> → <code>^4</code></li>
+<li>新增 <code>@tailwindcss/postcss</code></li>
+<li><code>tailwindcss-animate ^1.0.7</code> → <code>tw-animate-css</code>(v4 生态等价物,承载 accordion 动画)</li>
+</ul>
+<h3 id="2-postcssconfigmjs">2. <code>postcss.config.mjs</code><a class="header-anchor" href="#2-postcssconfigmjs">#</a></h3>
+<p><code>tailwindcss: {}</code> → <code>&quot;@tailwindcss/postcss&quot;: {}</code>(v4 把 PostCSS 插件独立成包)。</p>
+<h3 id="3-appglobalscss-入口">3. <code>app/globals.css</code> 入口<a class="header-anchor" href="#3-appglobalscss-入口">#</a></h3>
+<ul>
+<li><code>@tailwind base; @tailwind components; @tailwind utilities;</code> → <code>@import &quot;tailwindcss&quot;;</code></li>
+<li>动画插件: <code>@import &quot;tw-animate-css&quot;;</code></li>
+<li>暗色模式: 加 <code>@custom-variant dark (&amp;:where(.dark, .dark *));</code>(替代 config 的 <code>darkMode: [&quot;class&quot;]</code>)</li>
+</ul>
+<h3 id="4-config-css-theme">4. config → CSS <code>@theme</code><a class="header-anchor" href="#4-config-css-theme">#</a></h3>
+<p>把 <code>tailwind.config.ts</code> 里 <code>theme.extend</code> 的全部 token 别名翻译进 globals.css 的 <code>@theme</code> 块:</p>
+<ul>
+<li>颜色 → <code>--color-*</code>(如 <code>--color-text-bright: var(--text-bright)</code>)</li>
+<li>圆角 → <code>--radius-*</code></li>
+<li>字号 → <code>--text-*</code>(注意 v4 命名)</li>
+<li>间距 → <code>--spacing-*</code></li>
+<li>动画/keyframes → <code>@theme</code> 内 <code>--animate-*</code> + <code>@keyframes</code></li>
+</ul>
+<p>删除 <code>tailwind.config.ts</code>(v4 无需 JS config;<code>content</code> 自动检测)。<strong>这步量最大、最需逐条核对别名不漏。</strong></p>
+<h3 id="5-breaking-change-回归">5. Breaking-change 回归<a class="header-anchor" href="#5-breaking-change-回归">#</a></h3>
+<p>v4 改了若干默认值,全站排查并补回原视觉:</p>
+<ul>
+<li><strong>默认边框色</strong>: v3=<code>gray-200</code>,v4=<code>currentColor</code>。凡是只写 <code>border</code> 不带颜色的地方需显式给色。</li>
+<li><strong><code>ring</code> 默认</strong>: 宽度 3px→1px、色从 blue→currentColor。检查 focus ring。</li>
+<li><strong><code>shadow</code>/<code>rounded</code>/<code>blur</code> 默认刻度重命名</strong>: <code>shadow-sm</code>→<code>shadow-xs</code> 等。grep 排查裸用。</li>
+<li><strong><code>space-*</code> / 预设 <code>outline</code></strong> 行为微调。</li>
+</ul>
+<h3 id="6-收尾">6. 收尾<a class="header-anchor" href="#6-收尾">#</a></h3>
+<ul>
+<li>slider/kbd 等圆括号语法保留(v4 原生支持)。</li>
+<li><code>tsc --noEmit</code> + <code>next build</code> 通过。</li>
+<li><strong>视觉回归</strong>: CDP 逐个读关键面板(菜单 MENU_PANEL、context 面板、composer、sidebar、tooltip、effort 卡)的 computed 样式,和升级前基线对比,确保零偏差。</li>
+</ul>
+<h2 id="风险">风险<a class="header-anchor" href="#风险">#</a></h2>
+<p>集中在步骤 4、5。token 搬家漏一个名字、或默认值变化未补回 → 零星样式偏差。缓解:逐条核对 + CDP computed 样式对比 + 逐屏人工回归。</p>
+<h2 id="验证标准">验证标准<a class="header-anchor" href="#验证标准">#</a></h2>
+<ul>
+<li><code>next build</code> exit 0。</li>
+<li>关键面板 computed 样式与升级前一致(阴影、边框、圆角、字号、间距)。</li>
+<li>全站深/浅两主题人工过一遍无可见偏差。</li>
+<li>dev 18200 实测。</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Web Split View and Bookmark Management</span></a><a class="pn-link pn-next" href="/docs/reference/design/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Design Documents</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#背景">背景</a>
+<a class="" href="#现状调研">现状调研</a>
+<a class="" href="#迁移步骤">迁移步骤</a>
+<a class="lvl-3" href="#1-依赖">1. 依赖</a>
+<a class="lvl-3" href="#2-postcssconfigmjs">2. postcss.config.mjs</a>
+<a class="lvl-3" href="#3-appglobalscss-入口">3. app/globals.css 入口</a>
+<a class="lvl-3" href="#4-config-css-theme">4. config → CSS @theme</a>
+<a class="lvl-3" href="#5-breaking-change-回归">5. Breaking-change 回归</a>
+<a class="lvl-3" href="#6-收尾">6. 收尾</a>
+<a class="" href="#风险">风险</a>
+<a class="" href="#验证标准">验证标准</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

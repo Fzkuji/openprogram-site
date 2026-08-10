@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786402037" data-alt-lang-url="/docs/reference/design/integrations/mcp-server.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCP 服务端 —— 被外部调用 · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/design/README.html" data-title-zh="设计文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design Documents</a>
+<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="设计文档站（统一文档网页）" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Design Docs Site (Unified Documentation Website)</a>
+<a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
+<a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
+<a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
+<a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
+<a class="navlink" href="/docs/reference/design/framework-overview.html" data-title-zh="框架总览：一次对话从输入到产出" data-href-en="/docs/reference/design/framework-overview.html" data-href-zh="/docs/reference/design/framework-overview.zh.html">Framework Overview — One Conversation from Input to Output</a>
+<a class="navlink" href="/docs/reference/design/framework-comparison.html">整框架对标：我们和十二家放在一起看</a>
+<a class="navlink" href="/docs/reference/design/feature-matrix.html">功能清单对标：设计参考审计快照</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Channels</div>
+<a class="navlink" href="/docs/reference/design/channels/README.html" data-title-zh="Channels" data-href-en="/docs/reference/design/channels/README.html" data-href-zh="/docs/reference/design/channels/README.zh.html">Channels</a>
+<a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="Channel 子系统设计" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Channel Subsystem Design</a>
+<a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="Channel 子系统 —— 要求与不变量" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Channel Subsystem — Requirements and Invariants</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">CLI / TUI</div>
+<a class="navlink" href="/docs/reference/design/cli/README.html" data-title-zh="CLI / TUI" data-href-en="/docs/reference/design/cli/README.html" data-href-zh="/docs/reference/design/cli/README.zh.html">CLI / TUI</a>
+<a class="navlink" href="/docs/reference/design/cli/redesign.html" data-title-zh="CLI / TUI 配置界面 —— 设计" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html">CLI / TUI Configuration Surface — Design</a>
+<a class="navlink" href="/docs/reference/design/cli/naming.html" data-title-zh="CLI 命名规范" data-href-en="/docs/reference/design/cli/naming.html" data-href-zh="/docs/reference/design/cli/naming.zh.html">CLI Naming Convention</a>
+<a class="navlink" href="/docs/reference/design/cli/config-write-safety.html" data-title-zh="配置写入安全 —— 设计" data-href-en="/docs/reference/design/cli/config-write-safety.html" data-href-zh="/docs/reference/design/cli/config-write-safety.zh.html">Config Write Safety — Design</a>
+<a class="navlink" href="/docs/reference/design/cli/single-port.html" data-title-zh="单端口架构" data-href-en="/docs/reference/design/cli/single-port.html" data-href-zh="/docs/reference/design/cli/single-port.zh.html">Single-Port Architecture</a>
+<a class="navlink" href="/docs/reference/design/cli/slash-commands-references.html" data-title-zh="斜杠命令 — 参考实现快照" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html">Slash Commands — Reference Implementations Snapshot</a>
+<a class="navlink" href="/docs/reference/design/cli/slash-commands.html" data-title-zh="Slash Commands — Unified Design" data-href-en="/docs/reference/design/cli/slash-commands.html" data-href-zh="/docs/reference/design/cli/slash-commands.zh.html">Slash Commands — Unified Design</a>
+<a class="navlink" href="/docs/reference/design/cli/tui-upgrade.html" data-title-zh="TUI 会话记录渲染与交互" data-href-en="/docs/reference/design/cli/tui-upgrade.html" data-href-zh="/docs/reference/design/cli/tui-upgrade.zh.html">TUI Transcript Rendering and Interaction</a>
+<a class="navlink" href="/docs/reference/design/cli/drop-run-command.html" data-title-zh="统一 `@agentic_function` 执行路径" data-href-en="/docs/reference/design/cli/drop-run-command.html" data-href-zh="/docs/reference/design/cli/drop-run-command.zh.html">Unified `@agentic_function` Execution Path</a>
+<a class="navlink" href="/docs/reference/design/cli/ports.html" data-title-zh="Web UI 端口 — 配置与冲突处理" data-href-en="/docs/reference/design/cli/ports.html" data-href-zh="/docs/reference/design/cli/ports.zh.html">Web UI Port — Configuration and Conflict Handling</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Context</div>
+<a class="navlink" href="/docs/reference/design/context/README.html" data-title-zh="Context" data-href-en="/docs/reference/design/context/README.html" data-href-zh="/docs/reference/design/context/README.zh.html">Context</a>
+<a class="navlink" href="/docs/reference/design/context/overview.html" data-title-zh="Context — 上下文层" data-href-en="/docs/reference/design/context/overview.html" data-href-zh="/docs/reference/design/context/overview.zh.html">Context — The Context Layer</a>
+<a class="navlink" href="/docs/reference/design/context/compaction.html" data-title-zh="上下文压缩" data-href-en="/docs/reference/design/context/compaction.html" data-href-zh="/docs/reference/design/context/compaction.zh.html">Context Compaction</a>
+<a class="navlink" href="/docs/reference/design/context/composition.html" data-title-zh="上下文组成 —— 注册式三层" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html">Context Composition — Registry-Based Three Layers</a>
+<a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
+<a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
+<a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
+<a class="navlink" href="/docs/reference/design/extension-gating/README.html" data-title-zh="扩展门控（Extension Gating）" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html">Extension Gating</a>
+<a class="navlink" href="/docs/reference/design/extension-gating/future-work.html" data-title-zh="未来工作 —— 明确不做的部分" data-href-en="/docs/reference/design/extension-gating/future-work.html" data-href-zh="/docs/reference/design/extension-gating/future-work.zh.html">Future work — explicitly NOT built</a>
+<a class="navlink" href="/docs/reference/design/extension-gating/implementation.html" data-title-zh="实现地图" data-href-en="/docs/reference/design/extension-gating/implementation.html" data-href-zh="/docs/reference/design/extension-gating/implementation.zh.html">Implementation map</a>
+<a class="navlink" href="/docs/reference/design/extension-gating/reference-comparison.html" data-title-zh="参考实现对比" data-href-en="/docs/reference/design/extension-gating/reference-comparison.html" data-href-zh="/docs/reference/design/extension-gating/reference-comparison.zh.html">Reference-implementation comparison</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="函数设计">Function Design</div>
+<a class="navlink" href="/docs/reference/design/function/README.html" data-title-zh="函数设计" data-href-en="/docs/reference/design/function/README.html" data-href-zh="/docs/reference/design/function/README.zh.html">Function Design</a>
+<a class="navlink" href="/docs/reference/design/function/calling-unification.html" data-title-zh="Function calling" data-href-en="/docs/reference/design/function/calling-unification.html" data-href-zh="/docs/reference/design/function/calling-unification.zh.html">Function calling</a>
+<a class="navlink" href="/docs/reference/design/function/agentic-program.html">Agentic Program：工具、技能、agentic function是同一个概念</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="函数设计 · Calling">Function Design · Calling</div>
+<a class="navlink" href="/docs/reference/design/function/calling/code-call.html" data-title-zh="@agentic_function 按固定顺序调用子函数" data-href-en="/docs/reference/design/function/calling/code-call.html" data-href-zh="/docs/reference/design/function/calling/code-call.zh.html">@agentic_function Calling Sub-Functions in a Fixed Order</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="集成">Integrations</div>
+<a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/editor-integration.html">Editor integration: LSP tools and ACP server</a>
+<a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
+<a class="navlink" href="/docs/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/docs/reference/design/integrations/mcp-integration.html" data-href-zh="/docs/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
+<a class="navlink" href="/docs/reference/design/integrations/skills-and-plugins.html" data-title-zh="Skills &amp; Plugins" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html">Skills &amp; Plugins</a>
+<a class="navlink active" href="/docs/reference/design/integrations/mcp-server.html" data-title-zh="MCP 服务端 —— 被外部调用" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html">MCP Server — Being Called From Outside</a>
+<a class="navlink" href="/docs/reference/design/integrations/mcp-server.viz.html">MCP 服务端：现状、九家对标与最小能力集 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Memory — 记忆系统设计">Memory — Memory System Design</div>
+<a class="navlink" href="/docs/reference/design/memory/README.html" data-title-zh="Memory — 记忆系统设计" data-href-en="/docs/reference/design/memory/README.html" data-href-zh="/docs/reference/design/memory/README.zh.html">Memory — Memory System Design</a>
+<a class="navlink" href="/docs/reference/design/memory/overview.html" data-title-zh="记忆子系统" data-href-en="/docs/reference/design/memory/overview.html" data-href-zh="/docs/reference/design/memory/overview.zh.html">Memory subsystem</a>
+<a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="哪些轮次已经写进记忆" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Knowing which turns memory has written</a>
+<a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html">哪些轮次已经写进记忆 (viz)</a>
+<a class="navlink" href="/docs/reference/design/memory/memory-architecture.html">记忆子系统：机制图解</a>
+<a class="navlink" href="/docs/reference/design/memory/memory-comparison.html">记忆写入：八个框架横向对比</a>
+<a class="navlink" href="/docs/reference/design/memory/memory-adoption.html">对标之后抄什么：四条做法的适配方案</a>
+<a class="navlink" href="/docs/reference/design/memory/authority-handoff.html" data-title-zh="权限：两个档位与配对" data-href-en="/docs/reference/design/memory/authority-handoff.html" data-href-zh="/docs/reference/design/memory/authority-handoff.zh.html">Authority: Two Tiers and Pairing</a>
+<a class="navlink" href="/docs/reference/design/memory/entity-memory.html" data-title-zh="实体记忆 (Entity Memory)" data-href-en="/docs/reference/design/memory/entity-memory.html" data-href-zh="/docs/reference/design/memory/entity-memory.zh.html">Entity Memory</a>
+<a class="navlink" href="/docs/reference/design/memory/git-as-entity-memory.html" data-title-zh="实体记忆走 Git: Session-Git + Project-Git" data-href-en="/docs/reference/design/memory/git-as-entity-memory.html" data-href-zh="/docs/reference/design/memory/git-as-entity-memory.zh.html">Entity Memory on Git: Session-Git + Project-Git</a>
+<a class="navlink" href="/docs/reference/design/memory/virtual-memory.html" data-title-zh="抽象记忆 (Virtual Memory)" data-href-en="/docs/reference/design/memory/virtual-memory.html" data-href-zh="/docs/reference/design/memory/virtual-memory.zh.html">Virtual Memory</a>
+<a class="navlink" href="/docs/reference/design/memory/speaker-identity.html">发言人身份：记忆里谁说的</a>
+<a class="navlink" href="/docs/reference/design/memory/authority-landscape.html">权限与归因：我们做了什么、别人做了什么、接下来做什么</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Plans</div>
+<a class="navlink" href="/docs/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/docs/reference/design/plans/cache-control-passthrough.html" data-href-zh="/docs/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
+<a class="navlink" href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
+<a class="navlink" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</div>
+<a class="navlink" href="/docs/reference/design/proactive/README.html" data-title-zh="Proactive Layer — 设计" data-href-en="/docs/reference/design/proactive/README.html" data-href-zh="/docs/reference/design/proactive/README.zh.html">Proactive Layer — Design</a>
+<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="承诺与心跳" data-href-en="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments and Heartbeat</a>
+<a class="navlink" href="/docs/reference/design/proactive/event-layer.html" data-title-zh="事件层" data-href-en="/docs/reference/design/proactive/event-layer.html" data-href-zh="/docs/reference/design/proactive/event-layer.zh.html">Event Layer</a>
+<a class="navlink" href="/docs/reference/design/proactive/events-and-state.html" data-title-zh="事件与状态（地基）" data-href-en="/docs/reference/design/proactive/events-and-state.html" data-href-zh="/docs/reference/design/proactive/events-and-state.zh.html">Events and State (The Foundation)</a>
+<a class="navlink" href="/docs/reference/design/proactive/framework-evolution.html" data-title-zh="框架信号路由：一条总线当中枢" data-href-en="/docs/reference/design/proactive/framework-evolution.html" data-href-zh="/docs/reference/design/proactive/framework-evolution.zh.html">Framework Signal Routing: One Bus as the Hub</a>
+<a class="navlink" href="/docs/reference/design/proactive/execution-model.html" data-title-zh="规则怎么写、怎么跑" data-href-en="/docs/reference/design/proactive/execution-model.html" data-href-zh="/docs/reference/design/proactive/execution-model.zh.html">How Rules Are Written and How They Run</a>
+<a class="navlink" href="/docs/reference/design/proactive/invariants.html" data-title-zh="框架自己要守的底线" data-href-en="/docs/reference/design/proactive/invariants.html" data-href-zh="/docs/reference/design/proactive/invariants.zh.html">Invariants the Framework Must Enforce Itself</a>
+<a class="navlink" href="/docs/reference/design/proactive/event-reference.html">OpenProgram · 事件层 API Reference</a>
+<a class="navlink" href="/docs/reference/design/proactive/event-layer.viz.html">OpenProgram · 事件层设计 (viz)</a>
+<a class="navlink" href="/docs/reference/design/proactive/framework-evolution.viz.html">OpenProgram · 框架演进 (viz)</a>
+<a class="navlink" href="/docs/reference/design/proactive/overview.html" data-title-zh="总览：跟着一个场景走一遍" data-href-en="/docs/reference/design/proactive/overview.html" data-href-zh="/docs/reference/design/proactive/overview.zh.html">Overview: Walk Through One Scenario End to End</a>
+<a class="navlink" href="/docs/reference/design/proactive/policies-mvp.html" data-title-zh="三条样板规则" data-href-en="/docs/reference/design/proactive/policies-mvp.html" data-href-zh="/docs/reference/design/proactive/policies-mvp.zh.html">Three Template Rules</a>
+<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html">承诺与心跳：agent在正确的时刻主动开口 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Proactive Layer — 设计 · Research Archive">Proactive Layer — Design · Research Archive</div>
+<a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html">回放即 policy 测试</a>
+<a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html">威胁模型</a>
+<a class="navlink" href="/docs/reference/design/proactive/_research_archive/evaluation.html">评估</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers</div>
+<a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
+<a class="navlink" href="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
+<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
+<a class="navlink" href="/docs/reference/design/providers/network-proxy.html">Outbound network proxy</a>
+<a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="请求录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replaying provider calls</a>
+<a class="navlink" href="/docs/reference/design/providers/request-build.html" data-title-zh="请求构建:Context → 各 provider 参数" data-href-en="/docs/reference/design/providers/request-build.html" data-href-zh="/docs/reference/design/providers/request-build.zh.html">Request building: Context → per-provider parameters</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Auth</div>
+<a class="navlink" href="/docs/reference/design/providers/auth/unified-account-management.html" data-title-zh="账号管理与凭据池轮换" data-href-en="/docs/reference/design/providers/auth/unified-account-management.html" data-href-zh="/docs/reference/design/providers/auth/unified-account-management.zh.html">Account management and pool rotation</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="API key / 凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">API-key / credential resolution</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="claude-code 直连订阅" data-href-en="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">claude-code direct subscription connection</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接信息统一（一个 Credential + 一个解析出口）" data-href-en="/docs/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connection unification (one Credential, one resolution point)</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭证状态 —— 可用或停用" data-href-en="/docs/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/docs/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status — usable or stopped</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/credential-validation-unification.html" data-title-zh="凭证校验" data-href-en="/docs/reference/design/providers/auth/credential-validation-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-validation-unification.zh.html">Credential validation</a>
+<a class="navlink" href="/docs/reference/design/providers/auth/unified-auth-storage.html" data-title-zh="自包含的认证存储" data-href-en="/docs/reference/design/providers/auth/unified-auth-storage.html" data-href-zh="/docs/reference/design/providers/auth/unified-auth-storage.zh.html">Self-contained auth storage</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Models</div>
+<a class="navlink" href="/docs/reference/design/providers/models/fast-tier.html" data-title-zh="Fast（高速）档 — 判定、存储与线路" data-href-en="/docs/reference/design/providers/models/fast-tier.html" data-href-zh="/docs/reference/design/providers/models/fast-tier.zh.html">Fast tier — detection, storage, and wires</a>
+<a class="navlink" href="/docs/reference/design/providers/models/overview.html" data-title-zh="模型目录与 Provider 配置" data-href-en="/docs/reference/design/providers/models/overview.html" data-href-zh="/docs/reference/design/providers/models/overview.zh.html">Model Catalog and Provider Configuration</a>
+<a class="navlink" href="/docs/reference/design/providers/models/thinking-effort.html" data-title-zh="Thinking / Effort 子系统设计" data-href-en="/docs/reference/design/providers/models/thinking-effort.html" data-href-zh="/docs/reference/design/providers/models/thinking-effort.zh.html">Thinking / Effort Subsystem Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Reliability</div>
+<a class="navlink" href="/docs/reference/design/providers/reliability/error-retry.html" data-title-zh="模型调用的错误处理与重试决策逻辑" data-href-en="/docs/reference/design/providers/reliability/error-retry.html" data-href-zh="/docs/reference/design/providers/reliability/error-retry.zh.html">Error Handling and Retry Decision Logic for Model Calls</a>
+<a class="navlink" href="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-title-zh="错误分类传播 —— 把结构化的 LLM 错误一路传到 UI" data-href-en="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-zh="/docs/reference/design/providers/reliability/error-taxonomy-propagation.zh.html">Error-taxonomy propagation — structured LLM errors up to the UI</a>
+<a class="navlink" href="/docs/reference/design/providers/reliability/llm-fault-tolerance.html" data-title-zh="LLM 调用容错与超时管理" data-href-en="/docs/reference/design/providers/reliability/llm-fault-tolerance.html" data-href-zh="/docs/reference/design/providers/reliability/llm-fault-tolerance.zh.html">LLM-call fault tolerance &amp; timeout management</a>
+<a class="navlink" href="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Research</div>
+<a class="navlink" href="/docs/reference/design/research/execution-trace-model-selection.html" data-title-zh="执行记录数据模型 —— 选择 span" data-href-en="/docs/reference/design/research/execution-trace-model-selection.html" data-href-zh="/docs/reference/design/research/execution-trace-model-selection.zh.html">Execution Trace Data Model — Choosing Span</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时">Runtime</div>
+<a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/design/runtime/additional-working-directories.html" data-title-zh="会话多工作目录（Additional Working Directories）设计" data-href-en="/docs/reference/design/runtime/additional-working-directories.html" data-href-zh="/docs/reference/design/runtime/additional-working-directories.zh.html">Additional working directories for a session</a>
+<a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
+<a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
+<a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="自我更新：OpenProgram 一边改自己一边保持可用" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update: staying usable while OpenProgram modifies itself</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
+<a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
+<a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-collab-architecture.html">Agent协作：工具面</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent协作：八家实现对照</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Dag">Runtime · Dag</div>
+<a class="navlink" href="/docs/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作（通信 · 服务 · 合并）" data-href-en="/docs/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">Branch Collaboration (Communication · Service · Merge)</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/rendering.html" data-title-zh="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性）" data-href-en="/docs/reference/design/runtime/dag/rendering.html" data-href-zh="/docs/reference/design/runtime/dag/rendering.zh.html">DAG Rendering Spec (Layout · Edges · Legend · Default Visibility)</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/dag-live.html">DAG 实时布局（真算法）</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/dag-layout-spec.html">DAG 布局视觉规范</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/overview.html" data-title-zh="Session DAG — 设计" data-href-en="/docs/reference/design/runtime/dag/overview.html" data-href-zh="/docs/reference/design/runtime/dag/overview.zh.html">Session DAG — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Execution">Runtime · Execution</div>
+<a class="navlink" href="/docs/reference/design/runtime/execution/dispatcher-split.html" data-title-zh="`agent/dispatcher` —— 按职责划分的包" data-href-en="/docs/reference/design/runtime/execution/dispatcher-split.html" data-href-zh="/docs/reference/design/runtime/execution/dispatcher-split.zh.html">`agent/dispatcher` — a responsibility-scoped package</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
+<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html" data-title-zh="文件修改管理 — 行业分析与 OpenProgram 设计" data-href-en="/docs/reference/design/runtime/operations/file-management.html" data-href-zh="/docs/reference/design/runtime/operations/file-management.zh.html">File Modification Management — Industry Analysis and OpenProgram Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/multi-agent-revert-todo.html" data-title-zh="多 agent 分支与逐 turn 回滚" data-href-en="/docs/reference/design/runtime/operations/multi-agent-revert-todo.html" data-href-zh="/docs/reference/design/runtime/operations/multi-agent-revert-todo.zh.html">Multi-agent branches and per-turn revert</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/rewind.html" data-title-zh="Rewind — 回退到任意历史消息" data-href-en="/docs/reference/design/runtime/operations/rewind.html" data-href-zh="/docs/reference/design/runtime/operations/rewind.zh.html">Rewind — Roll Back to Any Historical Message</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">分支自动命名设计 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
+<a class="navlink" href="/docs/reference/design/runtime/session/README.html" data-title-zh="Session 子系统" data-href-en="/docs/reference/design/runtime/session/README.html" data-href-zh="/docs/reference/design/runtime/session/README.zh.html">Session Subsystem</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/distill.html" data-title-zh="Distill——把会话变成可复用流程" data-href-en="/docs/reference/design/runtime/session/distill.html" data-href-zh="/docs/reference/design/runtime/session/distill.zh.html">Distill — sessions into reusable procedures</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/name.html" data-title-zh="LLM 标题生成" data-href-en="/docs/reference/design/runtime/session/name.html" data-href-zh="/docs/reference/design/runtime/session/name.zh.html">LLM Title Generation</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/context.html" data-title-zh="Session 上下文" data-href-en="/docs/reference/design/runtime/session/context.html" data-href-zh="/docs/reference/design/runtime/session/context.zh.html">Session Context</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/storage.html" data-title-zh="Session 数据模型" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html">Session Data Model</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/comparison.html" data-title-zh="Session 管理方案对比" data-href-en="/docs/reference/design/runtime/session/comparison.html" data-href-zh="/docs/reference/design/runtime/session/comparison.zh.html">Session Management Comparison</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/operations.html" data-title-zh="Session 操作流程" data-href-en="/docs/reference/design/runtime/session/operations.html" data-href-zh="/docs/reference/design/runtime/session/operations.zh.html">Session Operations</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
+<a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="UI 跨模块不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">Cross-module UI invariants</a>
+<a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
+<a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="指示点系统" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Indicator dot system</a>
+<a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
+<a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html">OpenProgram 浏览器式界面原型 v3</a>
+<a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
+<a class="navlink" href="/docs/reference/design/ui/project-workspace.html" data-title-zh="项目工作区 —— 文件、多 Tab 与多会话" data-href-en="/docs/reference/design/ui/project-workspace.html" data-href-zh="/docs/reference/design/ui/project-workspace.zh.html">Project workspace — files, tabs, and multi-session</a>
+<a class="navlink" href="/docs/reference/design/ui/remote-web-access.html" data-title-zh="远程 Web 访问——单一所有者的自托管控制" data-href-en="/docs/reference/design/ui/remote-web-access.html" data-href-zh="/docs/reference/design/ui/remote-web-access.zh.html">Remote Web Access — Owner-Only, Self-Hosted Control</a>
+<a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
+<a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
+<a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
+<a class="navlink" href="/docs/reference/design/ui/layout-density-mock.html">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
+<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件处理设计（Web 聊天）" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment Handling Design (Web Chat)</a>
+<a class="navlink" href="/docs/reference/design/ui/attachment-handling.viz.html">OpenProgram · 附件处理设计 (viz)</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="集成">Integrations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="MCP 服务端 —— 被外部调用">MCP Server — Being Called From Outside</span></nav><h1 id="mcp-服务端-被外部调用">MCP 服务端 —— 被外部调用<a class="header-anchor" href="#mcp-服务端-被外部调用">#</a></h1>
+<blockquote>
+<p>本文是<strong>服务端</strong>方向的设计：外部程序（Claude Desktop、另一个 agent、IDE）
+如何通过稳定协议驱动 OpenProgram 的工具。相反方向，即消费外部 MCP server
+的工具，见 <a href="/docs/reference/design/integrations/mcp-integration.html"><code>mcp-integration.md</code></a>。
+关联代码：<code>openprogram/webui/</code>、<code>openprogram/functions/_runtime.py</code>、
+<code>openprogram/agent/internals/_approval.py</code>。
+配套可视化：<a href="/docs/reference/design/integrations/mcp-server.html"><code>mcp-server.html</code></a>。</p>
+</blockquote>
+<h2 id="一句话概括">一句话概括<a class="header-anchor" href="#一句话概括">#</a></h2>
+<p>用 MCP stdio 暴露一组小而固定的 OpenProgram 工具，对每个调用方做认证，把外部调用方
+映射成一个低权权限档位，让工具调用走本地轮次同一条审批阶梯，并把取消、进度
+和错误语义对齐 MCP 规范。协议客户端拿到的是一份能依赖的契约，不是内部路由表的快照。</p>
+<h2 id="层一-我们现在怎么做">层一 —— 我们现在怎么做<a class="header-anchor" href="#层一-我们现在怎么做">#</a></h2>
+<h3 id="只有客户端没有服务端">只有客户端，没有服务端<a class="header-anchor" href="#只有客户端没有服务端">#</a></h3>
+<p><code>openprogram/mcp/</code> 是纯客户端：八个模块（<code>client.py</code>、<code>adapter.py</code>、<code>config.py</code>、
+<code>registry.py</code>、<code>oauth_flow.py</code>、<code>sampling.py</code>、<code>token_storage.py</code>），负责拉起外部
+MCP server 并把它们的工具挂进注册表。代码里没有 <code>FastMCP</code>、没有 <code>mcp.server</code>、
+没有 <code>stdio_server</code>、没有请求处理器。外部 MCP 客户端目前调不到 OpenProgram 的任何东西。</p>
+<h3 id="现有的外部控制面是什么">现有的外部控制面是什么<a class="header-anchor" href="#现有的外部控制面是什么">#</a></h3>
+<p>三个面，全是本地 HTTP，都没有版本化：</p>
+<table>
+<thead>
+<tr>
+<th>控制面</th>
+<th>位置</th>
+<th>形状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastAPI 路由</td>
+<td><code>openprogram/webui/server.py</code> 的 <code>create_app()</code>，路由模块在 <code>openprogram/webui/routes/</code></td>
+<td>约 25 个模块共 198 条路由</td>
+</tr>
+<tr>
+<td>WebSocket <code>/ws</code></td>
+<td><code>openprogram/webui/server.py</code> 的 <code>_websocket_handler</code>，动作来自 <code>openprogram/webui/ws_actions/</code></td>
+<td><code>WS_ACTIONS</code> 分发字典里约 100 个客户端→服务端动作，约 120 种服务端→客户端事件</td>
+</tr>
+<tr>
+<td>工具注册表</td>
+<td><code>openprogram/functions/_runtime.py</code> 的 <code>_registry</code></td>
+<td><code>register()</code> / <code>get()</code> / <code>filter_for()</code>，按工具名索引</td>
+</tr>
+</tbody>
+</table>
+<p><code>AgentTool</code>（<code>openprogram/agent/types.py</code>）带 <code>name</code>、<code>description</code>、<code>parameters</code>、
+<code>label</code>，以及：</p>
+<pre><code class="language-python"><span class="n">execute</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span>
+    <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">AgentToolUpdateCallback</span> <span class="o">|</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="n">Awaitable</span><span class="p">[</span><span class="n">AgentToolResult</span><span class="p">],</span>
+<span class="p">]</span>
+</code></pre>
+<p>这个签名里已经有协议服务端需要的三样东西：参数字典、取消用的 <code>Event</code>、增量更新回调。
+缺的只是一层把它们说给外部进程听的传输。</p>
+<h3 id="web-已有认证mcp-调用方身份仍不存在">Web 已有认证；MCP 调用方身份仍不存在<a class="header-anchor" href="#web-已有认证mcp-调用方身份仍不存在">#</a></h3>
+<p><code>start_server()</code> 绑定 <code>web.host</code>（默认 <code>127.0.0.1</code>），并在 route dispatch 前安装
+<code>openprogram/webui/owner_auth.py</code> 中的 <code>OwnerAuthMiddleware</code>。当前 Web 进程持有每次启动
+重新生成的 token。Browser 用 fragment token 换取 profile-specific HttpOnly cookie；
+native HTTP、SSE 与 WebSocket client 使用 <code>Authorization: Bearer</code>。Canonical Host 与
+effective Origin 在认证前校验，非 loopback bind 没有显式 Origin 时拒绝启动，WebSocket
+在 <code>accept()</code> 前认证。成功请求取得当前 profile 的完整 owner authority。</p>
+<p>该边界改变了安全前提，但没有实现本 MCP 设计：</p>
+<ol>
+<li>内部 FastAPI 与 WebSocket surface 已受保护，但仍是未版本化、完整 owner 权限的应用
+interface，不是外部 integration contract。</li>
+<li>MCP client 不能取得 Web owner token。它需要独立 client identity、默认空的 tool
+whitelist 与低权限 authority mapping；这些 MCP server component 当前都不存在。</li>
+</ol>
+<p>这个面上还有 <code>POST /api/register</code>，它按请求体里给的模块路径做任意 import。已保存的
+provider credential 不再可取回明文：两种 reveal 形式都已删除，account 与 config-key
+route 只返回掩码，MCP 管理 route 同样把已存的每个 <code>env</code> 值、header 值、bearer token
+与 OAuth client secret 全部掩码。Web owner 认证限制谁能访问这些内部 route，但不会使其 shape 适合外部
+调用方，也不会使 full-owner credential 适合 MCP client。因此 MCP 认证与低权限授权仍是
+前置条件，不是后续加固项。</p>
+<h3 id="审批机制已经存在而且就是正确的挂载点">审批机制已经存在，而且就是正确的挂载点<a class="header-anchor" href="#审批机制已经存在而且就是正确的挂载点">#</a></h3>
+<p><code>openprogram/agent/internals/_approval.py</code> 的
+<code>wrap_with_approval(agent_tool, req, on_event)</code> 返回一个 <code>AgentTool</code> 副本，其
+<code>execute</code> 是 <code>_gated_execute</code>。阶梯按固定顺序执行：</p>
+<ol>
+<li><code>_hard_constraint_violation()</code> —— 在规则和 bypass 之前判定，所以任何东西都取消不了它。
+当前只覆盖 <code>req.source == &quot;agent_spawn&quot;</code>。</li>
+<li>规则层 <code>deny</code> / <code>ask</code>，来自 <code>req.permission_rules</code>，优先级 <code>deny &gt; ask &gt; allow</code>。</li>
+<li><code>_FORCE_APPROVAL_TOOLS</code> —— 始终询问，bypass 下也询问。</li>
+<li><code>mode == &quot;bypass&quot;</code> 短路。</li>
+<li>规则层 <code>allow</code>。</li>
+<li><code>SAFE_AUTO_ALLOWLIST</code> —— 只读工具在任何模式下放行。</li>
+<li><code>acceptEdits</code> + <code>_accept_edits_safe</code> + <code>_path_is_safe()</code>。</li>
+<li><code>mode == &quot;auto&quot;</code> → <code>RISKY_AUTO_DENYLIST</code>，否则 <code>auto_classify_tool()</code>。</li>
+<li>其余走阻塞式审批卡片。</li>
+</ol>
+<p><code>PermissionMode</code> 是 <code>ask</code> / <code>bypass</code> / <code>acceptEdits</code> / <code>auto</code> / <code>plan</code>，默认 <code>ask</code>，
+但 Web 聊天默认 <code>bypass</code>，spawn 出来的 sub-agent 在
+<code>openprogram/agent/sub_agent_run.py</code> 里硬编码 <code>permission_mode=&quot;bypass&quot;</code>。
+<code>await_user_approval()</code> 在 <code>QuestionRegistry</code> 里开一条 <code>kind=&quot;approval&quot;</code> 的记录，
+发出的 <code>question.asked</code> 带 <code>tool</code>、<code>args</code> 和 <code>risk_level ∈ {low, medium, high}</code>；
+返回 <code>(approved, reason, scope ∈ {once, always})</code>，<code>always</code> 会把 allow 规则写进
+<code>&lt;project&gt;/.openprogram/settings.json</code>。</p>
+<p>权限是一个<strong>两档枚举</strong>，<code>owner</code> / <code>paired</code>，以 <code>authority_tier</code> 字段挂在请求边界上，
+与 <code>principal_id</code> 相区别。门口通过 <code>openprogram/agent/authority.py</code> 里的
+<code>TIER_CAPABILITIES</code> 常量表把档位映射成固定能力集合；请求自己不携带能力列表，
+调用方也就没有可构造的东西。执行判定是
+<code>allow = hard_constraints ∧ TIER_CAPABILITIES[tier] ∋ capability ∧ permission_or_exact_owner_approval ∧ enforcement_boundary</code>，
+并且fail-closed：档位缺失或无法识别时拒绝全部能力，不回落到某个缩小的集合。
+本设计消费这个门口，档位模型见<a href="/docs/reference/design/memory/authority-handoff.html"><code>authority-handoff.md</code></a>。</p>
+<h3 id="取消">取消<a class="header-anchor" href="#取消">#</a></h3>
+<p><code>openprogram/agent/run_control.py</code> 把取消建模为<strong>按轮次的 <code>CancelToken</code>，从不按会话</strong> ——
+一个 <code>threading.Event</code> 加一个 <code>retired</code> 标志，所以轮次结束后才到的 stop 不会漏进下一轮。
+<code>begin_turn</code> / <code>end_turn</code> / <code>register_cancel_event</code> / <code>mark_cancelled</code> /
+<code>kill_active_runtime</code> 组成这层接口，<code>_cancel_hook</code> 在 import 时通过
+<code>add_pre_invocation_hook</code> 和 <code>set_cancellation_check</code> 全局装上，所以每个
+<code>@agentic_function</code> 入口和每次 <code>Runtime.exec</code> 都会中止。</p>
+<p>现有两个入口语义不一致。WS <code>stop</code>（<code>ws_actions/runtime.py</code>）是两段式：先发优雅停止，
+<code>_GRACEFUL_GRACE_S = 4.0</code> 之后硬杀，并通过 <code>cancel_session</code> 取消待答问题。HTTP
+<code>POST /api/stop</code>（<code>routes/lifecycle.py</code>）是单段式，不碰问题注册表。渠道 worker 的轮次
+根本不注册 token，对两者都不可见，这个缺口在 <code>run_control.py</code> 里已经标出。</p>
+<h3 id="错误语义">错误语义<a class="header-anchor" href="#错误语义">#</a></h3>
+<p>两套表示，没有共同字段。<code>ToolResult</code>（<code>openprogram/functions/_runtime.py</code>）有一等的
+<code>is_error: bool</code>。<code>AgentToolResult</code>（<code>openprogram/agent/types.py</code>）只有 <code>content</code> 和
+<code>details</code>，<code>_normalize_result()</code> 把标志挪进 <code>details[&quot;is_error&quot;]</code>。于是每个消费方都写
+防御性的 <code>details.get(&quot;is_error&quot;)</code>，也没有任何静态检查。具体载荷：拒绝是
+<code>{&quot;is_error&quot;: True, &quot;denied&quot;: True}</code>，超时是 <code>{&quot;is_error&quot;: True, &quot;timeout&quot;: True}</code>。
+事件层的 <code>AgentEventToolEnd</code> 倒是带一等的 <code>is_error</code>。</p>
+<h3 id="契约测试">契约测试<a class="header-anchor" href="#契约测试">#</a></h3>
+<p><code>tests/unit/test_diagnostic_mcp_route_contracts.py</code> 是唯一钉响应形状的文件，198 条路由里
+覆盖两条：</p>
+<ul>
+<li><code>test_doctor_route_contract</code> —— <code>GET /api/doctor</code> 精确返回
+<code>{&quot;results&quot;: [...], &quot;all_ok&quot;: bool}</code>。</li>
+<li><code>test_mcp_list_route_contract</code> —— <code>GET /api/mcp/servers</code> 精确返回
+<code>{&quot;servers&quot;: [status]}</code>，status 字典 15 个键。</li>
+<li><code>test_mcp_detail_route_contract_and_missing_status</code> —— 详情形状，以及不存在的 server
+返回 404 <code>{&quot;detail&quot;: &quot;server '&lt;name&gt;' not loaded&quot;}</code>。</li>
+</ul>
+<p>每个测试都新建一个裸 <code>FastAPI()</code> 再调模块的 <code>register(app)</code>，所以
+<code>OwnerAuthMiddleware</code> 不在路径上。断言用精确相等，加字段就会挂。这是对当前状态的准确
+描述：这些 route 是构造出来的契约，不是政策上的契约。</p>
+<h2 id="层二-参考框架怎么做">层二 —— 参考框架怎么做<a class="header-anchor" href="#层二-参考框架怎么做">#</a></h2>
+<p>调查范围：<code>references/</code> 下每一个目录。</p>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>MCP 服务端</th>
+<th>ACP（agent 侧）</th>
+<th>入站 HTTP / webhook</th>
+<th>客户端 SDK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>claude-code</td>
+<td>无（快照只有 <code>BashTool/</code>）</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>claude-code-leaked</td>
+<td><code>claude mcp serve</code>，stdio，全部内置工具</td>
+<td>无</td>
+<td><code>claude server</code>，bearer token</td>
+<td>Agent SDK 走 control protocol</td>
+</tr>
+<tr>
+<td>codex-cli</td>
+<td><code>codex mcp-server</code>，stdio，两个工具</td>
+<td>无（用自己的 app-server）</td>
+<td>app-server 走 stdio / WS / unix socket</td>
+<td><code>@openai/codex-sdk</code>（TS）+ <code>openai-codex</code>（Python）</td>
+</tr>
+<tr>
+<td>openclaw</td>
+<td>三个 stdio server 加 MCP-over-HTTP</td>
+<td><code>openclaw acp</code>，走 Gateway</td>
+<td>Gateway HTTP API + HMAC webhooks 插件</td>
+<td><code>@openclaw/sdk</code>（private）</td>
+</tr>
+<tr>
+<td>opencode</td>
+<td>无 —— 只做客户端</td>
+<td><code>opencode acp</code></td>
+<td><code>opencode serve</code>，HTTP Basic</td>
+<td><code>@opencode-ai/sdk</code></td>
+</tr>
+<tr>
+<td>hermes-agent</td>
+<td><code>hermes mcp serve</code>，FastMCP stdio，十个工具</td>
+<td><code>hermes acp</code> 加 ACP 注册表条目</td>
+<td>HMAC webhook 适配器 + bearer 的 OpenAI 兼容 API</td>
+<td>无</td>
+</tr>
+<tr>
+<td>pi-ai</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+<td>不适用 —— 它本身是 provider 客户端库</td>
+</tr>
+<tr>
+<td>pi-mono</td>
+<td>无，且明确写着 &quot;<strong>No MCP.</strong>&quot;</td>
+<td>无</td>
+<td>无</td>
+<td>只有内嵌用的包</td>
+</tr>
+<tr>
+<td>weclaw</td>
+<td>无</td>
+<td>只有 ACP <strong>客户端</strong>，自动放行所有权限请求</td>
+<td><code>POST /api/send</code>，无认证</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p>五点带进我们的设计。</p>
+<p><strong>工具面刻意做小，做小的那些活得更久。</strong> codex 只暴露两个工具，<code>codex</code> 和
+<code>codex-reply</code> —— 开一轮、续一个 thread。hermes 暴露十个，全是自己会话库上的读取或消息
+操作。openclaw 的渠道桥暴露九个，形状相同。只有 claude-code-leaked 暴露整个内置工具集，
+而且 list 和 call 两处都用 <code>getEmptyToolPermissionContext()</code> —— 不加载任何用户权限规则，
+<code>isNonInteractiveSession: true</code>，所以根本没有交互式询问路径。这是要避开的配置，不是要抄的。</p>
+<p><strong>协议内审批有两种成型写法。</strong> codex 用 <code>elicitation/create</code> 把 exec 和 patch 审批推回
+MCP 客户端，带自己的关联字段（<code>threadId</code>、<code>codex_elicitation</code>、
+<code>codex_mcp_tool_call_id</code>、<code>codex_event_id</code>），收回 <code>ReviewDecision</code>；它源码里注明这个
+载荷还不符合 <code>ElicitResult</code>。openclaw 走轮询：<code>permissions_list_open</code> 和
+<code>permissions_respond</code>，决策是 <code>allow-once | allow-always | deny</code>，所以不支持 elicitation
+的通用 MCP 客户端也能用。hermes 照搬这一对。轮询降级平滑，elicitation 延迟更低但依赖
+客户端支持。</p>
+<p><strong>取消只在做了的地方才做。</strong> codex 端到端实现了 <code>notifications/cancelled</code> —— 在活跃轮次
+注册表里查到该轮并停止向它路由事件，同时明确回答 <code>tasks/cancel</code> 不支持。openclaw 的
+plugin-tools server 把 SDK 的 <code>extra.signal</code> 转进 <code>handlers.callTool(params, signal)</code>。
+claude-code-leaked 每次调用新建一个 <code>AbortController</code>，但从不接到通知上。hermes 没有取消。</p>
+<p><strong>进度通知基本没人用。</strong> codex 收到 <code>notifications/progress</code> 只是记日志；它自己的流式
+输出是带 Codex 事件载荷的自定义通知形状。被调查的框架里没有一个对外发标准
+<code>notifications/progress</code>。</p>
+<p><strong>错误语义收敛到同一形状。</strong> 每个实现对&quot;工具跑了但失败&quot;都返回
+<code>{isError: true, content: [{type: &quot;text&quot;, ...}]}</code>，把 JSON-RPC 错误留给协议级故障 ——
+工具名不存在、参数格式错。这个划分我们采纳。</p>
+<p>同一次调查里还有两个反面数据点：weclaw 的 <code>/api/send</code> 没有任何认证，它的 ACP 客户端
+自动放行每个 <code>session/request_permission</code>；opencode 的 <code>serve</code> 在
+<code>OPENCODE_SERVER_PASSWORD</code> 未设时以无认证运行，只打印一行警告。这两种&quot;默认关&quot;的姿态
+都被本轮的验收标准排除。</p>
+<h2 id="层三-设计">层三 —— 设计<a class="header-anchor" href="#层三-设计">#</a></h2>
+<h3 id="传输与入口">传输与入口<a class="header-anchor" href="#传输与入口">#</a></h3>
+<p><code>openprogram mcp serve</code> 用 <strong>stdio 单一传输</strong> 跑 MCP 服务端。stdio 是被调查的每个实现
+最先支持的传输，它继承拉起进程那方的信任边界，而且不把内部 full-owner Web API 暴露成
+integration surface。HTTP 传输要等 stdio contract 稳定并形成独立 deployment design 后再做。</p>
+<p>服务端放在 <code>openprogram/mcp_server/</code>，与 <code>openprogram/mcp/</code> 平级的顶层模块。它不复用
+客户端模块 —— <code>client.py</code> 和 <code>adapter.py</code> 翻译的是相反方向 —— 但它共用
+<code>openprogram/functions/_runtime.py</code> 和审批阶梯，因为共用这两样正是全部意义所在。</p>
+<h3 id="最小工具集">最小工具集<a class="header-anchor" href="#最小工具集">#</a></h3>
+<p>六个工具，每个映射到一项能力，没有一个是通用逃生口：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+<th>能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sessions_list</code></td>
+<td>列出会话的 id、标题、更新时间</td>
+<td><code>reply</code></td>
+</tr>
+<tr>
+<td><code>session_get</code></td>
+<td>取一个会话的消息</td>
+<td><code>reply</code></td>
+</tr>
+<tr>
+<td><code>prompt_send</code></td>
+<td>在会话里开一轮并返回结果</td>
+<td><code>reply</code></td>
+</tr>
+<tr>
+<td><code>prompt_cancel</code></td>
+<td>取消本调用方开的在途轮次</td>
+<td><code>reply</code></td>
+</tr>
+<tr>
+<td><code>tools_list</code></td>
+<td>列出调用方档位允许的工具及其 schema</td>
+<td><code>reply</code></td>
+</tr>
+<tr>
+<td><code>tool_call</code></td>
+<td>按名调用一个工具</td>
+<td>按工具而定</td>
+</tr>
+</tbody>
+</table>
+<p><code>prompt_send</code> 是把 codex 的 <code>codex</code>/<code>codex-reply</code> 收成一次调用，会话 id 可选。
+<code>tool_call</code> 是需要下面那份白名单的那个；另外五个是读取或对话操作，除了往会话里追加以外
+不产生宿主副作用。</p>
+<p>没有 <code>register</code> 的等价物，没有配置改写，没有凭证访问，也不直接暴露文件工具 —— 想读文件的
+调用方用文件工具名去调 <code>tool_call</code>，一样过白名单和审批阶梯。</p>
+<h3 id="工具暴露白名单">工具暴露白名单<a class="header-anchor" href="#工具暴露白名单">#</a></h3>
+<p><code>tool_call</code> 按显式白名单解析，不按 <code>_registry</code> 的键解析。配置键
+<code>mcp_server.exposed_tools</code> 存一个工具名列表，默认为空，所以新装的实例在 owner 点名之前
+<code>tool_call</code> 一个工具都不暴露。<code>tools_list</code> 返回白名单与调用方档位允许集合的交集，
+所以客户端永远看不到自己调不了的工具。</p>
+<p>白名单是放在审批阶梯<strong>之前</strong>的过滤器，不是它的替代品。把工具写进
+<code>mcp_server.exposed_tools</code> 只让它可达；某次调用跑不跑仍由阶梯判定。</p>
+<h3 id="外部调用方的权限档位">外部调用方的权限档位<a class="header-anchor" href="#外部调用方的权限档位">#</a></h3>
+<p>MCP 客户端正好是 <a href="/docs/reference/design/runtime/sandbox-architecture.html"><code>sandbox-architecture.html</code></a>
+定义意义上的一种请求来源，它在那张表里占最低权的一行：</p>
+<table>
+<thead>
+<tr>
+<th>请求来源</th>
+<th>principal</th>
+<th><code>authority_tier</code></th>
+<th>缺失字段处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>认证本地 Web / CLI / TUI</td>
+<td><code>principal_id=owner</code>，<code>interaction=interactive</code></td>
+<td><code>owner</code>，持有 <code>approval.request</code></td>
+<td>入口必须主动构造；认证无效即拒绝</td>
+</tr>
+<tr>
+<td>已配对渠道账号</td>
+<td>实例 owner，speaker 另存</td>
+<td><code>paired</code>，持有 <code>reply</code> 与 <code>memory.source.append</code></td>
+<td>不带档位的消息直接拒绝，不做降档</td>
+</tr>
+<tr>
+<td><strong>外部 MCP 客户端</strong></td>
+<td><strong>实例 owner，客户端 id 另存</strong></td>
+<td><strong><code>paired</code>，再与暴露工具白名单取交集</strong></td>
+<td><strong>客户端身份缺失或未通过校验即拒绝连接</strong></td>
+</tr>
+<tr>
+<td>continuation / subagent</td>
+<td>显式继承 owner</td>
+<td>原样继承调用方档位，永不扩权</td>
+<td>缺字段即状态错误，deny</td>
+</tr>
+<tr>
+<td>cron 触发</td>
+<td>创建时批准的 owner</td>
+<td>批准时固化的 job capability</td>
+<td>触发时不重算为 interactive</td>
+</tr>
+</tbody>
+</table>
+<p>subagent 那一行由 <code>runtime_authority()</code> 实现：它复制父轮次规范化后的权限，只改写
+speaker 字段和 <code>interaction</code>，<code>authority_tier</code> 原封不动。子 agent 因此恰好持有父轮次的
+档位，<code>paired</code> 轮次不可能派生出 <code>owner</code> 子 agent；父轮次没有有效权限时返回 <code>{}</code>，门口拒绝。</p>
+<p>MCP 那一行推出三个结论。</p>
+<p>MCP 调用方的 <code>interaction</code> <strong>永不</strong>为 <code>interactive</code>。因此它永远不持有
+<code>approval.request</code>，也就无法申请一次性能力升级。一次需要审批而现场没有本地 owner 的工具
+调用判为拒绝，跟 cron 触发一样 —— 不会静默放行，也不会永久阻塞。</p>
+<p>MCP 来源轮次的 <code>permission_mode</code> 固定为 <code>ask</code>，不接受按请求配置。Web 聊天用的 <code>bypass</code>
+默认值是本地交互场景的便利，不跨协议边界延伸。</p>
+<p>hard constraints 一如既往最先跑，本设计把外部来源加进 <code>_hard_constraint_violation()</code>，
+与 <code>agent_spawn</code> 并列：写入或 patch 到会话工作目录之外，以及 <code>_RISKY_TOOLS</code> 集合，
+无论白名单、规则还是审批一律拒绝。</p>
+<h3 id="认证默认开启">认证，默认开启<a class="header-anchor" href="#认证默认开启">#</a></h3>
+<p>服务端从 <code>&lt;state_dir&gt;/mcp_server_token</code> 读 token，首次 <code>openprogram mcp serve</code> 时以
+<code>0600</code> 权限生成并打印一次。客户端在 <code>initialize</code> 请求的 <code>clientInfo</code> 里出示它；不匹配
+或缺失会在列出任何工具之前让 <code>initialize</code> 失败。比较用常量时间。</p>
+<p>没有关闭认证的开关。出示不了 token 的调用方拿不到工具列表也调不了工具。这一点对齐 codex
+的 token-file 模式和 claude-code-leaked 自动生成的 <code>sk-ant-cc-*</code> —— 不管运维有没有想到，
+token 都存在；也刻意不对齐 opencode 的&quot;警告后继续&quot;和 weclaw 的无认证端点。</p>
+<p>token 标识的是一个客户端，客户端 id 记进每条请求供审计。它不标识 <em>owner</em>：出示它拿到的是
+上表那个 <code>paired</code> 档位，不是 owner 权限。</p>
+<h3 id="取消-1">取消<a class="header-anchor" href="#取消-1">#</a></h3>
+<p><code>notifications/cancelled</code> 映射到已有的按轮次 <code>CancelToken</code>。服务端维护一张从 MCP 请求 id
+到它开的那轮 <code>session_id</code> 与 token 的映射；收到通知时走 WS <code>stop</code> 用的同一条两段式路径 ——
+先优雅请求，宽限期后硬杀 —— 并通过 <code>cancel_session</code> 取消待答问题，这正是 HTTP
+<code>/api/stop</code> 目前缺的一步。请求 id 未知、或对应轮次已退休的通知是空操作，<code>retired</code> 标志
+已经免费提供了这个行为。</p>
+<p><code>tool_call</code> 把 token 的 <code>asyncio.Event</code> 直接传进 <code>AgentTool</code> <code>execute</code> 签名的取消参数。
+该参数已经存在也已经被遵守，服务端只需要把它填上。</p>
+<h3 id="进度">进度<a class="header-anchor" href="#进度">#</a></h3>
+<p><code>execute</code> 签名里的 <code>on_update</code> 回调变成对着发起请求的 <code>progressToken</code> 发
+<code>notifications/progress</code>，只在客户端提供了 token 时发送。<code>prompt_send</code> 报的是轮次级进度 ——
+工具开始、工具结束 —— 而不是 token 级流式，这样通知量与实际工作量成正比，也不要求客户端
+重组一条流。</p>
+<p>客户端没给 <code>progressToken</code> 时回调被丢弃，调用照常返回结果。进度是优化，从来不是正确性要求。</p>
+<h3 id="错误">错误<a class="header-anchor" href="#错误">#</a></h3>
+<p>采用参考实现收敛出的那个划分：</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>响应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工具名不存在</td>
+<td>JSON-RPC 错误，方法级</td>
+</tr>
+<tr>
+<td>参数不过 schema 校验</td>
+<td>JSON-RPC 错误，invalid params</td>
+</tr>
+<tr>
+<td>token 缺失或错误</td>
+<td><code>initialize</code> 失败，不建立会话</td>
+</tr>
+<tr>
+<td>工具不在 <code>mcp_server.exposed_tools</code> 里</td>
+<td>JSON-RPC 错误，按工具名不存在处理 —— 调用方得不到关于自己无权使用的工具的任何信息</td>
+</tr>
+<tr>
+<td>档位不含该能力</td>
+<td><code>isError: true</code>，正文点名缺失的能力</td>
+</tr>
+<tr>
+<td>审批被拒或无法审批</td>
+<td><code>isError: true</code>，正文带拒绝原因</td>
+</tr>
+<tr>
+<td>工具跑了并失败</td>
+<td><code>isError: true</code>，正文是工具的错误内容</td>
+</tr>
+<tr>
+<td>轮次被取消</td>
+<td><code>isError: true</code>，正文说明已取消</td>
+</tr>
+</tbody>
+</table>
+<p>把 <code>AgentToolResult</code> 映射到这张表需要 <code>details.get(&quot;is_error&quot;)</code>，所以本设计把
+<code>is_error</code> 提升为 <code>AgentToolResult</code> 上的一等字段，而不是跨协议边界去读一个无类型字典键。
+这个字段在 <code>ToolResult</code> 和 <code>AgentEventToolEnd</code> 上已经有了，补齐第三处就能去掉每个调用点的
+防御性 <code>.get</code>。</p>
+<h3 id="契约测试-1">契约测试<a class="header-anchor" href="#契约测试-1">#</a></h3>
+<p>验收标准是来自真实外部客户端的端到端测试，不是路由形状断言。
+<code>tests/integration/test_mcp_server.py</code> 以子进程拉起 <code>openprogram mcp serve</code>，用 MCP SDK
+自己的客户端连上去，断言：不带 token 时 <code>initialize</code> 失败、带 token 时成功；<code>tools/list</code>
+精确返回白名单交集；白名单内的只读 <code>tool_call</code> 返回内容；白名单外的 <code>tool_call</code> 返回方法
+错误；需要审批的调用返回 <code>isError</code> 而不是挂住；<code>notifications/cancelled</code> 能停掉在途的
+<code>prompt_send</code>；进度通知当且仅当提供了 <code>progressToken</code> 时到达。</p>
+<p>用 SDK 客户端而不是手搓 JSON-RPC 帧，才让这成为一个协议测试 —— 一旦我们偏离规范它就会挂，
+而自洽的帧比对抓不到这种偏离。</p>
+<h2 id="层四-理想状态与差距">层四 —— 理想状态与差距<a class="header-anchor" href="#层四-理想状态与差距">#</a></h2>
+<h3 id="acp">ACP<a class="header-anchor" href="#acp">#</a></h3>
+<p>ACP 能让 Zed 之类的编辑器把 OpenProgram 当自己的 agent 驱动。被调查的框架里五家有它 ——
+openclaw、opencode、hermes 在 agent 侧，weclaw 在客户端侧，其余由
+<code>codex --experimental-acp</code> 这类开关覆盖。权限映射在各家之间是统一的：
+<code>session/request_permission</code> 返回 <code>allow_once</code> / <code>allow_always</code> / <code>reject_once</code> 这三个
+option id。</p>
+<p>差距不在协议，在会话模型。ACP 期望在一条 stdio 连接上跑
+<code>newSession</code> / <code>loadSession</code> / <code>prompt</code> / <code>cancel</code> / <code>setSessionMode</code>，并且由编辑器持有
+文件系统 —— <code>fs/read_text_file</code> 和 <code>fs/write_text_file</code> 是客户端能力。我们的会话是 DAG
+结构的，带分支、worktree 和按会话的工作目录，我们的文件工具直接读宿主。openclaw 自己的
+文档就把 <code>loadSession</code> 标为部分实现，把按会话的 <code>mcpServers</code>、<code>fs/*</code> 和 <code>terminal/*</code>
+标为不支持 —— 完整实现是一项分量不轻的映射工作。</p>
+<p>现在不做，是因为同一份会话映射工作先服务 MCP，而且 MCP 会先把 ACP 否则要独立回答的
+authority-tier 和审批问题定下来。等 <code>prompt_send</code> 和 <code>prompt_cancel</code> 把会话映射跑通了，
+ACP 才值得评估。</p>
+<h3 id="入站-webhook">入站 webhook<a class="header-anchor" href="#入站-webhook">#</a></h3>
+<p>hermes 和 openclaw 都有，hermes 那版说明了正确性的代价：按路由的 HMAC secret 且启动时
+校验、按路由的限流、防重投的幂等缓存、读取前先检查的 body 大小限制。这是地板不是加分项 ——
+webhook 默认就是一个无认证的入站触发器。</p>
+<p>差距在于 webhook 是<strong>推</strong>式触发，到达时没有 owner 在场，这把它归到跟 cron 触发同一类：
+它需要注册时批准并固化的 job capability，而不是投递时算出来的档位。沙箱计划的批次 I 和
+第 05B 步（cron 创建与管理）造的正是这套机制。在它之前做 webhook，要么另造一套平行机制，
+要么接受一个无人值守触发器带着交互形状的 scope。</p>
+<p>现在不做，是因为前置条件排在另一条线上，而且 MCP 覆盖了拉式集成 —— 外部程序想调我们 ——
+这是我们真正能点名的需求。</p>
+<h3 id="客户端-sdk">客户端 SDK<a class="header-anchor" href="#客户端-sdk">#</a></h3>
+<p>codex 出 TS 和 Python，opencode 出 TS 且由签入仓库的 OpenAPI spec 生成，openclaw 出一个
+private 的 TS 包，claude-code-leaked 出走 control protocol 的 Agent SDK。hermes 一个不出，
+让集成方直接用 MCP、ACP 或 HTTP API。</p>
+<p>差距在于 SDK 是一份兼容承诺，而我们没有稳定的东西可承诺。198 条 FastAPI 路由和约 100 个
+WebSocket 动作是随前端变化的内部面，其中两条钉了形状。在这样的面上发 SDK，等于把每次内部
+重构都变成外部调用方的破坏性变更。</p>
+<p>现在不做，而且顺序是刻意的：先做 MCP，因为对每种有 SDK 的语言来说，MCP SDK <em>就是</em>那个
+客户端库，这也正是 hermes 一个 SDK 不出还能被集成的原因。OpenProgram 专属 SDK 只有在 MCP
+工具面被证明对真实集成方太粗时才配存在，而这个证据我们还没有。</p>
+<h3 id="稳定面在哪里">稳定面在哪里<a class="header-anchor" href="#稳定面在哪里">#</a></h3>
+<p>三处推迟的共同线索是：只有在一个我们愿意长期保持形状的面上，协议才值得发布。上面那六个工具
+就是按&quot;小到能长期保持&quot;选的。FastAPI 和 WebSocket 两个面不是，本设计也不打算让它们变成
+那样 —— 本设计的做法是把外部调用方引开。</p>
+<h2 id="附录实现状态">附录：实现状态<a class="header-anchor" href="#附录实现状态">#</a></h2>
+<p>层三的内容一件都没实现。当前状态是层一：一个没有服务端对应物的 MCP 客户端，一个已做 owner
+认证但仍是内部且未版本化的 Web surface，以及一条对本地轮次有效的审批阶梯。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>状态</th>
+<th>阻塞条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openprogram mcp serve</code> stdio 服务端</td>
+<td>未实施</td>
+<td>—</td>
+</tr>
+<tr>
+<td>六工具最小集</td>
+<td>未实施</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>mcp_server.exposed_tools</code> 白名单，默认为空</td>
+<td>未实施</td>
+<td>—</td>
+</tr>
+<tr>
+<td>token 认证，无关闭开关</td>
+<td>未实施</td>
+<td>—</td>
+</tr>
+<tr>
+<td>外部调用方的 <code>authority_tier</code> 行</td>
+<td>未实施</td>
+<td>档位门口本身已存在（<code>openprogram/agent/authority.py</code>）；缺的是构造带该字段请求的 MCP 入口</td>
+</tr>
+<tr>
+<td>外部来源进 <code>_hard_constraint_violation()</code></td>
+<td>未实施</td>
+<td>不依赖批次 I，可与服务端同批落地</td>
+</tr>
+<tr>
+<td><code>notifications/cancelled</code> → <code>CancelToken</code></td>
+<td>未实施</td>
+<td>直接用现有 <code>run_control.py</code></td>
+</tr>
+<tr>
+<td><code>notifications/progress</code> 由 <code>on_update</code> 驱动</td>
+<td>未实施</td>
+<td>直接用现有 <code>execute</code> 签名</td>
+</tr>
+<tr>
+<td><code>AgentToolResult</code> 上的一等 <code>is_error</code></td>
+<td>未实施</td>
+<td>涉及每个 <code>details.get(&quot;is_error&quot;)</code> 调用点</td>
+</tr>
+<tr>
+<td><code>tests/integration/test_mcp_server.py</code> 端到端</td>
+<td>未实施</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ACP</td>
+<td>本轮不做</td>
+<td>先由 <code>prompt_send</code> / <code>prompt_cancel</code> 跑通会话映射</td>
+</tr>
+<tr>
+<td>入站 webhook</td>
+<td>本轮不做</td>
+<td>依赖沙箱批次 I 与第 05B 步的固化 job capability</td>
+</tr>
+<tr>
+<td>客户端 SDK</td>
+<td>本轮不做</td>
+<td>需要一个稳定到可以承诺的工具面</td>
+</tr>
+</tbody>
+</table>
+<p>当前 Web 边界是本设计的前提，不是 MCP server 条目：<code>OwnerAuthMiddleware</code> 认证 singleton
+owner，并按 <a href="/docs/reference/design/ui/remote-web-access.zh.html"><code>remote-web-access.zh.md</code></a> 保护 HTTP、SSE 与
+WebSocket。它不认证外部 MCP client，不把 client 限制在 tool whitelist，也不分配这里定义的
+低权限 scope。增加 MCP server 时必须另外实现这些控制，并且不能复用 Web owner token。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/skills-and-plugins.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Skills &amp; Plugins</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/mcp-server.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">MCP 服务端：现状、九家对标与最小能力集 (viz)</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#一句话概括">一句话概括</a>
+<a class="" href="#层一-我们现在怎么做">层一 —— 我们现在怎么做</a>
+<a class="lvl-3" href="#只有客户端没有服务端">只有客户端，没有服务端</a>
+<a class="lvl-3" href="#现有的外部控制面是什么">现有的外部控制面是什么</a>
+<a class="lvl-3" href="#web-已有认证mcp-调用方身份仍不存在">Web 已有认证；MCP 调用方身份仍不存在</a>
+<a class="lvl-3" href="#审批机制已经存在而且就是正确的挂载点">审批机制已经存在，而且就是正确的挂载点</a>
+<a class="lvl-3" href="#取消">取消</a>
+<a class="lvl-3" href="#错误语义">错误语义</a>
+<a class="lvl-3" href="#契约测试">契约测试</a>
+<a class="" href="#层二-参考框架怎么做">层二 —— 参考框架怎么做</a>
+<a class="" href="#层三-设计">层三 —— 设计</a>
+<a class="lvl-3" href="#传输与入口">传输与入口</a>
+<a class="lvl-3" href="#最小工具集">最小工具集</a>
+<a class="lvl-3" href="#工具暴露白名单">工具暴露白名单</a>
+<a class="lvl-3" href="#外部调用方的权限档位">外部调用方的权限档位</a>
+<a class="lvl-3" href="#认证默认开启">认证，默认开启</a>
+<a class="lvl-3" href="#取消-1">取消</a>
+<a class="lvl-3" href="#进度">进度</a>
+<a class="lvl-3" href="#错误">错误</a>
+<a class="lvl-3" href="#契约测试-1">契约测试</a>
+<a class="" href="#层四-理想状态与差距">层四 —— 理想状态与差距</a>
+<a class="lvl-3" href="#acp">ACP</a>
+<a class="lvl-3" href="#入站-webhook">入站 webhook</a>
+<a class="lvl-3" href="#客户端-sdk">客户端 SDK</a>
+<a class="lvl-3" href="#稳定面在哪里">稳定面在哪里</a>
+<a class="" href="#附录实现状态">附录：实现状态</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

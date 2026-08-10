@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786402037" data-alt-lang-url="/docs/start/faq.zh.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/README.html" data-title-zh="一次性:发 prompt、打印答案、退出(可重定向或接管道)" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/start/features.html" data-title-zh="功能详解" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html">Features</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="第一步">First steps</div>
+<a class="navlink" href="/docs/start/GETTING_STARTED.html" data-title-zh="快速上手" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html">Getting Started</a>
+<a class="navlink" href="/docs/start/daily-use.html" data-title-zh="日常操作" data-href-en="/docs/start/daily-use.html" data-href-zh="/docs/start/daily-use.zh.html">Daily Use</a>
+<a class="navlink active" href="/docs/start/faq.html" data-title-zh="常见问题" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html">FAQ</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="第一步">First steps</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="常见问题">FAQ</span></nav><h1 id="faq">FAQ<a class="header-anchor" href="#faq">#</a></h1>
+<p>The most common questions from installation and daily use, each with the command that solves it.</p>
+<h2 id="port-18100-is-already-in-use">Port 18100 is already in use?<a class="header-anchor" href="#port-18100-is-already-in-use">#</a></h2>
+<p>OpenProgram listens on a single port (API, WebSocket, and web UI together; default 18100). Check the currently configured port, then move to a free one:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>ports<span class="w">                    </span><span class="c1"># show current port</span>
+openprogram<span class="w"> </span>ports<span class="w"> </span>--port<span class="w"> </span><span class="m">18110</span><span class="w">   </span><span class="c1"># persistent change, takes effect on next start</span>
+</code></pre>
+<p>To change just one run, override with the environment variable <code>OPENPROGRAM_WEB_PORT</code>. If the port is held by a leftover process, free it with <code>lsof -ti:18100 | xargs kill</code> and restart.</p>
+<h2 id="provider-not-detected-no-provider-available">Provider not detected / &quot;No provider available&quot;?<a class="header-anchor" href="#provider-not-detected-no-provider-available">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w">            </span><span class="c1"># list detected credentials</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>discover<span class="w">   </span><span class="c1"># scan external sources (Claude Code / Codex / Gemini CLI, ...)</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w">     </span><span class="c1"># diagnose credentials: expiry, refresh, cooldown, conflicts</span>
+openprogram<span class="w"> </span>setup<span class="w">                </span><span class="c1"># re-run the setup wizard</span>
+</code></pre>
+<p>You can also set an environment variable directly (<code>ANTHROPIC_API_KEY</code> / <code>OPENAI_API_KEY</code> / <code>GEMINI_API_KEY</code>) and restart the service.</p>
+<h2 id="where-is-my-data-stored">Where is my data stored?<a class="header-anchor" href="#where-is-my-data-stored">#</a></h2>
+<p>Everything lives under <code>~/.openprogram/</code> by default: <code>config.json</code> (configuration), <code>sessions/</code> (sessions), <code>logs/</code> (logs), <code>memory/</code> (memory), <code>usage.db</code> (token usage). With <code>--profile &lt;name&gt;</code> it moves to <code>~/.openprogram-&lt;name&gt;/</code>.</p>
+<h2 id="how-do-i-update-to-the-latest-version">How do I update to the latest version?<a class="header-anchor" href="#how-do-i-update-to-the-latest-version">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>update<span class="w">           </span><span class="c1"># check and apply updates</span>
+openprogram<span class="w"> </span>update<span class="w"> </span>--check<span class="w">   </span><span class="c1"># check only, don&#39;t apply</span>
+openprogram<span class="w"> </span>update<span class="w"> </span>--force<span class="w">   </span><span class="c1"># bypass the 6-hour throttle, check now</span>
+</code></pre>
+<p>The worker also auto-checks for updates in the background at startup (at most once every 6 hours). See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
+<h2 id="the-page-opened-by-openprogram-web-wont-load">The page opened by <code>openprogram web</code> won't load?<a class="header-anchor" href="#the-page-opened-by-openprogram-web-wont-load">#</a></h2>
+<p>The page to open is <strong>http://localhost:18100</strong> — the single port that serves both the web UI and the API. If nothing is on 18100 at all, the web UI most likely wasn't built — re-run <code>./scripts/install.sh</code>.</p>
+<h2 id="the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?<a class="header-anchor" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">#</a></h2>
+<p>In this order:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>status<span class="w">     </span><span class="c1"># is the service running</span>
+openprogram<span class="w"> </span>restart<span class="w">    </span><span class="c1"># restart</span>
+openprogram<span class="w"> </span>doctor<span class="w">     </span><span class="c1"># health check</span>
+openprogram<span class="w"> </span>rescue<span class="w">     </span><span class="c1"># diagnose problems and print the fix commands</span>
+</code></pre>
+<h2 id="how-do-i-read-the-logs">How do I read the logs?<a class="header-anchor" href="#how-do-i-read-the-logs">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>logs<span class="w"> </span>list<span class="w">            </span><span class="c1"># all log files (size, age)</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w">            </span><span class="c1"># last 50 lines of the worker log</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>-f<span class="w">         </span><span class="c1"># follow live</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>runtime<span class="w">    </span><span class="c1"># pick a log: worker / runtime / ink</span>
+</code></pre>
+<h2 id="the-gui-agent-download-is-slow-or-failed">The GUI agent download is slow or failed?<a class="header-anchor" href="#the-gui-agent-download-is-slow-or-failed">#</a></h2>
+<p><code>openprogram programs install gui</code> downloads PyTorch (~300 MB for the CPU build, ~3 GB on CUDA machines) and model weights, so a long download is normal. If it fails, re-run the same command to resume. If the GPA detector weight won't download, fetch it manually:</p>
+<pre><code class="language-bash">hf<span class="w"> </span>download<span class="w"> </span>Salesforce/GPA-GUI-Detector<span class="w"> </span>model.pt<span class="w"> </span>--local-dir<span class="w"> </span>~/GPA-GUI-Detector
+</code></pre>
+<h2 id="i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">I installed an agent program but it doesn't show up in the UI?<a class="header-anchor" href="#i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">#</a></h2>
+<p>Programs register at startup, so run <code>openprogram restart</code> after installing (or hit Refresh on the Functions page). Confirm it's installed with <code>openprogram programs available</code>.</p>
+<h2 id="multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?<a class="header-anchor" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">   </span><span class="c1"># add a second account</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">               </span><span class="c1"># switch to the &quot;work&quot; account</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                          </span><span class="c1"># list accounts, the active one is marked</span>
+</code></pre>
+<h2 id="can-one-machine-run-two-openprograms-at-once">Can one machine run two OpenPrograms at once?<a class="header-anchor" href="#can-one-machine-run-two-openprograms-at-once">#</a></h2>
+<p>Yes — use profiles to separate the state directories and ports. See <a href="/docs/install/profiles.html">Multiple instances &amp; profiles</a>.</p>
+<h2 id="how-do-i-get-an-earlier-conversation-back">How do I get an earlier conversation back?<a class="header-anchor" href="#how-do-i-get-an-earlier-conversation-back">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>sessions<span class="w"> </span>list<span class="w">          </span><span class="c1"># list all sessions</span>
+openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_id&gt;<span class="w">  </span><span class="c1"># resume it in the terminal</span>
+</code></pre>
+<p>You can also open past sessions directly from the web sidebar.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Daily Use</span></a><a class="pn-link pn-next" href="/docs/install/install.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Installation</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#port-18100-is-already-in-use">Port 18100 is already in use?</a>
+<a class="" href="#provider-not-detected-no-provider-available">Provider not detected / "No provider available"?</a>
+<a class="" href="#where-is-my-data-stored">Where is my data stored?</a>
+<a class="" href="#how-do-i-update-to-the-latest-version">How do I update to the latest version?</a>
+<a class="" href="#the-page-opened-by-openprogram-web-wont-load">The page opened by openprogram web won't load?</a>
+<a class="" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?</a>
+<a class="" href="#how-do-i-read-the-logs">How do I read the logs?</a>
+<a class="" href="#the-gui-agent-download-is-slow-or-failed">The GUI agent download is slow or failed?</a>
+<a class="" href="#i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">I installed an agent program but it doesn't show up in the UI?</a>
+<a class="" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?</a>
+<a class="" href="#can-one-machine-run-two-openprograms-at-once">Can one machine run two OpenPrograms at once?</a>
+<a class="" href="#how-do-i-get-an-earlier-conversation-back">How do I get an earlier conversation back?</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

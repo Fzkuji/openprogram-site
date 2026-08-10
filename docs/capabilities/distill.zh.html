@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786402037" data-alt-lang-url="/docs/capabilities/distill.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distill（经验蒸馏） · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Agentic Programming</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/README.html" data-title-zh="指南" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html">Guide</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/philosophy.html" data-title-zh="设计哲学" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html">Philosophy</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-title-zh="嵌入到你自己的技术栈" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">Embedding in your own stack</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="纯 Python" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Pure Python</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="选择下一步">Choosing the next step</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-title-zh="工具调用循环" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">Tool-call loop</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-title-zh="固定顺序调用" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">Fixed-order calls</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-title-zh="下一步决策" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">Next-step decision</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Agentic Workflows</div>
+<a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
+<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
+<a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="扩展">Extending</div>
+<a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
+<a class="navlink" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
+<a class="navlink active" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
+<a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
+<a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
+<a class="navlink" href="/docs/capabilities/tools.html" data-title-zh="内置工具" data-href-en="/docs/capabilities/tools.html" data-href-zh="/docs/capabilities/tools.zh.html">Built-in tools</a>
+<a class="navlink" href="/docs/capabilities/lsp.html" data-title-zh="Language server 工具" data-href-en="/docs/capabilities/lsp.html" data-href-zh="/docs/capabilities/lsp.zh.html">Language server tools</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Distill（经验蒸馏）">Distill</span></nav><h1 id="distill经验蒸馏">Distill（经验蒸馏）<a class="header-anchor" href="#distill经验蒸馏">#</a></h1>
+<p>蒸馏是把一次做成了的对话变成下次能直接跑的东西。你指一个会话——当前这个，或者过去某个——agent 把里面的经验写成一份 <a href="/docs/capabilities/skills.zh.html">skill</a> 或一个 <a href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">agentic function</a>，或者合并进先前蒸馏出的那份，下次遇到同类任务，流程已经在那里了。</p>
+<p>不会引入新机制。蒸馏出的 skill 落在原有的 skill 目录里，由原有的加载器发现；蒸馏出的函数就是一个普通的 <code>@agentic_function</code>。</p>
+<h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
+<p>自然语言说，或者用 slash command：</p>
+<pre><code>/distill
+</code></pre>
+<p>两种都会触发内置的 <code>distill</code> skill。会命中的常见说法还有：&quot;把这次总结成一个技能&quot;、&quot;存成可复用的流程&quot;、&quot;让这件事以后能重复做&quot;、&quot;把那次对话里的做法提取出来&quot;。</p>
+<p><strong>当前对话</strong>不需要任何参数——agent 手里已经有了。</p>
+<p><strong>过去的会话</strong>用 <code>read_conversation</code> 工具读。你可以直接给会话 id，也可以描述它（&quot;配代理那次&quot;），让 agent 用 <code>list_agents</code> 去找。找到后它会先跟你确认再动手。</p>
+<h2 id="产出什么">产出什么<a class="header-anchor" href="#产出什么">#</a></h2>
+<p>agent 提取的是：目标、前置条件、步骤、决策点（当时凭什么选了这条路而不是那条）、以及路上踩的坑。然后选一种形态：</p>
+<table>
+<thead>
+<tr>
+<th>形态</th>
+<th>什么时候写这个</th>
+<th>落到哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>skill（<code>SKILL.md</code>）</td>
+<td>执行流程需要判断——步骤要看输出长什么样再决定往哪走</td>
+<td><code>~/.openprogram/skills/&lt;name&gt;/</code> 或 <code>&lt;cwd&gt;/skills/&lt;name&gt;/</code></td>
+</tr>
+<tr>
+<td>agentic function</td>
+<td>流程是机械的——输入输出固定的一串步骤</td>
+<td>按 <a href="/docs/capabilities/agentic-programming/README.zh.html">agentic-programming</a> 的约定放</td>
+</tr>
+</tbody>
+</table>
+<p>步骤里点到当前仓库内的路径时默认放项目级（<code>&lt;cwd&gt;/skills/</code>）；流程跟着你跨项目走就放用户级（<code>~/.openprogram/skills/</code>）。agent 会告诉你它选了哪个、写在哪。</p>
+<p>如果这个会话里根本没有可复用的流程，agent 会直说，而不是硬写一个空壳 skill。</p>
+<h2 id="蒸馏出来的东西怎么用">蒸馏出来的东西怎么用<a class="header-anchor" href="#蒸馏出来的东西怎么用">#</a></h2>
+<p>蒸馏出的 skill 立刻生效——skill 目录是热重载的，不用重启。它以两条路径找到你：</p>
+<ul>
+<li><strong>模型自己加载</strong>：你的任务和 skill 的 <code>description</code> 那一句匹配上就会加载。触发时机完全由那句话决定，所以 skill 触发得太频繁或者根本不触发，要调的就是它。</li>
+<li><strong>你直接调用</strong>：输入 <code>/&lt;name&gt;</code>，因为每个被发现的 skill 都会投射进 slash command 注册表。</li>
+</ul>
+<p><code>openprogram skills list</code> 里能看到它，和其他 skill 并列。之后要改它就是改文件——格式和查找路径见 <a href="/docs/capabilities/skills.zh.html">Skills</a>。</p>
+<h2 id="修订既有技能">修订既有技能<a class="header-anchor" href="#修订既有技能">#</a></h2>
+<p>蒸馏也是蒸馏出的 skill 变好的方式。哪份 skill 用起来不对，直接说——&quot;这个 skill 不好用，按这次的经验改一下&quot;——agent 会修订既有文件，而不是在旁边再写一份。</p>
+<p>匹配按主题，不按名字：既有 skill 的目标和适用条件与这次做的事重合，才算同一个。agent 读旧正文，保留经受住检验的步骤，替换这次被证伪的，把新的决策点和坑合并进流程里。正文保持干净——不留版本说明、不留变更记录；文件的历史在 git 里。函数同样处理：先前蒸馏出的 <code>@agentic_function</code> 原地修改，不复制新函数。</p>
+<p>修订后的 skill 文件一写完就生效，和新写的一样。这就是循环里的 refine 一环：记录一次会话，用蒸馏出的 skill 重放，重放教会了什么，教训就回到文件里。</p>
+<h2 id="自己读一个会话">自己读一个会话<a class="header-anchor" href="#自己读一个会话">#</a></h2>
+<p>蒸馏用的那个工具也可以单独用。<code>read_conversation</code> 把一个会话的分支渲染成纯文本：每一轮的内容，加上这一轮发起的工具调用——参数、结果，失败的会标出来。</p>
+<pre><code>--- [2] assistant ---
+Building the site first, then rsyncing.
+  [call] bash -&gt; ok
+    args: {&quot;command&quot;: &quot;python -m tools.docs_site.build&quot;}
+    result:
+      wrote 214 pages to docs/_site
+  [call] bash -&gt; FAILED
+    args: {&quot;command&quot;: &quot;python -m tools.docs_site.checklinks&quot;}
+    result:
+      2 dead links: capabilities/distill.md
+</code></pre>
+<p>默认读当前会话的活跃分支。读别的会话传 <code>session_id</code>（id 用 <code>list_agents</code> 找）；读旁支而不是活跃分支传 <code>head_id</code>（分支端点用 <code>list_agents</code> 找）。传<code>start_turn</code>/<code>end_turn</code>读一段轮次范围（1起、含端点，负数从尾部数，<code>start_turn=-10</code>读最后10轮）。输出太长会切在最后一个完整轮次上，并写明第一个被丢的轮号；从那里用<code>start_turn</code>接着读。</p>
+<p>用话说就行——&quot;把那个会话的记录给我看看&quot;——或者让 agent 在蒸馏过程中自己去调。</p>
+<h2 id="相关">相关<a class="header-anchor" href="#相关">#</a></h2>
+<ul>
+<li><a href="/docs/capabilities/skills.zh.html">Skills</a>——<code>SKILL.md</code> 格式、五个查找来源、管理 CLI</li>
+<li><a href="/docs/capabilities/agentic-programming/README.zh.html">Agentic Programming</a>——函数形态，适合运行时不需要判断的流程</li>
+<li><a href="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>——预置的完整 agent 程序，和蒸馏出的流程不是一回事</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/skills.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Skills</span></a><a class="pn-link pn-next" href="/docs/capabilities/plugins.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Plugins</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#怎么用">怎么用</a>
+<a class="" href="#产出什么">产出什么</a>
+<a class="" href="#蒸馏出来的东西怎么用">蒸馏出来的东西怎么用</a>
+<a class="" href="#修订既有技能">修订既有技能</a>
+<a class="" href="#自己读一个会话">自己读一个会话</a>
+<a class="" href="#相关">相关</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>
