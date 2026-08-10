@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786397592">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop Web Split View and Bookmark Management · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+<link rel="stylesheet" href="/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/index.html"><img class="mark" src="/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/reference/README.html" data-title-zh="概览" data-href-en="/reference/README.html" data-href-zh="/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/reference/API.html" data-title-zh="API Reference" data-href-en="/reference/API.html" data-href-zh="/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/reference/api/runtime.html" data-href-zh="/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/reference/api/providers.html" data-title-zh="Providers" data-href-en="/reference/api/providers.html" data-href-zh="/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/reference/api/agentic-function.html" data-href-zh="/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/reference/cli.html" data-title-zh="CLI" data-href-en="/reference/cli.html" data-href-zh="/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/reference/config.html" data-title-zh="配置" data-href-en="/reference/config.html" data-href-zh="/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/reference/claude-code-compaction.html" data-href-zh="/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/reference/cli/config.html">config</a>
+<a class="navlink" href="/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/reference/cli/status.html">status</a>
+<a class="navlink" href="/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/reference/cli/update.html">update</a>
+<a class="navlink" href="/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/reference/cli/web.html">web</a>
+<a class="navlink" href="/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink active" href="/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Specs</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Desktop Web Split View and Bookmark Management</span></nav><h1 id="desktop-web-split-view-and-bookmark-management">Desktop Web Split View and Bookmark Management<a class="header-anchor" href="#desktop-web-split-view-and-bookmark-management">#</a></h1>
+<h2 id="scope">Scope<a class="header-anchor" href="#scope">#</a></h2>
+<p>Add a desktop-only split view that keeps the current chat visible while one existing web tab remains visible and controllable beside it. Complete the existing bookmark feature with a persistent, discoverable manager in the right sidebar.</p>
+<p>The split view reuses the current center-tab store, <code>WebTabPane</code>, Electron <code>WebContentsView</code>, and browser-control bridge. It does not create a second <code>BrowserWindow</code>, a detached floating window, or more than one simultaneously visible web page.</p>
+<h2 id="user-visible-layout">User-visible Layout<a class="header-anchor" href="#user-visible-layout">#</a></h2>
+<p>When a session tab is active and a web tab is pinned for split view, the center body contains:</p>
+<pre><code class="language-text">chat and composer | draggable divider | web toolbar and live page | right rail
+</code></pre>
+<ul>
+<li>Chat starts at 44% and the web page at 56% of the center body.</li>
+<li>The divider changes the ratio and persists the last ratio.</li>
+<li>Chat keeps a minimum usable width of 360 DIP; the web pane keeps 480 DIP.</li>
+<li>Opening split view collapses an expanded right detail panel to its 49 DIP icon rail. The rail remains usable.</li>
+<li>Reopening a right-sidebar view keeps the split visible while both panes still satisfy their minimum widths. If the reduced center body is too narrow, the split pane is temporarily not mounted; closing the sidebar restores it. Exiting split does not restore a previously expanded right-sidebar view.</li>
+<li>If the center body is narrower than the two minimum widths plus the divider, the split pane is temporarily not mounted. Its pinned tab and ratio remain stored and return when enough width is available. Opening a bookmark collapses the right panel before showing the split page.</li>
+</ul>
+<h2 id="split-view-interaction">Split-view Interaction<a class="header-anchor" href="#split-view-interaction">#</a></h2>
+<ul>
+<li>A split-view button is added to the desktop web toolbar. Activating it pins that web tab and restores the session identified by the current chat route/session state as the primary tab. If that session tab no longer exists, it creates a draft with the existing new-session path. No separate session-MRU state is added.</li>
+<li>Only session tabs display beside the pinned web tab. Selecting a file, new-tab page, or any web tab uses the existing single-pane view. Returning to a session restores the pinned split page.</li>
+<li>Selecting the pinned web tab in the top strip displays it full-width through the existing tab behavior. Returning to a session restores the split without reloading the page.</li>
+<li>The split web toolbar includes an exit-split action. Exiting split does not close the web tab.</li>
+<li>Closing the pinned web tab clears the split reference. Closing or switching chat sessions does not close or reload the pinned page.</li>
+<li>The pinned web tab receives a small split indicator in the tab strip; the primary session tab remains the active tab.</li>
+</ul>
+<h2 id="state-and-persistence">State and Persistence<a class="header-anchor" href="#state-and-persistence">#</a></h2>
+<p>Extend the existing center-tab state with:</p>
+<ul>
+<li><code>splitWebTabId: string | null</code></li>
+<li><code>splitRatio: number</code></li>
+<li>actions to pin, unpin, and resize the split web tab</li>
+<li>an action that opens or reuses a web tab for split view without changing <code>activeId</code></li>
+</ul>
+<p>One small <code>openprogram.webSplit</code> local-storage payload stores both fields. Keeping it separate avoids changing every existing center-tab persistence call. Restore clamps invalid ratios and clears a split id that no longer identifies an existing web tab. <code>closeTab</code> clears and persists <code>splitWebTabId</code> when necessary.</p>
+<p>No separate split-view store or backend schema is introduced.</p>
+<h2 id="webcontentsview-lifecycle">WebContentsView Lifecycle<a class="header-anchor" href="#webcontentsview-lifecycle">#</a></h2>
+<p><code>AppShell</code> mounts one <code>WebTabPane</code> in one of two positions: the existing full-width web pane or the right split pane. It never mounts the same web tab twice.</p>
+<p>The current <code>ResizeObserver</code> in <code>DesktopWebTabPane</code> continues reporting the native view bounds, so resizing the divider requires no new Electron bounds protocol. The main process may retain its single <code>visibleViewId</code> rule because this design shows only one native web view at a time.</p>
+<p>Mounting a pane calls <code>ensure</code> and <code>show</code>, but no longer calls <code>navigate</code> unconditionally. <code>ensure</code> loads the URL only when the native view is first created; later navigation remains driven by a real URL change. Moving the same tab between split and full-width positions therefore keeps its page, redirects, scroll state, and form state.</p>
+<p>The divider and all split controls remain outside the native view bounds. <code>DesktopWebTabPane</code> observes existing Radix dialogs and explicit <code>data-native-view-occluder</code> overlays. While an overlay covers the page, or while the split is below its minimum width, the native view receives zero bounds; the last non-zero bounds are restored after the overlay closes. Zero bounds are used instead of visibility alone because an agent <code>activate</code> call can show the native view again.</p>
+<h2 id="agent-browser-control">Agent Browser Control<a class="header-anchor" href="#agent-browser-control">#</a></h2>
+<p>The desktop <code>webtab.command</code> handler resolves the controllable page in this order:</p>
+<ol>
+<li>a full-width active web tab;</li>
+<li>a visible split web tab beside an active session;</li>
+<li>otherwise no visible target.</li>
+</ol>
+<p>While a session is active and the split has enough space, <code>op=open</code> opens or reuses the requested URL in the split pane without changing the session route or <code>activeId</code>. The desktop bridge keeps renderer-local ready state per web-tab id. <code>DesktopWebTabPane</code> marks its id ready after sending non-zero bounds and marks it not ready on zero bounds or unmount. The command handler checks the current state first and otherwise waits for the matching transition before calling <code>activate</code>; this covers both an already-mounted pane and a newly mounted pane without losing an event. IPC message ordering ensures the bounds update reaches the main process first. A two-second timeout returns an error but leaves the mounted pane lifecycle unchanged so a later command can succeed.</p>
+<p>If the window is too narrow to mount the split, <code>op=open</code> and bookmark activation fall back to the existing full-width web tab instead of waiting. This fallback may change <code>activeId</code> from the session to that web tab, but it preserves the current <code>/s/...</code> or <code>/chat</code> route so returning to the session is deterministic. <code>op=active</code> reports no split target while the stored split has zero bounds, is covered by an overlay, or is otherwise not visible.</p>
+<p>This preserves the existing Playwright/CDP data path: model clicks, typing, scrolling, and screenshots operate on the same visible page the user sees.</p>
+<h2 id="bookmark-manager">Bookmark Manager<a class="header-anchor" href="#bookmark-manager">#</a></h2>
+<p>Keep the star button in the web toolbar and the compact bookmark shortcuts on the new-tab page. Add a <code>Bookmarks</code> destination to the right sidebar icon rail so saved pages are available from every chat session.</p>
+<p>The bookmark panel provides:</p>
+<ul>
+<li>a search field filtering title and URL;</li>
+<li>a list showing title and URL;</li>
+<li>row activation that opens the bookmark in split view while a session is active, and otherwise opens the normal web tab;</li>
+<li>an explicit full-tab action;</li>
+<li>inline title renaming;</li>
+<li>deletion;</li>
+<li>empty and no-search-result states.</li>
+</ul>
+<p>Renaming trims the title, preserves list order, and falls back to the URL when the title is empty. Bookmark URLs are not edited in place; deleting and bookmarking the intended page uses the existing normalized browser URL and avoids a second URL-validation path. Bookmark storage remains local to the desktop profile in <code>openprogram.bookmarks</code>; all changes continue emitting <code>openprogram:bookmarks-changed</code>, so the toolbar star, new-tab shortcuts, and manager update immediately.</p>
+<p>No bookmark folders, remote synchronization, favicon fetching, import, or export are added. Those features are not required for finding, opening, editing, and removing saved pages.</p>
+<h2 id="error-handling">Error Handling<a class="header-anchor" href="#error-handling">#</a></h2>
+<ul>
+<li>A failed local-storage write leaves the last readable bookmark list visible.</li>
+<li>A stale split id is cleared during restore and when tabs close.</li>
+<li>If Electron cannot activate the requested native view, the split path reports failure without changing the chat. A failed narrow-window full-tab fallback restores the previous session <code>activeId</code> before reporting failure.</li>
+<li>When the desktop bridge is unavailable, existing single-pane iframe behavior remains unchanged.</li>
+</ul>
+<h2 id="validation">Validation<a class="header-anchor" href="#validation">#</a></h2>
+<p>Automated checks must cover:</p>
+<ul>
+<li>pinning a web tab without changing the active session;</li>
+<li>ratio clamping and persistence migration;</li>
+<li>closing and restoring a pinned web tab;</li>
+<li><code>webtab.command(open|active)</code> selecting the visible split target;</li>
+<li>bookmark add, remove, rename, search wiring, and change events;</li>
+<li>the bookmark manager and split actions being reachable from their visible UI controls.</li>
+</ul>
+<p>Live Electron verification must confirm:</p>
+<ul>
+<li>chat messages and composer remain usable while a real page is visible on the right;</li>
+<li>dragging the divider updates the native page bounds without reloading it;</li>
+<li>switching chat sessions preserves the right page state;</li>
+<li>while split view is visible, a model browser action targets the right page without changing the chat tab;</li>
+<li>bookmarks can be added, found from the right rail, searched, edited, opened in split and full-tab modes, and deleted;</li>
+<li>attachment previews, Radix dialogs, and branch merge overlays are not covered by the native page;</li>
+<li>narrow-window fallback and reopening the split preserve the pinned tab and ratio.</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-07-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</span></a><a class="pn-link pn-next" href="/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tailwind CSS v3 → v4 升级</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#scope">Scope</a>
+<a class="" href="#user-visible-layout">User-visible Layout</a>
+<a class="" href="#split-view-interaction">Split-view Interaction</a>
+<a class="" href="#state-and-persistence">State and Persistence</a>
+<a class="" href="#webcontentsview-lifecycle">WebContentsView Lifecycle</a>
+<a class="" href="#agent-browser-control">Agent Browser Control</a>
+<a class="" href="#bookmark-manager">Bookmark Manager</a>
+<a class="" href="#error-handling">Error Handling</a>
+<a class="" href="#validation">Validation</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

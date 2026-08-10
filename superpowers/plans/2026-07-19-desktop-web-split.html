@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786397592">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop Web Split Implementation Plan · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+<link rel="stylesheet" href="/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/index.html"><img class="mark" src="/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/reference/README.html" data-title-zh="概览" data-href-en="/reference/README.html" data-href-zh="/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/reference/API.html" data-title-zh="API Reference" data-href-en="/reference/API.html" data-href-zh="/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/reference/api/runtime.html" data-href-zh="/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/reference/api/providers.html" data-title-zh="Providers" data-href-en="/reference/api/providers.html" data-href-zh="/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/reference/api/agentic-function.html" data-href-zh="/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/reference/cli.html" data-title-zh="CLI" data-href-en="/reference/cli.html" data-href-zh="/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/reference/config.html" data-title-zh="配置" data-href-en="/reference/config.html" data-href-zh="/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/reference/claude-code-compaction.html" data-href-zh="/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/reference/cli/config.html">config</a>
+<a class="navlink" href="/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/reference/cli/status.html">status</a>
+<a class="navlink" href="/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/reference/cli/update.html">update</a>
+<a class="navlink" href="/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/reference/cli/web.html">web</a>
+<a class="navlink" href="/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink active" href="/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Desktop Web Split Implementation Plan</span></nav><h1 id="desktop-web-split-implementation-plan">Desktop Web Split Implementation Plan<a class="header-anchor" href="#desktop-web-split-implementation-plan">#</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Keep one live Electron web tab visible and model-controllable beside the active chat, with persistent resizing and safe full-width/narrow-window fallbacks.</p>
+<p><strong>Architecture:</strong> Add split selection and ratio fields to the existing center-tabs Zustand store, persisted under a separate <code>openprogram.webSplit</code> key. <code>AppShell</code> remains the layout owner and mounts the existing <code>WebTabPane</code> in either full-width or split position. Renderer-local readiness in <code>desktop-bridge.ts</code> connects visible non-zero bounds to <code>webtab.command(open|active)</code> without changing the Electron main-process single-view model.</p>
+<p><strong>Tech Stack:</strong> TypeScript, React 18, Zustand 5, Next.js 14, Electron <code>WebContentsView</code>, Node assertion checks.</p>
+<h2 id="global-constraints">Global Constraints<a class="header-anchor" href="#global-constraints">#</a></h2>
+<ul>
+<li>Desktop split shows exactly one native <code>WebContentsView</code>; do not create a second <code>BrowserWindow</code> or change <code>desktop/main.js</code> visibility semantics.</li>
+<li>Default chat ratio is <code>0.44</code>; persisted ratios clamp to <code>0.30..0.70</code>.</li>
+<li>Minimum chat width is <code>360</code> DIP, minimum web width is <code>480</code> DIP, divider width is <code>6</code> DIP.</li>
+<li>A visible split keeps the session <code>activeId</code>; full-width narrow fallback may activate the web tab but must preserve the <code>/s/...</code> or <code>/chat</code> route.</li>
+<li>Native view readiness means non-zero unobstructed bounds. Radix dialogs, <code>.branches-merge-modal-backdrop</code>, and <code>[data-native-view-occluder=&quot;true&quot;]</code> make it not ready and set zero bounds.</li>
+<li>Reuse current <code>WebTabPane</code>, <code>ResizeObserver</code>, center-tabs store, right-dock state, and existing browser-control bridge. Add no dependency.</li>
+</ul>
+<hr />
+<h3 id="task-1-split-state-and-persistence">Task 1: Split state and persistence<a class="header-anchor" href="#task-1-split-state-and-persistence">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>web/scripts/check-web-split.mjs</code></li>
+<li>Modify: <code>web/lib/state/center-tabs-store.ts</code></li>
+<li>Modify: <code>web/package.json</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Produces: <code>splitWebTabId: string | null</code>, <code>splitRatio: number</code>, <code>setSplitWebTab(id)</code>, <code>setSplitRatio(ratio)</code>, <code>openWebTabInSplit(url): string</code>.</p>
+</li>
+<li>
+<p>Persists: <code>openprogram.webSplit</code> as <code>{ &quot;tabId&quot;: string | null, &quot;ratio&quot;: number }</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Write the failing state check</strong></p>
+</li>
+</ul>
+<p>Create <code>check-web-split.mjs</code> with the same <code>window</code>/<code>localStorage</code> stubs used by <code>check-multi-draft.mjs</code>, import <code>useCenterTabs</code>, and assert:</p>
+<pre><code class="language-js"><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">tabs</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;s:chat&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Chat&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">sessionId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;chat&quot;</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="nx">activeId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;s:chat&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">splitWebTabId</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">splitRatio</span><span class="o">:</span><span class="w"> </span><span class="mf">0.44</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">openWebTabInSplit</span><span class="p">(</span><span class="s2">&quot;https://example.com/&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;w:https://example.com/&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">activeId</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s:chat&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">splitWebTabId</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">setSplitRatio</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">splitRatio</span><span class="p">,</span><span class="w"> </span><span class="mf">0.70</span><span class="p">);</span>
+<span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">closeTab</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">splitWebTabId</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+</code></pre>
+<p>Register the exact script and insert it into <code>npm run check</code> before <code>check:multi-draft</code>:</p>
+<pre><code class="language-json"><span class="nt">&quot;check:web-split&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node --no-warnings --experimental-strip-types scripts/check-web-split.mjs&quot;</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the check and verify RED</strong></li>
+</ul>
+<p>Run: <code>cd web &amp;&amp; npm run check:web-split</code></p>
+<p>Expected: failure because <code>openWebTabInSplit</code> and split fields do not exist.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement minimal split state</strong></li>
+</ul>
+<p>Add constants and helpers in <code>center-tabs-store.ts</code>:</p>
+<pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">SPLIT_STORAGE_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;openprogram.webSplit&quot;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">DEFAULT_SPLIT_RATIO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.44</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">MIN_SPLIT_RATIO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.30</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">MAX_SPLIT_RATIO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.70</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">clampSplitRatio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">ratio</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">  </span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">MAX_SPLIT_RATIO</span><span class="p">,</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">MIN_SPLIT_RATIO</span><span class="p">,</span><span class="w"> </span><span class="nx">ratio</span><span class="p">));</span>
+</code></pre>
+<p>Read the separate payload after tabs restore, accept only an existing <code>kind === &quot;web&quot;</code> id, and persist changes from the three split actions. <code>openWebTabInSplit</code> appends or reuses the deterministic web tab without consuming the active NTP and returns its id. Update <code>closeTab</code> to clear/persist a matching split id.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run focused and neighboring checks</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:web-split
+npm<span class="w"> </span>run<span class="w"> </span>check:multi-draft
+</code></pre>
+<p>Expected: both commands print their pass message and exit <code>0</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/lib/state/center-tabs-store.ts<span class="w"> </span>web/scripts/check-web-split.mjs<span class="w"> </span>web/package.json
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(tabs): add persistent web split state&quot;</span>
+</code></pre>
+<h3 id="task-2-native-pane-lifecycle-and-readiness">Task 2: Native pane lifecycle and readiness<a class="header-anchor" href="#task-2-native-pane-lifecycle-and-readiness">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>web/lib/desktop-bridge.ts</code></li>
+<li>Modify: <code>web/components/center-tabs/web-tab-pane.tsx</code></li>
+<li>Modify: <code>web/components/chat/composer/attach/file-tiles.tsx</code></li>
+<li>Modify: <code>web/scripts/check-web-split.mjs</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Produces: <code>setWebTabReady(id: string, ready: boolean): void</code>, <code>isWebTabReady(id: string): boolean</code>, <code>waitForWebTabReady(id: string, timeoutMs: number): Promise&lt;boolean&gt;</code>.</p>
+</li>
+<li>
+<p>Produces: <code>setDesktopSplitLayoutAvailable(available: boolean): void</code>, <code>isDesktopSplitLayoutAvailable(): boolean</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Extend the check for readiness and lifecycle source</strong></p>
+</li>
+</ul>
+<p>Add assertions that readiness immediately resolves for an already-ready id, times out to <code>false</code>, and clears on <code>setWebTabReady(id, false)</code>. Add source checks requiring <code>web-tab-pane.tsx</code> to call <code>setWebTabReady</code>, forbidding the unconditional mount-time line <code>bridge.webTab.navigate(tabId, viewUrlRef.current)</code>, and requiring <code>data-native-view-occluder=&quot;true&quot;</code> on the attachment preview backdrop.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the check and verify RED</strong></li>
+</ul>
+<p>Run: <code>cd web &amp;&amp; npm run check:web-split</code></p>
+<p>Expected: failure on missing readiness exports or forbidden mount navigation.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Add the renderer-local registry</strong></li>
+</ul>
+<p>In <code>desktop-bridge.ts</code>, use a <code>Set&lt;string&gt;</code> and waiter map. <code>waitForWebTabReady</code> must return immediately when ready, otherwise resolve <code>true</code> on the next ready transition or <code>false</code> after the exact timeout. Clearing readiness must not resolve waiters as success.</p>
+<p>In <code>DesktopWebTabPane</code>:</p>
+<pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">occluded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!!</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">&#39;[role=&quot;dialog&quot;], .branches-merge-modal-backdrop, [data-native-view-occluder=&quot;true&quot;]&#39;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">occluded</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">width</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">bridge</span><span class="p">.</span><span class="nx">webTab</span><span class="p">.</span><span class="nx">setBounds</span><span class="p">(</span><span class="nx">tabId</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="nx">setWebTabReady</span><span class="p">(</span><span class="nx">tabId</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">bridge</span><span class="p">.</span><span class="nx">webTab</span><span class="p">.</span><span class="nx">setBounds</span><span class="p">(</span><span class="nx">tabId</span><span class="p">,</span><span class="w"> </span><span class="nx">roundedBounds</span><span class="p">);</span>
+<span class="nx">setWebTabReady</span><span class="p">(</span><span class="nx">tabId</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</code></pre>
+<p>Observe body child/attribute changes while mounted, clear readiness on cleanup, remove the unconditional mount <code>navigate</code>, and mark the file preview portal as an occluder.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run the focused check</strong></li>
+</ul>
+<p>Run: <code>cd web &amp;&amp; npm run check:web-split</code></p>
+<p>Expected: pass with no unhandled timeout.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/lib/desktop-bridge.ts<span class="w"> </span>web/components/center-tabs/web-tab-pane.tsx<span class="w"> </span>web/components/chat/composer/attach/file-tiles.tsx<span class="w"> </span>web/scripts/check-web-split.mjs
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;fix(desktop): preserve and guard native web views&quot;</span>
+</code></pre>
+<h3 id="task-3-split-layout-and-controls">Task 3: Split layout and controls<a class="header-anchor" href="#task-3-split-layout-and-controls">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>web/components/app-shell.tsx</code></li>
+<li>Modify: <code>web/components/center-tabs/web-tab-pane.tsx</code></li>
+<li>Modify: <code>web/components/center-tabs/center-tab-strip.tsx</code></li>
+<li>Modify: <code>web/components/center-tabs/center-tabs.module.css</code></li>
+<li>Modify: <code>web/app/styles/base.css</code></li>
+<li>Modify: <code>web/scripts/check-web-split.mjs</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: split store fields/actions and <code>setDesktopSplitLayoutAvailable</code>.</p>
+</li>
+<li>
+<p>Produces: toolbar enter/exit controls, <code>.center-split-chat</code>, <code>.center-split-divider</code>, <code>.center-split-web</code>, and <code>data-split-pinned</code> on the pinned tab.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing structural checks</strong></p>
+</li>
+</ul>
+<p>Require the app shell source to reference <code>splitWebTabId</code>, <code>splitRatio</code>, a <code>ResizeObserver</code>, the exact minimum-width sum <code>846</code>, and one conditional split <code>WebTabPane</code>. Require the toolbar to expose Chinese/English accessible labels for <code>Open split view</code>/<code>Exit split view</code>, and the tab strip to set <code>data-split-pinned</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the check and verify RED</strong></li>
+</ul>
+<p>Run: <code>cd web &amp;&amp; npm run check:web-split</code></p>
+<p>Expected: failure on the missing split layout and controls.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement the split layout</strong></li>
+</ul>
+<p>In <code>AppShell</code>, observe <code>.center-body</code>, derive <code>splitAvailable = width &gt;= 846</code>, and only render the secondary pane when desktop, active kind is session, the split id resolves to a web tab, and space is available. Wrap the singleton chat in a flex item whose width is <code>${splitRatio * 100}%</code>; keep the web side <code>flex: 1; min-width: 0</code>.</p>
+<pre><code class="language-tsx"><span class="kd">const</span><span class="w"> </span><span class="nx">centerBodyRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">centerBodyWidth</span><span class="p">,</span><span class="w"> </span><span class="nx">setCenterBodyWidth</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+<span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">centerBodyRef</span><span class="p">.</span><span class="nx">current</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">update</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setCenterBodyWidth</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">width</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">update</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ResizeObserver</span><span class="p">(</span><span class="nx">update</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">observer</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">observer</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
+<span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">splitAvailable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">centerBodyWidth</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">846</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">showSplit</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="nx">isDesktop</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">activeKind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!!</span><span class="nx">splitTab</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">splitAvailable</span><span class="p">;</span>
+<span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">setDesktopSplitLayoutAvailable</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">isDesktop</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">activeKind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">splitAvailable</span><span class="p">,</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">isDesktop</span><span class="p">,</span><span class="w"> </span><span class="nx">activeKind</span><span class="p">,</span><span class="w"> </span><span class="nx">splitAvailable</span><span class="p">]);</span>
+</code></pre>
+<pre><code class="language-tsx"><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">centerBodyRef</span><span class="p">}</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;center-body&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">&lt;</span><span class="nt">div</span>
+<span class="w">    </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">showSplit</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;center-split-chat&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;center-single-pane&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">showSplit</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">splitRatio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100</span><span class="si">}</span><span class="sb">%`</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">undefined</span><span class="p">}</span>
+<span class="w">  </span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">PageShell</span><span class="w"> </span><span class="na">page</span><span class="o">=</span><span class="s">&quot;chat&quot;</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">{</span><span class="nx">showSplit</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;center-split-divider&quot;</span><span class="w"> </span><span class="na">role</span><span class="o">=</span><span class="s">&quot;separator&quot;</span><span class="w"> </span><span class="na">aria-orientation</span><span class="o">=</span><span class="s">&quot;vertical&quot;</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;center-split-web&quot;</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">WebTabPane</span><span class="w"> </span><span class="na">tabId</span><span class="o">=</span><span class="p">{</span><span class="nx">splitTab</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="w"> </span><span class="na">url</span><span class="o">=</span><span class="p">{</span><span class="nx">splitTab</span><span class="p">.</span><span class="nx">url</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/&gt;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre>
+<p>The divider mousemove computes <code>(clientX - body.left) / body.width</code>, clamps dynamically so both minimum widths remain satisfied, then calls <code>setSplitRatio</code>. It has <code>role=&quot;separator&quot;</code>, <code>aria-orientation=&quot;vertical&quot;</code>, and a keyboard handler changing the ratio by <code>0.02</code> on left/right arrows.</p>
+<p>The web toolbar split button pins the current tab, selects the session represented by the current route/session state (or creates a draft through the existing path), and collapses the right dock. Exit clears only <code>splitWebTabId</code>. The tab strip marker must not replace the normal active styling.</p>
+<pre><code class="language-ts"><span class="kd">function</span><span class="w"> </span><span class="nx">enterSplit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;/s/&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="o">?</span><span class="w"> </span><span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">3</span><span class="p">))</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">activeChatKey</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
+<span class="w">    </span><span class="p">(</span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">sessionId</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">sid</span><span class="p">,</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="w">  </span><span class="nx">state</span><span class="p">.</span><span class="nx">setSplitWebTab</span><span class="p">(</span><span class="nx">tabId</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">useSessionStore</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">setRightDockOpen</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">setActive</span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">draftId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">openDraftSessionTab</span><span class="p">();</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">window</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">unknown</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">newSession</span><span class="o">?:</span><span class="w"> </span><span class="p">(</span><span class="nx">id?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">})</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">newSession</span><span class="o">?</span><span class="p">.(</span><span class="nx">draftId</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run checks and TypeScript build</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:web-split
+npm<span class="w"> </span>run<span class="w"> </span>check:center-tabs
+npm<span class="w"> </span>run<span class="w"> </span>build
+</code></pre>
+<p>Expected: all exit <code>0</code>; build reports successful compilation.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/components/app-shell.tsx<span class="w"> </span>web/components/center-tabs/web-tab-pane.tsx<span class="w"> </span>web/components/center-tabs/center-tab-strip.tsx<span class="w"> </span>web/components/center-tabs/center-tabs.module.css<span class="w"> </span>web/app/styles/base.css<span class="w"> </span>web/scripts/check-web-split.mjs
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(desktop): add resizable chat web split&quot;</span>
+</code></pre>
+<h3 id="task-4-agent-control-targets-the-visible-split">Task 4: Agent control targets the visible split<a class="header-anchor" href="#task-4-agent-control-targets-the-visible-split">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>web/lib/desktop-bridge.ts</code></li>
+<li>Modify: <code>web/scripts/check-web-split.mjs</code></li>
+<li>Test: <code>tests/unit/test_webtab_control.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>openWebTabInSplit</code>, readiness registry, and split-layout availability.</p>
+</li>
+<li>
+<p>Preserves: <code>webtab_result</code> schema <code>{ ok, url, tab_id, target_id, error? }</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Write failing selection checks</strong></p>
+</li>
+</ul>
+<p>Add source-level assertions in <code>check-web-split.mjs</code> that the <code>webtab.command</code> handler considers both active full-width web and ready split ids, waits with <code>2000</code>, and never calls <code>showCenterSurface()</code> when already on <code>/s/...</code>. Add a Python source check that the renderer contract contains the split target path.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run checks and verify RED</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>check:web-split
+<span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_webtab_control.py<span class="w"> </span>-q
+</code></pre>
+<p>Expected: at least the new split-target assertion fails.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement target resolution</strong></li>
+</ul>
+<p>For <code>op=active</code>, select an active web tab only when ready; otherwise select <code>splitWebTabId</code> only when the active tab is a session and that split id is ready. For <code>op=open</code>, use <code>openWebTabInSplit</code> when a session is active and the layout is available, await readiness for <code>2000</code>, then activate. When unavailable, use normal <code>openWebTab</code> without navigating an existing <code>/s/...</code> route to <code>/chat</code>. If fallback activation fails, restore the prior session id.</p>
+<pre><code class="language-ts"><span class="kd">function</span><span class="w"> </span><span class="nx">visibleWebTab</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">activeId</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">active</span><span class="o">?</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;web&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">isWebTabReady</span><span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">active</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">splitWebTabId</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">active</span><span class="o">?</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">split</span><span class="o">?</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;web&quot;</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">isWebTabReady</span><span class="p">(</span><span class="nx">split</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">split</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">priorActiveId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">activeId</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">active</span><span class="o">?</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;session&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">isDesktopSplitLayoutAvailable</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">split</span>
+<span class="w">  </span><span class="o">?</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">openWebTabInSplit</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">openWebTab</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">url</span><span class="p">),</span><span class="w"> </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">activeId</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">ready</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!!</span><span class="nx">id</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">waitForWebTabReady</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">targetId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ready</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">tab</span><span class="o">?</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;web&quot;</span>
+<span class="w">  </span><span class="o">?</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">bridge</span><span class="p">.</span><span class="nx">webTab</span><span class="p">.</span><span class="nx">activate</span><span class="p">(</span><span class="nx">tab</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">targetId</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">split</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">priorActiveId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">useCenterTabs</span><span class="p">.</span><span class="nx">getState</span><span class="p">().</span><span class="nx">setActive</span><span class="p">(</span><span class="nx">priorActiveId</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run control-plane checks</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>check:web-split
+<span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>node<span class="w"> </span>desktop/scripts/check-webtab-navigation.js
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_webtab_control.py<span class="w"> </span>-q
+</code></pre>
+<p>Expected: web split check passes, desktop script prints <code>webtab navigation checks passed</code>, and pytest reports all tests passed.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/lib/desktop-bridge.ts<span class="w"> </span>web/scripts/check-web-split.mjs<span class="w"> </span>tests/unit/test_webtab_control.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(browser): control the visible split web tab&quot;</span>
+</code></pre>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-07-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Multi-window Tab Transfer Implementation Plan</span></a><a class="pn-link pn-next" href="/superpowers/specs/2026-07-19-desktop-icon-flat-design.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Desktop App Icon Flat Design</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#global-constraints">Global Constraints</a>
+<a class="lvl-3" href="#task-1-split-state-and-persistence">Task 1: Split state and persistence</a>
+<a class="lvl-3" href="#task-2-native-pane-lifecycle-and-readiness">Task 2: Native pane lifecycle and readiness</a>
+<a class="lvl-3" href="#task-3-split-layout-and-controls">Task 3: Split layout and controls</a>
+<a class="lvl-3" href="#task-4-agent-control-targets-the-visible-split">Task 4: Agent control targets the visible split</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

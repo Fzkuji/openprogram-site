@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>记忆子系统：机制图解</title>
+<style>
+  :root{
+    --bg:#16150f; --pan:#1d1c14; --bd:#2e2c20; --tx:#bdb9a6; --acc:#d4843a;
+    --cb:#12110b; --dim:#8a8675;
+    --c0:#4f8ef7; --c1:#5aad4e; --c2:#d4843a; --c3:#9d6fe0; --c4:#2db3d5;
+    --no:#e0445a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font:14px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:40px 24px 96px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:23px;color:#f0eee6;margin:0 0 6px}
+  .sub{color:var(--tx);margin:0 0 20px;max-width:78ch}
+  .sub a{color:var(--acc)}
+  h2{font-size:16px;color:var(--acc);margin:34px 0 8px;scroll-margin-top:20px}
+  h2 .num{color:var(--dim);font-size:12px;margin-right:8px;letter-spacing:.16em}
+  .lead{color:var(--dim);font-size:13px;margin:0 0 12px;max-width:80ch}
+  .card{background:var(--pan);border:1px solid var(--bd);border-radius:12px;padding:8px;margin-bottom:16px}
+  svg{display:block;width:100%;height:auto;background:var(--cb);border-radius:8px}
+  .legend{font-size:12.5px;color:var(--dim);padding:8px 10px;line-height:1.8}
+  .legend b{color:#f0eee6}
+  code{background:var(--cb);color:var(--acc);padding:1px 5px;border-radius:4px;font:12px Menlo,monospace}
+  text{font-family:-apple-system,"Segoe UI",sans-serif}
+
+  .toc{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 22px}
+  .toc a{font-size:12px;color:var(--tx);text-decoration:none;border:1px solid var(--bd);
+    background:var(--pan);border-radius:99px;padding:4px 12px}
+  .toc a:hover{border-color:var(--acc);color:#f0eee6}
+
+  /* 状态三栏 */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 22px}
+  .st{background:var(--pan);border:1px solid var(--bd);border-top-width:3px;border-radius:12px;padding:12px 15px}
+  .st .k{font-size:10.5px;letter-spacing:.2em;color:var(--dim);margin-bottom:5px}
+  .st p{margin:0;font-size:12.5px;color:#a5a190;line-height:1.7}
+  .st p b{color:#f0eee6;font-weight:600}
+  @media(max-width:860px){.grid3{grid-template-columns:1fr}}
+
+  /* 两栏卡片 */
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px}
+  .oc{background:var(--pan);border:1px solid var(--bd);border-radius:12px;padding:8px 8px 12px}
+  .oc h4{margin:6px 4px 8px;font-size:13.5px;color:#f0eee6}
+  .oc .d{margin:8px 10px 0;font-size:12.5px;color:#a5a190;line-height:1.7}
+  .oc .d b{color:var(--no);font-weight:600}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+
+  .tbl{overflow-x:auto;background:var(--pan);border:1px solid var(--bd);border-radius:12px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+  th{text-align:left;padding:10px 14px;color:var(--dim);font-weight:600;font-size:11px;
+    letter-spacing:.14em;border-bottom:1px solid var(--bd);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid #26241a;vertical-align:top;line-height:1.65}
+  tr:last-child td{border-bottom:none}
+  td.y{color:var(--c1)} td.n{color:var(--no)}
+  td b{color:#f0eee6;font-weight:600}
+
+  .note{border-left:3px solid var(--bd);padding:2px 0 2px 13px;color:var(--dim);
+    font-size:12.5px;margin:0 0 16px;max-width:88ch;line-height:1.8}
+  .note b{color:#f0eee6}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>记忆子系统：机制图解</h1>
+  <p class="sub">一段对话怎么变成磁盘上的主题文件，写到一半失败会怎样，会话分叉之后靠什么认出哪些已经写过，
+    每次会话都注入的那一小块记忆归谁维护。
+    正文在 <code>docs/reference/design/memory/overview.md</code>，第 04 节的完整设计在 <a href="written-marker.html">written-marker.md</a>，这页只画机制。
+    别家怎么做的、我们的选择落在哪一格，在 <a href="memory-comparison.html">记忆写入：八个框架横向对比</a>。</p>
+
+  <div class="grid3">
+    <div class="st" style="border-top-color:#5aad4e">
+      <div class="k">在跑的</div>
+      <p>两个写入入口、五步写入、暂存事务、夜间整理、<b>沉默即成功</b>的返回值契约，
+        以及<b>第 05 节</b>的常驻块派生视图：<code>core.md</code>是<code>topics/core.md</code>的渲染结果，
+        预算不再拒事务。</p>
+    </div>
+    <div class="st" style="border-top-color:#d4843a">
+      <div class="k">定稿了还没落地</div>
+      <p><b>第 04 节</b>的写入游标：跑着的仍是位置游标，分叉之后整条分支漏写，
+        或者只写下一个从对话中间开始的片段。要走的是<b>在节点上打「已写」标记</b>，
+        从 head 往回走到第一个有标记的为止。</p>
+    </div>
+    <div class="st" style="border-top-color:#8a8675">
+      <div class="k">接口留着没接线</div>
+      <p><code>name</code> <code>is_available</code> <code>initialize</code> <code>shutdown</code>
+        <code>extract_before_discard</code>：五个方法运行时没有任何调用方。</p>
+    </div>
+  </div>
+
+  <div class="toc">
+    <a href="#flow">01 一条对话怎么变成长期记忆</a>
+    <a href="#steps">02 写入的五个步骤</a>
+    <a href="#txn">03 事务：改在暂存，验过才装</a>
+    <a href="#cursor">04 游标：身份不是位置</a>
+    <a href="#core">05 常驻块：谁在维护它</a>
+    <a href="#hooks">06 接口的九个方法</a>
+    <a href="#fail">07 失败会怎样</a>
+    <a href="#open">08 还没解决的</a>
+  </div>
+
+  <!-- ══════════ 01 总图 ══════════ -->
+  <h2 id="flow"><span class="num">01</span>一条对话怎么变成长期记忆</h2>
+  <p class="lead">两个入口，一段写入逻辑。两条路的区别只有 <code>force</code> 这一个开关：一个够了才写，一个剩多少写多少。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 610" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一条对话怎么变成长期记忆">
+    <defs>
+      <marker id="f-gn" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5aad4e"/></marker>
+      <marker id="f-bl" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#4f8ef7"/></marker>
+      <marker id="f-or" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4843a"/></marker>
+      <marker id="f-vi" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9d6fe0"/></marker>
+      <marker id="f-cy" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#2db3d5"/></marker>
+    </defs>
+
+    <text x="24" y="32" fill="#d4843a" font-size="16" font-weight="700">一条对话怎么变成长期记忆</text>
+    <text x="24" y="56" fill="#8a8675" font-size="12.5">对话不在写入时缓存在进程里。每一次写入都重新从会话存储读回来，所以进程重启不丢。</text>
+
+    <!-- 会话存储 -->
+    <rect x="32" y="76" width="1096" height="86" rx="10" fill="#1e2630" stroke="#2db3d5" stroke-width="1.4"/>
+    <text x="50" y="102" fill="#2db3d5" font-size="13" font-weight="700">会话存储</text>
+    <text x="122" y="102" fill="#8a8675" font-size="11.5">持久、有序，每条消息一个稳定 id</text>
+    <g>
+      <rect x="50" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="88" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">用户</text>
+      <rect x="134" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="172" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">助手</text>
+      <rect x="218" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="256" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">用户</text>
+      <rect x="302" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="340" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">助手</text>
+      <rect x="386" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="424" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">用户</text>
+      <rect x="470" y="114" width="76" height="28" rx="6" fill="#12110b" stroke="#2e2c20"/>
+      <text x="508" y="132" fill="#bdb9a6" font-size="11.5" text-anchor="middle">助手</text>
+      <text x="562" y="134" fill="#6b6a63" font-size="13">…</text>
+    </g>
+    <text x="606" y="124" fill="#bdb9a6" font-size="11.5">get_branch(session_id) 沿 predecessor 边往回走，</text>
+    <text x="606" y="144" fill="#bdb9a6" font-size="11.5">拿回 head 那条分支，按顺序</text>
+
+    <text x="50" y="184" fill="#8a8675" font-size="11.5">只有人说的和助手答的算数。工具调用和结果、runtime 自己排的轮次（子 agent 回报、分支合并提示）、空消息，都不进记忆。</text>
+
+    <!-- 入口一 -->
+    <rect x="32" y="206" width="272" height="122" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+    <text x="50" y="232" fill="#5aad4e" font-size="13.5" font-weight="700">入口一 · 每轮结束</text>
+    <text x="50" y="250" fill="#6b6a63" font-size="10.5" font-family="Menlo,monospace">agent/dispatcher</text>
+    <text x="50" y="272" fill="#d4843a" font-size="11" font-family="Menlo,monospace">write(session_id=…)  force=False</text>
+    <text x="50" y="294" fill="#bdb9a6" font-size="11">不传消息，自己去会话存储读</text>
+    <text x="50" y="314" fill="#8a8675" font-size="10.5">每轮都调，多数时候什么也不做</text>
+
+    <!-- 入口二 -->
+    <rect x="32" y="348" width="272" height="122" rx="9" fill="#1d2738" stroke="#4f8ef7" stroke-width="1.5"/>
+    <text x="50" y="374" fill="#4f8ef7" font-size="13.5" font-weight="700">入口二 · 会话闲下来</text>
+    <text x="50" y="392" fill="#6b6a63" font-size="10.5" font-family="Menlo,monospace">memory/session_watcher</text>
+    <text x="50" y="414" fill="#d4843a" font-size="11" font-family="Menlo,monospace">write(messages, …)  force=True</text>
+    <text x="50" y="436" fill="#bdb9a6" font-size="11">5 分钟扫一次，30 分钟没动静算闲</text>
+    <text x="50" y="456" fill="#8a8675" font-size="10.5">剩多少写多少，不管够不够一批</text>
+
+    <!-- 入口三 -->
+    <rect x="32" y="490" width="272" height="96" rx="9" fill="#221a30" stroke="#9d6fe0" stroke-width="1.5"/>
+    <text x="50" y="516" fill="#9d6fe0" font-size="13.5" font-weight="700">每天 03:00 · 整理</text>
+    <text x="50" y="534" fill="#6b6a63" font-size="10.5" font-family="Menlo,monospace">memory/scheduler</text>
+    <text x="50" y="556" fill="#d4843a" font-size="11" font-family="Menlo,monospace">reorganize(model=…)</text>
+    <text x="50" y="576" fill="#bdb9a6" font-size="11">不写新内容，只重排已经落盘的</text>
+
+    <!-- 汇合 -->
+    <rect x="344" y="206" width="236" height="264" rx="10" fill="#241f10" stroke="#d4843a" stroke-width="1.8"/>
+    <text x="362" y="234" fill="#d4843a" font-size="14" font-weight="700">writing.write()</text>
+    <text x="362" y="254" fill="#8a8675" font-size="11">两条路在这里汇合</text>
+    <line x1="362" y1="268" x2="562" y2="268" stroke="#2e2c20" stroke-width="1"/>
+    <text x="362" y="294" fill="#5aad4e" font-size="11.5" font-weight="700">force=False</text>
+    <text x="362" y="314" fill="#bdb9a6" font-size="11">走一趟就回来。不到阈值</text>
+    <text x="362" y="332" fill="#bdb9a6" font-size="11">就一趟也不写。</text>
+    <text x="362" y="366" fill="#4f8ef7" font-size="11.5" font-weight="700">force=True</text>
+    <text x="362" y="386" fill="#bdb9a6" font-size="11">while 还欠着：一趟接一趟，</text>
+    <text x="362" y="404" fill="#bdb9a6" font-size="11">直到不欠为止。</text>
+    <text x="362" y="432" fill="#8a8675" font-size="10.5">会话结束后没有下一批，</text>
+    <text x="362" y="450" fill="#8a8675" font-size="10.5">停在半路就永远补不上。</text>
+
+    <!-- 一趟 -->
+    <rect x="620" y="206" width="244" height="264" rx="10" fill="#12110b" stroke="#2e2c20" stroke-width="1.4"/>
+    <text x="638" y="234" fill="#d4843a" font-size="14" font-weight="700">write_session() 一趟</text>
+    <text x="638" y="254" fill="#8a8675" font-size="11">五步，见第 02 节</text>
+    <g font-size="11.5" fill="#bdb9a6">
+      <circle cx="648" cy="286" r="9" fill="#1e2630" stroke="#2db3d5"/><text x="648" y="290" fill="#2db3d5" font-size="10.5" text-anchor="middle">1</text>
+      <text x="666" y="290">挑欠账 · 游标没记过的</text>
+      <circle cx="648" cy="322" r="9" fill="#1d2738" stroke="#4f8ef7"/><text x="648" y="326" fill="#4f8ef7" font-size="10.5" text-anchor="middle">2</text>
+      <text x="666" y="326">分批 · 累加到 16k token</text>
+      <circle cx="648" cy="358" r="9" fill="#241f10" stroke="#d4843a"/><text x="648" y="362" fill="#d4843a" font-size="10.5" text-anchor="middle">3</text>
+      <text x="666" y="362">调模型 · 在暂存里改文件</text>
+      <circle cx="648" cy="394" r="9" fill="#221a30" stroke="#9d6fe0"/><text x="648" y="398" fill="#9d6fe0" font-size="10.5" text-anchor="middle">4</text>
+      <text x="666" y="398">整理 · 攒够了就重排</text>
+      <circle cx="648" cy="430" r="9" fill="#101a10" stroke="#5aad4e"/><text x="648" y="434" fill="#5aad4e" font-size="10.5" text-anchor="middle">5</text>
+      <text x="666" y="434">提交 · 验过才整体安装</text>
+    </g>
+
+    <!-- 记忆库 -->
+    <rect x="900" y="176" width="228" height="352" rx="10" fill="#12110b" stroke="#2e2c20" stroke-width="1.4"/>
+    <text x="918" y="204" fill="#d4843a" font-size="14" font-weight="700">记忆库</text>
+    <text x="918" y="224" fill="#6b6a63" font-size="10.5" font-family="Menlo,monospace">&lt;state&gt;/memory/</text>
+    <text x="918" y="256" fill="#d4843a" font-size="11.5" font-family="Menlo,monospace">topics/</text>
+    <text x="918" y="274" fill="#8a8675" font-size="11">主题文件。模型只改这里</text>
+    <text x="918" y="304" fill="#2db3d5" font-size="11.5" font-family="Menlo,monospace">sources/</text>
+    <text x="918" y="322" fill="#8a8675" font-size="11">原文存档，只增不改</text>
+    <text x="918" y="352" fill="#5aad4e" font-size="11.5" font-family="Menlo,monospace">core.md</text>
+    <text x="918" y="370" fill="#8a8675" font-size="11">每次会话都注入</text>
+    <text x="918" y="400" fill="#9d6fe0" font-size="11.5" font-family="Menlo,monospace">timeline/ 等三处</text>
+    <text x="918" y="418" fill="#8a8675" font-size="11">派生视图，写完就重建</text>
+    <text x="918" y="448" fill="#8a8675" font-size="11.5" font-family="Menlo,monospace">.scriptorium/</text>
+    <text x="918" y="466" fill="#8a8675" font-size="11">游标、写锁、写手历史</text>
+    <line x1="918" y1="486" x2="1110" y2="486" stroke="#2e2c20" stroke-width="1"/>
+    <text x="918" y="508" fill="#8a8675" font-size="10.5">写成一次，就 commit 一版</text>
+
+    <!-- 连线 -->
+    <line x1="304" y1="267" x2="340" y2="267" stroke="#5aad4e" stroke-width="1.6" marker-end="url(#f-gn)"/>
+    <line x1="304" y1="409" x2="340" y2="409" stroke="#4f8ef7" stroke-width="1.6" marker-end="url(#f-bl)"/>
+    <line x1="580" y1="338" x2="616" y2="338" stroke="#d4843a" stroke-width="1.6" marker-end="url(#f-or)"/>
+    <line x1="864" y1="338" x2="896" y2="338" stroke="#d4843a" stroke-width="1.6" marker-end="url(#f-or)"/>
+
+    <!-- force 回环 -->
+    <path d="M742 470 L742 492 L462 492 L462 474" fill="none" stroke="#4f8ef7" stroke-width="1.5"
+      stroke-dasharray="6 4" marker-end="url(#f-bl)"/>
+    <text x="602" y="510" fill="#4f8ef7" font-size="11" text-anchor="middle">force 时：还欠着就再来一趟</text>
+
+    <!-- 整理直连记忆库 -->
+    <path d="M304 538 C 520 570, 720 572, 894 520" fill="none" stroke="#9d6fe0" stroke-width="1.5"
+      marker-end="url(#f-vi)"/>
+    <text x="596" y="592" fill="#9d6fe0" font-size="11" text-anchor="middle">整理不走写入这条路：它只重排 topics/，不动 sources/，也不推游标</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <b>怎么读</b>：左边三个入口，中间是它们共用的那段逻辑，右边是磁盘。
+    绿色那条每轮都触发，但只有攒够 16k token 才真的写；蓝色那条在会话闲置后触发，把剩下的全部写完，所以它要循环。
+    紫色那条不产生新内容。<br>
+    <b>为什么每轮那次不传消息</b>：会话存储本来就是持久有序的，从它读回来的每条消息都有稳定 id，
+    进程里再缓一份只会在重启时丢掉，而且给出的位置每次运行都不一样。
+  </div>
+
+  <!-- ══════════ 02 五个步骤 ══════════ -->
+  <h2 id="steps"><span class="num">02</span>写入的五个步骤</h2>
+  <p class="lead">一趟里发生的事。阈值只回答"值不值得叫一次模型"，不回答"一次写多少"，所以跑了一天的会话要走好几趟。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="写入的五个步骤">
+    <defs>
+      <marker id="s-gy" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a8675"/></marker>
+    </defs>
+
+    <rect x="32" y="86" width="208" height="168" rx="10" fill="#1e2630" stroke="#2db3d5" stroke-width="1.4"/>
+    <circle cx="52" cy="70" r="13" fill="#12110b" stroke="#2db3d5" stroke-width="1.4"/>
+    <text x="52" y="75" fill="#2db3d5" font-size="13" font-weight="700" text-anchor="middle">1</text>
+    <text x="76" y="75" fill="#2db3d5" font-size="13.5" font-weight="700">挑欠账</text>
+    <text x="48" y="116" fill="#bdb9a6" font-size="11.5">分支上的每一条</text>
+    <text x="48" y="136" fill="#bdb9a6" font-size="11.5">减去游标记过的</text>
+    <text x="48" y="156" fill="#f0eee6" font-size="11.5">= 这个会话还欠着的</text>
+    <text x="48" y="186" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">runtime.pending()</text>
+    <text x="48" y="212" fill="#8a8675" font-size="10.5">顺手滤掉工具调用</text>
+    <text x="48" y="230" fill="#8a8675" font-size="10.5">和 runtime 自排的轮次</text>
+
+    <rect x="254" y="86" width="208" height="168" rx="10" fill="#1d2738" stroke="#4f8ef7" stroke-width="1.4"/>
+    <circle cx="274" cy="70" r="13" fill="#12110b" stroke="#4f8ef7" stroke-width="1.4"/>
+    <text x="274" y="75" fill="#4f8ef7" font-size="13" font-weight="700" text-anchor="middle">2</text>
+    <text x="298" y="75" fill="#4f8ef7" font-size="13.5" font-weight="700">分批</text>
+    <text x="270" y="116" fill="#bdb9a6" font-size="11.5">从头一条条累加</text>
+    <text x="270" y="136" fill="#bdb9a6" font-size="11.5">够 16k token 就切</text>
+    <text x="270" y="164" fill="#f0eee6" font-size="11.5">切下来的是这一批</text>
+    <text x="270" y="192" fill="#8a8675" font-size="10.5">剩的留给下一趟，</text>
+    <text x="270" y="210" fill="#8a8675" font-size="10.5">一次模型调用装不下</text>
+    <text x="270" y="228" fill="#8a8675" font-size="10.5">一整天的对话</text>
+
+    <rect x="476" y="86" width="208" height="168" rx="10" fill="#241f10" stroke="#d4843a" stroke-width="1.6"/>
+    <circle cx="496" cy="70" r="13" fill="#12110b" stroke="#d4843a" stroke-width="1.4"/>
+    <text x="496" y="75" fill="#d4843a" font-size="13" font-weight="700" text-anchor="middle">3</text>
+    <text x="520" y="75" fill="#d4843a" font-size="13.5" font-weight="700">调模型改主题文件</text>
+    <text x="492" y="116" fill="#bdb9a6" font-size="11.5">写手拿到这一批原文</text>
+    <text x="492" y="136" fill="#bdb9a6" font-size="11.5">和当前的目录结构</text>
+    <text x="492" y="164" fill="#f0eee6" font-size="11.5">用文件工具改 topics/</text>
+    <text x="492" y="192" fill="#8a8675" font-size="10.5">改的是暂存目录里的</text>
+    <text x="492" y="210" fill="#8a8675" font-size="10.5">拷贝，见第 03 节。跑在</text>
+    <text x="492" y="228" fill="#8a8675" font-size="10.5">用户自己的登录上</text>
+
+    <rect x="698" y="86" width="208" height="168" rx="10" fill="#221a30" stroke="#9d6fe0" stroke-width="1.4"/>
+    <circle cx="718" cy="70" r="13" fill="#12110b" stroke="#9d6fe0" stroke-width="1.4"/>
+    <text x="718" y="75" fill="#9d6fe0" font-size="13" font-weight="700" text-anchor="middle">4</text>
+    <text x="742" y="75" fill="#9d6fe0" font-size="13.5" font-weight="700">整理</text>
+    <text x="714" y="116" fill="#bdb9a6" font-size="11.5">攒够 5 批或 4 万 token</text>
+    <text x="714" y="136" fill="#bdb9a6" font-size="11.5">→ 重排一次</text>
+    <text x="714" y="164" fill="#bdb9a6" font-size="11.5">距上次全局整理满一天</text>
+    <text x="714" y="184" fill="#bdb9a6" font-size="11.5">→ 再重排一次</text>
+    <text x="714" y="212" fill="#8a8675" font-size="10.5">同一个动作，两个触发</text>
+    <text x="714" y="230" fill="#8a8675" font-size="10.5">条件。都不满足就跳过</text>
+
+    <rect x="920" y="86" width="208" height="168" rx="10" fill="#101a10" stroke="#5aad4e" stroke-width="1.6"/>
+    <circle cx="940" cy="70" r="13" fill="#12110b" stroke="#5aad4e" stroke-width="1.4"/>
+    <text x="940" y="75" fill="#5aad4e" font-size="13" font-weight="700" text-anchor="middle">5</text>
+    <text x="964" y="75" fill="#5aad4e" font-size="13.5" font-weight="700">事务提交</text>
+    <text x="936" y="116" fill="#bdb9a6" font-size="11.5">校验通过 → 整体安装</text>
+    <text x="936" y="136" fill="#bdb9a6" font-size="11.5">不通过 → 整批丢弃</text>
+    <text x="936" y="164" fill="#f0eee6" font-size="11.5">装进去了才推游标</text>
+    <text x="936" y="192" fill="#8a8675" font-size="10.5">这一批的原文在调模型</text>
+    <text x="936" y="210" fill="#8a8675" font-size="10.5">之前就已经存档，所以</text>
+    <text x="936" y="228" fill="#8a8675" font-size="10.5">存档永远不落后于游标</text>
+
+    <line x1="240" y1="170" x2="250" y2="170" stroke="#8a8675" stroke-width="1.4" marker-end="url(#s-gy)"/>
+    <line x1="462" y1="170" x2="472" y2="170" stroke="#8a8675" stroke-width="1.4" marker-end="url(#s-gy)"/>
+    <line x1="684" y1="170" x2="694" y2="170" stroke="#8a8675" stroke-width="1.4" marker-end="url(#s-gy)"/>
+    <line x1="906" y1="170" x2="916" y2="170" stroke="#8a8675" stroke-width="1.4" marker-end="url(#s-gy)"/>
+
+    <text x="32" y="286" fill="#8a8675" font-size="11.5">整趟持一把跨进程写锁，等 1 秒拿不到就放弃：正在聊天的会话要写记忆是常事，让用户等不如下一轮再来。</text>
+  </svg>
+  </div>
+
+  <!-- ══════════ 03 事务 ══════════ -->
+  <h2 id="txn"><span class="num">03</span>事务：改在暂存，验过才装</h2>
+  <p class="lead">模型不直接改记忆库。它改的是一份临时拷贝，只有整份验过才被整体安装；验不过整份丢掉，记忆库一个字节没动。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="写入事务">
+    <defs>
+      <marker id="t-gy" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a8675"/></marker>
+      <marker id="t-gn" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5aad4e"/></marker>
+      <marker id="t-no" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e0445a"/></marker>
+      <marker id="t-or" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4843a"/></marker>
+    </defs>
+
+    <text x="24" y="32" fill="#d4843a" font-size="15" font-weight="700">一次写入事务的全过程</text>
+
+    <!-- 记忆库 -->
+    <rect x="32" y="60" width="196" height="196" rx="10" fill="#12110b" stroke="#2e2c20" stroke-width="1.4"/>
+    <text x="50" y="86" fill="#bdb9a6" font-size="13" font-weight="700">记忆库</text>
+    <text x="50" y="112" fill="#d4843a" font-size="11" font-family="Menlo,monospace">topics/</text>
+    <text x="50" y="132" fill="#2db3d5" font-size="11" font-family="Menlo,monospace">sources/</text>
+    <text x="50" y="152" fill="#5aad4e" font-size="11" font-family="Menlo,monospace">core.md</text>
+    <text x="50" y="184" fill="#8a8675" font-size="11">事务期间它是只读的</text>
+    <text x="50" y="204" fill="#8a8675" font-size="11">参照物，谁也不在这里</text>
+    <text x="50" y="224" fill="#8a8675" font-size="11">直接改</text>
+
+    <path d="M228 130 L294 130" fill="none" stroke="#8a8675" stroke-width="1.5" marker-end="url(#t-gy)"/>
+    <text x="261" y="120" fill="#8a8675" font-size="10.5" text-anchor="middle">整份拷贝</text>
+
+    <!-- 暂存 -->
+    <rect x="298" y="60" width="290" height="196" rx="10" fill="#241f10" stroke="#d4843a" stroke-width="1.6"/>
+    <text x="316" y="86" fill="#d4843a" font-size="13" font-weight="700">暂存目录</text>
+    <text x="392" y="86" fill="#6b6a63" font-size="10.5" font-family="Menlo,monospace">系统临时目录里新建</text>
+    <rect x="316" y="98" width="254" height="42" rx="6" fill="#12110b" stroke="#2e2c20"/>
+    <text x="330" y="115" fill="#d4843a" font-size="11" font-family="Menlo,monospace">topics/</text>
+    <text x="330" y="132" fill="#bdb9a6" font-size="11">可写。写手这一轮的每次编辑都落这儿</text>
+    <rect x="316" y="150" width="254" height="42" rx="6" fill="#12110b" stroke="#2e2c20"/>
+    <text x="330" y="167" fill="#2db3d5" font-size="11" font-family="Menlo,monospace">sources/  chmod 0444</text>
+    <text x="330" y="184" fill="#bdb9a6" font-size="11">文件系统这一层就拒写，不等到最后才发现</text>
+    <text x="316" y="214" fill="#8a8675" font-size="11">基准线在拷贝之前从记忆库读：拷完再读，等于</text>
+    <text x="316" y="232" fill="#8a8675" font-size="11">拿这次编辑去量它自己，丢掉的块 ID 会像从没存在过</text>
+
+    <path d="M588 130 L644 130" fill="none" stroke="#8a8675" stroke-width="1.5" marker-end="url(#t-gy)"/>
+
+    <!-- 校验 -->
+    <rect x="648" y="60" width="256" height="196" rx="10" fill="#12110b" stroke="#2e2c20" stroke-width="1.4"/>
+    <text x="666" y="86" fill="#bdb9a6" font-size="13" font-weight="700">四道校验</text>
+    <text x="666" y="112" fill="#bdb9a6" font-size="11.5">1　sources/ 的指纹没变</text>
+    <text x="682" y="130" fill="#8a8675" font-size="10.5">原文存档只增不改</text>
+    <text x="666" y="154" fill="#bdb9a6" font-size="11.5">2　改之前的块 ID 一个不少</text>
+    <text x="682" y="172" fill="#8a8675" font-size="10.5">段落可以改写、合并、搬家</text>
+    <text x="666" y="196" fill="#bdb9a6" font-size="11.5">3　主题间的链接指到 #^块 ID</text>
+    <text x="666" y="220" fill="#bdb9a6" font-size="11.5">4　引用的来源真的存在</text>
+    <text x="682" y="238" fill="#8a8675" font-size="10.5">core.md 不超额，块链接不悬空</text>
+
+    <!-- 出口 -->
+    <path d="M904 100 L948 100" fill="none" stroke="#5aad4e" stroke-width="1.6" marker-end="url(#t-gn)"/>
+    <path d="M904 200 L948 200" fill="none" stroke="#e0445a" stroke-width="1.6" marker-end="url(#t-no)"/>
+
+    <rect x="952" y="60" width="176" height="90" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+    <text x="968" y="84" fill="#5aad4e" font-size="12.5" font-weight="700">通过 · 整体安装</text>
+    <text x="968" y="104" fill="#bdb9a6" font-size="11">现有的先挪进备份</text>
+    <text x="968" y="122" fill="#bdb9a6" font-size="11">暂存整份装入</text>
+    <text x="968" y="140" fill="#bdb9a6" font-size="11">重建派生视图，commit</text>
+
+    <rect x="952" y="164" width="176" height="92" rx="9" fill="#241015" stroke="#e0445a" stroke-width="1.5"/>
+    <text x="968" y="188" fill="#e0445a" font-size="12.5" font-weight="700">不通过 · 整批丢弃</text>
+    <text x="968" y="208" fill="#bdb9a6" font-size="11">暂存目录重新拷一份</text>
+    <text x="968" y="226" fill="#bdb9a6" font-size="11">记忆库保持原样</text>
+    <text x="968" y="244" fill="#bdb9a6" font-size="11">抛出被拒的原因</text>
+
+    <!-- 修复 -->
+    <text x="24" y="308" fill="#d4843a" font-size="14" font-weight="700">被驳回之后：只有一次修复机会</text>
+    <rect x="32" y="326" width="300" height="88" rx="9" fill="#241015" stroke="#e0445a" stroke-width="1.3"/>
+    <text x="50" y="350" fill="#e0445a" font-size="12" font-weight="700">第一次驳回</text>
+    <text x="50" y="372" fill="#bdb9a6" font-size="11.5">把被拒的原文，加上一句针对这条</text>
+    <text x="50" y="390" fill="#bdb9a6" font-size="11.5">规则的具体改法，发回写手重做</text>
+    <text x="50" y="408" fill="#8a8675" font-size="10.5">工作区已经回到这一轮之前的样子</text>
+
+    <path d="M332 370 L388 370" fill="none" stroke="#d4843a" stroke-width="1.5" marker-end="url(#t-or)"/>
+
+    <rect x="392" y="326" width="300" height="88" rx="9" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/>
+    <text x="410" y="350" fill="#d4843a" font-size="12" font-weight="700">重做一遍</text>
+    <text x="410" y="372" fill="#bdb9a6" font-size="11.5">同样在暂存里改，同样四道校验</text>
+    <text x="410" y="394" fill="#8a8675" font-size="10.5">基准线在修复之前重新取一次：改完再取会去</text>
+    <text x="410" y="410" fill="#8a8675" font-size="10.5">解析模型刚写坏的文本</text>
+
+    <path d="M692 370 L748 370" fill="none" stroke="#e0445a" stroke-width="1.5" marker-end="url(#t-no)"/>
+
+    <rect x="752" y="326" width="376" height="88" rx="9" fill="#241015" stroke="#e0445a" stroke-width="1.5"/>
+    <text x="770" y="350" fill="#e0445a" font-size="12" font-weight="700">第二次还驳回 → 这一批彻底不写</text>
+    <text x="770" y="372" fill="#bdb9a6" font-size="11.5">报 COMMIT_REJECTED，游标不动，这些轮次仍然欠着。</text>
+    <text x="770" y="394" fill="#bdb9a6" font-size="11.5">在这里报成功，就等于让调用方把游标推过一批从没落盘的内容。</text>
+
+    <text x="32" y="452" fill="#8a8675" font-size="11.5">同一条管线也给人用：手改主题文件走的是同一套暂存和校验，改坏了当场被拒，提交过的文件一字不动。</text>
+    <text x="32" y="474" fill="#8a8675" font-size="11.5">块 ID 是别的段落、时间轴和关系图找到这一段的唯一途径，所以"内容随便改、ID 必须还在"是这套校验里最硬的一条。</text>
+  </svg>
+  </div>
+
+  <!-- ══════════ 04 游标 ══════════ -->
+  <h2 id="cursor"><span class="num">04</span>游标：身份不是位置</h2>
+  <p class="lead">一条会话是一张图，不是一条线。重问一句、重试一次回答、派一个子 agent，都会从中间分叉出一条新分支。
+    分支上说的话都该进记忆，共享前缀上说的话不该进第二遍。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="写入游标：位置、节点标记与外部集合">
+    <defs>
+      <marker id="c-or" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4843a"/></marker>
+      <marker id="c-gr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5aad4e"/></marker>
+    </defs>
+
+    <text x="24" y="32" fill="#d4843a" font-size="15" font-weight="700">同一个会话，主干写完之后从第三条消息分出去</text>
+    <text x="24" y="54" fill="#8a8675" font-size="12">主干 9 条已经写进记忆。用户回到 m3 重新问，新分支往下又聊了 6 条，head 现在在 b9。</text>
+
+    <text x="104" y="104" fill="#8a8675" font-size="11.5" text-anchor="end">主干</text>
+    <g>
+      <line x1="150" y1="100" x2="880" y2="100" stroke="#3a382c" stroke-width="1.4"/>
+      <g font-size="11.5" text-anchor="middle">
+        <rect x="122" y="86" width="56" height="28" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/><text x="150" y="105" fill="#5aad4e">m1</text>
+        <rect x="212" y="86" width="56" height="28" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/><text x="240" y="105" fill="#5aad4e">m2</text>
+        <rect x="302" y="86" width="56" height="28" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/><text x="330" y="105" fill="#5aad4e">m3</text>
+        <rect x="392" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="420" y="105" fill="#8a8675">m4</text>
+        <rect x="482" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="510" y="105" fill="#8a8675">m5</text>
+        <rect x="572" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="600" y="105" fill="#8a8675">m6</text>
+        <rect x="662" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="690" y="105" fill="#8a8675">m7</text>
+        <rect x="752" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="780" y="105" fill="#8a8675">m8</text>
+        <rect x="842" y="86" width="56" height="28" rx="8" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/><text x="870" y="105" fill="#8a8675">m9</text>
+      </g>
+      <text x="920" y="105" fill="#8a8675" font-size="11">这 9 条已经写过</text>
+    </g>
+
+    <path d="M330 118 C 330 160, 392 158, 392 196" fill="none" stroke="#d4843a" stroke-width="1.6" marker-end="url(#c-or)"/>
+    <text x="348" y="152" fill="#d4843a" font-size="11">从 m3 分出去</text>
+
+    <text x="104" y="216" fill="#d4843a" font-size="11.5" text-anchor="end">新分支</text>
+    <g>
+      <line x1="420" y1="212" x2="880" y2="212" stroke="#3a382c" stroke-width="1.4"/>
+      <g font-size="11.5" text-anchor="middle">
+        <rect x="392" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/><text x="420" y="217" fill="#d4843a">b4</text>
+        <rect x="482" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/><text x="510" y="217" fill="#d4843a">b5</text>
+        <rect x="572" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/><text x="600" y="217" fill="#d4843a">b6</text>
+        <rect x="662" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/><text x="690" y="217" fill="#d4843a">b7</text>
+        <rect x="752" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/><text x="780" y="217" fill="#d4843a">b8</text>
+        <rect x="842" y="198" width="56" height="28" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="2.2"/><text x="870" y="217" fill="#d4843a">b9</text>
+      </g>
+      <text x="920" y="211" fill="#d4843a" font-size="11">head 在这里</text>
+      <text x="920" y="228" fill="#8a8675" font-size="10.5">这 6 条从没写过</text>
+    </g>
+
+    <path d="M122 130 L122 142 L358 142 L358 130" fill="none" stroke="#5aad4e" stroke-width="1.2"/>
+    <text x="240" y="160" fill="#5aad4e" font-size="11" text-anchor="middle">共享前缀</text>
+
+    <line x1="32" y1="256" x2="1128" y2="256" stroke="#2e2c20" stroke-width="1"/>
+
+    <text x="366" y="292" fill="#e0445a" font-size="12.5" font-weight="700" text-anchor="end">现在跑的 · 记「写到第几条」</text>
+    <text x="366" y="312" fill="#8a8675" font-size="11" text-anchor="end">游标存 ordinal=9，只收编号大于 9 的</text>
+    <g font-size="12" text-anchor="middle">
+      <text x="420" y="296" fill="#8a8675">4</text><text x="510" y="296" fill="#8a8675">5</text>
+      <text x="600" y="296" fill="#8a8675">6</text><text x="690" y="296" fill="#8a8675">7</text>
+      <text x="780" y="296" fill="#8a8675">8</text><text x="870" y="296" fill="#8a8675">9</text>
+    </g>
+    <g stroke="#e0445a" stroke-width="2">
+      <line x1="414" y1="306" x2="426" y2="318"/><line x1="426" y1="306" x2="414" y2="318"/>
+      <line x1="504" y1="306" x2="516" y2="318"/><line x1="516" y1="306" x2="504" y2="318"/>
+      <line x1="594" y1="306" x2="606" y2="318"/><line x1="606" y1="306" x2="594" y2="318"/>
+      <line x1="684" y1="306" x2="696" y2="318"/><line x1="696" y1="306" x2="684" y2="318"/>
+      <line x1="774" y1="306" x2="786" y2="318"/><line x1="786" y1="306" x2="774" y2="318"/>
+      <line x1="864" y1="306" x2="876" y2="318"/><line x1="876" y1="306" x2="864" y2="318"/>
+    </g>
+    <text x="920" y="300" fill="#e0445a" font-size="11.5" font-weight="700">六条全部 ≤ 9</text>
+    <text x="920" y="318" fill="#bdb9a6" font-size="11">一条都不写</text>
+
+    <text x="366" y="376" fill="#5aad4e" font-size="12.5" font-weight="700" text-anchor="end">要走的 · 在节点上打「已写」标记</text>
+    <text x="366" y="396" fill="#8a8675" font-size="11" text-anchor="end">从 head 往回走，收没标记的，遇到有标记的就停</text>
+    <g font-size="11" text-anchor="middle" fill="#8a8675">
+      <text x="420" y="380">无标记</text><text x="510" y="380">无标记</text><text x="600" y="380">无标记</text>
+      <text x="690" y="380">无标记</text><text x="780" y="380">无标记</text><text x="870" y="380">无标记</text>
+    </g>
+    <g stroke="#5aad4e" stroke-width="2.2" fill="none">
+      <path d="M413 392 L419 400 L429 386"/><path d="M503 392 L509 400 L519 386"/>
+      <path d="M593 392 L599 400 L609 386"/><path d="M683 392 L689 400 L699 386"/>
+      <path d="M773 392 L779 400 L789 386"/><path d="M863 392 L869 400 L879 386"/>
+    </g>
+    <path d="M392 368 L360 368" stroke="#5aad4e" stroke-width="1.4" marker-end="url(#c-gr)" transform="translate(0,0)"/>
+    <text x="920" y="380" fill="#5aad4e" font-size="11.5" font-weight="700">六条全部欠着</text>
+    <text x="920" y="398" fill="#bdb9a6" font-size="11">走到 m3 有标记，停</text>
+
+    <text x="366" y="440" fill="#9d6fe0" font-size="12.5" font-weight="700" text-anchor="end">另一个能走通的 · 记忆自己存 ID 集合</text>
+    <text x="366" y="460" fill="#8a8675" font-size="11" text-anchor="end">走完整条分支，减去集合里的 ID</text>
+    <g font-size="11" text-anchor="middle" fill="#8a8675">
+      <text x="420" y="444">新 id</text><text x="510" y="444">新 id</text><text x="600" y="444">新 id</text>
+      <text x="690" y="444">新 id</text><text x="780" y="444">新 id</text><text x="870" y="444">新 id</text>
+    </g>
+    <g stroke="#9d6fe0" stroke-width="2.2" fill="none">
+      <path d="M413 456 L419 464 L429 450"/><path d="M503 456 L509 464 L519 450"/>
+      <path d="M593 456 L599 464 L609 450"/><path d="M683 456 L689 464 L699 450"/>
+      <path d="M773 456 L779 464 L789 450"/><path d="M863 456 L869 464 L879 450"/>
+    </g>
+    <text x="920" y="444" fill="#9d6fe0" font-size="11.5" font-weight="700">六条全部欠着</text>
+    <text x="920" y="462" fill="#bdb9a6" font-size="11">结果一样，代价不一样</text>
+
+    <rect x="32" y="490" width="1096" height="52" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.2"/>
+    <text x="50" y="514" fill="#5aad4e" font-size="12" font-weight="700">分叉点之前为什么自动不会重复写：</text>
+    <text x="270" y="514" fill="#bdb9a6" font-size="12">分支这条线往回走，走到 m3 还是那条消息，标记就在它身上，走行到此为止。</text>
+    <text x="50" y="534" fill="#bdb9a6" font-size="12">两条线之间不需要任何顺序，也不需要互相知道：谁先写，谁就给共享的那几条打上标记，另一条来的时候正好停在它们上面。</text>
+
+    <rect x="32" y="558" width="354" height="122" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="50" y="582" fill="#d4843a" font-size="12" font-weight="700">标记写在哪</text>
+    <text x="50" y="604" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">节点 metadata，键名带 provider</text>
+    <text x="50" y="626" fill="#bdb9a6" font-size="11">值是记忆工作区的标识，导出的会话</text>
+    <text x="50" y="644" fill="#bdb9a6" font-size="11">带着标记去到别处，不会被误认</text>
+    <text x="50" y="666" fill="#8a8675" font-size="10.5">rewind 盖 rewound 就是同一条路</text>
+
+    <rect x="398" y="558" width="354" height="122" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="416" y="582" fill="#d4843a" font-size="12" font-weight="700">什么时候打上</text>
+    <text x="416" y="604" fill="#bdb9a6" font-size="11">两个条件：事务安装成功，并且这一趟</text>
+    <text x="416" y="622" fill="#bdb9a6" font-size="11">确实改动过文件</text>
+    <text x="416" y="646" fill="#8a8675" font-size="10.5">实测：二十轮撞同一处被拒编辑，</text>
+    <text x="416" y="664" fill="#8a8675" font-size="10.5">返回成功，主题文件只有一个字节</text>
+
+    <rect x="764" y="558" width="364" height="122" rx="9" fill="#241f10" stroke="#d4843a" stroke-width="1.4"/>
+    <text x="782" y="582" fill="#d4843a" font-size="12" font-weight="700">这一节的状态</text>
+    <text x="782" y="604" fill="#bdb9a6" font-size="11">设计定了，代码还没换。跑着的仍是位置</text>
+    <text x="782" y="622" fill="#bdb9a6" font-size="11">游标，上面那排红叉是改之前的真实行为</text>
+    <text x="782" y="646" fill="#8a8675" font-size="10.5">实测：存的是 9，一条五轮的分支被算成零轮，</text>
+    <text x="782" y="664" fill="#8a8675" font-size="10.5">一条十一轮的分支被算成最后两轮</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <b>为什么位置当不了身份</b>：编号是链表被展开成列表的那一刻数出来的，它描述的是这次展开，
+    不是消息本身。展开之前没有这个号，展开之后这个号和消息的 ID 没有关系。
+    同一条消息沿两条线走到会拿到两个号，两条线上深度相同的两条不同消息会拿到同一个号；
+    而且 <code>get_branch</code> 会滤掉 <code>rewind</code> 标记过的轮次、压缩会把摘要节点接在中间，
+    所以同一条线在两次读取之间也不稳定。<br>
+    <b>这个形状连纠正都不接受</b>：<code>advance_cursor</code> 在新序号低于已存序号时抛
+    <code>cursor cannot move backwards</code>，而往回走恰恰是分叉需要的。
+    单调计数器和会分叉的对话是两个形状，其中一个修不成另一个。<br>
+    <b>两种失效不是一样响的</b>：分支还没超过已写高度时一条都不认领，是漏掉一条分支；
+    超过之后只认领超出去的那一段，是<b>写下一个从对话中间开始的片段，然后把整条分支记成已写</b>。
+    后一种是成功返回的，没有任何东西会提示它出过错。
+  </div>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="四层：现状、别人、两种做法、取哪一个">
+    <rect x="24" y="16" width="240" height="24" rx="6" fill="#211316"/>
+    <text x="38" y="33" fill="#e0445a" font-size="11.5" letter-spacing="1.4">第一层 · 我们现在</text>
+    <rect x="24" y="48" width="1112" height="66" rx="8" fill="#1d1c14" stroke="#2e2c20"/>
+    <text x="42" y="72" fill="#f0eee6" font-size="12">位置游标：<tspan font-family="Menlo,monospace" fill="#bdb9a6">runtime.json</tspan> 里一个 thread 一条 <tspan font-family="Menlo,monospace" fill="#bdb9a6">{message_id, ordinal}</tspan>，只认领序号更大的记录</text>
+    <text x="42" y="94" fill="#8a8675" font-size="11">序号来自 <tspan font-family="Menlo,monospace">enumerate(get_branch(...))</tspan>，而 <tspan font-family="Menlo,monospace">advance_cursor</tspan> 明确拒绝往回移动，所以连改对都做不到</text>
+
+    <rect x="24" y="128" width="240" height="24" rx="6" fill="#101722"/>
+    <text x="38" y="145" fill="#4f8ef7" font-size="11.5" letter-spacing="1.4">第二层 · 别人怎么做</text>
+    <rect x="24" y="160" width="1112" height="118" rx="8" fill="#1d1c14" stroke="#2e2c20"/>
+    <text x="42" y="184" fill="#bdb9a6" font-size="11.5">读了九个参考框架。<tspan fill="#f0eee6" font-weight="600">三个存的对话会分叉</tspan>（claude-code、openclaw、pi-mono，都是一份追加写的文件里每条带父指针）；三个是直线；一个在重试时把整个会话重写掉、旧分支直接毁掉；两个不存对话。</text>
+    <text x="42" y="206" fill="#bdb9a6" font-size="11.5">直线让位置就是身份，所以大多数根本碰不到这个问题。<tspan fill="#f0eee6" font-weight="600">没有任何一个把「记忆取走过这一轮」写到对话轮次上。</tspan></text>
+    <text x="42" y="230" fill="#8a8675" font-size="11">codex-cli：分叉开一份新文件，抽取任务按 thread 记水位和租约，<tspan fill="#bdb9a6">把单位放粗到分叉不再重要</tspan></text>
+    <text x="42" y="248" fill="#8a8675" font-size="11">pi-mono：存储根本不提供改动一条记录的方法，加注解和移游标都靠追加一条指向它的记录，分支摘要覆盖谁在切换的那一刻从树上现算，<tspan fill="#bdb9a6">从拓扑推增量</tspan></text>
+    <text x="42" y="266" fill="#8a8675" font-size="11">claude-code：游标放进程内存，指的消息找不到就整个会话重新处理；openclaw：写 <tspan font-family="Menlo,monospace">promotedAt</tspan>，但写在派生记录上，它的记忆钩子读对话时平着取最后十五行</text>
+
+    <rect x="24" y="292" width="240" height="24" rx="6" fill="#141a12"/>
+    <text x="38" y="309" fill="#5aad4e" font-size="11.5" letter-spacing="1.4">第三层 · 两种做法并排</text>
+
+    <rect x="24" y="324" width="548" height="160" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+    <text x="42" y="348" fill="#5aad4e" font-size="12.5" font-weight="700">在节点上打标记</text>
+    <text x="42" y="370" fill="#bdb9a6" font-size="11">欠账：从 head 往回走，遇到第一个有标记的就停</text>
+    <text x="42" y="390" fill="#bdb9a6" font-size="11">要存的：一个本来就存在的节点上多一个字段</text>
+    <text x="42" y="410" fill="#bdb9a6" font-size="11">增长：不增长；一次读取只走几步</text>
+    <text x="42" y="430" fill="#bdb9a6" font-size="11">迁移：把归档覆盖到的节点标上</text>
+    <text x="42" y="450" fill="#e0445a" font-size="11">丢一个标记：走行提前停下，更老的全部搁浅</text>
+    <text x="42" y="470" fill="#e0445a" font-size="11">耦合：记忆往会话存储里写一个字段</text>
+
+    <rect x="588" y="324" width="548" height="160" rx="8" fill="#1a1622" stroke="#9d6fe0" stroke-width="1.3"/>
+    <text x="606" y="348" fill="#9d6fe0" font-size="12.5" font-weight="700">记忆自己存一份 ID 集合</text>
+    <text x="606" y="370" fill="#bdb9a6" font-size="11">欠账：走完整条分支，减去集合</text>
+    <text x="606" y="390" fill="#bdb9a6" font-size="11">要存的：每个 thread 一个文件，装下写过的每个 ID</text>
+    <text x="606" y="410" fill="#bdb9a6" font-size="11">增长：每条消息一项；一次读取要整份清单</text>
+    <text x="606" y="430" fill="#bdb9a6" font-size="11">迁移：用同一份归档播种同一个集合</text>
+    <text x="606" y="450" fill="#5aad4e" font-size="11">丢一个条目：那一轮被重新拿出来，精确</text>
+    <text x="606" y="470" fill="#bdb9a6" font-size="11">耦合：记忆自己记账，但带出文件、迁移、只增不删</text>
+
+    <rect x="24" y="498" width="240" height="24" rx="6" fill="#241f10"/>
+    <text x="38" y="515" fill="#d4843a" font-size="11.5" letter-spacing="1.4">第四层 · 取哪一个</text>
+    <text x="284" y="515" fill="#f0eee6" font-size="12" font-weight="600">取节点标记。</text>
+    <text x="380" y="515" fill="#bdb9a6" font-size="11.5">「记在外面」一旦要在分叉之后仍然正确，就只能是集合，而集合带出文件怎么放、怎么迁移、ID 为什么不能删、读取代价随会话增长这一串。</text>
+    <text x="284" y="537" fill="#bdb9a6" font-size="11.5">代价是集合精确而走行不精确：走行假定标记构成一段前缀，靠「一批永远是最老的那几轮」成立，它是假定不是不变量。会话存储本来就在给节点存来源、显示类别、分支根、rewind 状态，多一个字段是同一类东西。</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <b>先做能幂等重放的那一步</b>：三步的顺序是先归档证据、再写主题文件、最后打标记。
+    归档是追加式、按内容寻址的，同一批归档两次逐字节不变；主题文件带块 ID 和脚注，
+    半写会污染，所以走整装或不装的事务。写入器死在两步之间，留下的是没人引用的证据、
+    没有标记、下次仍然欠着的同一批，也就是一次<b>重做</b>。反过来先打标记，同一次崩溃变成安静地丢掉这些轮次。<br>
+    <b>「做完了」都要有可核对的产物</b>：标记要事务安装成功<i>并且</i>这一趟确实改动过文件，
+    夜间那一趟要报出改过哪些文件而不是看过哪些文件。没有报错不是产出。<br>
+    <b>它让会话存储付出什么（核实过）</b>：会话那边没有整树哈希，
+    唯一那个逐字节整树哈希是记忆工作区的版本号，根在 <code>&lt;state&gt;/memory</code>，
+    和 <code>&lt;state&gt;/sessions</code> 不相交，所以标记不会被读成一次并发的记忆写入。
+    会被碰到的是会话索引缓存：过期判定看 history 目录的 mtime，一次重写和一次追加一样会让它变，
+    别的进程重建一次索引，实测 289 个节点 4.2 MB 是 <b>14 到 50 毫秒</b>，而且自限。
+    真正会增长的是 git：会话目录每轮 <code>git add -A</code> 一次，
+    字节变过的节点都会成为新 blob，所以<b>标记只打在这一批上，不做全量扫一遍</b>，
+    否则每轮加上整个会话的重量，一生下来是平方级。
+    另外两条硬约束：标记不能动 <code>updated_at</code>（闲置看门狗就是按它判断"已处理"，
+    动了等于把会话送回一次强制写入），也不能走"把会话记成已同步"的那条路径。
+  </div>
+
+  <!-- ══════════ 05 常驻块 ══════════ -->
+  <h2 id="core"><span class="num">05</span>常驻块：谁在维护它</h2>
+  <p class="lead"><code>core.md</code>是每次会话开头都注入的那一小块。它现在是
+    <code>topics/core.md</code>的渲染结果，2000 token是渲染预算而不是闸门。
+    改之前它是被写的正本，顶到上限的那一刻就是它最后一次改变的时刻，而且此后每一笔事务都被它拒掉。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="常驻块：改之前的写入路径与现在的派生视图">
+    <defs>
+      <marker id="k-no" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e0445a"/></marker>
+      <marker id="k-gy" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a8675"/></marker>
+      <marker id="k-vi" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9d6fe0"/></marker>
+    </defs>
+
+    <text x="24" y="30" fill="#d4843a" font-size="15" font-weight="700">同一个文件，两种身份：被写的，和被渲染的</text>
+    <text x="24" y="52" fill="#8a8675" font-size="12">左边是改之前的，右边是现在跑着的。分界线就一句话：正本在哪。</text>
+
+    <!-- ─────────── 现在 ─────────── -->
+    <rect x="32" y="70" width="536" height="26" rx="6" fill="#241015"/>
+    <text x="48" y="88" fill="#e0445a" font-size="11.5" letter-spacing="1.4">改之前 · core.md就是正本</text>
+
+    <rect x="32" y="106" width="252" height="58" rx="8" fill="#12110b" stroke="#2e2c20" stroke-width="1.3"/>
+    <text x="48" y="128" fill="#bdb9a6" font-size="12">写入agent直接编辑它</text>
+    <text x="48" y="148" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">prompts/write.py · prompts/system.py</text>
+    <path d="M284 135 L316 135" stroke="#8a8675" stroke-width="1.4" marker-end="url(#k-gy)"/>
+
+    <rect x="320" y="106" width="248" height="58" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.4"/>
+    <text x="336" y="128" fill="#d4843a" font-size="12">2000 token闸，超了就抛</text>
+    <text x="336" y="148" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">management/block_views.py的_synchronize</text>
+
+    <path d="M444 164 L444 186" stroke="#e0445a" stroke-width="1.5" marker-end="url(#k-no)"/>
+    <rect x="32" y="188" width="536" height="58" rx="8" fill="#241015" stroke="#e0445a" stroke-width="1.4"/>
+    <text x="48" y="210" fill="#e0445a" font-size="12" font-weight="700">整笔事务被拒，这一轮的主题改动一起回滚</text>
+    <text x="48" y="230" fill="#bdb9a6" font-size="11.5">修复话术只有一句：core.md满了，别动它，这条放进主题文件。</text>
+
+    <path d="M300 246 L300 268" stroke="#e0445a" stroke-width="1.5" marker-end="url(#k-no)"/>
+    <rect x="32" y="270" width="536" height="52" rx="8" fill="#12110b" stroke="#e0445a" stroke-width="1.3"/>
+    <text x="48" y="292" fill="#e0445a" font-size="12" font-weight="700">从此每一条稳定事实都被劝走</text>
+    <text x="48" y="312" fill="#bdb9a6" font-size="11.5">而且没有任何东西让它变短：夜间整理的文件列表只从topics/**.md来。</text>
+
+    <!-- 更宽的那一层 -->
+    <rect x="32" y="336" width="536" height="106" rx="8" fill="#12110b" stroke="#e0445a" stroke-width="1.6"/>
+    <text x="48" y="358" fill="#e0445a" font-size="12" font-weight="700">闸量的是暂存里的整份core.md，不是这次改动</text>
+    <text x="48" y="378" fill="#bdb9a6" font-size="11.5">所以一份已经超标的core.md会拒掉它之后的每一笔事务，包括只改主题文件的，</text>
+    <text x="48" y="396" fill="#bdb9a6" font-size="11.5">和一个字都没改的。而它本来就允许人手编辑，是普通Markdown。</text>
+    <text x="48" y="418" fill="#8a8675" font-size="11">实测：人在编辑器里把它撑大之后，一笔没有任何改动的事务报</text>
+    <text x="48" y="435" fill="#8a8675" font-size="11" font-family="Menlo,monospace">Core Memory exceeds 2000 tokens: 4004</text>
+
+    <rect x="32" y="452" width="536" height="80" rx="8" fill="#241015" stroke="#e0445a" stroke-width="1.4"/>
+    <text x="48" y="474" fill="#e0445a" font-size="12" font-weight="700">两次被拒之后：这个会话的对话不进记忆，下一个也不进</text>
+    <text x="48" y="494" fill="#bdb9a6" font-size="11.5">报COMMIT_REJECTED，它不在可重试集合里，所以观察者照样把会话标成已处理。</text>
+    <text x="48" y="514" fill="#bdb9a6" font-size="11.5">这个状态要靠人去改短那个文件才会结束。</text>
+
+    <!-- ─────────── 计划 ─────────── -->
+    <rect x="596" y="70" width="532" height="26" rx="6" fill="#1a1622"/>
+    <text x="612" y="88" fill="#9d6fe0" font-size="11.5" letter-spacing="1.4">现在 · topics/core.md是正本，core.md是渲染结果</text>
+
+    <rect x="596" y="106" width="240" height="140" rx="8" fill="#12110b" stroke="#5aad4e" stroke-width="1.5"/>
+    <text x="612" y="128" fill="#5aad4e" font-size="12" font-weight="700">topics/core.md正本</text>
+    <text x="612" y="147" fill="#8a8675" font-size="11">一个普通主题文件，不设上限</text>
+    <rect x="612" y="158" width="208" height="20" rx="3" fill="#2a2a1c"/>
+    <text x="622" y="172" fill="#bdb9a6" font-size="10.5">段落^a1</text>
+    <rect x="612" y="182" width="208" height="20" rx="3" fill="#2a2a1c"/>
+    <text x="622" y="196" fill="#bdb9a6" font-size="10.5">段落^b2</text>
+    <rect x="612" y="206" width="208" height="20" rx="3" fill="#241f14"/>
+    <text x="622" y="220" fill="#8a8675" font-size="10.5">段落^c3 · 这次没装进去</text>
+    <text x="612" y="240" fill="#8a8675" font-size="10.5">写入方和夜间整理都只认识它</text>
+
+    <path d="M840 176 L876 176" stroke="#9d6fe0" stroke-width="1.6" marker-end="url(#k-vi)"/>
+    <text x="858" y="168" fill="#9d6fe0" font-size="10.5" text-anchor="middle">渲染</text>
+
+    <rect x="888" y="106" width="240" height="140" rx="8" fill="#12110b" stroke="#9d6fe0" stroke-width="1.5"/>
+    <text x="904" y="128" fill="#9d6fe0" font-size="12" font-weight="700">core.md派生</text>
+    <text x="904" y="147" fill="#8a8675" font-size="11">每次写入装成之后跟着重建</text>
+    <rect x="904" y="158" width="208" height="20" rx="3" fill="#2a2a1c"/>
+    <text x="914" y="172" fill="#bdb9a6" font-size="10.5">段落^a1</text>
+    <rect x="904" y="182" width="208" height="20" rx="3" fill="#2a2a1c"/>
+    <text x="914" y="196" fill="#bdb9a6" font-size="10.5">段落^b2</text>
+    <text x="904" y="220" fill="#5aad4e" font-size="10.5">装到2000 token为止</text>
+    <text x="904" y="238" fill="#5aad4e" font-size="10.5">装不下的不报错，只报出块ID</text>
+
+    <rect x="596" y="262" width="532" height="86" rx="8" fill="#12110b" stroke="#9d6fe0" stroke-width="1.3"/>
+    <text x="612" y="284" fill="#f0eee6" font-size="12" font-weight="700">预算是渲染上限，不是闸门</text>
+    <text x="612" y="304" fill="#bdb9a6" font-size="11.5">被挤出去的段落还在正本里，照样被索引，照样能被search和memory_get找到。</text>
+    <text x="612" y="323" fill="#bdb9a6" font-size="11.5">所以留在外面只损失可见性，不损失内容，裁剪也就不必先分清是谁写的。</text>
+    <text x="612" y="341" fill="#8a8675" font-size="11">想让某一段一直在，就把它在正本里排到前面，这是普通编辑。</text>
+
+    <rect x="596" y="356" width="532" height="86" rx="8" fill="#12110b" stroke="#5aad4e" stroke-width="1.3"/>
+    <text x="612" y="378" fill="#f0eee6" font-size="12" font-weight="700">为什么必须先变成派生视图，才谈得上裁</text>
+    <text x="612" y="398" fill="#bdb9a6" font-size="11.5">事务有一条硬契约：改之前存在的块ID，改之后必须还找得到。</text>
+    <text x="612" y="417" fill="#bdb9a6" font-size="11.5">core.md里今天可能有独苗，裁掉它整笔就被拒；渲染结果的ID永远是正本ID</text>
+    <text x="612" y="435" fill="#bdb9a6" font-size="11.5">的子集，裁掉一段，ID在正本里活着。</text>
+
+    <rect x="596" y="452" width="532" height="80" rx="8" fill="#221a30" stroke="#9d6fe0" stroke-width="1.4"/>
+    <text x="612" y="474" fill="#9d6fe0" font-size="12" font-weight="700">这一节的状态</text>
+    <text x="612" y="494" fill="#bdb9a6" font-size="11.5">已经落地。左边画的是改之前的行为，不再发生。</text>
+    <text x="612" y="514" fill="#bdb9a6" font-size="11.5">实测：一份11883 token的手写core.md，一笔不碰它的写入照样装成，渲染出1983 token。</text>
+
+    <line x1="32" y1="552" x2="1128" y2="552" stroke="#2e2c20" stroke-width="1"/>
+    <text x="32" y="578" fill="#8a8675" font-size="11.5">老实现里这件事是有人管的：<tspan font-family="Menlo,monospace">memory/core.py</tspan>的refresh_from_wiki把core.md从一个指定的wiki页重建出来，按标题边界截到预算，由sleep的deep阶段调用。</text>
+    <text x="32" y="600" fill="#8a8675" font-size="11.5">换成topics/sources这套结构时那条流程被删掉。右边那一栏就是把它接回来，只是指定页从wiki页换成主题文件。</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <b>两个方向的区别</b>：现在是<b>拒绝</b>，拒绝落在写入的路上，代价是内容进不来；
+    计划是<b>不装</b>，不装落在渲染的路上，代价只是这一次没被看见。
+    <b>为什么不给它加第二道闸</b>：第二道闸仍然是闸，仍然在写入的路上，仍然会把稳定事实挡在外面。
+    别家要区分"人写的"和"自动写的"才敢裁，是因为它们的常驻文件是唯一一份，丢一行等于销毁一行；
+    这里正本是全量的，所以归属这件事根本不用判。
+  </div>
+
+  <!-- ══════════ 06九个方法 ══════════ -->
+  <h2 id="hooks"><span class="num">06</span>接口的九个方法</h2>
+  <p class="lead">记忆和 agent 运行时之间只有这一个接口。除了 <code>name</code> 之外每个方法都有默认实现，
+    所以换一套记忆系统只需要写它有事可做的那几个。下图按会话的生命周期摆开，并如实标出哪些还没接线。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MemoryBackend 的九个方法">
+    <text x="24" y="32" fill="#d4843a" font-size="15" font-weight="700">按生命周期摆开的九个方法</text>
+    <text x="24" y="54" fill="#8a8675" font-size="12">线上方 = 运行时真的在调；线下方 = 接口留着，运行时还没有任何调用方。</text>
+
+    <!-- 已接线 -->
+    <g>
+      <rect x="216" y="86" width="196" height="94" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+      <text x="234" y="110" fill="#5aad4e" font-size="12.5" font-weight="700" font-family="Menlo,monospace">system_prompt()</text>
+      <text x="234" y="132" fill="#bdb9a6" font-size="11">会话开始注入 core.md</text>
+      <text x="234" y="152" fill="#8a8675" font-size="11">包在 memory-context 里，</text>
+      <text x="234" y="170" fill="#8a8675" font-size="11">免得被当成用户现在说的</text>
+
+      <rect x="428" y="86" width="196" height="94" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+      <text x="446" y="110" fill="#5aad4e" font-size="12.5" font-weight="700" font-family="Menlo,monospace">search(query)</text>
+      <text x="446" y="132" fill="#bdb9a6" font-size="11">每轮开跑前搜一次</text>
+      <text x="446" y="152" fill="#8a8675" font-size="11">默认 BM25，取前五条</text>
+      <text x="446" y="170" fill="#8a8675" font-size="11">时间预算很紧，要快</text>
+
+      <rect x="640" y="86" width="196" height="94" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+      <text x="658" y="110" fill="#5aad4e" font-size="12.5" font-weight="700" font-family="Menlo,monospace">write(…)</text>
+      <text x="658" y="132" fill="#bdb9a6" font-size="11">每轮一次，闲置再一次</text>
+      <text x="658" y="152" fill="#8a8675" font-size="11">两次的差别只有 force，</text>
+      <text x="658" y="170" fill="#8a8675" font-size="11">所以是一个方法不是两个</text>
+
+      <rect x="900" y="86" width="196" height="94" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+      <text x="918" y="110" fill="#5aad4e" font-size="12.5" font-weight="700" font-family="Menlo,monospace">reorganize()</text>
+      <text x="918" y="132" fill="#bdb9a6" font-size="11">每天 03:00 重排一次</text>
+      <text x="918" y="152" fill="#8a8675" font-size="11">也可以手动触发：</text>
+      <text x="918" y="170" fill="#8a8675" font-size="11" font-family="Menlo,monospace">openprogram memory sleep</text>
+    </g>
+
+    <line x1="314" y1="180" x2="314" y2="242" stroke="#5aad4e" stroke-width="1.4"/>
+    <line x1="526" y1="180" x2="526" y2="242" stroke="#5aad4e" stroke-width="1.4"/>
+    <line x1="700" y1="180" x2="700" y2="242" stroke="#5aad4e" stroke-width="1.4"/>
+    <path d="M800 180 C 800 214, 880 208, 880 242" fill="none" stroke="#5aad4e" stroke-width="1.4"/>
+    <line x1="998" y1="180" x2="998" y2="242" stroke="#5aad4e" stroke-width="1.4"/>
+
+    <!-- 生命线 -->
+    <line x1="60" y1="256" x2="1120" y2="256" stroke="#d4843a" stroke-width="2.4"/>
+    <g text-anchor="middle" font-size="11">
+      <circle cx="110" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="110" y="240" fill="#d4843a" font-size="11.5" font-weight="700">选中</text>
+      <circle cx="314" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="314" y="278" fill="#8a8675">会话开始</text>
+      <circle cx="526" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="526" y="278" fill="#8a8675">每轮开跑前</text>
+      <circle cx="614" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="614" y="240" fill="#8a8675">上下文压缩时</text>
+      <circle cx="700" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="700" y="278" fill="#8a8675">每轮结束</text>
+      <circle cx="880" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="880" y="278" fill="#8a8675">会话结束</text>
+      <circle cx="998" cy="256" r="5" fill="#16150f" stroke="#d4843a" stroke-width="2"/>
+      <text x="998" y="278" fill="#8a8675">夜里 03:00</text>
+    </g>
+
+    <!-- 未接线 -->
+    <line x1="110" y1="256" x2="110" y2="330" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="4 4"/>
+    <line x1="314" y1="288" x2="314" y2="330" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="4 4"/>
+    <line x1="614" y1="256" x2="614" y2="330" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="4 4"/>
+    <line x1="880" y1="288" x2="880" y2="330" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="4 4"/>
+
+    <rect x="32" y="332" width="196" height="104" rx="9" fill="#12110b" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="50" y="356" fill="#8a8675" font-size="12.5" font-weight="700" font-family="Menlo,monospace">name</text>
+    <text x="106" y="356" fill="#8a8675" font-size="12.5" font-weight="700" font-family="Menlo,monospace">is_available()</text>
+    <text x="50" y="378" fill="#bdb9a6" font-size="11">选哪一套记忆系统要用的</text>
+    <text x="50" y="398" fill="#bdb9a6" font-size="11">两件事。但现在没有"选"这</text>
+    <text x="50" y="416" fill="#bdb9a6" font-size="11">个动作：直接构造出来的</text>
+
+    <rect x="240" y="332" width="196" height="104" rx="9" fill="#12110b" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="258" y="356" fill="#8a8675" font-size="12.5" font-weight="700" font-family="Menlo,monospace">initialize(…)</text>
+    <text x="258" y="378" fill="#bdb9a6" font-size="11">本该在会话开始时调一次</text>
+    <text x="258" y="398" fill="#8a8675" font-size="11">附带后果：内置实现拿它记</text>
+    <text x="258" y="416" fill="#8a8675" font-size="11">会话 id，那条兜底路是死的</text>
+
+    <rect x="534" y="332" width="230" height="104" rx="9" fill="#12110b" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="552" y="356" fill="#8a8675" font-size="12.5" font-weight="700" font-family="Menlo,monospace">extract_before_discard()</text>
+    <text x="552" y="378" fill="#bdb9a6" font-size="11">方向和别的都相反：它什么也不存。</text>
+    <text x="552" y="398" fill="#bdb9a6" font-size="11">压缩器手里攥着一批准备丢掉的消息，</text>
+    <text x="552" y="416" fill="#bdb9a6" font-size="11">问记忆哪些该留进摘要</text>
+
+    <rect x="782" y="332" width="196" height="104" rx="9" fill="#12110b" stroke="#4a4838" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="800" y="356" fill="#8a8675" font-size="12.5" font-weight="700" font-family="Menlo,monospace">shutdown()</text>
+    <text x="800" y="378" fill="#bdb9a6" font-size="11">本该在最后一轮之后调</text>
+    <text x="800" y="398" fill="#8a8675" font-size="11">现在收尾靠闲置观察者，</text>
+    <text x="800" y="416" fill="#8a8675" font-size="11">它走的是 write(force=True)</text>
+
+    <rect x="32" y="456" width="1096" height="60" rx="8" fill="#241f10" stroke="#d4843a" stroke-width="1.2"/>
+    <text x="50" y="480" fill="#d4843a" font-size="12" font-weight="700">这五个不是多余的方法，缺的是运行时那几行接线。</text>
+    <text x="380" y="480" fill="#bdb9a6" font-size="12">它们是留给第三方记忆系统的插件点：外部系统往往要建连接、要在会话结束时冲刷缓冲、要在压缩前抢救内容。</text>
+    <text x="50" y="502" fill="#bdb9a6" font-size="12">内置实现恰好这几件事都不需要做，所以缺了接线也没人发现。真接进来一套 mem0 之类的，第一件事就是把这几个调用点补上。</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <b>另外两条约定</b>：一是回忆文本在产生的地方就已经包好 <code>&lt;memory-context&gt;</code>，出口不再包一次，
+    包两层会把里面那层剥掉、只剩一个空壳。二是接口里没有"注册工具"这一项：
+    带工具的记忆系统按插件接进来，插件本来就能注册命令、技能、MCP、hook 和 agent，再开一条私道只会绕过它。
+  </div>
+
+  <!-- ══════════ 07失败 ══════════ -->
+  <h2 id="fail"><span class="num">07</span>失败会怎样</h2>
+  <p class="lead">写入的返回值只有三种，观察者读的就是它。不吭声等于成功，失败要说清是哪一种：会自己好的，和再试也一样的。</p>
+
+  <div class="card">
+  <svg viewBox="0 0 1160 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="写入失败的两种">
+    <defs>
+      <marker id="e-gn" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5aad4e"/></marker>
+      <marker id="e-or" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4843a"/></marker>
+      <marker id="e-no" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e0445a"/></marker>
+    </defs>
+
+    <text x="24" y="32" fill="#d4843a" font-size="15" font-weight="700">write() 返回什么，闲置观察者就怎么做</text>
+
+    <rect x="32" y="130" width="164" height="120" rx="10" fill="#241f10" stroke="#d4843a" stroke-width="1.8"/>
+    <text x="114" y="176" fill="#d4843a" font-size="14" font-weight="700" text-anchor="middle">write()</text>
+    <text x="114" y="200" fill="#8a8675" font-size="11" text-anchor="middle">一次调用</text>
+    <text x="114" y="220" fill="#8a8675" font-size="11" text-anchor="middle">三种回答</text>
+
+    <path d="M196 160 C 236 160, 236 106, 276 106" fill="none" stroke="#5aad4e" stroke-width="1.6" marker-end="url(#e-gn)"/>
+    <path d="M196 190 L276 190" fill="none" stroke="#d4843a" stroke-width="1.6" marker-end="url(#e-or)"/>
+    <path d="M196 220 C 236 220, 236 302, 276 302" fill="none" stroke="#e0445a" stroke-width="1.6" marker-end="url(#e-no)"/>
+
+    <!-- 成功 -->
+    <rect x="280" y="66" width="300" height="80" rx="9" fill="#101a10" stroke="#5aad4e" stroke-width="1.5"/>
+    <text x="298" y="90" fill="#5aad4e" font-size="12.5" font-weight="700">什么也不返回</text>
+    <text x="298" y="112" fill="#bdb9a6" font-size="11.5">写完了，或者本来就没到阈值不欠什么</text>
+    <text x="298" y="132" fill="#8a8675" font-size="11">两种情况都是"没有问题要说"</text>
+    <rect x="612" y="66" width="216" height="80" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="630" y="90" fill="#bdb9a6" font-size="12" font-weight="700">观察者：标记已处理</text>
+    <text x="630" y="112" fill="#8a8675" font-size="11">这个会话不再被提起</text>
+    <text x="630" y="132" fill="#8a8675" font-size="11">下次轮询直接跳过</text>
+    <rect x="860" y="66" width="268" height="80" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="878" y="90" fill="#bdb9a6" font-size="12" font-weight="700">为什么方向不能反</text>
+    <text x="878" y="112" fill="#8a8675" font-size="11">忘了写 return 也是"什么也不返回"。</text>
+    <text x="878" y="132" fill="#8a8675" font-size="11">反过来读，这种疏忽就成了永久重试</text>
+
+    <!-- 可重试 -->
+    <rect x="280" y="160" width="300" height="96" rx="9" fill="#241f10" stroke="#d4843a" stroke-width="1.5"/>
+    <text x="298" y="184" fill="#d4843a" font-size="12.5" font-weight="700">还欠着 · 值得再试</text>
+    <text x="298" y="206" fill="#bdb9a6" font-size="11.5">别的写手正拿着写锁</text>
+    <text x="298" y="224" fill="#bdb9a6" font-size="11.5">git 提交失败、向量后端不可用</text>
+    <text x="298" y="242" fill="#bdb9a6" font-size="11.5">模型不可达、写手进程起不来</text>
+    <rect x="612" y="160" width="216" height="96" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="630" y="184" fill="#bdb9a6" font-size="12" font-weight="700">观察者：不标记</text>
+    <text x="630" y="206" fill="#8a8675" font-size="11">下一轮轮询原样再来</text>
+    <text x="630" y="226" fill="#8a8675" font-size="11">对话本来就安全躺在</text>
+    <text x="630" y="244" fill="#8a8675" font-size="11">会话存储里，不会丢</text>
+    <rect x="860" y="160" width="268" height="96" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="878" y="184" fill="#bdb9a6" font-size="12" font-weight="700">这一类的共同点</text>
+    <text x="878" y="206" fill="#8a8675" font-size="11">条件自己会消失：锁会释放，模型会</text>
+    <text x="878" y="226" fill="#8a8675" font-size="11">恢复。同样的内容下次送过去，结果</text>
+    <text x="878" y="246" fill="#8a8675" font-size="11">可能就不一样</text>
+
+    <!-- 不可重试 -->
+    <rect x="280" y="270" width="300" height="96" rx="9" fill="#241015" stroke="#e0445a" stroke-width="1.5"/>
+    <text x="298" y="294" fill="#e0445a" font-size="12.5" font-weight="700">还欠着 · 再试也一样</text>
+    <text x="298" y="316" fill="#bdb9a6" font-size="11.5">写手改两遍都被事务驳回</text>
+    <text x="298" y="334" fill="#bdb9a6" font-size="11.5">补丁引用了没提供的来源、格式不合</text>
+    <text x="298" y="352" fill="#bdb9a6" font-size="11.5">压根没给会话 id</text>
+    <rect x="612" y="270" width="216" height="96" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="630" y="294" fill="#bdb9a6" font-size="12" font-weight="700">观察者：照样标记</text>
+    <text x="630" y="316" fill="#bdb9a6" font-size="11">并且把原因发上事件总线</text>
+    <text x="630" y="336" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">memory.ingest_ended</text>
+    <text x="630" y="354" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">ok: false</text>
+    <rect x="860" y="270" width="268" height="96" rx="9" fill="#12110b" stroke="#2e2c20"/>
+    <text x="878" y="294" fill="#bdb9a6" font-size="12" font-weight="700">为什么明知没写完还标记</text>
+    <text x="878" y="316" fill="#8a8675" font-size="11">同样的内容再送一次还是同样的驳回，</text>
+    <text x="878" y="336" fill="#8a8675" font-size="11">一直重试只烧模型额度。而没人看见</text>
+    <text x="878" y="356" fill="#8a8675" font-size="11">的失败，就是永远不会被修的失败</text>
+
+    <line x1="32" y1="392" x2="1128" y2="392" stroke="#2e2c20" stroke-width="1"/>
+    <text x="32" y="418" fill="#bdb9a6" font-size="12">每轮那条路用同一套返回值：它也会撞上被别人占着的写锁。以前那次撞锁被当成"还不够写"咽掉，和真的没到阈值长得一模一样，于是一轮没写成、什么也没说。</text>
+    <text x="32" y="442" fill="#8a8675" font-size="12">每轮那条路拿到"还欠着"只记一行调试日志：下一轮自然会再来。真正要把一个会话收尾的是闲置观察者，所以判断标不标记的责任在它那边。</text>
+    <text x="32" y="464" fill="#8a8675" font-size="12">无论哪一种，记忆都不会把对话带下水：每个钩子都自己吞掉自己的异常并记日志。吞掉不等于装作没发生。</text>
+  </svg>
+  </div>
+
+  <!-- ══════════ 08还没解决的 ══════════ -->
+  <h2 id="open"><span class="num">08</span>分支相关的实现状态</h2>
+  <p class="lead">节点写入标记和会话边界的活分支枚举已经实现。其余问题分别是互斥分支的语义表达、跨会话spawn关系和压缩摘要去重；这些不属于位置记录本身。</p>
+
+  <div class="grid2">
+
+    <div class="oc">
+      <svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一条分支只在会话边界上被回访">
+        <text x="16" y="26" fill="#d4843a" font-size="12.5" font-weight="700">一条分支只在会话边界上被回访</text>
+        <line x1="60" y1="70" x2="220" y2="70" stroke="#3a382c" stroke-width="1.3"/>
+        <g font-size="10.5" text-anchor="middle">
+          <circle cx="60" cy="70" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+          <circle cx="140" cy="70" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+          <circle cx="220" cy="70" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+        </g>
+        <path d="M220 78 C 220 100, 260 100, 268 112" fill="none" stroke="#3a382c" stroke-width="1.3"/>
+        <path d="M220 62 C 220 44, 260 44, 268 34" fill="none" stroke="#3a382c" stroke-width="1.3"/>
+        <line x1="276" y1="30" x2="420" y2="30" stroke="#3a382c" stroke-width="1.3"/>
+        <g>
+          <circle cx="276" cy="30" r="7" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/>
+          <circle cx="348" cy="30" r="7" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/>
+          <circle cx="420" cy="30" r="8" fill="#241f10" stroke="#d4843a" stroke-width="2.2"/>
+        </g>
+        <text x="440" y="34" fill="#d4843a" font-size="11">head，会被写</text>
+        <line x1="276" y1="118" x2="420" y2="118" stroke="#2a2820" stroke-width="1.3"/>
+        <g>
+          <circle cx="276" cy="118" r="7" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/>
+          <circle cx="348" cy="118" r="7" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/>
+          <circle cx="420" cy="118" r="7" fill="#12110b" stroke="#3a382c" stroke-width="1.3"/>
+        </g>
+        <text x="440" y="122" fill="#8a8675" font-size="11">要等会话闲下来</text>
+        <text x="16" y="160" fill="#8a8675" font-size="11">每一轮里，两条写入路径要的都是"结束在head的那条分支"。</text>
+        <text x="16" y="178" fill="#8a8675" font-size="11">会话边界上才会枚举每条分支各要一遍。</text>
+      </svg>
+      <div class="d"><b>已实现。</b>强制会话边界写入先处理当前head，再枚举其他未归档分支tip；共享前缀由节点标记去重。当前仍通过闲置观察器触发，尚未改成head变化事件通知。</div>
+    </div>
+
+    <div class="oc">
+      <svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="两条分支写进同一批主题文件">
+        <text x="16" y="26" fill="#d4843a" font-size="12.5" font-weight="700">两条互斥的分支，一份主题文件</text>
+        <rect x="16" y="46" width="150" height="40" rx="7" fill="#241f10" stroke="#d4843a" stroke-width="1.3"/>
+        <text x="91" y="70" fill="#d4843a" font-size="11.5" text-anchor="middle">分支甲：用 Flask</text>
+        <rect x="16" y="104" width="150" height="40" rx="7" fill="#1d2738" stroke="#4f8ef7" stroke-width="1.3"/>
+        <text x="91" y="128" fill="#4f8ef7" font-size="11.5" text-anchor="middle">分支乙：改用 FastAPI</text>
+        <path d="M166 66 C 210 66, 210 88, 250 92" fill="none" stroke="#d4843a" stroke-width="1.4"/>
+        <path d="M166 124 C 210 124, 210 102, 250 98" fill="none" stroke="#4f8ef7" stroke-width="1.4"/>
+        <rect x="256" y="52" width="200" height="86" rx="8" fill="#12110b" stroke="#2e2c20" stroke-width="1.3"/>
+        <text x="272" y="74" fill="#bdb9a6" font-size="11" font-family="Menlo,monospace">topics/projects/x.md</text>
+        <text x="272" y="98" fill="#d4843a" font-size="11">这个项目用 Flask</text>
+        <text x="272" y="120" fill="#4f8ef7" font-size="11">这个项目用 FastAPI</text>
+        <text x="466" y="90" fill="#e0445a" font-size="11">两段并排</text>
+        <text x="466" y="110" fill="#8a8675" font-size="11">谁也没说</text>
+        <text x="466" y="128" fill="#8a8675" font-size="11">它们互斥</text>
+        <text x="16" y="172" fill="#8a8675" font-size="11">检索会把两条都返回；夜里整理甚至可能把它们合成一段。</text>
+      </svg>
+      <div class="d">主题文件的格式里<b>没有"这两条是互斥选项"这种说法</b>，所以来自不同分支的记录只能并排堆着。</div>
+    </div>
+
+    <div class="oc">
+      <svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="跨会话 spawn 的两半各自记账">
+        <text x="16" y="26" fill="#d4843a" font-size="12.5" font-weight="700">跨会话 spawn：两半各记各的账</text>
+        <rect x="16" y="46" width="230" height="60" rx="8" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+        <text x="32" y="68" fill="#5aad4e" font-size="11.5">会话 A · 主对话</text>
+        <text x="32" y="90" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">cursors/openprogram/A.json</text>
+        <rect x="314" y="46" width="230" height="60" rx="8" fill="#1d2738" stroke="#4f8ef7" stroke-width="1.3"/>
+        <text x="330" y="68" fill="#4f8ef7" font-size="11.5">会话 B · 子 agent 的分支</text>
+        <text x="330" y="90" fill="#8a8675" font-size="10.5" font-family="Menlo,monospace">cursors/openprogram/B.json</text>
+        <path d="M246 76 L308 76" fill="none" stroke="#8a8675" stroke-width="1.3" stroke-dasharray="4 4"/>
+        <text x="277" y="66" fill="#8a8675" font-size="10.5" text-anchor="middle">spawn</text>
+        <text x="16" y="134" fill="#bdb9a6" font-size="11">线程键就是会话 id，所以两半落在两个游标文件下，</text>
+        <text x="16" y="152" fill="#bdb9a6" font-size="11">两次回溯谁也不会走进对方的图。</text>
+        <text x="16" y="176" fill="#5aad4e" font-size="11">不重、不漏。</text>
+        <text x="96" y="176" fill="#e0445a" font-size="11">缺的是"这条分支接着那段对话"的那条链接。</text>
+      </svg>
+      <div class="d">同一会话内的 spawn 分支共用这个会话的游标和存档，不需要额外东西。<b>跨会话那种，记忆里看不出两段是一回事。</b></div>
+    </div>
+
+    <div class="oc">
+      <svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="压缩摘要一旦成为 head">
+        <text x="16" y="26" fill="#d4843a" font-size="12.5" font-weight="700">压缩摘要一旦成为 head</text>
+        <line x1="40" y1="66" x2="300" y2="66" stroke="#3a382c" stroke-width="1.3"/>
+        <g>
+          <circle cx="40" cy="66" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+          <circle cx="126" cy="66" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+          <circle cx="212" cy="66" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+          <circle cx="298" cy="66" r="7" fill="#101a10" stroke="#5aad4e" stroke-width="1.3"/>
+        </g>
+        <text x="330" y="70" fill="#8a8675" font-size="11">原始轮次，已经写过</text>
+        <path d="M40 74 C 40 100, 80 100, 100 108" fill="none" stroke="#9d6fe0" stroke-width="1.4"/>
+        <rect x="104" y="94" width="150" height="34" rx="7" fill="#221a30" stroke="#9d6fe0" stroke-width="1.4"/>
+        <text x="179" y="116" fill="#9d6fe0" font-size="11.5" text-anchor="middle">压缩摘要</text>
+        <text x="264" y="116" fill="#8a8675" font-size="11">它取的是被压那一段</text>
+        <text x="264" y="132" fill="#8a8675" font-size="11">第一条的前驱，所以平常是旁支</text>
+        <text x="16" y="164" fill="#bdb9a6" font-size="11">head 一旦挪到摘要这条线上，摘要就成了一条没写过的助手轮次：</text>
+        <text x="16" y="182" fill="#bdb9a6" font-size="11">内容是记忆里已有内容的复述，id 却是游标从没见过的。</text>
+      </svg>
+      <div class="d">于是<b>同一批事实被换一种说法又写了一遍</b>。平常不发生，因为摘要节点是旁支而不是主线上的一员。</div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <b>实现状态（2026-08-11）</b>：每轮写入与闲置写入使用同一事务；节点自身记录工作区写入标记；会话边界枚举活分支；常驻块由<code>topics/core.md</code>渲染；后台writer沿用默认聊天agent，并允许<code>memory.writer.model</code>实时覆盖；未分类异常默认不可重试。<code>memory.backend=none</code>既关闭提示、召回、自动写入、整理和记忆线程，也在创建工作区前拒绝全部CLI memory动词与<code>/api/memory/*</code>路由。writer最近成功、失败分类、retryable判定和待处理数可由工具、CLI及Web查询。一次性<code>memory backfill</code>已实现，只处理未被Topic引用的trusted Source、排除pending并按批复用正常writer事务；组合测试覆盖SessionDB、默认模型解析、managed tools、暂存安装、Topic、marker与watcher状态。正式工作区验收中，23个旧v1 source文件（154个frame）经<code>origin_scope</code>到<code>authority_tier</code>的只读兼容后全部解析；2条待处理消息提交为3个Topic文件、5个唯一block，6个source引用和relation目标均通过校验，两条节点marker写入成功，第二次扫描处理数为0且revision不变。该验收未执行历史backfill，因此152个未引用frame仍存在。仍未实现：越权请求hold队列、按请求方档位过滤读取结果、互斥分支语义、跨会话spawn关系和由head变化事件直接触发写入。写入失败原因码是封闭枚举，受限writer阶段看不到Source归档。
+  </div>
+
+</div>
+</body>
+</html>
+
+<script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

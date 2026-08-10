@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786397592">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>upgrade · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+<link rel="stylesheet" href="/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/index.html"><img class="mark" src="/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/reference/README.html" data-title-zh="概览" data-href-en="/reference/README.html" data-href-zh="/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/reference/API.html" data-title-zh="API Reference" data-href-en="/reference/API.html" data-href-zh="/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/reference/api/runtime.html" data-href-zh="/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/reference/api/providers.html" data-title-zh="Providers" data-href-en="/reference/api/providers.html" data-href-zh="/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/reference/api/agentic-function.html" data-href-zh="/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/reference/cli.html" data-title-zh="CLI" data-href-en="/reference/cli.html" data-href-zh="/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/reference/config.html" data-title-zh="配置" data-href-en="/reference/config.html" data-href-zh="/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/reference/claude-code-compaction.html" data-href-zh="/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/reference/cli/config.html">config</a>
+<a class="navlink" href="/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/reference/cli/status.html">status</a>
+<a class="navlink" href="/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/reference/cli/update.html">update</a>
+<a class="navlink active" href="/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/reference/cli/web.html">web</a>
+<a class="navlink" href="/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="CLI 命令">CLI commands</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">upgrade</span></nav><!-- GENERATED FILE — do not edit. Rebuilt by tools/docs_site/generate_reference.py from openprogram/cli.py. -->
+<h1 id="upgrade">upgrade<a class="header-anchor" href="#upgrade">#</a></h1>
+<pre><code>usage: openprogram upgrade [-h] [--channel NAME] [--dry-run] [--no-restart]
+                           [--yes] [--json]
+                           verb ...
+</code></pre>
+<h2 id="options">Options<a class="header-anchor" href="#options">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--channel</code> <code>NAME</code></td>
+<td>Release line to follow (default: stable). Persisted as the <code>update.channel</code> setting.</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>Print the planned steps and change nothing.</td>
+</tr>
+<tr>
+<td><code>--no-restart</code></td>
+<td>Stop after the probe — build and verify the new code without restarting the running instance.</td>
+</tr>
+<tr>
+<td><code>--yes</code>, <code>-y</code></td>
+<td>Skip the confirmation a downgrade would otherwise require.</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Emit JSON</td>
+</tr>
+</tbody>
+</table>
+<h2 id="upgrade-status"><code>upgrade status</code><a class="header-anchor" href="#upgrade-status">#</a></h2>
+<p>Show the channel, current sha, target sha, and whether an update is available. Read-only.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--json</code></td>
+<td>Emit JSON</td>
+</tr>
+<tr>
+<td><code>--channel</code> <code>NAME</code></td>
+<td>Report against this channel instead of the configured one.</td>
+</tr>
+</tbody>
+</table>
+<div class="prevnext"><a class="pn-link pn-prev" href="/reference/cli/update.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">update</span></a><a class="pn-link pn-next" href="/reference/cli/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">web</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#options">Options</a>
+<a class="" href="#upgrade-status">upgrade status</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

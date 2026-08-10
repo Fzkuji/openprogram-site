@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786397592">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop Compact Right Panel Implementation Plan · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+<link rel="stylesheet" href="/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/index.html"><img class="mark" src="/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/reference/README.html" data-title-zh="概览" data-href-en="/reference/README.html" data-href-zh="/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/reference/API.html" data-title-zh="API Reference" data-href-en="/reference/API.html" data-href-zh="/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/reference/api/runtime.html" data-href-zh="/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/reference/api/providers.html" data-title-zh="Providers" data-href-en="/reference/api/providers.html" data-href-zh="/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/reference/api/agentic-function.html" data-href-zh="/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/reference/cli.html" data-title-zh="CLI" data-href-en="/reference/cli.html" data-href-zh="/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/reference/config.html" data-title-zh="配置" data-href-en="/reference/config.html" data-href-zh="/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/reference/claude-code-compaction.html" data-href-zh="/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/reference/cli/config.html">config</a>
+<a class="navlink" href="/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/reference/cli/status.html">status</a>
+<a class="navlink" href="/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/reference/cli/update.html">update</a>
+<a class="navlink" href="/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/reference/cli/web.html">web</a>
+<a class="navlink" href="/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink active" href="/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Desktop Compact Right Panel Implementation Plan</span></nav><h1 id="desktop-compact-right-panel-implementation-plan">Desktop Compact Right Panel Implementation Plan<a class="header-anchor" href="#desktop-compact-right-panel-implementation-plan">#</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Replace the current expanding right sidebar with a permanent 49 DIP icon rail and a separate rounded, resizable content panel on its left while preserving and completing the existing bookmark-management workflow.</p>
+<p><strong>Architecture:</strong> Keep <code>RightSidebar</code> as the single flex item mounted by <code>AppShell</code>, but render it as a horizontal shell containing an optional layout-occupying panel and a permanent icon-only rail. Keep <code>useSessionStore.rightDock</code> as the open/view source of truth, retain the existing <code>data-view</code> view host, and use the browser-native <code>storage</code> event alongside the existing same-window bookmark event for cross-window updates. No new UI dependency, drag-and-drop dependency, persistence layer, or test dependency is introduced.</p>
+<p><strong>Tech Stack:</strong> TypeScript, React 18, Zustand 5, Lucide icons, CSS, Electron 37 <code>WebContentsView</code>, Node <code>assert</code> checks.</p>
+<h2 id="global-constraints">Global Constraints<a class="header-anchor" href="#global-constraints">#</a></h2>
+<ul>
+<li>The right rail is always visible, icon-only, and exactly 49 DIP wide.</li>
+<li>The content panel is immediately to the rail's left, defaults to 320 DIP, clamps to 280–560 DIP, has 8 DIP outer gaps, a 16 DIP radius, the existing popover border/shadow tokens, and a 40 DIP header.</li>
+<li>The panel is non-modal and always occupies flex layout space, including below 900px, so a native <code>WebContentsView</code> cannot cover it.</li>
+<li>History, Bookmarks, and Files remain 32 DIP controls with tooltips and the existing neutral selected background. Do not add a persistent accent line or copy the Codex screenshot's dotted execution timeline into non-timeline views.</li>
+<li>Clicking the selected rail item or pressing <code>Escape</code> closes the panel and returns focus to that rail item; clicking a different rail item opens or switches the panel.</li>
+<li>History, Bookmarks, and Files are native <code>button</code> elements. The resize handle is a keyboard-operable vertical separator with current/minimum/maximum ARIA values.</li>
+<li>Preserve bookmark add/remove from the web toolbar, new-tab shortcuts, title/URL search, inline rename, delete, split-open, full-tab-open, empty/no-result states, immediate UI updates, and profile-local persistence.</li>
+<li>Bookmark view selection must survive reload, and bookmark mutations must update every OpenProgram window without reload.</li>
+<li>Do not add bookmark folders, cloud synchronization, favicon fetching, import/export, a backend bookmark schema, or a new dependency.</li>
+<li>Perform live testing against the development application on port 18200; leave the stable 18100 application unchanged.</li>
+</ul>
+<hr />
+<h3 id="task-1-persist-the-bookmarks-view-and-synchronize-bookmark-consumers-across-windows">Task 1: Persist the Bookmarks view and synchronize bookmark consumers across windows<a class="header-anchor" href="#task-1-persist-the-bookmarks-view-and-synchronize-bookmark-consumers-across-windows">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>web/lib/bookmarks.ts:6-55</code></li>
+<li>Modify: <code>web/lib/session-store/index.ts:267-305</code></li>
+<li>Modify: <code>web/components/center-tabs/web-tab-pane.tsx:37-77</code></li>
+<li>Modify: <code>web/components/center-tabs/new-tab-page.tsx:21-46</code></li>
+<li>Modify: <code>web/components/right-sidebar/bookmarks-panel.tsx:6-30</code></li>
+<li>Modify: <code>web/scripts/check-bookmarks.mjs:5-253</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>BOOKMARKS_STORAGE_KEY</code>, <code>BOOKMARKS_CHANGE_EVENT</code>, and browser <code>storage</code> events.</p>
+</li>
+<li>
+<p>Produces: <code>subscribeBookmarks(listener: () =&gt; void): () =&gt; void</code> and a persisted right-dock view id of <code>bookmarks</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing persistence and subscription checks</strong></p>
+</li>
+</ul>
+<p>Add the session-store source to <code>check-bookmarks.mjs</code> and require <code>bookmarks</code> in the persisted view whitelist:</p>
+<pre><code class="language-js"><span class="kd">const</span><span class="w"> </span><span class="nx">sessionStorePath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="s2">&quot;../lib/session-store/index.ts&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">sessionStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">sessionStorePath</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;utf8&quot;</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">sessionStore</span><span class="p">,</span>
+<span class="w">  </span><span class="sr">/const VALID_VIEWS = new Set\(\[[^\]]*&quot;bookmarks&quot;[^\]]*\]\);/s</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;Bookmarks must survive right-dock restore&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+</code></pre>
+<p>After the existing bookmark storage assertions, exercise same-window delivery, cross-window-style <code>storage</code> delivery, irrelevant keys, and cleanup:</p>
+<pre><code class="language-js"><span class="kd">let</span><span class="w"> </span><span class="nx">refreshes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">unsubscribe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">subscribeBookmarks</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">refreshes</span><span class="o">++</span><span class="p">);</span>
+
+<span class="nx">windowEvents</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Event</span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">BOOKMARKS_CHANGE_EVENT</span><span class="p">));</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">refreshes</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;same-window bookmark event must refresh subscribers&quot;</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">relevantStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;storage&quot;</span><span class="p">);</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">relevantStorage</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">configurable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">BOOKMARKS_STORAGE_KEY</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="nx">windowEvents</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">relevantStorage</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">refreshes</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shared-profile storage changes must refresh subscribers&quot;</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">unrelatedStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;storage&quot;</span><span class="p">);</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">unrelatedStorage</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">configurable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;unrelated.key&quot;</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="nx">windowEvents</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">unrelatedStorage</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">refreshes</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;unrelated storage writes must be ignored&quot;</span><span class="p">);</span>
+
+<span class="nx">unsubscribe</span><span class="p">();</span>
+<span class="nx">windowEvents</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Event</span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">BOOKMARKS_CHANGE_EVENT</span><span class="p">));</span>
+<span class="nx">windowEvents</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">relevantStorage</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">refreshes</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;unsubscribe must remove both listeners&quot;</span><span class="p">);</span>
+</code></pre>
+<p>Replace the existing component-source assertions for direct custom-event listeners with assertions that all three consumers call the shared subscription:</p>
+<pre><code class="language-js"><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="p">]</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;web-tab-pane.tsx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">webTab</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;new-tab-page.tsx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">newTab</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;bookmarks-panel.tsx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">manager</span><span class="p">],</span>
+<span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="sr">/subscribeBookmarks\(refresh\)/</span><span class="p">,</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> must use shared bookmark subscription`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the focused check and verify RED</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+</code></pre>
+<p>Expected: FAIL because <code>subscribeBookmarks</code> is not exported and <code>VALID_VIEWS</code> does not contain <code>bookmarks</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement the shared subscription and persistence fix</strong></li>
+</ul>
+<p>Add this function to <code>web/lib/bookmarks.ts</code> immediately after the event constants:</p>
+<pre><code class="language-ts"><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">subscribeBookmarks</span><span class="p">(</span><span class="nx">listener</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">typeof</span><span class="w"> </span><span class="nb">window</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;undefined&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">onStorage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">StorageEvent</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">BOOKMARKS_STORAGE_KEY</span><span class="p">)</span><span class="w"> </span><span class="nx">listener</span><span class="p">();</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">BOOKMARKS_CHANGE_EVENT</span><span class="p">,</span><span class="w"> </span><span class="nx">listener</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;storage&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">onStorage</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="nx">BOOKMARKS_CHANGE_EVENT</span><span class="p">,</span><span class="w"> </span><span class="nx">listener</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="s2">&quot;storage&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">onStorage</span><span class="p">);</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+<p>Add <code>bookmarks</code> to the right-dock persistence whitelist in <code>web/lib/session-store/index.ts</code>:</p>
+<pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">VALID_VIEWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">([</span><span class="s2">&quot;history&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;context&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;detail&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;files&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="p">]);</span>
+</code></pre>
+<p>In <code>web-tab-pane.tsx</code>, <code>new-tab-page.tsx</code>, and <code>bookmarks-panel.tsx</code>, import <code>subscribeBookmarks</code> from <code>@/lib/bookmarks</code> and replace each direct event-listener effect with:</p>
+<pre><code class="language-ts"><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">refresh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setBookmarks</span><span class="p">(</span><span class="nx">readBookmarks</span><span class="p">());</span>
+<span class="w">  </span><span class="nx">refresh</span><span class="p">();</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">subscribeBookmarks</span><span class="p">(</span><span class="nx">refresh</span><span class="p">);</span>
+<span class="p">},</span><span class="w"> </span><span class="p">[]);</span>
+</code></pre>
+<p>For <code>BookmarkButton</code>, retain the URL dependency and its boolean update:</p>
+<pre><code class="language-ts"><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">refresh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setBookmarked</span><span class="p">(</span><span class="nx">isBookmarked</span><span class="p">(</span><span class="nx">url</span><span class="p">));</span>
+<span class="w">  </span><span class="nx">refresh</span><span class="p">();</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">subscribeBookmarks</span><span class="p">(</span><span class="nx">refresh</span><span class="p">);</span>
+<span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">url</span><span class="p">]);</span>
+</code></pre>
+<p>Remove the now-unused <code>BOOKMARKS_CHANGE_EVENT</code> imports from those three components. Do not change bookmark serialization, ordering, rename behavior, navigation behavior, or storage keys.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run focused and aggregate checks</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+npm<span class="w"> </span>run<span class="w"> </span>check
+</code></pre>
+<p>Expected: both commands exit <code>0</code>; the focused command prints <code>bookmark storage checks passed</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/lib/bookmarks.ts<span class="w"> </span>web/lib/session-store/index.ts<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/components/center-tabs/web-tab-pane.tsx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/components/center-tabs/new-tab-page.tsx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/components/right-sidebar/bookmarks-panel.tsx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/scripts/check-bookmarks.mjs
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;fix(bookmarks): sync manager across windows&quot;</span>
+</code></pre>
+<h3 id="task-2-build-the-permanent-rail-and-accessible-panel-interactions">Task 2: Build the permanent rail and accessible panel interactions<a class="header-anchor" href="#task-2-build-the-permanent-rail-and-accessible-panel-interactions">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>web/lib/right-panel-behavior.ts</code></li>
+<li>Modify: <code>web/components/right-sidebar/right-sidebar.tsx:29-387</code></li>
+<li>Modify: <code>web/scripts/check-bookmarks.mjs:5-170</code></li>
+<li>Modify: <code>web/package.json:5-14</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>useSessionStore.rightDock</code>, <code>setRightDockOpen(open: boolean)</code>, <code>setRightDockView(view: string)</code>, existing <code>rightDock</code> legacy shims, <code>sidebarNavItemClass</code>, and existing view components.</p>
+</li>
+<li>
+<p>Produces: <code>resolveRightPanelAction</code>, <code>panelWidthAfterKey</code>, <code>clampPanelWidth</code>, and the shared <code>handlePanelResizeKey</code> event handler as directly executable interaction rules; the semantic <code>.right-sidebar-rail</code> / <code>.right-sidebar-panel</code> shell; native rail buttons; close/focus behavior; and a keyboard-operable <code>.right-panel-resize</code> separator.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing executable interaction checks</strong></p>
+</li>
+</ul>
+<p>Change <code>check:bookmarks</code> so Node can import the small TypeScript behavior module directly:</p>
+<pre><code class="language-json"><span class="nt">&quot;check:bookmarks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node --no-warnings --experimental-strip-types scripts/check-bookmarks.mjs&quot;</span>
+</code></pre>
+<p>Import the not-yet-created module at the top of <code>check-bookmarks.mjs</code>:</p>
+<pre><code class="language-js"><span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_GAP</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_RAIL_WIDTH</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">clampPanelWidth</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">handlePanelResizeKey</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">panelWidthAfterKey</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;../lib/right-panel-behavior.ts&quot;</span><span class="p">;</span>
+</code></pre>
+<p>Add these direct behavior assertions. They execute the same pure rules the React handlers will call; they do not infer behavior from source text:</p>
+<pre><code class="language-js"><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="mf">320</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">,</span><span class="w"> </span><span class="mf">280</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">,</span><span class="w"> </span><span class="mf">560</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">RIGHT_PANEL_GAP</span><span class="p">,</span><span class="w"> </span><span class="mf">8</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">RIGHT_RAIL_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="mf">49</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="mf">120</span><span class="p">),</span><span class="w"> </span><span class="mf">280</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="mf">420</span><span class="p">),</span><span class="w"> </span><span class="mf">420</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="mf">900</span><span class="p">),</span><span class="w"> </span><span class="mf">560</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">320</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ArrowLeft&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">336</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">320</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ArrowRight&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">304</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">280</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ArrowRight&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">280</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">560</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ArrowLeft&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">560</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Home&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">280</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;End&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">560</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Enter&quot;</span><span class="p">),</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;select&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="s2">&quot;re-clicking the selected rail item must close and target that item for focus&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;escape&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="s2">&quot;Escape must close and target the selected rail item for focus&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;select&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;files&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;files&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="s2">&quot;selecting another rail item must switch the open panel&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;escape&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">),</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="s2">&quot;Escape on a closed panel must not move focus&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+</code></pre>
+<p>Add a dependency-free EventTarget/attribute harness that binds and executes the same <code>handlePanelResizeKey</code> function used by the separator's React <code>onKeyDown</code> handler:</p>
+<pre><code class="language-js"><span class="kd">class</span><span class="w"> </span><span class="nx">SeparatorHarness</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">EventTarget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">#attributes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
+
+<span class="w">  </span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">#attributes</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">#attributes</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">separator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">SeparatorHarness</span><span class="p">();</span>
+<span class="nx">separator</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;separator&quot;</span><span class="p">);</span>
+<span class="nx">separator</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuemin&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">);</span>
+<span class="nx">separator</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuemax&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">renderedPanelWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">renderSeparator</span><span class="p">(</span><span class="nx">nextWidth</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">renderedPanelWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">nextWidth</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">separator</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">nextWidth</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Event</span><span class="p">(</span><span class="s2">&quot;keydown&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">cancelable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="nx">separator</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">event</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">separator</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keydown&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">handlePanelResizeKey</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="w"> </span><span class="nx">renderedPanelWidth</span><span class="p">,</span><span class="w"> </span><span class="nx">renderSeparator</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">renderSeparator</span><span class="p">(</span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuemin&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;280&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuemax&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;560&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;320&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;ArrowLeft&quot;</span><span class="p">).</span><span class="nx">defaultPrevented</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;336&quot;</span><span class="p">);</span>
+<span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;Home&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;280&quot;</span><span class="p">);</span>
+<span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;ArrowRight&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;280&quot;</span><span class="p">);</span>
+<span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;End&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;560&quot;</span><span class="p">);</span>
+<span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;ArrowLeft&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;560&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">dispatchSeparatorKey</span><span class="p">(</span><span class="s2">&quot;Enter&quot;</span><span class="p">).</span><span class="nx">defaultPrevented</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">separator</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;aria-valuenow&quot;</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;560&quot;</span><span class="p">);</span>
+</code></pre>
+<p>After the existing <code>parseTsx</code> and <code>attr</code> helpers, add one AST wiring check that locates the actual separator and verifies its <code>onKeyDown</code> arrow invokes the exported handler exercised above:</p>
+<pre><code class="language-js"><span class="kd">const</span><span class="w"> </span><span class="nx">rightSidebarFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parseTsx</span><span class="p">(</span><span class="nx">rightSidebar</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;right-sidebar.tsx&quot;</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">resizeSeparator</span><span class="p">;</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">findResizeSeparator</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">ts</span><span class="p">.</span><span class="nx">isJsxSelfClosingElement</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">attr</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;role&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="nx">initializer</span><span class="o">?</span><span class="p">.</span><span class="nx">text</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;separator&quot;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">resizeSeparator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nx">ts</span><span class="p">.</span><span class="nx">forEachChild</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span><span class="w"> </span><span class="nx">findResizeSeparator</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">findResizeSeparator</span><span class="p">(</span><span class="nx">rightSidebarFile</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">(</span><span class="nx">resizeSeparator</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;keyboard resize separator missing&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resizeKeyDown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">attr</span><span class="p">(</span><span class="nx">resizeSeparator</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;onKeyDown&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">(</span><span class="nx">resizeKeyDown</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;separator onKeyDown missing&quot;</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">(</span><span class="nx">ts</span><span class="p">.</span><span class="nx">isJsxExpression</span><span class="p">(</span><span class="nx">resizeKeyDown</span><span class="p">.</span><span class="nx">initializer</span><span class="p">));</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">resizeKeyExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">resizeKeyDown</span><span class="p">.</span><span class="nx">initializer</span><span class="p">.</span><span class="nx">expression</span><span class="p">;</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">(</span><span class="nx">resizeKeyExpression</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">ts</span><span class="p">.</span><span class="nx">isArrowFunction</span><span class="p">(</span><span class="nx">resizeKeyExpression</span><span class="p">));</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">ok</span><span class="p">(</span><span class="nx">ts</span><span class="p">.</span><span class="nx">isCallExpression</span><span class="p">(</span><span class="nx">resizeKeyExpression</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">resizeKeyExpression</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">expression</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="nx">rightSidebarFile</span><span class="p">),</span>
+<span class="w">  </span><span class="s2">&quot;handlePanelResizeKey&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;separator must invoke the handler covered by the EventTarget harness&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+</code></pre>
+<p>Retain only small semantic/AST checks for the three native rail buttons, the separator ARIA attributes, no nested buttons, localized icon labels, bookmark focus-visible styles, and the bookmark navigation matrix. Do not use source regex to claim resize, selected-item close, Escape, or focus-target behavior; those behaviors are covered by the direct assertions above and later by live <code>document.activeElement</code> checks.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the focused check and verify RED</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+</code></pre>
+<p>Expected: FAIL with <code>ERR_MODULE_NOT_FOUND</code> because <code>right-panel-behavior.ts</code> does not exist yet.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement the shared behavior module and call its handler from React</strong></li>
+</ul>
+<p>Create <code>web/lib/right-panel-behavior.ts</code>:</p>
+<pre><code class="language-ts"><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_RAIL_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">49</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">320</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">280</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MAX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">560</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_PANEL_GAP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">RIGHT_PANEL_KEY_STEP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">16</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">RightPanelState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">};</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">RightPanelAction</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;select&quot;</span><span class="p">;</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;escape&quot;</span><span class="w"> </span><span class="p">};</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">,</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">,</span><span class="w"> </span><span class="nx">width</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;ArrowLeft&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="nx">width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">RIGHT_PANEL_KEY_STEP</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;ArrowRight&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="nx">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">RIGHT_PANEL_KEY_STEP</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;Home&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;End&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">type</span><span class="w"> </span><span class="nx">ResizeKeyEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">preventDefault</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handlePanelResizeKey</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">ResizeKeyEvent</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">commit</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">nextWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">panelWidthAfterKey</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">next</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">commit</span><span class="p">(</span><span class="nx">next</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="kt">RightPanelState</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="kt">RightPanelAction</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">RightPanelState</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="kr">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;escape&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">open</span>
+<span class="w">      </span><span class="o">?</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kt">state.view</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">open</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">action</span><span class="p">.</span><span class="nx">view</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kt">action.view</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="kt">action.view</span><span class="p">,</span><span class="w"> </span><span class="nx">focusView</span><span class="o">:</span><span class="w"> </span><span class="kt">null</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+<p>In <code>right-sidebar.tsx</code>, change the Lucide import and replace the existing sidebar width constants/state/handlers with:</p>
+<pre><code class="language-tsx"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Bookmark</span><span class="p">,</span><span class="w"> </span><span class="nx">X</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;lucide-react&quot;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_GAP</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">RIGHT_RAIL_WIDTH</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">clampPanelWidth</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">handlePanelResizeKey</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">resolveRightPanelAction</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@/lib/right-panel-behavior&quot;</span><span class="p">;</span>
+
+<span class="c1">// Inside RightSidebar:</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">panelWidth</span><span class="p">,</span><span class="w"> </span><span class="nx">setPanelWidth</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="nx">RIGHT_PANEL_DEFAULT</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">resizing</span><span class="p">,</span><span class="w"> </span><span class="nx">setResizing</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">dragRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRef</span><span class="o">&lt;</span><span class="p">{</span><span class="w"> </span><span class="nx">startX</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">startW</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">toggleButtonRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">HTMLButtonElement</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">railButtonRefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">Record</span><span class="err">&lt;</span><span class="na">string</span><span class="err">,</span><span class="w"> </span><span class="na">HTMLButtonElement</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="na">null</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">({});</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">restoreRailFocus</span><span class="p">(</span><span class="nx">targetView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">view</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">railButtonRefs</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="nx">targetView</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="nx">toggleButtonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">requestAnimationFrame</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">target</span><span class="o">?</span><span class="p">.</span><span class="nx">focus</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">closePanelAndRestoreFocus</span><span class="p">(</span><span class="nx">targetView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">view</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">setRightDockOpen</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">restoreRailFocus</span><span class="p">(</span><span class="nx">targetView</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">onToggleRail</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">open</span><span class="p">)</span><span class="w"> </span><span class="nx">closePanelAndRestoreFocus</span><span class="p">();</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="nx">setRightDockOpen</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">onNavClick</span><span class="p">(</span><span class="nx">v</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">button</span><span class="o">:</span><span class="w"> </span><span class="kt">HTMLButtonElement</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">resolveRightPanelAction</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">open</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;select&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="o">:</span><span class="w"> </span><span class="kt">v</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">view</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">view</span><span class="p">)</span><span class="w"> </span><span class="nx">setRightDockView</span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">view</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">setRightDockOpen</span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">open</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">focusView</span><span class="p">)</span><span class="w"> </span><span class="nx">requestAnimationFrame</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">button</span><span class="p">.</span><span class="nx">focus</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">onSidebarKeyDown</span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">React.KeyboardEvent</span><span class="p">&lt;</span><span class="nt">HTMLElement</span><span class="p">&gt;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;Escape&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">open</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">resolveRightPanelAction</span><span class="p">({</span><span class="w"> </span><span class="nx">open</span><span class="p">,</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;escape&quot;</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="nx">setRightDockOpen</span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">open</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">focusView</span><span class="p">)</span><span class="w"> </span><span class="nx">restoreRailFocus</span><span class="p">(</span><span class="nx">next</span><span class="p">.</span><span class="nx">focusView</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">onResizePointerDown</span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">React.PointerEvent</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">button</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">setPointerCapture</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerId</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">dragRef</span><span class="p">.</span><span class="nx">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">startX</span><span class="o">:</span><span class="w"> </span><span class="kt">event.clientX</span><span class="p">,</span><span class="w"> </span><span class="nx">startW</span><span class="o">:</span><span class="w"> </span><span class="kt">panelWidth</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="nx">setResizing</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">onResizePointerMove</span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">React.PointerEvent</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">dragRef</span><span class="p">.</span><span class="nx">current</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">hasPointerCapture</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerId</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">setPanelWidth</span><span class="p">(</span><span class="nx">clampPanelWidth</span><span class="p">(</span><span class="nx">dragRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">startW</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">dragRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">startX</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">clientX</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">finishResize</span><span class="p">(</span><span class="nx">event</span><span class="o">:</span><span class="w"> </span><span class="kt">React.PointerEvent</span><span class="p">&lt;</span><span class="nt">HTMLDivElement</span><span class="p">&gt;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">hasPointerCapture</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">releasePointerCapture</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">pointerId</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nx">dragRef</span><span class="p">.</span><span class="nx">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">setResizing</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre>
+<p>Delete <code>onResizeMouseDown</code> and its document-level listeners. Keep the existing <code>window.rightDock</code> compatibility effect unchanged.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Replace the single-column sidebar shell</strong></li>
+</ul>
+<p>Compute the header text before <code>return</code>:</p>
+<pre><code class="language-tsx"><span class="kd">const</span><span class="w"> </span><span class="nx">panelTitle</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_HISTORY</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.history&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_BOOKMARKS</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;书签&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_FILES</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Files&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;文件&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_CONTEXT</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.context&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Execution detail&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;执行详情&quot;</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">shellWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">open</span>
+<span class="w">  </span><span class="o">?</span><span class="w"> </span><span class="nx">panelWidth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">RIGHT_RAIL_WIDTH</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">RIGHT_PANEL_GAP</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">2</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kt">RIGHT_RAIL_WIDTH</span><span class="p">;</span>
+</code></pre>
+<p>Replace the current <code>&lt;aside&gt;</code> return block with this structure. The existing <code>HistoryGraphPanel</code>, <code>DetailPanel</code>, <code>ContextCommitTimeline</code>, and <code>FileTree</code> children remain the same components and IDs:</p>
+<pre><code class="language-tsx"><span class="p">&lt;</span><span class="nt">aside</span>
+<span class="w">  </span><span class="na">id</span><span class="o">=</span><span class="s">&quot;rightSidebar&quot;</span>
+<span class="w">  </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="sb">`sidebar right-sidebar</span><span class="si">${</span><span class="nx">open</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot; collapsed&quot;</span><span class="si">}</span><span class="sb">`</span><span class="p">}</span>
+<span class="w">  </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">shellWidth</span><span class="si">}</span><span class="sb">px`</span><span class="p">,</span><span class="w"> </span><span class="nx">minWidth</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">shellWidth</span><span class="si">}</span><span class="sb">px`</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">  </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">view</span><span class="p">}</span>
+<span class="w">  </span><span class="na">data-resizing</span><span class="o">=</span><span class="p">{</span><span class="nx">resizing</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;false&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="na">onKeyDown</span><span class="o">=</span><span class="p">{</span><span class="nx">onSidebarKeyDown</span><span class="p">}</span>
+<span class="p">&gt;</span>
+<span class="w">  </span><span class="p">&lt;</span><span class="nt">section</span>
+<span class="w">    </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-sidebar-panel&quot;</span>
+<span class="w">    </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">panelWidth</span><span class="si">}</span><span class="sb">px`</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">    </span><span class="na">role</span><span class="o">=</span><span class="s">&quot;region&quot;</span>
+<span class="w">    </span><span class="na">aria-labelledby</span><span class="o">=</span><span class="s">&quot;right-panel-title&quot;</span>
+<span class="w">    </span><span class="na">hidden</span><span class="o">=</span><span class="p">{</span><span class="o">!</span><span class="nx">open</span><span class="p">}</span>
+<span class="w">  </span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span>
+<span class="w">        </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-panel-resize&quot;</span>
+<span class="w">        </span><span class="na">role</span><span class="o">=</span><span class="s">&quot;separator&quot;</span>
+<span class="w">        </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.resize_panel&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-orientation</span><span class="o">=</span><span class="s">&quot;vertical&quot;</span>
+<span class="w">        </span><span class="na">aria-valuemin</span><span class="o">=</span><span class="p">{</span><span class="nx">RIGHT_PANEL_MIN</span><span class="p">}</span>
+<span class="w">        </span><span class="na">aria-valuemax</span><span class="o">=</span><span class="p">{</span><span class="nx">RIGHT_PANEL_MAX</span><span class="p">}</span>
+<span class="w">        </span><span class="na">aria-valuenow</span><span class="o">=</span><span class="p">{</span><span class="nx">panelWidth</span><span class="p">}</span>
+<span class="w">        </span><span class="na">tabIndex</span><span class="o">=</span><span class="p">{</span><span class="mf">0</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onPointerDown</span><span class="o">=</span><span class="p">{</span><span class="nx">onResizePointerDown</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onPointerMove</span><span class="o">=</span><span class="p">{</span><span class="nx">onResizePointerMove</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onPointerUp</span><span class="o">=</span><span class="p">{</span><span class="nx">finishResize</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onPointerCancel</span><span class="o">=</span><span class="p">{</span><span class="nx">finishResize</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onKeyDown</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">          </span><span class="nx">handlePanelResizeKey</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="w"> </span><span class="nx">panelWidth</span><span class="p">,</span><span class="w"> </span><span class="nx">setPanelWidth</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">header</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-sidebar-panel-header&quot;</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">span</span><span class="w"> </span><span class="na">id</span><span class="o">=</span><span class="s">&quot;right-panel-title&quot;</span><span class="p">&gt;{</span><span class="nx">panelTitle</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">button</span>
+<span class="w">          </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<span class="w">          </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarToggleClass</span><span class="p">}</span>
+<span class="w">          </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">closePanelAndRestoreFocus</span><span class="p">()}</span>
+<span class="w">          </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Close panel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;关闭面板&quot;</span><span class="p">)}</span>
+<span class="w">          </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Close panel&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;关闭面板&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="p">&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">X</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">18</span><span class="p">}</span><span class="w"> </span><span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view-host&quot;</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view&quot;</span><span class="w"> </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_BOOKMARKS</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">BookmarksPanel</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view&quot;</span><span class="w"> </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_FILES</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">{</span><span class="nx">treeProjectId</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="p">&lt;</span><span class="nt">FileTree</span><span class="w"> </span><span class="na">projectId</span><span class="o">=</span><span class="p">{</span><span class="nx">treeProjectId</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">          </span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="kt">16</span><span class="p">,</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="kt">13</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;var(--text-dim)&quot;</span><span class="w"> </span><span class="p">}}&gt;</span>
+<span class="w">              </span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Bind a project to browse files&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;绑定项目后可浏览文件&quot;</span><span class="p">)}</span>
+<span class="w">            </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">          </span><span class="p">)}</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">id</span><span class="o">=</span><span class="s">&quot;historyPanel&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view&quot;</span><span class="w"> </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_HISTORY</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">HistoryGraphPanel</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">id</span><span class="o">=</span><span class="s">&quot;detailPanel&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view&quot;</span><span class="w"> </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_DETAIL</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">DetailPanel</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">id</span><span class="o">=</span><span class="s">&quot;commitsPanel&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-view&quot;</span><span class="w"> </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_CONTEXT</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">ContextCommitTimeline</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+<span class="w">  </span><span class="p">&lt;</span><span class="nt">nav</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-sidebar-rail&quot;</span><span class="w"> </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Workspace tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;工作区工具&quot;</span><span class="p">)}&gt;</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-sidebar-rail-header&quot;</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span>
+<span class="w">        </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">toggleButtonRef</span><span class="p">}</span>
+<span class="w">        </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarToggleClass</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onToggleRail</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onMouseEnter</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">toggleIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">startAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">onMouseLeave</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">toggleIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">stopAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.toggle_panel&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.toggle_panel&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-expanded</span><span class="o">=</span><span class="p">{</span><span class="nx">open</span><span class="p">}</span>
+<span class="w">        </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<span class="w">      </span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">{</span><span class="nx">open</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">PanelLeftCloseIcon</span><span class="w"> </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">toggleIconRef</span><span class="p">}</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">20</span><span class="p">}</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">transform</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;scaleX(-1)&quot;</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">PanelLeftOpenIcon</span><span class="w"> </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">toggleIconRef</span><span class="p">}</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">20</span><span class="p">}</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">transform</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;scaleX(-1)&quot;</span><span class="w"> </span><span class="p">}}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">)}</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;right-sidebar-rail-items&quot;</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span>
+<span class="w">        </span><span class="na">ref</span><span class="o">=</span><span class="p">{(</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">railButtonRefs</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="nx">VIEW_HISTORY</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">        </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<span class="w">        </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavItemClass</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; right-nav-item&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">          </span><span class="p">(</span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_HISTORY</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">sidebarNavItemActiveClass</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_HISTORY</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">onNavClick</span><span class="p">(</span><span class="nx">VIEW_HISTORY</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">onMouseEnter</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">historyIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">startAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">onMouseLeave</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">historyIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">stopAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.history&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">t</span><span class="p">(</span><span class="s2">&quot;right.history&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-pressed</span><span class="o">=</span><span class="p">{</span><span class="nx">open</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_HISTORY</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">span</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavIconClass</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">GitGraphIcon</span><span class="w"> </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">historyIconRef</span><span class="p">}</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">20</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span>
+<span class="w">        </span><span class="na">ref</span><span class="o">=</span><span class="p">{(</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">railButtonRefs</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="nx">VIEW_BOOKMARKS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">        </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<span class="w">        </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavItemClass</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; right-nav-item&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">          </span><span class="p">(</span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_BOOKMARKS</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">sidebarNavItemActiveClass</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_BOOKMARKS</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">onNavClick</span><span class="p">(</span><span class="nx">VIEW_BOOKMARKS</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;书签&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Bookmarks&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;书签&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-pressed</span><span class="o">=</span><span class="p">{</span><span class="nx">open</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_BOOKMARKS</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">span</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavIconClass</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">Bookmark</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">20</span><span class="p">}</span><span class="w"> </span><span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">button</span>
+<span class="w">        </span><span class="na">ref</span><span class="o">=</span><span class="p">{(</span><span class="nx">node</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">railButtonRefs</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="nx">VIEW_FILES</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">        </span><span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<span class="w">        </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavItemClass</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; right-nav-item&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">          </span><span class="p">(</span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_FILES</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">sidebarNavItemActiveClass</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">data-view</span><span class="o">=</span><span class="p">{</span><span class="nx">VIEW_FILES</span><span class="p">}</span>
+<span class="w">        </span><span class="na">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">onNavClick</span><span class="p">(</span><span class="nx">VIEW_FILES</span><span class="p">,</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">onMouseEnter</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">filesIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">startAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">onMouseLeave</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">filesIconRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">stopAnimation</span><span class="o">?</span><span class="p">.()}</span>
+<span class="w">        </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Project files&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;项目文件&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-label</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Project files&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;项目文件&quot;</span><span class="p">)}</span>
+<span class="w">        </span><span class="na">aria-pressed</span><span class="o">=</span><span class="p">{</span><span class="nx">open</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">view</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">VIEW_FILES</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">span</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">sidebarNavIconClass</span><span class="p">}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">FolderOpenIcon</span><span class="w"> </span><span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">filesIconRef</span><span class="p">}</span><span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="p">{</span><span class="mf">20</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
+</code></pre>
+<p>Remove the unused <code>sidebarNavLabelClass</code> import. Do not expose the legacy Detail or Context views as permanent rail buttons; their existing <code>window.rightDock.show(&quot;detail&quot; | &quot;context&quot;)</code> entry points continue to select the content host.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Run focused and type checks</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
+</code></pre>
+<p>Expected: both commands exit <code>0</code>; the focused check prints <code>bookmark storage checks passed</code> and TypeScript reports no errors.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 6: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/lib/right-panel-behavior.ts<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/components/right-sidebar/right-sidebar.tsx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/scripts/check-bookmarks.mjs<span class="w"> </span>web/package.json
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(desktop): add compact right panel controls&quot;</span>
+</code></pre>
+<h3 id="task-3-apply-compact-geometry-and-keep-the-panel-in-layout-at-narrow-widths">Task 3: Apply compact geometry and keep the panel in layout at narrow widths<a class="header-anchor" href="#task-3-apply-compact-geometry-and-keep-the-panel-in-layout-at-narrow-widths">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>web/app/styles/right-dock.css:1-169</code></li>
+<li>Modify: <code>web/scripts/check-bookmarks.mjs:5-170</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>.right-sidebar</code>, <code>.right-sidebar-panel</code>, <code>.right-sidebar-rail</code>, <code>.right-sidebar-panel-header</code>, <code>.right-panel-resize</code>, and <code>data-resizing</code> from Task 2.</p>
+</li>
+<li>
+<p>Produces: exact 49/320/280/560 panel geometry, 8 DIP gaps, a 16 DIP rounded surface, a 40 DIP header, and a non-fixed narrow layout.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing geometry and responsive checks</strong></p>
+</li>
+</ul>
+<p>Extend <code>check-bookmarks.mjs</code> with:</p>
+<pre><code class="language-js"><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">selector</span><span class="p">,</span><span class="w"> </span><span class="nx">declaration</span><span class="p">]</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;right-sidebar-rail&quot;</span><span class="p">,</span><span class="w"> </span><span class="sr">/width:\s*49px/</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;right-sidebar-panel&quot;</span><span class="p">,</span><span class="w"> </span><span class="sr">/margin:\s*8px/</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;right-sidebar-panel&quot;</span><span class="p">,</span><span class="w"> </span><span class="sr">/border-radius:\s*16px/</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;right-sidebar-panel&quot;</span><span class="p">,</span><span class="w"> </span><span class="sr">/box-shadow:\s*var\(--shadow-popover\)/</span><span class="p">],</span>
+<span class="w">  </span><span class="p">[</span><span class="s2">&quot;right-sidebar-panel-header&quot;</span><span class="p">,</span><span class="w"> </span><span class="sr">/height:\s*40px/</span><span class="p">],</span>
+<span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="sb">`\\.</span><span class="si">${</span><span class="nx">selector</span><span class="si">}</span><span class="sb">\\s*\\{[^}]*</span><span class="si">${</span><span class="nx">declaration</span><span class="p">.</span><span class="nx">source</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">rightDockCss</span><span class="p">,</span><span class="w"> </span><span class="nx">rule</span><span class="p">,</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">selector</span><span class="si">}</span><span class="sb"> geometry missing`</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">rightDockCss</span><span class="p">,</span><span class="w"> </span><span class="sr">/\.right-sidebar-panel\[hidden\]\s*\{\s*display:\s*none;/</span><span class="p">);</span>
+
+<span class="nx">assert</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">rightDockCss</span><span class="p">,</span>
+<span class="w">  </span><span class="sr">/@media\s*\(max-width:\s*900px\)[\s\S]*\.right-sidebar[\s\S]*position:\s*relative;/</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;narrow right panel must remain a layout participant&quot;</span><span class="p">,</span>
+<span class="p">);</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the focused check and verify RED</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+</code></pre>
+<p>Expected: FAIL because the new compact-panel selectors and responsive override are absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Add compact-panel CSS and remove narrow overlay behavior</strong></li>
+</ul>
+<p>Replace the shell/view-host preamble in <code>right-dock.css</code> and retain the existing bookmark and other view-specific rules below it:</p>
+<pre><code class="language-css"><span class="p">.</span><span class="nc">right-sidebar</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span>
+<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">stretch</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg-secondary</span><span class="p">);</span>
+<span class="w">  </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">width</span><span class="w"> </span><span class="mi">150</span><span class="kt">ms</span><span class="w"> </span><span class="nb">cubic-bezier</span><span class="p">(</span><span class="mf">0.165</span><span class="p">,</span><span class="w"> </span><span class="mf">0.84</span><span class="p">,</span><span class="w"> </span><span class="mf">0.44</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">              </span><span class="k">min-width</span><span class="w"> </span><span class="mi">150</span><span class="kt">ms</span><span class="w"> </span><span class="nb">cubic-bezier</span><span class="p">(</span><span class="mf">0.165</span><span class="p">,</span><span class="w"> </span><span class="mf">0.84</span><span class="p">,</span><span class="w"> </span><span class="mf">0.44</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-resizing</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-panel</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">  </span><span class="k">box-sizing</span><span class="p">:</span><span class="w"> </span><span class="kc">border-box</span><span class="p">;</span>
+<span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<span class="w">  </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--border-popover</span><span class="p">);</span>
+<span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg-secondary</span><span class="p">);</span>
+<span class="w">  </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--shadow-popover</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">right-sidebar-panel</span><span class="o">[</span><span class="nt">hidden</span><span class="o">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-panel-header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-between</span><span class="p">;</span>
+<span class="w">  </span><span class="k">box-sizing</span><span class="p">:</span><span class="w"> </span><span class="kc">border-box</span><span class="p">;</span>
+<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">border-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--border</span><span class="p">);</span>
+<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--text-primary</span><span class="p">);</span>
+<span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="mi">550</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-rail</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">49</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">  </span><span class="k">box-sizing</span><span class="p">:</span><span class="w"> </span><span class="kc">border-box</span><span class="p">;</span>
+<span class="w">  </span><span class="k">border-left</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--border</span><span class="p">);</span>
+<span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg-secondary</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-rail-header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-rail-items</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">  </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-sidebar-rail</span><span class="w"> </span><span class="p">.</span><span class="nc">right-nav-item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-panel-resize</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span>
+<span class="w">  </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">cursor</span><span class="p">:</span><span class="w"> </span><span class="kc">ew-resize</span><span class="p">;</span>
+<span class="w">  </span><span class="n">touch-action</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">right-panel-resize</span><span class="p">:</span><span class="nd">focus-visible</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">outline</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--accent-blue</span><span class="p">);</span>
+<span class="w">  </span><span class="k">outline-offset</span><span class="p">:</span><span class="w"> </span><span class="mi">-2</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">right-view-host</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+<span class="w">  </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">right-view</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span>
+<span class="w">  </span><span class="k">inset</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="w">  </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;history&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">.</span><span class="nc">right-view</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;history&quot;</span><span class="o">],</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">.</span><span class="nc">right-view</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="o">],</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;context&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">.</span><span class="nc">right-view</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;context&quot;</span><span class="o">],</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;files&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">.</span><span class="nc">right-view</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;files&quot;</span><span class="o">],</span>
+<span class="p">.</span><span class="nc">right-sidebar</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;bookmarks&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">.</span><span class="nc">right-view</span><span class="o">[</span><span class="nt">data-view</span><span class="o">=</span><span class="s2">&quot;bookmarks&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">900px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">.</span><span class="nc">right-sidebar</span><span class="o">,</span>
+<span class="w">  </span><span class="p">.</span><span class="nc">right-sidebar</span><span class="p">:</span><span class="nd">not</span><span class="o">(</span><span class="p">.</span><span class="nc">collapsed</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span>
+<span class="w">    </span><span class="k">inset</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">    </span><span class="k">z-index</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>Delete the obsolete <code>.right-sidebar.collapsed .right-view-host</code> rule because the panel's <code>hidden</code> attribute now controls its closed state. Keep all bookmark rows and History/Detail/Context-specific styles unchanged.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run focused, aggregate, type, and production checks</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check:bookmarks
+npm<span class="w"> </span>run<span class="w"> </span>check
+npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
+npm<span class="w"> </span>run<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>../desktop
+npm<span class="w"> </span>run<span class="w"> </span>check:webtabs
+</code></pre>
+<p>Expected: every command exits <code>0</code>; the focused check prints <code>bookmark storage checks passed</code>, TypeScript reports no errors, and Next reports a successful production build.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/app/styles/right-dock.css<span class="w"> </span>web/scripts/check-bookmarks.mjs
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;style(desktop): add compact right panel geometry&quot;</span>
+</code></pre>
+<h3 id="task-4-verify-geometry-accessibility-native-view-bounds-and-the-full-bookmark-workflow">Task 4: Verify geometry, accessibility, native-view bounds, and the full bookmark workflow<a class="header-anchor" href="#task-4-verify-geometry-accessibility-native-view-bounds-and-the-full-bookmark-workflow">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify only if a live failure first receives a focused executable regression assertion in <code>web/scripts/check-bookmarks.mjs</code> or <code>web/lib/right-panel-behavior.ts</code>, followed by the smallest covering fix in an already-listed implementation file.</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Verifies the completed compact-panel and bookmark interfaces without adding production APIs.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Confirm or start the development worker on 18209/18200</strong></p>
+</li>
+</ul>
+<p>From the repository root, first inspect only the <code>dev</code> profile and probe both required services without changing any process:</p>
+<pre><code class="language-bash"><span class="nv">OPENPROGRAM_PROFILE</span><span class="o">=</span>dev<span class="w"> </span><span class="se">\</span>
+<span class="nv">OPENPROGRAM_BACKEND_PORT</span><span class="o">=</span><span class="m">18209</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">OPENPROGRAM_WEB_PORT</span><span class="o">=</span><span class="m">18200</span><span class="w"> </span><span class="se">\</span>
+openprogram<span class="w"> </span>worker<span class="w"> </span>status
+</code></pre>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsS<span class="w"> </span>http://127.0.0.1:18209/healthz
+curl<span class="w"> </span>-fsS<span class="w"> </span>http://127.0.0.1:18200/chat<span class="w"> </span>&gt;/dev/null
+</code></pre>
+<p>Also use the repository's identity probes from <code>openprogram/_ports.py</code>; they distinguish OpenProgram from an unrelated process occupying either port:</p>
+<pre><code class="language-bash">python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;PY&#39;</span>
+<span class="s">from openprogram._ports import backend_is_ours, frontend_is_ours</span>
+
+<span class="s">assert backend_is_ours(18209) is True, &quot;OpenProgram dev backend is not ready on 18209&quot;</span>
+<span class="s">assert frontend_is_ours(18200) is True, &quot;OpenProgram dev frontend is not ready on 18200&quot;</span>
+<span class="s">PY</span>
+</code></pre>
+<p>If status or either identity probe fails, start only the <code>dev</code> worker with the repository's supported <code>worker start</code> command:</p>
+<pre><code class="language-bash"><span class="nv">OPENPROGRAM_PROFILE</span><span class="o">=</span>dev<span class="w"> </span><span class="se">\</span>
+<span class="nv">OPENPROGRAM_BACKEND_PORT</span><span class="o">=</span><span class="m">18209</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">OPENPROGRAM_WEB_PORT</span><span class="o">=</span><span class="m">18200</span><span class="w"> </span><span class="se">\</span>
+openprogram<span class="w"> </span>worker<span class="w"> </span>start
+</code></pre>
+<p>Repeat both HTTP probes and the identity-probe block until all commands exit <code>0</code>:</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsS<span class="w"> </span>http://127.0.0.1:18209/healthz
+curl<span class="w"> </span>-fsS<span class="w"> </span>http://127.0.0.1:18200/chat<span class="w"> </span>&gt;/dev/null
+</code></pre>
+<p>Expected: the OpenProgram backend reports its <code>/healthz</code> JSON on <code>18209</code>, the development frontend responds on <code>18200</code>, and both <code>backend_is_ours</code> / <code>frontend_is_ours</code> return <code>True</code>. This is the dev profile pairing documented in <code>docs/install/profiles.md</code>. Do not run a default-profile start, stop, or restart command, and do not change stable ports <code>18109</code> or <code>18100</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Launch Electron with an actual isolated user-data directory argument</strong></li>
+</ul>
+<p>Create a disposable directory and pass Electron's supported command-line switch through <code>npm run</code>:</p>
+<pre><code class="language-bash"><span class="nv">RIGHT_PANEL_PROFILE_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="w"> </span>/tmp/openprogram-right-panel.XXXXXX<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">cd</span><span class="w"> </span>desktop
+<span class="nv">OPENPROGRAM_WEB_PORT</span><span class="o">=</span><span class="m">18200</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">OPENPROGRAM_DESKTOP_URL</span><span class="o">=</span>http://127.0.0.1:18200/chat<span class="w"> </span><span class="se">\</span>
+npm<span class="w"> </span>run<span class="w"> </span>dev<span class="w"> </span>--<span class="w"> </span>--user-data-dir<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$RIGHT_PANEL_PROFILE_DIR</span><span class="s2">&quot;</span>
+</code></pre>
+<p>Expected: Electron receives an argument of the form <code>--user-data-dir=/tmp/openprogram-right-panel.…</code>, opens <code>http://127.0.0.1:18200/chat</code>, and <code>http://127.0.0.1:9223/json/version</code> responds. Do not use an environment variable such as <code>ELECTRON_EXTRA_LAUNCH_ARGS</code>; <code>desktop/main.js</code> does not read one.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Measure the collapsed and expanded geometry through CDP</strong></li>
+</ul>
+<p>In the renderer target, evaluate:</p>
+<pre><code class="language-js"><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">sidebar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#rightSidebar&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.right-sidebar-rail&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">panel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.right-sidebar-panel&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.right-sidebar-panel-header&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">panel</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">panel</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">sidebarWidth</span><span class="o">:</span><span class="w"> </span><span class="nx">sidebar</span><span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">width</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">railWidth</span><span class="o">:</span><span class="w"> </span><span class="nx">rail</span><span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">width</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">panelWidth</span><span class="o">:</span><span class="w"> </span><span class="nx">panel</span><span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">width</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headerHeight</span><span class="o">:</span><span class="w"> </span><span class="nx">header</span><span class="o">?</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">height</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">panelMargin</span><span class="o">:</span><span class="w"> </span><span class="nx">style</span><span class="o">?</span><span class="p">.</span><span class="nx">margin</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">panelRadius</span><span class="o">:</span><span class="w"> </span><span class="nx">style</span><span class="o">?</span><span class="p">.</span><span class="nx">borderRadius</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">panelPosition</span><span class="o">:</span><span class="w"> </span><span class="nx">style</span><span class="o">?</span><span class="p">.</span><span class="nx">position</span><span class="p">,</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">})()</span>
+</code></pre>
+<p>Expected when closed: <code>sidebarWidth === 49</code> and <code>railWidth === 49</code>. Expected after opening Bookmarks at the default width: <code>railWidth === 49</code>, <code>panelWidth === 320</code>, <code>headerHeight === 40</code>, <code>panelMargin === &quot;8px&quot;</code>, <code>panelRadius === &quot;16px&quot;</code>, and the panel is a normal child of the layout-occupying sidebar shell.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Verify rail toggle, Escape, focus restoration, and keyboard resize</strong></li>
+</ul>
+<p>Use pointer and keyboard input, then inspect <code>document.activeElement</code> and the separator attributes:</p>
+<ol>
+<li>Open Bookmarks, click Bookmarks again, and confirm the panel closes while the Bookmarks button remains focused.</li>
+<li>Reopen Bookmarks, focus the search field, press <code>Escape</code>, and confirm the panel closes and focus moves to the Bookmarks rail button.</li>
+<li>Focus <code>.right-panel-resize</code>; press <code>ArrowLeft</code> once and confirm <code>aria-valuenow</code> changes from <code>320</code> to <code>336</code>; press <code>ArrowRight</code> once and confirm it returns to <code>320</code>.</li>
+<li>Press <code>Home</code> and confirm <code>aria-valuenow === &quot;280&quot;</code>; press another <code>ArrowRight</code> and confirm it remains <code>280</code>.</li>
+<li>Press <code>End</code> and confirm <code>aria-valuenow === &quot;560&quot;</code>; press another <code>ArrowLeft</code> and confirm it remains <code>560</code>.</li>
+</ol>
+<p>Expected: every control remains keyboard reachable, no focus is lost to <code>body</code>, and resize changes do not reload or close any center tab.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Verify narrow-window layout and native page bounds</strong></li>
+</ul>
+<p>Open a real web tab, then open the right panel and resize the Electron window below 900 DIP. Through CDP, compare <code>.center-body</code>, <code>.right-sidebar-panel</code>, and <code>.right-sidebar-rail</code> rectangles. Through the existing web-tab bridge/CDP target, inspect the active native view bounds.</p>
+<p>Expected: the right shell remains a flex layout participant rather than <code>position: fixed</code>; the center rectangle ends before the panel begins; the native <code>WebContentsView</code> right edge does not enter the panel rectangle; closing the panel increases the center width by the panel width plus its two 8 DIP gaps without reloading the page.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 6: Accept the web-toolbar star add/remove entry independently</strong></li>
+</ul>
+<ol>
+<li>Open a real page with a unique URL, for example <code>https://example.com/?bookmark-toolbar-acceptance=1</code>.</li>
+<li>Click the toolbar star and confirm its accessible label changes from <code>Bookmark</code> to <code>Remove bookmark</code> and its icon becomes filled.</li>
+<li>Open Bookmarks and a new-tab page in turn; confirm the new item is visible in both surfaces without reload.</li>
+<li>Return to the same web page, click the filled star, and confirm the accessible label returns to <code>Bookmark</code>.</li>
+<li>Confirm the item disappears from Bookmarks and the new-tab page without reload.</li>
+</ol>
+<p>Expected: the toolbar star independently performs both add and remove, and every consumer updates immediately.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 7: Accept the new-tab-page bookmark shortcut independently</strong></li>
+</ul>
+<ol>
+<li>Open <code>https://example.org/?bookmark-ntp-acceptance=1</code> and add it with the toolbar star.</li>
+<li>Open a new-tab page and confirm its bookmark shortcut shows the page title and carries the exact URL in its title attribute.</li>
+<li>Click the shortcut title and confirm it opens the bookmarked URL in a normal web tab.</li>
+<li>Return to a new-tab page, click that shortcut's <code>Delete bookmark</code> control, and confirm the shortcut disappears immediately.</li>
+<li>Return to the web page and confirm the toolbar star is no longer filled.</li>
+</ol>
+<p>Expected: the new-tab-page open/delete entry works independently of the manager. This is a separate acceptance case from the toolbar-star add/remove case.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 8: Accept manager search, rename, split-open, full-open, delete, and reload persistence</strong></li>
+</ul>
+<ol>
+<li>Add two real pages with distinct titles and URLs through the toolbar star, including <code>https://example.com/?bookmark-manager-acceptance=1</code>.</li>
+<li>Open Bookmarks and search for the first item by a unique title substring; confirm only the title match remains.</li>
+<li>Clear the query, search by a unique URL substring, and confirm only the URL match remains.</li>
+<li>Rename the first item, press <code>Enter</code>, and confirm the renamed title appears immediately in the manager and new-tab page while the URL is unchanged.</li>
+<li>With a session active and desktop split available, click the renamed title; confirm the page opens beside chat and the panel closes.</li>
+<li>Reopen Bookmarks and click the explicit <code>Open in full tab</code> action for the second item; confirm it activates as a normal full web tab rather than replacing the split target.</li>
+<li>Reopen Bookmarks, reload the renderer while <code>bookmarks</code> is selected, and confirm the right panel restores to Bookmarks rather than Files; both items and the renamed title persist.</li>
+<li>Delete the first item through the manager, reload again, and confirm it remains absent from the manager, toolbar state, and new-tab page.</li>
+</ol>
+<p>Expected: title/URL search, rename, split-open, full-tab-open, manager delete, view restore, and profile-local persistence all work with real renderer state.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 9: Verify real cross-window storage updates</strong></li>
+</ul>
+<p>Using the multi-window implementation and the same isolated <code>--user-data-dir</code>, open windows A and B. Keep Bookmarks open in B. In A, add a third unique bookmark from the toolbar, rename it in A's manager, then delete it.</p>
+<p>Expected: B shows the added item, its renamed title, and its removal after each operation without reload. Confirm B receives the native browser <code>storage</code> event for <code>BOOKMARKS_STORAGE_KEY</code>; the same-window custom event alone is not sufficient for this acceptance. Do not replace this step with two tabs in one renderer.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 10: Run the final regression commands</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>web
+npm<span class="w"> </span>run<span class="w"> </span>check
+npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
+npm<span class="w"> </span>run<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>../desktop
+npm<span class="w"> </span>run<span class="w"> </span>check:webtabs
+<span class="nb">cd</span><span class="w"> </span>..
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/unit/test_webtab_control.py<span class="w"> </span>-q
+git<span class="w"> </span>diff<span class="w"> </span>--check
+</code></pre>
+<p>Expected: every command exits <code>0</code>; no check relies on the stable 18100 application.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 11: Commit only live-discovered fixes</strong></li>
+</ul>
+<p>If live verification exposed no issue, make no commit. If it exposed an issue, first add a failing executable assertion to <code>web/scripts/check-bookmarks.mjs</code> or <code>web/lib/right-panel-behavior.ts</code>, implement the smallest covering fix, rerun Steps 4–10, then commit only those files:</p>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>web/scripts/check-bookmarks.mjs<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/lib/right-panel-behavior.ts<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/components/right-sidebar/right-sidebar.tsx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/app/styles/right-dock.css<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>web/lib/bookmarks.ts<span class="w"> </span>web/lib/session-store/index.ts
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;fix(desktop): correct compact right panel behavior&quot;</span>
+</code></pre>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-07-20</div><div class="prevnext"><a class="pn-link pn-prev" href="/superpowers/plans/2026-07-19-bookmark-manager.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Bookmark Manager Implementation Plan</span></a><a class="pn-link pn-next" href="/superpowers/plans/2026-07-19-desktop-compound-tabs.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Desktop Compound Tabs Implementation Plan</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#global-constraints">Global Constraints</a>
+<a class="lvl-3" href="#task-1-persist-the-bookmarks-view-and-synchronize-bookmark-consumers-across-windows">Task 1: Persist the Bookmarks view and synchronize bookmark consumers across windows</a>
+<a class="lvl-3" href="#task-2-build-the-permanent-rail-and-accessible-panel-interactions">Task 2: Build the permanent rail and accessible panel interactions</a>
+<a class="lvl-3" href="#task-3-apply-compact-geometry-and-keep-the-panel-in-layout-at-narrow-widths">Task 3: Apply compact geometry and keep the panel in layout at narrow widths</a>
+<a class="lvl-3" href="#task-4-verify-geometry-accessibility-native-view-bounds-and-the-full-bookmark-workflow">Task 4: Verify geometry, accessibility, native-view bounds, and the full bookmark workflow</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

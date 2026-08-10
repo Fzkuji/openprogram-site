@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786397592" data-alt-lang-url="/reference/design/runtime/permission-model.zh.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Permission System Design · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/assets/mark.svg">
+<link rel="stylesheet" href="/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/index.html"><img class="mark" src="/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink active" href="/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/reference/design/README.html" data-title-zh="设计文档" data-href-en="/reference/design/README.html" data-href-zh="/reference/design/README.zh.html">Design Documents</a>
+<a class="navlink" href="/reference/design/docs-site.html" data-title-zh="设计文档站（统一文档网页）" data-href-en="/reference/design/docs-site.html" data-href-zh="/reference/design/docs-site.zh.html">Design Docs Site (Unified Documentation Website)</a>
+<a class="navlink" href="/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/reference/design/error-handling.html" data-href-zh="/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
+<a class="navlink" href="/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/reference/design/TODO-doc-code-gaps.html" data-href-zh="/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
+<a class="navlink" href="/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
+<a class="navlink" href="/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/reference/design/usage-metering.html" data-href-zh="/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
+<a class="navlink" href="/reference/design/framework-overview.html" data-title-zh="框架总览：一次对话从输入到产出" data-href-en="/reference/design/framework-overview.html" data-href-zh="/reference/design/framework-overview.zh.html">Framework Overview — One Conversation from Input to Output</a>
+<a class="navlink" href="/reference/design/framework-comparison.html">整框架对标：我们和十二家放在一起看</a>
+<a class="navlink" href="/reference/design/feature-matrix.html">功能清单对标：设计参考审计快照</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Channels</div>
+<a class="navlink" href="/reference/design/channels/README.html" data-title-zh="Channels" data-href-en="/reference/design/channels/README.html" data-href-zh="/reference/design/channels/README.zh.html">Channels</a>
+<a class="navlink" href="/reference/design/channels/design.html" data-title-zh="Channel 子系统设计" data-href-en="/reference/design/channels/design.html" data-href-zh="/reference/design/channels/design.zh.html">Channel Subsystem Design</a>
+<a class="navlink" href="/reference/design/channels/audit.html" data-title-zh="Channel 子系统 —— 要求与不变量" data-href-en="/reference/design/channels/audit.html" data-href-zh="/reference/design/channels/audit.zh.html">Channel Subsystem — Requirements and Invariants</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">CLI / TUI</div>
+<a class="navlink" href="/reference/design/cli/README.html" data-title-zh="CLI / TUI" data-href-en="/reference/design/cli/README.html" data-href-zh="/reference/design/cli/README.zh.html">CLI / TUI</a>
+<a class="navlink" href="/reference/design/cli/redesign.html" data-title-zh="CLI / TUI 配置界面 —— 设计" data-href-en="/reference/design/cli/redesign.html" data-href-zh="/reference/design/cli/redesign.zh.html">CLI / TUI Configuration Surface — Design</a>
+<a class="navlink" href="/reference/design/cli/naming.html" data-title-zh="CLI 命名规范" data-href-en="/reference/design/cli/naming.html" data-href-zh="/reference/design/cli/naming.zh.html">CLI Naming Convention</a>
+<a class="navlink" href="/reference/design/cli/config-write-safety.html" data-title-zh="配置写入安全 —— 设计" data-href-en="/reference/design/cli/config-write-safety.html" data-href-zh="/reference/design/cli/config-write-safety.zh.html">Config Write Safety — Design</a>
+<a class="navlink" href="/reference/design/cli/single-port.html" data-title-zh="单端口架构" data-href-en="/reference/design/cli/single-port.html" data-href-zh="/reference/design/cli/single-port.zh.html">Single-Port Architecture</a>
+<a class="navlink" href="/reference/design/cli/slash-commands-references.html" data-title-zh="斜杠命令 — 参考实现快照" data-href-en="/reference/design/cli/slash-commands-references.html" data-href-zh="/reference/design/cli/slash-commands-references.zh.html">Slash Commands — Reference Implementations Snapshot</a>
+<a class="navlink" href="/reference/design/cli/slash-commands.html" data-title-zh="Slash Commands — Unified Design" data-href-en="/reference/design/cli/slash-commands.html" data-href-zh="/reference/design/cli/slash-commands.zh.html">Slash Commands — Unified Design</a>
+<a class="navlink" href="/reference/design/cli/tui-upgrade.html" data-title-zh="TUI 会话记录渲染与交互" data-href-en="/reference/design/cli/tui-upgrade.html" data-href-zh="/reference/design/cli/tui-upgrade.zh.html">TUI Transcript Rendering and Interaction</a>
+<a class="navlink" href="/reference/design/cli/drop-run-command.html" data-title-zh="统一 `@agentic_function` 执行路径" data-href-en="/reference/design/cli/drop-run-command.html" data-href-zh="/reference/design/cli/drop-run-command.zh.html">Unified `@agentic_function` Execution Path</a>
+<a class="navlink" href="/reference/design/cli/ports.html" data-title-zh="Web UI 端口 — 配置与冲突处理" data-href-en="/reference/design/cli/ports.html" data-href-zh="/reference/design/cli/ports.zh.html">Web UI Port — Configuration and Conflict Handling</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Context</div>
+<a class="navlink" href="/reference/design/context/README.html" data-title-zh="Context" data-href-en="/reference/design/context/README.html" data-href-zh="/reference/design/context/README.zh.html">Context</a>
+<a class="navlink" href="/reference/design/context/overview.html" data-title-zh="Context — 上下文层" data-href-en="/reference/design/context/overview.html" data-href-zh="/reference/design/context/overview.zh.html">Context — The Context Layer</a>
+<a class="navlink" href="/reference/design/context/compaction.html" data-title-zh="上下文压缩" data-href-en="/reference/design/context/compaction.html" data-href-zh="/reference/design/context/compaction.zh.html">Context Compaction</a>
+<a class="navlink" href="/reference/design/context/composition.html" data-title-zh="上下文组成 —— 注册式三层" data-href-en="/reference/design/context/composition.html" data-href-zh="/reference/design/context/composition.zh.html">Context Composition — Registry-Based Three Layers</a>
+<a class="navlink" href="/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/reference/design/context/comparison.html" data-href-zh="/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
+<a class="navlink" href="/reference/design/context/context-compaction.html">上下文压缩</a>
+<a class="navlink" href="/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
+<a class="navlink" href="/reference/design/extension-gating/README.html" data-title-zh="扩展门控（Extension Gating）" data-href-en="/reference/design/extension-gating/README.html" data-href-zh="/reference/design/extension-gating/README.zh.html">Extension Gating</a>
+<a class="navlink" href="/reference/design/extension-gating/future-work.html" data-title-zh="未来工作 —— 明确不做的部分" data-href-en="/reference/design/extension-gating/future-work.html" data-href-zh="/reference/design/extension-gating/future-work.zh.html">Future work — explicitly NOT built</a>
+<a class="navlink" href="/reference/design/extension-gating/implementation.html" data-title-zh="实现地图" data-href-en="/reference/design/extension-gating/implementation.html" data-href-zh="/reference/design/extension-gating/implementation.zh.html">Implementation map</a>
+<a class="navlink" href="/reference/design/extension-gating/reference-comparison.html" data-title-zh="参考实现对比" data-href-en="/reference/design/extension-gating/reference-comparison.html" data-href-zh="/reference/design/extension-gating/reference-comparison.zh.html">Reference-implementation comparison</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="函数设计">Function Design</div>
+<a class="navlink" href="/reference/design/function/README.html" data-title-zh="函数设计" data-href-en="/reference/design/function/README.html" data-href-zh="/reference/design/function/README.zh.html">Function Design</a>
+<a class="navlink" href="/reference/design/function/calling-unification.html" data-title-zh="Function calling" data-href-en="/reference/design/function/calling-unification.html" data-href-zh="/reference/design/function/calling-unification.zh.html">Function calling</a>
+<a class="navlink" href="/reference/design/function/agentic-program.html">Agentic Program：工具、技能、agentic function是同一个概念</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="函数设计 · Calling">Function Design · Calling</div>
+<a class="navlink" href="/reference/design/function/calling/code-call.html" data-title-zh="@agentic_function 按固定顺序调用子函数" data-href-en="/reference/design/function/calling/code-call.html" data-href-zh="/reference/design/function/calling/code-call.zh.html">@agentic_function Calling Sub-Functions in a Fixed Order</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="集成">Integrations</div>
+<a class="navlink" href="/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/reference/design/integrations/README.html" data-href-zh="/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/reference/design/integrations/editor-integration.html">Editor integration: LSP tools and ACP server</a>
+<a class="navlink" href="/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/reference/design/integrations/harness-standard.html" data-href-zh="/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
+<a class="navlink" href="/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/reference/design/integrations/mcp-integration.html" data-href-zh="/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
+<a class="navlink" href="/reference/design/integrations/skills-and-plugins.html" data-title-zh="Skills &amp; Plugins" data-href-en="/reference/design/integrations/skills-and-plugins.html" data-href-zh="/reference/design/integrations/skills-and-plugins.zh.html">Skills &amp; Plugins</a>
+<a class="navlink" href="/reference/design/integrations/mcp-server.html" data-title-zh="MCP 服务端 —— 被外部调用" data-href-en="/reference/design/integrations/mcp-server.html" data-href-zh="/reference/design/integrations/mcp-server.zh.html">MCP Server — Being Called From Outside</a>
+<a class="navlink" href="/reference/design/integrations/mcp-server.viz.html">MCP 服务端：现状、九家对标与最小能力集 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Memory — 记忆系统设计">Memory — Memory System Design</div>
+<a class="navlink" href="/reference/design/memory/README.html" data-title-zh="Memory — 记忆系统设计" data-href-en="/reference/design/memory/README.html" data-href-zh="/reference/design/memory/README.zh.html">Memory — Memory System Design</a>
+<a class="navlink" href="/reference/design/memory/overview.html" data-title-zh="记忆子系统" data-href-en="/reference/design/memory/overview.html" data-href-zh="/reference/design/memory/overview.zh.html">Memory subsystem</a>
+<a class="navlink" href="/reference/design/memory/written-marker.html" data-title-zh="哪些轮次已经写进记忆" data-href-en="/reference/design/memory/written-marker.html" data-href-zh="/reference/design/memory/written-marker.zh.html">Knowing which turns memory has written</a>
+<a class="navlink" href="/reference/design/memory/written-marker.viz.html">哪些轮次已经写进记忆 (viz)</a>
+<a class="navlink" href="/reference/design/memory/memory-architecture.html">记忆子系统：机制图解</a>
+<a class="navlink" href="/reference/design/memory/memory-comparison.html">记忆写入：八个框架横向对比</a>
+<a class="navlink" href="/reference/design/memory/memory-adoption.html">对标之后抄什么：四条做法的适配方案</a>
+<a class="navlink" href="/reference/design/memory/authority-handoff.html" data-title-zh="权限：两个档位与配对" data-href-en="/reference/design/memory/authority-handoff.html" data-href-zh="/reference/design/memory/authority-handoff.zh.html">Authority: Two Tiers and Pairing</a>
+<a class="navlink" href="/reference/design/memory/entity-memory.html" data-title-zh="实体记忆 (Entity Memory)" data-href-en="/reference/design/memory/entity-memory.html" data-href-zh="/reference/design/memory/entity-memory.zh.html">Entity Memory</a>
+<a class="navlink" href="/reference/design/memory/git-as-entity-memory.html" data-title-zh="实体记忆走 Git: Session-Git + Project-Git" data-href-en="/reference/design/memory/git-as-entity-memory.html" data-href-zh="/reference/design/memory/git-as-entity-memory.zh.html">Entity Memory on Git: Session-Git + Project-Git</a>
+<a class="navlink" href="/reference/design/memory/virtual-memory.html" data-title-zh="抽象记忆 (Virtual Memory)" data-href-en="/reference/design/memory/virtual-memory.html" data-href-zh="/reference/design/memory/virtual-memory.zh.html">Virtual Memory</a>
+<a class="navlink" href="/reference/design/memory/speaker-identity.html">发言人身份：记忆里谁说的</a>
+<a class="navlink" href="/reference/design/memory/authority-landscape.html">权限与归因：我们做了什么、别人做了什么、接下来做什么</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Plans</div>
+<a class="navlink" href="/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/reference/design/plans/cache-control-passthrough.html" data-href-zh="/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
+<a class="navlink" href="/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
+<a class="navlink" href="/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/reference/design/plans/proactive-implementation.html" data-href-zh="/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</div>
+<a class="navlink" href="/reference/design/proactive/README.html" data-title-zh="Proactive Layer — 设计" data-href-en="/reference/design/proactive/README.html" data-href-zh="/reference/design/proactive/README.zh.html">Proactive Layer — Design</a>
+<a class="navlink" href="/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="承诺与心跳" data-href-en="/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments and Heartbeat</a>
+<a class="navlink" href="/reference/design/proactive/event-layer.html" data-title-zh="事件层" data-href-en="/reference/design/proactive/event-layer.html" data-href-zh="/reference/design/proactive/event-layer.zh.html">Event Layer</a>
+<a class="navlink" href="/reference/design/proactive/events-and-state.html" data-title-zh="事件与状态（地基）" data-href-en="/reference/design/proactive/events-and-state.html" data-href-zh="/reference/design/proactive/events-and-state.zh.html">Events and State (The Foundation)</a>
+<a class="navlink" href="/reference/design/proactive/framework-evolution.html" data-title-zh="框架信号路由：一条总线当中枢" data-href-en="/reference/design/proactive/framework-evolution.html" data-href-zh="/reference/design/proactive/framework-evolution.zh.html">Framework Signal Routing: One Bus as the Hub</a>
+<a class="navlink" href="/reference/design/proactive/execution-model.html" data-title-zh="规则怎么写、怎么跑" data-href-en="/reference/design/proactive/execution-model.html" data-href-zh="/reference/design/proactive/execution-model.zh.html">How Rules Are Written and How They Run</a>
+<a class="navlink" href="/reference/design/proactive/invariants.html" data-title-zh="框架自己要守的底线" data-href-en="/reference/design/proactive/invariants.html" data-href-zh="/reference/design/proactive/invariants.zh.html">Invariants the Framework Must Enforce Itself</a>
+<a class="navlink" href="/reference/design/proactive/event-reference.html">OpenProgram · 事件层 API Reference</a>
+<a class="navlink" href="/reference/design/proactive/event-layer.viz.html">OpenProgram · 事件层设计 (viz)</a>
+<a class="navlink" href="/reference/design/proactive/framework-evolution.viz.html">OpenProgram · 框架演进 (viz)</a>
+<a class="navlink" href="/reference/design/proactive/overview.html" data-title-zh="总览：跟着一个场景走一遍" data-href-en="/reference/design/proactive/overview.html" data-href-zh="/reference/design/proactive/overview.zh.html">Overview: Walk Through One Scenario End to End</a>
+<a class="navlink" href="/reference/design/proactive/policies-mvp.html" data-title-zh="三条样板规则" data-href-en="/reference/design/proactive/policies-mvp.html" data-href-zh="/reference/design/proactive/policies-mvp.zh.html">Three Template Rules</a>
+<a class="navlink" href="/reference/design/proactive/commitments-and-heartbeat.viz.html">承诺与心跳：agent在正确的时刻主动开口 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="Proactive Layer — 设计 · Research Archive">Proactive Layer — Design · Research Archive</div>
+<a class="navlink" href="/reference/design/proactive/_research_archive/replay.html">回放即 policy 测试</a>
+<a class="navlink" href="/reference/design/proactive/_research_archive/threat-model.html">威胁模型</a>
+<a class="navlink" href="/reference/design/proactive/_research_archive/evaluation.html">评估</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers</div>
+<a class="navlink" href="/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/reference/design/providers/README.html" data-href-zh="/reference/design/providers/README.zh.html">Providers</a>
+<a class="navlink" href="/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
+<a class="navlink" href="/reference/design/providers/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
+<a class="navlink" href="/reference/design/providers/network-proxy.html">Outbound network proxy</a>
+<a class="navlink" href="/reference/design/providers/record-replay.html" data-title-zh="请求录制与回放" data-href-en="/reference/design/providers/record-replay.html" data-href-zh="/reference/design/providers/record-replay.zh.html">Recording and replaying provider calls</a>
+<a class="navlink" href="/reference/design/providers/request-build.html" data-title-zh="请求构建:Context → 各 provider 参数" data-href-en="/reference/design/providers/request-build.html" data-href-zh="/reference/design/providers/request-build.zh.html">Request building: Context → per-provider parameters</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Auth</div>
+<a class="navlink" href="/reference/design/providers/auth/unified-account-management.html" data-title-zh="账号管理与凭据池轮换" data-href-en="/reference/design/providers/auth/unified-account-management.html" data-href-zh="/reference/design/providers/auth/unified-account-management.zh.html">Account management and pool rotation</a>
+<a class="navlink" href="/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="API key / 凭据解析" data-href-en="/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/reference/design/providers/auth/api-key-resolution-unification.zh.html">API-key / credential resolution</a>
+<a class="navlink" href="/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="claude-code 直连订阅" data-href-en="/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/reference/design/providers/auth/claude-code-direct-oauth.zh.html">claude-code direct subscription connection</a>
+<a class="navlink" href="/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接信息统一（一个 Credential + 一个解析出口）" data-href-en="/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connection unification (one Credential, one resolution point)</a>
+<a class="navlink" href="/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭证状态 —— 可用或停用" data-href-en="/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status — usable or stopped</a>
+<a class="navlink" href="/reference/design/providers/auth/credential-validation-unification.html" data-title-zh="凭证校验" data-href-en="/reference/design/providers/auth/credential-validation-unification.html" data-href-zh="/reference/design/providers/auth/credential-validation-unification.zh.html">Credential validation</a>
+<a class="navlink" href="/reference/design/providers/auth/unified-auth-storage.html" data-title-zh="自包含的认证存储" data-href-en="/reference/design/providers/auth/unified-auth-storage.html" data-href-zh="/reference/design/providers/auth/unified-auth-storage.zh.html">Self-contained auth storage</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Models</div>
+<a class="navlink" href="/reference/design/providers/models/fast-tier.html" data-title-zh="Fast（高速）档 — 判定、存储与线路" data-href-en="/reference/design/providers/models/fast-tier.html" data-href-zh="/reference/design/providers/models/fast-tier.zh.html">Fast tier — detection, storage, and wires</a>
+<a class="navlink" href="/reference/design/providers/models/overview.html" data-title-zh="模型目录与 Provider 配置" data-href-en="/reference/design/providers/models/overview.html" data-href-zh="/reference/design/providers/models/overview.zh.html">Model Catalog and Provider Configuration</a>
+<a class="navlink" href="/reference/design/providers/models/thinking-effort.html" data-title-zh="Thinking / Effort 子系统设计" data-href-en="/reference/design/providers/models/thinking-effort.html" data-href-zh="/reference/design/providers/models/thinking-effort.zh.html">Thinking / Effort Subsystem Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Providers · Reliability</div>
+<a class="navlink" href="/reference/design/providers/reliability/error-retry.html" data-title-zh="模型调用的错误处理与重试决策逻辑" data-href-en="/reference/design/providers/reliability/error-retry.html" data-href-zh="/reference/design/providers/reliability/error-retry.zh.html">Error Handling and Retry Decision Logic for Model Calls</a>
+<a class="navlink" href="/reference/design/providers/reliability/error-taxonomy-propagation.html" data-title-zh="错误分类传播 —— 把结构化的 LLM 错误一路传到 UI" data-href-en="/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-zh="/reference/design/providers/reliability/error-taxonomy-propagation.zh.html">Error-taxonomy propagation — structured LLM errors up to the UI</a>
+<a class="navlink" href="/reference/design/providers/reliability/llm-fault-tolerance.html" data-title-zh="LLM 调用容错与超时管理" data-href-en="/reference/design/providers/reliability/llm-fault-tolerance.html" data-href-zh="/reference/design/providers/reliability/llm-fault-tolerance.zh.html">LLM-call fault tolerance &amp; timeout management</a>
+<a class="navlink" href="/reference/design/providers/reliability/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Research</div>
+<a class="navlink" href="/reference/design/research/execution-trace-model-selection.html" data-title-zh="执行记录数据模型 —— 选择 span" data-href-en="/reference/design/research/execution-trace-model-selection.html" data-href-zh="/reference/design/research/execution-trace-model-selection.zh.html">Execution Trace Data Model — Choosing Span</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时">Runtime</div>
+<a class="navlink" href="/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/reference/design/runtime/README.html" data-href-zh="/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/reference/design/runtime/additional-working-directories.html" data-title-zh="会话多工作目录（Additional Working Directories）设计" data-href-en="/reference/design/runtime/additional-working-directories.html" data-href-zh="/reference/design/runtime/additional-working-directories.zh.html">Additional working directories for a session</a>
+<a class="navlink" href="/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
+<a class="navlink" href="/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
+<a class="navlink active" href="/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/reference/design/runtime/permission-model.html" data-href-zh="/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
+<a class="navlink" href="/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/reference/design/runtime/overview.html" data-href-zh="/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
+<a class="navlink" href="/reference/design/runtime/self-update.html" data-title-zh="自我更新：OpenProgram 一边改自己一边保持可用" data-href-en="/reference/design/runtime/self-update.html" data-href-zh="/reference/design/runtime/self-update.zh.html">Self-update: staying usable while OpenProgram modifies itself</a>
+<a class="navlink" href="/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/reference/design/runtime/goal.html" data-href-zh="/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
+<a class="navlink" href="/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/reference/design/runtime/tool-toggle-management.html" data-href-zh="/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
+<a class="navlink" href="/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/reference/design/runtime/unified-session-context.html" data-href-zh="/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
+<a class="navlink" href="/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/reference/design/runtime/sandbox.html" data-href-zh="/reference/design/runtime/sandbox.zh.html">Sandbox</a>
+<a class="navlink" href="/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
+<a class="navlink" href="/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/reference/design/runtime/agent-collaboration.html" data-href-zh="/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
+<a class="navlink" href="/reference/design/runtime/agent-collab-architecture.html">Agent协作：工具面</a>
+<a class="navlink" href="/reference/design/runtime/agent-collab-comparison.html">Agent协作：八家实现对照</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Dag">Runtime · Dag</div>
+<a class="navlink" href="/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作（通信 · 服务 · 合并）" data-href-en="/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/reference/design/runtime/dag/branch-collaboration.zh.html">Branch Collaboration (Communication · Service · Merge)</a>
+<a class="navlink" href="/reference/design/runtime/dag/rendering.html" data-title-zh="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性）" data-href-en="/reference/design/runtime/dag/rendering.html" data-href-zh="/reference/design/runtime/dag/rendering.zh.html">DAG Rendering Spec (Layout · Edges · Legend · Default Visibility)</a>
+<a class="navlink" href="/reference/design/runtime/dag/dag-live.html">DAG 实时布局（真算法）</a>
+<a class="navlink" href="/reference/design/runtime/dag/dag-layout-spec.html">DAG 布局视觉规范</a>
+<a class="navlink" href="/reference/design/runtime/dag/overview.html" data-title-zh="Session DAG — 设计" data-href-en="/reference/design/runtime/dag/overview.html" data-href-zh="/reference/design/runtime/dag/overview.zh.html">Session DAG — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Execution">Runtime · Execution</div>
+<a class="navlink" href="/reference/design/runtime/execution/dispatcher-split.html" data-title-zh="`agent/dispatcher` —— 按职责划分的包" data-href-en="/reference/design/runtime/execution/dispatcher-split.html" data-href-zh="/reference/design/runtime/execution/dispatcher-split.zh.html">`agent/dispatcher` — a responsibility-scoped package</a>
+<a class="navlink" href="/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
+<a class="navlink" href="/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
+<a class="navlink" href="/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
+<a class="navlink" href="/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
+<a class="navlink" href="/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
+<a class="navlink" href="/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
+<a class="navlink" href="/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/reference/design/runtime/operations/branch-naming.html" data-href-zh="/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
+<a class="navlink" href="/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
+<a class="navlink" href="/reference/design/runtime/operations/file-management.html" data-title-zh="文件修改管理 — 行业分析与 OpenProgram 设计" data-href-en="/reference/design/runtime/operations/file-management.html" data-href-zh="/reference/design/runtime/operations/file-management.zh.html">File Modification Management — Industry Analysis and OpenProgram Design</a>
+<a class="navlink" href="/reference/design/runtime/operations/multi-agent-revert-todo.html" data-title-zh="多 agent 分支与逐 turn 回滚" data-href-en="/reference/design/runtime/operations/multi-agent-revert-todo.html" data-href-zh="/reference/design/runtime/operations/multi-agent-revert-todo.zh.html">Multi-agent branches and per-turn revert</a>
+<a class="navlink" href="/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
+<a class="navlink" href="/reference/design/runtime/operations/rewind.html" data-title-zh="Rewind — 回退到任意历史消息" data-href-en="/reference/design/runtime/operations/rewind.html" data-href-zh="/reference/design/runtime/operations/rewind.zh.html">Rewind — Roll Back to Any Historical Message</a>
+<a class="navlink" href="/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
+<a class="navlink" href="/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
+<a class="navlink" href="/reference/design/runtime/operations/branch-naming.viz.html">分支自动命名设计 (viz)</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
+<a class="navlink" href="/reference/design/runtime/session/README.html" data-title-zh="Session 子系统" data-href-en="/reference/design/runtime/session/README.html" data-href-zh="/reference/design/runtime/session/README.zh.html">Session Subsystem</a>
+<a class="navlink" href="/reference/design/runtime/session/distill.html" data-title-zh="Distill——把会话变成可复用流程" data-href-en="/reference/design/runtime/session/distill.html" data-href-zh="/reference/design/runtime/session/distill.zh.html">Distill — sessions into reusable procedures</a>
+<a class="navlink" href="/reference/design/runtime/session/name.html" data-title-zh="LLM 标题生成" data-href-en="/reference/design/runtime/session/name.html" data-href-zh="/reference/design/runtime/session/name.zh.html">LLM Title Generation</a>
+<a class="navlink" href="/reference/design/runtime/session/context.html" data-title-zh="Session 上下文" data-href-en="/reference/design/runtime/session/context.html" data-href-zh="/reference/design/runtime/session/context.zh.html">Session Context</a>
+<a class="navlink" href="/reference/design/runtime/session/storage.html" data-title-zh="Session 数据模型" data-href-en="/reference/design/runtime/session/storage.html" data-href-zh="/reference/design/runtime/session/storage.zh.html">Session Data Model</a>
+<a class="navlink" href="/reference/design/runtime/session/comparison.html" data-title-zh="Session 管理方案对比" data-href-en="/reference/design/runtime/session/comparison.html" data-href-zh="/reference/design/runtime/session/comparison.zh.html">Session Management Comparison</a>
+<a class="navlink" href="/reference/design/runtime/session/operations.html" data-title-zh="Session 操作流程" data-href-en="/reference/design/runtime/session/operations.html" data-href-zh="/reference/design/runtime/session/operations.zh.html">Session Operations</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/reference/design/ui/README.html" data-href-zh="/reference/design/ui/README.zh.html">Web UI</a>
+<a class="navlink" href="/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/reference/design/ui/composer-interaction-modes.html" data-href-zh="/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
+<a class="navlink" href="/reference/design/ui/invariants.html" data-title-zh="UI 跨模块不变量" data-href-en="/reference/design/ui/invariants.html" data-href-zh="/reference/design/ui/invariants.zh.html">Cross-module UI invariants</a>
+<a class="navlink" href="/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
+<a class="navlink" href="/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/reference/design/ui/gui-agent-context.html" data-href-zh="/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/reference/design/ui/indicator-dots.html" data-title-zh="指示点系统" data-href-en="/reference/design/ui/indicator-dots.html" data-href-zh="/reference/design/ui/indicator-dots.zh.html">Indicator dot system</a>
+<a class="navlink" href="/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
+<a class="navlink" href="/reference/design/ui/project-workspace-prototype.html">OpenProgram 浏览器式界面原型 v3</a>
+<a class="navlink" href="/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
+<a class="navlink" href="/reference/design/ui/project-workspace.html" data-title-zh="项目工作区 —— 文件、多 Tab 与多会话" data-href-en="/reference/design/ui/project-workspace.html" data-href-zh="/reference/design/ui/project-workspace.zh.html">Project workspace — files, tabs, and multi-session</a>
+<a class="navlink" href="/reference/design/ui/remote-web-access.html" data-title-zh="远程 Web 访问——单一所有者的自托管控制" data-href-en="/reference/design/ui/remote-web-access.html" data-href-zh="/reference/design/ui/remote-web-access.zh.html">Remote Web Access — Owner-Only, Self-Hosted Control</a>
+<a class="navlink" href="/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/reference/design/ui/surface-system.html" data-href-zh="/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
+<a class="navlink" href="/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/reference/design/ui/state-layer.html" data-href-zh="/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
+<a class="navlink" href="/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/reference/design/ui/web-styles.html" data-href-zh="/reference/design/ui/web-styles.zh.html">Web style organization</a>
+<a class="navlink" href="/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
+<a class="navlink" href="/reference/design/ui/layout-density-mock.html">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</a>
+<a class="navlink" href="/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
+<a class="navlink" href="/reference/design/ui/attachment-handling.html" data-title-zh="附件处理设计（Web 聊天）" data-href-en="/reference/design/ui/attachment-handling.html" data-href-zh="/reference/design/ui/attachment-handling.zh.html">Attachment Handling Design (Web Chat)</a>
+<a class="navlink" href="/reference/design/ui/attachment-handling.viz.html">OpenProgram · 附件处理设计 (viz)</a>
+<a class="navlink" href="/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="权限系统设计（Permission System Design）">Permission System Design</span></nav><h1 id="permission-system-design">Permission System Design<a class="header-anchor" href="#permission-system-design">#</a></h1>
+<p>This is the <strong>implementation-level design document</strong> for the OpenProgram permission system: after reading it, someone unfamiliar with the code knows what the permission system is, which permissions exist, how the backend is written, how the frontend is written, and which files hold the code. Every data structure gets its field definitions, every key function gets its signature, every WS frame gets its fields, every frontend component gets its structure. All references carry <code>file:line</code>.</p>
+<p>Reading order: <strong>① Overview</strong> (what it is, how it runs) → <strong>② Which permissions exist</strong> (definitions of modes and rules) → <strong>③ Backend implementation</strong> (decisions, matching, storage) → <strong>④ Frontend implementation</strong> (approval card, mode picker, rule management) → <strong>⑤ Attended mode</strong> (an orthogonal mechanism) → <strong>⑥ Key constraints and code map</strong> → <strong>⑦ Explicit non-goals</strong>.</p>
+<hr />
+<h2 id="1-overview">1. Overview<a class="header-anchor" href="#1-overview">#</a></h2>
+<h3 id="11-what-the-permission-system-solves">1.1 What the permission system solves<a class="header-anchor" href="#11-what-the-permission-system-solves">#</a></h3>
+<p>When the model wants to call a tool (bash / write / …), there are only three possible dispositions: <strong>execute directly</strong>, <strong>ask the user first</strong>, or <strong>deny outright</strong>. The permission system is the mechanism that decides which path each tool call takes. It is not a security sandbox (it does no process or file isolation); it is a <strong>decision and awareness layer</strong> — it lets the user control &quot;what runs automatically, what needs a nod, what is never allowed&quot;, and shows clearly what is being approved when a nod is needed.</p>
+<h3 id="12-how-the-four-parts-cooperate">1.2 How the four parts cooperate<a class="header-anchor" href="#12-how-the-four-parts-cooperate">#</a></h3>
+<p>Permission decisions run through four parts chained into a decision path, from hard to soft:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Governs</th>
+<th>Can <code>bypass</code> disable it</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>gate (hard block)</strong></td>
+<td>Absolute prohibitions from the policy layer (proactive policy deny/ask)</td>
+<td>No, always in effect</td>
+<td><code>openprogram/events/tool_gate.py</code></td>
+</tr>
+<tr>
+<td><strong>Rule layer</strong></td>
+<td>User-configured allow / deny / ask rules (per-tool + per-pattern, <strong>project level</strong> primarily, layered across sources)</td>
+<td>No for deny/ask; yes for allow</td>
+<td><code>openprogram/agent/internals/_approval.py:50-68</code> (<code>_match_rule</code>) + <code>openprogram/functions/permission_rule.py</code></td>
+</tr>
+<tr>
+<td><strong>Permission mode (session level)</strong></td>
+<td>Session tier: ask / acceptEdits / auto / bypass / plan (aligned with Claude Code's official names, 5 tiers)</td>
+<td>The tier itself is that switch</td>
+<td><code>_gated_execute</code> (<code>internals/_approval.py:150-197</code>)</td>
+</tr>
+<tr>
+<td><strong>Approval flow</strong></td>
+<td>Frontend/backend interaction when a nod is needed (show card, block waiting for an answer, write back project rules)</td>
+<td>No (showing the card blocks)</td>
+<td><code>await_user_approval</code> (<code>internals/_approval.py:245-</code>) + frontend approval mode</td>
+</tr>
+</tbody>
+</table>
+<p>One safety constraint runs through the whole document: <strong>decision priority is deny &gt; ask &gt; allow, and the deny/ask decision happens before the bypass short circuit.</strong> Because the web entry point defaults to bypass (<code>webui/_execute/__init__.py:552-553</code>), placing deny rule matching after bypass would silently ignore a user's &quot;forbid rm -rf&quot; under the default — that is a security defect. The decision pseudocode in section 3 strictly guarantees the ordering.</p>
+<h3 id="13-data-flow">1.3 Data flow<a class="header-anchor" href="#13-data-flow">#</a></h3>
+<pre><code>LLM issues a tool call
+        │
+        ▼
+┌──────────────────────────────────────────────────────────────┐
+│ agent_loop.py:695  build the tool.before event                 │
+│ agent_loop.py:701  decide_tool_gate(before_ev)  ← gate block    │
+│   deny → raise ToolGateDenied → error tool result to model      │
+└──────────────────────────────────────────────────────────────┘
+        │ allowed through
+        ▼
+┌──────────────────────────────────────────────────────────────┐
+│ _gated_execute (internals/_approval.py:150-197)                │
+│                                                                │
+│  ① Rule layer deny/ask (before bypass)                         │
+│     _match_rule → &quot;deny&quot; → return [denied] (any mode, incl.    │
+│       bypass)                                                  │
+│     _match_rule → &quot;ask&quot;  → force await_user_approval (incl.    │
+│       bypass)                                                  │
+│  ② force_ask tools (exit_plan_mode) → forced approval          │
+│  ③ permission_mode == &quot;bypass&quot; → execute directly              │
+│  ④ Rule layer allow (after bypass)                             │
+│     _match_rule → &quot;allow&quot; → execute directly                   │
+│  ⑤ Read-only safe tools (SAFE_AUTO_ALLOWLIST) → execute in all │
+│     modes                                                      │
+│  ⑥ permission_mode == &quot;acceptEdits&quot; and the tool is write-safe │
+│     → execute directly                                         │
+│  ⑦ permission_mode == &quot;auto&quot; → risky tools return [denied];    │
+│     everything else goes to the haiku classifier               │
+│  ⑧ Everything else → await_user_approval, card blocks          │
+└──────────────────────────────────────────────────────────────┘
+        │
+        ▼   when approval is needed
+┌──────────────────────────────────────────────────────────────┐
+│ await_user_approval → open_question(kind=&quot;approval&quot;)           │
+│   → emit_question_asked → event layer → WS question.asked      │
+│   → frontend approval mode renders the approval card           │
+│   → user clicks Allow once / Always allow / Deny               │
+│   → question_reply/question_reject → _resolve_question          │
+│   → threading.Event wakes → consume_or_timeout → (approved,    │
+│      reason, scope)                                            │
+│   scope==&quot;always&quot; → _persist_always_allow_rule → write back to │
+│      project rules                                             │
+└──────────────────────────────────────────────────────────────┘
+        │
+        ▼
+   approved → orig_execute   |   denied/timeout → [denied] error result
+</code></pre>
+<hr />
+<h2 id="2-which-permissions-exist-definitions">2. Which permissions exist (definitions)<a class="header-anchor" href="#2-which-permissions-exist-definitions">#</a></h2>
+<p>This section covers only the &quot;what&quot; — the definitions of permission modes and rules. Implementation lives in sections 3 and 4.</p>
+<h3 id="21-permission-modes-5-tiers-claude-codes-official-names">2.1 Permission modes (5 tiers, Claude Code's official names)<a class="header-anchor" href="#21-permission-modes-5-tiers-claude-codes-official-names">#</a></h3>
+<p>The permission mode is <strong>session level</strong>: it lives in <code>SessionRunConfig.permission_mode</code>, the frontend picks it in the permission badge on the chat page top bar (§4.5), and it is isolated per session. It is defined at <code>openprogram/agent/dispatcher/types.py:19</code>, with the legal value set at <code>openprogram/agent/session_config.py:27</code> (aligned with Claude Code's official 5 tiers):</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/dispatcher/types.py:19</span>
+<span class="n">PermissionMode</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="s2">&quot;acceptEdits&quot;</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;bypass&quot;</span><span class="p">]</span>
+
+<span class="c1"># openprogram/agent/session_config.py:27</span>
+<span class="n">VALID_PERMISSION</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="s2">&quot;acceptEdits&quot;</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;bypass&quot;</span><span class="p">}</span>
+<span class="n">_PERMISSION_BY_LOWER</span> <span class="o">=</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">VALID_PERMISSION</span><span class="p">}</span>  <span class="c1"># case-insensitive normalization</span>
+</code></pre>
+<p>Internal tier values use the official English names, and frontend labels follow Claude Code's official labels (<code>MODE_LABELS</code> in <code>use-permission-mode.ts</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Mode (internal value)</th>
+<th>Frontend label</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ask</code></td>
+<td>Ask permissions</td>
+<td>Every tool call shows an approval card and blocks waiting for an answer (unless a rule allows it, it is a read-only safe tool, or the per-tool declaration says no approval is needed). One prompt per call.</td>
+</tr>
+<tr>
+<td><code>acceptEdits</code></td>
+<td>Accept edits</td>
+<td>Tools that are <strong>write-class and path-safe</strong> (read/write/edit/glob/grep/list, targeting a path inside the working directories and not a dangerous file) are auto-allowed; command-class tools such as bash/exec/shell <strong>still go through full approval</strong>.</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>Auto mode</td>
+<td>The LLM classifier tier. Risky tools (<code>RISKY_AUTO_DENYLIST</code>: bash/exec/shell/execute_code/process) return <code>[denied]</code> outright; anything else that is uncertain gets one haiku call to judge safety (<code>internals/_auto_classifier.py</code>).</td>
+</tr>
+<tr>
+<td><code>bypass</code></td>
+<td>Bypass permissions</td>
+<td>Everything is allowed through, no approval card. <strong>Exception</strong>: <code>exit_plan_mode</code> forces approval (<code>_FORCE_APPROVAL_TOOLS</code>, <code>internals/_approval.py:34</code>); rule-layer deny/ask still applies.</td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>Plan mode</td>
+<td>Planning state. Write-class tools are invisible to the model in this mode (<code>apply_tool_policy(source=&quot;plan&quot;)</code>) — pure <strong>visibility</strong> control, orthogonal to approval strength (see §3.7).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Case normalization: <code>acceptEdits</code> is camel case. <code>VALID_PERMISSION</code> stores the camel-case canonical values, and <code>_PERMISSION_BY_LOWER</code> builds a <code>lowercase → canonical</code> table; <code>_normalize_permission</code> (<code>session_config.py:289-293</code>) uses <code>_PERMISSION_BY_LOWER.get(value.lower())</code> for case-insensitive matching, so a frontend sending <code>&quot;acceptedits&quot;</code> still normalizes back to <code>&quot;acceptEdits&quot;</code>, and illegal values return <code>None</code>.</p>
+</blockquote>
+<h3 id="22-rules-allow-deny-ask-three-parallel-lists">2.2 Rules (allow / deny / ask, three parallel lists)<a class="header-anchor" href="#22-rules-allow-deny-ask-three-parallel-lists">#</a></h3>
+<p>Rules are user-configured overrides, orthogonal to the tier, and <strong>carried primarily by the project</strong> (see §2.3). Three parallel lists; a rule's behavior comes from which list it lives in, not from a field inside the string:</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/session_config.py:35-45</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PermissionRules</span><span class="p">:</span>
+    <span class="n">allow</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">deny</span><span class="p">:</span>  <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">ask</span><span class="p">:</span>   <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allow</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">deny</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ask</span><span class="p">)</span>
+</code></pre>
+<p><strong>Rule string syntax</strong>:</p>
+<pre><code>ToolName                 Whole tool, per-tool. e.g. Bash / write_file / read_file
+ToolName(content)        Command level, per-pattern. e.g. bash(git:*) / read_file(/etc/**)
+</code></pre>
+<ul>
+<li><code>bash</code> → <code>{tool_name=&quot;bash&quot;}</code> (the whole bash tool)</li>
+<li><code>bash(git status)</code> → <code>{tool_name=&quot;bash&quot;, pattern=&quot;git status&quot;}</code> (exact command)</li>
+<li><code>bash(git:*)</code> → <code>{tool_name=&quot;bash&quot;, pattern=&quot;git:*&quot;}</code> (prefix wildcard: commands starting with <code>git </code>)</li>
+<li><code>read_file(/etc/**)</code> → <code>{tool_name=&quot;read_file&quot;, pattern=&quot;/etc/**&quot;}</code> (path glob)</li>
+<li>Escaping: <code>(</code>, <code>)</code>, and <code>\</code> inside a pattern must be escaped (<code>\( \) \\</code>) because they are syntax delimiters. Serialization and deserialization are duals.</li>
+</ul>
+<pre><code class="language-python"><span class="c1"># openprogram/functions/permission_rule.py:19-22</span>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PermissionRuleValue</span><span class="p">:</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># None = per-tool; non-None = per-pattern</span>
+</code></pre>
+<h3 id="23-rule-sources-3-layers-the-project-is-the-primary-carrier">2.3 Rule sources (3 layers, the project is the primary carrier)<a class="header-anchor" href="#23-rule-sources-3-layers-the-project-is-the-primary-carrier">#</a></h3>
+<p>Rules can come from multiple sources, lowest priority first and highest last, with later entries overriding earlier ones. Merging happens in <code>load_merged_rules(session_id)</code> (<code>openprogram/functions/permission_rule.py:100-146</code>). <strong>The project layer is the primary carrier of rules</strong> — rules follow the project, survive session switches, and let &quot;always allow&quot; be remembered long term. Only carriers that actually exist are mapped (no local/cliArg/enterprise policy backend, see the non-goals in section 7):</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Priority</th>
+<th>Carrier</th>
+<th>Writable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>global (global config)</td>
+<td>Lowest</td>
+<td><code>tools.permission_rules</code> in the global config (<code>webui._setup._read_config()</code>)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>project (primary carrier)</strong></td>
+<td>↑</td>
+<td><code>permission_rules</code> in <code>&lt;project&gt;/.openprogram/settings.json</code>; the default project lands in <code>&lt;state&gt;/projects/default-settings.json</code>. Resolved via <code>project_for_session(session_id)</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>session (this session, one-off override)</td>
+<td>Highest</td>
+<td><code>SessionRunConfig.permission_rules</code>, persisted with the session into session meta (schemaless)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Reading and writing the project layer: <code>load_project_settings</code> / <code>save_project_settings</code> in <code>openprogram/store/project/project_store.py</code> (<code>:565-</code>); the carrier path is decided by <code>_settings_path_for</code> (<code>:559-</code>) — non-default projects land in <code>&lt;project&gt;/.openprogram/settings.json</code>, the default project lands in <code>&lt;state&gt;/projects/default-settings.json</code> (never write config into the home directory).</li>
+<li>Merging is just concatenation of the three lists: the overall ordering of deny/ask/allow is guaranteed by <code>_match_rule</code> (first hit returns, deny &gt; ask &gt; allow), and source order only affects ordering within the same behavior.</li>
+<li>&quot;Always allow&quot; (scope=<code>always</code>) writes back to the <strong>project</strong> settings (<code>_persist_always_allow_rule</code>, <code>internals/_approval.py:90-106</code>), no longer to session meta.</li>
+</ul>
+<h3 id="24-pendingquestion-the-data-carrier-of-the-approval-frame">2.4 PendingQuestion, the data carrier of the approval frame<a class="header-anchor" href="#24-pendingquestion-the-data-carrier-of-the-approval-frame">#</a></h3>
+<p>Approvals merge into the unified <code>QuestionRegistry</code> — an approval is simply a question with <code>kind=&quot;approval&quot;</code>, taking the same path and the same frontend landing point as <code>runtime.ask</code>.</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/questions.py:34-54</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PendingQuestion</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1"># UUID hex[:12]</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span>            <span class="c1"># webui session id, may be empty</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># &quot;ask&quot;|&quot;confirm&quot;|&quot;approval&quot;|&quot;form&quot;|&quot;ask_many&quot;</span>
+    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">multi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">allow_custom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">detail</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>           <span class="c1"># approval use: tool name + argument summary</span>
+    <span class="n">schema</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">questions</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">expires_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+</code></pre>
+<p><code>_Resolution = tuple[str, object]</code>, and the registry's <code>outcome</code> has only two states, <code>{&quot;answered&quot;, &quot;declined&quot;}</code> (<code>questions.py:57-58</code>). <code>&quot;timeout&quot;</code> is not a registry state; it is a value <strong>synthesized</strong> by <code>consume_or_timeout</code> (<code>questions.py:256-</code>) when no result arrives: <code>return res if res is not None else (&quot;timeout&quot;, None)</code>.</p>
+<hr />
+<h2 id="3-backend-implementation">3. Backend implementation<a class="header-anchor" href="#3-backend-implementation">#</a></h2>
+<p>A tool call passes through two checkpoints: the gate (in the agent main loop) and the approval wrapper (inside the tool coroutine). Rule matching, per-mode branches, storage, and danger detection all live in this layer.</p>
+<h3 id="31-gate-checkpoint-a-synchronous-hard-block">3.1 gate (checkpoint A, synchronous hard block)<a class="header-anchor" href="#31-gate-checkpoint-a-synchronous-hard-block">#</a></h3>
+<p>In <code>agent_loop.py</code>, before each tool execution: <code>agent_loop.py:695</code> builds the <code>tool.before</code> event → <code>agent_loop.py:701</code> calls <code>decide_tool_gate(before_ev)</code> to poll every registered gate → on a deny, <code>agent_loop.py:708</code> raises <code>ToolGateDenied</code>, and the deny reason goes back to the model as an error tool result.</p>
+<pre><code class="language-python"><span class="c1"># openprogram/events/tool_gate.py</span>
+<span class="n">ToolGate</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Event</span><span class="p">],</span> <span class="s2">&quot;str | None&quot;</span><span class="p">]</span>   <span class="c1"># returns None to allow / a string deny reason</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">decide_tool_gate</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Poll every gate and take the strictest: any deny blocks (reasons joined by &quot;; &quot;).</span>
+<span class="sd">    A gate that raises → fail-open (printed to stderr), continue to the next one.&quot;&quot;&quot;</span>
+</code></pre>
+<p>Key property: <strong>the gate sits outside the permission approval wrapper, and <code>bypass</code> cannot disable it</strong> (<code>events/tool_gate.py:15</code>); it applies to subagents just the same. The gate is the hard block point for the policy layer (proactive policy Gate allow/deny/ask), so it must be fast (synchronous hot path, no LLM, no slow IO).</p>
+<h3 id="32-approval-wrapper-checkpoint-b-and-decision-pseudocode">3.2 Approval wrapper (checkpoint B) and decision pseudocode<a class="header-anchor" href="#32-approval-wrapper-checkpoint-b-and-decision-pseudocode">#</a></h3>
+<p>Tools get individually wrapped with an approval layer when they enter the dispatcher (<code>dispatcher/__init__.py:802</code>: <code>tools = [_wrap_with_approval(t, req, on_event) for t in tools]</code>; the real function name is <code>wrap_with_approval</code>, aliased at the dispatcher import). The wrapper sits <strong>inside</strong> the tool coroutine, because agent_loop eagerly schedules <code>tool.execute</code> and intercepting from outside races (<code>internals/_approval.py:121-126</code>). <code>_gated_execute</code> is the execute that gets substituted in (<code>internals/_approval.py:150-197</code>), with the full decision order (8 branches):</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/internals/_approval.py:34, 150-197</span>
+<span class="n">_FORCE_APPROVAL_TOOLS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;exit_plan_mode&quot;</span><span class="p">}</span>  <span class="c1"># :34</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_gated_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">):</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">permission_mode</span>
+    <span class="n">force_ask</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_FORCE_APPROVAL_TOOLS</span>
+
+    <span class="c1"># (1) Rule layer deny/ask -- before bypass, highest safety priority</span>
+    <span class="n">verdict</span> <span class="o">=</span> <span class="n">_match_rule</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;permission_rules&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>  <span class="c1"># 3.4</span>
+    <span class="k">if</span> <span class="n">verdict</span> <span class="o">==</span> <span class="s2">&quot;deny&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_denied</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[denied] blocked by deny rule: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verdict</span> <span class="o">==</span> <span class="s2">&quot;ask&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_approve_then_run</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>  <span class="c1"># shows even under bypass</span>
+
+    <span class="c1"># (2) force_ask (exit_plan_mode), bypass cannot skip it either</span>
+    <span class="k">if</span> <span class="n">force_ask</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_approve_then_run</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (3) bypass short circuit (after deny/ask/force)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;bypass&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (4) Rule layer allow -- after bypass</span>
+    <span class="k">if</span> <span class="n">verdict</span> <span class="o">==</span> <span class="s2">&quot;allow&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (5) Read-only safe tools allowed in every mode (read/grep/glob under</span>
+    <span class="c1">#     ask / acceptEdits / plan raise no card; reuses the auto classifier allowlist)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">SAFE_AUTO_ALLOWLIST</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (6) acceptEdits: write-safe tools auto-allowed; command-class tools fall to approval</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;acceptEdits&quot;</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">agent_tool</span><span class="p">,</span> <span class="s2">&quot;_accept_edits_safe&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="n">_path_is_safe</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>        <span class="c1"># 3.3 / 3.5</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (7) auto: obvious danger denied outright, uncertainty gets one haiku call</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">RISKY_AUTO_DENYLIST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_denied</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[denied] auto mode: risky tool blocked: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">should_block</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="k">await</span> <span class="n">auto_classify_tool</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">should_block</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_denied</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[denied] auto classifier: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+    <span class="c1"># (8) Show the card and block for an answer (ask / plan / acceptEdits command-class land here)</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">_approve_then_run</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+
+<span class="c1"># internals/_approval.py:139-148</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_approve_then_run</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">):</span>
+    <span class="n">approved</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">scope</span> <span class="o">=</span> <span class="k">await</span> <span class="n">await_user_approval</span><span class="p">(</span>
+        <span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">tool_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">on_event</span><span class="o">=</span><span class="n">on_event</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">approved</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_denied</span><span class="p">(</span><span class="n">reason_or_default</span><span class="p">(</span><span class="n">reason</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">scope</span> <span class="o">==</span> <span class="s2">&quot;always&quot;</span><span class="p">:</span>
+        <span class="n">_persist_always_allow_rule</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>  <span class="c1"># write back project rules, see 4.4</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">orig_execute</span><span class="p">(</span><span class="n">call_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">on_update</span><span class="p">)</span>
+</code></pre>
+<p><strong>The safety constraint that deny precedes bypass (the single most critical property of this design, keep it)</strong>: deny/ask rule matching (① ②) must come before the bypass short circuit (③). Counterexample: if the whole rule block were inserted after bypass, then under the web default of bypass (<code>_execute/__init__.py:552-553</code>) a user's <code>deny: [&quot;bash(rm -rf:*)&quot;]</code> would never be consulted — rm -rf would run silently. So deny/ask is checked before bypass and allow after it. This ordering is a safety property; do not scramble it when changing <code>_gated_execute</code>.</p>
+<h3 id="33-per-mode-branch-implementation">3.3 Per-mode branch implementation<a class="header-anchor" href="#33-per-mode-branch-implementation">#</a></h3>
+<p>Numbering matches the pseudocode in 3.2:</p>
+<ul>
+<li><strong>acceptEdits (⑥)</strong>: three parts — ① <code>@function</code> takes an <code>accept_edits_safe: bool = False</code> parameter (<code>functions/_runtime.py:767</code>) that lands on the tool object as <code>_accept_edits_safe</code> (<code>:1079</code>); read/write/edit/glob/grep/list each mark <code>True</code> in their <code>@function</code> (e.g. <code>functions/tools/write/write.py:24</code>, <code>edit/edit.py:25</code>, <code>read/read.py:28</code>, <code>grep/grep.py:101</code>, <code>list/list.py:30</code>, <code>glob/glob.py:43</code>), while bash/exec/execute_code do not (default <code>False</code>); ② <code>_path_is_safe</code> (<code>internals/_approval.py:72-87</code>) reuses <code>check_path_safety</code> from 3.5 (path inside the working directory set, not a dangerous file/directory, no Windows bypass); ③ command-class tools fall through to ⑧ forced approval even when a broad allow exists.</li>
+<li><strong>plan (visibility control)</strong>: <code>apply_tool_policy(tools, source=&quot;plan&quot;)</code> (<code>dispatcher/__init__.py:798</code>) filters out write-class tools so they never enter the model's tool list. Plan state lives in a boolean set (<code>_active</code> in <code>agent/plan_mode.py</code>) and <strong>does not switch approval strength</strong> — it is orthogonal to the approval tier (details in §3.7). <code>_gated_execute</code> has no plan-specific branch (write-class tools are already filtered, read-only tools follow the current tier as usual).</li>
+<li><strong>auto (⑦)</strong>: the LLM classifier tier, with three levels of filtering to save calls (<code>internals/_auto_classifier.py</code>): obviously safe read-only tools already passed at ⑤; <code>RISKY_AUTO_DENYLIST</code> (bash/exec/shell/execute_code/process) returns <code>[denied]</code> outright; anything else uncertain gets one <code>auto_classify_tool</code> call to haiku. Rule-layer deny/ask (①) still applies ahead of it, and allow (④) is unaffected.</li>
+<li><strong>ask</strong>: every tool that misses allow, is not on the read-only allowlist, and is not per-tool exempt lands at ⑧.</li>
+<li><strong>bypass (③)</strong>: everything after deny/ask/force executes directly.</li>
+</ul>
+<h3 id="34-rule-matching-in-_match_rule">3.4 Rule matching in <code>_match_rule</code><a class="header-anchor" href="#34-rule-matching-in-_match_rule">#</a></h3>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/internals/_approval.py:50-68</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_match_rule</span><span class="p">(</span><span class="n">rules</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;str | None&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns &quot;deny&quot; | &quot;ask&quot; | &quot;allow&quot; | None (no match).</span>
+<span class="sd">    Priority is fixed at deny &gt; ask &gt; allow: scan deny first and return on a hit, then ask, then allow.</span>
+<span class="sd">    Within each tier: try per-tool first (rule.pattern is None and tool_name equal),</span>
+<span class="sd">    then per-pattern (rule.pattern prefix/glob matched against parse_command(tool_name, args)).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.permission_rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_rule</span><span class="p">,</span> <span class="n">parse_command</span><span class="p">,</span> <span class="n">pattern_matches</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># lazy: parse the command only when a per-pattern rule is reached</span>
+    <span class="k">for</span> <span class="n">behavior</span><span class="p">,</span> <span class="n">ruleset</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">&quot;deny&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">deny</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">ask</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">allow</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">ruleset</span><span class="p">:</span>
+            <span class="n">rv</span> <span class="o">=</span> <span class="n">parse_rule</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rv</span><span class="o">.</span><span class="n">tool_name</span> <span class="o">!=</span> <span class="n">tool_name</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">rv</span><span class="o">.</span><span class="n">pattern</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>                      <span class="c1"># per-tool</span>
+                <span class="k">return</span> <span class="n">behavior</span>
+            <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="n">parse_command</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>    <span class="c1"># see below</span>
+            <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pattern_matches</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">behavior</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre>
+<ul>
+<li><strong>per-tool</strong> (<code>rv.pattern is None</code>): <code>rv.tool_name == tool_name</code> matches the whole tool. For example <code>deny: [&quot;bash&quot;]</code> blocks all bash.</li>
+<li><strong>per-pattern</strong> (<code>rv.pattern</code> non-empty): first derive the comparable command string <code>cmd = parse_command(...)</code>, then apply <code>pattern_matches</code> (<code>permission_rule.py:149-</code>): a trailing <code>:*</code> → prefix match (<code>git:*</code> matches <code>git status</code>, not <code>github</code>); containing a glob character (<code>*?[</code>) → <code>fnmatch</code> (<code>/etc/**</code> matches <code>/etc/passwd</code>); otherwise exact equality.</li>
+</ul>
+<p>Command parser and rule parsing (<code>openprogram/functions/permission_rule.py</code>):</p>
+<pre><code class="language-python"><span class="c1"># permission_rule.py:43, 77, 83-98</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_rule</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PermissionRuleValue</span><span class="p">:</span> <span class="o">...</span>        <span class="c1"># &quot;bash(git:*)&quot; -&gt; (bash, &quot;git:*&quot;)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rule_to_string</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">PermissionRuleValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>    <span class="c1"># dual of parse_rule</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_command</span><span class="p">(</span><span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reduce tool arguments to a comparable string (used by per-pattern matching).</span>
+<span class="sd">    bash/exec/shell/execute_code/process -&gt; args[&quot;command&quot;];</span>
+<span class="sd">    read*/write*/edit*/apply_patch/list -&gt; args[&quot;path&quot;] or args[&quot;file_path&quot;];</span>
+<span class="sd">    anything else with no comparable field -&gt; None (per-pattern does not apply,</span>
+<span class="sd">    only per-tool can block it).&quot;&quot;&quot;</span>
+</code></pre>
+<p>Merging rules across layers (<code>load_merged_rules(session_id)</code>, <code>permission_rule.py:100-146</code>) — concatenates the three lists in priority order global &lt; project &lt; session, for <code>_gated_execute</code> to use (at actual decision time <code>req.permission_rules</code> is filled in when the TurnRequest is built):</p>
+<pre><code class="language-python"><span class="c1"># openprogram/functions/permission_rule.py:100-146</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_merged_rules</span><span class="p">(</span><span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PermissionRules</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge the three real carriers: global config &lt; project (primary carrier) &lt; session (one-off override).</span>
+<span class="sd">    The project layer is resolved through project_for_session(session_id) -&gt; load_project_settings.</span>
+<span class="sd">    Merging is just concatenation of the three lists; the overall ordering of deny/ask/allow is</span>
+<span class="sd">    guaranteed by _match_rule (first hit returns), and source order only affects ordering</span>
+<span class="sd">    within the same behavior.&quot;&quot;&quot;</span>
+</code></pre>
+<p><strong>Relationship with per-tool <code>requires_approval</code></strong>: the two layers coexist and complement each other. <code>@function(requires_approval=...)</code> (<code>functions/_runtime.py</code>) is a hard-coded declaration by the tool author (<code>True</code>/<code>False</code>/<code>None</code>/<code>callable(**args)-&gt;bool|str</code>), which the dispatcher reads via <code>tool_requires_approval</code> (<code>functions/_runtime.py:1099</code>). The rule layer is the user's runtime override and runs ahead of per-tool (① ⑤ come before ⑦).</p>
+<h3 id="35-danger-detection-and-path-safety">3.5 Danger detection and path safety<a class="header-anchor" href="#35-danger-detection-and-path-safety">#</a></h3>
+<p><strong>RiskLevel + card highlighting</strong> (<code>internals/_approval.py:218-242</code>):</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/internals/_approval.py:218-230</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_risk_level</span><span class="p">(</span><span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Danger grading for the approval card, &quot;low&quot;|&quot;medium&quot;|&quot;high&quot;, driving frontend highlighting.</span>
+<span class="sd">    high: command-class tools (_RISKY_TOOLS) whose command contains rm -rf / sudo / mkfs /</span>
+<span class="sd">          fork bomb / pipe to shell / curl / wget.</span>
+<span class="sd">    medium: other command-class tools; write/edit/delete tools. low: read-only tools.&quot;&quot;&quot;</span>
+</code></pre>
+<p><code>_approval_detail</code> (<code>internals/_approval.py:232-242</code>, producing &quot;tool name + full arguments, head and tail truncated when too long&quot;) gives the approval card a readable summary (the first version does not highlight dangerous tokens). The <code>question.asked</code> frame from <code>_on_asked</code> (inside <code>await_user_approval</code>) carries <code>tool</code>/<code>args</code>/<code>risk_level</code>, which the frontend uses for coloring (§4.2).</p>
+<p><strong>Path safety</strong> (<code>openprogram/functions/tools/file_safety.py</code>):</p>
+<pre><code class="language-python"><span class="c1"># file_safety.py:20-40, 63</span>
+<span class="n">DANGEROUS_FILES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.bashrc&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash_profile&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash_login&quot;</span><span class="p">,</span> <span class="s2">&quot;.profile&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;.zshrc&quot;</span><span class="p">,</span> <span class="s2">&quot;.zprofile&quot;</span><span class="p">,</span> <span class="s2">&quot;.zshenv&quot;</span><span class="p">,</span> <span class="s2">&quot;.gitconfig&quot;</span><span class="p">,</span> <span class="s2">&quot;.gitmodules&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;.git-credentials&quot;</span><span class="p">,</span> <span class="s2">&quot;.npmrc&quot;</span><span class="p">,</span> <span class="s2">&quot;.pypirc&quot;</span><span class="p">,</span> <span class="s2">&quot;.netrc&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;.mcp.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.claude.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.env&quot;</span><span class="p">}</span>
+<span class="n">DANGEROUS_DIRECTORIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.git&quot;</span><span class="p">,</span> <span class="s2">&quot;.hg&quot;</span><span class="p">,</span> <span class="s2">&quot;.svn&quot;</span><span class="p">,</span> <span class="s2">&quot;.vscode&quot;</span><span class="p">,</span> <span class="s2">&quot;.idea&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;.openprogram&quot;</span><span class="p">,</span> <span class="s2">&quot;.claude&quot;</span><span class="p">,</span> <span class="s2">&quot;.ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;.gnupg&quot;</span><span class="p">}</span>
+<span class="n">DANGEROUS_BASH_PATTERNS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="s2">&quot;deno&quot;</span><span class="p">,</span><span class="s2">&quot;bun&quot;</span><span class="p">,</span><span class="s2">&quot;ruby&quot;</span><span class="p">,</span><span class="s2">&quot;perl&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;php&quot;</span><span class="p">,</span><span class="s2">&quot;sh&quot;</span><span class="p">,</span><span class="s2">&quot;bash&quot;</span><span class="p">,</span><span class="s2">&quot;zsh&quot;</span><span class="p">,</span><span class="s2">&quot;eval&quot;</span><span class="p">,</span><span class="s2">&quot;exec&quot;</span><span class="p">,</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;sudo&quot;</span><span class="p">,</span><span class="s2">&quot;ssh&quot;</span><span class="p">,</span><span class="s2">&quot;npx&quot;</span><span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">check_path_safety</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">working_dirs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns {&quot;safe&quot;: bool, &quot;message&quot;: str}. Unsafe when: it hits DANGEROUS_FILES (by</span>
+<span class="sd">    basename) / a segment hits DANGEROUS_DIRECTORIES / the target is outside working_dirs /</span>
+<span class="sd">    a Windows bypass (NTFS stream ::$DATA, 8.3 short name ~1, UNC \\, trailing dots or spaces,</span>
+<span class="sd">    DOS device names CON/PRN, triple dots .../). working_dirs defaults to [cwd].&quot;&quot;&quot;</span>
+</code></pre>
+<p><code>check_path_safety</code> is currently consumed only by <code>_path_is_safe</code> in the acceptEdits branch (<code>internals/_approval.py:72-87</code>): an unsafe path means acceptEdits does not auto-allow and falls through to approval at ⑦.</p>
+<p><strong>Additional working directories</strong>: <code>SessionRunConfig.additional_working_dirs</code> (§3.6) extends the working directory set used by path safety. <code>_path_is_safe</code> assembles <code>work_dirs = [current_worktree_path() or os.getcwd(), *req.additional_working_dirs]</code> (<code>:85-86</code>) and passes it to <code>check_path_safety</code> — the fence baseline shares its source with the cwd in the system prompt (the dispatcher binds the real worktree/project path into <code>current_worktree_path</code> each turn, and the process <code>getcwd</code> is only a fallback). The field flows down from session meta through <code>TurnRequest.additional_working_dirs</code> (<code>dispatcher/types.py:112</code>), populated at <code>webui/_execute/chat.py:259</code> and <code>channels/_conversation.py:243</code>. Users can add &quot;this directory counts as safe too&quot;; without it, only cwd is recognized.</p>
+<p><strong>Capability not enabled</strong>: <code>is_dangerous_allow_rule(tool_name, pattern)</code> (<code>file_safety.py:94-100</code>, using <code>DANGEROUS_BASH_PATTERNS</code> to judge whether an allow rule would let a dangerous command through under acceptEdits) is implemented but has no callers — &quot;temporarily strip dangerous allow rules when entering acceptEdits&quot; is not enabled. The system also provides no bypass-immune safetyCheck forced approval (<code>tool_requires_approval</code> is a <code>(bool, reason)</code> pair, without <code>classifier_approvable</code>): path safety only takes effect in the acceptEdits branch, and writing a dangerous file under bypass is not forcibly blocked. See the end of §7 for the follow-up plan.</p>
+<h3 id="36-storage-schemaless-session-meta-sessionrunconfig">3.6 Storage: schemaless session meta + SessionRunConfig<a class="header-anchor" href="#36-storage-schemaless-session-meta-sessionrunconfig">#</a></h3>
+<p>Storage is split in two, each owning half: <strong>the permission mode lives in the session (session meta), the permission rules live in the project (settings.json)</strong>.</p>
+<p><strong>The session layer (mode) is schemaless</strong> — that is why persisting the permission mode needs no DB migration. <code>SessionDB.update_session(session_id, **fields)</code> (<code>store/session/session_store.py:651-</code>) routes <code>head_id</code> specially to <code>idx.set_head()</code>, and every other field (<code>permission_mode</code> / <code>additional_working_dirs</code>, plus <code>permission_rules</code> for one-off overrides) goes through <code>idx.set_meta(**clean)</code> into session meta. So adding a session-level permission field only changes load/save in <code>session_config.py</code>, and old sessions still read back without error.</p>
+<pre><code class="language-python"><span class="c1"># openprogram/store/session/session_store.py:651-</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="o">**</span><span class="n">fields</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;head_id -&gt; set_head(); every other field -&gt; set_meta(**clean). Schemaless.&quot;&quot;&quot;</span>
+</code></pre>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/session_config.py:47-61</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SessionRunConfig</span><span class="p">:</span>
+    <span class="n">tools_enabled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tools_override</span><span class="p">:</span> <span class="n">ToolsOverride</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">web_search</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">toolset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">thinking_effort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">permission_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># -- Permission rules (the session layer is the highest-priority one-off override;</span>
+    <span class="c1">#    the primary carrier is the project, see 2.3) --</span>
+    <span class="n">permission_rules</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PermissionRules</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>          <span class="c1"># 2.2</span>
+    <span class="n">additional_working_dirs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>  <span class="c1"># 3.5 path safety</span>
+
+<span class="c1"># session_config.py:192-193</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">permission_from_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_normalize_permission</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">permission_mode</span><span class="p">)</span> <span class="ow">or</span> <span class="n">default</span>
+</code></pre>
+<p><strong>The project layer (rules)</strong> lands in the <code>permission_rules</code> key of <code>&lt;project&gt;/.openprogram/settings.json</code> (default project: <code>&lt;state&gt;/projects/default-settings.json</code>), read and written through <code>project_store.load_project_settings</code> / <code>save_project_settings</code> (<code>store/project/project_store.py:565-</code>). This is the primary carrier for rules and follows the project. The session-layer <code>permission_rules</code> is only a highest-priority one-off override. See <code>load_merged_rules</code> (§3.4) for merging.</p>
+<p><strong>Three default values</strong> (the <code>default</code> passed to <code>permission_from_config</code> decides where an unset session lands; the web and channels paths first consult the project default via <code>project_defaults(session_id)</code> and fall back to the table below):</p>
+<table>
+<thead>
+<tr>
+<th>Entry point</th>
+<th>Default</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TurnRequest dataclass field</td>
+<td><code>ask</code></td>
+<td><code>dispatcher/types.py:53</code></td>
+</tr>
+<tr>
+<td>Web execution path</td>
+<td>Project default, else <code>bypass</code></td>
+<td><code>webui/_execute/__init__.py:552-553</code></td>
+</tr>
+<tr>
+<td>Channels</td>
+<td>Project default, else <code>ask</code></td>
+<td><code>channels/_conversation.py:240-241</code></td>
+</tr>
+</tbody>
+</table>
+<p>Subagents are fixed at <code>bypass</code> (<code>sub_agent_run.py:89</code>): a subagent's lane has no UI subscribed to approval events, so ask would make every tool time out into <code>[denied]</code>; and &quot;spawn a subagent&quot; is already an explicit user action.</p>
+<h3 id="37-how-plan-relates-to-permission_mode-no-preplanmode">3.7 How plan relates to permission_mode (no prePlanMode)<a class="header-anchor" href="#37-how-plan-relates-to-permission_mode-no-preplanmode">#</a></h3>
+<p>plan is <strong>visibility control</strong> (hiding write tools via the boolean set in <code>agent/plan_mode.py</code>) and does not switch <code>permission_mode</code> — the two are orthogonal. So unlike Claude Code, there is no need to &quot;remember the old tier when entering plan and restore it on exit&quot; (CC's plan is a permission tier, and occupying a tier slot is what forces prePlanMode). Entering and leaving plan only flips the <code>plan_mode._active</code> switch; the current <code>permission_mode</code> (ask/acceptEdits/auto/bypass) never changes and applies as-is on exit — nothing recorded, nothing restored. The code has <strong>no</strong> <code>pre_plan_permission_mode</code> field and <strong>no</strong> <code>permission_context.py</code>.</p>
+<hr />
+<h2 id="4-frontend-implementation">4. Frontend implementation<a class="header-anchor" href="#4-frontend-implementation">#</a></h2>
+<p>The frontend does three things: the approval card (receive <code>question.asked</code>, render the three choices), the permission mode picker (top-bar permission badge, session level), and the rule management panel (<strong>Projects page</strong>, project level).</p>
+<h3 id="41-approval-card-entry-point">4.1 Approval card entry point<a class="header-anchor" href="#41-approval-card-entry-point">#</a></h3>
+<p>Approvals merge into unified question rendering (an approval is a question with <code>kind=&quot;approval&quot;</code>, taking the same path as <code>runtime.ask</code>). The entry component <code>QuestionMode</code> (<code>web/components/chat/composer/modes/question/question-mode.tsx</code>) branches on <code>kind</code>: the approval branch (<code>:82-83, :309-334</code>) normalizes the frame's <code>prompt</code>/<code>detail</code>/<code>risk_level</code> into a single approval step and renders the card.</p>
+<p><code>question.asked</code> frame fields (emitted by the backend <code>emit_question_asked</code>, <code>internals/_approval.py:274-282</code>):</p>
+<pre><code class="language-json"><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;question.asked&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;uuid hex[:12]&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;may be empty&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approval&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow running &lt;tool_name&gt;?&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Deny&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;multi&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;allow_custom&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;tool_name&gt;\n&lt;args_json truncated when too long&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;expires_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1735689600.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;tool_name&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool argument dict&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;risk_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p><code>tool</code>/<code>args</code>/<code>risk_level</code> are approval-specific (<code>:281</code>), letting the frontend draw the danger summary and drive highlighting.</p>
+<h3 id="42-three-choice-approval-card-danger-highlighting">4.2 Three-choice approval card + danger highlighting<a class="header-anchor" href="#42-three-choice-approval-card-danger-highlighting">#</a></h3>
+<p>The approval branch renders three buttons (Allow once / Always allow / Deny) plus danger highlighting (<code>question-mode.tsx:309-334</code>):</p>
+<pre><code class="language-tsx"><span class="c1">// question-mode.tsx:309-334</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">step</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;approval&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">pick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">answer</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">pick</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;once&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;always&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}).</span><span class="nx">pick</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">risk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">step</span><span class="p">.</span><span class="nx">risk</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;low&quot;</span><span class="p">;</span><span class="w">   </span><span class="c1">// &quot;low&quot; | &quot;medium&quot; | &quot;high&quot;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">once</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Allow once&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">always</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Always allow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">deny</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Deny&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="kd">const</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">prompt</span><span class="p">}&gt;{</span><span class="nx">withColon</span><span class="p">(</span><span class="nx">step</span><span class="p">.</span><span class="nx">prompt</span><span class="p">)}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">{</span><span class="nx">step</span><span class="p">.</span><span class="nx">detail</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">pre</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">approvalStyles</span><span class="p">.</span><span class="nx">summary</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">approvalStyles</span><span class="p">[</span><span class="s2">&quot;risk_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">risk</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)}&gt;</span>
+<span class="w">          </span><span class="p">{</span><span class="nx">step</span><span class="p">.</span><span class="nx">detail</span><span class="p">}</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">options</span><span class="p">}&gt;</span>
+<span class="w">        </span><span class="p">{([</span><span class="s2">&quot;once&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;always&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span><span class="p">]</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="kd">const</span><span class="p">).</span><span class="nx">map</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">button</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">opt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">pick</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">styles</span><span class="p">.</span><span class="nx">optPicked</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)}</span>
+<span class="w">            </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">onChange</span><span class="p">({</span><span class="w"> </span><span class="nx">pick</span><span class="o">:</span><span class="w"> </span><span class="kt">pick</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">null</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">p</span><span class="w"> </span><span class="p">})}&gt;</span>
+<span class="w">            </span><span class="p">{</span><span class="nx">pick</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;✓ &quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">}{</span><span class="nx">label</span><span class="p">[</span><span class="nx">p</span><span class="p">]}</span>
+<span class="w">          </span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">))}</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+<p>The approval branch of the <code>Answer</code> type is <code>{pick:&quot;once&quot;|&quot;always&quot;|&quot;deny&quot;|null}</code> (<code>question-mode.tsx:74</code>). Danger highlighting comes from <code>.risk_high</code>/<code>.risk_medium</code>/<code>.risk_low</code> in <code>approval-mode.module.css</code> applied to <code>.summary</code>; buttons use <code>.opt</code>/<code>.optPicked</code> (the selected state adds <code>✓</code>).</p>
+<h3 id="43-ws-payload-sent-back">4.3 WS payload sent back<a class="header-anchor" href="#43-ws-payload-sent-back">#</a></h3>
+<p>The frontend <code>submit()</code> sends according to the pick (<code>question-mode.tsx:162-166</code>):</p>
+<pre><code class="language-js"><span class="nx">wsSend</span><span class="p">({</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;question_reply&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">q</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">answer</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;once&quot;</span><span class="w"> </span><span class="p">})</span><span class="w">   </span><span class="c1">// Allow once</span>
+<span class="nx">wsSend</span><span class="p">({</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;question_reply&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">q</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">answer</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">scope</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;always&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="c1">// Always allow</span>
+<span class="nx">wsSend</span><span class="p">({</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;question_reject&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">q</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w">                                  </span><span class="c1">// Deny</span>
+</code></pre>
+<p>Backend handling (<code>webui/ws_actions/session.py:693-712</code>) — when <code>scope</code> is present it packs <code>{answer, scope}</code> into the value, and <code>await_user_approval</code> unpacks the scope when consuming it:</p>
+<pre><code class="language-python"><span class="c1"># webui/ws_actions/session.py:693-712</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_question_reply</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+    <span class="n">qid</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;answer&quot;</span><span class="p">);</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scope&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">qid</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">scope</span><span class="p">}</span> <span class="k">if</span> <span class="n">scope</span> <span class="k">else</span> <span class="n">answer</span>
+        <span class="n">_resolve_question</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span> <span class="s2">&quot;answered&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_question_reject</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+    <span class="n">qid</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;reason&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">qid</span><span class="p">:</span>
+        <span class="n">_resolve_question</span><span class="p">(</span><span class="n">qid</span><span class="p">,</span> <span class="s2">&quot;declined&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
+</code></pre>
+<p><code>_resolve_question</code> (<code>session.py:686-690</code>) is a thin wrapper over <code>resolve_question_and_broadcast</code> (<code>questions.py</code>) — the shared claim-once path for WS/REST/channel <code>/answer</code>: resolve the registry and broadcast to retract the card in other UIs.</p>
+<p>The backend <code>await_user_approval</code> returns <code>(approved, reason, scope)</code> (<code>internals/_approval.py:235-305</code>), with <code>scope ∈ {&quot;once&quot;,&quot;always&quot;}</code>. Flow: <code>open_question(kind=&quot;approval&quot;,...)</code> → <code>await asyncio.to_thread(ev.wait, timeout)</code> (does not block the asyncio loop, default 300s) → <code>consume_or_timeout</code>: on answered it unpacks <code>answer</code>/<code>scope</code>, and <code>answer ∈ {&quot;Allow&quot;,&quot;approve&quot;,&quot;yes&quot;,&quot;y&quot;,&quot;true&quot;,&quot;ok&quot;}</code> → <code>(True, None, scope)</code>; declined → <code>(False, reason, &quot;once&quot;)</code>; timeout → <code>retract_question</code> retracts the card → <code>(False, None, &quot;once&quot;)</code>.</p>
+<h3 id="44-allow-always-writes-back-to-project-rules">4.4 allow-always writes back to project rules<a class="header-anchor" href="#44-allow-always-writes-back-to-project-rules">#</a></h3>
+<p><code>_approve_then_run</code> receiving <code>approved=True and scope==&quot;always&quot;</code> writes a per-tool allow rule back to the <strong>project</strong> layer:</p>
+<pre><code class="language-python"><span class="c1"># openprogram/agent/internals/_approval.py:90-106</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_persist_always_allow_rule</span><span class="p">(</span><span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist tool_name as a per-tool allow rule into the project layer</span>
+<span class="sd">    (permission_rules.allow in &lt;project&gt;/.openprogram/settings.json).</span>
+<span class="sd">    Resolves the project via project_for_session(session_id), falling back to get_default_project().</span>
+<span class="sd">    Rules follow the project -- still in effect after a session switch, remembered long term.&quot;&quot;&quot;</span>
+</code></pre>
+<p>Once written, the next call to the same tool hits allow in <code>_match_rule</code> and no longer shows a card. To revoke a mis-clicked &quot;Always allow&quot;: delete the entry in the rules panel on the Projects page (§4.6).</p>
+<h3 id="45-permission-mode-picker-top-bar-permission-menu-session-level">4.5 Permission mode picker (top-bar permission menu, session level)<a class="header-anchor" href="#45-permission-mode-picker-top-bar-permission-menu-session-level">#</a></h3>
+<p>The picker is <strong>not in the composer's plus menu</strong>; it is the permission badge
+<code>PermissionBadge</code> in the chat page top bar (<code>web/components/chat/top-bar/permission-menu.tsx:68</code>). The badge is driven by the
+<code>usePermissionMode</code> hook (<code>web/components/chat/composer/controls/use-permission-mode.ts</code>),
+which returns <code>{mode, options, set}</code>.</p>
+<p>The 5 tier labels use Claude Code's official names (<code>MODE_LABELS</code> in <code>use-permission-mode.ts:28-34</code>, with numeric shortcuts 1-5):</p>
+<table>
+<thead>
+<tr>
+<th>Internal value</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ask</code></td>
+<td>Ask permissions</td>
+</tr>
+<tr>
+<td><code>acceptEdits</code></td>
+<td>Accept edits</td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>Plan mode</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>Auto mode</td>
+</tr>
+<tr>
+<td><code>bypass</code></td>
+<td>Bypass permissions</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Storage: isolated per session, no global value.</strong> It reads <code>useBoundComposerSettings().permission_mode</code>
+(<code>use-permission-mode.ts:48</code>) — bound to the current session, so switching sessions switches the value.</p>
+<p><strong>Chat frames do not carry <code>permission_mode</code>.</strong> The frame builder
+<code>composer/legacy-send.ts:136-238</code> (<code>sendChatMessage</code>) has no <code>permission_mode</code> field —
+frames carry only text / thinking / tools / web_search / service_tier / attachments and similar.
+The backend <code>webui/ws_actions/chat.py:312</code> still reads <code>cmd.get(&quot;permission_mode&quot;)</code>, but nothing on the frontend fills it,
+so this path is permanently <code>None</code>: dead code left uncleaned, not a live mechanism.</p>
+<p><strong>Only two writers actually take effect</strong>, neither through the chat frame:</p>
+<ul>
+<li><strong>Session settings</strong>: change the session's <code>SessionRunConfig.permission_mode</code> (<code>session_config.py</code>), persisted into session meta.</li>
+<li><strong>Project config</strong>: the project-level default tier, supplied by project settings.</li>
+</ul>
+<p>Downstream the dispatcher still reads the run config: <code>effective_permission = permission_from_config(run_cfg, default=&quot;bypass&quot;)</code> (<code>_execute/__init__.py:557</code>) goes into the TurnRequest.</p>
+<h3 id="46-rule-management-panel-projects-page-project-level">4.6 Rule management panel (Projects page, project level)<a class="header-anchor" href="#46-rule-management-panel-projects-page-project-level">#</a></h3>
+<p>The rule management UI lives on the <strong>Projects page</strong> (<code>web/components/projects/projects-page.tsx:146-148</code>): expanding a project reveals its rules panel. The panel component <code>PermissionsSection</code> (<code>web/components/projects/permissions-section.tsx</code>) works by <code>projectId</code>:</p>
+<ul>
+<li>Lists the project's deny / ask / allow rule groups, each of which supports manual addition and per-entry deletion.</li>
+<li>Fetching and refreshing go over WS: <code>list_permission_rules</code> / <code>add_permission_rule</code> / <code>remove_permission_rule</code>, with <code>project_id</code> on every request; the backend broadcasts a <code>permission_rules</code> frame (<code>session.py:742-748</code>) to refresh the panel.</li>
+<li>Rule string syntax is <code>ToolName</code> or <code>ToolName(pattern)</code> (such as <code>bash(git:*)</code>), see §2.2.</li>
+</ul>
+<p>The backend WS handlers (<code>webui/ws_actions/session.py:751-783</code>) are all <strong>project level</strong>: <code>_resolve_project_id</code> (<code>:718-730</code>) supports requests carrying <code>project_id</code> directly (the Projects page knows the project), or resolving the project via <code>project_for_session</code> when only <code>session_id</code> is present (the composer path); <code>_mutate_project_rule</code> calls <code>save_project_settings</code> after an add or remove and broadcasts.</p>
+<blockquote>
+<p>Rules are managed only on the Projects page: settings has no Permissions tab, and the chat composer has no &quot;Manage rules…&quot; entry. Rules uniformly land in the project layer.</p>
+</blockquote>
+<hr />
+<h2 id="5-attended-mode-an-orthogonal-mechanism">5. Attended mode — an orthogonal mechanism<a class="header-anchor" href="#5-attended-mode-an-orthogonal-mechanism">#</a></h2>
+<p>Attended mode and permissions are two independent mechanisms governing different things:</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Governs</th>
+<th>Who triggers it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Permission mode</strong></td>
+<td>Whether user approval is needed when the model calls a tool</td>
+<td>The model issuing a tool call</td>
+</tr>
+<tr>
+<td><strong>Attended</strong></td>
+<td>Whether the model may proactively ask the user a question</td>
+<td>The model wanting to call <code>ask_user_question</code></td>
+</tr>
+</tbody>
+</table>
+<p>Attended mode lives in <code>openprogram/agent/attended.py</code>. The core (<code>attended.py:1-23</code>): a long run either has &quot;someone watching who can answer&quot; (attended) or &quot;nobody around, don't ask&quot; (unattended). The control mechanism is to withhold the question tool from the model when unattended. State: a process-level default <code>_default = False</code> (<code>:33</code>, unattended by default) plus per-session overrides in <code>_by_session</code> (<code>:34</code>). Implementation: <code>denied_ask_tools</code> (<code>:64-68</code>) folds <code>ask_user_question</code> into the tool-resolution deny set when unattended, referenced on the runtime side at <code>runtime.py:1516</code>. The setter is <code>set_attended(value, session_id)</code> (<code>:38-46</code>); the web calls it through <code>handle_set_attended</code> in <code>ws_actions/runtime.py:503-504</code> (per session).</p>
+<p><strong>How they combine</strong>: the permission mode governs &quot;does execution need approval&quot;, attended governs &quot;may the model speak up&quot;. unattended + bypass = never stops to ask and every tool executes directly (unattended autonomous running); attended + ask = can ask questions and every tool needs a nod (watching closely). The two are orthogonal and combine freely.</p>
+<hr />
+<h2 id="6-key-constraints-and-code-map">6. Key constraints and code map<a class="header-anchor" href="#6-key-constraints-and-code-map">#</a></h2>
+<h3 id="61-properties-that-must-hold-when-changing-permission-code">6.1 Properties that must hold when changing permission code<a class="header-anchor" href="#61-properties-that-must-hold-when-changing-permission-code">#</a></h3>
+<ul>
+<li><strong>deny/ask before bypass</strong>: in <code>_gated_execute</code> (<code>internals/_approval.py:151-188</code>), rule-layer deny/ask (① ②) must come before the bypass short circuit (③). Web defaults to bypass, so moving deny/ask after bypass silently ignores &quot;forbid rm -rf&quot; — a security defect.</li>
+<li><strong>exit_plan_mode forces approval</strong>: <code>_FORCE_APPROVAL_TOOLS</code> (<code>:34</code>) shows a card even under bypass; submitting a plan requires the user's signature.</li>
+<li><strong>Scope of modes vs rules</strong>: the permission mode is <strong>session level</strong> (session meta), permission rules are primarily <strong>project level</strong> (<code>&lt;project&gt;/.openprogram/settings.json</code>). Do not mix up their storage.</li>
+<li><strong>Camel-case normalization</strong>: <code>acceptEdits</code> is the camel-case canonical value; all comparisons go through the case-insensitive table in <code>_normalize_permission</code> (<code>session_config.py:289-293</code>). Do not <code>.lower()</code> and treat the result as canonical.</li>
+<li><strong>acceptEdits only allows path-safe write tools</strong>: command-class tools (bash/exec/execute_code) fall through to approval no matter what (⑥ only allows tools with <code>_accept_edits_safe=True</code> that pass <code>_path_is_safe</code>).</li>
+</ul>
+<h3 id="62-code-map">6.2 Code map<a class="header-anchor" href="#62-code-map">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Code location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Decision chain <code>_gated_execute</code> / <code>_match_rule</code> / <code>await_user_approval</code> / <code>_persist_always_allow_rule</code> / <code>_risk_level</code></td>
+<td><code>openprogram/agent/internals/_approval.py</code></td>
+</tr>
+<tr>
+<td>Rule string parsing, matching, multi-layer merging</td>
+<td><code>openprogram/functions/permission_rule.py</code> (<code>parse_rule</code> / <code>parse_command</code> / <code>pattern_matches</code> / <code>load_merged_rules</code>)</td>
+</tr>
+<tr>
+<td>Path safety / dangerous files and directories / Windows bypass</td>
+<td><code>openprogram/functions/tools/file_safety.py</code></td>
+</tr>
+<tr>
+<td>gate hard block</td>
+<td><code>openprogram/events/tool_gate.py</code></td>
+</tr>
+<tr>
+<td>Permission mode legal values + normalization + SessionRunConfig fields</td>
+<td><code>openprogram/agent/session_config.py</code></td>
+</tr>
+<tr>
+<td><code>PermissionMode</code> type + TurnRequest fields and defaults</td>
+<td><code>openprogram/agent/dispatcher/types.py</code></td>
+</tr>
+<tr>
+<td>Schemaless session meta storage</td>
+<td><code>openprogram/store/session/session_store.py</code></td>
+</tr>
+<tr>
+<td>Project-level settings read/write + <code>project_for_session</code></td>
+<td><code>openprogram/store/project/project_store.py</code></td>
+</tr>
+<tr>
+<td><code>accept_edits_safe</code> declaration + per-tool <code>requires_approval</code></td>
+<td><code>openprogram/functions/_runtime.py</code>; tool markings in <code>openprogram/functions/tools/{read,write,edit,glob,grep,list}/</code></td>
+</tr>
+<tr>
+<td>Web default bypass + effective_permission</td>
+<td><code>openprogram/webui/_execute/__init__.py</code>; <code>additional_working_dirs</code> populated in <code>_execute/chat.py</code>, <code>channels/_conversation.py</code></td>
+</tr>
+<tr>
+<td>WS: approval replies + project rule list/add/remove</td>
+<td><code>openprogram/webui/ws_actions/session.py</code>, <code>chat.py</code></td>
+</tr>
+<tr>
+<td>Attended mode (orthogonal mechanism)</td>
+<td><code>openprogram/agent/attended.py</code>, <code>openprogram/webui/ws_actions/runtime.py</code></td>
+</tr>
+<tr>
+<td>Frontend approval card (approval mode)</td>
+<td><code>web/components/chat/composer/modes/question/question-mode.tsx</code> + <code>../approval/approval-mode.module.css</code></td>
+</tr>
+<tr>
+<td>Frontend permission mode picker (session-level hook)</td>
+<td><code>web/components/chat/composer/controls/use-permission-mode.ts</code> + <code>composer/index.tsx</code></td>
+</tr>
+<tr>
+<td>Frontend rules panel (project level)</td>
+<td><code>web/components/projects/projects-page.tsx</code> + <code>web/components/projects/permissions-section.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-explicit-non-goals">7. Explicit non-goals<a class="header-anchor" href="#7-explicit-non-goals">#</a></h2>
+<p>This lists only what genuinely has no physical carrier, or what would create an unresolvable conflict if added. These are not &quot;skipped for convenience&quot;.</p>
+<ul>
+<li><strong>Enterprise policy layer (policy/flag source)</strong>: no feature flags, no enterprise MDM/policy distribution backend. All three source layers in §2.3 are implemented; only the enterprise layer has no carrier to land in. It can be added when enterprise deployment is supported.</li>
+<li><strong>local / cliArg rule layers</strong>: no <code>.openprogram/settings.local.json</code>, no CLI flags such as <code>--allow-tool</code>. The equivalent capability comes from the project layer plus session-layer overrides.</li>
+<li><strong>External approval delegation (permissionPromptTool)</strong>: delegating the approval decision to an external MCP tool. Everything goes through QuestionRegistry plus the frontend card; this mechanism does not exist. It can be added when custom approval backends are supported.</li>
+<li><strong>Sandbox isolation (security boundary)</strong>: the permission system is a decision and awareness layer, not a security boundary, and does no process or file isolation. Real isolation is a separate sandbox work stream.</li>
+<li><strong>Bypass-immune safetyCheck forced approval</strong>: <code>tool_requires_approval</code> remains <code>(bool, reason)</code> without <code>classifier_approvable</code>; path safety only takes effect in the acceptEdits branch, and writing a dangerous file under bypass is not forcibly blocked. <code>is_dangerous_allow_rule</code> (<code>file_safety.py:94-100</code>) is implemented but unwired. Adding bypass immunity requires extending <code>tool_requires_approval</code> into a triple and treating &quot;path unsafe&quot; as ask at point ① of <code>_gated_execute</code>.</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-07</div><div class="prevnext"><a class="pn-link pn-prev" href="/reference/design/runtime/p3-three-surface-sync.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</span></a><a class="pn-link pn-next" href="/reference/design/runtime/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime — Design Rationale</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#1-overview">1. Overview</a>
+<a class="lvl-3" href="#11-what-the-permission-system-solves">1.1 What the permission system solves</a>
+<a class="lvl-3" href="#12-how-the-four-parts-cooperate">1.2 How the four parts cooperate</a>
+<a class="lvl-3" href="#13-data-flow">1.3 Data flow</a>
+<a class="" href="#2-which-permissions-exist-definitions">2. Which permissions exist (definitions)</a>
+<a class="lvl-3" href="#21-permission-modes-5-tiers-claude-codes-official-names">2.1 Permission modes (5 tiers, Claude Code's official names)</a>
+<a class="lvl-3" href="#22-rules-allow-deny-ask-three-parallel-lists">2.2 Rules (allow / deny / ask, three parallel lists)</a>
+<a class="lvl-3" href="#23-rule-sources-3-layers-the-project-is-the-primary-carrier">2.3 Rule sources (3 layers, the project is the primary carrier)</a>
+<a class="lvl-3" href="#24-pendingquestion-the-data-carrier-of-the-approval-frame">2.4 PendingQuestion, the data carrier of the approval frame</a>
+<a class="" href="#3-backend-implementation">3. Backend implementation</a>
+<a class="lvl-3" href="#31-gate-checkpoint-a-synchronous-hard-block">3.1 gate (checkpoint A, synchronous hard block)</a>
+<a class="lvl-3" href="#32-approval-wrapper-checkpoint-b-and-decision-pseudocode">3.2 Approval wrapper (checkpoint B) and decision pseudocode</a>
+<a class="lvl-3" href="#33-per-mode-branch-implementation">3.3 Per-mode branch implementation</a>
+<a class="lvl-3" href="#34-rule-matching-in-_match_rule">3.4 Rule matching in _match_rule</a>
+<a class="lvl-3" href="#35-danger-detection-and-path-safety">3.5 Danger detection and path safety</a>
+<a class="lvl-3" href="#36-storage-schemaless-session-meta-sessionrunconfig">3.6 Storage: schemaless session meta + SessionRunConfig</a>
+<a class="lvl-3" href="#37-how-plan-relates-to-permission_mode-no-preplanmode">3.7 How plan relates to permission_mode (no prePlanMode)</a>
+<a class="" href="#4-frontend-implementation">4. Frontend implementation</a>
+<a class="lvl-3" href="#41-approval-card-entry-point">4.1 Approval card entry point</a>
+<a class="lvl-3" href="#42-three-choice-approval-card-danger-highlighting">4.2 Three-choice approval card + danger highlighting</a>
+<a class="lvl-3" href="#43-ws-payload-sent-back">4.3 WS payload sent back</a>
+<a class="lvl-3" href="#44-allow-always-writes-back-to-project-rules">4.4 allow-always writes back to project rules</a>
+<a class="lvl-3" href="#45-permission-mode-picker-top-bar-permission-menu-session-level">4.5 Permission mode picker (top-bar permission menu, session level)</a>
+<a class="lvl-3" href="#46-rule-management-panel-projects-page-project-level">4.6 Rule management panel (Projects page, project level)</a>
+<a class="" href="#5-attended-mode-an-orthogonal-mechanism">5. Attended mode — an orthogonal mechanism</a>
+<a class="" href="#6-key-constraints-and-code-map">6. Key constraints and code map</a>
+<a class="lvl-3" href="#61-properties-that-must-hold-when-changing-permission-code">6.1 Properties that must hold when changing permission code</a>
+<a class="lvl-3" href="#62-code-map">6.2 Code map</a>
+<a class="" href="#7-explicit-non-goals">7. Explicit non-goals</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>
