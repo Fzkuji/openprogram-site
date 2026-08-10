@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786398419" data-alt-lang-url="/reference/design/providers/reliability/llm-fault-tolerance.html">
+<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786400789" data-alt-lang-url="/reference/design/providers/reliability/llm-fault-tolerance.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -593,7 +593,7 @@ SSE 调控器是两个预算加一个兜底：</p>
 <p><strong>有意关闭或未构建的部分：</strong></p>
 <ul>
 <li><strong>API-key 轮换</strong> —— 机制位于 auth 层（<code>auth/pool.py</code>：<code>pick</code> 轮换、
-<code>mark_failure</code> / <code>report_failure</code> 冷却，带策略与 TTL）。当一个池里有多于一份
+<code>mark_failure</code> / <code>record_call_failure</code> 冷却，带策略与 TTL）。当一个池里有多于一份
 凭据时，获取时的轮换是自动的。逐次调用的失败冷却上报没有接入单账号的实时路径，
 因为让唯一一份凭据进入冷却只会把用户锁在门外而没有任何收益。单账号下轮换是
 干净的 no-op，一旦配置了多份凭据便自行生效。</li>

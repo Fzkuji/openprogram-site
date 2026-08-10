@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/" data-page-lang="en" data-build="1786398419" data-alt-lang-url="/reference/design/providers/auth/unified-account-management.zh.html">
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786400789" data-alt-lang-url="/reference/design/providers/auth/unified-account-management.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -279,9 +279,9 @@ that can be switched on or off. The backend behind a given provider is an
 implementation detail; the management surface is uniform. This builds on the
 login side described in <a href="/reference/design/providers/auth/unified-auth-storage.html">unified-auth-storage.md</a>.</p>
 <h2 id="an-account-is-a-profile">An account is a profile<a class="header-anchor" href="#an-account-is-a-profile">#</a></h2>
-<p>AuthStore keys every credential pool by <code>(provider_id, profile_id)</code> and persists
+<p>AuthStore keys every credential pool by <code>(provider_id, account_id)</code> and persists
 one file per pool at <code>~/.openprogram/auth/&lt;provider&gt;/&lt;profile&gt;.json</code>, and
-<code>ProfileManager</code> already does profile CRUD. &quot;Multiple accounts&quot; and &quot;multiple
+<code>AccountManager</code> already does profile CRUD. &quot;Multiple accounts&quot; and &quot;multiple
 profiles&quot; are therefore the same concept — each account is a profile id.</p>
 <p>The constraint that forces this model is OAuth refresh-token rotation:
 <code>_prune_superseded_oauth</code> means <strong>at most one OAuth credential can live in a
@@ -291,15 +291,15 @@ every provider, and each named api-key is a profile too.</p>
 <h2 id="what-the-pool-provides">What the pool provides<a class="header-anchor" href="#what-the-pool-provides">#</a></h2>
 <p>The storage and rotation machinery it builds on:</p>
 <ul>
-<li>Multi-profile storage plus <code>ProfileManager</code> CRUD (<code>auth/store.py</code>,
-<code>auth/profiles.py</code>).</li>
+<li>Multi-profile storage plus <code>AccountManager</code> CRUD (<code>auth/store.py</code>,
+<code>auth/accounts.py</code>).</li>
 <li>The pool strategy model — <code>PoolStrategy = fill_first | round_robin | random | least_used</code>, <code>credentials[]</code>, <code>_rr_cursor</code>, <code>fallback_chain</code>, and per-credential
 <code>cooldown_until_ms</code> / <code>status</code>, all serialized (<code>auth/types.py:335-390</code>).</li>
 <li>Pool selection honouring strategy, health filter, and cooldown skip
-(<code>auth/pool.py:99-161</code>); fallback recursion (<code>auth/manager.py:247-312</code>);
+(<code>auth/pool.py:99-161</code>); fallback recursion (<code>auth/credential_provider.py</code>);
 cooldown durations with <code>mark_failure</code> / <code>mark_success</code> / <code>clear_cooldown</code>
-(<code>auth/pool.py:57-276</code>); and the manager wrappers <code>report_failure</code> /
-<code>report_success</code> (<code>auth/manager.py:450-497</code>).</li>
+(<code>auth/pool.py:57-276</code>); and the credential-provider wrappers <code>apply_failure</code> /
+<code>apply_success</code> (<code>auth/credential_provider.py</code>).</li>
 <li>A multi-profile REST surface (<code>webui/_auth_routes.py</code>: <code>/profiles</code>, <code>/pools</code>,
 <code>/pools/.../credentials</code>, <code>/doctor</code>, SSE <code>/events</code>).</li>
 <li>The unified login endpoints (<code>/api/providers/{id}/login/{start,poll,submit, cancel}</code>) and <code>&lt;ProviderLogin&gt;</code>.</li>
@@ -308,15 +308,15 @@ cooldown durations with <code>mark_failure</code> / <code>mark_success</code> / 
 <p>Rotation and per-account selection are inert unless two connections exist, and
 without them the rest of the surface is decoration:</p>
 <ol>
-<li><strong>Active-profile selection at request time.</strong> <code>AuthManager.acquire</code> defaults
-to <code>profile_id=&quot;default&quot;</code>, so unless the request path enters
+<li><strong>Active-profile selection at request time.</strong> <code>CredentialProvider.acquire</code> defaults
+to <code>account_id=&quot;default&quot;</code>, so unless the request path enters
 <code>auth_scope(...)</code> a user cannot actually run on &quot;work&quot; rather than
-&quot;personal&quot;. <code>auth/active.py</code> provides <code>get_active_profile(provider)</code> /
-<code>set_active_profile(provider)</code> plus <code>get_active_pin</code>; <code>acquire</code> and the
+&quot;personal&quot;. <code>auth/account_selection.py</code> provides <code>get_active_account(provider)</code> /
+<code>set_active_account(provider)</code> plus <code>get_active_pin</code>; <code>acquire</code> and the
 resolver default to it, and the chat/execute entry enters the scope. The
 default stays <code>&quot;default&quot;</code>, so activating another profile is opt-in.</li>
-<li><strong>Outcome reporting from the call path.</strong> <code>report_failure</code> and
-<code>report_success</code> only matter if a provider runtime feeds a 429/402/5xx back
+<li><strong>Outcome reporting from the call path.</strong> <code>record_call_failure</code> and
+<code>record_call_success</code> only matter if a provider runtime feeds a 429/402/5xx back
 to the pool. Without that, <code>cooldown_until_ms</code> stays 0, <code>fill_first</code> always
 returns credential #0, and rotation and fallback never engage. The call path
 (<code>auth/usage.py</code> plus <code>openai_completions.stream_simple</code>) acquires per
@@ -360,7 +360,7 @@ this one, and validate-all.</p>
 <p>Only <strong>add</strong> branches per backend: an api-key add creates a profile and adds the
 key; a login add is the shared login flow with <code>profile=&lt;name&gt;</code>.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<p>In place: active-profile infrastructure (<code>auth/active.py</code>, CLI <code>providers use &lt;provider&gt; [profile]</code>, the <code>← active</code> marker in <code>providers list</code>); the generic
+<p>In place: active-profile infrastructure (<code>auth/account_selection.py</code>, CLI <code>providers use &lt;provider&gt; [profile]</code>, the <code>← active</code> marker in <code>providers list</code>); the generic
 accounts REST surface and the unified web and TUI components; and the rotation
 wiring with its control surface (<code>routes/accounts.py</code> strategy/retry/keys
 endpoints, the &quot;Keys &amp; rotation&quot; panel in <code>pool-controls.tsx</code>).</p>

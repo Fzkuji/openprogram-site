@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/" data-page-lang="en" data-build="1786398419">
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786400789">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,8 +134,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Provider id (e.g. openai-codex, anthropic)</td>
 </tr>
 <tr>
-<td><code>--profile</code> <code>PROFILE</code></td>
-<td>Profile (default: default)</td>
+<td><code>--account</code> <code>ACCOUNT</code></td>
+<td>Account (default: default)</td>
 </tr>
 <tr>
 <td><code>--method</code> <code>METHOD</code></td>
@@ -152,7 +152,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h2 id="providers-list"><code>providers list</code><a class="header-anchor" href="#providers-list">#</a></h2>
-<p>List pools per profile</p>
+<p>List pools per account</p>
 <table>
 <thead>
 <tr>
@@ -162,8 +162,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
-<td><code>--profile</code> <code>PROFILE</code></td>
-<td>Filter to one profile (default: all)</td>
+<td><code>--account</code> <code>ACCOUNT</code></td>
+<td>Filter to one account (default: all)</td>
 </tr>
 <tr>
 <td><code>--json</code></td>
@@ -274,8 +274,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Source id from <code>discover</code> output (e.g. codex_cli, env:OPENAI_API_KEY). Omit when using --all.</td>
 </tr>
 <tr>
-<td><code>--profile</code> <code>PROFILE</code></td>
-<td>Target profile (default: default)</td>
+<td><code>--account</code> <code>ACCOUNT</code></td>
+<td>Target account (default: default)</td>
 </tr>
 <tr>
 <td><code>--all</code></td>
@@ -298,8 +298,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Provider id to log out of</td>
 </tr>
 <tr>
-<td><code>--profile</code> <code>PROFILE</code></td>
-<td>Profile to remove credentials from</td>
+<td><code>--account</code> <code>ACCOUNT</code></td>
+<td>Account to remove credentials from</td>
 </tr>
 <tr>
 <td><code>--yes</code></td>
@@ -322,13 +322,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Provider id to check</td>
 </tr>
 <tr>
-<td><code>--profile</code> <code>PROFILE</code></td>
-<td>Profile to check</td>
+<td><code>--account</code> <code>ACCOUNT</code></td>
+<td>Account to check</td>
 </tr>
 </tbody>
 </table>
 <h2 id="providers-use"><code>providers use</code><a class="header-anchor" href="#providers-use">#</a></h2>
-<p>Set which account (profile) a provider runs on</p>
+<p>Set which account (account) a provider runs on</p>
 <table>
 <thead>
 <tr>
@@ -342,8 +342,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Provider id</td>
 </tr>
 <tr>
-<td><code>profile</code></td>
-<td>Profile to activate; omit to clear back to the default</td>
+<td><code>account</code></td>
+<td>Account to activate; omit to clear back to the default</td>
 </tr>
 </tbody>
 </table>
@@ -383,8 +383,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <h2 id="providers-migrate"><code>providers migrate</code><a class="header-anchor" href="#providers-migrate">#</a></h2>
 <p>Migrate stored credentials to the current format</p>
-<h2 id="providers-profiles"><code>providers profiles</code><a class="header-anchor" href="#providers-profiles">#</a></h2>
-<p>Profile management</p>
+<h2 id="providers-accounts"><code>providers accounts</code><a class="header-anchor" href="#providers-accounts">#</a></h2>
+<p>Account management</p>
 <table>
 <thead>
 <tr>
@@ -394,16 +394,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
-<td><code>providers profiles list</code></td>
-<td>List profiles</td>
+<td><code>providers accounts list</code></td>
+<td>List accounts</td>
 </tr>
 <tr>
-<td><code>providers profiles create</code></td>
-<td>Create a profile</td>
+<td><code>providers accounts create</code></td>
+<td>Create an account</td>
 </tr>
 <tr>
-<td><code>providers profiles delete</code></td>
-<td>Delete a profile</td>
+<td><code>providers accounts delete</code></td>
+<td>Delete an account</td>
 </tr>
 </tbody>
 </table>
@@ -424,7 +424,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#providers-setup">providers setup</a>
 <a class="" href="#providers-aliases">providers aliases</a>
 <a class="" href="#providers-migrate">providers migrate</a>
-<a class="" href="#providers-profiles">providers profiles</a>
+<a class="" href="#providers-accounts">providers accounts</a>
 </div></aside>
 </div>
 

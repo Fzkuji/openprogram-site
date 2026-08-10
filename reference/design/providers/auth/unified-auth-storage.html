@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/" data-page-lang="en" data-build="1786398419" data-alt-lang-url="/reference/design/providers/auth/unified-auth-storage.zh.html">
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786400789" data-alt-lang-url="/reference/design/providers/auth/unified-auth-storage.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -280,7 +280,7 @@ itself, rather than being read out of other CLIs' credential files
 web, and TUI.</p>
 <h2 id="the-store">The store<a class="header-anchor" href="#the-store">#</a></h2>
 <p><code>openprogram/auth/store.py</code> implements <code>AuthStore</code> at
-<code>~/.openprogram/auth/&lt;provider_id&gt;/&lt;profile_id&gt;.json</code> — 0600, atomic
+<code>~/.openprogram/auth/&lt;provider_id&gt;/&lt;account_id&gt;.json</code> — 0600, atomic
 write→fsync→replace, cross-process <code>flock</code>, and an in-memory mtime/size watch so
 a file changed underneath is re-loaded. <code>openprogram/auth/types.py</code> defines the
 credential kinds:</p>
@@ -309,12 +309,12 @@ credential kinds:</p>
 <td><strong>POINTER only</strong> — <code>store_path</code> + key-paths into an external file; re-read each use</td>
 </tr>
 <tr>
-<td><code>external_process</code></td>
+<td><code>credential_process</code></td>
 <td>argv run on demand</td>
 </tr>
 </tbody>
 </table>
-<p><code>AuthManager</code> is <strong>store-authoritative and never re-discovers</strong>: it serves
+<p><code>CredentialProvider</code> is <strong>store-authoritative and never re-discovers</strong>: it serves
 whatever pool is on disk. Importing is an explicit, write-once step
 (<code>cli_import</code>, <code>import_from_codex_file</code>), so once a credential is copied into
 the store, nothing re-reads the external file.

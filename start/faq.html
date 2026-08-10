@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/" data-page-lang="en" data-build="1786398419" data-alt-lang-url="/start/faq.zh.html">
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786400789" data-alt-lang-url="/start/faq.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,7 +98,7 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="
 <h2 id="i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">I installed an agent program but it doesn't show up in the UI?<a class="header-anchor" href="#i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">#</a></h2>
 <p>Programs register at startup, so run <code>openprogram restart</code> after installing (or hit Refresh on the Functions page). Confirm it's installed with <code>openprogram programs available</code>.</p>
 <h2 id="multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?<a class="header-anchor" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--profile<span class="w"> </span>work<span class="w">   </span><span class="c1"># add a second account</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">   </span><span class="c1"># add a second account</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">               </span><span class="c1"># switch to the &quot;work&quot; account</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                          </span><span class="c1"># list accounts, the active one is marked</span>
 </code></pre>

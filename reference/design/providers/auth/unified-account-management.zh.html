@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786398419" data-alt-lang-url="/reference/design/providers/auth/unified-account-management.html">
+<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786400789" data-alt-lang-url="/reference/design/providers/auth/unified-account-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -278,8 +278,8 @@ provider 可以有多个账号，另有可开关的轮换与故障转移。某�
 后端属于实现细节，管理界面是统一的。本文建立在
 <a href="/reference/design/providers/auth/unified-auth-storage.html">unified-auth-storage.md</a> 描述的登录侧之上。</p>
 <h2 id="一个账号就是一个-profile">一个账号就是一个 profile<a class="header-anchor" href="#一个账号就是一个-profile">#</a></h2>
-<p>AuthStore 以 <code>(provider_id, profile_id)</code> 为键存放每个凭据池，每个池一个文件，
-位于 <code>~/.openprogram/auth/&lt;provider&gt;/&lt;profile&gt;.json</code>，而 <code>ProfileManager</code> 已经
+<p>AuthStore 以 <code>(provider_id, account_id)</code> 为键存放每个凭据池，每个池一个文件，
+位于 <code>~/.openprogram/auth/&lt;provider&gt;/&lt;profile&gt;.json</code>，而 <code>AccountManager</code> 已经
 提供 profile 的 CRUD。因此&quot;多账号&quot;与&quot;多 profile&quot;是同一个概念 —— 每个账号就是
 一个 profile id。</p>
 <p>强制采用这个模型的约束是 OAuth refresh-token 轮换：<code>_prune_superseded_oauth</code>
@@ -289,14 +289,14 @@ profile。既然这个模型同样适用于 api-key provider，那么&quot;账�
 <h2 id="凭据池已经提供的能力">凭据池已经提供的能力<a class="header-anchor" href="#凭据池已经提供的能力">#</a></h2>
 <p>它所依托的存储与轮换机制：</p>
 <ul>
-<li>多 profile 存储与 <code>ProfileManager</code> CRUD（<code>auth/store.py</code>、<code>auth/profiles.py</code>）。</li>
+<li>多 profile 存储与 <code>AccountManager</code> CRUD（<code>auth/store.py</code>、<code>auth/accounts.py</code>）。</li>
 <li>凭据池策略模型 —— <code>PoolStrategy = fill_first | round_robin | random | least_used</code>、<code>credentials[]</code>、<code>_rr_cursor</code>、<code>fallback_chain</code>，以及每个凭据的
 <code>cooldown_until_ms</code> / <code>status</code>，全部已序列化（<code>auth/types.py:335-390</code>）。</li>
 <li>遵循策略、健康过滤与冷却跳过的池选择（<code>auth/pool.py:99-161</code>）；fallback
-递归（<code>auth/manager.py:247-312</code>）；冷却时长与
+递归（<code>auth/credential_provider.py</code>）；冷却时长与
 <code>mark_failure</code> / <code>mark_success</code> / <code>clear_cooldown</code>（<code>auth/pool.py:57-276</code>）；
-以及 manager 封装 <code>report_failure</code> / <code>report_success</code>
-（<code>auth/manager.py:450-497</code>）。</li>
+以及 credential_provider 封装 <code>apply_failure</code> / <code>apply_success</code>
+（<code>auth/credential_provider.py</code>）。</li>
 <li>一套多 profile REST 界面（<code>webui/_auth_routes.py</code>：<code>/profiles</code>、<code>/pools</code>、
 <code>/pools/.../credentials</code>、<code>/doctor</code>、SSE <code>/events</code>）。</li>
 <li>统一登录端点（<code>/api/providers/{id}/login/{start,poll,submit,cancel}</code>）
@@ -305,13 +305,13 @@ profile。既然这个模型同样适用于 api-key provider，那么&quot;账�
 <h2 id="让凭据池真正生效的两处连接">让凭据池真正生效的两处连接<a class="header-anchor" href="#让凭据池真正生效的两处连接">#</a></h2>
 <p>轮换与按账号选择需要两处连接才不是空转，缺了它们，其余界面都只是摆设：</p>
 <ol>
-<li><strong>请求时的激活 profile 选择。</strong> <code>AuthManager.acquire</code> 默认
-<code>profile_id=&quot;default&quot;</code>，因此除非请求路径进入 <code>auth_scope(...)</code>，用户无法真正
-以&quot;work&quot;而非&quot;personal&quot;运行。<code>auth/active.py</code> 提供
-<code>get_active_profile(provider)</code> / <code>set_active_profile(provider)</code> 以及
+<li><strong>请求时的激活 profile 选择。</strong> <code>CredentialProvider.acquire</code> 默认
+<code>account_id=&quot;default&quot;</code>，因此除非请求路径进入 <code>auth_scope(...)</code>，用户无法真正
+以&quot;work&quot;而非&quot;personal&quot;运行。<code>auth/account_selection.py</code> 提供
+<code>get_active_account(provider)</code> / <code>set_active_account(provider)</code> 以及
 <code>get_active_pin</code>；<code>acquire</code> 与 resolver 以它为默认，chat/execute 入口进入
 该作用域。默认仍是 <code>&quot;default&quot;</code>，激活其他 profile 是可选行为。</li>
-<li><strong>调用路径回报结果。</strong> <code>report_failure</code> 与 <code>report_success</code> 只有在 provider
+<li><strong>调用路径回报结果。</strong> <code>record_call_failure</code> 与 <code>record_call_success</code> 只有在 provider
 runtime 把 429/402/5xx 回报给凭据池时才有意义。没有这一步，
 <code>cooldown_until_ms</code> 恒为 0，<code>fill_first</code> 永远返回第 0 个凭据，轮换与 fallback
 都不会启动。调用路径（<code>auth/usage.py</code> 与 <code>openai_completions.stream_simple</code>）
@@ -350,7 +350,7 @@ web。</p>
 <p>只有<strong>添加</strong>按后端分支：api-key 添加会创建一个 profile 并加入 key；登录添加是
 共享登录流程并带 <code>profile=&lt;name&gt;</code>。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
-<p>已就位：激活 profile 的基础设施（<code>auth/active.py</code>、CLI
+<p>已就位：激活 profile 的基础设施（<code>auth/account_selection.py</code>、CLI
 <code>providers use &lt;provider&gt; [profile]</code>、<code>providers list</code> 中的 <code>← active</code> 标记）；
 通用账号 REST 界面与统一的 web、TUI 组件；以及轮换的接线与其控制界面
 （<code>routes/accounts.py</code> 的 strategy/retry/keys 端点，<code>pool-controls.tsx</code> 中的

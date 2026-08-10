@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/" data-page-lang="en" data-build="1786398419" data-alt-lang-url="/models/auth.zh.html">
+<html lang="en" data-base="/" data-page-lang="en" data-build="1786400789" data-alt-lang-url="/models/auth.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +57,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="模型">Models</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="配置">Configuration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="认证">Authentication</span></nav><h1 id="authentication">Authentication<a class="header-anchor" href="#authentication">#</a></h1>
 <p>This page covers where provider credentials come from, where they are stored, and how to import them from other CLIs you are already logged in to.</p>
 <h2 id="storage-location">Storage location<a class="header-anchor" href="#storage-location">#</a></h2>
-<p>All credentials live in one credential store: <code>~/.openprogram/auth/&lt;provider&gt;/&lt;profile&gt;.json</code> (permissions 0600; with <code>--profile &lt;name&gt;</code> the root directory becomes <code>~/.openprogram-&lt;name&gt;/</code>).</p>
+<p>All credentials live in one credential store: <code>~/.openprogram/auth/&lt;provider&gt;/&lt;account&gt;.json</code> (permissions 0600; with <code>--profile &lt;name&gt;</code> the workspace root directory becomes <code>~/.openprogram-&lt;name&gt;/</code>).</p>
 <p>At runtime, keys are <strong>read from the credential store only — environment variables are not read directly</strong>. A key in an environment variable (such as <code>OPENAI_API_KEY</code>) must be imported first (see discover below); changing the environment variable afterwards does not affect the imported credential. The two exceptions are cloud credential chains: Amazon Bedrock (<code>AWS_PROFILE</code> / access keys / bearer token, etc.) and Google Vertex (ADC), both detected automatically at runtime.</p>
 <h2 id="credential-sources">Credential sources<a class="header-anchor" href="#credential-sources">#</a></h2>
 <h3 id="api-key-login">API key login<a class="header-anchor" href="#api-key-login">#</a></h3>
@@ -111,14 +111,55 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>adopt<span c
 </table>
 <p>Imports take one of two forms: while the external CLI is still on the machine, a pointer is stored (the external file is re-read on every call, so tokens the external CLI refreshes itself take effect automatically); otherwise the token is copied into the credential store and OpenProgram handles refreshing.</p>
 <p>The Gemini CLI login state does not go through discover: the <code>google-gemini-cli</code> provider reads <code>~/.gemini/oauth_creds.json</code> directly — install the Gemini CLI, log in, and it works. Claude subscriptions are likewise not on the scan list; use the OAuth login above.</p>
+<h3 id="helper-command-external-process">Helper command (external process)<a class="header-anchor" href="#helper-command-external-process">#</a></h3>
+<p>Some corporate setups issue tokens through a vendor or in-house CLI (<code>aws</code>, <code>sso-helper</code>, <code>token-fetcher</code>) rather than an API key you can paste. Add such a provider in Settings → Providers with type <code>credential_process</code>: the command's argv, how to read its stdout, and a cache window.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command</code></td>
+<td>Helper argv, as a list. Run directly — no shell, so there is nothing to escape</td>
+<td>required</td>
+</tr>
+<tr>
+<td><code>parses</code></td>
+<td><code>json</code> to parse stdout as JSON, <code>text</code> to take the stripped stdout as the token</td>
+<td><code>json</code></td>
+</tr>
+<tr>
+<td><code>json_key_path</code></td>
+<td>Key path to walk into the JSON, e.g. <code>[&quot;creds&quot;, &quot;token&quot;]</code>. Empty means the document itself must be a string</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>cache_seconds</code></td>
+<td>How long one token is reused before the helper runs again. <code>0</code> runs the helper on every call</td>
+<td><code>300</code></td>
+</tr>
+<tr>
+<td><code>timeout_seconds</code></td>
+<td>Wall-clock limit for one helper run</td>
+<td><code>60</code></td>
+</tr>
+</tbody>
+</table>
+<p>The helper runs on every API call whose token is not within the cache window, and the login smoke test runs it once so a broken command is reported while you are still configuring it.</p>
+<p>A helper that fails — non-zero exit, timeout, unparseable output, or a missing key path — makes the request fail with an error naming the command and its stderr. It does not fall back to another credential: you configured this helper deliberately, so a token quietly sourced from somewhere else would hide the breakage. Fix the helper, or remove the credential to use a different source.</p>
+<p>Enterprise SSO (<code>sso</code>) is not implemented. The credential kind is reserved, and both the API and the resolver reject it explicitly rather than accepting configuration that could never take effect.</p>
 <h2 id="management-and-troubleshooting">Management and troubleshooting<a class="header-anchor" href="#management-and-troubleshooting">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>status<span class="w"> </span>&lt;provider&gt;<span class="w">    </span><span class="c1"># are the current credentials usable</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w">               </span><span class="c1"># expiry, refresh failures, cooldown, conflicts</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span><span class="nb">logout</span><span class="w"> </span>&lt;provider&gt;<span class="w">    </span><span class="c1"># delete credentials</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;provider&gt;<span class="w"> </span><span class="o">[</span>profile<span class="o">]</span><span class="w">   </span><span class="c1"># switch between multiple accounts</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                 </span><span class="c1"># list credential pools by profile</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;provider&gt;<span class="w"> </span><span class="o">[</span>account<span class="o">]</span><span class="w">   </span><span class="c1"># switch between multiple accounts</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                 </span><span class="c1"># list credential pools by account</span>
 </code></pre>
-<p>Every provider supports multiple accounts (named profiles), and one account's credential pool can hold multiple API keys. A key that returns 401 / 402 / 429 / 503 is put on a cooldown and the pool hands the next healthy key to the following request — automatically, with selectable strategies (<code>fill_first</code> is the default &quot;backup key&quot; behavior; <code>round_robin</code>, <code>random</code>, and <code>least_used</code> are also available). Rotating across whole accounts (instead of the single active one) is a separate per-provider switch, off by default.</p>
+<p>Every provider supports multiple named accounts, and one account's credential pool can hold multiple API keys. A key that returns 401 / 402 / 429 / 503 is put on a cooldown and the pool hands the next healthy key to the following request — automatically, with selectable strategies (<code>fill_first</code> is the default &quot;backup key&quot; behavior; <code>round_robin</code>, <code>random</code>, and <code>least_used</code> are also available). Rotating across whole accounts (instead of the single active one) is a separate per-provider switch, off by default.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/models/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/models/fast-tier.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Fast tier</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -127,6 +168,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 <a class="lvl-3" href="#api-key-login">API key login</a>
 <a class="lvl-3" href="#oauth-login">OAuth login</a>
 <a class="lvl-3" href="#importing-credentials-already-on-this-machine">Importing credentials already on this machine</a>
+<a class="lvl-3" href="#helper-command-external-process">Helper command (external process)</a>
 <a class="" href="#management-and-troubleshooting">Management and troubleshooting</a>
 </div></aside>
 </div>

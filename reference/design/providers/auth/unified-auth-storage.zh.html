@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786398419" data-alt-lang-url="/reference/design/providers/auth/unified-auth-storage.html">
+<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786400789" data-alt-lang-url="/reference/design/providers/auth/unified-auth-storage.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -279,7 +279,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 一个存储、一套登录流程，在 CLI、web、TUI 中保持一致。</p>
 <h2 id="存储">存储<a class="header-anchor" href="#存储">#</a></h2>
 <p><code>openprogram/auth/store.py</code> 实现了 <code>AuthStore</code>，位于
-<code>~/.openprogram/auth/&lt;provider_id&gt;/&lt;profile_id&gt;.json</code> —— 0600 权限、原子的
+<code>~/.openprogram/auth/&lt;provider_id&gt;/&lt;account_id&gt;.json</code> —— 0600 权限、原子的
 write→fsync→replace、跨进程 <code>flock</code>，以及内存中的 mtime/size 监视，使得文件在
 底层被改动后会重新加载。<code>openprogram/auth/types.py</code> 定义了凭据 kind：</p>
 <table>
@@ -307,12 +307,12 @@ write→fsync→replace、跨进程 <code>flock</code>，以及内存中的 mtim
 <td><strong>仅指针</strong> —— <code>store_path</code> + 指向外部文件的 key-path；每次使用时重读</td>
 </tr>
 <tr>
-<td><code>external_process</code></td>
+<td><code>credential_process</code></td>
 <td>按需运行的 argv</td>
 </tr>
 </tbody>
 </table>
-<p><code>AuthManager</code> <strong>以存储为准，从不重新发现</strong>：磁盘上是什么池，它就提供什么。
+<p><code>CredentialProvider</code> <strong>以存储为准，从不重新发现</strong>：磁盘上是什么池，它就提供什么。
 导入是显式的一次性写入步骤（<code>cli_import</code>、<code>import_from_codex_file</code>），因此一旦
 凭据被复制进存储，就不会再有任何东西去读外部文件。
 <code>openprogram/auth/methods/cli_import.py</code> 的 <code>mode=&quot;copy&quot;</code> 会对外部文件解引用

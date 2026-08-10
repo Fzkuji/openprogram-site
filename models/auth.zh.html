@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786398419" data-alt-lang-url="/models/auth.html">
+<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786400789" data-alt-lang-url="/models/auth.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +57,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="模型">Models</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="配置">Configuration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="认证">Authentication</span></nav><h1 id="认证">认证<a class="header-anchor" href="#认证">#</a></h1>
 <p>本页说明 provider 凭据从哪来、存在哪、如何从已登录的其他 CLI 导入。</p>
 <h2 id="存放位置">存放位置<a class="header-anchor" href="#存放位置">#</a></h2>
-<p>所有凭据统一存在凭据库：<code>~/.openprogram/auth/&lt;provider&gt;/&lt;profile&gt;.json</code>（权限 0600；使用 <code>--profile &lt;name&gt;</code> 时根目录换成 <code>~/.openprogram-&lt;name&gt;/</code>）。</p>
+<p>所有凭据统一存在凭据库：<code>~/.openprogram/auth/&lt;provider&gt;/&lt;account&gt;.json</code>（权限 0600；使用 <code>--profile &lt;name&gt;</code> 时工作区根目录换成 <code>~/.openprogram-&lt;name&gt;/</code>）。</p>
 <p>运行时<strong>只从凭据库取密钥，不直接读环境变量</strong>。环境变量里的 key（如 <code>OPENAI_API_KEY</code>）需要先导入（见下文 discover），之后改环境变量不影响已导入的凭据。两个例外是云凭据链：Amazon Bedrock（<code>AWS_PROFILE</code> / access key / bearer token 等）和 Google Vertex（ADC），它们在运行时自动识别。</p>
 <h2 id="凭据的几种来源">凭据的几种来源<a class="header-anchor" href="#凭据的几种来源">#</a></h2>
 <h3 id="api-key-登录">API key 登录<a class="header-anchor" href="#api-key-登录">#</a></h3>
@@ -111,14 +111,55 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>adopt<span c
 </table>
 <p>导入有两种形态：外部 CLI 还在机器上时记指针（每次调用现读外部文件，外部 CLI 自己刷新的 token 自动生效）；否则拷贝 token 进凭据库、由 OpenProgram 负责刷新。</p>
 <p>Gemini CLI 的登录态不走 discover：<code>google-gemini-cli</code> provider 直接读 <code>~/.gemini/oauth_creds.json</code>，装好 Gemini CLI 并登录即可用。Claude 订阅同样不在扫描列表里，走上面的 OAuth 登录。</p>
+<h3 id="辅助命令外部进程">辅助命令（外部进程）<a class="header-anchor" href="#辅助命令外部进程">#</a></h3>
+<p>有些企业环境的 token 由厂商或自研 CLI 签发（<code>aws</code>、<code>sso-helper</code>、<code>token-fetcher</code>），拿不到可以直接粘贴的 API key。这类 provider 在 Settings → Providers 里按 <code>credential_process</code> 类型添加：填命令 argv、stdout 的解析方式、缓存窗口。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command</code></td>
+<td>辅助命令的 argv 列表。直接执行不过 shell，无需转义</td>
+<td>必填</td>
+</tr>
+<tr>
+<td><code>parses</code></td>
+<td><code>json</code> 表示按 JSON 解析 stdout，<code>text</code> 表示 stdout 去空白后即 token</td>
+<td><code>json</code></td>
+</tr>
+<tr>
+<td><code>json_key_path</code></td>
+<td>在 JSON 里下钻的键路径，例如 <code>[&quot;creds&quot;, &quot;token&quot;]</code>。留空则文档本身必须是字符串</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>cache_seconds</code></td>
+<td>一个 token 复用多久后重新执行命令。<code>0</code> 表示每次调用都执行</td>
+<td><code>300</code></td>
+</tr>
+<tr>
+<td><code>timeout_seconds</code></td>
+<td>单次执行的墙钟上限</td>
+<td><code>60</code></td>
+</tr>
+</tbody>
+</table>
+<p>每次 API 调用只要 token 不在缓存窗口内就会执行该命令；登录冒烟测试也会执行一次，命令有问题在配置阶段就能发现。</p>
+<p>命令执行失败（非零退出、超时、输出无法解析、键路径不存在）会让请求直接报错，错误信息里带上命令和它的 stderr，不会回落到其他凭据。这是刻意配置的取值方式，悄悄换成别处的 token 只会掩盖故障。修好命令，或者删掉该凭据改用别的来源。</p>
+<p>企业 SSO（<code>sso</code>）尚未实现。该凭据类型是预留的，API 和 resolver 都会明确拒绝，不接受一份永远不会生效的配置。</p>
 <h2 id="管理与排障">管理与排障<a class="header-anchor" href="#管理与排障">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>status<span class="w"> </span>&lt;provider&gt;<span class="w">    </span><span class="c1"># 当前凭据是否可用</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w">               </span><span class="c1"># 过期、刷新失败、冷却、冲突</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span><span class="nb">logout</span><span class="w"> </span>&lt;provider&gt;<span class="w">    </span><span class="c1"># 删除凭据</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;provider&gt;<span class="w"> </span><span class="o">[</span>profile<span class="o">]</span><span class="w">   </span><span class="c1"># 多账号切换</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                 </span><span class="c1"># 按 profile 列出凭据池</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;provider&gt;<span class="w"> </span><span class="o">[</span>account<span class="o">]</span><span class="w">   </span><span class="c1"># 多账号切换</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                 </span><span class="c1"># 按账号列出凭据池</span>
 </code></pre>
-<p>每个 provider 支持多账号（命名 profile），一个账号的凭据池可以放多个 API key。某个 key 返回 401 / 402 / 429 / 503 时进入冷却，凭据池自动把下一把健康的 key 交给后续请求，策略可选（默认 <code>fill_first</code>，即&quot;备用 key&quot;语义；另有 <code>round_robin</code>、<code>random</code>、<code>least_used</code>）。跨账号轮换（而不是只用当前激活账号）是每个 provider 单独的开关，默认关闭。</p>
+<p>每个 provider 支持多个命名账号，一个账号的凭据池可以放多个 API key。某个 key 返回 401 / 402 / 429 / 503 时进入冷却，凭据池自动把下一把健康的 key 交给后续请求，策略可选（默认 <code>fill_first</code>，即&quot;备用 key&quot;语义；另有 <code>round_robin</code>、<code>random</code>、<code>least_used</code>）。跨账号轮换（而不是只用当前激活账号）是每个 provider 单独的开关，默认关闭。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/models/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/models/fast-tier.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Fast tier</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -127,6 +168,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 <a class="lvl-3" href="#api-key-登录">API key 登录</a>
 <a class="lvl-3" href="#oauth-登录">OAuth 登录</a>
 <a class="lvl-3" href="#从本机已有凭据导入">从本机已有凭据导入</a>
+<a class="lvl-3" href="#辅助命令外部进程">辅助命令（外部进程）</a>
 <a class="" href="#管理与排障">管理与排障</a>
 </div></aside>
 </div>

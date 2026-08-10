@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786398419" data-alt-lang-url="/start/features.html">
+<html lang="zh" data-base="/" data-page-lang="zh" data-build="1786400789" data-alt-lang-url="/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -187,8 +187,8 @@ openprogram<span class="w"> </span>memory<span class="w"> </span><span class="nb
 <p>同一个 provider、多个账户 —— 每个账户还可有多个密钥 —— 在每个界面上
 以相同的方式管理。一个<strong>账户就是一份 profile</strong>：某个 provider 的
 一套独立凭据。</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--profile<span class="w"> </span>work<span class="w">      </span><span class="c1"># 添加第二个账户</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--profile<span class="w"> </span>personal
+<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">      </span><span class="c1"># 添加第二个账户</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>personal
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">                  </span><span class="c1"># 用 &quot;work&quot; 账户运行 openai</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w">                        </span><span class="c1"># 切回默认账户</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                              </span><span class="c1"># 当前激活的会被标记</span>
