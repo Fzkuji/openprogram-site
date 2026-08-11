@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786457856">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786458760">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -255,6 +255,61 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<h2 id="agent-resources">Agent resources<a class="header-anchor" href="#agent-resources">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Apply</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agent.resource_limits.max_live_per_session</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.max_queued_per_session</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.max_tasks_per_session</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.max_total_tokens</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.max_cost_usd</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.max_runtime_seconds</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+<tr>
+<td><code>agent.resource_limits.idle_timeout_seconds</code></td>
+<td>—</td>
+<td>live</td>
+<td>Empty means inherit or unlimited; non-empty values must be positive.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="hooks">Hooks<a class="header-anchor" href="#hooks">#</a></h2>
 <table>
 <thead>
@@ -375,6 +430,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#memory">Memory</a>
 <a class="" href="#goal">Goal</a>
 <a class="" href="#agent">Agent</a>
+<a class="" href="#agent-resources">Agent resources</a>
 <a class="" href="#hooks">Hooks</a>
 <a class="" href="#sandbox">Sandbox</a>
 <a class="" href="#git">Git</a>
