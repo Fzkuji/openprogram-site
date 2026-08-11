@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786438675">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786455773">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -277,33 +277,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 超时进程误报成功、问答模式过期闭包、Finder 重复文件）；本文只收<strong>需要讨论后再动</strong>
 的项，按影响排序。讨论定案一条就删一条。</em></p>
 <h2 id="打包-分发">打包 / 分发<a class="header-anchor" href="#打包-分发">#</a></h2>
-<ol start="3">
-<li>
-<p><s><strong>pip wheel 缺数据文件</strong></s> —— 已修。<code>pyproject.toml</code> 现有
-<code>[tool.setuptools.package-data]</code>，49 个运行时数据文件（27 个
-<code>provider.json</code>、2 个 <code>claude_models.json</code>、2 个 bundled SKILL.md、
-webui 静态资源与 <code>*_meta.json</code>）进 wheel；<code>packages.find</code> 排除
-<code>openprogram.functions.agentics.*</code>（各 harness 是独立仓库，由
-<code>openprogram programs install</code> 拉取）。干净 venv 装 wheel 后
-<code>openprogram --help</code> / <code>web --help</code> 正常，22 个 provider 可见。</p>
-<p>遗留：<code>providers/_provider_meta.py</code> 读 provider.json 时仍静默吞异常，
-数据文件损坏（而非缺失）依然表现为&quot;provider 列表为空且无报错&quot;。
-与打包无关，属独立的错误处理问题。</p>
-<p>不打包的两项，均为构建产物且已 gitignore：<code>web/out/</code>（Next.js 导出，
-<code>webui/frontend.py:ensure_frontend_built</code> 在缺失时用 <code>npx next build</code>
-重建）、<code>docs/_site/</code>（文档站，<code>webui/routes/docs.py</code> 按 mtime 重建）。
-两者都由仓库根目录解析路径（<code>parents[2]</code> / <code>parents[3]</code>），装进
-site-packages 后取不到——要支持&quot;pip 装完即可用 web UI&quot;，需先把它们
-改成包内资源。属独立课题。</p>
-</li>
-<li>
-<p><s><strong><code>requirements.txt</code> 与 <code>pyproject.toml</code> 手工双维护</strong></s> —— 已修。
-<code>requirements.txt</code> 改成一行 <code>-e .</code>（外加说明注释），pyproject 成为
-依赖的唯一真相源。全仓无任何 README / 文档 / CI 引用被破坏。</p>
-</li>
+<ol>
+<li><strong>provider.json 损坏被静默吞掉</strong>：<code>providers/_provider_meta.py</code> 读
+provider.json 时静默吞异常，数据文件损坏（而非缺失）表现为
+&quot;provider 列表为空且无报错&quot;。</li>
+<li><strong>pip 装完不可用 web UI 与文档站</strong>：<code>web/out/</code> 与 <code>docs/_site/</code> 是构建产物
+且已 gitignore，运行时由仓库根目录解析路径（<code>parents[2]</code> / <code>parents[3]</code>），
+装进 site-packages 后取不到。要支持&quot;pip 装完即可用&quot;，需把它们改成包内资源。</li>
 </ol>
 <h2 id="前端">前端<a class="header-anchor" href="#前端">#</a></h2>
-<ol start="5">
+<ol start="3">
 <li><strong><code>window.*</code> 退役（state-layer 阶段 3）</strong>：201 处 / 16 文件。四组：
 <code>W.currentSessionId</code> 路由闸门 39 处、<code>window.conversations</code> 20 处、
 <code>W.isRunning</code> 9 处（最便宜，<code>runningTasks</code> 已覆盖）、
@@ -312,29 +295,28 @@ site-packages 后取不到——要支持&quot;pip 装完即可用 web UI&quot;�
 完成后的事，规模大，需专项排期。</li>
 <li><strong>WS 层用无类型 CustomEvent 二次广播 store 帧</strong>
 （<code>web/lib/net/use-ws.ts</code> 六处）：与 store 平行的第二条状态通路，
-detail 无类型。属于 window.* 退役的同族问题，可并入第 5 条专项。</li>
+detail 无类型。属于 window.* 退役的同族问题，可并入第 3 条专项。</li>
 </ol>
-<h2 id="模块规模1000-行且多职责重构窗口另排">模块规模（&gt;1000 行且多职责，重构窗口另排）<a class="header-anchor" href="#模块规模1000-行且多职责重构窗口另排">#</a></h2>
-<ol start="7">
-<li><code>web/components/center-tabs/center-tab-strip.tsx</code>（2045 行：DnD、路由
-推导、容器、复合 tab 渲染混在一起）；
-<code>web/components/chat/composer/index.tsx</code>（2007 行单函数）；
-<code>openprogram/agentic_programming/runtime.py</code>（2040）；
-<code>openprogram/cli.py</code>（1540）；
-<code>openprogram/webui/server.py</code>（1538）。</li>
-</ol>
-<h2 id="清理">清理<a class="header-anchor" href="#清理">#</a></h2>
-<ol start="8">
-<li><s><strong>FastAPI 弃用的 <code>@app.on_event</code></strong></s> —— 已完成。<code>create_app()</code> 已用
-<code>_lifespan</code> 上下文管理器（<code>webui/server.py:1448</code>），<code>@app.on_event</code> 零残留。</li>
+<h2 id="模块规模1400-行且多职责重构窗口另排">模块规模（&gt;1400 行且多职责，重构窗口另排）<a class="header-anchor" href="#模块规模1400-行且多职责重构窗口另排">#</a></h2>
+<ol start="5">
+<li>前端两个大文件已拆完（center-tab-strip 479 行、composer 967 行）。
+剩余为 Python 侧，2026-08-11 复测：
+<code>openprogram/agentic_programming/runtime.py</code>（2162）、
+<code>openprogram/store/session/session_store.py</code>（1803）、
+<code>openprogram/webui/server.py</code>（1780）、
+<code>openprogram/cli.py</code>（1780）、
+<code>openprogram/agentic_programming/function.py</code>（1557）、
+<code>openprogram/auth/cli.py</code>（1537）、
+<code>openprogram/functions/_runtime.py</code>（1502）。
+<code>cli/src/runtime/</code> 下的 yoga-layout 与 ink 运行时属 vendored 移植代码，
+不算多职责问题。</li>
 </ol>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/TODO-doc-code-gaps.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Open Items Where Design Docs Are Out of Sync With Code</span></a><a class="pn-link pn-next" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Usage Metering Subsystem Design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#打包-分发">打包 / 分发</a>
 <a class="" href="#前端">前端</a>
-<a class="" href="#模块规模1000-行且多职责重构窗口另排">模块规模（&gt;1000 行且多职责，重构窗口另排）</a>
-<a class="" href="#清理">清理</a>
+<a class="" href="#模块规模1400-行且多职责重构窗口另排">模块规模（&gt;1400 行且多职责，重构窗口另排）</a>
 </div></aside>
 </div>
 
