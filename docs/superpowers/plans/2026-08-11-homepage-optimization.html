@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>providers · OpenProgram Docs</title>
+<title>OpenProgram Homepage Optimization Implementation Plan · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -82,7 +82,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/plugins.html">plugins</a>
 <a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
-<a class="navlink active" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
@@ -106,7 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
-<a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink active" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
 </div>
 <div class="nav-sec">
@@ -119,316 +119,101 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="CLI 命令">CLI commands</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">providers</span></nav><!-- GENERATED FILE — do not edit. Rebuilt by tools/docs_site/generate_reference.py from openprogram/cli.py. -->
-<h1 id="providers">providers<a class="header-anchor" href="#providers">#</a></h1>
-<pre><code>usage: openprogram providers [-h] verb ...
-</code></pre>
-<h2 id="providers-login"><code>providers login</code><a class="header-anchor" href="#providers-login">#</a></h2>
-<p>Log into a provider</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>provider</code></td>
-<td>Provider id (e.g. openai-codex, anthropic)</td>
-</tr>
-<tr>
-<td><code>--account</code> <code>ACCOUNT</code></td>
-<td>Account (default: default)</td>
-</tr>
-<tr>
-<td><code>--method</code> <code>METHOD</code></td>
-<td>Advanced: force a specific login method. Omit it and the right one for the provider is picked automatically.</td>
-</tr>
-<tr>
-<td><code>--api-key</code> <code>API_KEY</code></td>
-<td>Supply the API key non-interactively (scripts / agents). Implies --method api_key; skips the prompt. WARNING: visible in shell history and <code>ps</code> — prefer --api-key-stdin or an env var.</td>
-</tr>
-<tr>
-<td><code>--api-key-stdin</code></td>
-<td>Read the API key from stdin (until EOF), non-interactively. Implies --method api_key. e.g. <code>printf %%s &quot;$KEY&quot; | openprogram providers login minimax-cn --api-key-stdin</code>.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-list"><code>providers list</code><a class="header-anchor" href="#providers-list">#</a></h2>
-<p>List pools per account</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--account</code> <code>ACCOUNT</code></td>
-<td>Filter to one account (default: all)</td>
-</tr>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-available"><code>providers available</code><a class="header-anchor" href="#providers-available">#</a></h2>
-<p>Show all providers OpenProgram knows about — the built-in ones plus the community catalogue (models.dev). This is the list you pick an id from for <code>openprogram providers login &lt;id&gt;</code>. Pass a QUERY to filter by id or label (case-insensitive substring), e.g. <code>providers available minimax</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>query</code></td>
-<td>Filter to providers whose id or label contains this text.</td>
-</tr>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON (for scripts / agents).</td>
-</tr>
-<tr>
-<td><code>--configured</code></td>
-<td>Only show providers that already have a key / credential.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-search"><code>providers search</code><a class="header-anchor" href="#providers-search">#</a></h2>
-<p>Show all providers OpenProgram knows about — the built-in ones plus the community catalogue (models.dev). This is the list you pick an id from for <code>openprogram providers login &lt;id&gt;</code>. Pass a QUERY to filter by id or label (case-insensitive substring), e.g. <code>providers available minimax</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>query</code></td>
-<td>Filter to providers whose id or label contains this text.</td>
-</tr>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON (for scripts / agents).</td>
-</tr>
-<tr>
-<td><code>--configured</code></td>
-<td>Only show providers that already have a key / credential.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-catalog"><code>providers catalog</code><a class="header-anchor" href="#providers-catalog">#</a></h2>
-<p>Show all providers OpenProgram knows about — the built-in ones plus the community catalogue (models.dev). This is the list you pick an id from for <code>openprogram providers login &lt;id&gt;</code>. Pass a QUERY to filter by id or label (case-insensitive substring), e.g. <code>providers available minimax</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>query</code></td>
-<td>Filter to providers whose id or label contains this text.</td>
-</tr>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON (for scripts / agents).</td>
-</tr>
-<tr>
-<td><code>--configured</code></td>
-<td>Only show providers that already have a key / credential.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-discover"><code>providers discover</code><a class="header-anchor" href="#providers-discover">#</a></h2>
-<p>Scan external sources</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-adopt"><code>providers adopt</code><a class="header-anchor" href="#providers-adopt">#</a></h2>
-<p>Adopt a discovered credential into the store</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>source_id</code></td>
-<td>Source id from <code>discover</code> output (e.g. codex_cli, env:OPENAI_API_KEY). Omit when using --all.</td>
-</tr>
-<tr>
-<td><code>--account</code> <code>ACCOUNT</code></td>
-<td>Target account (default: default)</td>
-</tr>
-<tr>
-<td><code>--all</code></td>
-<td>Adopt every credential discover() finds. Skips pools that already contain the same credential_id.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-logout"><code>providers logout</code><a class="header-anchor" href="#providers-logout">#</a></h2>
-<p>Remove credentials for a provider</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>provider</code></td>
-<td>Provider id to log out of</td>
-</tr>
-<tr>
-<td><code>--account</code> <code>ACCOUNT</code></td>
-<td>Account to remove credentials from</td>
-</tr>
-<tr>
-<td><code>--yes</code></td>
-<td>Skip confirmation</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-status"><code>providers status</code><a class="header-anchor" href="#providers-status">#</a></h2>
-<p>Check a provider's current credential</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>provider</code></td>
-<td>Provider id to check</td>
-</tr>
-<tr>
-<td><code>--account</code> <code>ACCOUNT</code></td>
-<td>Account to check</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-use"><code>providers use</code><a class="header-anchor" href="#providers-use">#</a></h2>
-<p>Set which account (account) a provider runs on</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>provider</code></td>
-<td>Provider id</td>
-</tr>
-<tr>
-<td><code>account</code></td>
-<td>Account to activate; omit to clear back to the default</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-doctor"><code>providers doctor</code><a class="header-anchor" href="#providers-doctor">#</a></h2>
-<p>Diagnose credentials (expiry, refresh, cooldown, conflicts)</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-setup"><code>providers setup</code><a class="header-anchor" href="#providers-setup">#</a></h2>
-<p>Interactive first-time setup</p>
-<h2 id="providers-aliases"><code>providers aliases</code><a class="header-anchor" href="#providers-aliases">#</a></h2>
-<p>List provider short-name aliases</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--json</code></td>
-<td>Output JSON</td>
-</tr>
-</tbody>
-</table>
-<h2 id="providers-migrate"><code>providers migrate</code><a class="header-anchor" href="#providers-migrate">#</a></h2>
-<p>Migrate stored credentials to the current format</p>
-<h2 id="providers-accounts"><code>providers accounts</code><a class="header-anchor" href="#providers-accounts">#</a></h2>
-<p>Account management</p>
-<table>
-<thead>
-<tr>
-<th>Subcommand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>providers accounts list</code></td>
-<td>List accounts</td>
-</tr>
-<tr>
-<td><code>providers accounts create</code></td>
-<td>Create an account</td>
-</tr>
-<tr>
-<td><code>providers accounts delete</code></td>
-<td>Delete an account</td>
-</tr>
-</tbody>
-</table>
-<div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/programs.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">programs</span></a><a class="pn-link pn-next" href="/docs/reference/cli/rescue.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">rescue</span></a></div></article></main>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">OpenProgram Homepage Optimization Implementation Plan</span></nav><h1 id="openprogram-homepage-optimization-implementation-plan">OpenProgram Homepage Optimization Implementation Plan<a class="header-anchor" href="#openprogram-homepage-optimization-implementation-plan">#</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Replace the sparse landing page with an evidence-backed, responsive product homepage and complete its search and sharing metadata.</p>
+<p><strong>Architecture:</strong> Keep the homepage as one dependency-free <code>site/index.html</code>. Reuse assets already published by the docs build under <code>/docs/</code>, and add one stdlib validation script for structural regression checks.</p>
+<p><strong>Tech Stack:</strong> HTML, CSS, vanilla JavaScript, Python standard library, existing docs-site builder</p>
+<h2 id="global-constraints">Global Constraints<a class="header-anchor" href="#global-constraints">#</a></h2>
+<ul>
+<li>Preserve the selected near-black, teal, and violet direction.</li>
+<li>Use only claims already supported by <code>docs/README.md</code> and <code>docs/start/GETTING_STARTED.md</code>.</li>
+<li>Use the documented installer rather than <code>pip install openprogram</code>.</li>
+<li>Add no dependency or external font request.</li>
+<li>Keep all content visible when JavaScript is unavailable.</li>
+</ul>
+<hr />
+<h3 id="task-1-add-the-landing-page-regression-check">Task 1: Add the landing-page regression check<a class="header-anchor" href="#task-1-add-the-landing-page-regression-check">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>tools/docs_site/check_landing.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>site/index.html</code></p>
+</li>
+<li>
+<p>Produces: exit code 0 only when the homepage contains required metadata, sections, installer, images, and no CSS that hides content</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Write assertions for canonical and social metadata, JSON-LD, section ids, the documented installer, three existing screenshot paths, favicon, and visible content.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Run <code>python -m tools.docs_site.check_landing</code> and verify it fails against the current page.</p>
+</li>
+</ul>
+<h3 id="task-2-rebuild-the-landing-page">Task 2: Rebuild the landing page<a class="header-anchor" href="#task-2-rebuild-the-landing-page">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/index.html</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: <code>/docs/assets/mark.svg</code>, <code>/docs/images/code_hero.png</code>, <code>/docs/images/chat_hero.png</code>, <code>/docs/images/tui_hero.png</code>, and existing documentation URLs</p>
+</li>
+<li>
+<p>Produces: dependency-free responsive homepage at <code>/</code></p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Add complete metadata and JSON-LD.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Implement the approved information structure and accurate installation copy.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Keep content visible and make the ambient hero motion reduced-motion safe.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Run <code>python -m tools.docs_site.check_landing</code> until it passes.</p>
+</li>
+</ul>
+<h3 id="task-3-build-inspect-and-publish">Task 3: Build, inspect, and publish<a class="header-anchor" href="#task-3-build-inspect-and-publish">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify only if verification finds a defect: <code>site/index.html</code>, <code>tools/docs_site/check_landing.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: finished homepage and current docs builder</p>
+</li>
+<li>
+<p>Produces: verified local and deployed homepage</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Run the docs build, docs link checker, landing checker, and <code>git diff --check</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Render desktop and mobile screenshots and correct visible defects.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Commit only the homepage design, plan, check, and HTML changes.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> Push <code>main</code>, wait for <code>Publish openprogram.io</code>, and verify the live root page and referenced assets.</p>
+</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Web Split Implementation Plan</span></a><a class="pn-link pn-next" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Search Console Verification Implementation Plan</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#providers-login">providers login</a>
-<a class="" href="#providers-list">providers list</a>
-<a class="" href="#providers-available">providers available</a>
-<a class="" href="#providers-search">providers search</a>
-<a class="" href="#providers-catalog">providers catalog</a>
-<a class="" href="#providers-discover">providers discover</a>
-<a class="" href="#providers-adopt">providers adopt</a>
-<a class="" href="#providers-logout">providers logout</a>
-<a class="" href="#providers-status">providers status</a>
-<a class="" href="#providers-use">providers use</a>
-<a class="" href="#providers-doctor">providers doctor</a>
-<a class="" href="#providers-setup">providers setup</a>
-<a class="" href="#providers-aliases">providers aliases</a>
-<a class="" href="#providers-migrate">providers migrate</a>
-<a class="" href="#providers-accounts">providers accounts</a>
+<a class="" href="#global-constraints">Global Constraints</a>
+<a class="lvl-3" href="#task-1-add-the-landing-page-regression-check">Task 1: Add the landing-page regression check</a>
+<a class="lvl-3" href="#task-2-rebuild-the-landing-page">Task 2: Rebuild the landing page</a>
+<a class="lvl-3" href="#task-3-build-inspect-and-publish">Task 3: Build, inspect, and publish</a>
 </div></aside>
 </div>
 
