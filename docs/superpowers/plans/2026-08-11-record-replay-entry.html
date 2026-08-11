@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786464212">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provider Request Record/Replay Entry Implementation Plan · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/README.html" data-title-zh="概览" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/docs/reference/API.html" data-title-zh="API Reference" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/docs/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="Providers" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/docs/reference/config.html" data-title-zh="配置" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/docs/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/docs/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/docs/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/docs/reference/claude-code-compaction.html" data-href-zh="/docs/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/docs/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/docs/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/docs/reference/cli/config.html">config</a>
+<a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
+<a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/docs/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/docs/reference/cli/status.html">status</a>
+<a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/docs/reference/cli/update.html">update</a>
+<a class="navlink" href="/docs/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/docs/reference/cli/web.html">web</a>
+<a class="navlink" href="/docs/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink active" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-framework-adoption-homepage-design.html">Framework Adoption Homepage Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-homepage-optimization-design.html">OpenProgram Homepage Optimization Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-search-console-verification-design.html">Search Console Verification Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Provider Request Record/Replay Entry Implementation Plan</span></nav><h1 id="provider-request-recordreplay-entry-implementation-plan">Provider Request Record/Replay Entry Implementation Plan<a class="header-anchor" href="#provider-request-recordreplay-entry-implementation-plan">#</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Add a secure, deterministic CLI/config entry point that records provider traffic and replays it without credentials or network fallback.</p>
+<p><strong>Architecture:</strong> Keep the version-1 JSONL format and public provider classes, but move file coordination into a shared <code>RecordingSink</code>, install one registry-level provider transform, and select the transformed provider before credential resolution. Keep managed-recording lifecycle functions in <code>recording.py</code>; <code>cli.py</code> only declares arguments and delegates commands.</p>
+<p><strong>Tech Stack:</strong> Python 3.11+, argparse, JSONL, <code>os.open</code>/<code>os.write</code>/<code>fsync</code>, <code>_compat.flock</code>, pytest, Ruff.</p>
+<h2 id="global-constraints">Global Constraints<a class="header-anchor" href="#global-constraints">#</a></h2>
+<ul>
+<li>Start from <code>origin/main</code> commit <code>8f62da5a</code>; use only branch <code>codex/record-replay-entry-20260811</code> in <code>/private/tmp/openprogram-record-replay-entry-20260811</code>.</li>
+<li>Do not modify JSON Schema, MCP, or resource-governance files.</li>
+<li>Keep changes to <code>openprogram/cli.py</code> and <code>openprogram/config_schema.py</code> local to record/replay declarations and dispatch.</li>
+<li><code>record_replay.mode</code> is <code>off</code>, <code>record</code>, or <code>replay</code>; changes apply on the next process start.</li>
+<li>Managed directories and lock files use mode <code>0700</code> and <code>0600</code>; POSIX permission verification is fail-closed.</li>
+<li>Redaction is unconditional and has no disabling configuration.</li>
+<li>Replay must parse the whole file before serving calls and must not resolve credentials, retain an original provider, or make network calls.</li>
+<li>Preserve version-1 constructors, properties, <code>call_count</code>, <code>RecordingFileError</code>, <code>ReplayMismatch</code>, and structurally valid legacy recordings.</li>
+<li>Use test-driven development for every production change and commit each task independently.</li>
+</ul>
+<hr />
+<h3 id="task-1-strict-recording-format-redaction-and-private-paths">Task 1: Strict recording format, redaction, and private paths<a class="header-anchor" href="#task-1-strict-recording-format-redaction-and-private-paths">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>openprogram/paths.py</code></li>
+<li>Modify: <code>openprogram/providers/recording.py</code></li>
+<li>Modify: <code>openprogram/providers/replay.py</code></li>
+<li>Modify: <code>tests/providers/test_record_replay.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Produces: <code>get_recordings_dir() -&gt; Path</code>, <code>restrict_recording_file(path: Path) -&gt; None</code>, <code>read_recording_file(path: str | Path) -&gt; list[RecordedCall]</code>.</p>
+</li>
+<li>
+<p>Preserves: <code>RecordingProvider(provider, path)</code>, <code>ReplayProvider(path)</code>, <code>ReplayProvider.call_count</code>, <code>RecordingFileError</code>, and <code>ReplayMismatch</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing parser, redaction, and permission tests</strong></p>
+</li>
+</ul>
+<pre><code class="language-python"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;mutation&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;event_after_end&quot;</span><span class="p">,</span> <span class="s2">&quot;index_gap&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown_event&quot;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_strict_parser_rejects_invalid_structure</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">mutation</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">write_mutated_recording</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">mutation</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">RecordingFileError</span><span class="p">):</span>
+        <span class="n">ReplayProvider</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_redaction_covers_basic_auth_url_userinfo_and_query_secrets</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">record_one_request</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="s2">&quot;Basic dXNlcjpwYXNz https://u:p@host/?api_key=secret&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;dXNlcjpwYXNz&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="s2">&quot;u:p&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="s2">&quot;secret&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_recording_file_and_directory_are_private</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="s2">&quot;get_state_dir&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">tmp_path</span><span class="p">)</span>
+    <span class="n">recording</span> <span class="o">=</span> <span class="n">create_managed_recording</span><span class="p">(</span><span class="s2">&quot;private&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IMODE</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">get_recordings_dir</span><span class="p">()</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span> <span class="o">==</span> <span class="mo">0o700</span>
+    <span class="k">assert</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IMODE</span><span class="p">(</span><span class="n">recording</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span> <span class="o">==</span> <span class="mo">0o600</span>
+</code></pre>
+<p>Construct exact JSONL fixtures for duplicate headers, orphan events, missing <code>call_end</code>, mismatched event counts, non-contiguous indexes, and unknown event classes. Assert <code>RecordingFileError</code> is raised during <code>ReplayProvider(path)</code>, before iteration.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the new tests and verify the intended failures</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay.py</code></p>
+<p>Expected: FAIL because the current parser ignores <code>call_end</code>, unknown rows, index gaps, and permission requirements.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement the minimum strict parser and path protection</strong></li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">get_recordings_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">get_state_dir</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;recordings&quot;</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0o700</span><span class="p">)</span>
+    <span class="n">_restrict_to_owner</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mo">0o700</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RecordingFileError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">line_number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">call_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="o">=</span> <span class="n">reason</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_number</span> <span class="o">=</span> <span class="n">line_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_index</span> <span class="o">=</span> <span class="n">call_index</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_recording_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">load_jsonl_rows</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">validate_header</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">assemble_and_validate_contiguous_calls</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</code></pre>
+<p>Implement URL-userinfo, query-parameter, authorization-scheme, secret-field, and known-token-prefix replacement with the existing <code>&lt;REDACTED&gt;</code> placeholder. Add no redaction toggle and no entropy heuristic. Verify regular-file status, symlink safety, and exact POSIX <code>0600</code> before reading or appending.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run focused tests and compatibility tests</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay.py</code></p>
+<p>Expected: PASS, including existing multi-turn tool-call replay and mismatch tests.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Commit Task 1</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/paths.py<span class="w"> </span>openprogram/providers/recording.py<span class="w"> </span>openprogram/providers/replay.py<span class="w"> </span>tests/providers/test_record_replay.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(providers): harden recording file format&quot;</span>
+</code></pre>
+<h3 id="task-2-concurrent-sink-and-registry-wide-transform">Task 2: Concurrent sink and registry-wide transform<a class="header-anchor" href="#task-2-concurrent-sink-and-registry-wide-transform">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>openprogram/providers/recording.py</code></li>
+<li>Modify: <code>openprogram/providers/api_registry.py</code></li>
+<li>Modify: <code>openprogram/providers/__init__.py</code></li>
+<li>Modify: <code>tests/providers/test_record_replay.py</code></li>
+<li>Create: <code>tests/providers/test_record_replay_registry.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: strict format helpers and private-path checks from Task 1.</p>
+</li>
+<li>
+<p>Produces: <code>RecordingSink(path)</code>, <code>configure_provider_transform(transform)</code>, and <code>activate_record_replay_from_config()</code>.</p>
+</li>
+<li>
+<p><code>RecordingProvider(provider, path_or_sink)</code> accepts a path or shared <code>RecordingSink</code> without changing existing path-based callers.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing concurrency and registry tests</strong></p>
+</li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">test_two_recording_providers_share_contiguous_call_indexes</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+    <span class="n">sink</span> <span class="o">=</span> <span class="n">RecordingSink</span><span class="p">(</span><span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;calls.jsonl&quot;</span><span class="p">)</span>
+    <span class="n">drain</span><span class="p">(</span><span class="n">RecordingProvider</span><span class="p">(</span><span class="n">provider_a</span><span class="p">,</span> <span class="n">sink</span><span class="p">)</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">request_a</span><span class="p">))</span>
+    <span class="n">drain</span><span class="p">(</span><span class="n">RecordingProvider</span><span class="p">(</span><span class="n">provider_b</span><span class="p">,</span> <span class="n">sink</span><span class="p">)</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">request_b</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">call</span><span class="o">.</span><span class="n">call_index</span> <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">read_recording_file</span><span class="p">(</span><span class="n">sink</span><span class="o">.</span><span class="n">path</span><span class="p">)]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_transform_wraps_existing_and_future_registry_entries</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">reset_test_registry</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">provider_a</span><span class="p">})</span>
+    <span class="n">configure_provider_transform</span><span class="p">(</span><span class="n">wrap</span><span class="p">)</span>
+    <span class="n">register_api_provider</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">provider_b</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">get_api_provider</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">inner</span> <span class="ow">is</span> <span class="n">provider_a</span>
+    <span class="k">assert</span> <span class="n">get_api_provider</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">inner</span> <span class="ow">is</span> <span class="n">provider_b</span>
+</code></pre>
+<p>Use two provider instances and separate processes against one file; assert unique contiguous call indexes and a strict-reader success. Save and restore registry module dictionaries/globals in fixtures so the one-time transform does not leak across tests.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the focused tests and verify failures</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay.py tests/providers/test_record_replay_registry.py</code></p>
+<p>Expected: FAIL because call indexes are currently per wrapper and the registry has no transform hook.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement <code>RecordingSink</code> and one-time transform</strong></li>
+</ul>
+<pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">RecordingSink</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">begin_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_append_request_with_next_index</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">event_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_append_row</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="s2">&quot;call_index&quot;</span><span class="p">:</span> <span class="n">call_index</span><span class="p">,</span> <span class="s2">&quot;event_index&quot;</span><span class="p">:</span> <span class="n">event_index</span><span class="p">,</span> <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">})</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">end_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">event_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_append_row</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;call_end&quot;</span><span class="p">,</span> <span class="s2">&quot;call_index&quot;</span><span class="p">:</span> <span class="n">call_index</span><span class="p">,</span> <span class="s2">&quot;event_count&quot;</span><span class="p">:</span> <span class="n">event_count</span><span class="p">},</span> <span class="n">fsync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">configure_provider_transform</span><span class="p">(</span><span class="n">transform</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="n">APIProvider</span><span class="p">],</span> <span class="n">APIProvider</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">install_once_and_rewrap_registered_providers</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
+</code></pre>
+<p>For each append, open the data file with <code>O_WRONLY|O_CREAT|O_APPEND</code> and mode <code>0600</code>, hold an exclusive sibling lock-file <code>flock</code>, loop until <code>os.write</code> consumes the complete encoded JSON line, and <code>fsync</code> on <code>call_end</code>. Allocate a call index while holding the lock by scanning request rows. Store original providers separately; transform all existing providers atomically, transform future registrations, no-op only when passed the identical callable object, and reject a different second transform.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Implement startup activation without per-provider configuration</strong></li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">activate_record_replay_from_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">setting</span> <span class="o">=</span> <span class="n">read_record_replay_setting</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">setting</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;record&quot;</span><span class="p">:</span>
+        <span class="n">install_shared_recording_sink</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">setting</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;replay&quot;</span><span class="p">:</span>
+        <span class="n">install_shared_replay_provider</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+</code></pre>
+<p>Call activation once from <code>providers/__init__.py</code> after built-in providers register. Keep mode <code>off</code> behavior identical and avoid importing CLI modules.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Run focused tests and commit Task 2</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay.py tests/providers/test_record_replay_registry.py</code></p>
+<p>Expected: PASS.</p>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/providers/recording.py<span class="w"> </span>openprogram/providers/api_registry.py<span class="w"> </span>openprogram/providers/__init__.py<span class="w"> </span>tests/providers/test_record_replay.py<span class="w"> </span>tests/providers/test_record_replay_registry.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(providers): install concurrent record replay transform&quot;</span>
+</code></pre>
+<h3 id="task-3-strict-offline-stream-selection">Task 3: Strict offline stream selection<a class="header-anchor" href="#task-3-strict-offline-stream-selection">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>openprogram/providers/stream.py</code></li>
+<li>Modify: <code>openprogram/providers/api_registry.py</code></li>
+<li>Modify: <code>tests/unit/test_usage_stream_chokepoint.py</code></li>
+<li>Modify: <code>tests/providers/test_record_replay_registry.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: transformed providers from Task 2.</p>
+</li>
+<li>
+<p>Produces: <code>APIProvider.requires_credentials: bool</code>, defaulting to <code>True</code>; <code>ReplayProvider.requires_credentials</code> returns <code>False</code>.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing credential-order and no-fallback tests</strong></p>
+</li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">test_replay_stream_skips_credential_resolution</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="n">stream_module</span><span class="p">,</span> <span class="s2">&quot;resolve_api_key&quot;</span><span class="p">,</span> <span class="n">fail_if_called</span><span class="p">)</span>
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="n">stream_module</span><span class="p">,</span> <span class="s2">&quot;get_api_provider&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">api</span><span class="p">:</span> <span class="n">replay</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">stream_simple</span><span class="p">(</span><span class="n">request</span><span class="p">))</span> <span class="o">==</span> <span class="n">expected_events</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_replay_provider_has_no_original_provider_or_network_fallback</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+    <span class="n">replay</span> <span class="o">=</span> <span class="n">ReplayProvider</span><span class="p">(</span><span class="n">valid_recording</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">replay</span><span class="p">,</span> <span class="s2">&quot;provider&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">ReplayMismatch</span><span class="p">):</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">replay</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mismatched_request</span><span class="p">))</span>
+</code></pre>
+<p>Patch the credential resolver to raise if called in replay mode; invoke both <code>stream_simple</code> and <code>stream</code>. Assert malformed recordings fail during provider construction and mismatch/exhaustion never consult another provider.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the focused tests and verify failure</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/unit/test_usage_stream_chokepoint.py tests/providers/test_record_replay_registry.py</code></p>
+<p>Expected: FAIL because both stream entry points currently resolve credentials before selecting the provider.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Select provider before credentials and expose capability</strong></li>
+</ul>
+<pre><code class="language-python"><span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">requires_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">provider</span> <span class="o">=</span> <span class="n">get_api_provider</span><span class="p">(</span><span class="n">api</span><span class="p">)</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">resolve_api_key</span><span class="p">(</span><span class="n">api</span><span class="p">)</span> <span class="k">if</span> <span class="n">provider</span><span class="o">.</span><span class="n">requires_credentials</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+</code></pre>
+<p>Apply the order in both stream entry points. Add <code>ReplayProvider.assert_consumed()</code> and keep the replay object free of any original-provider reference.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Run stream and provider tests and commit Task 3</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/unit/test_usage_stream_chokepoint.py tests/providers/test_record_replay.py tests/providers/test_record_replay_registry.py</code></p>
+<p>Expected: PASS.</p>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/providers/stream.py<span class="w"> </span>openprogram/providers/api_registry.py<span class="w"> </span>openprogram/providers/replay.py<span class="w"> </span>tests/unit/test_usage_stream_chokepoint.py<span class="w"> </span>tests/providers/test_record_replay_registry.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(providers): make replay strictly offline&quot;</span>
+</code></pre>
+<h3 id="task-4-config-and-recording-management-cli">Task 4: Config and recording-management CLI<a class="header-anchor" href="#task-4-config-and-recording-management-cli">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>openprogram/config_schema.py</code></li>
+<li>Modify: <code>openprogram/cli.py</code></li>
+<li>Modify: <code>openprogram/providers/recording.py</code></li>
+<li>Create: <code>tests/providers/test_record_replay_cli.py</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Produces: <code>record_replay.mode</code>, <code>record_replay.file</code>, <code>create_managed_recording(name=None)</code>, <code>resolve_recording_selector(selector)</code>, <code>list_recordings()</code>, <code>show_recording(selector, include_content=False)</code>, <code>delete_recording(recording_id)</code>, and <code>prune_recordings(older_than_days, dry_run=False)</code>.</p>
+</li>
+<li>
+<p>CLI produces: <code>recordings status|record|replay|off|list|show|delete|prune</code> with exit codes <code>0</code> success, <code>1</code> runtime/validation failure, and <code>2</code> usage/confirmation failure.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Add failing configuration and CLI tests</strong></p>
+</li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">test_record_command_precreates_private_header_then_updates_config</span><span class="p">(</span><span class="n">cli_env</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">main</span><span class="p">([</span><span class="s2">&quot;recordings&quot;</span><span class="p">,</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span> <span class="s2">&quot;--name&quot;</span><span class="p">,</span> <span class="s2">&quot;fixture&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">setup</span><span class="o">.</span><span class="n">_read_config</span><span class="p">()[</span><span class="s2">&quot;record_replay&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;record&quot;</span>
+    <span class="k">assert</span> <span class="n">managed_path</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;{&quot;type&quot;:&quot;header&quot;&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_replay_command_prevalidates_before_updating_config</span><span class="p">(</span><span class="n">cli_env</span><span class="p">):</span>
+    <span class="n">invalid</span> <span class="o">=</span> <span class="n">cli_env</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&quot;invalid.jsonl&quot;</span>
+    <span class="n">invalid</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;not-json</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">RecordingFileError</span><span class="p">):</span>
+        <span class="n">set_replay_mode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">invalid</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="s2">&quot;record_replay&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">setup</span><span class="o">.</span><span class="n">_read_config</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_delete_rejects_active_recording</span><span class="p">(</span><span class="n">cli_env</span><span class="p">):</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">set_record_mode</span><span class="p">(</span><span class="s2">&quot;active&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">RecordingManagementError</span><span class="p">):</span>
+        <span class="n">delete_recording</span><span class="p">(</span><span class="n">active</span><span class="o">.</span><span class="n">recording_id</span><span class="p">)</span>
+</code></pre>
+<p>Drive <code>main(argv)</code> or subprocess parsing as appropriate. Patch state/config paths only, keep real filesystem modes, and verify no config mutation on every failure path.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run CLI tests and verify failure</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay_cli.py</code></p>
+<p>Expected: FAIL because the command group and config keys do not exist.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Implement managed lifecycle and transactional mode changes</strong></li>
+</ul>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">create_managed_recording</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RecordingInfo</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">create_exclusive_private_header_file</span><span class="p">(</span><span class="n">validated_recording_id</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_record_mode</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RecordingInfo</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">transactionally_create_and_select_recording</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_replay_mode</span><span class="p">(</span><span class="n">selector</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RecordingInfo</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">validate_then_transactionally_select_replay</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_record_replay_off</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">setup</span><span class="o">.</span><span class="n">update_config</span><span class="p">(</span><span class="n">clear_record_replay_selection</span><span class="p">)</span>
+</code></pre>
+<p>Treat selectors containing a path separator or absolute syntax as explicit paths for replay/show only; otherwise resolve IDs under the managed root. Reject traversal and symlinks. <code>record</code> creates a header-only <code>0600</code> file before one <code>setup.update_config</code> call and removes only that newly created file if configuration fails. <code>replay</code> strictly parses before configuration update. Delete/prune only managed files, never delete the active selector, and skip a non-blocking locked recording during prune.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Add the two config settings and thin argparse dispatch</strong></li>
+</ul>
+<pre><code class="language-python"><span class="n">SettingSpec</span><span class="p">(</span><span class="s2">&quot;record_replay.mode&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span> <span class="s2">&quot;replay&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="s2">&quot;next_start&quot;</span><span class="p">)</span>
+<span class="n">SettingSpec</span><span class="p">(</span><span class="s2">&quot;record_replay.file&quot;</span><span class="p">,</span> <span class="n">value_type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="s2">&quot;next_start&quot;</span><span class="p">)</span>
+</code></pre>
+<p>Add one <code>recordings</code> parser with the eight verbs and <code>set_defaults(_cmd_parser=recordings_parser)</code>; delegate runtime behavior to <code>recording.py</code>. JSON modes use <code>json.dumps</code>, destructive commands require <code>--yes</code> or an exact-ID interactive confirmation, and non-TTY refusal returns <code>2</code>.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Run CLI/config tests and commit Task 4</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay_cli.py tests/unit/test_config_schema.py tests/unit/test_config_write_safety.py tests/unit/test_cli_subcommand_dispatch.py</code></p>
+<p>Expected: all feature/config tests PASS; if the isolated subprocess baseline still lacks <code>typing_extensions</code>, record that pre-existing environment failure separately and rerun all in-process command cases.</p>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/config_schema.py<span class="w"> </span>openprogram/cli.py<span class="w"> </span>openprogram/providers/recording.py<span class="w"> </span>tests/providers/test_record_replay_cli.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(cli): manage provider recordings&quot;</span>
+</code></pre>
+<h3 id="task-5-documentation-status-and-final-verification">Task 5: Documentation status and final verification<a class="header-anchor" href="#task-5-documentation-status-and-final-verification">#</a></h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>docs/reference/design/providers/record-replay.html</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li>
+<p>Consumes: completed behavior and test evidence from Tasks 1–4.</p>
+</li>
+<li>
+<p>Produces: an evidence-separated implementation/verification status section without changing the approved conceptual design.</p>
+</li>
+<li class="task-list-item enabled">
+<p><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 1: Update only the implementation status and evidence table</strong></p>
+</li>
+</ul>
+<p>Record exact production files, compatibility boundary, test files, and fresh verification commands. Mark only implemented behavior as complete; retain limitations such as provider-layer-only offline scope and scheduling-order nondeterminism.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 2: Run the complete relevant test matrix</strong></li>
+</ul>
+<p>Run: <code>pytest -q tests/providers/test_record_replay.py tests/providers/test_record_replay_registry.py tests/providers/test_record_replay_cli.py tests/providers/test_scripted_provider.py tests/unit/test_usage_stream_chokepoint.py tests/unit/test_config_schema.py tests/unit/test_config_write_safety.py tests/unit/test_cli_subcommand_dispatch.py</code></p>
+<p>Expected: PASS except any reproduced baseline-only missing-dependency subprocess case, which must be reported exactly and not attributed to this feature.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 3: Run lint, docs, and diff checks</strong></li>
+</ul>
+<p>Run: <code>ruff check openprogram/paths.py openprogram/config_schema.py openprogram/cli.py openprogram/providers tests/providers/test_record_replay.py tests/providers/test_record_replay_registry.py tests/providers/test_record_replay_cli.py tests/unit/test_usage_stream_chokepoint.py</code></p>
+<p>Run the repository-provided HTML/docs check discovered from package scripts or CI configuration; then run <code>git diff --check 8f62da5a HEAD</code> and <code>git status --short</code>.</p>
+<p>Expected: zero Ruff, docs, and whitespace errors; only intended files changed.</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 4: Commit Task 5</strong></li>
+</ul>
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>docs/reference/design/providers/record-replay.html
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;docs: record request replay implementation evidence&quot;</span>
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> <strong>Step 5: Review the branch without merging</strong></li>
+</ul>
+<p>Run: <code>git log --oneline 8f62da5a..HEAD</code> and <code>git diff --stat 8f62da5a HEAD</code>.</p>
+<p>Expected: one plan commit plus independently reviewable task commits, no JSON Schema/MCP/resource-governance file changes, and no merge into <code>main</code>.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram Homepage Optimization Implementation Plan</span></a><a class="pn-link pn-next" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Search Console Verification Implementation Plan</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#global-constraints">Global Constraints</a>
+<a class="lvl-3" href="#task-1-strict-recording-format-redaction-and-private-paths">Task 1: Strict recording format, redaction, and private paths</a>
+<a class="lvl-3" href="#task-2-concurrent-sink-and-registry-wide-transform">Task 2: Concurrent sink and registry-wide transform</a>
+<a class="lvl-3" href="#task-3-strict-offline-stream-selection">Task 3: Strict offline stream selection</a>
+<a class="lvl-3" href="#task-4-config-and-recording-management-cli">Task 4: Config and recording-management CLI</a>
+<a class="lvl-3" href="#task-5-documentation-status-and-final-verification">Task 5: Documentation status and final verification</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

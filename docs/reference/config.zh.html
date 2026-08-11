@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786461074" data-alt-lang-url="/docs/reference/config.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786464212" data-alt-lang-url="/docs/reference/config.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,6 +83,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
 <a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
@@ -107,7 +108,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
 </div>
 <div class="nav-sec">
@@ -498,7 +501,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </table>
 <h3 id="其他">其他<a class="header-anchor" href="#其他">#</a></h3>
 <p>代码里还有一批更内部的变量（HTTP/SSE 超时细调 <code>OPENPROGRAM_HTTPX_*</code> / <code>OPENPROGRAM_SSE_*</code>、TCP keepalive <code>OPENPROGRAM_TCP_*</code>、各 provider 单独的重试次数 <code>OPENPROGRAM_&lt;PROVIDER&gt;_MAX_RETRIES</code>、<code>OPENPROGRAM_TASK_WORKERS</code>、<code>OPENPROGRAM_IMAGE_DIR</code>、<code>OPENPROGRAM_BROWSER_CDP_URL</code> 等）。用 <code>grep -rn &quot;OPENPROGRAM_&quot; openprogram/</code> 可以列出全集；每个变量在定义处都有注释。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/config-keys.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Config keys</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/config-keys.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Config keys</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#openprogram-config-能读写什么">openprogram config 能读写什么</a>

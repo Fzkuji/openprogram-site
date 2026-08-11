@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786461074">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786464212">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,6 +83,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
 <a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
@@ -107,7 +108,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
 </div>
 <div class="nav-sec">
@@ -202,6 +205,31 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>``</td>
 <td>live</td>
 <td>Empty uses the default chat agent's provider and model. Set provider/model to override only background memory writing.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="recordings">Recordings<a class="header-anchor" href="#recordings">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Apply</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>record_replay.mode</code></td>
+<td><code>off</code></td>
+<td>next_start</td>
+<td>Record or strictly replay all LLM provider calls on the next process start.</td>
+</tr>
+<tr>
+<td><code>record_replay.file</code></td>
+<td>``</td>
+<td>next_start</td>
+<td>Managed recording ID or an explicit replay file path; record mode accepts IDs only.</td>
 </tr>
 </tbody>
 </table>
@@ -428,6 +456,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#ports">Ports</a>
 <a class="" href="#search">Search</a>
 <a class="" href="#memory">Memory</a>
+<a class="" href="#recordings">Recordings</a>
 <a class="" href="#goal">Goal</a>
 <a class="" href="#agent">Agent</a>
 <a class="" href="#agent-resources">Agent resources</a>

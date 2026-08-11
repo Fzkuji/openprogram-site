@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786461074" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786464212" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,6 +83,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
 <a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
@@ -107,7 +108,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
 </div>
 <div class="nav-sec">
@@ -266,7 +269,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>response_format</code></td>
 <td><code>dict | None</code></td>
 <td><code>None</code></td>
-<td>输出格式约束(JSON schema),转发给 <code>_call()</code>。默认 provider 路径不应用它;要生效需子类重写 <code>_call()</code></td>
+<td>输出格式约束(JSON Schema 或 <code>JsonSchemaOutput</code> 包络)。默认 provider 路径原生应用它:OpenAI 系走 <code>response_format</code>,Anthropic 走结构化输出映射,其余模型回退为提示词指令。最终回复严格解析校验,无效输出重试一次。同时仍转发给 <code>_call()</code> 供子类使用</td>
 </tr>
 <tr>
 <td><code>model</code></td>
@@ -514,7 +517,7 @@ Attempt 3: ConnectionError: timeout
 </code></pre>
 <h3 id="重试的边界">重试的边界<a class="header-anchor" href="#重试的边界">#</a></h3>
 <p><code>max_retries</code> 只处理 API 层面的瞬态故障(网络超时、速率限制等)。如果是函数本身的逻辑或输出格式有问题,重试解决不了——直接修改函数代码,参见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">API Reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Providers</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">API Reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Providers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#class-runtime">Class: Runtime</a>
