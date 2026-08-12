@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786549311" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786556007" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -520,7 +520,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <p>Implemented as described. Known ceilings: <code>local_command</code> replies in the web transcript are not persisted (parity with REPL console prints); concurrent turns on one session from two surfaces could each run the judge — <code>turns_used</code> is re-read per iteration so the cap still holds, and per-session serialization elsewhere (composer lock, follow-up lock) makes the race practically unreachable.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-update.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-update: staying usable while OpenProgram modifies itself</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/task-list-workflow.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Task list workflow — 把 todo list 编成可执行的 agentic workflow</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-update.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-update: staying usable while OpenProgram modifies itself</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/task-list-workflow.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Task list workflow — 把 todo list 编成可执行的 agentic workflow</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#where-the-loop-lives">Where the loop lives</a>

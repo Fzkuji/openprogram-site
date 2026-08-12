@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786549311" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786556007" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -343,8 +343,11 @@ does not consume a notification step.</p>
 <p>The deterministic ID deduplicates repeated extraction. The persisted <code>due</code> and
 <code>overdue:7</code> steps bound successful delivery to two notifications per record in
 the current policy. A failed send consumes neither step and is retried by a
-later eligible heartbeat. Delivery is intentionally at-least-once: a process
-crash after the channel accepts a message but before the atomic state write can
+later eligible heartbeat. Concurrent heartbeat passes are serialized by an OS
+file-lock claim, so a normal run sends and stores each step once; the claim is
+released on send failure and automatically when its process exits. Delivery is
+intentionally at-least-once only across abnormal owner death: a process crash
+after the channel accepts a message but before the atomic state write can
 produce one duplicate. The current outbound API has no cross-channel
 idempotency key, so claiming exactly-once delivery or adding a separate delivery
 journal would not remove that external ambiguity.</p>
@@ -424,7 +427,7 @@ host-local time until then.</li>
 <li>Do not add priorities, subtasks, projects, autonomous action, or a new
 scheduler/storage/task-manager subsystem as part of this follow-up.</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/event-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Event Layer</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/event-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Event Layer</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-openprogram-current-state">1. OpenProgram current state</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786549311" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786556007" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -331,8 +331,10 @@ provenance。显式转移使用现有 <code>memory_update</code> 事务并携带
 保持可见但不推送；安静时段抑制不会消耗通知档位。</p>
 <p>确定性 ID 负责重复提取去重；持久化的 <code>due</code> 与 <code>overdue:7</code> 把当前策略下每条
 记录的成功提醒限制为两次。发送失败不消耗档位，后续合格 heartbeat 会重试。
-送达语义明确为 at-least-once：如果 channel 已接受消息，而进程在原子写入通知
-状态前退出，可能出现一次重复。当前 outbound API 没有跨 channel idempotency
+并发 heartbeat pass 由 OS 文件锁 claim 串行化，因此正常运行中每个档位只发送并
+记录一次；发送失败时释放 claim，owner 进程退出时由 OS 自动释放。仅异常 owner
+退出保留 at-least-once：如果 channel 已接受消息，而进程在原子写入通知状态前
+退出，可能出现一次重复。当前 outbound API 没有跨 channel idempotency
 key，因此不能声称 exactly-once；另加 delivery journal 也不能消除外部不确定性。</p>
 <p>送达目标来自证据，不来自模型输出。对于
 <code>openprogram/&lt;session&gt;/&lt;message&gt;</code> Source，Runtime 从 <code>SessionDB</code> 读取来源会话，
@@ -394,7 +396,7 @@ daily/hourly/off、七天逾期档和宿主本地时间。</li>
 <li>后续不加入优先级、子任务、项目、自主执行，也不新增
 scheduler/storage/task-manager 子系统。</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/event-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Event Layer</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/event-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Event Layer</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-openprogram-当前现状">1. OpenProgram 当前现状</a>
