@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527712">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786528207">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -467,6 +467,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>True</code></td>
 <td>live</td>
 <td>Add the trailer <code>Co-Authored-By: &lt;model&gt; &lt;noreply@openprogram.dev&gt;</code> to commits OpenProgram writes, so the AI contribution is visible in <code>git log</code>. The model's display name is used when known, otherwise <code>OpenProgram</code>. Turning this off stops OpenProgram adding any attribution trailer.</td>
+</tr>
+<tr>
+<td><code>git.allow_remote_write</code></td>
+<td><code>False</code></td>
+<td>live</td>
+<td>Let the <code>commit-push-pr</code> flow run <code>git push</code> and <code>gh pr create</code>. Off by default: branching, staging, and committing are local and reversible, but a push and a pull request are visible to other people and cannot be undone by resetting the local tree. Leave it off to keep the flow stopping at the commit, and use <code>git push --dry-run</code> to see what a push would send.</td>
 </tr>
 </tbody>
 </table>

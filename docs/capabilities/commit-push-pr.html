@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527712" data-alt-lang-url="/docs/capabilities/commit-push-pr.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786528207" data-alt-lang-url="/docs/capabilities/commit-push-pr.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,9 +102,25 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>Stages named paths.</strong> It reads <code>git status --short -uall</code> and adds the files the request is about. No blanket <code>git add -A</code> over a tree it did not inspect; files you did not mention stay unstaged and get reported.</li>
 <li><strong>Writes the message</strong> with <code>/commit-message</code>, which reads the staged diff and returns one imperative subject plus a body when the change needs one.</li>
 <li><strong>Commits from a message file</strong> (<code>git commit -F</code>), never a fragile inline <code>-m</code>. Hooks always run — no <code>--no-verify</code>. If a pre-commit hook rewrites files the agent amends once and stops rather than looping.</li>
-<li><strong>Pushes</strong> with <code>git push -u origin &lt;branch&gt;</code>. A non-fast-forward rejection gets a rebase and one retry. Force-pushing needs you to ask for it explicitly, and then it uses <code>--force-with-lease</code>.</li>
+<li><strong>Pushes</strong> with <code>git push -u origin &lt;branch&gt;</code>, once the remote-write gate below allows it. A non-fast-forward rejection gets a rebase and one retry. Force-pushing needs you to ask for it explicitly, and then it uses <code>--force-with-lease</code>.</li>
 <li><strong>Opens the PR</strong> with <code>gh pr create --base &lt;default&gt; --head &lt;branch&gt; --title ... --body-file ...</code>, after checking <code>gh auth status</code>. The body is built from the branch's commits and its diff against the base, in summary / what changed / testing sections.</li>
 </ol>
+<h2 id="dry-run">Dry run<a class="header-anchor" href="#dry-run">#</a></h2>
+<p>Ask for a dry run and the flow stops short of the remote. Steps 1–4 run for real — branching, staging, the message, and the commit are all local and undoable — and then the agent prints the remote actions it would have taken instead of taking them:</p>
+<pre><code>would push: git push -u origin fix-commit-trailers
+would open PR: gh pr create --base main --head fix-commit-trailers --title ... --body-file ...
+</code></pre>
+<p>No <code>git push</code> and no <code>gh pr create</code> runs. To see what a push would send without writing anything, <code>git push --dry-run -u origin &lt;branch&gt;</code> contacts the remote, reports the refs that would update, and pushes nothing.</p>
+<h2 id="remote-write-authorization">Remote-write authorization<a class="header-anchor" href="#remote-write-authorization">#</a></h2>
+<p>Pushing a branch and opening a pull request are the only two steps other people can see, and resetting your local tree does not undo them. They are off by default:</p>
+<pre><code>openprogram config set git.allow_remote_write true
+</code></pre>
+<p>With the setting off, the flow runs through the commit and then stops and tells you, which leaves you a finished local commit to push yourself. Asking for the push or the PR in the same turn authorizes that call on its own — the setting is for standing permission, not for one-off requests.</p>
+<p>The gate lives in the argv builders, so an unauthorized call fails before <code>git</code> or <code>gh</code> runs rather than after:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">git_push_argv</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># fine, writes nothing</span>
+</code></pre>
 <h2 id="ai-attribution">AI attribution<a class="header-anchor" href="#ai-attribution">#</a></h2>
 <p>Commits the agent writes carry a git trailer naming the model as a co-author:</p>
 <pre><code>Co-Authored-By: Claude Opus 5 &lt;noreply@openprogram.dev&gt;
@@ -121,7 +137,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_trailers</span><span class="p">,</span> <span class="n">co_author_trailer</span><span class="p">,</span> <span class="n">pr_body</span>
 </code></pre>
 <h2 id="approval-and-safety">Approval and safety<a class="header-anchor" href="#approval-and-safety">#</a></h2>
-<p>Every step is a <code>bash</code> call, so <code>git push</code> and <code>gh pr create</code> go through the session's normal approval tier — under the default tier you see and approve each one. OpenProgram never switches you to a bypass tier to make the flow quieter.</p>
+<p>Every step is a <code>bash</code> call, so <code>git push</code> and <code>gh pr create</code> go through the session's normal approval tier — under the default tier you see and approve each one, on top of the <code>git.allow_remote_write</code> gate. OpenProgram never switches you to a bypass tier to make the flow quieter.</p>
 <p>A spawned subagent is refused <code>bash</code> entirely, so it cannot commit or push. This flow belongs to a top-level session; if you delegated the work, the delegate hands the branch back for you to ship.</p>
 <h2 id="when-it-stops">When it stops<a class="header-anchor" href="#when-it-stops">#</a></h2>
 <p>The agent stops and reports rather than improvising when the working tree holds changes it cannot attribute to your request, a hook keeps rewriting files, the push is rejected twice, or <code>gh</code> is missing or unauthenticated. In the last case the branch is already pushed, so you can open the PR in the web UI or run <code>gh auth login</code> and ask again.</p>
@@ -129,13 +145,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <ul>
 <li><a href="/docs/capabilities/skills.html">Skills</a> — the <code>SKILL.md</code> registry this flow ships in</li>
 <li><a href="/docs/capabilities/tools.html">Built-in tools</a> — the shell tool every step runs through</li>
-<li><a href="/docs/reference/config-keys.html">Configuration keys</a> — <code>git.co_author</code> and the rest</li>
+<li><a href="/docs/reference/config-keys.html">Configuration keys</a> — <code>git.co_author</code>, <code>git.allow_remote_write</code>, and the rest</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Language server tools</span></a><a class="pn-link pn-next" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Interfaces</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#running-it">Running it</a>
 <a class="" href="#what-it-does">What it does</a>
+<a class="" href="#dry-run">Dry run</a>
+<a class="" href="#remote-write-authorization">Remote-write authorization</a>
 <a class="" href="#ai-attribution">AI attribution</a>
 <a class="" href="#approval-and-safety">Approval and safety</a>
 <a class="" href="#when-it-stops">When it stops</a>
