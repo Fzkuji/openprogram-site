@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/providers/request-build.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/providers/request-build.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>请求构建:Context → 各 provider 参数 · OpenProgram Docs</title>
+<meta name="description" content="providers 层的唯一职责: 拿到一个准备好的 Context ,翻译成当前 provider 的 wire 请求,并按该 provider 的机制落地 prompt 缓存。 providers 不关心 Context 是怎么构建出来的 —— 系统提示里身份/工具/记忆怎么拼、 要不要分段,那是上游">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/request-build.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

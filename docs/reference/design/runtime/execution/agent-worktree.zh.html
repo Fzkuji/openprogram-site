@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agent Worktree 工具 · OpenProgram Docs</title>
+<meta name="description" content="Agent 在用户真实代码仓库里跑高风险改动时，工作在一个隔离的临时目录里： 改好了 merge 回主线，改坏了一次 discard 清掉，主仓库不受影响。 底层是 git worktree add / git worktree remove 的封装，与 OpenProgram 自己的 session-git">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/agent-worktree.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

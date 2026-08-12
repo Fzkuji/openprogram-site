@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/session/context.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/session/context.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session 上下文 · OpenProgram Docs</title>
+<meta name="description" content="session_context 是统一的 per-turn 上下文管理器，负责装载 ContextVar（ _store / _current_turn_id / _current_runtime / _call_id ），让 docstring 进 prompt、DAG 持久化、ask_user">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/session/context.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

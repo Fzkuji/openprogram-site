@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>事件与状态（地基） · OpenProgram Docs</title>
+<meta name="description" content="这是整层最底下的两块砖： 事件 长什么样， 状态 怎么从事件累加出来。 overview 里点到为止，这里讲透。读这篇前先读完 overview.md 。 1. 事件长什么样 # 一条事件就是一个小数据包，记着&quot;刚刚发生了一件什么事&quot;。字段如下： @dataclass class Event : id : str #">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/proactive/events-and-state.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

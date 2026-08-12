@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Distill——把会话变成可复用流程 · OpenProgram Docs</title>
+<meta name="description" content="一个会话记录了一次做成了的工作。蒸馏把这份记录转成下次能直接起步的产物：一份 SKILL.md 或一个 @agentic_function 。 设计刻意做薄。新增的只有一个把会话渲染成文本的模块；其余全是既有基础设施，而&quot;什么算好流程&quot;的判断放在 skill 正文里，不写进代码。 组成 # 部件 位置 做什么 转写器">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/session/distill.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

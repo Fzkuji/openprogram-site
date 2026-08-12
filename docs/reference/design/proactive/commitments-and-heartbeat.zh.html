@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>承诺与心跳 · OpenProgram Docs</title>
+<meta name="description" content="本文记录已经实现的边界和剩余工作，不定义通用任务系统。 1. OpenProgram 当前现状 # 已实现的数据与写入路径 # 现有 memory writer 在处理 Runtime 已选定的会话批次时识别义务，并调用 record_commitments ，没有第二套提取服务。LLM 提供义务句子、语义截止值、">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

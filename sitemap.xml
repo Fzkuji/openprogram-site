@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://openprogram.io/</loc></url>
-  <url><loc>https://openprogram.io/docs/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/README.zh.html</loc></url>
@@ -17,6 +16,7 @@
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/philosophy.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/philosophy.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agentic-function.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.html</loc></url>
@@ -55,6 +55,7 @@
   <url><loc>https://openprogram.io/docs/capabilities/workflows/research-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/wiki-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/wiki-agent.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/comparisons/ai-agent-frameworks.html</loc></url>
   <url><loc>https://openprogram.io/docs/</loc></url>
   <url><loc>https://openprogram.io/docs/install/install.html</loc></url>
   <url><loc>https://openprogram.io/docs/install/install.zh.html</loc></url>

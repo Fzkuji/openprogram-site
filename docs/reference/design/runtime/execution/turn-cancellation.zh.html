@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/execution/turn-cancellation.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/execution/turn-cancellation.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turn Cancellation — 设计 · OpenProgram Docs</title>
+<meta name="description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-task-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

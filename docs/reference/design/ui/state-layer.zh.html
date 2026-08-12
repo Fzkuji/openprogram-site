@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web 状态层：每会话独立 store · OpenProgram Docs</title>
+<meta name="description" content="web 前端的状态存放方式是： 每个会话一个 Zustand store 实例，真正共享的数据放在唯一的 全局 store 。这一页说明每类状态各自存在哪里、这条分界线为什么划在这里，以及换成别的 安排会出什么问题。 不预设前端知识。先介绍必要概念，再是对照真实代码的盘点（引用格式为 文件:行号 ）， 第 6">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/state-layer.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

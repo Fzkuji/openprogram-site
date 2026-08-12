@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/models/token-tracking.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/models/token-tracking.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Token 计量 · OpenProgram Docs</title>
+<meta name="description" content="各厂商上报 token 用量的字段名和口径都不一样（有的把缓存 token 算进输入总数，有的不算）。provider 层把它们统一归一化成每条 assistant 消息一份用量记录，界面和会话记录不接触厂商格式。 统一格式 # 每条 assistant 消息带一个 Usage 记录（定义见">
+<link rel="canonical" href="https://openprogram.io/docs/models/token-tracking.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

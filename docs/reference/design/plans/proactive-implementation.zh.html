@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/plans/proactive-implementation.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/plans/proactive-implementation.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proactive Layer 接入代码 — 设计 · OpenProgram Docs</title>
+<meta name="description" content="Proactive 本身的设计在 ../proactive/ 。本文只讲那套设计 与现有 OpenProgram 代码的交界：复用了哪些机制、事件从哪里发出、gate 挂在哪里、 它的强制力实际覆盖到什么程度。有冲突以设计文档为准。 1. 代码落点 # 事件层是 openprogram/events/bus.py">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/plans/proactive-implementation.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

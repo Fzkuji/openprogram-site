@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/session/name.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/session/name.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LLM 标题生成 · OpenProgram Docs</title>
+<meta name="description" content="命名的完整流程（首轮自动命名、用户主动重命名、竞态保护、锁标记）见 operations.md 的&quot;命名&quot;段。权威实现在 openprogram/agent/dispatcher/titles.py ，是所有入口共用的唯一命名实现。本文件只描述 _generate_llm_title() （阶段 2）的实现细节。">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/session/name.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

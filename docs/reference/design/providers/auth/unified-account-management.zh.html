@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>账号管理与凭据池轮换 · OpenProgram Docs</title>
+<meta name="description" content="CLI、web、TUI 用同一套方式管理账号：列出、添加、激活、重命名、删除，每个 provider 可以有多个账号，另有可开关的轮换与故障转移。某个 provider 背后是什么 后端属于实现细节，管理界面是统一的。本文建立在 unified-auth-storage.md 描述的登录侧之上。 一个账号就是一个">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/auth/unified-account-management.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

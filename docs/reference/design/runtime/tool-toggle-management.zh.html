@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>工具开关 / 工具集管理设计 · OpenProgram Docs</title>
+<meta name="description" content="所有 file:line 经代码核对。核心原则一句话： 会话只存&quot;开关意图&quot;，绝不存&quot;展开后的工具名列表&quot;——工具表每次运行时从 registry 实时展开，这样新增工具对所有历史会话自动生效。 1. 工具集如何确定 # 1.1 优先级链 # 一次 turn 给模型的工具，由">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

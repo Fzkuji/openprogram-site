@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/error-handling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/error-handling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Error Handling — 纪律与门禁 · OpenProgram Docs</title>
+<meta name="description" content="什么可以被 catch，catch 之后必须说明什么，以及 linter 在哪些路径上强制执行。 1. 规则 # 只 catch 你能处理的，并为你吞掉的东西留下记录。 一个不产生日志、不带注释、也没有 fallback 的 catch，与一个尚未被发现的 bug 无法区分。 静默 handler">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/error-handling.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

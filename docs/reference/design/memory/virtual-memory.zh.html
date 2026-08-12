@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/memory/virtual-memory.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/memory/virtual-memory.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>抽象记忆 (Virtual Memory) · OpenProgram Docs</title>
+<meta name="description" content="1. 概念 # 抽象记忆是从实体记忆提炼出的紧凑索引。它不替代实体层，而是给实体层建一张 带坐标的导航地图 。 核心属性： Provenance-linked ：每条记忆都带指针回指实体层出处 Bi-temporal ：每条记忆记两个时间—— event_time （事情发生时）和 ingestion_time">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/memory/virtual-memory.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

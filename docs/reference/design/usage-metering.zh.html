@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/usage-metering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/usage-metering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Usage Metering 子系统设计 · OpenProgram Docs</title>
+<meta name="description" content="1. 目标 # 框架内 每一次 LLM 调用 的 token、模型、成本都被无遗漏地记录，带来源标签、时间序列、按模型/来源/会话分组的聚合能力，支撑可视化面板与成本核算，并为配额、限流、预算告警、导出预留扩展口。 记账不为累积快照式的旧记录保留兼容路径；该拆该删的职责就拆就删。 2. 记账需要覆盖什么 # LLM">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/usage-metering.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786572822" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agent 协作：一个分支间通信原语 · OpenProgram Docs</title>
+<meta name="description" content="整套 agent 协作收敛成 一个原语：分支间通信 。一个 agent 能派生别的 agent、能给 别的分支/别的 session 发消息。这些表面上不同 的操作， 底层是同一件事 ：往某条分支投递内容 → 触发那条分支跑一轮 → 结果自动回送 发起方。全部做成工具调用，全部建在已有的事件层上。 §1">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
 <link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
