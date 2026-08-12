@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786532953" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786536293" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,6 +115,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-json-schema-structured-output-completion.html">JSON Schema Structured Output Completion Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-12-mark-merged-atomicity.html">Mark Merged Atomicity Task Brief and Ledger</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
@@ -284,9 +285,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>response_format</code></td>
-<td><code>dict | None</code></td>
+<td><code>dict | JsonSchemaOutput | None</code></td>
 <td><code>None</code></td>
-<td>Output format constraint (JSON Schema or a <code>JsonSchemaOutput</code> envelope). The default provider path applies it natively: OpenAI-style providers get <code>response_format</code>, Anthropic gets its structured-output mapping, and other models fall back to a prompt instruction. The final reply is strictly parsed and validated, with one retry on invalid output. Also forwarded to <code>_call()</code> for subclasses</td>
+<td>A bare JSON Schema or normalized <code>JsonSchemaOutput</code> envelope. Verified provider/model combinations use their registered native mapping; otherwise <code>fallback=&quot;auto&quot;</code> may use the verified hidden strict-tool path, while prompt fallback requires explicit <code>fallback=&quot;prompt&quot;</code>. Unsupported or lossy combinations fail closed. The terminal value is parsed and validated locally against the original schema and returned as a Python JSON value. <code>max_validation_retries</code> is <code>0</code> or <code>1</code>. Also forwarded to <code>_call()</code> for subclasses</td>
 </tr>
 <tr>
 <td><code>model</code></td>
@@ -365,22 +366,37 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>Media blocks take either a <code>path</code> (read and base64-encoded automatically, mime type guessed from the extension) or inline <code>data</code> + <code>mime_type</code>. A text block may carry <code>&quot;role&quot;: &quot;system&quot;</code> to contribute to the system prompt, and text/image blocks accept <code>cache_control</code> for provider prompt caching. Unknown block types are skipped silently.</p>
 <h4>Return value</h4>
-<p><code>str</code> — the LLM's reply text. With <code>choices</code>, returns the parsed decision result (the return value of the selected function, or the selected value itself).</p>
+<p>With <code>response_format=None</code>, returns the LLM reply as <code>str</code>. With a structured
+<code>response_format</code>, returns the locally validated Python JSON value (<code>dict</code>,
+<code>list</code>, scalar, or <code>None</code>). With <code>choices</code>, returns the parsed decision result
+(the return value of the selected function, or the selected value itself).</p>
 <h4>Exceptions</h4>
 <ul>
 <li><code>RuntimeError</code> — the runtime is closed (<code>close()</code> was called)</li>
 <li><code>TypeError</code> / <code>NotImplementedError</code> — raised immediately, never retried (programming errors: wrong call signature, no provider configured)</li>
 <li><code>LLMError</code> — raised when retries are exhausted or a non-retryable error is hit; structured fields include <code>reason</code> / <code>retryable</code> / <code>http_status</code> / <code>retry_after_s</code> / <code>attempts</code> / <code>elapsed_s</code> / <code>provider</code> / <code>model</code>, etc.</li>
+<li><code>StructuredOutputSchemaError</code> — invalid public schema or envelope; stable <code>code=&quot;invalid_schema&quot;</code>.</li>
+<li><code>StructuredOutputUnsupportedError</code> — no verified lossless provider/fallback contract; stable <code>code=&quot;unsupported&quot;</code>.</li>
+<li><code>StructuredOutputValidationError</code> — invalid JSON, schema mismatch, or hidden-submit contract failure; stable codes are <code>invalid_json</code>, <code>validation_failed</code>, <code>missing_submission</code>, and <code>mixed_submission</code>.</li>
+<li><code>StructuredOutputGenerationError</code> — refusal or incomplete provider terminal; stable codes are <code>refusal</code> and <code>incomplete</code>.</li>
 </ul>
+<p>All structured-output errors expose the stable <code>.code</code> and bounded <code>.issues</code>
+fields. Provider candidate text is not part of the public diagnostic contract.</p>
 <hr />
 <h3 id="async_exec"><code>async_exec()</code><a class="header-anchor" href="#async_exec">#</a></h3>
 <pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">async_exec</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
-<p>The async version of <code>exec()</code>. Internally calls <code>_async_call()</code>, which by default only supports a <code>call=</code> function (sync or async — a sync one is adapted automatically); the <code>&quot;provider:model_id&quot;</code> path requires overriding <code>_async_call()</code> in a subclass. Same <code>timeout_s</code> / <code>on_retry</code> semantics as <code>exec()</code>; retries sleep with <code>asyncio.sleep</code>, so external cancellation works. No tool-loop parameters — <code>async_exec()</code> is a plain single-reply call.</p>
+<p>The async version of <code>exec()</code>. It has the same <code>response_format=None</code> text
+return and structured Python JSON return/error contract. Internally it calls
+<code>_async_call()</code>; a <code>call=</code> function may be synchronous or asynchronous, and the
+default provider path uses the same AgentSession structured lifecycle. Same
+<code>timeout_s</code> / <code>on_retry</code> semantics as <code>exec()</code>; retries sleep with
+<code>asyncio.sleep</code>, so external cancellation works. It has no public tool-loop
+parameters.</p>
 <hr />
 <h3 id="_call"><code>_call()</code><a class="header-anchor" href="#_call">#</a></h3>
-<pre><code class="language-python"><span class="n">Runtime</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<pre><code class="language-python"><span class="n">Runtime</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p>The method that actually calls the LLM once (no retry — <code>exec()</code> wraps it in the retry loop). The default implementation routes through the provider layer (<code>AgentSession</code>) when a provider model or <code>call=</code> function is configured, and raises <code>NotImplementedError</code> otherwise. <strong>Override this method when subclassing.</strong></p>
 <h4>Parameters</h4>
@@ -411,10 +427,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h4>Return value</h4>
-<p><code>str</code> — the LLM reply text.</p>
+<p>Raw text for ordinary calls; the validated Python JSON value when a structured
+format is active.</p>
 <hr />
 <h3 id="_async_call"><code>_async_call()</code><a class="header-anchor" href="#_async_call">#</a></h3>
-<pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">_async_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">_async_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p>The async version of <code>_call()</code>. Override this method when subclassing to support an async provider.</p>
 <hr />

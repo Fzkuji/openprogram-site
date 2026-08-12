@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786532953" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786536293" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,6 +115,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-json-schema-structured-output-completion.html">JSON Schema Structured Output Completion Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-12-mark-merged-atomicity.html">Mark Merged Atomicity Task Brief and Ledger</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
@@ -284,9 +285,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>response_format</code></td>
-<td><code>dict | None</code></td>
+<td><code>dict | JsonSchemaOutput | None</code></td>
 <td><code>None</code></td>
-<td>输出格式约束(JSON Schema 或 <code>JsonSchemaOutput</code> 包络)。默认 provider 路径原生应用它:OpenAI 系走 <code>response_format</code>,Anthropic 走结构化输出映射,其余模型回退为提示词指令。最终回复严格解析校验,无效输出重试一次。同时仍转发给 <code>_call()</code> 供子类使用</td>
+<td>裸 JSON Schema 或规范化 <code>JsonSchemaOutput</code> 包络。已验证的 provider/model 组合使用已注册的原生映射；否则 <code>fallback=&quot;auto&quot;</code> 可使用已验证的隐藏 strict-tool 路径，提示词回退必须显式设置 <code>fallback=&quot;prompt&quot;</code>。不支持或有损的组合直接失败。终态按原始 schema 做本地解析与校验，并返回 Python JSON 值；<code>max_validation_retries</code> 只能是 <code>0</code> 或 <code>1</code>。同时仍转发给 <code>_call()</code> 供子类使用</td>
 </tr>
 <tr>
 <td><code>model</code></td>
@@ -365,22 +366,34 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>媒体块给 <code>path</code>(自动读取并 base64 编码,mime 类型按扩展名猜)或内联 <code>data</code> + <code>mime_type</code> 都行。text 块可带 <code>&quot;role&quot;: &quot;system&quot;</code> 汇入 system prompt;text/image 块接受 <code>cache_control</code> 做 provider prompt caching。未知块类型静默跳过。</p>
 <h4>返回值</h4>
-<p><code>str</code> — LLM 的回复文本。带 <code>choices</code> 时返回解析后的决策结果(选中函数的返回值,或选中值本身)。</p>
+<p><code>response_format=None</code> 时返回 LLM 回复文本 <code>str</code>。传结构化
+<code>response_format</code> 时返回经过本地校验的 Python JSON 值(<code>dict</code>、<code>list</code>、标量或
+<code>None</code>)。带 <code>choices</code> 时返回解析后的决策结果(选中函数的返回值,或选中值本身)。</p>
 <h4>异常</h4>
 <ul>
 <li><code>RuntimeError</code> — runtime 已关闭(调用过 <code>close()</code>)</li>
 <li><code>TypeError</code> / <code>NotImplementedError</code> — 立即抛出,从不重试(编程错误:调用签名不对、没配置 provider)</li>
 <li><code>LLMError</code> — 重试耗尽或遇到不可重试错误时抛出,结构化字段含 <code>reason</code> / <code>retryable</code> / <code>http_status</code> / <code>retry_after_s</code> / <code>attempts</code> / <code>elapsed_s</code> / <code>provider</code> / <code>model</code> 等</li>
+<li><code>StructuredOutputSchemaError</code> — 公共 schema 或包络非法;稳定 <code>code=&quot;invalid_schema&quot;</code></li>
+<li><code>StructuredOutputUnsupportedError</code> — 没有已验证且无损的 provider/fallback 合同;稳定 <code>code=&quot;unsupported&quot;</code></li>
+<li><code>StructuredOutputValidationError</code> — JSON 非法、schema 不匹配或隐藏提交合同失败;稳定 code 为 <code>invalid_json</code>、<code>validation_failed</code>、<code>missing_submission</code>、<code>mixed_submission</code></li>
+<li><code>StructuredOutputGenerationError</code> — provider 拒绝或未完整生成;稳定 code 为 <code>refusal</code>、<code>incomplete</code></li>
 </ul>
+<p>全部 structured-output 异常都提供稳定 <code>.code</code> 和有界 <code>.issues</code> 字段。
+provider 候选正文不属于公共诊断合同。</p>
 <hr />
 <h3 id="async_exec"><code>async_exec()</code><a class="header-anchor" href="#async_exec">#</a></h3>
 <pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">async_exec</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
-<p><code>exec()</code> 的异步版本。内部调用 <code>_async_call()</code>——默认实现只支持 <code>call=</code> 函数(同步或异步均可,同步的自动适配);<code>&quot;provider:model_id&quot;</code> 路径需要子类重写 <code>_async_call()</code>。<code>timeout_s</code> / <code>on_retry</code> 语义与 <code>exec()</code> 相同;重试用 <code>asyncio.sleep</code> 休眠,外部取消能生效。没有工具循环参数——<code>async_exec()</code> 是单回复的普通调用。</p>
+<p><code>exec()</code> 的异步版本,具有相同的 <code>response_format=None</code> 文本返回以及结构化
+Python JSON 返回/异常合同。内部调用 <code>_async_call()</code>;<code>call=</code> 函数可同步或异步,
+默认 provider 路径使用同一 AgentSession structured lifecycle。<code>timeout_s</code> /
+<code>on_retry</code> 语义与 <code>exec()</code> 相同;重试用 <code>asyncio.sleep</code> 休眠,外部取消能生效。
+它没有公开的工具循环参数。</p>
 <hr />
 <h3 id="_call"><code>_call()</code><a class="header-anchor" href="#_call">#</a></h3>
-<pre><code class="language-python"><span class="n">Runtime</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<pre><code class="language-python"><span class="n">Runtime</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p>实际调用一次 LLM 的方法(不含重试——重试循环在 <code>exec()</code> 里包着)。默认实现在配置了 provider 模型或 <code>call=</code> 函数时走 provider 层(<code>AgentSession</code>),否则抛 <code>NotImplementedError</code>。<strong>子类化时重写此方法。</strong></p>
 <h4>参数</h4>
@@ -411,10 +424,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h4>返回值</h4>
-<p><code>str</code> — LLM 回复文本。</p>
+<p>普通调用返回原始文本;结构化格式激活时返回已校验的 Python JSON 值。</p>
 <hr />
 <h3 id="_async_call"><code>_async_call()</code><a class="header-anchor" href="#_async_call">#</a></h3>
-<pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">_async_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">_async_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p><code>_call()</code> 的异步版本。子类化时重写此方法以支持异步 provider。</p>
 <hr />
