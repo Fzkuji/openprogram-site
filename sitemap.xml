@@ -323,7 +323,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-unified-primitive.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
@@ -352,6 +351,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.zh.html</loc></url>
