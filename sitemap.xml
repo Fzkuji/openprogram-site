@@ -390,6 +390,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/store-lock-scope.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/ssrf-protection.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/task-list-workflow.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html</loc></url>
@@ -465,6 +466,7 @@
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-homepage-optimization.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-record-replay-entry.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-runtime-url-ssrf-protection.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-search-console-verification.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-agent-resource-governance-completion.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-dag-persistence-observability.html</loc></url>
