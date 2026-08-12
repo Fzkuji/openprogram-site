@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/self-update.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/self-update.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs</title>
 <meta name="description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
+<meta property="og:title" content="自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs">
+<meta property="og:description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs">
+<meta name="twitter:description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

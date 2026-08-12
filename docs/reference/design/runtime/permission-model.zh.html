@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>权限系统设计（Permission System Design） · OpenProgram Docs</title>
 <meta name="description" content="本文是 OpenProgram 权限系统的 实现级设计文档 ：一个不了解代码的人读完，就知道权限系统是什么、有哪些权限、后端怎么写、前端怎么写、代码写在哪些文件。每个数据结构给字段定义，每个关键函数给签名，每个 WS 帧给字段，每个前端组件给结构。所有引用带 file:line 。 阅读顺序： ① 概览">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/permission-model.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/permission-model.zh.html">
+<meta property="og:title" content="权限系统设计（Permission System Design） · OpenProgram Docs">
+<meta property="og:description" content="本文是 OpenProgram 权限系统的 实现级设计文档 ：一个不了解代码的人读完，就知道权限系统是什么、有哪些权限、后端怎么写、前端怎么写、代码写在哪些文件。每个数据结构给字段定义，每个关键函数给签名，每个 WS 帧给字段，每个前端组件给结构。所有引用带 file:line 。 阅读顺序： ① 概览">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="权限系统设计（Permission System Design） · OpenProgram Docs">
+<meta name="twitter:description" content="本文是 OpenProgram 权限系统的 实现级设计文档 ：一个不了解代码的人读完，就知道权限系统是什么、有哪些权限、后端怎么写、前端怎么写、代码写在哪些文件。每个数据结构给字段定义，每个关键函数给签名，每个 WS 帧给字段，每个前端组件给结构。所有引用带 file:line 。 阅读顺序： ① 概览">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

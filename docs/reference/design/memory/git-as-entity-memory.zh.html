@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/memory/git-as-entity-memory.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/memory/git-as-entity-memory.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>实体记忆走 Git: Session-Git + Project-Git · OpenProgram Docs</title>
 <meta name="description" content="心智模型 # &quot;实体记忆&quot;= 真实发生过的事, 可逐步回溯. Git 天生就是这个范式 (commit 是不可变的, log 是时间线, checkout 能时光机), 所以实体记忆直接复用 Git, 而不是另建一套存储. 整体记忆模型是 4+1: 实体记忆 (raw, 可回溯) ├─ Session memory">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/memory/git-as-entity-memory.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/memory/git-as-entity-memory.zh.html">
+<meta property="og:title" content="实体记忆走 Git: Session-Git + Project-Git · OpenProgram Docs">
+<meta property="og:description" content="心智模型 # &quot;实体记忆&quot;= 真实发生过的事, 可逐步回溯. Git 天生就是这个范式 (commit 是不可变的, log 是时间线, checkout 能时光机), 所以实体记忆直接复用 Git, 而不是另建一套存储. 整体记忆模型是 4+1: 实体记忆 (raw, 可回溯) ├─ Session memory">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="实体记忆走 Git: Session-Git + Project-Git · OpenProgram Docs">
+<meta name="twitter:description" content="心智模型 # &quot;实体记忆&quot;= 真实发生过的事, 可逐步回溯. Git 天生就是这个范式 (commit 是不可变的, log 是时间线, checkout 能时光机), 所以实体记忆直接复用 Git, 而不是另建一套存储. 整体记忆模型是 4+1: 实体记忆 (raw, 可回溯) ├─ Session memory">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

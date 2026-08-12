@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性） · OpenProgram Docs</title>
 <meta name="description" content="会话图怎么画：每个节点放哪、每条线什么样、默认给用户看什么。 本文是权威 实现标准 ——布局代码照此写，出问题对照本文查。数据语义（节点、两条边）见 dag/overview.md ；本文只管画。 每条规则配示例。 SVG 场景图以 dag-layout-spec.html 为权威 （共 13 个 场景：1–7">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/dag/rendering.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/dag/rendering.zh.html">
+<meta property="og:title" content="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性） · OpenProgram Docs">
+<meta property="og:description" content="会话图怎么画：每个节点放哪、每条线什么样、默认给用户看什么。 本文是权威 实现标准 ——布局代码照此写，出问题对照本文查。数据语义（节点、两条边）见 dag/overview.md ；本文只管画。 每条规则配示例。 SVG 场景图以 dag-layout-spec.html 为权威 （共 13 个 场景：1–7">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性） · OpenProgram Docs">
+<meta name="twitter:description" content="会话图怎么画：每个节点放哪、每条线什么样、默认给用户看什么。 本文是权威 实现标准 ——布局代码照此写，出问题对照本文查。数据语义（节点、两条边）见 dag/overview.md ；本文只管画。 每条规则配示例。 SVG 场景图以 dag-layout-spec.html 为权威 （共 13 个 场景：1–7">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

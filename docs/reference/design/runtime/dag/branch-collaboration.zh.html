@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>分支协作（通信 · 服务 · 合并） · OpenProgram Docs</title>
 <meta name="description" content="DAG 里的分支不只是&quot;平行世界&quot;，它们能 互相协作 ——一个分支给另一个分支发消 息、一个分支为另一个分支干活、两个分支的成果合并成一条。本文定义三种协作模式， 以及它们的节点与图的关系。 前置：边模型（caller + predecessor）见 dag/overview.md ；布局与连线的权威规范见">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html">
+<meta property="og:title" content="分支协作（通信 · 服务 · 合并） · OpenProgram Docs">
+<meta property="og:description" content="DAG 里的分支不只是&quot;平行世界&quot;，它们能 互相协作 ——一个分支给另一个分支发消 息、一个分支为另一个分支干活、两个分支的成果合并成一条。本文定义三种协作模式， 以及它们的节点与图的关系。 前置：边模型（caller + predecessor）见 dag/overview.md ；布局与连线的权威规范见">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="分支协作（通信 · 服务 · 合并） · OpenProgram Docs">
+<meta name="twitter:description" content="DAG 里的分支不只是&quot;平行世界&quot;，它们能 互相协作 ——一个分支给另一个分支发消 息、一个分支为另一个分支干活、两个分支的成果合并成一条。本文定义三种协作模式， 以及它们的节点与图的关系。 前置：边模型（caller + predecessor）见 dag/overview.md ；布局与连线的权威规范见">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

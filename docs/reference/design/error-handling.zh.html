@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/error-handling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/error-handling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Error Handling — 纪律与门禁 · OpenProgram Docs</title>
 <meta name="description" content="什么可以被 catch，catch 之后必须说明什么，以及 linter 在哪些路径上强制执行。 1. 规则 # 只 catch 你能处理的，并为你吞掉的东西留下记录。 一个不产生日志、不带注释、也没有 fallback 的 catch，与一个尚未被发现的 bug 无法区分。 静默 handler">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/error-handling.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/error-handling.zh.html">
+<meta property="og:title" content="Error Handling — 纪律与门禁 · OpenProgram Docs">
+<meta property="og:description" content="什么可以被 catch，catch 之后必须说明什么，以及 linter 在哪些路径上强制执行。 1. 规则 # 只 catch 你能处理的，并为你吞掉的东西留下记录。 一个不产生日志、不带注释、也没有 fallback 的 catch，与一个尚未被发现的 bug 无法区分。 静默 handler">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Error Handling — 纪律与门禁 · OpenProgram Docs">
+<meta name="twitter:description" content="什么可以被 catch，catch 之后必须说明什么，以及 linter 在哪些路径上强制执行。 1. 规则 # 只 catch 你能处理的，并为你吞掉的东西留下记录。 一个不产生日志、不带注释、也没有 fallback 的 catch，与一个尚未被发现的 bug 无法区分。 静默 handler">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

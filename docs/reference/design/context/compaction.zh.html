@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/context/compaction.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/context/compaction.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>上下文压缩 · OpenProgram Docs</title>
 <meta name="description" content="压缩通过把最老的轮次替换成一份 LLM 写的摘要，让长对话保持在模型上下文窗口之内。 本文是压缩的唯一权威文档：结果如何存储、如何改变模型读到的内容、如何与分支和多轮 压缩组合、由哪些不变量保护。摘要在 DAG 上的视觉呈现（胶囊）由 dag/rendering.md 第九节 规定；本文定义渲染所消费的 数据与语义。">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/context/compaction.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/context/compaction.zh.html">
+<meta property="og:title" content="上下文压缩 · OpenProgram Docs">
+<meta property="og:description" content="压缩通过把最老的轮次替换成一份 LLM 写的摘要，让长对话保持在模型上下文窗口之内。 本文是压缩的唯一权威文档：结果如何存储、如何改变模型读到的内容、如何与分支和多轮 压缩组合、由哪些不变量保护。摘要在 DAG 上的视觉呈现（胶囊）由 dag/rendering.md 第九节 规定；本文定义渲染所消费的 数据与语义。">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="上下文压缩 · OpenProgram Docs">
+<meta name="twitter:description" content="压缩通过把最老的轮次替换成一份 LLM 写的摘要，让长对话保持在模型上下文窗口之内。 本文是压缩的唯一权威文档：结果如何存储、如何改变模型读到的内容、如何与分支和多轮 压缩组合、由哪些不变量保护。摘要在 DAG 上的视觉呈现（胶囊）由 dag/rendering.md 第九节 规定；本文定义渲染所消费的 数据与语义。">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

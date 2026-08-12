@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/memory/virtual-memory.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/memory/virtual-memory.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>抽象记忆 (Virtual Memory) · OpenProgram Docs</title>
 <meta name="description" content="1. 概念 # 抽象记忆是从实体记忆提炼出的紧凑索引。它不替代实体层，而是给实体层建一张 带坐标的导航地图 。 核心属性： Provenance-linked ：每条记忆都带指针回指实体层出处 Bi-temporal ：每条记忆记两个时间—— event_time （事情发生时）和 ingestion_time">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/memory/virtual-memory.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/memory/virtual-memory.zh.html">
+<meta property="og:title" content="抽象记忆 (Virtual Memory) · OpenProgram Docs">
+<meta property="og:description" content="1. 概念 # 抽象记忆是从实体记忆提炼出的紧凑索引。它不替代实体层，而是给实体层建一张 带坐标的导航地图 。 核心属性： Provenance-linked ：每条记忆都带指针回指实体层出处 Bi-temporal ：每条记忆记两个时间—— event_time （事情发生时）和 ingestion_time">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="抽象记忆 (Virtual Memory) · OpenProgram Docs">
+<meta name="twitter:description" content="1. 概念 # 抽象记忆是从实体记忆提炼出的紧凑索引。它不替代实体层，而是给实体层建一张 带坐标的导航地图 。 核心属性： Provenance-linked ：每条记忆都带指针回指实体层出处 Bi-temporal ：每条记忆记两个时间—— event_time （事情发生时）和 ingestion_time">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

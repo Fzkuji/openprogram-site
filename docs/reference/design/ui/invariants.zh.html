@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/ui/invariants.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/ui/invariants.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI 跨模块不变量 · OpenProgram Docs</title>
 <meta name="description" content="单模块文档写&quot;这个模块怎么工作&quot;，这份文档写&quot;模块之间必须共同遵守什么&quot;。 改动任何一个相关模块前，对着这份清单过一遍；新增会打破清单的功能时， 先改清单再改代码。每条不变量都应有对应的固定测试（tests/unit/）， 文档说给人听，测试挡住回归。 1. 启用集合是模型可用性的唯一门控 #">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/invariants.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/invariants.zh.html">
+<meta property="og:title" content="UI 跨模块不变量 · OpenProgram Docs">
+<meta property="og:description" content="单模块文档写&quot;这个模块怎么工作&quot;，这份文档写&quot;模块之间必须共同遵守什么&quot;。 改动任何一个相关模块前，对着这份清单过一遍；新增会打破清单的功能时， 先改清单再改代码。每条不变量都应有对应的固定测试（tests/unit/）， 文档说给人听，测试挡住回归。 1. 启用集合是模型可用性的唯一门控 #">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UI 跨模块不变量 · OpenProgram Docs">
+<meta name="twitter:description" content="单模块文档写&quot;这个模块怎么工作&quot;，这份文档写&quot;模块之间必须共同遵守什么&quot;。 改动任何一个相关模块前，对着这份清单过一遍；新增会打破清单的功能时， 先改清单再改代码。每条不变量都应有对应的固定测试（tests/unit/）， 文档说给人听，测试挡住回归。 1. 启用集合是模型可用性的唯一门控 #">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

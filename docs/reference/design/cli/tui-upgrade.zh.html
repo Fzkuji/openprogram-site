@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TUI 会话记录渲染与交互 · OpenProgram Docs</title>
 <meta name="description" content="本文是 Ink TUI 会话记录显示与交互的设计：工具调用如何渲染、输出如何折叠与 展开、命令与键位如何声明、运行中途的提问如何呈现。配套文档： user-input-requests.md （运行中途的提问；其 TUI 呈现层在本文中规定）。 1. 目标 # 会话记录应做到：工具调用折叠但不丢失信息、提供">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/cli/tui-upgrade.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/cli/tui-upgrade.zh.html">
+<meta property="og:title" content="TUI 会话记录渲染与交互 · OpenProgram Docs">
+<meta property="og:description" content="本文是 Ink TUI 会话记录显示与交互的设计：工具调用如何渲染、输出如何折叠与 展开、命令与键位如何声明、运行中途的提问如何呈现。配套文档： user-input-requests.md （运行中途的提问；其 TUI 呈现层在本文中规定）。 1. 目标 # 会话记录应做到：工具调用折叠但不丢失信息、提供">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TUI 会话记录渲染与交互 · OpenProgram Docs">
+<meta name="twitter:description" content="本文是 Ink TUI 会话记录显示与交互的设计：工具调用如何渲染、输出如何折叠与 展开、命令与键位如何声明、运行中途的提问如何呈现。配套文档： user-input-requests.md （运行中途的提问；其 TUI 呈现层在本文中规定）。 1. 目标 # 会话记录应做到：工具调用折叠但不丢失信息、提供">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

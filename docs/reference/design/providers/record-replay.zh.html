@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/providers/record-replay.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/providers/record-replay.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>请求录制与回放 · OpenProgram Docs</title>
 <meta name="description" content="确定性循环测试需要一个每次都给同样答案的 provider。录制在共享 API provider 边界把一次真实会话写成 JSONL 录制文件；回放离线返回其中的事件，并在后续运行发生偏离时报出具体字段。 一、请求边界 # 框架里每一次模型调用都走 providers/stream.py ,它按 model.api">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/record-replay.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/providers/record-replay.zh.html">
+<meta property="og:title" content="请求录制与回放 · OpenProgram Docs">
+<meta property="og:description" content="确定性循环测试需要一个每次都给同样答案的 provider。录制在共享 API provider 边界把一次真实会话写成 JSONL 录制文件；回放离线返回其中的事件，并在后续运行发生偏离时报出具体字段。 一、请求边界 # 框架里每一次模型调用都走 providers/stream.py ,它按 model.api">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="请求录制与回放 · OpenProgram Docs">
+<meta name="twitter:description" content="确定性循环测试需要一个每次都给同样答案的 provider。录制在共享 API provider 边界把一次真实会话写成 JSONL 录制文件；回放离线返回其中的事件，并在后续运行发生偏离时报出具体字段。 一、请求边界 # 框架里每一次模型调用都走 providers/stream.py ,它按 model.api">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/function/calling/code-call.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/function/calling/code-call.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@agentic_function 按固定顺序调用子函数 · OpenProgram Docs</title>
 <meta name="description" content="调用大模型（可选），按代码写死的顺序调用多个子函数。 适用场景 # 研究流程：调研 → 找 gap → 生成想法 论文流程：写初稿 → 审稿 → 修改 数据流程：采集 → 清洗 → 分析 任何步骤顺序固定的多步任务 设计要点 # 用 @agentic_function 装饰器 按固定顺序调用多个子">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/function/calling/code-call.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/function/calling/code-call.zh.html">
+<meta property="og:title" content="@agentic_function 按固定顺序调用子函数 · OpenProgram Docs">
+<meta property="og:description" content="调用大模型（可选），按代码写死的顺序调用多个子函数。 适用场景 # 研究流程：调研 → 找 gap → 生成想法 论文流程：写初稿 → 审稿 → 修改 数据流程：采集 → 清洗 → 分析 任何步骤顺序固定的多步任务 设计要点 # 用 @agentic_function 装饰器 按固定顺序调用多个子">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@agentic_function 按固定顺序调用子函数 · OpenProgram Docs">
+<meta name="twitter:description" content="调用大模型（可选），按代码写死的顺序调用多个子函数。 适用场景 # 研究流程：调研 → 找 gap → 生成想法 论文流程：写初稿 → 审稿 → 修改 数据流程：采集 → 清洗 → 分析 任何步骤顺序固定的多步任务 设计要点 # 用 @agentic_function 装饰器 按固定顺序调用多个子">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';

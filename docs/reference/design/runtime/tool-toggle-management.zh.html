@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786576177" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>工具开关 / 工具集管理设计 · OpenProgram Docs</title>
 <meta name="description" content="所有 file:line 经代码核对。核心原则一句话： 会话只存&quot;开关意图&quot;，绝不存&quot;展开后的工具名列表&quot;——工具表每次运行时从 registry 实时展开，这样新增工具对所有历史会话自动生效。 1. 工具集如何确定 # 1.1 优先级链 # 一次 turn 给模型的工具，由">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html">
+<meta property="og:title" content="工具开关 / 工具集管理设计 · OpenProgram Docs">
+<meta property="og:description" content="所有 file:line 经代码核对。核心原则一句话： 会话只存&quot;开关意图&quot;，绝不存&quot;展开后的工具名列表&quot;——工具表每次运行时从 registry 实时展开，这样新增工具对所有历史会话自动生效。 1. 工具集如何确定 # 1.1 优先级链 # 一次 turn 给模型的工具，由">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="工具开关 / 工具集管理设计 · OpenProgram Docs">
+<meta name="twitter:description" content="所有 file:line 经代码核对。核心原则一句话： 会话只存&quot;开关意图&quot;，绝不存&quot;展开后的工具名列表&quot;——工具表每次运行时从 registry 实时展开，这样新增工具对所有历史会话自动生效。 1. 工具集如何确定 # 1.1 优先级链 # 一次 turn 给模型的工具，由">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
