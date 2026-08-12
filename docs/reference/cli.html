@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786536293" data-alt-lang-url="/docs/reference/cli.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786539568" data-alt-lang-url="/docs/reference/cli.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -618,7 +618,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>status</code></td>
-<td>Path, entry count, last sleep time</td>
+<td>Owner view of workspace path/revision, file and relation counts, writer health, and commitment counts/records</td>
 </tr>
 <tr>
 <td><code>recall</code></td>
@@ -679,8 +679,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>cron-worker</code></td>
-<td>Foreground loop that fires scheduled entries from the <code>cron</code> tool</td>
-<td><code>--once</code> evaluates one tick and exits; <code>--list</code> shows each entry with match status</td>
+<td>Foreground loop that fires scheduled <code>cron</code> entries and the built-in commitment heartbeat</td>
+<td><code>--once</code> evaluates one tick and exits; <code>--list</code> shows user cron entries only</td>
 </tr>
 </tbody>
 </table>

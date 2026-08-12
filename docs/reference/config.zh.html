@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786536293" data-alt-lang-url="/docs/reference/config.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786539568" data-alt-lang-url="/docs/reference/config.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -197,6 +197,20 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td>live</td>
 </tr>
 <tr>
+<td><code>proactive.heartbeat</code></td>
+<td>Memory</td>
+<td>到期承诺的提醒节奏：<code>daily</code> 在本地时间 09:00、<code>hourly</code> 在每小时 00 分、或 <code>off</code>；需要运行 <code>cron-worker</code></td>
+<td>daily</td>
+<td>live</td>
+</tr>
+<tr>
+<td><code>proactive.quiet_hours</code></td>
+<td>Memory</td>
+<td>使用 <code>HH:MM-HH:MM</code> 表示的本地安静时段，期间不发送提醒</td>
+<td>23:00-08:00</td>
+<td>live</td>
+</tr>
+<tr>
 <td><code>sandbox.mode</code></td>
 <td>Sandbox</td>
 <td><code>danger-full-access</code>，或<code>workspace-write</code>：对本地模型驱动命令使用宿主原生沙箱，写入限制在工作目录/已配置根，deny-read路径不可读，网络禁用</td>
@@ -294,6 +308,11 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>memory</code></td>
 <td><code>{backend, writer: {model}}</code>，见上表</td>
 <td><code>openprogram/config_schema.py</code>、<code>openprogram/memory/</code></td>
+</tr>
+<tr>
+<td><code>proactive</code></td>
+<td><code>{heartbeat, quiet_hours}</code>，见上表</td>
+<td><code>openprogram/config_schema.py</code>、<code>openprogram/proactive/heartbeat.py</code></td>
 </tr>
 <tr>
 <td><code>tools</code></td>

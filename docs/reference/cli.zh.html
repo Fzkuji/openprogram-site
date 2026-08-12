@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786536293" data-alt-lang-url="/docs/reference/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786539568" data-alt-lang-url="/docs/reference/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -616,7 +616,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>status</code></td>
-<td>路径、条目数、上次 sleep 时间</td>
+<td>owner 视图：workspace 路径/revision、文件与关系计数、writer 健康状态、承诺计数与记录</td>
 </tr>
 <tr>
 <td><code>recall</code></td>
@@ -677,8 +677,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>cron-worker</code></td>
-<td>前台循环，触发 <code>cron</code> 工具登记的计划任务</td>
-<td><code>--once</code> 只评估一个 tick 就退出；<code>--list</code> 显示每条任务的匹配状态</td>
+<td>前台循环，触发 <code>cron</code> 工具登记的计划任务和内置承诺心跳</td>
+<td><code>--once</code> 只评估一个 tick 就退出；<code>--list</code> 只显示用户 cron 条目</td>
 </tr>
 </tbody>
 </table>

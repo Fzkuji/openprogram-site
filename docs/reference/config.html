@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786536293" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786539568" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -197,6 +197,20 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td>live</td>
 </tr>
 <tr>
+<td><code>proactive.heartbeat</code></td>
+<td>Memory</td>
+<td>due-commitment reminder cadence: <code>daily</code> at 09:00 local, <code>hourly</code> at minute 00, or <code>off</code>; requires <code>cron-worker</code></td>
+<td>daily</td>
+<td>live</td>
+</tr>
+<tr>
+<td><code>proactive.quiet_hours</code></td>
+<td>Memory</td>
+<td>local-time interval in <code>HH:MM-HH:MM</code> form during which reminders are suppressed</td>
+<td>23:00-08:00</td>
+<td>live</td>
+</tr>
+<tr>
 <td><code>sandbox.mode</code></td>
 <td>Sandbox</td>
 <td><code>danger-full-access</code>, or <code>workspace-write</code> to apply the host-native sandbox to local model-driven commands: writes are limited to the working directory/configured roots, deny-read paths are blocked, and network is disabled</td>
@@ -294,6 +308,11 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>memory</code></td>
 <td><code>{backend, writer: {model}}</code>, see the table above</td>
 <td><code>openprogram/config_schema.py</code>, <code>openprogram/memory/</code></td>
+</tr>
+<tr>
+<td><code>proactive</code></td>
+<td><code>{heartbeat, quiet_hours}</code>, see the table above</td>
+<td><code>openprogram/config_schema.py</code>, <code>openprogram/proactive/heartbeat.py</code></td>
 </tr>
 <tr>
 <td><code>tools</code></td>
