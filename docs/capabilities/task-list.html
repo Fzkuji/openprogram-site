@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786558903" data-alt-lang-url="/docs/capabilities/task-list.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786565454" data-alt-lang-url="/docs/capabilities/task-list.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Task lists · OpenProgram Docs</title>
+<title>Self-programmed agentic workflows · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -76,7 +76,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink active" href="/docs/capabilities/task-list.html" data-title-zh="任务清单" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Task lists</a>
+<a class="navlink active" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -101,56 +101,65 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="任务清单">Task lists</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="任务清单">Task lists</span></nav><h1 id="task-lists">Task lists<a class="header-anchor" href="#task-lists">#</a></h1>
-<p>A task list is OpenProgram's self-programmed agentic workflow: the agent writes the program — the list — and then executes it. Instead of one agent working a long task in a single growing conversation, the task is planned into items, and each item runs as its own agent whose entire context is that item plus the results handed to it. The list is the program; each item is a bounded sub-task. Two things follow: a long task stays stable, because scope is pinned per item and a failure is retried at item level rather than restarting everything, and the context stops growing with the step count, because step twenty does not carry steps one through nineteen.</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="任务清单">Task lists</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="self-programmed-agentic-workflows">Self-programmed agentic workflows<a class="header-anchor" href="#self-programmed-agentic-workflows">#</a></h1>
+<p><code>run_task_list</code> is OpenProgram's self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The planner composes the program out of the framework's building blocks — free-form <code>agent()</code> calls and the registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
 <p>Run it from the Functions panel as <code>run_task_list</code>, or call it from Python:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.agentics.task_list</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_task_list</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">run_task_list</span><span class="p">(</span><span class="s2">&quot;port the auth module to the new client and update its tests&quot;</span><span class="p">)</span>
 </code></pre>
+<p>Every call creates an independent workflow instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
 <h2 id="small-tasks-are-not-split">Small tasks are not split<a class="header-anchor" href="#small-tasks-are-not-split">#</a></h2>
-<p>The planner's first decision is whether to split at all. A task one agent finishes in a single pass — a small edit, one question answered, one file written — runs as a single item, because planning it and handing work between agents costs more than just doing it. Splitting starts when a task genuinely exceeds one pass: several distinct deliverables, work spread across files or stages, or steps that depend on what the step before produced.</p>
-<h2 id="the-list-is-the-todo-board">The list is the todo board<a class="header-anchor" href="#the-list-is-the-todo-board">#</a></h2>
-<p>There is no second list. Items are entries on the session's <a href="/docs/capabilities/tools.html">todo planning board</a> — the same <code>todos.json</code> that <code>todo_create</code>, <code>todo_update</code> and <code>todo_list</code> read and write — so a running workflow shows up wherever todos already show up, moving through <code>pending</code> → <code>in_progress</code> → <code>completed</code> as it goes. <code>todo_list</code> renders workflow items like any other entry, and todos you wrote by hand sit alongside untouched.</p>
-<p>Three optional fields ride on an entry when a workflow owns it:</p>
+<p>The planner's first decision is whether the task needs a program at all. A task one agent finishes in a single pass — a small edit, one question answered, one file written — is executed directly, because writing a program for it costs more than doing it. Programs are for tasks that genuinely exceed one pass: several deliverables, work spread across stages, or steps that depend on earlier output.</p>
+<h2 id="the-generated-program">The generated program<a class="header-anchor" href="#the-generated-program">#</a></h2>
+<p>The planner has read-only tools (read, grep, glob, list) and receives the task plus the function registry — the list of building blocks. It produces a plain Python module with a <code>def workflow()</code> entry point:</p>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">find_issues</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
+        <span class="s2">&quot;Review openprogram/auth/ file by file for error handling and &quot;</span>
+        <span class="s2">&quot;concurrency issues. Output a findings list graded HIGH / MEDIUM / LOW &quot;</span>
+        <span class="s2">&quot;with file paths and line numbers.&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;find issues&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">findings</span> <span class="o">=</span> <span class="n">find_issues</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s2">&quot;HIGH&quot;</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
+        <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Fix the HIGH findings and get the related tests passing: &quot;</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
+              <span class="n">description</span><span class="o">=</span><span class="s2">&quot;fix auth&quot;</span><span class="p">)</span>          <span class="c1"># a working agent, its profile carries tools</span>
+        <span class="n">checks</span> <span class="o">=</span> <span class="n">run_tests</span><span class="p">()</span>                    <span class="c1"># a registered agentic function, called by name</span>
+        <span class="k">if</span> <span class="s2">&quot;failed&quot;</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;tests still failing after fix: &quot;</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write a report summarizing the results above&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;report&quot;</span><span class="p">)</span>
+</code></pre>
+<p>Imports are forbidden — the framework injects everything the program may call:</p>
 <table>
 <thead>
 <tr>
-<th>Field</th>
-<th>Meaning</th>
+<th>Injected name</th>
+<th>What it is</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>done_criteria</code></td>
-<td>The criterion judged after the item runs — a file that must exist, a command that must pass, an output that must appear</td>
+<td><code>agent</code></td>
+<td>The one LLM primitive — the existing agent spawn tool, injected as-is (<code>agent(prompt, description=&quot;&quot;, agent_id=&quot;&quot;, …)</code>). Model and tool set come from the agent profile selected by <code>agent_id</code>.</td>
 </tr>
 <tr>
-<td><code>context_spec.upstream</code></td>
-<td>How many earlier completed items' results this one receives: <code>0</code> stands alone, <code>N</code> takes the last N, <code>-1</code> takes all of them</td>
-</tr>
-<tr>
-<td><code>result_summary</code></td>
-<td>The hand-off text passed to the items downstream</td>
+<td>registered agentic functions</td>
+<td>Every function in the <code>AGENTIC_MODULES</code> registry, callable by name. The planner's prompt carries this catalog.</td>
 </tr>
 </tbody>
 </table>
-<p>They are optional everywhere else, so entries written before this existed, or written by the plain todo tools, keep working.</p>
-<p><code>upstream</code> is the item's context budget, decided at planning time rather than guessed while running. It is also what bounds the DAG slice a nested call renders, so a narrow item stays narrow all the way down.</p>
-<p>The repository is shared state, so hand-off summaries carry conclusions and paths, never file contents. A summary that grows past its limit is truncated with a note telling the next agent to read the named paths instead — a summary that becomes a transcript gives back everything the split was for.</p>
-<h2 id="how-an-item-is-judged">How an item is judged<a class="header-anchor" href="#how-an-item-is-judged">#</a></h2>
-<p>The same judge that decides <a href="/docs/capabilities/goal.html">session goals</a> decides items, with the item's <code>done_criteria</code> handed to it as the goal. There is no second completion judge: it reads the compacted session view, has inspection tools, and answers a strict yes or no with a reason. Anything other than a clear &quot;met&quot; — including a judge that wants to ask you something, or one that fails outright — leaves the item not done.</p>
-<p>This is one layer above the goal loop, not the same one. A session goal drives whole turns until a condition holds; a task list drives items, and calls the judge once per item. Setting a goal and running a task list are independent.</p>
-<p>A miss is retried once, with the judge's reason passed to the executor so the second attempt knows what was wrong. A second miss goes to the planner instead of a third identical attempt — retrying the same failure again does not fix it, but splitting the item or correcting its criterion does.</p>
-<h2 id="revision-while-running">Revision while running<a class="header-anchor" href="#revision-while-running">#</a></h2>
-<p>The list is not frozen once planned. When an item fails twice, the planner rewrites the part of the list that has not run yet: splitting the failed item, restating its criterion, inserting work that turned out to be a prerequisite, or dropping it. Completed items are never touched — their results stand, and each revision is recorded with the item ids before and after, so the change is visible next to the list it changed.</p>
-<h2 id="resuming-after-an-interruption">Resuming after an interruption<a class="header-anchor" href="#resuming-after-an-interruption">#</a></h2>
-<p>Every transition is written to the board before the work happens, which makes <code>todos.json</code> a checkpoint rather than a log. A run killed halfway resumes from where it stopped:</p>
-<pre><code class="language-python"><span class="n">run_task_list</span><span class="p">(</span><span class="s2">&quot;the same task text&quot;</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># resume=True is the default</span>
-</code></pre>
-<p>An item left <code>in_progress</code> by a killed process is picked up and run again; completed items keep their results and are skipped. Resuming matches on the task text, so entries belonging to a different task — or to a todo you wrote yourself — are never adopted, and a task with no entries on the board is planned fresh.</p>
+<p>The module is validated before it runs: it must parse, it must define <code>workflow()</code>, and it must not import. Invalid code is sent back to the planner with the concrete error, as many times as it takes.</p>
+<p>There is no checkpoint syntax in the program. Recording is the framework's job: every injected callable is wrapped, and each real execution is written to <code>state.json</code> before and after it happens, keyed by function name, invocation order, and an argument digest. Verification is not imposed by the framework either — the planner writes checks into the program and raises when they fail, which routes into the revision loop.</p>
+<h2 id="resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls<a class="header-anchor" href="#resuming-rerun-the-whole-program-replay-completed-calls">#</a></h2>
+<p>There is no scheduler and no &quot;next item&quot; logic. Resuming means executing <code>workflow()</code> again from its first line. The only mechanism is short-circuiting at call boundaries: a call already completed in <code>state.json</code> — same name, same order, same arguments — is not executed again; it returns its recorded result instantly. The rerun flashes past finished work and starts doing real work at the first incomplete call. Control flow is re-evaluated every time (<code>if</code> re-branches, <code>for</code> re-loops); only the expensive call results are restored.</p>
+<p>A killed process resumes the same way: state changes hit disk before the work happens, so rerunning the instance by its <code>run_id</code> continues it. Resuming is explicit — each <code>run_task_list(task)</code> call creates a fresh instance and returns its <code>run_id</code>; to continue an existing one, pass that <code>run_id</code> back. Nothing is matched by task text.</p>
+<h2 id="revision-after-an-error">Revision after an error<a class="header-anchor" href="#revision-after-an-error">#</a></h2>
+<p>When the program raises — a syntax error, a failed call, or a check the planner wrote itself — the handling is what a developer does: the planner gets the traceback, the current code, and the run records in <code>state.json</code>, rewrites <code>code.py</code>, and the whole program reruns. Untouched completed calls replay as before, so a revision never discards finished work. Old code versions are archived in the instance directory, and the revision history is part of the return value.</p>
+<p>There is no abandoned state. Invalid code and runtime failures both go back to the planner with the concrete error, as many rounds as needed. The only forced stop is <code>capped</code>: 40 real executions (replays don't count) ends the run, because a program still growing at that point is a planning failure.</p>
 <h2 id="what-it-returns">What it returns<a class="header-anchor" href="#what-it-returns">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span> <span class="s2">&quot;revisions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span> <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">}</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">&quot;revisions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
 </code></pre>
 <table>
 <thead>
@@ -162,28 +171,23 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>completed</code></td>
-<td>Every item is settled — done, or dropped by a revision.</td>
-</tr>
-<tr>
-<td><code>abandoned</code></td>
-<td>A revision emptied the remaining list, or the planner could not be reached to revise.</td>
+<td><code>workflow()</code> returned. The result and full run records come with it.</td>
 </tr>
 <tr>
 <td><code>capped</code></td>
-<td>The run hit its ceiling of 40 executed items. A list still growing at that point is a planning failure, not progress.</td>
+<td>The run hit its ceiling of 40 real executions.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="compared-to-a-session-goal">Compared to a session goal<a class="header-anchor" href="#compared-to-a-session-goal">#</a></h2>
-<p>A <a href="/docs/capabilities/goal.html">goal</a> keeps one session working until a condition holds; the conversation is continuous and grows with every turn. A task list splits the work up front and runs each piece in its own bounded context. Use a goal when the finish line is clear but the path is not; use a task list when the work is long enough that carrying all of it in one context is the problem.</p>
+<p>A <a href="/docs/capabilities/goal.html">goal</a> keeps one session working until a condition holds; the conversation is continuous and grows with every turn. A workflow writes the plan down as a program and runs each call in its own bounded context. Use a goal when the finish line is clear but the path is not; use a workflow when the work is long enough that carrying all of it in one context is the problem. The todo planning board is not involved — a workflow's state lives in its own instance directory.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session goals</span></a><a class="pn-link pn-next" href="/docs/capabilities/docs-question.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Asking about OpenProgram itself</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#small-tasks-are-not-split">Small tasks are not split</a>
-<a class="" href="#the-list-is-the-todo-board">The list is the todo board</a>
-<a class="" href="#how-an-item-is-judged">How an item is judged</a>
-<a class="" href="#revision-while-running">Revision while running</a>
-<a class="" href="#resuming-after-an-interruption">Resuming after an interruption</a>
+<a class="" href="#the-generated-program">The generated program</a>
+<a class="" href="#resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls</a>
+<a class="" href="#revision-after-an-error">Revision after an error</a>
 <a class="" href="#what-it-returns">What it returns</a>
 <a class="" href="#compared-to-a-session-goal">Compared to a session goal</a>
 </div></aside>

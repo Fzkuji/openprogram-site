@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786565454" data-alt-lang-url="/docs/reference/design/runtime/execution/agentic-self-recursion.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786565454">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agentic 函数防自递归机制 · OpenProgram Docs</title>
+<title>agent 统一原语 — 编排层唯一的 LLM 调用 · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -198,7 +198,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="运行时">Runtime</div>
 <a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/additional-working-directories.html" data-title-zh="会话多工作目录（Additional Working Directories）设计" data-href-en="/docs/reference/design/runtime/additional-working-directories.html" data-href-zh="/docs/reference/design/runtime/additional-working-directories.zh.html">Additional working directories for a session</a>
-<a class="navlink" href="/docs/reference/design/runtime/agent-unified-primitive.html">agent 统一原语 — 编排层唯一的 LLM 调用</a>
+<a class="navlink active" href="/docs/reference/design/runtime/agent-unified-primitive.html">agent 统一原语 — 编排层唯一的 LLM 调用</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
@@ -233,7 +233,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
-<a class="navlink active" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
 </div>
 <div class="nav-sec">
@@ -287,293 +287,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Execution">Runtime · Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Agentic 函数防自递归机制">Self-Recursion Guard for Agentic Functions</span></nav><h1 id="agentic-函数防自递归机制">Agentic 函数防自递归机制<a class="header-anchor" href="#agentic-函数防自递归机制">#</a></h1>
-<blockquote>
-<p>agentic 函数通过处境引导防止调用自身，并以递归深度上限兜底。
-本文档基于真实代码逐条对应 file:line，可照着核对。
-相关代码：</p>
-<ul>
-<li><code>openprogram/agentic_programming/function.py</code></li>
-<li><code>openprogram/agentic_programming/runtime.py</code></li>
-<li>测试：<code>tests/agentic_programming/test_self_recursion_guard.py</code>(8 用例)</li>
-</ul>
-</blockquote>
-<hr />
-<h2 id="1-问题agentic-函数为什么会自递归">1. 问题：agentic 函数为什么会自递归<a class="header-anchor" href="#1-问题agentic-函数为什么会自递归">#</a></h2>
-<p>一个 agentic 函数(如 <code>wiki_agent</code>)的函数体里跑一个内层 agent loop——通过 <code>runtime.exec(content=[task])</code> 驱动内层 LLM。</p>
-<p>两个诱因叠加：</p>
-<ol>
-<li>
-<p><strong>默认 toolset = full，含函数自己。</strong> 裸 <code>runtime.exec(content=...)</code> 不传 <code>tools=</code> / <code>toolset=</code>，<code>_call_via_providers</code> 把它解析成 <code>DEFAULT_TOOLSET = &quot;full&quot;</code>：</p>
-<ul>
-<li><code>openprogram/agentic_programming/runtime.py:1467</code> <code>DEFAULT_TOOLSET = &quot;full&quot;</code></li>
-<li><code>runtime.py:1468-1483</code> <code>raw_tools is None</code> 分支 → <code>_resolve_agent_tools(toolset=&quot;full&quot;, ...)</code></li>
-<li>而 <code>full</code> 工具集列出了所有 harness 入口本身(<code>wiki_agent</code> / <code>research_agent</code> / <code>gui_agent</code> …，见 <code>openprogram.functions.TOOLSETS[&quot;full&quot;]</code>)。所以内层模型的工具列表里<strong>有它正在执行的那个函数</strong>。</li>
-</ul>
-</li>
-<li>
-<p><strong>模型看到 docstring 匹配任务，误以为该调。</strong> 模型看到 <code>wiki_agent</code> 的工具描述(&quot;Maintain a wiki vault — route to ingest…&quot;)正好匹配当前任务，认为应该路由给 <code>wiki_agent</code> → 调自己 → 进去又是裸 exec、又看到自己 → 无限递归。</p>
-</li>
-</ol>
-<p>一个 7 层嵌套的根因实例见 <code>docs/reference/design/TODO-doc-code-gaps.md</code> §1，其中会话记录的 <code>context_tree</code> 展示了调用链 <code>4d76→0c07→0964→c6f9→f1c9→4379→8746→100c</code>。</p>
-<hr />
-<h2 id="2-设计理念为什么用引导而非deny">2. 设计理念：为什么用「引导」而非「deny」<a class="header-anchor" href="#2-设计理念为什么用引导而非deny">#</a></h2>
-<p><strong>让模型理解自己的处境、自主判断不调，而不是把它自己从工具列表里屏蔽掉。</strong></p>
-<p>另一种做法是 deny 方案：wrapper 把函数自己的名字推进 <code>_current_tool_policy[&quot;deny&quot;]</code>，使内层模型看不到自己。有两点不利：</p>
-<ul>
-<li>模型学不会处境判断。它不知道「我正在 X 内部」，只知道「X 不在工具列表里」。换到 deny 不适用的上下文(如跨函数环)，它照样会犯同样的错。</li>
-<li>框架替模型做了决定，而不是给模型足够信息让它自己做对的决定。</li>
-</ul>
-<p>引导把「不调自己」变成模型能据以行动的处境信息：你正在 X 体内，调 X 就是回到你现在的位置。模型据此自主不调。与模型判断无关的<strong>深度上限</strong>保留下来作为止损兜底。</p>
-<hr />
-<h2 id="3-三个机制怎么协同">3. 三个机制怎么协同<a class="header-anchor" href="#3-三个机制怎么协同">#</a></h2>
-<h3 id="主-处境提示-防发生">(主) 处境提示 —— 防「发生」<a class="header-anchor" href="#主-处境提示-防发生">#</a></h3>
-<p><code>_situational_prefix(fn_name, fn_doc)</code>(<code>runtime.py:321-341</code>)生成一段英文处境提示：</p>
-<pre><code>[Execution context] You are currently running INSIDE the agentic function `{fn_name}`.
-The tool list may include `{fn_name}` itself — do NOT call it. Calling `{fn_name}`
-re-enters where you are now and causes infinite recursion. Use lower-level tools
-(search / read-write files / run code) to do the work directly.
-</code></pre>
-<p><code>fn_doc</code> 非空时，docstring 被<strong>降级置后</strong>(<code>text += f&quot;\n\nThis function's job: {fn_doc.strip()}&quot;</code>，<code>runtime.py:339-340</code>)——诱因(docstring 描述)不再盖过警告。</p>
-<p><strong>注入到哪：user turn 开头的 text block，不进 system 前缀。</strong></p>
-<ul>
-<li>DAG 路径：<code>runtime.py:578-587</code> 构造 <code>frame_prefix_blocks</code>(从当前 frame 节点读 <code>name</code> + <code>metadata.doc</code>)，然后 <code>runtime.py:597</code> <code>_build_pi_context(frame_prefix_blocks + (content or []))</code>——拼在当前轮 <code>content</code> 之前，作为当前轮 user 消息的开头 block。</li>
-<li>standalone 回退路径(无 store)：<code>runtime.py:1518-1532</code>，从 <code>_recursion_depth</code> 取最深的函数名(<code>max(_depths, key=_depths.get)</code>，<code>runtime.py:1525</code>)，<code>_situational_prefix(_cur_fn, &quot;&quot;)</code>(无 doc)，同样拼在 <code>content</code> 之前(<code>runtime.py:1532</code>)。</li>
-<li>system 前缀单独组装(<code>runtime.py:1535-1539</code>：<code>self.system</code> + <code>_skills_block()</code>)，<strong>处境提示不进 system</strong>。</li>
-</ul>
-<p><strong>为什么放 user turn、不放 system：</strong> 整个项目共用一个<strong>统一且恒定</strong>的 system prompt(身份 + 项目记忆 + 统一工具列表 + skills)以最大化 KV 缓存命中(<code>dag/overview.md</code>)——前缀一变，长上下文后全不命中、成本爆。处境提示是<strong>逐函数、逐调用点</strong>变化的(每个函数名/docstring 不同)，放进 system 会破坏前缀恒定。放在 user turn 开头既能让模型看到，又不碰 system 前缀。</p>
-<h3 id="不做自我-deny-工具列表含函数自己">不做自我 deny —— 工具列表含函数自己<a class="header-anchor" href="#不做自我-deny-工具列表含函数自己">#</a></h3>
-<p>wrapper 不把函数自己的名字推进 <code>_current_tool_policy[&quot;deny&quot;]</code>。内层模型的工具列表里<strong>仍然能看到它自己</strong>——这正是处境提示有对象可指的前提，由提示让模型自主不调。</p>
-<p><code>_current_tool_policy</code> 的<strong>其它用途不受影响</strong>：<code>source</code> / <code>allow</code> / <code>toolset</code> / unattended deny。具体见 <code>runtime.py:1451-1458</code>——<code>policy.get(&quot;deny&quot;)</code> 在用，与 unattended 的 <code>denied_ask_tools</code> 合并(<code>runtime.py:1457</code>)；<code>source</code>/<code>allow</code>/<code>toolset</code> 在 <code>runtime.py:1469</code>/<code>1479-1482</code> 生效。唯一不存在的是「把函数自己名字注入 deny」。</p>
-<h3 id="兜底-深度上限-止损安全网">(兜底) 深度上限 —— 止损安全网<a class="header-anchor" href="#兜底-深度上限-止损安全网">#</a></h3>
-<ul>
-<li><code>_MAX_AGENTIC_RECURSION_DEPTH = 5</code>(<code>function.py:48</code>)。</li>
-<li><code>_recursion_depth</code> 是一个 <code>ContextVar[Optional[dict]]</code>(<code>function.py:49-51</code>)，存 <strong>per-function-name</strong> 的当前嵌套深度 <code>{name: depth}</code>。</li>
-<li>进入 wrapper 时：取本函数名(<code>getattr(self, &quot;tool_name&quot;, None) or fn.__name__</code>，sync <code>function.py:964</code>，async <code>function.py:852</code>)，读当前深度，<strong>超限则抛 <code>RecursionError</code></strong>，否则 +1 写回(token 保存)：
-<ul>
-<li>sync：<code>function.py:964-976</code></li>
-<li>async：<code>function.py:852-864</code></li>
-</ul>
-</li>
-<li>抛错确切条件：<code>_cur_depth &gt;= _MAX_AGENTIC_RECURSION_DEPTH</code>(即已经在第 5 层、要进第 6 层时抛)。消息：<code>f&quot;agentic function {name} exceeded max nesting depth {5} — possible runaway recursion&quot;</code>(sync <code>function.py:967-972</code>，async <code>function.py:855-860</code>)。</li>
-<li><code>finally</code> 复位：<code>_recursion_depth.reset(token)</code>(sync <code>function.py:989</code>，async <code>function.py:877</code>)——return / 异常都复位。</li>
-</ul>
-<p><strong>正常调用永不触及上限</strong>：处境提示先拦住「发生」，深度计数只在模型无视引导、连续 re-enter 同名函数 5 层后才触发。</p>
-<p><strong>三者定位：</strong> 处境提示 = 防发生(让模型自己不调)；不做自我 deny = 配套(工具可见，引导才有对象)；深度上限 = 止损安全网(模型失控时不烧无限 token)。</p>
-<hr />
-<h2 id="4-关键代码位置表">4. 关键代码位置表<a class="header-anchor" href="#4-关键代码位置表">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>机制</th>
-<th>代码</th>
-<th>file:line</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>深度上限常量</td>
-<td><code>_MAX_AGENTIC_RECURSION_DEPTH = 5</code></td>
-<td><code>function.py:48</code></td>
-</tr>
-<tr>
-<td>深度计数 contextvar</td>
-<td><code>_recursion_depth</code></td>
-<td><code>function.py:49-51</code></td>
-</tr>
-<tr>
-<td>sync wrapper：本函数名</td>
-<td><code>getattr(self,&quot;tool_name&quot;,None) or fn.__name__</code></td>
-<td><code>function.py:964</code></td>
-</tr>
-<tr>
-<td>sync wrapper：超限抛错</td>
-<td><code>if _cur_depth &gt;= MAX: raise RecursionError</code></td>
-<td><code>function.py:967-972</code></td>
-</tr>
-<tr>
-<td>sync wrapper：+1 写回</td>
-<td><code>_recursion_depth.set({**prev, name: cur+1})</code></td>
-<td><code>function.py:973-976</code></td>
-</tr>
-<tr>
-<td>sync wrapper：finally 复位</td>
-<td><code>_recursion_depth.reset(token)</code></td>
-<td><code>function.py:989</code></td>
-</tr>
-<tr>
-<td>async wrapper：本函数名</td>
-<td>同上</td>
-<td><code>function.py:852</code></td>
-</tr>
-<tr>
-<td>async wrapper：超限抛错</td>
-<td>同上</td>
-<td><code>function.py:855-860</code></td>
-</tr>
-<tr>
-<td>async wrapper：+1 写回</td>
-<td>同上</td>
-<td><code>function.py:861-864</code></td>
-</tr>
-<tr>
-<td>async wrapper：finally 复位</td>
-<td>同上</td>
-<td><code>function.py:877</code></td>
-</tr>
-<tr>
-<td>处境提示文案</td>
-<td><code>_situational_prefix(fn_name, fn_doc)</code></td>
-<td><code>runtime.py:321-341</code></td>
-</tr>
-<tr>
-<td>处境提示注入(DAG 路径)</td>
-<td><code>frame_prefix_blocks</code> → <code>_build_pi_context(prefix + content)</code></td>
-<td><code>runtime.py:578-587</code>, <code>597</code></td>
-</tr>
-<tr>
-<td>处境提示注入(standalone 回退)</td>
-<td>从 <code>_recursion_depth</code> 取最深名 → 拼 content 前</td>
-<td><code>runtime.py:1518-1532</code></td>
-</tr>
-<tr>
-<td>system 前缀单独组装(不含提示)</td>
-<td><code>self.system</code> + <code>_skills_block()</code></td>
-<td><code>runtime.py:1535-1539</code></td>
-</tr>
-<tr>
-<td><code>_current_tool_policy</code> 其它用途</td>
-<td>deny/source/allow/toolset 解析</td>
-<td><code>runtime.py:1451-1483</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="5-行为契约从测试提炼">5. 行为契约(从测试提炼)<a class="header-anchor" href="#5-行为契约从测试提炼">#</a></h2>
-<p>来自 <code>tests/agentic_programming/test_self_recursion_guard.py</code>：</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>契约</th>
-<th>测试</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>处境提示含函数名、含 &quot;do NOT call it&quot;、含 &quot;recursion&quot;，docstring 降级到末尾(<code>recursion</code> 出现位置在 docstring 之前)</td>
-<td><code>test_situational_prefix_warns_against_self_call</code></td>
-</tr>
-<tr>
-<td>2</td>
-<td>空 docstring 时不追加 &quot;This function's job&quot;，提示仍含函数名</td>
-<td><code>test_situational_prefix_handles_empty_doc</code></td>
-</tr>
-<tr>
-<td>3</td>
-<td>函数自己的名字<strong>不</strong>进 <code>_current_tool_policy[&quot;deny&quot;]</code></td>
-<td><code>test_self_name_NOT_denied_during_call</code></td>
-</tr>
-<tr>
-<td>4</td>
-<td>正常调用一层时，本函数名深度 = 1(进入即 +1)</td>
-<td><code>test_depth_increments_during_call</code></td>
-</tr>
-<tr>
-<td>5</td>
-<td>无脑自调超限抛 <code>RecursionError</code>，消息含函数名 + 上限数字；进入函数体次数恰为 <code>_MAX_AGENTIC_RECURSION_DEPTH</code>(到上限止住、不再深入)</td>
-<td><code>test_depth_backstop_raises_past_limit</code></td>
-</tr>
-<tr>
-<td>6</td>
-<td>A→B 不同名独立计数：B 深 nesting 不计入 A 的限额，反之亦然(per-name 不误伤)</td>
-<td><code>test_distinct_subcalls_not_collateral_damage</code></td>
-</tr>
-<tr>
-<td>7</td>
-<td>return 后深度复位回调用前的值</td>
-<td><code>test_depth_restored_after_return</code></td>
-</tr>
-<tr>
-<td>8</td>
-<td>抛异常后深度也复位</td>
-<td><code>test_depth_restored_after_exception</code></td>
-</tr>
-</tbody>
-</table>
-<p>补充：测试用 <code>_deny()</code> helper(<code>test:51-53</code>)读 <code>_current_tool_policy.get(None).get(&quot;deny&quot;)</code>，<code>_depth(name)</code> helper(<code>test:55-56</code>)读 <code>_recursion_depth.get(None).get(name, 0)</code>——核对时可对照这两个读法确认计数/deny 形态。</p>
-<hr />
-<h2 id="6-与-deny-方案的对比">6. 与 deny 方案的对比<a class="header-anchor" href="#6-与-deny-方案的对比">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>维度</th>
-<th>deny:屏蔽工具</th>
-<th>本设计:处境引导 + 深度上限</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>怎么做</td>
-<td>wrapper 把函数自己名字推进 <code>_current_tool_policy[&quot;deny&quot;]</code>，内层模型看不到自己</td>
-<td>工具列表含函数自己；user turn 开头注入处境提示让模型自主不调；超 5 层抛 <code>RecursionError</code> 兜底</td>
-</tr>
-<tr>
-<td>模型认知</td>
-<td>不知道「我在 X 内部」，只是 X 不在列表</td>
-<td>明确知道处境(你在 X 体内、调 X = 递归)</td>
-</tr>
-<tr>
-<td>对 system 前缀缓存的影响</td>
-<td>deny 在 policy 层、不动 system，但屏蔽是替模型决定</td>
-<td>提示放 user turn、不进 system，前缀仍恒定</td>
-</tr>
-<tr>
-<td>失控止损</td>
-<td>靠屏蔽间接挡，屏蔽失效就无底</td>
-<td>显式深度上限 5 层硬止损</td>
-</tr>
-<tr>
-<td>长处</td>
-<td>直接、无需模型配合</td>
-<td>模型学会处境判断;兜底确定性强</td>
-</tr>
-<tr>
-<td>短处</td>
-<td>模型学不会处境判断;屏蔽一旦不生效就裸奔</td>
-<td>纯引导对弱模型不完全可靠，故有深度上限兜底</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="7-已知局限">7. 已知局限<a class="header-anchor" href="#7-已知局限">#</a></h2>
-<ol>
-<li><strong>纯引导对弱模型 / 长上下文不完全可靠。</strong> 处境提示是让模型自主判断，弱模型或上下文过长稀释提示时可能仍会调自己——所以保留深度上限作为确定性兜底。</li>
-<li><strong>跨函数环(A→B→A 交替)未覆盖。</strong> 深度上限按<strong>同名</strong>计数(<code>_recursion_depth[name]</code>)，只挡直接自递归(A→A→A…)。A→B→A→B 这种交替环里 A 的深度只 +1 到一定层、B 同理，不会触发任一名的上限。整条调用链识别(把 A 在调用链上出现过就算环)是可选的增强项。</li>
-<li><strong>deny 方案同样挡不住跨函数环。</strong> deny 把当前函数自己推进 deny，A 跑时 deny 的是 A，B 仍可被调、B 里再调 A 也不在 B 的 deny 里。两种做法都只防直接自递归，跨链识别对二者都是增强项。</li>
-</ol>
-<hr />
-<h2 id="关联文档">关联文档<a class="header-anchor" href="#关联文档">#</a></h2>
-<ul>
-<li><code>docs/reference/design/runtime/dag/overview.md</code> —— 统一 system 前缀约束，本机制把处境提示放 user turn 正是为遵守该约束。</li>
-<li><code>docs/reference/design/TODO-doc-code-gaps.md</code> §1 —— 7 层嵌套根因实例。</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision making(decision.make / exec(choices=))</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/turn-cancellation.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Turn Cancellation — Design</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#1-问题agentic-函数为什么会自递归">1. 问题：agentic 函数为什么会自递归</a>
-<a class="" href="#2-设计理念为什么用引导而非deny">2. 设计理念：为什么用「引导」而非「deny」</a>
-<a class="" href="#3-三个机制怎么协同">3. 三个机制怎么协同</a>
-<a class="lvl-3" href="#主-处境提示-防发生">(主) 处境提示 —— 防「发生」</a>
-<a class="lvl-3" href="#不做自我-deny-工具列表含函数自己">不做自我 deny —— 工具列表含函数自己</a>
-<a class="lvl-3" href="#兜底-深度上限-止损安全网">(兜底) 深度上限 —— 止损安全网</a>
-<a class="" href="#4-关键代码位置表">4. 关键代码位置表</a>
-<a class="" href="#5-行为契约从测试提炼">5. 行为契约(从测试提炼)</a>
-<a class="" href="#6-与-deny-方案的对比">6. 与 deny 方案的对比</a>
-<a class="" href="#7-已知局限">7. 已知局限</a>
-<a class="" href="#关联文档">关联文档</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">agent 统一原语 — 编排层唯一的 LLM 调用</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/agent-unified-primitive.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/additional-working-directories.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Additional working directories for a session</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-resource-governance.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agent 运行配额与任务生命周期治理</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">
