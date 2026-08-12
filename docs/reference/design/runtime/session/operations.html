@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527558" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527712" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -536,6 +536,7 @@ After <code>_user_titled</code> is set, auto-naming stops permanently.</li>
   → handle_list_sessions:
       → session_store.list_sessions():
           → Iterate over the in-memory _index.values()
+          → Drop archived rows unless include_archived=True
           → Filter by filters
           → Sort by updated_at in descending order
           → Return rows[offset:offset+limit]
@@ -544,6 +545,18 @@ After <code>_user_titled</code> is set, auto-naming stops permanently.</li>
   → The frontend renders the sidebar and the Chats page
 </code></pre>
 <p>Purely an in-memory operation; it does not touch disk.</p>
+<h3 id="archived-rows">Archived rows<a class="header-anchor" href="#archived-rows">#</a></h3>
+<p><code>list_sessions</code> hides archived sessions by default — archiving only bounds the
+list if the default listing honours it. Two ways to see them:</p>
+<ul>
+<li><code>include_archived=True</code> returns archived and active rows together</li>
+<li><code>archived=True</code> returns only the archived ones</li>
+</ul>
+<p>Maintenance passes that must visit every session regardless of the flag —
+the memory scan, run-state repair, &quot;clear all&quot;, channel-binding lookup,
+agent addressing — pass <code>include_archived=True</code> explicitly. The sidebar
+payload also sends every row and lets the client switch between the active,
+archived, and all views without a round trip.</p>
 <h3 id="fields-returned-per-session">Fields returned per session<a class="header-anchor" href="#fields-returned-per-session">#</a></h3>
 <p>The 15 fields in the registry + preview + project (filled in during listing), 17 in total. See <a href="/docs/reference/design/runtime/session/storage.html">storage.md</a> for the complete list.</p>
 <hr />
@@ -559,10 +572,48 @@ After <code>_user_titled</code> is set, auto-naming stops permanently.</li>
 <p>The registry operation is internal to <code>delete_session</code>. The broadcast is initiated by the WebSocket handler layer via <code>_broadcast</code>.</p>
 <hr />
 <h2 id="archiving">Archiving<a class="header-anchor" href="#archiving">#</a></h2>
-<pre><code>Caller calls update_session(session_id, archived=True)
+<p>Archiving keeps the session list from growing without end. It is a single
+boolean on the session meta — nothing is deleted, nothing is moved, and the
+operation is reversible at any time.</p>
+<pre><code>Caller calls set_archived(session_id, True)
+  → update_session(session_id, archived=True)
   → Follows the full &quot;Updating fields&quot; flow
   → After the frontend receives the broadcast, it filters the display
 </code></pre>
+<p><code>set_archived</code> returns <code>False</code> for an unknown session id, so the CLI and the
+REST endpoints can report a missing session instead of silently succeeding.</p>
+<h3 id="what-archiving-does-not-touch">What archiving does not touch<a class="header-anchor" href="#what-archiving-does-not-touch">#</a></h3>
+<p><code>updated_at</code> records the last time a message was appended, and archiving
+appends nothing — so it leaves the timestamp alone. This is the
+<a href="/docs/reference/design/runtime/session/index-consistency.html">index consistency contract</a>: an archived session
+returns to exactly its old place in the list when unarchived, rather than
+jumping to the top. Messages, branches, and history files are untouched;
+<code>get_messages</code> keeps working while a session is archived.</p>
+<h3 id="entry-points">Entry points<a class="header-anchor" href="#entry-points">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WebSocket</td>
+<td><code>{&quot;action&quot;: &quot;update_session_flags&quot;, &quot;session_id&quot;: ..., &quot;archived&quot;: true}</code></td>
+</tr>
+<tr>
+<td>REST</td>
+<td><code>POST /api/sessions/archive</code> / <code>POST /api/sessions/unarchive</code>, body <code>{&quot;session_id&quot;: ...}</code></td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>openprogram sessions archive &lt;id&gt;</code> / <code>openprogram sessions unarchive &lt;id&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>All three write the same flag through <code>set_archived</code> and broadcast
+<code>session_updated</code>, so every open tab agrees.</p>
 <p>Archived sessions are subject to the startup-time data maintenance constraints: 90-day expiration + the 1000 capacity cap. Active sessions are not affected.</p>
 <hr />
 <h2 id="writing-the-registry-to-disk-general">Writing the registry to disk (general)<a class="header-anchor" href="#writing-the-registry-to-disk-general">#</a></h2>
@@ -594,9 +645,12 @@ After <code>_user_titled</code> is set, auto-naming stops permanently.</li>
 <a class="lvl-3" href="#empty-conversations">Empty conversations</a>
 <a class="lvl-3" href="#user-initiated-rename">User-initiated rename</a>
 <a class="" href="#listing">Listing</a>
+<a class="lvl-3" href="#archived-rows">Archived rows</a>
 <a class="lvl-3" href="#fields-returned-per-session">Fields returned per session</a>
 <a class="" href="#deleting">Deleting</a>
 <a class="" href="#archiving">Archiving</a>
+<a class="lvl-3" href="#what-archiving-does-not-touch">What archiving does not touch</a>
+<a class="lvl-3" href="#entry-points">Entry points</a>
 <a class="" href="#writing-the-registry-to-disk-general">Writing the registry to disk (general)</a>
 </div></aside>
 </div>

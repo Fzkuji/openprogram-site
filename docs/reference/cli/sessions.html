@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527558">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786527712">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,6 +57,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI</a>
 <a class="navlink" href="/docs/reference/config.html" data-title-zh="配置" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration</a>
 <a class="navlink" href="/docs/reference/diagnostics.html" data-title-zh="诊断包" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html">Diagnostics bundle</a>
+<a class="navlink" href="/docs/reference/session-export.html" data-title-zh="会话导出" data-href-en="/docs/reference/session-export.html" data-href-zh="/docs/reference/session-export.zh.html">Session export</a>
+<a class="navlink" href="/docs/reference/output-styles.html" data-title-zh="输出风格" data-href-en="/docs/reference/output-styles.html" data-href-zh="/docs/reference/output-styles.zh.html">Output styles</a>
 <a class="navlink" href="/docs/reference/config-keys.html">Config keys</a>
 <a class="navlink" href="/docs/reference/provider-registry.html">Provider registry</a>
 </div>
@@ -142,6 +144,60 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <h2 id="sessions-list"><code>sessions list</code><a class="header-anchor" href="#sessions-list">#</a></h2>
 <p>List every session across every agent</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--chat</code></td>
+<td>List chat sessions from the session store instead of waiting follow-up sessions</td>
+</tr>
+<tr>
+<td><code>--archived</code></td>
+<td>With --chat: list archived chat sessions instead of active ones</td>
+</tr>
+<tr>
+<td><code>--all</code></td>
+<td>With --chat: list archived and active chat sessions together</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sessions-archive"><code>sessions archive</code><a class="header-anchor" href="#sessions-archive">#</a></h2>
+<p>Hide a chat session from the default list (reversible, deletes nothing)</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session_id</code></td>
+<td>Chat session id to archive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sessions-unarchive"><code>sessions unarchive</code><a class="header-anchor" href="#sessions-unarchive">#</a></h2>
+<p>Return an archived chat session to the default list</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session_id</code></td>
+<td>Chat session id to unarchive</td>
+</tr>
+</tbody>
+</table>
 <h2 id="sessions-resume"><code>sessions resume</code><a class="header-anchor" href="#sessions-resume">#</a></h2>
 <p>Answer a waiting session</p>
 <table>
@@ -224,14 +280,41 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <h2 id="sessions-aliases"><code>sessions aliases</code><a class="header-anchor" href="#sessions-aliases">#</a></h2>
 <p>List every session↔channel-peer alias</p>
+<h2 id="sessions-export"><code>sessions export</code><a class="header-anchor" href="#sessions-export">#</a></h2>
+<p>Export a session as a shareable Markdown or HTML file</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session_id</code></td>
+<td>Session id to export</td>
+</tr>
+<tr>
+<td><code>--format</code> <code>EXPORT_FORMAT</code></td>
+<td>Output format: md (default) or html (single self-contained file)</td>
+</tr>
+<tr>
+<td><code>--output</code> <code>OUTPUT</code></td>
+<td>Write here instead of ./<session-id>.<format></td>
+</tr>
+</tbody>
+</table>
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/secrets.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">secrets</span></a><a class="pn-link pn-next" href="/docs/reference/cli/setup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">setup</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#sessions-list">sessions list</a>
+<a class="" href="#sessions-archive">sessions archive</a>
+<a class="" href="#sessions-unarchive">sessions unarchive</a>
 <a class="" href="#sessions-resume">sessions resume</a>
 <a class="" href="#sessions-attach">sessions attach</a>
 <a class="" href="#sessions-detach">sessions detach</a>
 <a class="" href="#sessions-aliases">sessions aliases</a>
+<a class="" href="#sessions-export">sessions export</a>
 </div></aside>
 </div>
 

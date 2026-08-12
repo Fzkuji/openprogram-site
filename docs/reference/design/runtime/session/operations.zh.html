@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786527558" data-alt-lang-url="/docs/reference/design/runtime/session/operations.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786527712" data-alt-lang-url="/docs/reference/design/runtime/session/operations.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -535,6 +535,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   → handle_list_sessions：
       → session_store.list_sessions()：
           → 遍历内存 _index.values()
+          → 除非 include_archived=True，否则丢掉已归档的行
           → 按 filters 过滤
           → 按 updated_at 降序排序
           → 返回 rows[offset:offset+limit]
@@ -543,6 +544,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   → 前端渲染侧边栏和 Chats 页面
 </code></pre>
 <p>纯内存操作，不碰磁盘。</p>
+<h3 id="已归档的行">已归档的行<a class="header-anchor" href="#已归档的行">#</a></h3>
+<p><code>list_sessions</code> 默认隐藏已归档会话：只有默认列举遵守归档，归档才真的能约束列表
+长度。两种方式看到它们：</p>
+<ul>
+<li><code>include_archived=True</code> 同时返回已归档和活跃的行</li>
+<li><code>archived=True</code> 只返回已归档的</li>
+</ul>
+<p>那些必须遍历每个会话、不管标志的维护流程（记忆扫描、运行态修复、&quot;清空全部&quot;、
+渠道绑定查找、agent 寻址）显式传 <code>include_archived=True</code>。侧边栏 payload 也发送
+全部行，前端在活跃/已归档/全部三个视图之间切换无需再请求一次。</p>
 <h3 id="每条-session-返回的字段">每条 session 返回的字段<a class="header-anchor" href="#每条-session-返回的字段">#</a></h3>
 <p>注册表中的 15 个字段 + preview + project（列举时补充），共 17 个。完整列表见 <a href="/docs/reference/design/runtime/session/storage.html">storage.md</a>。</p>
 <hr />
@@ -558,10 +569,45 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>注册表操作在 <code>delete_session</code> 内部完成。广播由 WebSocket handler 层通过 <code>_broadcast</code> 发起。</p>
 <hr />
 <h2 id="归档">归档<a class="header-anchor" href="#归档">#</a></h2>
-<pre><code>调用方调 update_session(session_id, archived=True)
+<p>归档让会话列表不再无限增长。它只是 session meta 上的一个布尔标志：不删数据、
+不搬目录，随时可逆。</p>
+<pre><code>调用方调 set_archived(session_id, True)
+  → update_session(session_id, archived=True)
   → 走&quot;更新字段&quot;的完整流程
   → 前端收到广播后过滤显示
 </code></pre>
+<p><code>set_archived</code> 对不存在的 session id 返回 <code>False</code>，CLI 和 REST 端点据此报告
+会话不存在，而不是静默成功。</p>
+<h3 id="归档不动的东西">归档不动的东西<a class="header-anchor" href="#归档不动的东西">#</a></h3>
+<p><code>updated_at</code> 记录的是最后一次追加消息的时间，归档不追加任何消息，因此不碰这个
+时间戳。这是<a href="/docs/reference/design/runtime/session/index-consistency.html">索引一致性契约</a>：取消归档后会话回到列表
+里原来的位置，不会被顶到最上面。消息、分支、history 文件都不动，归档期间
+<code>get_messages</code> 照常可读。</p>
+<h3 id="入口">入口<a class="header-anchor" href="#入口">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>界面</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WebSocket</td>
+<td><code>{&quot;action&quot;: &quot;update_session_flags&quot;, &quot;session_id&quot;: ..., &quot;archived&quot;: true}</code></td>
+</tr>
+<tr>
+<td>REST</td>
+<td><code>POST /api/sessions/archive</code> / <code>POST /api/sessions/unarchive</code>，body <code>{&quot;session_id&quot;: ...}</code></td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>openprogram sessions archive &lt;id&gt;</code> / <code>openprogram sessions unarchive &lt;id&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>三个入口都经 <code>set_archived</code> 写同一个标志并广播 <code>session_updated</code>，所以每个
+打开的标签页看到的状态一致。</p>
 <p>已归档的 session 受启动时数据维护约束：90 天过期 + 1000 容量上限。活跃 session 不受影响。</p>
 <hr />
 <h2 id="注册表写磁盘通用">注册表写磁盘（通用）<a class="header-anchor" href="#注册表写磁盘通用">#</a></h2>
@@ -593,9 +639,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="lvl-3" href="#空会话">空会话</a>
 <a class="lvl-3" href="#用户主动重命名">用户主动重命名</a>
 <a class="" href="#列举">列举</a>
+<a class="lvl-3" href="#已归档的行">已归档的行</a>
 <a class="lvl-3" href="#每条-session-返回的字段">每条 session 返回的字段</a>
 <a class="" href="#删除">删除</a>
 <a class="" href="#归档">归档</a>
+<a class="lvl-3" href="#归档不动的东西">归档不动的东西</a>
+<a class="lvl-3" href="#入口">入口</a>
 <a class="" href="#注册表写磁盘通用">注册表写磁盘（通用）</a>
 </div></aside>
 </div>

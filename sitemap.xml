@@ -427,7 +427,11 @@
   <url><loc>https://openprogram.io/docs/reference/design/usage-metering.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/diagnostics.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/diagnostics.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/output-styles.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/output-styles.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/provider-registry.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/session-export.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/session-export.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/server/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/server/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/server/backup.html</loc></url>
