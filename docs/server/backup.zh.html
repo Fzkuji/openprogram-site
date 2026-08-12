@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786544365" data-alt-lang-url="/docs/server/backup.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786549311" data-alt-lang-url="/docs/server/backup.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,7 +68,9 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 </code></pre>
 <p>归档文件放在 <code>~/.openprogram/backups/</code>（命名 profile 下是
 <code>~/.openprogram-&lt;profile&gt;/backups/</code>），文件名为
-<code>&lt;profile&gt;-&lt;时间戳&gt;.tar.gz</code>，权限 <code>0600</code>，只有你自己能读。</p>
+<code>&lt;profile&gt;-&lt;时间戳&gt;.tar.gz</code>，权限 <code>0600</code>，只有你自己能读。
+归档先写入唯一的 owner-only 临时文件，flush 后原子发布；POSIX 还会
+fsync 所在目录。</p>
 <h2 id="备份范围">备份范围<a class="header-anchor" href="#备份范围">#</a></h2>
 <p>范围是一份白名单，不是&quot;除了某些以外全都要&quot;。
 将来版本新增的缓存目录不会悄悄把你的归档撑大。</p>
@@ -117,8 +119,8 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 <td>MCP 服务器、模型覆盖、自定义命令</td>
 </tr>
 <tr>
-<td><code>owner.json</code>、<code>projects/</code>、<code>worktrees.json</code>、<code>usage.db</code></td>
-<td>归属、项目列表、worktree、用量历史</td>
+<td><code>owner.json</code>、<code>projects/</code>、<code>profiles/</code>、<code>worktrees.json</code>、<code>usage.db</code></td>
+<td>归属、项目和账号元数据、worktree、用量历史</td>
 </tr>
 </tbody>
 </table>
@@ -129,15 +131,26 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 <li><code>logs/</code> 以及任何 <code>*.log</code></li>
 <li>锁文件、PID 文件、端口文件（<code>*.lock</code>、<code>*.pid</code>、<code>*.port</code>）</li>
 <li>web token，每次启动都会重新生成</li>
+<li><code>.env.tmp</code>、<code>*.json.tmp</code> 等凭据 writer 临时文件</li>
+<li>凭据账号的 <code>profiles/*/home/</code> 目录；profile 只允许 <code>metadata.json</code>，以及
+inventory 注册的 <code>.env</code> 和 AuthStore 路径进入归档</li>
 <li>目录树里任何位置的 <code>node_modules/</code></li>
 <li>符号链接：跳过而不是跟随，否则一条指向状态目录外的链接会把无关的目录树拉进归档</li>
 </ul>
 <h2 id="凭据">凭据<a class="header-anchor" href="#凭据">#</a></h2>
-<p><code>auth/</code> 和 <code>mcp_tokens/</code> 默认<strong>不备份</strong>。它们以明文保存着有效的 API key 和 OAuth token，
-包含它们的归档和这些密钥本身一样敏感。</p>
+<p>默认情况下，归档会排除 <code>auth/</code>、<code>mcp_tokens/</code>、profile AuthStore 文件和
+<code>.env</code> 文件、Channel
+<code>credentials.json</code>；同时从混合配置中删除 <code>config.json[api_keys]</code>，以及
+MCP server 的 env、header、bearer token 和 OAuth client secret 字段，
+其余非秘密配置继续保留。</p>
+<p>Web 运行期 token 和待处理的 Channel pairing code 永远不进入归档，
+即使显式开启凭据备份也不例外。</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-credentials
 </code></pre>
-<p>这样显式开启，并会打印一条警告。请像对待密码文件一样对待生成的文件。
+<p>这样会显式包含 inventory 中允许备份的全部长期凭据，并打印准确的明文凭据警告。
+生成的文件必须采用与原始凭据相同的访问限制。归档内的 <code>backup-manifest.json</code>
+只记录本次归档实际包含、redacted 或排除的凭据类别；全局 never-backup 规则
+单独记录在 <code>credential_policy</code> 下，且不记录秘密值。
 如果你只是要换一台机器，重新登录通常比拷贝归档更安全。</p>
 <h2 id="恢复">恢复<a class="header-anchor" href="#恢复">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>default-20260811-012458.tar.gz
@@ -148,12 +161,23 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 在活进程底下替换会话文件会把两边都搞坏。先用 <code>openprogram stop</code> 停掉。</li>
 <li><strong>确认。</strong> 命令会列出将要覆盖的内容并等你输入 <code>y</code>。脚本里可以用 <code>-y</code> 跳过。</li>
 <li><strong>自动安全快照。</strong> 先把当前状态备份成
-<code>&lt;profile&gt;-pre-restore-&lt;时间戳&gt;.tar.gz</code>，这样恢复错了也能再退回去。</li>
+<code>&lt;profile&gt;-pre-restore-&lt;时间戳&gt;.tar.gz</code>，这样恢复错了也能再退回去。
+如果要恢复的归档是用 <code>--include-credentials</code> 创建的，这份快照会按同一份
+授权一并包含凭据：否则退回去的时候，恰好会丢掉这次恢复替换掉的那些秘密。
+发生时命令会明确提示。</li>
 </ol>
 <p>用 <code>--dry-run</code> 只看覆盖清单，上面这些都不会发生：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>default-20260811-012458.tar.gz<span class="w"> </span>--dry-run
 </code></pre>
-<p>恢复只替换归档里存在的条目，范围之外的状态（缓存、日志）原样不动。</p>
+<p>恢复只替换归档里存在的条目，范围之外的状态（缓存、日志）原样不动。
+如果混合文件中的已注册秘密字段缺失或被 redacted，恢复会保留本机现有值，
+不会把 mask 写入，也不会删除本机秘密。</p>
+<p>整个归档在任何内容可见之前先完整校验：路径包含关系、成员类型，以及每个
+已注册秘密文件的 JSON 结构。symlink、hardlink 和路径穿越成员一律拒绝，
+被拒绝的归档不会改动本机状态。通过校验后，每个文件都用 OpenProgram 其余
+部分共用的 owner-only 原子写入发布，并且每次发布都记录 journal：因此被崩溃
+或磁盘写满打断的恢复会被回滚，而不是停在改了一半的状态。下次执行恢复时
+会自动先做这个回滚。</p>
 <h2 id="清理">清理<a class="header-anchor" href="#清理">#</a></h2>
 <p>备份不会自动删除。堆积起来之后：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span class="w"> </span>--keep<span class="w"> </span><span class="m">5</span>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786544365" data-alt-lang-url="/docs/server/backup.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786549311" data-alt-lang-url="/docs/server/backup.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,7 +70,8 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 <p>Archives land in <code>~/.openprogram/backups/</code> (or
 <code>~/.openprogram-&lt;profile&gt;/backups/</code> under a named profile), named
 <code>&lt;profile&gt;-&lt;timestamp&gt;.tar.gz</code> and created with mode <code>0600</code> — readable only
-by you.</p>
+by you. The archive is written to a unique owner-only temporary file, flushed,
+and atomically published; POSIX also flushes the containing directory.</p>
 <h2 id="what-gets-backed-up">What gets backed up<a class="header-anchor" href="#what-gets-backed-up">#</a></h2>
 <p>The scope is an allowlist, not &quot;everything except&quot;. A new cache directory
 added by a future release cannot silently start bloating your archives.</p>
@@ -119,8 +120,8 @@ added by a future release cannot silently start bloating your archives.</p>
 <td>MCP servers, model overrides, custom commands</td>
 </tr>
 <tr>
-<td><code>owner.json</code>, <code>projects/</code>, <code>worktrees.json</code>, <code>usage.db</code></td>
-<td>Ownership, project list, worktrees, usage history</td>
+<td><code>owner.json</code>, <code>projects/</code>, <code>profiles/</code>, <code>worktrees.json</code>, <code>usage.db</code></td>
+<td>Ownership, project and account metadata, worktrees, usage history</td>
 </tr>
 </tbody>
 </table>
@@ -132,19 +133,29 @@ make the archive bigger:</p>
 <li><code>logs/</code> and any <code>*.log</code></li>
 <li>Locks, PID files, and port files (<code>*.lock</code>, <code>*.pid</code>, <code>*.port</code>)</li>
 <li>The web token, which is regenerated every launch</li>
+<li>Credential-writer temporary files such as <code>.env.tmp</code> and <code>*.json.tmp</code></li>
+<li>Credential-account <code>profiles/*/home/</code> trees. Only <code>metadata.json</code> and the
+registered <code>.env</code> and AuthStore inventory paths are eligible.</li>
 <li><code>node_modules/</code> anywhere in the tree</li>
 <li>Symlinks, which are skipped rather than followed — a link out of the state
 directory would pull unrelated trees into the archive</li>
 </ul>
 <h2 id="credentials">Credentials<a class="header-anchor" href="#credentials">#</a></h2>
-<p><code>auth/</code> and <code>mcp_tokens/</code> are <strong>not</strong> backed up by default. They hold live API
-keys and OAuth tokens in plaintext, and an archive containing them is as
-sensitive as the keys themselves.</p>
+<p>By default, the archive omits <code>auth/</code>, <code>mcp_tokens/</code>, profile AuthStore files and <code>.env</code> files,
+and Channel <code>credentials.json</code> files. It removes <code>config.json[api_keys]</code> and MCP
+server env, header, bearer-token, and OAuth client-secret fields while keeping
+the rest of those mixed configuration files.</p>
+<p>The Web runtime token and pending Channel pairing codes are never archived,
+including when credential opt-in is enabled.</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span>--include-credentials
 </code></pre>
-<p>This opts in and prints a warning. Treat the resulting file the way you would
-treat a password file. If you only need to move to a new machine, logging in
-again is usually safer than copying the archive.</p>
+<p>This opts in to every registered persistent credential category and prints an
+accurate plaintext warning. Store the resulting file with the same access
+restrictions as the original credentials. <code>backup-manifest.json</code> records only
+credential categories that were actually included, redacted, or excluded in
+that archive. Global never-backup rules are reported separately under
+<code>credential_policy</code>, without recording secret values. If you only need to move
+to a new machine, logging in again is usually safer than copying the archive.</p>
 <h2 id="restoring">Restoring<a class="header-anchor" href="#restoring">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>default-20260811-012458.tar.gz
 </code></pre>
@@ -157,13 +168,26 @@ Stop it first with <code>openprogram stop</code>.</li>
 for <code>y</code>. Pass <code>-y</code> to skip this in a script.</li>
 <li><strong>Automatic safety snapshot.</strong> Your current state is backed up as
 <code>&lt;profile&gt;-pre-restore-&lt;timestamp&gt;.tar.gz</code> first, so a mistaken restore is
-itself undoable.</li>
+itself undoable. Restoring an archive that was created with
+<code>--include-credentials</code> makes that snapshot include credentials too, under
+the same authorization — otherwise the undo would drop the very secrets the
+restore replaced. The command says so when it happens.</li>
 </ol>
 <p>Use <code>--dry-run</code> to see the overwrite list without any of this happening:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span>default-20260811-012458.tar.gz<span class="w"> </span>--dry-run
 </code></pre>
 <p>Restore only replaces the entries present in the archive. State outside that
-scope — caches, logs — is left alone.</p>
+scope — caches, logs — is left alone. When a mixed file omits or redacts a
+registered secret field, restore keeps the current machine's value for that
+field instead of replacing it with a mask or deleting it.</p>
+<p>The whole archive is validated before any of it becomes visible: containment,
+member type, and the JSON shape of every registered secret file. Symlink,
+hardlink, and path-traversal members are refused outright, and a rejected
+archive leaves your state exactly as it was. Each file is then published
+through the same owner-only atomic writer the rest of OpenProgram uses, and
+every publish is journalled — so a restore interrupted by a crash or a full
+disk is reversed rather than left half-applied. Recovery runs automatically at
+the start of the next restore.</p>
 <h2 id="pruning">Pruning<a class="header-anchor" href="#pruning">#</a></h2>
 <p>Backups are never deleted automatically. When they pile up:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span class="w"> </span>--keep<span class="w"> </span><span class="m">5</span>
