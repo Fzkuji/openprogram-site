@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786524059">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provider Runtime Explicit Initialization Plan · OpenProgram Docs</title>
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/README.html" data-title-zh="概览" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Overview</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">API</div>
+<a class="navlink" href="/docs/reference/API.html" data-title-zh="API Reference" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API Reference</a>
+<a class="navlink" href="/docs/reference/api/runtime.html" data-title-zh="Runtime" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="Providers" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Providers</a>
+<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="agentic_function" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">agentic_function</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div>
+<a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI</a>
+<a class="navlink" href="/docs/reference/config.html" data-title-zh="配置" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration</a>
+<a class="navlink" href="/docs/reference/config-keys.html">Config keys</a>
+<a class="navlink" href="/docs/reference/provider-registry.html">Provider registry</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="笔记">Notes</div>
+<a class="navlink" href="/docs/reference/claude-code-compaction.html" data-title-zh="Claude Code 压缩机制" data-href-en="/docs/reference/claude-code-compaction.html" data-href-zh="/docs/reference/claude-code-compaction.zh.html">Claude Code Compaction</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="CLI 命令">CLI commands</div>
+<a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
+<a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
+<a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
+<a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
+<a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
+<a class="navlink" href="/docs/reference/cli/chat.html">chat</a>
+<a class="navlink" href="/docs/reference/cli/completion.html">completion</a>
+<a class="navlink" href="/docs/reference/cli/config.html">config</a>
+<a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
+<a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
+<a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
+<a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/plugins.html">plugins</a>
+<a class="navlink" href="/docs/reference/cli/ports.html">ports</a>
+<a class="navlink" href="/docs/reference/cli/programs.html">programs</a>
+<a class="navlink" href="/docs/reference/cli/providers.html">providers</a>
+<a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
+<a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
+<a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
+<a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
+<a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
+<a class="navlink" href="/docs/reference/cli/skills.html">skills</a>
+<a class="navlink" href="/docs/reference/cli/status.html">status</a>
+<a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
+<a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
+<a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
+<a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
+<a class="navlink" href="/docs/reference/cli/update.html">update</a>
+<a class="navlink" href="/docs/reference/cli/upgrade.html">upgrade</a>
+<a class="navlink" href="/docs/reference/cli/web.html">web</a>
+<a class="navlink" href="/docs/reference/cli/worker.html">worker</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Plans</div>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-bookmark-manager.html">Bookmark Manager Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compact-right-panel.html">Desktop Compact Right Panel Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html">Desktop Compound Tabs Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html">Desktop Multi-window Tab Transfer Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-07-19-desktop-web-split.html">Desktop Web Split Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html">Framework Adoption Homepage Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
+<a class="navlink active" href="/docs/superpowers/plans/2026-08-12-provider-runtime-initialization.html">Provider Runtime Explicit Initialization Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-record-replay-reliability.html">Record/Replay Reliability Task Brief and Ledger</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-send-queue-reliability.html">Send Queue Reliability Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-session-index-consistency.html">Session Index Consistency Task Brief and Ledger</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-websocket-command-lifecycle.html">WebSocket Command Lifecycle Task Brief and Ledger</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Superpowers · Specs</div>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-icon-flat-design.html">Desktop App Icon Flat Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html">Desktop Compound Tabs, Multi-window Transfer, and Compact Right Panel</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html">Desktop Web Split View and Bookmark Management</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-framework-adoption-homepage-design.html">Framework Adoption Homepage Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-homepage-optimization-design.html">OpenProgram Homepage Optimization Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-08-11-search-console-verification-design.html">Search Console Verification Design</a>
+<a class="navlink" href="/docs/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html">Tailwind CSS v3 → v4 升级</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Provider Runtime Explicit Initialization Plan</span></nav><h1 id="provider-runtime-explicit-initialization-plan">Provider Runtime Explicit Initialization Plan<a class="header-anchor" href="#provider-runtime-explicit-initialization-plan">#</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: use <code>superpowers:test-driven-development</code>; run specification review before quality review.</p>
+</blockquote>
+<p><strong>Goal:</strong> Remove provider registration and record/replay activation from <code>import openprogram.providers</code>, while preserving existing off/record behavior and keeping replay credential-free.</p>
+<p><strong>Approved design:</strong> <code>docs/reference/design/providers/record-replay.html</code> at design commit <code>ea796046</code>.</p>
+<p><strong>Base:</strong> <code>990bfe36e625579443e1cb01a1b3266c8dbd0e87</code> in isolated worktree <code>/private/tmp/openprogram-provider-runtime-design-20260812</code>.</p>
+<p><strong>Exclusions:</strong> No recording-format change, workflow/session/DAG replay, vendor request rewrite, runtime hot reload, Web/Node UI, resource-governance change, or auth account-management refactor. Do not modify the user's separate auth/send-queue worktree.</p>
+<h2 id="task-1-lifecycle-and-import-boundary">Task 1: Lifecycle and import boundary<a class="header-anchor" href="#task-1-lifecycle-and-import-boundary">#</a></h2>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create <code>openprogram/providers/initialization.py</code></li>
+<li>Modify <code>openprogram/providers/api_registry.py</code></li>
+<li>Modify <code>openprogram/providers/register.py</code></li>
+<li>Modify <code>openprogram/providers/__init__.py</code></li>
+<li>Modify <code>openprogram/auth/credential_provider.py</code></li>
+<li>Create <code>tests/providers/test_provider_initialization.py</code></li>
+</ul>
+<ol>
+<li>Add subprocess RED tests proving package import does not read record/replay config, open a recording, install a transform, or register provider/auth plugins.</li>
+<li>Add thread RED tests for one initializer, waiting callers, stable READY/FAILED results, interrupted initialization, and provider-batch publication failure.</li>
+<li>Implement <code>NEW → INITIALIZING → READY|FAILED</code> with <code>threading.Condition</code>; no production reset API.</li>
+<li>Make <code>get_api_provider()</code> initialize before registry lookup. Keep internal raw registry access private to initialization/register code so initialization does not recurse.</li>
+<li>Make built-in registration locked, retry-safe before success, and batch-published. Replace auth's provider-package side-effect import with explicit auth-adapter registration.</li>
+<li>Remove both import-time calls from <code>providers/__init__.py</code>.</li>
+<li>Verify focused tests and existing registry/provider tests; commit.</li>
+</ol>
+<h2 id="task-2-replay-safe-runtime-factory">Task 2: Replay-safe runtime factory<a class="header-anchor" href="#task-2-replay-safe-runtime-factory">#</a></h2>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify <code>openprogram/providers/registry.py</code></li>
+<li>Modify <code>tests/unit/test_create_runtime_routing.py</code></li>
+<li>Modify <code>tests/providers/test_provider_initialization.py</code></li>
+</ul>
+<ol>
+<li>Add RED cases for explicit plain and all three subscription providers in replay, non-credential defaults, missing defaults, and off/record compatibility.</li>
+<li>Add <code>model_namespace</code> metadata to the three subscription entries.</li>
+<li>Have <code>create_runtime()</code> initialize first. In replay only, choose provider/model from explicit arguments or non-credential config defaults, then construct base <code>Runtime</code> from <code>model_namespace:model</code>; do not call CLI/AuthStore detection, credential resolution, or <code>runtime_class</code> import/construction.</li>
+<li>Keep off/record code paths unchanged. Let <code>ReplayProvider</code> perform the existing full wire-level request comparison.</li>
+<li>Verify focused factory, subscription, detection, structured-output, and record/replay tests; commit.</li>
+</ol>
+<h2 id="task-3-explicit-process-startup-and-management-recovery">Task 3: Explicit process startup and management recovery<a class="header-anchor" href="#task-3-explicit-process-startup-and-management-recovery">#</a></h2>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify <code>openprogram/webui/server.py</code></li>
+<li>Modify <code>openprogram/worker/runner.py</code></li>
+<li>Modify <code>openprogram/cli.py</code></li>
+<li>Modify <code>tests/providers/test_record_replay_cli.py</code></li>
+<li>Modify relevant worker/Web startup tests discovered from callers</li>
+</ul>
+<ol>
+<li>Add RED tests proving Web/worker initialize before starting restore/warm-up/channel threads, while recordings status/off never initialize providers.</li>
+<li>Call <code>initialize_provider_runtime()</code> synchronously at Web/worker startup before their background threads.</li>
+<li>Delete <code>_OPENPROGRAM_RECORDINGS_MANAGEMENT</code>; dispatch recordings management directly.</li>
+<li>Verify missing/corrupt/unsupported replay recovery through real CLI subprocesses and startup fail-fast behavior; commit.</li>
+</ol>
+<h2 id="task-4-evidence-reviews-and-gates">Task 4: Evidence, reviews, and gates<a class="header-anchor" href="#task-4-evidence-reviews-and-gates">#</a></h2>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify implementation-status/evidence blocks in <code>docs/reference/design/providers/record-replay.html</code>, <code>.md</code>, and <code>.zh.md</code> only after code review passes.</li>
+</ul>
+<ol>
+<li>Run affected provider, factory, auth, CLI, worker, Web, usage, agent-loop, and runtime tests.</li>
+<li>Run an independent specification review against <code>ea796046</code>; reproduce and repair only contract findings, then obtain PASS.</li>
+<li>Run a fresh independent quality review; repair and re-review any load-bearing finding.</li>
+<li>Run the repository full Python gate, changed-file Ruff, docs build, checklinks, <code>git diff --check</code>, and clean-status check. Record exact environment-only failures at both base and candidate.</li>
+<li>Update implementation evidence and commit. Do not change the feature matrix: record/replay was already implemented and this task changes lifecycle quality, not capability scoring.</li>
+</ol>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Provider Request Record/Replay Entry Implementation Plan</span></a><a class="pn-link pn-next" href="/docs/superpowers/plans/2026-08-12-record-replay-reliability.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Record/Replay Reliability Task Brief and Ledger</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#task-1-lifecycle-and-import-boundary">Task 1: Lifecycle and import boundary</a>
+<a class="" href="#task-2-replay-safe-runtime-factory">Task 2: Replay-safe runtime factory</a>
+<a class="" href="#task-3-explicit-process-startup-and-management-recovery">Task 3: Explicit process startup and management recovery</a>
+<a class="" href="#task-4-evidence-reviews-and-gates">Task 4: Evidence, reviews, and gates</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>

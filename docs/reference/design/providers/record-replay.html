@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786523609" data-alt-lang-url="/docs/reference/design/providers/record-replay.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786524059" data-alt-lang-url="/docs/reference/design/providers/record-replay.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,8 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
 <a class="navlink" href="/docs/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/docs/reference/design/integrations/mcp-integration.html" data-href-zh="/docs/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/skills-and-plugins.html" data-title-zh="Skills &amp; Plugins" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html">Skills &amp; Plugins</a>
-<a class="navlink" href="/docs/reference/design/integrations/mcp-server.html" data-title-zh="MCP 服务端 —— 被外部调用" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html">MCP Server — Being Called From Outside</a>
-<a class="navlink" href="/docs/reference/design/integrations/mcp-server.viz.html">MCP 服务端：现状、九家对标与最小能力集 (viz)</a>
+<a class="navlink" href="/docs/reference/design/integrations/mcp-server.html">MCP 服务端：现状、九家对标与最小能力集</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Memory — 记忆系统设计">Memory — Memory System Design</div>
@@ -129,6 +128,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Plans</div>
 <a class="navlink" href="/docs/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/docs/reference/design/plans/cache-control-passthrough.html" data-href-zh="/docs/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
+<a class="navlink" href="/docs/reference/design/plans/2026-08-12-mcp-server.html">MCP Server Implementation Plan</a>
 <a class="navlink" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
 </div>
 <div class="nav-sec">
@@ -249,6 +249,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/session/storage.html" data-title-zh="Session 数据模型" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html">Session Data Model</a>
 <a class="navlink" href="/docs/reference/design/runtime/session/comparison.html" data-title-zh="Session 管理方案对比" data-href-en="/docs/reference/design/runtime/session/comparison.html" data-href-zh="/docs/reference/design/runtime/session/comparison.zh.html">Session Management Comparison</a>
 <a class="navlink" href="/docs/reference/design/runtime/session/operations.html" data-title-zh="Session 操作流程" data-href-en="/docs/reference/design/runtime/session/operations.html" data-href-zh="/docs/reference/design/runtime/session/operations.zh.html">Session Operations</a>
+<a class="navlink" href="/docs/reference/design/runtime/session/index-consistency.html">Session 注册表时间语义与并发一致性</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -279,14 +280,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Providers</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="请求录制与回放">Recording and replaying provider calls</span></nav><h1 id="recording-and-replaying-provider-calls">Recording and replaying provider calls<a class="header-anchor" href="#recording-and-replaying-provider-calls">#</a></h1>
 <blockquote>
 <p>Deterministic loop tests need a provider that answers the same way every run. Recording captures one real
-session at the API-provider chokepoint into a JSONL recording file; replay serves that recording file back offline, and reports
+session at the shared API-provider boundary into a JSONL recording file; replay returns those events offline and reports
 the exact field where a later run diverges.</p>
 </blockquote>
 <hr />
-<h2 id="1-where-it-attaches">1. Where it attaches<a class="header-anchor" href="#1-where-it-attaches">#</a></h2>
+<h2 id="1-request-boundary">1. Request boundary<a class="header-anchor" href="#1-request-boundary">#</a></h2>
 <p>Every model call in the framework goes through <code>providers/stream.py</code>, which looks up one <code>ApiProvider</code> in
 <code>api_registry</code> by <code>model.api</code> and calls <code>stream()</code> / <code>stream_simple()</code>. That registry entry is the single
-narrowest point where a request goes out and events come back, so both recording and replay are <code>ApiProvider</code>
+narrowest shared point where a request goes out and events come back, so both recording and replay are <code>ApiProvider</code>
 implementations registered there — no vendor module knows about either.</p>
 <pre><code>stream_simple(model, context, options)
         │  get_api_provider(model.api)
@@ -301,13 +302,27 @@ ReplayProvider ──reads recording.jsonl──▶ events, no vendor provider, 
 <p><code>RecordingProvider</code> wraps the provider it replaces and is transparent: it yields exactly the events the wrapped
 provider produced, writing each one out first. <code>ReplayProvider</code> wraps nothing and holds no HTTP client, so an
 agent loop driven by it cannot reach the network.</p>
+<p>Provider package import and runtime activation are separate contracts. Importing <code>openprogram.providers</code> defines
+and exports APIs; it must not register vendor providers, read <code>record_replay</code> configuration, open a recording, or
+install a registry transform. <code>initialize_provider_runtime()</code> performs built-in registration and one process-wide
+configuration snapshot before the first real provider lookup. Concurrent first callers wait for the same result.
+Built-in registration failure keeps the runtime FAILED and every caller sees the same stable error. Record/replay
+activation failure never fails the runtime: it logs the underlying error, installs a fail-closed provider that
+raises the same diagnostic on every stream call, and transitions to READY so <code>openprogram recordings status</code> and
+<code>openprogram recordings off</code> can recover the config. Recordings management commands call file/configuration
+functions directly and never initialize the provider runtime, so <code>status</code> and <code>off</code> remain available when a
+configured replay file is missing or invalid.</p>
+<p>This is not workflow recording. The Agent loop, Runtime, tools, Session, and DAG still execute the current code;
+replay replaces only the live LLM provider with recorded events. It does not restore a historical Session, replay
+tool side effects, roll back files, or define task steps.</p>
 <h2 id="2-recording-file-format">2. Recording file format<a class="header-anchor" href="#2-recording-file-format">#</a></h2>
 <p>JSONL, one JSON object per line, written in the order events occur. The first line is the header:</p>
 <pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;header&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
 </code></pre>
 <p><code>format_version</code> is a single integer, <code>RECORDING_FORMAT_VERSION</code> in <code>openprogram/providers/recording.py</code>. Replay
-compares it for equality and refuses any other value, so a recording file written before a shape change is rejected
-rather than misread. Bump it whenever a line's shape changes.</p>
+compares it for equality and refuses any other value, so an incompatible recording is rejected rather than misread.
+Bump it when required request/event/call_end fields or their semantics change. Optional header metadata that old
+readers may ignore does not require a version bump.</p>
 <p>The remaining line types:</p>
 <table>
 <thead>
@@ -365,23 +380,30 @@ reports the same path. Running past the end of the recording file raises the sam
 <p>Wall-clock fields listed in <code>NON_DETERMINISTIC_FIELD_NAMES</code> (currently <code>timestamp</code>) are skipped: they differ
 between the recording run and every replay run, and comparing them would make every recording file mismatch on its
 second message.</p>
-<h2 id="5-scope">5. Scope<a class="header-anchor" href="#5-scope">#</a></h2>
-<p>Recording and replay are library modules used from tests. There is no CLI entry point, no UI surface, and no
-recording file-management command; those wait until the format has settled. Tests register the providers themselves:</p>
+<h2 id="5-product-entry-and-scope">5. Product entry and scope<a class="header-anchor" href="#5-product-entry-and-scope">#</a></h2>
+<p>The library constructors remain available for focused tests:</p>
 <pre><code class="language-python"><span class="n">register_api_provider</span><span class="p">(</span><span class="n">api</span><span class="p">,</span> <span class="n">RecordingProvider</span><span class="p">(</span><span class="n">real_provider</span><span class="p">,</span> <span class="n">recording_path</span><span class="p">))</span>  <span class="c1"># capture</span>
 <span class="n">register_api_provider</span><span class="p">(</span><span class="n">api</span><span class="p">,</span> <span class="n">ReplayProvider</span><span class="p">(</span><span class="n">recording_path</span><span class="p">))</span>                    <span class="c1"># replay</span>
 </code></pre>
+<p>Product configuration uses <code>record_replay.mode=off|record|replay</code> with next-start application. The CLI exposes
+<code>openprogram recordings status|record|replay|off|list|show|delete|prune</code>. Strict offline replay covers only the LLM
+provider layer; tools and other subsystems keep their own network and permission policies. Recordings may contain
+prompts, model output, tool results, file excerpts, and personal data even after credential redaction.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<p>Implemented: <code>openprogram/providers/recording.py</code>, <code>openprogram/providers/replay.py</code>, covered by
-<code>tests/providers/test_record_replay.py</code>.</p>
+<p>Implemented: strict versioned recording/replay, shared registry transform, next-start configuration, recordings CLI
+and file management, and the explicit provider runtime lifecycle: side-effect-free provider package import, atomic
+auth/API publication, stable FAILED propagation for built-in registration failure, blocked-provider recovery for
+record/replay activation failure (runtime stays READY, <code>openprogram recordings status</code>/<code>off</code> recover), and removal
+of the import-time environment guard. The normative design and verification boundary are in
+<a href="/docs/reference/design/providers/record-replay.html"><code>record-replay.html</code></a>.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/network-proxy.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Outbound network proxy</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/request-build.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Request building: Context → per-provider parameters</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#1-where-it-attaches">1. Where it attaches</a>
+<a class="" href="#1-request-boundary">1. Request boundary</a>
 <a class="" href="#2-recording-file-format">2. Recording file format</a>
 <a class="" href="#3-redaction">3. Redaction</a>
 <a class="" href="#4-difference-reporting">4. Difference reporting</a>
-<a class="" href="#5-scope">5. Scope</a>
+<a class="" href="#5-product-entry-and-scope">5. Product entry and scope</a>
 <a class="" href="#implementation-status">Implementation status</a>
 </div></aside>
 </div>

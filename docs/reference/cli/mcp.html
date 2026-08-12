@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786523609">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786524059">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -111,9 +111,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html">JSON Schema Structured Output Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-homepage-optimization.html">OpenProgram Homepage Optimization Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-record-replay-entry.html">Provider Request Record/Replay Entry Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-provider-runtime-initialization.html">Provider Runtime Explicit Initialization Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-12-record-replay-reliability.html">Record/Replay Reliability Task Brief and Ledger</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-11-search-console-verification.html">Search Console Verification Implementation Plan</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-12-send-queue-reliability.html">Send Queue Reliability Implementation Plan</a>
+<a class="navlink" href="/docs/superpowers/plans/2026-08-12-session-index-consistency.html">Session Index Consistency Task Brief and Ledger</a>
 <a class="navlink" href="/docs/superpowers/plans/2026-08-12-websocket-command-lifecycle.html">WebSocket Command Lifecycle Task Brief and Ledger</a>
 </div>
 <div class="nav-sec">
@@ -131,6 +133,24 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h1 id="mcp">mcp<a class="header-anchor" href="#mcp">#</a></h1>
 <pre><code>usage: openprogram mcp [-h] verb ...
 </code></pre>
+<h2 id="mcp-token"><code>mcp token</code><a class="header-anchor" href="#mcp-token">#</a></h2>
+<p>Manage the independent stdio MCP server token</p>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp token create</code></td>
+<td>Create and print a new stdio MCP server token</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mcp-serve"><code>mcp serve</code><a class="header-anchor" href="#mcp-serve">#</a></h2>
+<p>Serve authenticated MCP over local stdio</p>
 <h2 id="mcp-list"><code>mcp list</code><a class="header-anchor" href="#mcp-list">#</a></h2>
 <p>List every configured MCP server with state</p>
 <h2 id="mcp-show"><code>mcp show</code><a class="header-anchor" href="#mcp-show">#</a></h2>
@@ -278,6 +298,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/logs.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">logs</span></a><a class="pn-link pn-next" href="/docs/reference/cli/memory.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">memory</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#mcp-token">mcp token</a>
+<a class="" href="#mcp-serve">mcp serve</a>
 <a class="" href="#mcp-list">mcp list</a>
 <a class="" href="#mcp-show">mcp show</a>
 <a class="" href="#mcp-add">mcp add</a>
