@@ -377,6 +377,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.html</loc></url>
@@ -397,7 +398,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/store-lock-scope.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/ssrf-protection.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/task-list-workflow.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
