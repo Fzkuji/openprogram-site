@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786539568">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786540677">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -226,11 +226,74 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<h2 id="subagent-list"><code>subagent list</code><a class="header-anchor" href="#subagent-list">#</a></h2>
+<p>List resource views for tasks in a session.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--session</code> <code>SESSION</code></td>
+<td>Session id whose tasks should be listed</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Print the canonical task resource views as JSON</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subagent-show"><code>subagent show</code><a class="header-anchor" href="#subagent-show">#</a></h2>
+<p>Show one task's resource view.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task_id</code></td>
+<td>Task id to inspect</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Print the canonical task resource view as JSON</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subagent-cancel"><code>subagent cancel</code><a class="header-anchor" href="#subagent-cancel">#</a></h2>
+<p>Cancel one task and show its updated resource view.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task_id</code></td>
+<td>Task id to cancel</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Print the canonical task resource view as JSON</td>
+</tr>
+</tbody>
+</table>
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/stop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">stop</span></a><a class="pn-link pn-next" href="/docs/reference/cli/trash.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">trash</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#subagent-spawn">subagent spawn</a>
 <a class="" href="#subagent-merge">subagent merge</a>
+<a class="" href="#subagent-list">subagent list</a>
+<a class="" href="#subagent-show">subagent show</a>
+<a class="" href="#subagent-cancel">subagent cancel</a>
 </div></aside>
 </div>
 
