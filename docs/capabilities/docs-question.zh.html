@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786543180" data-alt-lang-url="/docs/capabilities/skills.zh.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786543180" data-alt-lang-url="/docs/capabilities/docs-question.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skills · OpenProgram Docs</title>
+<title>询问 OpenProgram 自身 · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -80,12 +80,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
-<a class="navlink" href="/docs/capabilities/docs-question.html" data-title-zh="询问 OpenProgram 自身" data-href-en="/docs/capabilities/docs-question.html" data-href-zh="/docs/capabilities/docs-question.zh.html">Asking about OpenProgram itself</a>
+<a class="navlink active" href="/docs/capabilities/docs-question.html" data-title-zh="询问 OpenProgram 自身" data-href-en="/docs/capabilities/docs-question.html" data-href-zh="/docs/capabilities/docs-question.zh.html">Asking about OpenProgram itself</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
 <a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
-<a class="navlink active" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
+<a class="navlink" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
 <a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
 <a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
 <a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
@@ -97,47 +97,56 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Skills</span></nav><h1 id="skills">Skills<a class="header-anchor" href="#skills">#</a></h1>
-<p>A skill is domain knowledge the model loads on demand: one directory containing a <code>SKILL.md</code>. This page covers the skill format, the lookup paths, and the management commands — how to teach the agent &quot;how to do a class of tasks&quot; without writing code.</p>
-<h2 id="how-it-works">How it works<a class="header-anchor" href="#how-it-works">#</a></h2>
-<ol>
-<li>At startup, each skill directory is scanned for <code>&lt;slug&gt;/SKILL.md</code>; the <code>name</code> + <code>description</code> in the front matter are parsed.</li>
-<li>Every skill's name and one-line description are rendered into a skills block in the system prompt (the agentic runtime's <code>&lt;available_skills&gt;</code> block also carries the absolute path of each <code>SKILL.md</code>).</li>
-<li>The model judges whether the current task matches a skill's description; on a match, it reads the full <code>SKILL.md</code> with the <code>read</code> tool. The full text is never injected automatically.</li>
-</ol>
-<p>A skill executes nothing by itself. Scripts, reference files, and data can sit next to <code>SKILL.md</code> and be run through the existing <code>bash</code> / <code>execute_code</code> tools. Every discovered skill is also projected into the slash-command registry, so typing <code>/&lt;name&gt;</code> in chat inserts its body.</p>
-<h2 id="format">Format<a class="header-anchor" href="#format">#</a></h2>
-<pre><code class="language-markdown">---
-name: my-skill
-<span class="gu">description: One line saying when to use it — the model matches on this sentence.</span>
-<span class="gu">---</span>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram itself</span></nav><h1 id="询问-openprogram-自身">询问 OpenProgram 自身<a class="header-anchor" href="#询问-openprogram-自身">#</a></h1>
+<p>&quot;OpenProgram 能不能做 X&quot;&quot;怎么配 Y&quot;这类问题，这份文档站本来就有答案；模型凭着对别的 agent 产品的印象回答，正是错误答案的来源。<code>run_docs_question</code> 靠读这些页面来回答：它派一个只读的 agent，工作范围锁在仓库的 <code>docs/</code> 目录内，并报出答案来自哪几页。</p>
+<p>在 Functions 面板里以 <code>run_docs_question</code> 运行，或从 Python 调用：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.agentics.docs_question</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_docs_question</span>
 
-The body is free-form markdown: procedures, rule checklists, examples...
+<span class="n">result</span> <span class="o">=</span> <span class="n">run_docs_question</span><span class="p">(</span><span class="s2">&quot;能让一个会话一直做到条件成立吗？&quot;</span><span class="p">)</span>
 </code></pre>
-<p>The front matter is a <code>key: value</code> YAML subset; <code>name</code> and <code>description</code> are both required — a directory missing either is simply skipped.</p>
-<h2 id="lookup-paths">Lookup paths<a class="header-anchor" href="#lookup-paths">#</a></h2>
-<p>The system-prompt block probes two locations in order; on a name clash the first one found wins, so <strong>user skills override repo skills</strong>:</p>
-<ol>
-<li><code>~/.openprogram/skills/</code> (user level)</li>
-<li><code>&lt;OpenProgram repo&gt;/skills/</code> (project level)</li>
-</ol>
-<p>The management CLI and the slash-command projection merge five sources: bundled (shipped with OpenProgram), user (<code>~/.openprogram/skills/</code>), project (<code>&lt;cwd&gt;/skills/</code>), plugin-contributed (see <a href="/docs/capabilities/plugins.html">Plugins</a>), and remote-cache (<code>~/.openprogram/cache/skills/</code> — where <code>skills install</code> puts downloads).</p>
-<h2 id="management-commands">Management commands<a class="header-anchor" href="#management-commands">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>skills<span class="w"> </span>list<span class="w">       </span><span class="c1"># list discovered skills by source (bundled / user / project / plugin / remote-cache)</span>
-openprogram<span class="w"> </span>skills<span class="w"> </span>doctor<span class="w">     </span><span class="c1"># scan skill directories for problems</span>
-openprogram<span class="w"> </span>skills<span class="w"> </span>search<span class="w"> </span>&lt;q&gt;<span class="w">       </span><span class="c1"># search discovery sources (ClawHub by default)</span>
-openprogram<span class="w"> </span>skills<span class="w"> </span>install<span class="w"> </span>&lt;spec&gt;<span class="w">   </span><span class="c1"># install: slug (ClawHub by default), clawhub:&lt;slug&gt;, github:owner/repo</span>
-openprogram<span class="w"> </span>skills<span class="w"> </span>update<span class="w"> </span>--all<span class="w">     </span><span class="c1"># compare local SKILL.md hashes with upstream, re-pull stale ones (or pass one name)</span>
-openprogram<span class="w"> </span>skills<span class="w"> </span>remove<span class="w"> </span>&lt;slug&gt;<span class="w">    </span><span class="c1"># remove an installed skill (project / user / remote-cache only)</span>
+<h2 id="它读什么">它读什么<a class="header-anchor" href="#它读什么">#</a></h2>
+<p>整棵文档树，此外什么都不读。这个 agent 只拿到四个工具（<code>read</code>、<code>grep</code>、<code>glob</code>、<code>list</code>），写不了、改不了、也起不了 shell，prompt 把它的工作范围钉在给定的 <code>docs/</code> 目录上。它也看不到派生它的那轮对话：问题就是它的全部交待，所以答案来自页面，而不是来自会话当时在聊什么。</p>
+<p>它不是上来就开文件。prompt 里带着每个英文页的路径和标题清单，agent 先按路径和标题挑候选页，再去读正文。英文页（<code>xxx.md</code>）为准；旁边的 <code>xxx.zh.md</code> 在问题是中文或英文页有歧义时对照着看，两者不一致时报出的是英文页的说法。</p>
+<p>生成的参考页（<code>reference/cli/</code>、<code>reference/config-keys.md</code>、<code>reference/provider-registry.md</code>）是构建产物，所以没构建过站点的检出里，清单上就少这几页。不会因此报错。</p>
+<h2 id="三种回答不是两种">三种回答，不是两种<a class="header-anchor" href="#三种回答不是两种">#</a></h2>
+<p>&quot;OpenProgram 支不支持 X&quot;这个问题有三种诚实的回答，它们被分开：</p>
+<table>
+<thead>
+<tr>
+<th><code>covered</code></th>
+<th>回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>true</code></td>
+<td>文档回答了这个问题。答案照页面的写法给出命令、配置键或路径。</td>
+</tr>
+<tr>
+<td><code>true</code></td>
+<td>文档写了这东西<strong>不</strong>支持，或者写的行为和问题的假设不一样。这是文档里的事实，同样附出处。</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td>文档根本没提。答案直说没覆盖，并指向最接近的相关页，让你知道这个话题该落在哪里。</td>
+</tr>
+</tbody>
+</table>
+<p>值得有的正是第三种。&quot;文档未覆盖&quot;是一个真答案，猜某个功能存不存在不是；prompt 明确禁止用对 agent 产品的泛泛认识去补这个缺口。</p>
+<h2 id="返回什么">返回什么<a class="header-anchor" href="#返回什么">#</a></h2>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;capabilities/goal.md&quot;</span><span class="p">],</span> <span class="s2">&quot;covered&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 </code></pre>
-<p><code>install</code> accepts <code>--source</code> to name a discovery-source URL (<code>clawhub://</code>, a GitHub repo, or a JSON index).</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Harnesses</span></a><a class="pn-link pn-next" href="/docs/capabilities/distill.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Distill</span></a></div></article></main>
+<p><code>sources</code> 是相对 <code>docs/</code> 的路径，按引用顺序去重。指向不存在页面的引用会被丢掉，所以编出来的页名不会作为出处递到你手上。<code>covered</code> 为 <code>false</code> 时，<code>sources</code> 装的是 agent 找到的最接近的相关页，而不是回答了问题的页。</p>
+<p>空问题在派 agent 之前就被拒掉；agent 的回复无法表达成这个结构时直接报错，而不是返回半个答案。</p>
+<h2 id="答案的来源">答案的来源<a class="header-anchor" href="#答案的来源">#</a></h2>
+<p><a href="/docs/capabilities/README.html">概览</a>以及本站其他 Tab 下的全部内容。答案不对，要修的是它引的那一页：这个函数报的是文档，它不读代码。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/task-list.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Task lists</span></a><a class="pn-link pn-next" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Harnesses</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#how-it-works">How it works</a>
-<a class="" href="#format">Format</a>
-<a class="" href="#lookup-paths">Lookup paths</a>
-<a class="" href="#management-commands">Management commands</a>
+<a class="" href="#它读什么">它读什么</a>
+<a class="" href="#三种回答不是两种">三种回答，不是两种</a>
+<a class="" href="#返回什么">返回什么</a>
+<a class="" href="#答案的来源">答案的来源</a>
 </div></aside>
 </div>
 
