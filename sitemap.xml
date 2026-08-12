@@ -201,6 +201,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/function/calling/code-call.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling-unification.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling-unification.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/implementation-status.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
@@ -311,6 +312,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-comparison.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
@@ -319,6 +321,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-live.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/persistence-observability.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/rendering.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/rendering.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agent-call-flow.html</loc></url>
@@ -444,11 +447,14 @@
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-web-split.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-agent-resource-governance.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-homepage-optimization.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-record-replay-entry.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-search-console-verification.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-agent-resource-governance-completion.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-dag-persistence-observability.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-provider-runtime-initialization.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-record-replay-reliability.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-send-queue-reliability.html</loc></url>
