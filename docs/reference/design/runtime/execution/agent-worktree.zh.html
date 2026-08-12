@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786542735" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786543127" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -311,6 +311,8 @@ OpenProgram 自己的 session-git 严格区分。</p>
 <li><code>parent_session_id</code>: 关联的 OpenProgram session（一对一或一对多）</li>
 <li><code>parent_task_id</code>: 关联的 async task（若有）</li>
 <li><code>created_by_agent</code>: agent id（记录是哪个 agent 开的，UI 上能看出来）</li>
+<li><code>pr_number</code>: 通过 <code>worktree_create</code> 的 <code>pr</code> 参数开出来的 worktree 会记这个值（见 D5b）；
+后续再对同一个 PR 号调用 <code>pr</code> 模式时，靠它识别出重复而不是再开一个</li>
 </ul>
 <p>记录持久化在 session-git 仓库的 <code>worktrees/&lt;id&gt;.json</code>，跟 ContextCommit 平行存。
 session 关闭时不自动清理，等 agent 或用户显式 merge / discard。</p>
@@ -386,6 +388,29 @@ worktree path（若有），否则 session-git 的 <code>workdir/</code>。</li>
 </ol>
 <p>入口都失败 → worktree_create 报错 <code>source_repo_not_a_git_repo</code>。
 不会自动 <code>git init</code> 给用户建仓库（破坏性太大）。</p>
+<h3 id="d5b-直接从-pr-开-worktree">D5b. 直接从 PR 开 worktree<a class="header-anchor" href="#d5b-直接从-pr-开-worktree">#</a></h3>
+<p><code>worktree_create</code> 的 <code>pr</code> 参数让 worktree 直接开在某个 PR 的分支上，替代 <code>base_ref</code>——
+接受纯数字（<code>123</code>）、<code>#</code> 前缀（<code>#123</code>）、或完整 GitHub PR 链接
+（<code>https://github.com/&lt;owner&gt;/&lt;repo&gt;/pull/&lt;number&gt;</code>）。解析逻辑在
+<code>openprogram/worktree/pr_ref.py::parse_pr_ref</code>。这条路复用同一个 <code>worktree_create</code>
+工具和同一条 <code>WorktreeManager.create_worktree</code> 创建路径——<code>pr</code> 是这唯一入口上的一种
+模式切换，不是另起一个工具。</p>
+<p>解析走 <code>gh</code> CLI（<code>openprogram/worktree/pr_ref.py</code>）：</p>
+<ol>
+<li><code>gh pr view &lt;n&gt; --json headRefName,headRepositoryOwner,isCrossRepository</code> 读 PR
+的 head 分支和是否来自 fork。</li>
+<li><strong>同仓 PR</strong>（<code>isCrossRepository=false</code>）：<code>git fetch origin &lt;headRefName&gt;:&lt;local_branch&gt;</code>——
+分支已经在 <code>origin</code> 上。</li>
+<li><strong>fork PR</strong>（<code>isCrossRepository=true</code>）：<code>git fetch origin pull/&lt;n&gt;/head:&lt;local_branch&gt;</code>——
+GitHub 提供的每个 PR 一个的合成 ref，跟 <code>gh pr checkout</code> 用的机制一样，不需要把
+贡献者的 fork 注册成 remote。</li>
+<li>fetch 到的 commit 作为普通 <code>git worktree add</code> 的 <code>base_ref</code>；worktree 自己的分支名是
+<code>op/wt/pr-&lt;n&gt;-&lt;id6&gt;</code>（跟其它 worktree 一样的 <code>op/wt/&lt;slug&gt;-&lt;id6&gt;</code> 命名惯例，用 PR 号
+顶替 label 位置）。临时 fetch ref 在 <code>-b</code> 把它的 tip 拷到新分支后就删掉。</li>
+</ol>
+<p><code>gh</code> 缺失或未登录会报 <code>pr_ref_error: gh_not_found</code> / <code>gh_not_authenticated</code>——绝不
+静默退回 <code>base_ref</code>。同一 PR 号已存在一个非终态 worktree（<code>Worktree.pr_number</code>）时报
+<code>pr_worktree_exists</code>，报出已有 worktree 的 id 和路径，而不是重复创建。</p>
 <h3 id="d6-安全-权限">D6. 安全 / 权限<a class="header-anchor" href="#d6-安全-权限">#</a></h3>
 <p>worktree 内 agent 工具的核心安全约束：<strong>bash 命令的 cwd 锁定，但 cmd
 内可以 <code>cd ..</code> 跑到 worktree 外</strong>。这不是真正的 sandbox，只是设定默认位置。
@@ -470,7 +495,7 @@ into source_repo (ff-only, 3 files changed)&quot;。</p>
 <tbody>
 <tr>
 <td><code>worktree_create</code></td>
-<td><code>source_repo: str?</code> <code>name: str?</code> <code>base_ref: str?</code></td>
+<td><code>source_repo: str?</code> <code>branch_name: str?</code> <code>base_ref: str?</code> <code>label: str?</code> <code>pr: str?</code>（见 D5b，纯数字 / <code>#number</code> / GitHub PR 链接，一旦传了 <code>branch_name</code>/<code>base_ref</code> 会被忽略）</td>
 <td><code>{id, path, branch, base_sha}</code></td>
 </tr>
 <tr>
@@ -498,6 +523,8 @@ into source_repo (ff-only, 3 files changed)&quot;。</p>
 <li><code>merge_conflict</code>: merge 期间冲突</li>
 <li><code>worktree_in_sessions_dir</code>: source_repo 落在 sessions 树里（D4 隔离违例）</li>
 <li><code>worktree_exists</code>: 同 source_repo 下同名 branch 已有 worktree</li>
+<li><code>pr_ref_error</code>: <code>pr</code> 解析不出来，或 <code>gh</code> 缺失 / 未登录 / 调用失败（D5b）</li>
+<li><code>pr_worktree_exists</code>: 同一个 PR 号已经有非终态 worktree（D5b）</li>
 </ul>
 <p><code>worktree_create</code> / <code>worktree_merge</code> / <code>worktree_discard</code> 默认
 <code>requires_approval=True</code>，permission_mode=auto 才不弹审批。</p>
@@ -1029,6 +1056,7 @@ docker backend。</li>
 <a class="lvl-3" href="#d3-状态机">D3. 状态机</a>
 <a class="lvl-3" href="#d4-跟-openprogram-session-git-的隔离">D4. 跟 OpenProgram session-git 的隔离</a>
 <a class="lvl-3" href="#d5-source-repo-来源">D5. Source repo 来源</a>
+<a class="lvl-3" href="#d5b-直接从-pr-开-worktree">D5b. 直接从 PR 开 worktree</a>
 <a class="lvl-3" href="#d6-安全-权限">D6. 安全 / 权限</a>
 <a class="lvl-3" href="#d7-worktree-内的-commit">D7. Worktree 内的 commit</a>
 <a class="lvl-3" href="#d8-merge-策略">D8. Merge 策略</a>

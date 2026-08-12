@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786542735" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786543127" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -311,6 +311,8 @@ runtime / session model.</p>
 <li><code>parent_session_id</code>: the associated OpenProgram session (one-to-one or one-to-many)</li>
 <li><code>parent_task_id</code>: the associated async task (if any)</li>
 <li><code>created_by_agent</code>: agent id (records which agent opened it, so it is visible in the UI)</li>
+<li><code>pr_number</code>: set when the worktree was opened via <code>worktree_create</code>'s <code>pr</code> parameter (D5b);
+lets a later <code>pr</code>-mode call detect a duplicate instead of opening a second worktree for the same PR</li>
 </ul>
 <p>Records are persisted in the session-git repository at <code>worktrees/&lt;id&gt;.json</code>, stored alongside ContextCommit.
 They are not cleaned up automatically when the session closes; they wait for the agent or user to explicitly merge / discard.</p>
@@ -385,6 +387,31 @@ Usually the directory from which the user launched OpenProgram.</li>
 </ol>
 <p>If all entry points fail → worktree_create reports the error <code>source_repo_not_a_git_repo</code>.
 It will not automatically <code>git init</code> a repository for the user (too destructive).</p>
+<h3 id="d5b-opening-a-worktree-directly-from-a-pr">D5b. Opening a Worktree Directly From a PR<a class="header-anchor" href="#d5b-opening-a-worktree-directly-from-a-pr">#</a></h3>
+<p><code>worktree_create</code>'s <code>pr</code> parameter opens a worktree on a pull request's branch instead of
+<code>base_ref</code> — accepts a bare number (<code>123</code>), a <code>#</code>-prefixed number (<code>#123</code>), or a full GitHub PR
+URL (<code>https://github.com/&lt;owner&gt;/&lt;repo&gt;/pull/&lt;number&gt;</code>). Parsing lives in
+<code>openprogram/worktree/pr_ref.py::parse_pr_ref</code>. This reuses the same <code>worktree_create</code> tool and
+the same <code>WorktreeManager.create_worktree</code> code path as every other worktree — <code>pr</code> is a mode
+switch on that one entry point, not a second tool.</p>
+<p>Resolution, via the <code>gh</code> CLI (<code>openprogram/worktree/pr_ref.py</code>):</p>
+<ol>
+<li><code>gh pr view &lt;n&gt; --json headRefName,headRepositoryOwner,isCrossRepository</code> reads the PR's head
+branch and whether it lives on a fork.</li>
+<li><strong>Same-repo PR</strong> (<code>isCrossRepository=false</code>): <code>git fetch origin &lt;headRefName&gt;:&lt;local_branch&gt;</code> —
+the branch already exists on <code>origin</code>.</li>
+<li><strong>Fork PR</strong> (<code>isCrossRepository=true</code>): <code>git fetch origin pull/&lt;n&gt;/head:&lt;local_branch&gt;</code> — GitHub's
+synthetic per-PR ref, the same mechanism <code>gh pr checkout</code> uses, so no remote has to be registered
+for the contributor's fork.</li>
+<li>The fetched commit becomes <code>base_ref</code> for a normal <code>git worktree add</code>; the worktree's own branch
+is named <code>op/wt/pr-&lt;n&gt;-&lt;id6&gt;</code> (same <code>op/wt/&lt;slug&gt;-&lt;id6&gt;</code> convention as every other worktree, with
+the PR number standing in for the label). The throwaway fetch ref is deleted once <code>-b</code> has copied
+its tip onto the new branch.</li>
+</ol>
+<p><code>gh</code> missing or unauthenticated raises <code>pr_ref_error: gh_not_found</code> / <code>gh_not_authenticated</code> —
+never a silent fallback to <code>base_ref</code>. A non-terminal worktree already open on the same PR number
+(<code>Worktree.pr_number</code>) raises <code>pr_worktree_exists</code>, naming the existing worktree's id and path,
+instead of creating a duplicate.</p>
 <h3 id="d6-security-permissions">D6. Security / Permissions<a class="header-anchor" href="#d6-security-permissions">#</a></h3>
 <p>The core security constraint for agent tools inside a worktree: <strong>the bash command's cwd is locked, but the cmd
 itself can <code>cd ..</code> to run outside the worktree</strong>. This is not a true sandbox; it sets the default location.
@@ -469,7 +496,7 @@ into source_repo (ff-only, 3 files changed)&quot;.</p>
 <tbody>
 <tr>
 <td><code>worktree_create</code></td>
-<td><code>source_repo: str?</code> <code>name: str?</code> <code>base_ref: str?</code></td>
+<td><code>source_repo: str?</code> <code>branch_name: str?</code> <code>base_ref: str?</code> <code>label: str?</code> <code>pr: str?</code> (D5b — number / <code>#number</code> / GitHub PR URL, ignores <code>branch_name</code>/<code>base_ref</code> when set)</td>
 <td><code>{id, path, branch, base_sha}</code></td>
 </tr>
 <tr>
@@ -497,6 +524,8 @@ into source_repo (ff-only, 3 files changed)&quot;.</p>
 <li><code>merge_conflict</code>: conflict during merge</li>
 <li><code>worktree_in_sessions_dir</code>: source_repo falls inside the sessions tree (D4 isolation violation)</li>
 <li><code>worktree_exists</code>: a worktree with the same branch name already exists under the same source_repo</li>
+<li><code>pr_ref_error</code>: <code>pr</code> doesn't parse, or <code>gh</code> is missing/unauthenticated/fails (D5b)</li>
+<li><code>pr_worktree_exists</code>: a non-terminal worktree already exists for this PR number (D5b)</li>
 </ul>
 <p><code>worktree_create</code> / <code>worktree_merge</code> / <code>worktree_discard</code> default to
 <code>requires_approval=True</code>; only permission_mode=auto skips the approval prompt.</p>
@@ -1028,6 +1057,7 @@ restarts (after restart, list_worktrees probes, and ones still active are marked
 <a class="lvl-3" href="#d3-state-machine">D3. State Machine</a>
 <a class="lvl-3" href="#d4-isolation-from-openprogram-session-git">D4. Isolation from OpenProgram session-git</a>
 <a class="lvl-3" href="#d5-where-source_repo-comes-from">D5. Where source_repo Comes From</a>
+<a class="lvl-3" href="#d5b-opening-a-worktree-directly-from-a-pr">D5b. Opening a Worktree Directly From a PR</a>
 <a class="lvl-3" href="#d6-security-permissions">D6. Security / Permissions</a>
 <a class="lvl-3" href="#d7-commits-inside-a-worktree">D7. Commits Inside a Worktree</a>
 <a class="lvl-3" href="#d8-merge-strategy">D8. Merge Strategy</a>
