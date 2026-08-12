@@ -409,6 +409,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.zh.html</loc></url>
@@ -416,6 +417,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/websocket-command-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/usage-metering.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/usage-metering.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/provider-registry.html</loc></url>
@@ -447,6 +449,9 @@
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-record-replay-entry.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-search-console-verification.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-record-replay-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-send-queue-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-websocket-command-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-icon-flat-design.html</loc></url>
   <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html</loc></url>

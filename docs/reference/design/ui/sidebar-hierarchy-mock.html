@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786466393">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786523609">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,6 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="指示点系统" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Indicator dot system</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
+<a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html">OpenProgram 浏览器式界面原型 v3</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace.html" data-title-zh="项目工作区 —— 文件、多 Tab 与多会话" data-href-en="/docs/reference/design/ui/project-workspace.html" data-href-zh="/docs/reference/design/ui/project-workspace.zh.html">Project workspace — files, tabs, and multi-session</a>
@@ -266,6 +267,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
+<a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
 <a class="navlink active" href="/docs/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
 <a class="navlink" href="/docs/reference/design/ui/layout-density-mock.html">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
@@ -274,7 +276,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Web UI</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">左侧栏层级设计 mock</span></nav><iframe class="viz-frame" src="/docs/reference/design/ui/sidebar-hierarchy-mock.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/web-styles.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Web style organization</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/layout-density-mock.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</span></a></div></article></main>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Web UI</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">左侧栏层级设计 mock</span></nav><iframe class="viz-frame" src="/docs/reference/design/ui/sidebar-hierarchy-mock.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/websocket-command-lifecycle.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">WebSocket 命令与交互等待生命周期</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/layout-density-mock.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 
