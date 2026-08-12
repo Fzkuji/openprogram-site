@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786543180" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786544365" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -896,7 +896,49 @@ only OpenProgram's reference is unbound; in the user's git repository they can s
 </li>
 </ol>
 <hr />
-<h2 id="part-4-out-of-scope">Part 4. Out of Scope<a class="header-anchor" href="#part-4-out-of-scope">#</a></h2>
+<h2 id="part-4-worktreeinclude">Part 4. <code>.worktreeinclude</code><a class="header-anchor" href="#part-4-worktreeinclude">#</a></h2>
+<p><code>git worktree add</code> only ever checks out <strong>tracked</strong> content. Files a repo deliberately keeps
+untracked and gitignored — <code>.env</code>, per-machine TLS certs, <code>*.local.json</code> overrides — never
+appear in a fresh worktree, even though the agent's tools need them immediately (a bash command
+reading <code>.env</code> fails silently different from how it fails in the main tree).</p>
+<p>If <code>source_repo/.worktreeinclude</code> exists, each line is a gitignore-style pattern:</p>
+<ul>
+<li><code>#</code> at the start of a (trimmed) line is a comment; blank lines are ignored.</li>
+<li><code>*</code>, <code>?</code>, <code>[...]</code> — standard glob wildcards.</li>
+<li>A pattern with no <code>/</code> matches the basename anywhere in the tree (<code>*.local.json</code> matches both
+<code>a.local.json</code> and <code>sub/a.local.json</code>).</li>
+<li>A pattern containing <code>/</code> is anchored to the repo root.</li>
+<li>A trailing <code>/</code> marks a directory pattern (matches the directory and everything under it).</li>
+</ul>
+<p>Not supported: <code>!</code> negation, <code>**</code> double-star. Split those cases into multiple plain patterns.</p>
+<p>At the end of <code>create_worktree</code>, right after <code>git worktree add</code> succeeds, <code>WorktreeManager</code>
+calls <code>sync_include_files(source_repo, worktree_path)</code>
+(<code>openprogram/worktree/include_sync.py</code>). This is the single choke point every creation path
+shares — the <code>worktree_create</code> tool, and any future task/plan-mode fan-out — so the hook lives
+in the manager, not in one caller.</p>
+<p>Semantics:</p>
+<ul>
+<li>Only <strong>untracked</strong> files are ever candidates (<code>git ls-files --others</code>, deliberately without
+<code>--exclude-standard</code> so already-gitignored files like <code>.env</code> still show up) — tracked files
+are already checked out by <code>git worktree add</code> itself.</li>
+<li>A destination path that already exists is left untouched (no clobber).</li>
+<li>Symlinks are copied as links, not dereferenced.</li>
+<li>File permissions are preserved (<code>shutil.copy2</code>).</li>
+<li>One file's copy failure is recorded and does not abort the rest; failures and successes are
+both attached to the <code>Worktree</code> record (<code>include_synced</code> / <code>include_failed</code>) and echoed in the
+<code>worktree_create</code> tool's return string.</li>
+<li>No <code>.worktreeinclude</code> file in <code>source_repo</code> → zero git calls, zero behavior change.</li>
+</ul>
+<p>Pattern matching is hand-rolled Python (<code>fnmatch</code> + <code>pathlib</code>), not git's own exclude engine.
+<code>git check-ignore</code> / <code>ls-files --exclude-from</code> only ever <em>exclude</em> matches from a listing — there
+is no plumbing form that treats a pattern file as an <em>include</em> filter — and pointing git at an
+arbitrary pattern file otherwise requires <code>core.excludesFile</code> config injection, which this
+sandbox refuses. Reusing git's own untracked-file enumeration (<code>git ls-files --others</code>) plus a
+small pattern matcher over the manifest gets git's semantics for &quot;what's untracked&quot; without
+needing config injection or a new dependency (<code>pathspec</code> is not in <code>openprogram</code>'s own base
+dependency set — it only ships transitively via <code>semble</code>, an MCP dev tool).</p>
+<hr />
+<h2 id="part-5-out-of-scope">Part 5. Out of Scope<a class="header-anchor" href="#part-5-out-of-scope">#</a></h2>
 <ul>
 <li><strong>Remote push</strong>: the worktree is local-only; to push the worktree branch to origin, the agent runs
 <code>git push -u origin &lt;branch&gt;</code> via bash itself. worktree_merge does not push either.</li>
@@ -953,6 +995,10 @@ restarts (after restart, list_worktrees probes, and ones still active are marked
 <tr>
 <td>Sub-agent worktree mechanism</td>
 <td>removed when sub-agents became peer sessions; not reused here</td>
+</tr>
+<tr>
+<td><code>.worktreeinclude</code> untracked-file sync</td>
+<td>landed — <code>openprogram/worktree/include_sync.py</code>, called from <code>WorktreeManager.create_worktree</code></td>
 </tr>
 </tbody>
 </table>
@@ -1074,7 +1120,8 @@ restarts (after restart, list_worktrees probes, and ones still active are marked
 <a class="lvl-3" href="#scenario-c-concurrent-worktrees-plan-agent-dispatches-3-tasks">Scenario C: Concurrent worktrees (plan agent dispatches 3 tasks)</a>
 <a class="lvl-3" href="#scenario-d-long-running-worktree-user-takeover">Scenario D: Long-running worktree / user takeover</a>
 <a class="" href="#part-3-key-invariants">Part 3. Key Invariants</a>
-<a class="" href="#part-4-out-of-scope">Part 4. Out of Scope</a>
+<a class="" href="#part-4-worktreeinclude">Part 4. .worktreeinclude</a>
+<a class="" href="#part-5-out-of-scope">Part 5. Out of Scope</a>
 <a class="" href="#appendix-implementation-status">Appendix: Implementation Status</a>
 </div></aside>
 </div>

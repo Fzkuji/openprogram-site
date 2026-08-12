@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786543180" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786544365" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -895,7 +895,45 @@ ContextCommit 读取时能据此区分&quot;在哪儿改的&quot;。</p>
 </li>
 </ol>
 <hr />
-<h2 id="part-4-不在本设计范围">Part 4. 不在本设计范围<a class="header-anchor" href="#part-4-不在本设计范围">#</a></h2>
+<h2 id="part-4-worktreeinclude">Part 4. <code>.worktreeinclude</code><a class="header-anchor" href="#part-4-worktreeinclude">#</a></h2>
+<p><code>git worktree add</code>只checkout<strong>已跟踪</strong>的内容。仓库故意保持未跟踪且被 gitignore 的文件
+（<code>.env</code>、按机器分的 TLS 证书、<code>*.local.json</code> 覆盖项）不会出现在新建的 worktree 里，
+但 agent 的工具马上就要用到它们。</p>
+<p><code>source_repo/.worktreeinclude</code>存在时，每行是一条 gitignore 风格的 pattern：</p>
+<ul>
+<li>去掉首尾空白后以<code>#</code>开头的行是注释；空行忽略。</li>
+<li><code>*</code>、<code>?</code>、<code>[...]</code>——标准 glob 通配符。</li>
+<li>不含<code>/</code>的 pattern 匹配树里任意位置的 basename（<code>*.local.json</code>同时匹配<code>a.local.json</code>
+和<code>sub/a.local.json</code>）。</li>
+<li>含<code>/</code>的 pattern 相对仓库根锚定。</li>
+<li>结尾的<code>/</code>标记目录 pattern（匹配该目录及其下所有内容）。</li>
+</ul>
+<p>不支持：<code>!</code>取反、<code>**</code>双星号。这类情形拆成多条普通 pattern。</p>
+<p><code>create_worktree</code>末尾、<code>git worktree add</code>成功之后，<code>WorktreeManager</code>调用
+<code>sync_include_files(source_repo, worktree_path)</code>（<code>openprogram/worktree/include_sync.py</code>）。
+这是所有创建路径共同经过的唯一入口——<code>worktree_create</code>工具，以及未来的
+task/plan-mode 并发创建——所以钩子挂在 manager 里，不挂在某一个调用方上。</p>
+<p>语义：</p>
+<ul>
+<li>只有<strong>未跟踪</strong>文件才是候选（<code>git ls-files --others</code>，刻意不加<code>--exclude-standard</code>，
+这样已经被 gitignore 的<code>.env</code>之类仍会出现）——已跟踪文件本来就被
+<code>git worktree add</code>自己 checkout 了。</li>
+<li>目标路径已存在就跳过，不覆盖。</li>
+<li>符号链接按链接本身拷贝，不解引用。</li>
+<li>文件权限保留（<code>shutil.copy2</code>）。</li>
+<li>单个文件拷贝失败会被记录，不中断其余文件；成功与失败都会挂到<code>Worktree</code>记录上
+（<code>include_synced</code> / <code>include_failed</code>），并回显在<code>worktree_create</code>工具的返回文本里。</li>
+<li><code>source_repo</code>里没有<code>.worktreeinclude</code>文件→零 git 调用，零行为变化。</li>
+</ul>
+<p>Pattern 匹配是手写的 Python（<code>fnmatch</code> + <code>pathlib</code>），不是 git 自己的 exclude 引擎。
+<code>git check-ignore</code> / <code>ls-files --exclude-from</code>只会把匹配到的文件从列表里<strong>排除</strong>——
+没有把 pattern 文件当作<em>包含</em>过滤器的 plumbing 形式——要让 git 指向任意 pattern 文件，
+另一条路是<code>core.excludesFile</code>配置注入，这个 sandbox 会拒绝。复用 git 自己枚举未跟踪
+文件的能力（<code>git ls-files --others</code>）加一个小的 pattern matcher 处理 manifest，
+不需要配置注入也不需要新依赖——<code>pathspec</code>不在<code>openprogram</code>自己的 base
+dependencies 里，它只通过<code>semble</code>（一个 MCP 开发工具）传递引入。</p>
+<hr />
+<h2 id="part-5-不在本设计范围">Part 5. 不在本设计范围<a class="header-anchor" href="#part-5-不在本设计范围">#</a></h2>
 <ul>
 <li><strong>远程 push</strong>：worktree 只本地；要把 worktree branch 推 origin，agent 自己用
 bash 跑 <code>git push -u origin &lt;branch&gt;</code>。worktree_merge 也不做 push。</li>
@@ -952,6 +990,10 @@ docker backend。</li>
 <tr>
 <td>Sub-agent worktree 机制</td>
 <td>在 sub-agent 改为 peer session 时已移除，本设计不复用</td>
+</tr>
+<tr>
+<td><code>.worktreeinclude</code> 未跟踪文件同步</td>
+<td>已落地——<code>openprogram/worktree/include_sync.py</code>，从 <code>WorktreeManager.create_worktree</code> 调用</td>
 </tr>
 </tbody>
 </table>
@@ -1073,7 +1115,8 @@ docker backend。</li>
 <a class="lvl-3" href="#场景-c-并发-worktreeplan-agent-分发-3-个-task">场景 C: 并发 worktree（plan agent 分发 3 个 task）</a>
 <a class="lvl-3" href="#场景-d-长时间-worktree-用户接管">场景 D: 长时间 worktree / 用户接管</a>
 <a class="" href="#part-3-关键不变式">Part 3. 关键不变式</a>
-<a class="" href="#part-4-不在本设计范围">Part 4. 不在本设计范围</a>
+<a class="" href="#part-4-worktreeinclude">Part 4. .worktreeinclude</a>
+<a class="" href="#part-5-不在本设计范围">Part 5. 不在本设计范围</a>
 <a class="" href="#附录实现状态">附录：实现状态</a>
 </div></aside>
 </div>
