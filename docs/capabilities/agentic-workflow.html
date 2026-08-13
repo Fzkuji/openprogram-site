@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786609603" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786630014" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -130,7 +130,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="self-programmed-agentic-workflows">Self-programmed agentic workflows<a class="header-anchor" href="#self-programmed-agentic-workflows">#</a></h1>
-<p><code>agentic_workflow</code> is OpenProgram's self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The planner composes the program out of the framework's building blocks — free-form <code>agent()</code> calls and the registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
+<p><code>agentic_workflow</code> is OpenProgram's self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The planner composes the program out of the framework's building blocks — three-tier LLM primitives plus registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
 <p>Run it from the Programs panel as <code>agentic_workflow</code>, or call it from Python:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
@@ -169,8 +169,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
+<td><code>llm</code></td>
+<td>Single model request, no tools, no loop. Signature: <code>llm(prompt, model=&quot;&quot;, effort=&quot;&quot;, response_format=None, ...)</code></td>
+</tr>
+<tr>
 <td><code>agent</code></td>
-<td>The one LLM primitive — the existing agent spawn tool, injected as-is (<code>agent(prompt, description=&quot;&quot;, agent_id=&quot;&quot;, …)</code>). Model and tool set come from the agent profile selected by <code>agent_id</code>.</td>
+<td>Tool loop, repeatedly calls llm + executes tools until done. Signature: <code>agent(prompt, model=&quot;&quot;, effort=&quot;&quot;, tools=None, max_iterations=20, ...)</code></td>
+</tr>
+<tr>
+<td><code>goal</code></td>
+<td>Judgment loop, repeatedly calls agent + uses llm to judge condition until satisfied. Signature: <code>goal(prompt, condition, model=&quot;&quot;, effort=&quot;&quot;, max_rounds=10, ...)</code></td>
 </tr>
 <tr>
 <td>registered agentic functions</td>
@@ -178,6 +186,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<p>The three tiers compose: goal is based on agent, agent is based on llm.</p>
 <p>The module is validated before it runs: it must parse, it must define <code>workflow()</code>, and it must not import. Invalid code is sent back to the planner with the concrete error, as many times as it takes.</p>
 <p>There is no checkpoint syntax in the program. Recording is the framework's job: every injected callable is wrapped, and each real execution is written to <code>state.json</code> before and after it happens, keyed by function name, invocation order, and an argument digest. Verification is not imposed by the framework either — the planner writes checks into the program and raises when they fail, which routes into the revision loop.</p>
 <h2 id="resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls<a class="header-anchor" href="#resuming-rerun-the-whole-program-replay-completed-calls">#</a></h2>
