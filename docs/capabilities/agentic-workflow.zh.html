@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786604307" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786609603" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>自编程agentic workflow · OpenProgram Docs</title>
-<meta name="description" content="run_agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
+<meta name="description" content="agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
 <meta property="og:title" content="自编程agentic workflow · OpenProgram Docs">
-<meta property="og:description" content="run_agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
+<meta property="og:description" content="agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="自编程agentic workflow · OpenProgram Docs">
-<meta name="twitter:description" content="run_agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
+<meta name="twitter:description" content="agentic_workflow 是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的 agent()">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -130,11 +130,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="自编程agentic-workflow">自编程agentic workflow<a class="header-anchor" href="#自编程agentic-workflow">#</a></h1>
-<p><code>run_agentic_workflow</code>是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的<code>agent()</code>调用加上注册的agentic function，控制流就是Python本身的<code>if</code>、<code>for</code>、异常。运行模型和开发者写代码一样：整个程序从头到尾跑完；崩了就看报错、改代码、整个重跑，已完成的调用直接回放上次结果，效果上从出错处继续。</p>
-<p>在Programs面板里以<code>run_agentic_workflow</code>运行，或从Python调用：</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_agentic_workflow</span>
+<p><code>agentic_workflow</code>是OpenProgram的自编程agentic workflow（self-programmed agentic workflow）：agent自己把任务写成一个真正的Python程序，再由框架执行。planner用框架的积木组合程序：自由的<code>agent()</code>调用加上注册的agentic function，控制流就是Python本身的<code>if</code>、<code>for</code>、异常。运行模型和开发者写代码一样：整个程序从头到尾跑完；崩了就看报错、改代码、整个重跑，已完成的调用直接回放上次结果，效果上从出错处继续。</p>
+<p>在Programs面板里以<code>agentic_workflow</code>运行，或从Python调用：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">run_agentic_workflow</span><span class="p">(</span><span class="s2">&quot;把 auth 模块迁到新客户端并更新它的测试&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;把 auth 模块迁到新客户端并更新它的测试&quot;</span><span class="p">)</span>
 </code></pre>
 <p>每次调用新建一个独立实例，在会话仓库下有自己的目录：<code>workflows/&lt;run_id&gt;/</code>，存<code>code.py</code>和<code>state.json</code>。实例之间什么都不共享，想同时跑几个流程就跑几个。</p>
 <h2 id="小任务不写程序">小任务不写程序<a class="header-anchor" href="#小任务不写程序">#</a></h2>
@@ -181,7 +181,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>程序里没有任何checkpoint语法。存档是框架的事：注入环境里的每个可调用都被包了一层，真实执行前后写<code>state.json</code>，键是（函数名，第几次被调，参数摘要）。验证也不是框架强加的：planner把检查写成程序的一步，不满足就<code>raise</code>，交给修订回环。</p>
 <h2 id="断点续跑整个程序重跑调用回放">断点续跑：整个程序重跑，调用回放<a class="header-anchor" href="#断点续跑整个程序重跑调用回放">#</a></h2>
 <p>没有调度器，没有&quot;取下一项&quot;。续跑就是把<code>workflow()</code>从第一行重新执行一遍，唯一的机制是调用边界的短路：<code>state.json</code>里已完成的调用（同名、同次序、同参数摘要）不真正执行，直接返回上次的结果。重跑时程序飞速掠过做完的部分，到第一个没做完的调用才真正干活。控制流每次都完整重走（<code>if</code>重新判断、<code>for</code>重新循环），恢复的只是昂贵调用的结果。</p>
-<p>进程被杀同理：状态变化先写盘再动手，拿<code>run_id</code>再跑一遍即续。续跑是显式的：每次<code>run_agentic_workflow(task)</code>都新建实例（返回值带<code>run_id</code>），续跑要传入既有实例的<code>run_id</code>。不存在按任务文本匹配旧运行这种事。</p>
+<p>进程被杀同理：状态变化先写盘再动手，拿<code>run_id</code>再跑一遍即续。续跑是显式的：每次<code>agentic_workflow(task)</code>都新建实例（返回值带<code>run_id</code>），续跑要传入既有实例的<code>run_id</code>。不存在按任务文本匹配旧运行这种事。</p>
 <h2 id="出错后的修订">出错后的修订<a class="header-anchor" href="#出错后的修订">#</a></h2>
 <p>程序抛异常时（语法错、积木调用失败、planner自己写的检查<code>raise</code>），处理方式和开发者一样：planner拿到异常栈、当前代码和<code>state.json</code>里的运行记录，重写<code>code.py</code>，然后整个程序重跑。没改动的已完成调用照旧回放，所以修订不推翻已完成的工作。旧版代码留档在实例目录里，修订历史进返回值。</p>
 <p>没有abandoned这种状态。无效代码、运行报错都带着具体错误打回planner再改，改到能跑为止。唯一的强制停止是<code>capped</code>：40次真实调用执行（回放不计数）触发，到这个份上程序还在长是规划失败。</p>
