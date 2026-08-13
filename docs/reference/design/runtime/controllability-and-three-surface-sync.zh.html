@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/runtime/controllability-and-three-surface-sync.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786583257" data-alt-lang-url="/docs/reference/design/runtime/controllability-and-three-surface-sync.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>长跑 agent 任务的可控性 + 三端一致性 · OpenProgram Docs</title>
 <meta name="description" content="用户需求(原话整理): 值守开关 :无人值守时(我睡觉了)别问我;观察时可以问我。做法已定 —— 无人值守就 不把&quot;询问用户&quot;工具给 agent ,它拿不到就不问,顶多生成点不确定内容,靠后续模型思考自解。 中途干预/切换方向 :任务跑一半发现路线错了,我能插一条新指令让它调整。做法方向已定 —— 基于事件层">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
@@ -68,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
 <a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
 <a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation status and handoff</a>
+<a class="navlink" href="/docs/reference/design/site-discoverability-performance.html">Site discoverability and performance design</a>
 <a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
 <a class="navlink" href="/docs/reference/design/framework-overview.html" data-title-zh="框架总览：一次对话从输入到产出" data-href-en="/docs/reference/design/framework-overview.html" data-href-zh="/docs/reference/design/framework-overview.zh.html">Framework Overview — One Conversation from Input to Output</a>

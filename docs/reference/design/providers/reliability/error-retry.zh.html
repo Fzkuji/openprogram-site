@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786577084" data-alt-lang-url="/docs/reference/design/providers/reliability/error-retry.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786583257" data-alt-lang-url="/docs/reference/design/providers/reliability/error-retry.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>模型调用的错误处理与重试决策逻辑 · OpenProgram Docs</title>
 <meta name="description" content="本文档描述一次 @agentic_function 内的模型调用从发起到失败/成功之间,系统在每一层&quot;做选择&quot;的逻辑:什么时候重试、什么时候放弃、什么时候判定为永久错误。 调用链 # 一次 runtime.exec() 触发模型调用,自上而下经过: @agentic_function 内 runtime.exec()">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/reliability/error-retry.zh.html">
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/providers/reliability/error-retry.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/providers/reliability/error-retry.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/providers/reliability/error-retry.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
@@ -68,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
 <a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
 <a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation status and handoff</a>
+<a class="navlink" href="/docs/reference/design/site-discoverability-performance.html">Site discoverability and performance design</a>
 <a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
 <a class="navlink" href="/docs/reference/design/framework-overview.html" data-title-zh="框架总览：一次对话从输入到产出" data-href-en="/docs/reference/design/framework-overview.html" data-href-zh="/docs/reference/design/framework-overview.zh.html">Framework Overview — One Conversation from Input to Output</a>
