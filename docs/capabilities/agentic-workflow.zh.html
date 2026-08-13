@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786635888" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -184,12 +184,50 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>判定循环，反复调agent+用llm判定条件直到满足。签名：<code>goal(prompt, condition, model=&quot;&quot;, effort=&quot;&quot;, max_rounds=10, ...)</code></td>
 </tr>
 <tr>
+<td><code>validate_and_retry</code></td>
+<td>验证和回溯：执行action，用llm判定结果是否满足check，不满足则执行retry。签名：<code>validate_and_retry(action, check, retry, max_retries=2)</code></td>
+</tr>
+<tr>
+<td><code>route</code></td>
+<td>路由选择：让llm从options列表中选择一个。签名：<code>route(question, options, context=&quot;&quot;)</code></td>
+</tr>
+<tr>
+<td><code>conditional</code></td>
+<td>条件分支：llm判定condition（YES/NO）并执行对应分支。签名：<code>conditional(condition, context=&quot;&quot;, if_true, if_false)</code></td>
+</tr>
+<tr>
 <td>注册的agentic function</td>
 <td><code>AGENTIC_MODULES</code>注册表里的全部函数，按名直接调用。planner的prompt里带着这份清单。</td>
 </tr>
 </tbody>
 </table>
-<p>三层是组合关系：goal基于agent，agent基于llm。</p>
+<p>三层是组合关系：goal基于agent，agent基于llm。控制流原语用llm做判定，简化planner的代码生成。</p>
+<p><strong>控制流原语示例</strong>：</p>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># 验证和回溯：第一次结果不满足就重试</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 auth 相关文件&quot;</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量&gt;=3 且包含 oauth&quot;</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 oauth、openid 相关文件&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 路由选择：让llm选策略</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;选择迁移策略&quot;</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">],</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">files</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 条件分支：根据llm判定执行不同分支</span>
+    <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;策略是直接迁移&quot;</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写直接迁移方案：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写重构方案：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">plan</span>
+</code></pre>
 <p>模块运行前先校验：能解析、必须有<code>workflow()</code>、不许import。无效代码带着具体错误打回planner重写，改到能跑为止。</p>
 <p>程序里没有任何checkpoint语法。存档是框架的事：注入环境里的每个可调用都被包了一层，真实执行前后写<code>state.json</code>，键是（函数名，第几次被调，参数摘要）。验证也不是框架强加的：planner把检查写成程序的一步，不满足就<code>raise</code>，交给修订回环。</p>
 <h2 id="断点续跑整个程序重跑调用回放">断点续跑：整个程序重跑，调用回放<a class="header-anchor" href="#断点续跑整个程序重跑调用回放">#</a></h2>

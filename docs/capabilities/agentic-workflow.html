@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786635888" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -185,12 +185,50 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Judgment loop, repeatedly calls agent + uses llm to judge condition until satisfied. Signature: <code>goal(prompt, condition, model=&quot;&quot;, effort=&quot;&quot;, max_rounds=10, ...)</code></td>
 </tr>
 <tr>
+<td><code>validate_and_retry</code></td>
+<td>Validation and retry: execute action, use llm to check result, retry if failed. Signature: <code>validate_and_retry(action, check, retry, max_retries=2)</code></td>
+</tr>
+<tr>
+<td><code>route</code></td>
+<td>Route selection: let llm choose one option from a list. Signature: <code>route(question, options, context=&quot;&quot;)</code></td>
+</tr>
+<tr>
+<td><code>conditional</code></td>
+<td>Conditional branch: llm judges condition (YES/NO) and executes corresponding branch. Signature: <code>conditional(condition, context=&quot;&quot;, if_true, if_false)</code></td>
+</tr>
+<tr>
 <td>registered agentic functions</td>
 <td>Every function in the <code>AGENTIC_MODULES</code> registry, callable by name. The planner's prompt carries this catalog.</td>
 </tr>
 </tbody>
 </table>
-<p>The three tiers compose: goal is based on agent, agent is based on llm.</p>
+<p>The three tiers compose: goal is based on agent, agent is based on llm. Control flow primitives use llm for judgment, simplifying planner's code generation.</p>
+<p><strong>Control flow primitives example</strong>:</p>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># Validation and retry: retry if first result doesn&#39;t satisfy check</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Find auth related files&quot;</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;File count &gt;= 3 and includes oauth&quot;</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Expand search to include oauth and openid files&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Route selection: let llm choose strategy</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;Choose migration strategy&quot;</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Direct migration&quot;</span><span class="p">,</span> <span class="s2">&quot;Refactor then migrate&quot;</span><span class="p">],</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">files</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Conditional branch: execute different branches based on llm judgment</span>
+    <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;strategy is direct migration&quot;</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write direct migration plan: &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write refactor plan: &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">plan</span>
+</code></pre>
 <p>The module is validated before it runs: it must parse, it must define <code>workflow()</code>, and it must not import. Invalid code is sent back to the planner with the concrete error, as many times as it takes.</p>
 <p>There is no checkpoint syntax in the program. Recording is the framework's job: every injected callable is wrapped, and each real execution is written to <code>state.json</code> before and after it happens, keyed by function name, invocation order, and an argument digest. Verification is not imposed by the framework either — the planner writes checks into the program and raises when they fail, which routes into the revision loop.</p>
 <h2 id="resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls<a class="header-anchor" href="#resuming-rerun-the-whole-program-replay-completed-calls">#</a></h2>

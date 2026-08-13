@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/reference/design/cli/naming.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CLI Naming Convention · OpenProgram Docs</title>
-<meta name="description" content="Every openprogram subcommand follows the same shape so users can guess new commands from ones they already know. Rule # openprogram &lt;noun&gt; [&lt;noun&gt; ...] &lt;verb&gt;">
-<link rel="canonical" href="https://openprogram.io/docs/reference/design/cli/naming.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/cli/naming.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/cli/naming.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/cli/naming.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"CLI Naming Convention"}]}</script>
+<title>Workflow Control Primitives — 控制流原语设计 · OpenProgram Docs</title>
+<meta name="description" content="问题 # 当前 Planner 生成的代码需要手写验证、回溯、路由逻辑： # 手写版本：细节多、容易写错 files = agent ( &quot;找文件&quot; ) if len ( files . split ( &#x27; \n &#x27; )) &lt; 3 : files = agent ( &quot;扩大范围&quot; ) analysis = agent">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Workflow Control Primitives — 控制流原语设计"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
-<meta property="og:url" content="https://openprogram.io/docs/reference/design/cli/naming.html">
-<meta property="og:title" content="CLI Naming Convention · OpenProgram Docs">
-<meta property="og:description" content="Every openprogram subcommand follows the same shape so users can guess new commands from ones they already know. Rule # openprogram &lt;noun&gt; [&lt;noun&gt; ...] &lt;verb&gt;">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html">
+<meta property="og:title" content="Workflow Control Primitives — 控制流原语设计 · OpenProgram Docs">
+<meta property="og:description" content="问题 # 当前 Planner 生成的代码需要手写验证、回溯、路由逻辑： # 手写版本：细节多、容易写错 files = agent ( &quot;找文件&quot; ) if len ( files . split ( &#x27; \n &#x27; )) &lt; 3 : files = agent ( &quot;扩大范围&quot; ) analysis = agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +21,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CLI Naming Convention · OpenProgram Docs">
-<meta name="twitter:description" content="Every openprogram subcommand follows the same shape so users can guess new commands from ones they already know. Rule # openprogram &lt;noun&gt; [&lt;noun&gt; ...] &lt;verb&gt;">
+<meta name="twitter:title" content="Workflow Control Primitives — 控制流原语设计 · OpenProgram Docs">
+<meta name="twitter:description" content="问题 # 当前 Planner 生成的代码需要手写验证、回溯、路由逻辑： # 手写版本：细节多、容易写错 files = agent ( &quot;找文件&quot; ) if len ( files . split ( &#x27; \n &#x27; )) &lt; 3 : files = agent ( &quot;扩大范围&quot; ) analysis = agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -92,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">CLI / TUI</div>
 <a class="navlink" href="/docs/reference/design/cli/README.html" data-title-zh="CLI / TUI" data-href-en="/docs/reference/design/cli/README.html" data-href-zh="/docs/reference/design/cli/README.zh.html">CLI / TUI</a>
 <a class="navlink" href="/docs/reference/design/cli/redesign.html" data-title-zh="CLI / TUI 配置界面 —— 设计" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html">CLI / TUI Configuration Surface — Design</a>
-<a class="navlink active" href="/docs/reference/design/cli/naming.html" data-title-zh="CLI 命名规范" data-href-en="/docs/reference/design/cli/naming.html" data-href-zh="/docs/reference/design/cli/naming.zh.html">CLI Naming Convention</a>
+<a class="navlink" href="/docs/reference/design/cli/naming.html" data-title-zh="CLI 命名规范" data-href-en="/docs/reference/design/cli/naming.html" data-href-zh="/docs/reference/design/cli/naming.zh.html">CLI Naming Convention</a>
 <a class="navlink" href="/docs/reference/design/cli/config-write-safety.html" data-title-zh="配置写入安全 —— 设计" data-href-en="/docs/reference/design/cli/config-write-safety.html" data-href-zh="/docs/reference/design/cli/config-write-safety.zh.html">Config Write Safety — Design</a>
 <a class="navlink" href="/docs/reference/design/cli/single-port.html" data-title-zh="单端口架构" data-href-en="/docs/reference/design/cli/single-port.html" data-href-zh="/docs/reference/design/cli/single-port.zh.html">Single-Port Architecture</a>
 <a class="navlink" href="/docs/reference/design/cli/slash-commands-references.html" data-title-zh="斜杠命令 — 参考实现快照" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html">Slash Commands — Reference Implementations Snapshot</a>
@@ -238,7 +236,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
-<a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
+<a class="navlink active" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
@@ -316,103 +314,405 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">CLI / TUI</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="CLI 命名规范">CLI Naming Convention</span></nav><h1 id="cli-naming-convention">CLI Naming Convention<a class="header-anchor" href="#cli-naming-convention">#</a></h1>
-<p>Every <code>openprogram</code> subcommand follows the same shape so users can
-guess new commands from ones they already know.</p>
-<h2 id="rule">Rule<a class="header-anchor" href="#rule">#</a></h2>
-<pre><code>openprogram &lt;noun&gt; [&lt;noun&gt; ...] &lt;verb&gt; [&lt;arg&gt; ...]
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Workflow Control Primitives — 控制流原语设计</span></nav><h1 id="workflow-control-primitives-控制流原语设计">Workflow Control Primitives — 控制流原语设计<a class="header-anchor" href="#workflow-control-primitives-控制流原语设计">#</a></h1>
+<h2 id="问题">问题<a class="header-anchor" href="#问题">#</a></h2>
+<p>当前 Planner 生成的代码需要手写验证、回溯、路由逻辑：</p>
+<pre><code class="language-python"><span class="c1"># 手写版本：细节多、容易写错</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找文件&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围&quot;</span><span class="p">)</span>
+<span class="n">analysis</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+<span class="k">if</span> <span class="s2">&quot;缺少&quot;</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">:</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;补充&quot;</span><span class="p">)</span>
+    <span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span> <span class="o">+</span> <span class="n">extra</span>
 </code></pre>
+<p>问题：</p>
 <ul>
-<li><strong>Exactly one verb per command.</strong> It is always the last word before
-positional arguments. A command must never have two verbs, and
-must never mix verbs into the middle of the noun stack.</li>
-<li><strong>Nouns come first, verb comes last.</strong> Additional nouns stack in
-front of the verb to narrow the namespace.</li>
-<li><strong>Nouns may be plural.</strong> Use plural when the namespace represents a
-collection (<code>providers</code>, <code>profiles</code>, <code>models</code>, <code>channels</code>). Use
-singular only when there is exactly one thing and it can never have
-siblings (rare).</li>
-<li><strong>Verbs are simple present, no suffix.</strong> <code>list</code>, <code>status</code>, <code>add</code>,
-<code>remove</code>, <code>login</code>, <code>logout</code>, <code>set</code>, <code>get</code>, <code>discover</code>, <code>adopt</code>,
-<code>doctor</code>, <code>setup</code>. Not <code>listing</code>, not <code>lists</code>, not <code>added</code>.</li>
-<li><strong>Positional arguments come after the verb.</strong> <code>openprogram providers auth login codex</code> — <code>codex</code> is the target of the <code>login</code> verb.</li>
-<li><strong>Flags use double-dash kebab-case.</strong> <code>--profile</code>, <code>--display-name</code>,
-<code>--max-poll-seconds</code>. Never camelCase, never underscores.</li>
+<li>Planner（LLM）不擅长写正确的条件判断（<code>len(...) &lt; 3</code>）</li>
+<li>验证和回溯逻辑重复，每个步骤都要写</li>
+<li>意图不清晰：看代码才知道&quot;这是在做验证回溯&quot;</li>
 </ul>
-<h2 id="examples-current-and-future">Examples (current and future)<a class="header-anchor" href="#examples-current-and-future">#</a></h2>
-<pre><code>openprogram providers login &lt;prov&gt;               ✓
-openprogram providers list                       ✓
-openprogram providers status &lt;prov&gt;              ✓
-openprogram providers accounts list              ✓  (nouns stack: providers &gt; accounts)
-openprogram providers accounts create &lt;n&gt;        ✓
-openprogram providers doctor                     ✓
-openprogram providers setup                      ✓  (interactive wizard)
+<h2 id="方案提供控制流原语">方案：提供控制流原语<a class="header-anchor" href="#方案提供控制流原语">#</a></h2>
+<p>给 Planner 一套<strong>声明式的控制流工具函数</strong>，让它组装而不是手写逻辑。</p>
+<h3 id="新增原语">新增原语<a class="header-anchor" href="#新增原语">#</a></h3>
+<h4>1. <code>validate_and_retry</code> — 验证和回溯</h4>
+<pre><code class="language-python"><span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
+    <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 auth 相关文件&quot;</span><span class="p">),</span>
+    <span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量 &gt;= 3&quot;</span><span class="p">,</span>  <span class="c1"># LLM 判定的条件描述</span>
+    <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 oauth、openid 相关文件&quot;</span><span class="p">),</span>
+    <span class="n">max_retries</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+</code></pre>
+<p><strong>实现</strong>：</p>
+<ul>
+<li>执行 <code>action()</code></li>
+<li>用 <code>llm()</code> 判定结果是否满足 <code>check</code>（返回 YES/NO）</li>
+<li>不满足 → 执行 <code>retry()</code>，重复最多 <code>max_retries</code> 次</li>
+<li>都失败 → 返回最后一次的结果</li>
+</ul>
+<h4>2. <code>route</code> — 路由选择</h4>
+<pre><code class="language-python"><span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
+    <span class="n">question</span><span class="o">=</span><span class="s2">&quot;这个任务适合什么迁移策略？&quot;</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;分阶段迁移&quot;</span><span class="p">],</span>
+    <span class="n">context</span><span class="o">=</span><span class="n">analysis</span>  <span class="c1"># 可选：提供给 LLM 的上下文</span>
+<span class="p">)</span>
+<span class="c1"># strategy = &quot;直接迁移&quot;（LLM 选择的选项）</span>
+</code></pre>
+<p><strong>实现</strong>：</p>
+<ul>
+<li>用 <code>llm()</code> 从 <code>options</code> 中选一个</li>
+<li>返回选中的字符串</li>
+</ul>
+<h4>3. <code>conditional</code> — 条件分支</h4>
+<pre><code class="language-python"><span class="n">result</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
+    <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;分析结果是否复杂？&quot;</span><span class="p">,</span>
+    <span class="n">context</span><span class="o">=</span><span class="n">analysis</span><span class="p">,</span>
+    <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;详细分析每个模块&quot;</span><span class="p">),</span>
+    <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;给出简要结论&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre>
+<p><strong>实现</strong>：</p>
+<ul>
+<li>用 <code>llm()</code> 判定 <code>condition</code>（返回 YES/NO）</li>
+<li>YES → 执行 <code>if_true()</code></li>
+<li>NO → 执行 <code>if_false()</code></li>
+</ul>
+<h4>4. <code>repeat_until</code> — 循环直到满足</h4>
+<pre><code class="language-python"><span class="n">complete_files</span> <span class="o">=</span> <span class="n">repeat_until</span><span class="p">(</span>
+    <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找剩余文件&quot;</span><span class="p">),</span>
+    <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;已找到所有相关文件&quot;</span><span class="p">,</span>
+    <span class="n">max_rounds</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+</code></pre>
+<p><strong>实现</strong>：</p>
+<ul>
+<li>执行 <code>action()</code></li>
+<li>用 <code>llm()</code> 判定是否满足 <code>condition</code></li>
+<li>满足 → 返回结果</li>
+<li>不满足 → 重复，最多 <code>max_rounds</code> 次</li>
+</ul>
+<h4>5. <code>parallel</code> — 并行执行（可选，后期扩展）</h4>
+<pre><code class="language-python"><span class="n">results</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">([</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析前端代码&quot;</span><span class="p">),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析后端代码&quot;</span><span class="p">),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析数据库&quot;</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="c1"># results = [前端分析结果, 后端分析结果, 数据库分析结果]</span>
+</code></pre>
+<h3 id="planner-生成的代码示例">Planner 生成的代码示例<a class="header-anchor" href="#planner-生成的代码示例">#</a></h3>
+<p><strong>任务</strong>：&quot;迁移 auth 模块到新客户端&quot;</p>
+<p><strong>生成的代码</strong>：</p>
+<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">():</span>
+    <span class="c1"># Step 1: 找文件，带验证和回溯</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 openprogram/auth/ 下所有相关文件&quot;</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量 &gt;= 5 且包含 oauth 相关&quot;</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 openid、token 相关文件&quot;</span><span class="p">),</span>
+        <span class="n">max_retries</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Step 2: 分析</span>
+    <span class="n">analysis</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析这些文件的依赖关系和接口：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3: 路由选择策略</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;根据分析结果，选择迁移策略&quot;</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;分阶段迁移&quot;</span><span class="p">],</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">analysis</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Step 4: 条件分支执行</span>
+    <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;选择的策略是否复杂（重构或分阶段）&quot;</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写详细的多阶段迁移计划：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写简要的直接迁移步骤：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">plan</span>
+</code></pre>
+<p><strong>对比手写版本</strong>：</p>
+<pre><code class="language-python"><span class="c1"># 手写版本：38 行，充满判断逻辑</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">():</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 auth 相关文件&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="s2">&quot;oauth&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 oauth&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;再次扩大，包括 openid、token&quot;</span><span class="p">)</span>
+    
+    <span class="n">analysis</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+    
+    <span class="n">strategies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;分阶段迁移&quot;</span><span class="p">]</span>
+    <span class="n">strategy_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;选择策略（</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strategies</span><span class="p">)</span><span class="si">}</span><span class="s2">）：</span><span class="si">{</span><span class="n">analysis</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">strategy_prompt</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s2">&quot;重构&quot;</span> <span class="ow">in</span> <span class="n">strategy</span> <span class="ow">or</span> <span class="s2">&quot;分阶段&quot;</span> <span class="ow">in</span> <span class="n">strategy</span><span class="p">:</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写详细计划：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写简要步骤：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">plan</span>
 
-openprogram providers models list                (future, same pattern)
-openprogram providers aliases add &lt;from&gt; &lt;to&gt;    (future, nouns stack)
-openprogram channels login discord               (future, same pattern in different domain)
-openprogram tools login github                   (future)
+<span class="c1"># 控制流原语版本：20 行，意图清晰</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">():</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 openprogram/auth/ 下所有相关文件&quot;</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量 &gt;= 5 且包含 oauth 相关&quot;</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 openid、token 相关文件&quot;</span><span class="p">),</span>
+        <span class="n">max_retries</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+    
+    <span class="n">analysis</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;分析这些文件的依赖关系和接口：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+    
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;根据分析结果，选择迁移策略&quot;</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;分阶段迁移&quot;</span><span class="p">],</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">analysis</span>
+    <span class="p">)</span>
+    
+    <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;选择的策略是否复杂（重构或分阶段）&quot;</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写详细的多阶段迁移计划：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写简要的直接迁移步骤：&quot;</span> <span class="o">+</span> <span class="n">analysis</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">plan</span>
 </code></pre>
-<h2 id="when-to-add-a-namespace-layer">When to add a namespace layer<a class="header-anchor" href="#when-to-add-a-namespace-layer">#</a></h2>
-<p>Only add a middle noun (e.g. <code>providers auth login</code> instead of
-<code>providers login</code>) when the parent noun genuinely needs to split into
-<em>multiple</em> sibling subgroups. If the parent only ever speaks about
-one subgroup, collapse the layer — a middle noun with no siblings is
-dead weight.</p>
-<p>For example, OpenClaw keeps <code>openclaw models auth login</code> because
-<code>models</code> also has <code>aliases</code>, <code>list</code>, and other siblings. We keep
-<code>providers login</code> flat because every verb on <code>providers</code> is
-auth-adjacent.</p>
-<h2 id="why-this-rule">Why this rule<a class="header-anchor" href="#why-this-rule">#</a></h2>
+<h2 id="文件结构变化">文件结构变化<a class="header-anchor" href="#文件结构变化">#</a></h2>
+<h3 id="新增文件">新增文件<a class="header-anchor" href="#新增文件">#</a></h3>
+<pre><code>openprogram/agentic_programming/control_flow/
+├── __init__.py          # 导出所有控制流原语
+├── validate.py          # validate_and_retry 实现
+├── route.py             # route 实现
+├── conditional.py       # conditional 实现
+├── repeat.py            # repeat_until 实现
+└── parallel.py          # parallel 实现（可选）
+</code></pre>
+<h3 id="修改文件">修改文件<a class="header-anchor" href="#修改文件">#</a></h3>
 <ol>
-<li>Discoverability — typing <code>openprogram providers auth &lt;TAB&gt;</code> lists
-every action available on that namespace. No hunting.</li>
-<li>Extensibility — new domains slot in as sibling nouns at any level
-without colliding. <code>providers models list</code> doesn't conflict with
-<code>providers auth list</code>.</li>
-<li>Mirrors what mature CLIs converged on:
+<li>
+<p><strong><code>openprogram/agentic_programming/__init__.py</code></strong></p>
 <ul>
-<li><code>openclaw models auth login</code>, <code>openclaw models aliases add</code></li>
-<li><code>gh auth login</code>, <code>gh repo create</code></li>
-<li><code>docker container ls</code>, <code>docker image prune</code></li>
-<li><code>kubectl get pods</code>, <code>kubectl delete service &lt;name&gt;</code></li>
+<li>导出控制流原语：<code>from .control_flow import validate_and_retry, route, conditional, repeat_until</code></li>
+</ul>
+</li>
+<li>
+<p><strong><code>openprogram/programs/agentic_functions/agentic_workflow/__init__.py</code></strong></p>
+<ul>
+<li><code>_build_namespace()</code> 注入控制流原语（和 llm/agent/goal 一起）</li>
+<li>包上 checkpoint 包装器</li>
+</ul>
+</li>
+<li>
+<p><strong><code>openprogram/programs/agentic_functions/agentic_workflow/planner.py</code></strong></p>
+<ul>
+<li>更新 system prompt，教 Planner 使用控制流原语</li>
+<li>添加工具函数的文档和示例</li>
+</ul>
+</li>
+<li>
+<p><strong><code>docs/capabilities/agentic-workflow.md</code> 和 <code>.zh.md</code></strong></p>
+<ul>
+<li>添加控制流原语说明</li>
+<li>更新生成代码示例</li>
+</ul>
+</li>
+<li>
+<p><strong><code>docs/reference/design/runtime/self-programmed-agentic-workflow.html</code></strong></p>
+<ul>
+<li>添加&quot;控制流原语&quot;章节</li>
+<li>更新注入环境的表格</li>
 </ul>
 </li>
 </ol>
-<h2 id="anti-patterns-do-not-do-these">Anti-patterns — do not do these<a class="header-anchor" href="#anti-patterns-do-not-do-these">#</a></h2>
-<ul>
-<li>❌ <code>openprogram login</code> — verb at top level, no namespace, clashes as
-soon as we have a second login target.</li>
-<li>❌ <code>openprogram providerAuth login</code> — camelCase names, violates the
-noun-stack rule (should be two words: <code>providers auth</code>).</li>
-<li>❌ <code>openprogram list-providers</code> — hyphenated compound verb-noun,
-locks the verb into the noun. Use <code>providers list</code>.</li>
-<li>❌ <code>openprogram providers listing</code> — wrong verb form.</li>
-</ul>
-<h2 id="how-to-add-a-new-command">How to add a new command<a class="header-anchor" href="#how-to-add-a-new-command">#</a></h2>
+<h3 id="新增测试">新增测试<a class="header-anchor" href="#新增测试">#</a></h3>
+<pre><code>tests/unit/
+├── test_control_flow_validate.py    # validate_and_retry 单元测试
+├── test_control_flow_route.py       # route 单元测试
+├── test_control_flow_conditional.py # conditional 单元测试
+├── test_control_flow_repeat.py      # repeat_until 单元测试
+└── test_workflow_with_control_flow.py  # 集成测试：workflow 使用控制流原语
+</code></pre>
+<h2 id="实现顺序">实现顺序<a class="header-anchor" href="#实现顺序">#</a></h2>
+<h3 id="phase-1核心原语validaterouteconditional">Phase 1：核心原语（validate、route、conditional）<a class="header-anchor" href="#phase-1核心原语validaterouteconditional">#</a></h3>
 <ol>
-<li>Pick the deepest noun namespace the command belongs to. If none
-exists, create one — but reuse existing namespaces whenever the
-command is a sibling of existing commands.</li>
-<li>Pick the verb. Prefer verbs already used elsewhere in the CLI
-(<code>list</code>, <code>add</code>, <code>remove</code>, <code>set</code>, <code>status</code>) over inventing new ones.</li>
-<li>Wire it under the appropriate <code>argparse</code> subparser tree, following
-the same two-file layout:
+<li>
+<p><strong>实现三个核心控制流函数</strong></p>
 <ul>
-<li>Command metadata + argparse wiring: the CLI entrypoint</li>
-<li>Logic: a dedicated module (no logic in <code>cli.py</code>)</li>
+<li><code>validate_and_retry</code></li>
+<li><code>route</code></li>
+<li><code>conditional</code></li>
+<li>每个都写单元测试</li>
+</ul>
+</li>
+<li>
+<p><strong>注入到 workflow 执行环境</strong></p>
+<ul>
+<li>修改 <code>_build_namespace()</code></li>
+<li>包上 checkpoint 包装器</li>
+<li>写集成测试验证可调用</li>
+</ul>
+</li>
+<li>
+<p><strong>更新 Planner prompt</strong></p>
+<ul>
+<li>添加控制流原语文档</li>
+<li>示例代码</li>
+<li>教它什么时候用哪个原语</li>
+</ul>
+</li>
+<li>
+<p><strong>端到端测试</strong></p>
+<ul>
+<li>真实任务：&quot;迁移 auth 模块&quot;</li>
+<li>验证 Planner 能生成使用控制流原语的代码</li>
+<li>验证代码能正确执行</li>
 </ul>
 </li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/cli/redesign.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI / TUI Configuration Surface — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/cli/config-write-safety.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Config Write Safety — Design</span></a></div></article></main>
+<h3 id="phase-2循环原语repeat_until">Phase 2：循环原语（repeat_until）<a class="header-anchor" href="#phase-2循环原语repeat_until">#</a></h3>
+<ol start="5">
+<li><strong>实现 <code>repeat_until</code></strong>
+<ul>
+<li>单元测试</li>
+<li>更新 Planner prompt</li>
+<li>端到端测试</li>
+</ul>
+</li>
+</ol>
+<h3 id="phase-3可选并行原语">Phase 3（可选）：并行原语<a class="header-anchor" href="#phase-3可选并行原语">#</a></h3>
+<ol start="6">
+<li><strong>实现 <code>parallel</code></strong>
+<ul>
+<li>需要线程池或进程池</li>
+<li>checkpoint 并发写入处理</li>
+<li>更复杂，暂时可以不做</li>
+</ul>
+</li>
+</ol>
+<h2 id="设计决策">设计决策<a class="header-anchor" href="#设计决策">#</a></h2>
+<h3 id="为什么用-lambda">为什么用 <code>lambda</code>？<a class="header-anchor" href="#为什么用-lambda">#</a></h3>
+<pre><code class="language-python"><span class="n">validate_and_retry</span><span class="p">(</span>
+    <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">),</span>  <span class="c1"># ← 为什么不直接 agent(&quot;...&quot;)</span>
+    <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre>
+<p><strong>原因</strong>：延迟执行。</p>
+<ul>
+<li>如果写 <code>action=agent(&quot;...&quot;)</code>，函数调用立即发生（在 <code>validate_and_retry</code> 执行之前）</li>
+<li>写 <code>lambda: agent(&quot;...&quot;)</code>，只是传一个&quot;如何执行&quot;的函数，<code>validate_and_retry</code> 内部决定何时执行</li>
+</ul>
+<h3 id="为什么判定条件是字符串而不是函数">为什么判定条件是字符串而不是函数？<a class="header-anchor" href="#为什么判定条件是字符串而不是函数">#</a></h3>
+<pre><code class="language-python"><span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量 &gt;= 5&quot;</span>  <span class="c1"># ← 字符串</span>
+<span class="c1"># 而不是：</span>
+<span class="n">check</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">5</span>  <span class="c1"># ← 函数</span>
+</code></pre>
+<p><strong>原因</strong>：Planner（LLM）不擅长写正确的 Python 表达式。</p>
+<ul>
+<li><code>len(r.split('\n')) &gt;= 5</code> 容易写错（变量名、方法名、边界条件）</li>
+<li><code>&quot;文件数量 &gt;= 5&quot;</code> 是自然语言描述，LLM 擅长生成</li>
+<li>框架内部用 <code>llm()</code> 把描述转成判定（返回 YES/NO）</li>
+</ul>
+<h3 id="checkpoint-如何记录">Checkpoint 如何记录？<a class="header-anchor" href="#checkpoint-如何记录">#</a></h3>
+<p>每个控制流原语内部的 <code>llm()</code>/<code>agent()</code> 调用都正常记录：</p>
+<pre><code class="language-json"><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="nt">&quot;call_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;agent&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;找文件&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth.py&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="nt">&quot;call_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llm&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;判定：文件数量 &gt;= 3？&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NO&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="nt">&quot;call_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;agent&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;扩大范围&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth.py\noauth.py\nlogin.py&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="nt">&quot;call_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llm&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;判定：文件数量 &gt;= 3？&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YES&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<p><code>validate_and_retry</code> 本身不记录，它只是组合 <code>agent</code> 和 <code>llm</code> 调用。</p>
+<h3 id="如果-llm-判定错误怎么办">如果 LLM 判定错误怎么办？<a class="header-anchor" href="#如果-llm-判定错误怎么办">#</a></h3>
+<p>例如 <code>llm(&quot;文件数量 &gt;= 5？&quot;)</code> 返回 YES，但实际只有 3 个文件。</p>
+<p><strong>当前设计</strong>：信任 LLM 判定。</p>
+<p><strong>理由</strong>：</p>
+<ul>
+<li>精确判定（<code>len(...) &gt;= 5</code>）需要 Planner 写正确的 Python 代码，它做不到</li>
+<li>LLM 判定虽然不精确，但&quot;大概率对&quot;（80-90% 准确率）</li>
+<li>判定错误 → 后续步骤可能发现问题 → 整个 workflow 修订重跑</li>
+</ul>
+<p><strong>未来优化</strong>：允许混合模式</p>
+<pre><code class="language-python"><span class="n">check</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">,</span>  <span class="c1"># 精确判定（用户手写）</span>
+<span class="c1"># 或</span>
+<span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量 &gt;= 5&quot;</span>  <span class="c1"># LLM 判定（Planner 生成）</span>
+</code></pre>
+<p>框架检测参数类型，<code>callable</code> 就直接调，<code>str</code> 就用 <code>llm()</code> 判定。</p>
+<h2 id="与现有机制的关系">与现有机制的关系<a class="header-anchor" href="#与现有机制的关系">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>机制</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>三层原语（llm/agent/goal）</td>
+<td>控制流原语基于它们实现（内部调 llm/agent）</td>
+</tr>
+<tr>
+<td>Checkpoint 机制</td>
+<td>控制流原语透明：内部的 llm/agent 调用正常记录</td>
+</tr>
+<tr>
+<td>Planner 修订</td>
+<td>不变：崩了还是 Planner 看错误改代码重跑</td>
+</tr>
+<tr>
+<td><code>goal()</code></td>
+<td><code>repeat_until</code> 是简化版 goal（只有循环，没有复杂判定）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="边界">边界<a class="header-anchor" href="#边界">#</a></h2>
+<p><strong>不做的事</strong>：</p>
+<ol>
+<li><strong>不做可视化编排</strong>：不是拖拽式 workflow 编辑器，Planner 还是生成代码</li>
+<li><strong>不做 DAG 执行引擎</strong>：还是 <code>exec()</code> Python 代码，不是数据驱动的调度器</li>
+<li><strong>不做运行时插入步骤</strong>：还是只能修订重跑，不能运行中改代码</li>
+</ol>
+<p><strong>这些是架构重构才能做的</strong>，控制流原语只是&quot;让 Planner 写出更好的代码&quot;，不改执行模型。</p>
+<h2 id="总结">总结<a class="header-anchor" href="#总结">#</a></h2>
+<p><strong>问题</strong>：Planner 手写验证、回溯、路由逻辑容易出错，代码冗长</p>
+<p><strong>方案</strong>：提供控制流原语（validate_and_retry、route、conditional、repeat_until），让 Planner 组装而不是手写</p>
+<p><strong>收益</strong>：</p>
+<ul>
+<li>代码更短、意图更清晰</li>
+<li>Planner 不需要写 Python 细节（条件表达式、字符串处理）</li>
+<li>统一的模式，容易调试和维护</li>
+</ul>
+<p><strong>实现</strong>：</p>
+<ul>
+<li>新增 <code>openprogram/agentic_programming/control_flow/</code> 模块</li>
+<li>注入到 workflow 执行环境</li>
+<li>更新 Planner prompt</li>
+<li>不改变执行模型（还是 exec Python 代码）</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/unified-session-context.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Unified session context creation</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/sandbox.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Sandbox</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#rule">Rule</a>
-<a class="" href="#examples-current-and-future">Examples (current and future)</a>
-<a class="" href="#when-to-add-a-namespace-layer">When to add a namespace layer</a>
-<a class="" href="#why-this-rule">Why this rule</a>
-<a class="" href="#anti-patterns-do-not-do-these">Anti-patterns — do not do these</a>
-<a class="" href="#how-to-add-a-new-command">How to add a new command</a>
+<a class="" href="#问题">问题</a>
+<a class="" href="#方案提供控制流原语">方案：提供控制流原语</a>
+<a class="lvl-3" href="#新增原语">新增原语</a>
+<a class="lvl-3" href="#planner-生成的代码示例">Planner 生成的代码示例</a>
+<a class="" href="#文件结构变化">文件结构变化</a>
+<a class="lvl-3" href="#新增文件">新增文件</a>
+<a class="lvl-3" href="#修改文件">修改文件</a>
+<a class="lvl-3" href="#新增测试">新增测试</a>
+<a class="" href="#实现顺序">实现顺序</a>
+<a class="lvl-3" href="#phase-1核心原语validaterouteconditional">Phase 1：核心原语（validate、route、conditional）</a>
+<a class="lvl-3" href="#phase-2循环原语repeat_until">Phase 2：循环原语（repeat_until）</a>
+<a class="lvl-3" href="#phase-3可选并行原语">Phase 3（可选）：并行原语</a>
+<a class="" href="#设计决策">设计决策</a>
+<a class="lvl-3" href="#为什么用-lambda">为什么用 lambda？</a>
+<a class="lvl-3" href="#为什么判定条件是字符串而不是函数">为什么判定条件是字符串而不是函数？</a>
+<a class="lvl-3" href="#checkpoint-如何记录">Checkpoint 如何记录？</a>
+<a class="lvl-3" href="#如果-llm-判定错误怎么办">如果 LLM 判定错误怎么办？</a>
+<a class="" href="#与现有机制的关系">与现有机制的关系</a>
+<a class="" href="#边界">边界</a>
+<a class="" href="#总结">总结</a>
 </div></aside>
 </div>
 
