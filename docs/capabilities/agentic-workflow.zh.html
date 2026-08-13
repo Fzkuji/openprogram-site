@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786630014" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786635888" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,9 +134,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>在Programs面板里以<code>agentic_workflow</code>运行，或从Python调用：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
+<span class="c1"># 新建workflow</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;把 auth 模块迁到新客户端并更新它的测试&quot;</span><span class="p">)</span>
+
+<span class="c1"># 自动续跑：任务以&quot;继续&quot;/&quot;接着&quot;开头时，自动找最近的workflow续跑</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;继续上次的优化&quot;</span><span class="p">)</span>
 </code></pre>
-<p>每次调用新建一个独立实例，在会话仓库下有自己的目录：<code>workflows/&lt;run_id&gt;/</code>，存<code>code.py</code>和<code>state.json</code>。实例之间什么都不共享，想同时跑几个流程就跑几个。</p>
+<p>每次新调用新建一个独立实例，在会话仓库下有自己的目录：<code>workflows/&lt;run_id&gt;/</code>，存<code>code.py</code>和<code>state.json</code>。实例之间什么都不共享，想同时跑几个流程就跑几个。</p>
 <h2 id="小任务不写程序">小任务不写程序<a class="header-anchor" href="#小任务不写程序">#</a></h2>
 <p>planner的第一个决定是这个任务配不配得上一个程序。单个agent一口气能做完的（一处小改动、回答一个问题、写一个文件）直接执行，因为为它写程序的开销超过直接做完。程序留给真正超出一次范围的任务：多个交付物、跨阶段的工作、后一步依赖前一步产出。</p>
 <h2 id="生成的程序长什么样">生成的程序长什么样<a class="header-anchor" href="#生成的程序长什么样">#</a></h2>

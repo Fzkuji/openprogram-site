@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786630014" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786635888" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,7 +134,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Run it from the Programs panel as <code>agentic_workflow</code>, or call it from Python:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
+<span class="c1"># Start a new workflow</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;port the auth module to the new client and update its tests&quot;</span><span class="p">)</span>
+
+<span class="c1"># Auto-resume: tasks starting with &quot;continue&quot;/&quot;resume&quot; automatically resume the latest workflow</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;continue the optimization&quot;</span><span class="p">)</span>
 </code></pre>
 <p>Every call creates an independent workflow instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
 <h2 id="small-tasks-are-not-split">Small tasks are not split<a class="header-anchor" href="#small-tasks-are-not-split">#</a></h2>
