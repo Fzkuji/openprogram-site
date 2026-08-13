@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/function/calling-unification.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/function/calling-unification.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -366,7 +366,7 @@ LLM's tool_call dispatch.             (it triggers __call__ → wrapper);
                                        Both routes hit the same wrapper.
 </code></pre>
 <p>Both decorators ultimately produce one <code>AgentTool</code> entry in one
-shared registry (<code>openprogram.functions._runtime._registry</code>). The
+shared registry (<code>openprogram.programs._runtime._registry</code>). The
 <code>_build_and_register_tool</code> helper is the single source of truth for
 &quot;build AgentTool + attach sidecars + register&quot;. Both decorators
 delegate to it; adding a new sidecar attribute or gating layer means
@@ -552,7 +552,7 @@ toolbox&quot;); L5 is <em>blacklisting / capping</em> (subtractive, &quot;this t
 broken / this session may not use it&quot;). A veto must be independent of
 selection — e.g. attended-mode must withhold <code>ask_user_question</code> no
 matter which folder is active; you can't rely on the user remembering to
-leave it out of every folder. So the <strong>Functions page surfaces L2b as
+leave it out of every folder. So the <strong>Programs page surfaces L2b as
 the primary action (organize &amp; pick folders) and L5 as the exception
 (a per-tool off switch)</strong>; the system's own L5 vetoes (attended,
 subagent caps) are code-only and invisible to the user.</p>
@@ -574,14 +574,14 @@ without making the tools invisible.</li>
 <code>expose=False</code>; a user can still turn any of them off on the Functions
 page (Layer 5). The default, though, is &quot;registered = usable&quot;.</li>
 </ul>
-<h2 id="tool-profiles-functions-page">Tool profiles (Functions page)<a class="header-anchor" href="#tool-profiles-functions-page">#</a></h2>
+<h2 id="tool-profiles-programs-page">Tool profiles (Programs page)<a class="header-anchor" href="#tool-profiles-programs-page">#</a></h2>
 <p>A <strong>tool profile</strong> is a named configuration that says &quot;which tools are
-enabled for this conversation&quot;. The Functions page (<code>/functions</code>)
+enabled for this conversation&quot;. The Programs page (<code>/programs</code>)
 manages profiles; the chat composer lets the user pick which profile to
 use.</p>
 <h3 id="concepts">Concepts<a class="header-anchor" href="#concepts">#</a></h3>
 <pre><code>tool catalog          all registered, exposed tools — a flat read-only
-(the shelf)           list on the Functions page. Shows every tool with
+(the shelf)           list on the Programs page. Shows every tool with
                       its name + description. The catalog itself has no
                       enable/disable controls; it just shows what exists.
 
@@ -602,7 +602,7 @@ default profile       the built-in &quot;all tools on&quot; profile. Always
 </code></pre>
 <h3 id="user-flow">User flow<a class="header-anchor" href="#user-flow">#</a></h3>
 <ol>
-<li><strong>Functions page</strong> shows the catalog (all tools) and a sidebar of
+<li><strong>Programs page</strong> shows the catalog (all tools) and a sidebar of
 profiles. Clicking a profile shows which tools it includes; the
 user adds/removes tools from that profile.</li>
 <li><strong>Chat composer</strong> has a profile picker (e.g. a dropdown next to the
@@ -637,7 +637,7 @@ action is profile management, not per-tool global toggles.</p>
 <h2 id="user-editable-entry-points">User-editable entry points<a class="header-anchor" href="#user-editable-entry-points">#</a></h2>
 <pre><code>Entry point                     Controls                     Layer  Persisted in
 ────────────────────────────────────────────────────────────────────────────────────────
-Functions page —                create / edit / delete tool  L2b    functions_meta.json
+Programs page —                create / edit / delete tool  L2b    functions_meta.json
   tool profiles                 profiles (named tool sets).         → profiles: {name:[...]}
                                 Add/remove tools to/from a
                                 profile. Default profile =
@@ -663,14 +663,14 @@ Attended / unattended           withhold ask_user_question   L5     session stat
                                                                     the user)
 
 Global tool disable             blacklist a single tool      L5     config.json:
-  (Functions page / config)     everywhere — rarely used.           tools.disabled
+  (Programs page / config)     everywhere — rarely used.           tools.disabled
                                 Overrides any profile.
 
 Author decorator kwargs         expose / available_if /      L1/2/  in-code
   @function(...)                defer / toolset / unsafe_in  3/6
                                 / check_fn
 </code></pre>
-<p>Daily use = <strong>tool profiles</strong> on the Functions page (create profiles,
+<p>Daily use = <strong>tool profiles</strong> on the Programs page (create profiles,
 add/remove tools) + <strong>profile picker</strong> in the chat composer (choose
 which profile this conversation uses). Global disable = rarely-used
 backstop. Agent profile = per-agent override for advanced multi-agent
@@ -858,7 +858,7 @@ def research(topic: str) -&gt; str: ...
    → LLM can call cron normally
 </code></pre>
 <h2 id="where-each-piece-lives">Where each piece lives<a class="header-anchor" href="#where-each-piece-lives">#</a></h2>
-<pre><code>openprogram/functions/_runtime.py
+<pre><code>openprogram/programs/_runtime.py
   AgentTool subclass (from openprogram.agent.types)
   _registry                                            exposure source
                                                        (Layer 2: exposed =
@@ -881,12 +881,12 @@ def research(topic: str) -&gt; str: ...
   deferred_catalog_text                                Layer 6 prompt block
   tool_search (the AgentTool itself)                   Layer 6 loader
 
-openprogram/functions/_helpers.py
+openprogram/programs/_helpers.py
   is_available (legacy dict, kept for older callers)
   is_available_agent_tool                              consolidates the
                                                        Layer 4 triad
 
-openprogram/functions/__init__.py
+openprogram/programs/__init__.py
   DEFAULT_TOOLS, TOOLSETS                              Layer 2 presets
   agent_tools, apply_tool_policy                       resolution API
   get_agent_tool, list_registered_agent_tools,
@@ -894,7 +894,7 @@ openprogram/functions/__init__.py
   side-effect imports of every subpackage              @function tools register
                                                        at import time
 
-openprogram/functions/&lt;name&gt;/&lt;name&gt;.py                  one per tool
+openprogram/programs/&lt;name&gt;/&lt;name&gt;.py                  one per tool
   @function on a plain def                             (for the 38 leaf
                                                        tools shipped today)
 
@@ -926,7 +926,7 @@ openprogram/agent/agent_loop.py
                                                        schemas appear on
                                                        the next call)
 
-openprogram/functions/agentics/*/__init__.py           @agentic_function
+openprogram/programs/agentic_functions/*/__init__.py           @agentic_function
                                                        modules (each its
                                                        own directory).
                                                        Includes harness
@@ -986,7 +986,7 @@ ToolSearch</li>
 <h2 id="appendix-implementation-status">Appendix — implementation status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
 <p>The registry, the six gating layers, the two decorators, and the four
 runtime knobs are all in place. Two user-facing entry points described
-under &quot;Tool profiles (Functions page)&quot; and &quot;User-editable entry points&quot;
+under &quot;Tool profiles (Programs page)&quot; and &quot;User-editable entry points&quot;
 are not built yet:</p>
 <ul>
 <li>the Functions-page profile manager (create / edit / delete tool
@@ -1005,7 +1005,7 @@ uses).</li>
 <a class="" href="#the-gating-layers">The gating layers</a>
 <a class="" href="#per-layer-default-policy">Per-layer default policy</a>
 <a class="" href="#plugins-and-mcp-servers">Plugins and MCP servers</a>
-<a class="" href="#tool-profiles-functions-page">Tool profiles (Functions page)</a>
+<a class="" href="#tool-profiles-programs-page">Tool profiles (Programs page)</a>
 <a class="lvl-3" href="#concepts">Concepts</a>
 <a class="lvl-3" href="#user-flow">User flow</a>
 <a class="lvl-3" href="#storage">Storage</a>

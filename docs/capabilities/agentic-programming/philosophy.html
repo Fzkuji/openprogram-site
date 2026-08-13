@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -186,19 +186,20 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <p>Decompose a complex task into a function call graph. For each node on the graph, you decide:</p>
 <ul>
 <li><strong>Doesn't need reasoning</strong> — use a plain Python function</li>
-<li><strong>Needs understanding / generation / judgment</strong> — decorate it with <code>@agentic_function</code>, and call <code>runtime.exec(...)</code> inside the function body to trigger the LLM</li>
+<li><strong>Needs understanding / generation / judgment</strong> — decorate it with <code>@agentic_function</code>, and call <code>llm(...)</code> inside the function body</li>
 </ul>
 <p>The LLM becomes a tool that you call, constrain, and compose.</p>
 <h2 id="the-three-primitives">The Three Primitives<a class="header-anchor" href="#the-three-primitives">#</a></h2>
 <p>The entire paradigm is just three things:</p>
 <h3 id="1-agentic_function">1. <code>@agentic_function</code><a class="header-anchor" href="#1-agentic_function">#</a></h3>
-<p>A decorator. For a function it decorates, the docstring travels with the call as descriptive context, and <code>runtime.exec(...)</code> inside the body triggers the model call. The <code>runtime</code> parameter is auto-injected.</p>
+<p>A decorator. For a function it decorates, the docstring travels with the call as descriptive context, and <code>llm(...)</code> inside the body triggers one model call. The decorator supplies the ambient runtime.</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">summarize</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Summarize a text in one sentence, preserving the core point.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Summarize in one sentence, preserving the core point:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)}])</span>
 </code></pre>
@@ -210,10 +211,10 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <li>Calling the underlying provider (Anthropic / OpenAI / Claude Code / ...)</li>
 <li>Writing the result back into the context</li>
 </ul>
-<p><code>Runtime.exec()</code> is the only LLM entry point. Every model call goes through it.</p>
+<p>User orchestration calls <code>llm()</code> for a single model request. <code>Runtime.exec()</code> remains the lower-level embedding and infrastructure API used underneath it.</p>
 <h3 id="3-context">3. <code>Context</code><a class="header-anchor" href="#3-context">#</a></h3>
 <p>The automatic record of execution. Every user turn, every LLM call, and every function call is one node on a single <strong>flat DAG</strong>; the edges are <code>caller</code> (which function invoked this node) and <code>reads</code> (which nodes an LLM call saw in its prompt). Each node records inputs, outputs, token usage, elapsed time, and failure reason.</p>
-<p>The DAG is not just a trace — it is also <strong>where each LLM call's history comes from</strong>: <code>runtime.exec()</code> renders its message history from the DAG. Two decorator knobs shape that flow per function:</p>
+<p>The DAG is not just a trace — it is also <strong>where each LLM call's history comes from</strong>: <code>llm()</code> renders its message history from the DAG through the ambient runtime. Two decorator knobs shape that flow per function:</p>
 <ul>
 <li><code>expose</code> — what a completed call reveals to its parent (<code>&quot;io&quot;</code> by default: name + input + output, internals hidden).</li>
 <li><code>render_range</code> — how much history the function's own <code>exec</code> pulls in. <code>render_range={&quot;callers&quot;: 0}</code> gives an isolated scratch context that sees none of the prior conversation.</li>
@@ -221,13 +222,13 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <p>So context management stops being prompt plumbing and becomes a property you declare on the function. The same DAG doubles as your debugging view: visualization, token accounting, replaying failure paths.</p>
 <h2 id="derived-concepts">Derived Concepts<a class="header-anchor" href="#derived-concepts">#</a></h2>
 <h3 id="the-llm-writes-code-too">The LLM Writes Code Too<a class="header-anchor" href="#the-llm-writes-code-too">#</a></h3>
-<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the spec. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits, following the <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> as the spec — where files go, decorator metadata, the division of labor between the docstring and <code>content</code>, and the validation checklist. A background watcher rescans <code>functions/agentics/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
+<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the spec. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits, following the <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> as the spec — where files go, decorator metadata, the division of labor between the docstring and <code>content</code>, and the validation checklist. A background watcher rescans <code>programs/agentic_functions/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
 <p>Code is data, the LLM is the compiler, and functions are the product — the loop closes.</p>
 <h3 id="dual-mode">Dual Mode<a class="header-anchor" href="#dual-mode">#</a></h3>
 <p>Agentic Programming is at the same time:</p>
 <ul>
 <li><strong>A library</strong> — you write <code>@agentic_function</code>s and wire up the pipeline by hand</li>
-<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>functions/agentics/</code> and hot-loads</li>
+<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>programs/agentic_functions/</code> and hot-loads</li>
 </ul>
 <p>Beginners start by asking, and what they get is a complete, readable Python file. Those who want to dig deeper can then import and hand-write. This is a tool that <strong>can be understood incrementally</strong>.</p>
 <h2 id="comparison-with-traditional-agent-frameworks">Comparison with Traditional Agent Frameworks<a class="header-anchor" href="#comparison-with-traditional-agent-frameworks">#</a></h2>
@@ -264,7 +265,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 </table>
 <p>This isn't to say agent frameworks are wrong; they suit a class of tasks (fully open-ended, with fuzzy goals). But most of what you want to do can actually be done more reliably with Agentic Programming.</p>
 <h2 id="openprogram-the-productized-paradigm">OpenProgram = the Productized Paradigm<a class="header-anchor" href="#openprogram-the-productized-paradigm">#</a></h2>
-<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>functions/agentics/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
+<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>programs/agentic_functions/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
 <p>The paradigm comes first; the product exists to use it.</p>
 <hr />
 <p>Further reading:</p>

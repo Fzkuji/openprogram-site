@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,6 +108,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -125,7 +126,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -177,15 +177,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <blockquote>
 <p>Source: <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agentic_programming/function.py"><code>openprogram/agentic_programming/function.py</code></a></p>
 </blockquote>
-<p><code>@agentic_function</code> turns an ordinary Python function into an Agentic Function: each call is recorded as a <code>code</code> node in the session DAG, and the <code>runtime.exec</code> calls inside the function body are recorded as <code>llm</code> nodes.</p>
+<p><code>@agentic_function</code> turns an ordinary Python function into an Agentic Function: each call is recorded as a <code>code</code> node in the session DAG, and the <code>llm()</code> calls inside the function body are recorded as <code>llm</code> nodes.</p>
 <p>For the full authoring conventions—file layout, the division of labor between the docstring and <code>content</code>, parameter metadata, the validation checklist, and smoke tests—see <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>. This document only covers the decorator itself.</p>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;One-line summary of what f does.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
 </code></pre>
 <p>You can use bare <code>@agentic_function</code> or the parameterized form <code>@agentic_function(...)</code>.</p>
 <h2 id="decorator-parameters">Decorator parameters<a class="header-anchor" href="#decorator-parameters">#</a></h2>
@@ -210,7 +211,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>render_range</code></td>
 <td><code>dict</code></td>
 <td><code>None</code></td>
-<td><strong>Inward-facing</strong>: how many history nodes to read from the DAG when this function's internal <code>runtime.exec</code> assembles its prompt. Shape <code>{&quot;callers&quot;: N, &quot;subcalls&quot;: M}</code>, where both numbers are <strong>node counts (sliced by <code>seq</code>)</strong>:<br>• <code>callers</code> — nodes written <strong>before</strong> this function's frame started; take the most recent N (<code>None</code> default = unlimited, <code>0</code> = a full wall)<br>• <code>subcalls</code> — nodes already written <strong>after</strong> this function's frame started; take the most recent N (<code>-1</code> default = unlimited, so the frame naturally sees its own progress; <code>N&gt;=0</code> = set explicitly when you want to truncate the prompt; <code>0</code> = wall off in-frame entirely)<br><code>{&quot;callers&quot;:0,&quot;subcalls&quot;:0}</code> = cut off from both the outside world and your own frame</td>
+<td><strong>Inward-facing</strong>: how many history nodes to read from the DAG when this function's internal <code>llm()</code> call assembles its prompt. Shape <code>{&quot;callers&quot;: N, &quot;subcalls&quot;: M}</code>, where both numbers are <strong>node counts (sliced by <code>seq</code>)</strong>:<br>• <code>callers</code> — nodes written <strong>before</strong> this function's frame started; take the most recent N (<code>None</code> default = unlimited, <code>0</code> = a full wall)<br>• <code>subcalls</code> — nodes already written <strong>after</strong> this function's frame started; take the most recent N (<code>-1</code> default = unlimited, so the frame naturally sees its own progress; <code>N&gt;=0</code> = set explicitly when you want to truncate the prompt; <code>0</code> = wall off in-frame entirely)<br><code>{&quot;callers&quot;:0,&quot;subcalls&quot;:0}</code> = cut off from both the outside world and your own frame</td>
 </tr>
 <tr>
 <td><code>input</code></td>
@@ -233,7 +234,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h3 id="tool-registration-parameters">Tool-registration parameters<a class="header-anchor" href="#tool-registration-parameters">#</a></h3>
-<p>Every <code>@agentic_function</code> is also registered as an LLM-callable tool in the shared registry (<code>openprogram.functions</code>), alongside <code>@function</code>-decorated tools. These parameters control that registration and share their names and semantics with <code>@function</code>:</p>
+<p>Every <code>@agentic_function</code> is also registered as an LLM-callable tool in the shared registry (<code>openprogram.programs</code>), alongside <code>@function</code>-decorated tools. These parameters control that registration and share their names and semantics with <code>@function</code>:</p>
 <table>
 <thead>
 <tr>
@@ -378,7 +379,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="recording-to-the-dag">Recording to the DAG<a class="header-anchor" href="#recording-to-the-dag">#</a></h2>
 <ul>
 <li><strong>Entering the function</strong>: write a <code>code</code> node (<code>output=None</code>, <code>status=&quot;running&quot;</code>), and store the function docstring into that node's <code>metadata.doc</code>, which is prepended to <code>function_name(args)</code> when rendering context.</li>
-<li><strong><code>runtime.exec</code> inside the function body</strong>: each call writes an <code>llm</code> node.</li>
+<li><strong><code>llm()</code> inside the function body</strong>: each call writes an <code>llm</code> node.</li>
 <li><strong>Exiting the function</strong>: backfill the same <code>code</code> node's <code>output</code> / <code>status</code>.</li>
 </ul>
 <p>When <code>expose=&quot;hidden&quot;</code>, no nodes are written. In standalone runs (with no DAG store installed), all recording is a no-op and the function executes as usual.</p>

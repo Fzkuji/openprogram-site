@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harnesses">Harnesses<a class="header-anchor" href="#harnesses">#</a></h1>
 <p>A <strong>harness</strong> (an <em>agentic program</em>) is a self-contained git repo of
 agentic functions. <code>openprogram programs install</code> records its source under
-<code>openprogram/functions/agentics/</code>, and its functions then register like
+<code>openprogram/programs/agentic_functions/</code>, and its functions then register like
 built-ins. This is a <strong>general mechanism</strong>: the first-party programs
 (gui / research / wiki) and any third-party repo install the exact same
 way. Cross-platform (macOS / Linux / Windows); no symlinks required.</p>
@@ -164,7 +164,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>The same four steps for first-party and third-party:</p>
 <ol>
 <li><strong>Shallow-clone</strong> the repo into
-<code>openprogram/functions/agentics/&lt;Repo-Name&gt;/</code> — a real, editable
+<code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code> — a real, editable
 directory (not site-packages). The clone is git-ignored by
 OpenProgram, so it stays an independent checkout you can <code>git pull</code>
 or edit in place.</li>
@@ -178,7 +178,7 @@ reported and will simply not register; it never breaks the load.</li>
 <li><strong>Record the owner-approved source.</strong> On the next launch the registry imports
 only recorded <code>&lt;package&gt;.agentics</code> packages, the
 <code>@agentic_function</code> decorators fire, and the functions appear in
-chat / the Functions page / <code>openprogram programs run</code>.</li>
+chat / the Programs page / <code>openprogram programs run</code>.</li>
 </ol>
 <p>Guard rails: for an existing <strong>dev symlink</strong>, <code>install</code> verifies the harness
 contract and records the link without modifying its target. It refuses a
@@ -219,7 +219,7 @@ interactively.</p>
 a YOLO detector weight + OCR models that aren't on PyPI. After the
 install, run the harness's own installer to fetch them (it skips the
 host since you already have it):
-<code>openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh --no-host</code>
+<code>openprogram/programs/applications/gui_harness/scripts/install.sh --no-host</code>
 (Windows: <code>…\scripts\install.ps1 -NoHost</code>). See the
 <a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">GUI install guide</a>.</p>
 </blockquote>
@@ -235,7 +235,7 @@ with their contract status; <code>openprogram programs uninstall &lt;Harness-Nam
 <details>
 <summary>Manual equivalent (mirror / no GitHub access)</summary>
 <p><code>&lt;AGENTICS&gt;</code> is OpenProgram's bundled-functions folder:</p>
-<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;functions&#39;,&#39;agentics&#39;))&quot;</span>
+<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;programs&#39;,&#39;applications&#39;))&quot;</span>
 </code></pre>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span>
 pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span><span class="w">        </span><span class="c1"># or its requirements.txt</span>

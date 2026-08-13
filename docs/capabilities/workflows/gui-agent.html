@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>This is the heaviest of the three first-party workflows: dependencies include <code>torch</code> / <code>torchvision</code>, <code>opencv-python</code>, <code>ultralytics</code>, <code>easyocr</code>, <code>pynput</code>, and more. On Linux without a GPU it automatically picks the CPU torch wheel (about 300 MB) instead of the roughly 3 GB CUDA build.</p>
 <p>Beyond the pip dependencies you also need model files — the YOLO detector weights (downloaded via <code>huggingface-hub</code>) and the OCR models are not on PyPI. After installing, run the harness's bundled installer to fetch them:</p>
-<pre><code class="language-bash">openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh<span class="w"> </span>--no-host
+<pre><code class="language-bash">openprogram/programs/applications/gui_harness/scripts/install.sh<span class="w"> </span>--no-host
 <span class="c1"># Windows: ...\scripts\install.ps1 -NoHost</span>
 </code></pre>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
@@ -175,7 +175,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Platforms: macOS / Windows / Linux; the OCR backend is selected automatically per platform.</li>
 <li>The runtime needs a working directory configured before running (screenshots and run records are written there).</li>
 </ul>
-<p>Source and README: <code>openprogram/functions/agentics/GUI-Agent-Harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
+<p>Source and README: <code>openprogram/programs/applications/gui_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">

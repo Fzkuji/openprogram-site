@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/usage-metering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/usage-metering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -339,7 +339,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>职责分离</strong>。计费记账、compaction 阈值估算、热路径 budget 缓存的生命周期与消费者各不相同，分属不同对象。</p>
 </li>
 </ol>
-<p>聊天主循环之外抵达 provider 的路径——<code>context/summarize.py</code>、<code>functions/tools/mixture_of_agents</code>、<code>memory/llm_bridge.py</code>，以及 <code>@agentic_function</code> 子进程（<code>process_runner.py</code>）——都由同一个收口点加一个显式来源 scope 覆盖。</p>
+<p>聊天主循环之外抵达 provider 的路径——<code>context/summarize.py</code>、<code>programs/functions/mixture_of_agents</code>、<code>memory/llm_bridge.py</code>，以及 <code>@agentic_function</code> 子进程（<code>process_runner.py</code>）——都由同一个收口点加一个显式来源 scope 覆盖。</p>
 <p><code>providers/models.py:calculate_cost(model, usage)</code> 已能从 <code>Model.cost</code> 算成本。metering 层在收口点调用它，不新建定价逻辑。</p>
 <h2 id="3-分层架构">3. 分层架构<a class="header-anchor" href="#3-分层架构">#</a></h2>
 <pre><code>消费层  webui 面板 / CLI / 导出 / 未来配额引擎

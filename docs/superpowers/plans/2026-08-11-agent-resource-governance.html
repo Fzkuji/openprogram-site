@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,6 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -123,7 +124,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -175,16 +175,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Specification: <code>docs/reference/design/runtime/agent-resource-governance.html</code>.</p>
 <h2 id="global-constraints">Global constraints<a class="header-anchor" href="#global-constraints">#</a></h2>
 <ul>
-<li>Preserve the single-user, local, single execution-worker topology. <code>OPENPROGRAM_TASK_WORKERS</code> remains the only global scheduler capacity; do not add <code>max_live_global</code>.</li>
+<li>Preserve the single-user, local, single execution-worker topology. <code>OPENPROGRAM_JOB_WORKERS</code> remains the only global scheduler capacity; do not add <code>max_live_global</code>.</li>
 <li>Preserve existing Task ids/status enums, depth, fanout, message-budget semantics, broadcasts, cancellation APIs, and legacy tasks. Missing resource fields mean <code>legacy/unmetered</code>, never zero.</li>
 <li>Follow strict TDD and record RED/GREEN evidence. All creation paths must use one admission boundary; rejected admissions create no Task, branch, inbox, or event side effects.</li>
-<li>Use SQLite WAL and <code>BEGIN IMMEDIATE</code> for admission/reservation atomicity. Never hold a SQLite transaction across tasks.json file I/O. Durable <code>preparing</code> is committed before Task publication, and every concurrent check counts its provisional occupancy.</li>
+<li>Use SQLite WAL and <code>BEGIN IMMEDIATE</code> for admission/reservation atomicity. Never hold a SQLite transaction across jobs.json file I/O. Durable <code>preparing</code> is committed before Task publication, and every concurrent check counts its provisional occupancy.</li>
 <li>Queue, live, stopping, cumulative tasks, actual usage, and unsettled reservations are distinct. Actual provider usage remains append-only in <code>usage_events</code>.</li>
 <li>New configuration values are positive or null. Task/child limits can only narrow owner/session/ancestor limits. Unknown cost is never treated as zero.</li>
 <li>Do not mark the matrix row solid until the mechanical gate in the specification passes.</li>
 </ul>
 <h2 id="task-1-configuration-schema-migration-and-read-only-resource-views">Task 1: Configuration, schema migration, and read-only resource views<a class="header-anchor" href="#task-1-configuration-schema-migration-and-read-only-resource-views">#</a></h2>
-<p>Add <code>agent.resource_limits</code>, session overrides, configured/effective/source resolution, SQLite migrations for admissions/scopes/reservations and nullable task attribution on usage events, legacy handling, unknown-cost aggregation, and read-only <code>TaskResourceView</code>. Money is decimal-string at APIs and integer micro-USD in storage.</p>
+<p>Add <code>agent.resource_limits</code>, session overrides, configured/effective/source resolution, SQLite migrations for admissions/scopes/reservations and nullable task attribution on usage events, legacy handling, unknown-cost aggregation, and read-only <code>JobResourceView</code>. Money is decimal-string at APIs and integer micro-USD in storage.</p>
 <p>Required verification: schema upgrade/reopen/rollback compatibility, invalid/zero values, owner-only mutations, child narrowing, worker-capacity projection, unknown-cost display, legacy tasks, and existing usage queries.</p>
 <h2 id="task-2-unified-durable-admission-queue-dispatcher-and-recovery">Task 2: Unified durable admission, queue, dispatcher, and recovery<a class="header-anchor" href="#task-2-unified-durable-admission-queue-dispatcher-and-recovery">#</a></h2>
 <p>Route sync/async agent, busy-target, Web/API, model tools, and runner calls through <code>ResourceGovernor.admit_task</code>. Commit a provisional <code>preparing</code> row in the first transaction; write Task under cross-process file lock; finalize <code>queued</code> in a second transaction; create branch/inbox and broadcast only afterward. Add durable dispatcher fairness, atomic queued-to-live exchange, per-session live/queued/cumulative limits, stopping leases, idempotent retries, reconciliation, and stable reason codes. Renew leases every 10 seconds with a 30-second TTL; never release while the original owner still holds the worker lock.</p>

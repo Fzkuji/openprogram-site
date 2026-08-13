@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -393,7 +393,7 @@ the words never overlap — a term means the same thing everywhere it appears.</
 <tr>
 <td>Execution</td>
 <td><strong>task</strong></td>
-<td><code>task_output</code> / <code>task_stop</code> / <code>list_tasks</code></td>
+<td><code>job_output</code> / <code>job_stop</code> / <code>list_jobs</code></td>
 <td>Work handed out and now running: a task id, a status, a result</td>
 </tr>
 <tr>
@@ -412,7 +412,7 @@ the words never overlap — a term means the same thing everywhere it appears.</
 </table>
 <p>Writing &quot;benchmark the parser&quot; on the todo list starts nothing. <code>agent(…)</code>
 starts something, and what comes back is a task id. The list says what was
-intended; <code>list_tasks</code> says what is running.</p>
+intended; <code>list_jobs</code> says what is running.</p>
 <p>An agent's conversation is a <strong>branch</strong>: a <code>(session_id, head_id)</code> pair
 inside a session. Two heads in one session are two branches of one
 conversation; two sessions are two conversations. Every agent address is a
@@ -434,7 +434,7 @@ do them:</p>
 </tr>
 <tr>
 <td>It can be stopped</td>
-<td><code>task_stop</code> cancels the task; one still queued is withdrawn before it ever runs</td>
+<td><code>job_stop</code> cancels the task; one still queued is withdrawn before it ever runs</td>
 </tr>
 <tr>
 <td>Cancellation cascades</td>
@@ -443,7 +443,7 @@ do them:</p>
 </tbody>
 </table>
 <p><code>read_conversation</code> makes every task id readable, so ownership is checked
-rather than assumed: <code>task_output</code> and <code>task_stop</code> refuse a task another
+rather than assumed: <code>job_output</code> and <code>job_stop</code> refuse a task another
 session dispatched (§5.10). Calls with no session context (the user, the
 UI) are not gated.</p>
 <p><code>send_message</code> carries none of the three, which is why anyone may write to
@@ -476,22 +476,22 @@ fork point left to choose.</p>
 <pre><code>todo_create(&quot;benchmark the parser&quot;)            → todo #1 on the board
 todo_update(&quot;1&quot;, status=&quot;in_progress&quot;)
 agent(&quot;benchmark the parser&quot;, &quot;bench&quot;,
-      run_in_background=true)                  → task_id=t_7f2
-list_tasks()                                   → t_7f2 running — bench
+      run_in_background=true)                  → job_id=t_7f2
+list_jobs()                                   → t_7f2 running — bench
 send_message(&quot;how far along?&quot;, to=&quot;bench&quot;)     → the agent answers, no task created
-task_output(&quot;t_7f2&quot;)                           → the result, when it lands
+job_output(&quot;t_7f2&quot;)                           → the result, when it lands
 todo_update(&quot;1&quot;, status=&quot;completed&quot;)
 archive_agent(to=&quot;bench&quot;)                      → archived out of the agent list
 </code></pre>
 <h3 id="names-shared-with-claude-code">Names shared with Claude Code<a class="header-anchor" href="#names-shared-with-claude-code">#</a></h3>
-<p><code>agent</code>, <code>list_agents</code>, <code>send_message</code>, <code>task_output</code> and <code>task_stop</code> carry
+<p><code>agent</code>, <code>list_agents</code>, <code>send_message</code>, <code>job_output</code> and <code>job_stop</code> carry
 the same meaning here as in Claude Code, deliberately — a model that knows
 those names already knows these tools.</p>
 <p>One name deliberately differs. Claude Code's <code>TaskList</code> is a todo planning
 board, not a view of running work. The planning board here takes the
-<code>todo_*</code> prefix instead, so the collision cannot happen and <code>list_tasks</code>
+<code>todo_*</code> prefix instead, so the collision cannot happen and <code>list_jobs</code>
 keeps its literal reading: the tasks that are running.</p>
-<p>Three tools have no Claude Code counterpart — <code>list_tasks</code> (there, a model
+<p>Three tools have no Claude Code counterpart — <code>list_jobs</code> (there, a model
 cannot enumerate its background tasks), <code>archive_agent</code> (archiving an agent
 out of the agent list, §2.6), and <code>read_conversation</code> (another agent's
 history as a readable transcript, rather than the raw session files).</p>
@@ -507,7 +507,7 @@ them, <code>list_agents</code> sees them.</strong></p>
     description: str = &quot;&quot;,              # short label, becomes the branch name
     agent_id: str = &quot;&quot;,                 # agent profile; defaults to the session's
     start_from: str = &quot;clean&quot;,          # &quot;clean&quot; / &quot;inherit&quot; / &quot;SID:MSG_ID&quot;
-    run_in_background: bool = false,    # false=block for the reply; true=task_id
+    run_in_background: bool = false,    # false=block for the reply; true=job_id
     to: str = &quot;&quot;,                       # dispatch to an EXISTING agent instead
     archive_when_done: bool = false,    # archive the spawned agent at terminal state (§2.6)
 ) -&gt; str
@@ -515,9 +515,9 @@ them, <code>list_agents</code> sees them.</strong></p>
 <p><code>start_from</code> picks where the new branch starts: <code>&quot;clean&quot;</code> (default) is a new
 root seeing only the prompt; <code>&quot;inherit&quot;</code> forks off the calling turn with the
 full chain; <code>&quot;SID:MSG_ID&quot;</code> forks off that exact node (any session),
-inheriting the chain up to it. <code>run_in_background=true</code> returns a <code>task_id</code>; its
-companions <code>task_output(task_id)</code> (block for the result) and
-<code>task_stop(task_id)</code> (cancel) manage the background form.</p>
+inheriting the chain up to it. <code>run_in_background=true</code> returns a <code>job_id</code>; its
+companions <code>job_output(job_id)</code> (block for the result) and
+<code>job_stop(job_id)</code> (cancel) manage the background form.</p>
 <p><strong><code>to=</code> — dispatch a tracked task to an EXISTING agent.</strong> With <code>to</code> set the
 tool creates no branch: the prompt is handed to the named existing branch
 as a formal task. Addressing is send_message's, verbatim (<code>&quot;SID:HEAD&quot;</code>
@@ -526,8 +526,8 @@ then unique prefix; ambiguity lists candidates). What distinguishes a
 dispatch from a message is task tracking:</p>
 <ul>
 <li>A <strong>Task entity</strong> is created (the runner's task record): the dispatcher gets
-a <code>task_id</code> back immediately, <code>task_output</code> waits on it, <code>task_stop</code>
-withdraws or cancels it, and <code>list_tasks</code> shows it.</li>
+a <code>job_id</code> back immediately, <code>job_output</code> waits on it, <code>job_stop</code>
+withdraws or cancels it, and <code>list_jobs</code> shows it.</li>
 <li>Delivery reuses the message machinery: an idle target runs the task as
 the next turn on its branch; a busy target queues it in its inbox
 (§5.4) — the Task entity is pre-created in <code>pending</code> so the id exists
@@ -651,7 +651,7 @@ target branch's reply into the delivery session as a <strong>synthetic user-role
 turn</strong>. <strong>Key rule: the reply-back <code>TurnRequest</code> leaves <code>branch_from</code> unset
 (INHERIT_PARENT) — the dispatcher resolves it to the delivery session's
 current HEAD and advances it.</strong> A per-delivery-session follow-up lock
-(<code>TaskRunner._followup_lock</code>) serialises concurrent completions, so N
+(<code>JobRunner._followup_lock</code>) serialises concurrent completions, so N
 sub-tasks finishing produce one serial chain
 <code>… → notice₁ → answer₁ → notice₂ → answer₂</code> — each follow-up reads a HEAD
 that already contains the previous answer.</p>
@@ -759,7 +759,7 @@ name). Archiving an already-archived branch is an idempotent notice, not
 an error.</li>
 </ul>
 <p><strong>Any session may archive any agent.</strong> Archiving is not gated the way
-<code>task_stop</code> is (§5.10), because it does not do what <code>task_stop</code> does: it
+<code>job_stop</code> is (§5.10), because it does not do what <code>job_stop</code> does: it
 interrupts no running work and deletes nothing. A task already running on
 the branch runs to its end, <code>read_conversation</code> still reads the branch and
 <code>agent(start_from=&quot;SID:MSG_ID&quot;)</code> still forks it. All that changes is that
@@ -861,7 +861,7 @@ accumulates against it and nothing is refused because of it.</p>
 <p><strong>Reading a result spends a message and no generation.</strong> The turn that
 carries a finished agent's reply back is the <em>dispatcher's</em> turn, so it
 runs at the dispatcher's generation count (<code>Task.caller_chain_generations</code>,
-re-bound by <code>TaskRunner._dispatch_followup</code>) and one message further
+re-bound by <code>JobRunner._dispatch_followup</code>) and one message further
 along. That keeps the most common multi-agent shape open: send a batch of
 work out, read what comes back, send the next batch. One counter for both
 budgets closes it — the coordinator's follow-up turn inherits the worker's
@@ -874,8 +874,8 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </code></pre>
 <p><strong>What the budgets do when they run out.</strong> A call that would overrun is
 refused with a reason the model can act on, and it keeps every other
-tool. Once the <strong>message</strong> budget is spent, <code>agent</code>, <code>task_output</code> and
-<code>task_stop</code> leave the tool list altogether: every form of delegation
+tool. Once the <strong>message</strong> budget is spent, <code>agent</code>, <code>job_output</code> and
+<code>job_stop</code> leave the tool list altogether: every form of delegation
 hands a message over, so a chain out of messages can do nothing with
 them, and a tool sitting in the listing makes the model try to call it.
 The generation budget never removes a tool, because a chain out of
@@ -952,12 +952,12 @@ delivered as its own turn, so there is nothing to thrash.</li>
 <li>hermes' 600 seconds is a caller-side <code>Future.result(timeout=…)</code>, not a
 kill. On expiry it sets a cooperative interrupt flag and abandons the
 worker thread, and a child wedged in blocking I/O keeps running. We
-already have both halves of that and stronger: <code>task_output(timeout=)</code>
+already have both halves of that and stronger: <code>job_output(timeout=)</code>
 is the same caller-side wait (default 30s, ceiling 600s), and
-<code>task_stop</code> cancels cooperatively, kills the active runtime and forces
+<code>job_stop</code> cancels cooperatively, kills the active runtime and forces
 the entity terminal after 30s. What neither we nor hermes have is a
 deadline that fires with nobody watching. Adding one means scheduling
-<code>cancel_task</code> at submit time in <code>TaskRunner</code>, and the bound that makes
+<code>cancel_job</code> at submit time in <code>JobRunner</code>, and the bound that makes
 it rarely necessary is the 50-iteration per-turn cap below.</li>
 </ul>
 <p><strong>How the counts travel.</strong> Both counters live in ContextVars
@@ -979,11 +979,11 @@ defaults:</p>
 </tr>
 <tr>
 <td>Sender → task worker</td>
-<td>Both are persisted on the Task (<code>chain_messages</code>, always sender + 1; <code>chain_generations</code>, sender + 1 for a spawn and unchanged for a dispatch) and re-bound by <code>TaskRunner._run_one</code></td>
+<td>Both are persisted on the Task (<code>chain_messages</code>, always sender + 1; <code>chain_generations</code>, sender + 1 for a spawn and unchanged for a dispatch) and re-bound by <code>JobRunner._run_one</code></td>
 </tr>
 <tr>
 <td>Task → reply follow-up</td>
-<td><code>TaskRunner._dispatch_followup</code> re-binds the finished task's <code>chain_messages</code> and its <code>caller_chain_generations</code> in its own thread</td>
+<td><code>JobRunner._dispatch_followup</code> re-binds the finished task's <code>chain_messages</code> and its <code>caller_chain_generations</code> in its own thread</td>
 </tr>
 </tbody>
 </table>
@@ -995,8 +995,8 @@ started at 0 would give A a fresh budget on every round and the
 dispatcher's count: the follow-up creates nobody, and inheriting the
 child's count left an agent that had read one worker's reply unable to
 create any further agent in that chain.</p>
-<p>The same thread also re-binds <code>_current_task_id</code> to the finished task's
-<code>parent_task_id</code>, so a task A spawns while reading the reply belongs to
+<p>The same thread also re-binds <code>_current_job_id</code> to the finished task's
+<code>parent_job_id</code>, so a task A spawns while reading the reply belongs to
 the same lineage cascading cancel walks (§5.3).</p>
 <p>The session id those tools read (<code>run_control._current_session_id</code>) is
 bound by <code>TurnBindings</code> for the length of the turn, alongside the turn
@@ -1008,8 +1008,8 @@ it, so a nested turn for another session cannot repoint the cancel hook
 or <code>runtime.ask</code> at a session that registered no turn token.</p>
 <h3 id="52-concurrency-limit-queueing">5.2 Concurrency limit + queueing<a class="header-anchor" href="#52-concurrency-limit-queueing">#</a></h3>
 <ul>
-<li>Spawning runs on the <code>TaskRunner</code> thread pool, capped by
-<code>OPENPROGRAM_TASK_WORKERS</code> (default 4). Spawn eight at once and anything over
+<li>Spawning runs on the <code>JobRunner</code> thread pool, capped by
+<code>OPENPROGRAM_JOB_WORKERS</code> (default 4). Spawn eight at once and anything over
 the cap <strong>queues</strong>, running as slots free up, without overloading anything.
 This is a global pool, so it bounds what runs at once and not how much
 work one turn can create. That is the fan-out budget's job (§5.1).</li>
@@ -1024,8 +1024,8 @@ subagent at the same 50.</li>
 <ul>
 <li>Cancelling a task <strong>also cancels every task it spawned</strong>. Each spawn made
 from inside a running task records the chain on the Task entity
-(<code>parent_task_id</code>, defaulted from the runner's current-task ContextVar).
-<code>TaskRunner.cancel_task</code> walks the persisted entities breadth-first over
+(<code>parent_job_id</code>, defaulted from the runner's current-task ContextVar).
+<code>JobRunner.cancel_job</code> walks the persisted entities breadth-first over
 that chain (visited-set guard, so even a malformed cycle terminates):
 pending/queued descendants flip straight to cancelled without ever running;
 running ones go through the same per-task cancel path as the root —
@@ -1037,7 +1037,7 @@ queued future, which is a descendant the cascade had not reached yet. It
 then ran a full turn for work the user had already stopped. Walking the
 chain first means the worker that picks the descendant up finds an
 entity already at <code>cancelled</code> and returns without calling
-<code>run_agent_turn</code>. Ordering only; <code>cancel_task</code> still returns the root's
+<code>run_agent_turn</code>. Ordering only; <code>cancel_job</code> still returns the root's
 post-update entity, and <code>None</code> for a task id that resolves to no session.</li>
 <li>Session-level cancel (the user's Stop on a session) additionally clears the
 session's send_message inbox (<code>inbox.clear</code>): the queued messages are new
@@ -1056,7 +1056,7 @@ sender's own turn, whose token is the one the check would see.</p>
 <ul>
 <li><strong>Queueing</strong>: a busy target's message is persisted to the target session's
 inbox (<code>&lt;session-repo&gt;/inbox.json</code>, <code>openprogram/agent/inbox.py</code> — same
-placement pattern as <code>tasks.json</code>), recording the delivery body, sender
+placement pattern as <code>jobs.json</code>), recording the delivery body, sender
 <code>SID:HEAD</code>, sender agent, the chain's message count at send time, and
 enqueue time. The sender immediately gets back &quot;target busy, message
 queued, processed when its current turn ends&quot;.</li>
@@ -1120,18 +1120,18 @@ permission gating applies on top.</li>
 branch can only be triggered by <code>send_message</code> and does not appear in the UI's
 session picker (but it is still drawn in the DAG and can be listed by
 list_agents so agents can address it).</p>
-<h3 id="510-task-ownership-task_output-task_stop">5.10 Task ownership (task_output / task_stop)<a class="header-anchor" href="#510-task-ownership-task_output-task_stop">#</a></h3>
+<h3 id="510-task-ownership-job_output-job_stop">5.10 Task ownership (job_output / job_stop)<a class="header-anchor" href="#510-task-ownership-job_output-job_stop">#</a></h3>
 <p><code>read_conversation</code> can read any branch, so any agent can learn any
-task_id — without a gate, any agent could wait on or kill work it never
-dispatched. <code>task_output</code> and <code>task_stop</code> therefore verify ownership
+job_id — without a gate, any agent could wait on or kill work it never
+dispatched. <code>job_output</code> and <code>job_stop</code> therefore verify ownership
 before acting: the current session must be the task's dispatcher
 (<code>caller_session_id</code>, or <code>parent_session_id</code> for a same-session spawn),
 or an ancestor on the task chain (the current task is an ancestor via
-<code>parent_task_id</code>, or the current session dispatched one of the task's
+<code>parent_job_id</code>, or the current session dispatched one of the task's
 ancestors — the same lineage cascading cancel walks). Anything else is
-refused: <code>[task_stop error] task {id} was not dispatched by this session</code>. Calls with no session context (the user, the UI) are not
+refused: <code>[job_stop error] task {id} was not dispatched by this session</code>. Calls with no session context (the user, the UI) are not
 gated.</p>
-<p><code>task_stop</code> on a <code>to=</code>-dispatched task is state-dependent:</p>
+<p><code>job_stop</code> on a <code>to=</code>-dispatched task is state-dependent:</p>
 <ul>
 <li><strong>queued</strong> (target was busy, task waiting in its inbox) → the entry is
 withdrawn from the inbox and the entity flips to <code>cancelled</code>. No
@@ -1229,7 +1229,7 @@ session event log.</p>
 <a class="lvl-3" href="#57-sub-branch-identity-least-privilege">5.7 Sub-branch identity / least privilege</a>
 <a class="lvl-3" href="#58-unattended-interception-validation">5.8 Unattended interception + validation</a>
 <a class="lvl-3" href="#59-branch-visibility">5.9 Branch visibility</a>
-<a class="lvl-3" href="#510-task-ownership-task_output-task_stop">5.10 Task ownership (task_output / task_stop)</a>
+<a class="lvl-3" href="#510-task-ownership-job_output-job_stop">5.10 Task ownership (job_output / job_stop)</a>
 <a class="lvl-3" href="#511-explicitly-out-of-scope-and-why">5.11 Explicitly out of scope (and why)</a>
 <a class="" href="#6-behavior-you-can-check">6. Behavior you can check</a>
 </div></aside>

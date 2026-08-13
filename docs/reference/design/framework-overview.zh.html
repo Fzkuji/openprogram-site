@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/framework-overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/framework-overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -617,7 +617,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <h3 id="⑤-协作send_message-跨-session-防护">⑤ 协作　send_message + 跨 session + 防护<a class="header-anchor" href="#⑤-协作send_message-跨-session-防护">#</a></h3>
 <p><strong>职责</strong>：分支/会话之间投递消息、跑分支、把回复带回来。
-<strong>关键文件</strong>：<code>functions/tools/send_message/send_message/send_message.py</code>、<code>functions/tools/send_message/list_agents/list_agents.py</code>。
+<strong>关键文件</strong>：<code>programs/functions/send_message/send_message/send_message.py</code>、<code>programs/functions/send_message/list_agents/list_agents.py</code>。
 <strong>关键机制</strong>：</p>
 <ul>
 <li><code>send_message(message, to, agent_id)</code>（→ <code>_send_message_impl</code>）。</li>
@@ -635,7 +635,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>引用扫描结果未被 ContextCommit 规则消费</strong>：目前仅用于日志（<code>engine.py:204–212</code>）。</li>
 <li><strong>DAG 渲染回退路径与正常路径并存</strong>：坏 commit 时 fall back 到 legacy（<code>engine.py:218–220</code>）。</li>
 <li><strong>核心入口无覆盖测试</strong>：<code>process_user_turn</code> / <code>agent_loop</code> 若干路径标注「⚠️ no covering tests found」。</li>
-<li><strong>worker 线程 ContextVar 不可靠</strong>：<code>subagent.started/ended</code> 因此由 session 显式传参（<code>agent/task/runner.py:111–115</code>）；<code>send_message._resolve_parent</code> 为此加了 head 回退。</li>
+<li><strong>worker 线程 ContextVar 不可靠</strong>：<code>subagent.started/ended</code> 因此由 session 显式传参（<code>agent/job/runner.py:111–115</code>）；<code>send_message._resolve_parent</code> 为此加了 head 回退。</li>
 <li><strong><code>ContextEngine.after_turn</code> 有两层</strong>：抽象基类桩 <code>engine.py:124</code> 为 <code>pass</code>；<strong>具体引擎实现 <code>engine.py:437</code> 才是真正在干活的</strong>（usage 回灌 + 发 compaction_recommended），由 <code>dispatcher/finalize.py:308</code> 调用。</li>
 </ul>
 <hr />

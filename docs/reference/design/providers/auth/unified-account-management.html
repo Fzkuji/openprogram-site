@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -331,6 +331,18 @@ profiles&quot; are therefore the same concept — each account is a profile id.<
 pool</strong>, so OAuth multi-account has to be separate profiles. Since that model
 also covers api-key providers, account = profile is the only model that covers
 every provider, and each named api-key is a profile too.</p>
+<h3 id="stable-id-and-display-label-are-different-fields">Stable id and display label are different fields<a class="header-anchor" href="#stable-id-and-display-label-are-different-fields">#</a></h3>
+<p><code>account_id</code> is an internal storage and routing key. It is allocated by the
+runtime (<code>default</code>, <code>account-2</code>, …), remains ASCII, and never changes after a
+login. <code>label</code> is user-facing Unicode text and can be changed without moving a
+credential pool or invalidating the active-account pin.</p>
+<p>For a new login, label selection is deterministic: an explicitly entered label
+wins; otherwise the runtime uses the OAuth email, then the provider display
+name, then the stable id. Identity is read from credential metadata, nested
+OAuth account data, or OIDC <code>id_token</code> claims. New credentials persist the
+derived label; existing credentials derive it when read, so they do not require
+a new sign-in. Duplicate labels are allowed because operations address the
+stable id.</p>
 <h2 id="what-the-pool-provides">What the pool provides<a class="header-anchor" href="#what-the-pool-provides">#</a></h2>
 <p>The storage and rotation machinery it builds on:</p>
 <ul>
@@ -369,10 +381,13 @@ the outer retry rotates to the next.</li>
 <p>The reporting is gated: it is a no-op unless the provider has a real AuthStore
 pool, so env-key and OAuth paths are unaffected.</p>
 <h2 id="the-management-surface">The management surface<a class="header-anchor" href="#the-management-surface">#</a></h2>
-<p><strong>REST.</strong> <code>/api/providers/{id}/accounts/*</code> is generic:
-<code>GET …/accounts</code> returns <code>{active, accounts:[{name,label,email?,status,kind}]}</code>;
-<code>POST …/accounts/use {name}</code> activates one (<code>&quot;&quot;</code> deactivates); <code>…/rename {old,new}</code>; add reuses <code>/login/start|poll|submit</code> with a target account name;
-remove reuses the existing credential/pool delete. Every provider reports an
+<p><strong>REST.</strong> <code>/api/providers/{provider}/accounts/*</code> is generic:
+<code>GET …/accounts</code> returns
+<code>{active, accounts:[{id,label,name,email?,status,kind}]}</code>, where <code>name</code> is a
+compatibility alias of <code>label</code>; <code>POST …/accounts/use {id}</code> activates one (<code>&quot;&quot;</code>
+deactivates); <code>…/rename {id,name:&lt;new label&gt;}</code> changes only display text; and
+remove uses <code>{id}</code>. Login add reuses <code>/login/start|poll|submit</code> with an optional
+<code>label</code>; the runtime, not the client, allocates the stable id. Every provider reports an
 <code>add_mode</code> (<code>code_paste</code> or <code>login</code>) so the frontend does not branch on provider
 identity.</p>
 <p><strong>Pool controls.</strong> <code>GET …/{name}/keys</code> returns masked keys with per-key health
@@ -401,12 +416,18 @@ setting, leaving the hot <code>manager.acquire</code> path untouched.</p>
 <p>On a profile's credential: reveal the full key, update (replace it), validate
 this one, and validate-all.</p>
 <p>Only <strong>add</strong> branches per backend: an api-key add creates a profile and adds the
-key; a login add is the shared login flow with <code>profile=&lt;name&gt;</code>.</p>
+key; a login add is the shared login flow with optional <code>label=&lt;display text&gt;</code>.
+The completion result contains both the stable account <code>name</code> (legacy response
+field) and <code>label</code>; all later operations use the stable id returned by the
+accounts list.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <p>In place: active-profile infrastructure (<code>auth/account_selection.py</code>, CLI <code>providers use &lt;provider&gt; [profile]</code>, the <code>← active</code> marker in <code>providers list</code>); the generic
 accounts REST surface and the unified web and TUI components; and the rotation
 wiring with its control surface (<code>routes/accounts.py</code> strategy/retry/keys
-endpoints, the &quot;Keys &amp; rotation&quot; panel in <code>pool-controls.tsx</code>).</p>
+endpoints, the &quot;Keys &amp; rotation&quot; panel in <code>pool-controls.tsx</code>). Stable account
+ids and independent labels are also in place across AuthStore, login driver,
+REST, web, and TUI, including automatic OAuth identity labels, manual override,
+rename-without-rekey, legacy-account projection, and strict request validation.</p>
 <p>Remaining: a <code>fallback_chain</code> toggle in the UI; TUI pool controls (web, REST,
 and CLI-via-REST already cover the same operations); native <code>providers pool …</code>
 CLI verbs; and retiring the api-key credentials-in-pool surface
@@ -416,6 +437,7 @@ account = profile is the model.</p>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#an-account-is-a-profile">An account is a profile</a>
+<a class="lvl-3" href="#stable-id-and-display-label-are-different-fields">Stable id and display label are different fields</a>
 <a class="" href="#what-the-pool-provides">What the pool provides</a>
 <a class="" href="#two-things-the-pool-needs-to-be-live">Two things the pool needs to be live</a>
 <a class="" href="#the-management-surface">The management surface</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/api/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/api/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>agentic_function · OpenProgram Docs</title>
-<meta name="description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 runtime.exec 调用记录为">
+<meta name="description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 llm() 调用记录为 llm">
 <link rel="canonical" href="https://openprogram.io/docs/reference/api/agentic-function.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/api/agentic-function.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/api/agentic-function.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/api/agentic-function.zh.html">
 <meta property="og:title" content="agentic_function · OpenProgram Docs">
-<meta property="og:description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 runtime.exec 调用记录为">
+<meta property="og:description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 llm() 调用记录为 llm">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="agentic_function · OpenProgram Docs">
-<meta name="twitter:description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 runtime.exec 调用记录为">
+<meta name="twitter:description" content="Source: openprogram/agentic_programming/function.py @agentic_function 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 code 节点,函数体内的 llm() 调用记录为 llm">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -108,6 +108,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -125,7 +126,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -177,15 +177,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <blockquote>
 <p>Source: <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agentic_programming/function.py"><code>openprogram/agentic_programming/function.py</code></a></p>
 </blockquote>
-<p><code>@agentic_function</code> 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 <code>code</code> 节点,函数体内的 <code>runtime.exec</code> 调用记录为 <code>llm</code> 节点。</p>
+<p><code>@agentic_function</code> 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 <code>code</code> 节点,函数体内的 <code>llm()</code> 调用记录为 <code>llm</code> 节点。</p>
 <p>完整的编写规范——文件布局、docstring 与 <code>content</code> 的分工、参数元数据、校验清单、冒烟测试——见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>。本文只列装饰器本身。</p>
 <h2 id="用法">用法<a class="header-anchor" href="#用法">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;One-line summary of what f does.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
 </code></pre>
 <p>裸用 <code>@agentic_function</code> 或带参数 <code>@agentic_function(...)</code> 都可以。</p>
 <h2 id="装饰器参数">装饰器参数<a class="header-anchor" href="#装饰器参数">#</a></h2>
@@ -210,7 +211,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>render_range</code></td>
 <td><code>dict</code></td>
 <td><code>None</code></td>
-<td><strong>朝内</strong>:本函数内部 <code>runtime.exec</code> 拼 prompt 时,从 DAG 读多少历史节点。形状 <code>{&quot;callers&quot;: N, &quot;subcalls&quot;: M}</code>,两个数字都是 <strong>节点计数(按 <code>seq</code> 切片)</strong>:<br>• <code>callers</code> — 本函数 frame <strong>启动前</strong>的节点,取最近 N 个(<code>None</code> 默认 = 不限,<code>0</code> = 全墙)<br>• <code>subcalls</code> — 本函数 frame <strong>启动后</strong>已写入的节点,取最近 N 个(<code>-1</code> 默认 = 不限,frame 自然看见自己的进度;<code>N&gt;=0</code> = 只想截 prompt 时显式设;<code>0</code> = 完全墙掉 in-frame)<br><code>{&quot;callers&quot;:0,&quot;subcalls&quot;:0}</code> = 跟外界和自己 frame 全断绝</td>
+<td><strong>朝内</strong>:本函数内部 <code>llm()</code> 拼 prompt 时,从 DAG 读多少历史节点。形状 <code>{&quot;callers&quot;: N, &quot;subcalls&quot;: M}</code>,两个数字都是 <strong>节点计数(按 <code>seq</code> 切片)</strong>:<br>• <code>callers</code> — 本函数 frame <strong>启动前</strong>的节点,取最近 N 个(<code>None</code> 默认 = 不限,<code>0</code> = 全墙)<br>• <code>subcalls</code> — 本函数 frame <strong>启动后</strong>已写入的节点,取最近 N 个(<code>-1</code> 默认 = 不限,frame 自然看见自己的进度;<code>N&gt;=0</code> = 只想截 prompt 时显式设;<code>0</code> = 完全墙掉 in-frame)<br><code>{&quot;callers&quot;:0,&quot;subcalls&quot;:0}</code> = 跟外界和自己 frame 全断绝</td>
 </tr>
 <tr>
 <td><code>input</code></td>
@@ -233,7 +234,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h3 id="工具注册参数">工具注册参数<a class="header-anchor" href="#工具注册参数">#</a></h3>
-<p>每个 <code>@agentic_function</code> 还会注册进共享注册表(<code>openprogram.functions</code>),成为 LLM 可调用的工具,与 <code>@function</code> 装饰的工具并列。以下参数控制这次注册,名字和语义与 <code>@function</code> 一致:</p>
+<p>每个 <code>@agentic_function</code> 还会注册进共享注册表(<code>openprogram.programs</code>),成为 LLM 可调用的工具,与 <code>@function</code> 装饰的工具并列。以下参数控制这次注册,名字和语义与 <code>@function</code> 一致:</p>
 <table>
 <thead>
 <tr>
@@ -378,7 +379,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="记录到-dag">记录到 DAG<a class="header-anchor" href="#记录到-dag">#</a></h2>
 <ul>
 <li><strong>进入函数</strong>:写一个 <code>code</code> 节点(<code>output=None</code>, <code>status=&quot;running&quot;</code>),函数 docstring 一并存进该节点的 <code>metadata.doc</code>,渲染上下文时拼在 <code>函数名(参数)</code> 前面。</li>
-<li><strong>函数体内 <code>runtime.exec</code></strong>:每次调用写一个 <code>llm</code> 节点。</li>
+<li><strong>函数体内 <code>llm()</code></strong>:每次调用写一个 <code>llm</code> 节点。</li>
 <li><strong>退出函数</strong>:回填同一个 <code>code</code> 节点的 <code>output</code> / <code>status</code>。</li>
 </ul>
 <p><code>expose=&quot;hidden&quot;</code> 时不写任何节点。standalone 运行(没安装 DAG store)时记录全部 no-op,函数照常执行。</p>

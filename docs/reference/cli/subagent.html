@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,6 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -123,7 +124,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink active" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -256,7 +256,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h2 id="subagent-list"><code>subagent list</code><a class="header-anchor" href="#subagent-list">#</a></h2>
-<p>List resource views for tasks in a session.</p>
+<p>List resource views for jobs in a session.</p>
 <table>
 <thead>
 <tr>
@@ -267,16 +267,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>--session</code> <code>SESSION</code></td>
-<td>Session id whose tasks should be listed</td>
+<td>Session id whose jobs should be listed</td>
 </tr>
 <tr>
 <td><code>--json</code></td>
-<td>Print the canonical task resource views as JSON</td>
+<td>Print the canonical job resource views as JSON</td>
 </tr>
 </tbody>
 </table>
 <h2 id="subagent-show"><code>subagent show</code><a class="header-anchor" href="#subagent-show">#</a></h2>
-<p>Show one task's resource view.</p>
+<p>Show one job's resource view.</p>
 <table>
 <thead>
 <tr>
@@ -286,17 +286,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
-<td><code>task_id</code></td>
-<td>Task id to inspect</td>
+<td><code>job_id</code></td>
+<td>Job id to inspect</td>
 </tr>
 <tr>
 <td><code>--json</code></td>
-<td>Print the canonical task resource view as JSON</td>
+<td>Print the canonical job resource view as JSON</td>
 </tr>
 </tbody>
 </table>
 <h2 id="subagent-cancel"><code>subagent cancel</code><a class="header-anchor" href="#subagent-cancel">#</a></h2>
-<p>Cancel one task and show its updated resource view.</p>
+<p>Cancel one job and show its updated resource view.</p>
 <table>
 <thead>
 <tr>
@@ -306,16 +306,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
-<td><code>task_id</code></td>
-<td>Task id to cancel</td>
+<td><code>job_id</code></td>
+<td>Job id to cancel</td>
 </tr>
 <tr>
 <td><code>--json</code></td>
-<td>Print the canonical task resource view as JSON</td>
+<td>Print the canonical job resource view as JSON</td>
 </tr>
 </tbody>
 </table>
-<div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/stop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">stop</span></a><a class="pn-link pn-next" href="/docs/reference/cli/tasks.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">tasks</span></a></div></article></main>
+<div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/stop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">stop</span></a><a class="pn-link pn-next" href="/docs/reference/cli/trash.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">trash</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#subagent-spawn">subagent spawn</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink active" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -339,7 +339,7 @@ runtime / session model.</p>
 <li><code>created_at</code>: unix timestamp</li>
 <li><code>status</code>: <code>active</code> / <code>committing</code> / <code>merged</code> / <code>discarded</code> / <code>kept</code></li>
 <li><code>parent_session_id</code>: the associated OpenProgram session (one-to-one or one-to-many)</li>
-<li><code>parent_task_id</code>: the associated async task (if any)</li>
+<li><code>parent_job_id</code>: the associated async task (if any)</li>
 <li><code>created_by_agent</code>: agent id (records which agent opened it, so it is visible in the UI)</li>
 <li><code>pr_number</code>: set when the worktree was opened via <code>worktree_create</code>'s <code>pr</code> parameter (D5b);
 lets a later <code>pr</code>-mode call detect a duplicate instead of opening a second worktree for the same PR</li>
@@ -355,7 +355,7 @@ controlled via <code>runtime.set_workdir(path)</code>.</li>
 bash goes through <code>get_active_backend().run(...)</code>; currently <code>LocalBackend.run</code> accepts
 a <code>cwd</code> argument but callers don't pass it; edit / write / read require absolute paths.</li>
 </ol>
-<p>A ContextVar <code>_current_worktree_path: Optional[str]</code> in <code>openprogram/functions/_runtime.py</code> carries the
+<p>A ContextVar <code>_current_worktree_path: Optional[str]</code> in <code>openprogram/programs/_runtime.py</code> carries the
 active path. Each time the dispatcher enters a turn, if the session currently has an active worktree
 (read from session meta), it <code>set</code>s this var. Tool implementations consume it as needed:</p>
 <ul>
@@ -492,7 +492,7 @@ for auditing convenience — but worktree_path no longer exists.</li>
 <p>There is no automatic backup before discard. Archiving the discarded content as a tarball under
 <code>~/.openprogram/discarded/</code> is cheap enough to add later, and is listed in Part 6.</p>
 <h3 id="d10-relationship-between-worktree-and-task">D10. Relationship Between Worktree and Task<a class="header-anchor" href="#d10-relationship-between-worktree-and-task">#</a></h3>
-<p>The async task system (see <code>async-task-lifecycle.md</code>):</p>
+<p>The async task system (see <code>async-job-lifecycle.md</code>):</p>
 <ul>
 <li>A task can exclusively create and use a worktree (task_create → worktree_create).</li>
 <li>On task cancel, the worktree held by the task defaults to <code>discard force=True</code>.
@@ -1069,17 +1069,17 @@ restarts (after restart, list_worktrees probes, and ones still active are marked
 </tr>
 <tr>
 <td>6</td>
-<td>edit <code>openprogram/functions/tools/bash/bash.py</code></td>
+<td>edit <code>openprogram/programs/functions/bash/bash.py</code></td>
 <td>call <code>backend.run(cmd, cwd=_current_worktree_path.get())</code></td>
 </tr>
 <tr>
 <td>7</td>
-<td>edit <code>openprogram/functions/tools/edit/edit.py</code> + write/read</td>
+<td>edit <code>openprogram/programs/functions/edit/edit.py</code> + write/read</td>
 <td>warning when path outside worktree (D6)</td>
 </tr>
 <tr>
 <td>8</td>
-<td>new <code>openprogram/functions/tools/worktree/</code></td>
+<td>new <code>openprogram/programs/functions/worktree/</code></td>
 <td>4 @function tools: worktree_create / worktree_merge / worktree_discard / worktree_list; go through WorktreeManager</td>
 </tr>
 <tr>

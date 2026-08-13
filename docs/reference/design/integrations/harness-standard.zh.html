@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -322,11 +322,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 即可 <strong>被自动检测并直接使用，无需改动 host</strong>。三个第一方 harness
 （GUI / Research / Wiki）是参考实现；第三方遵循同样的规则。
 相关：<a href="/docs/capabilities/installing-harnesses.html"><code>../installing-harnesses.md</code></a>
-（安装流程）、<code>openprogram/functions/_registry.py</code>（加载器）、
-<code>openprogram/functions/_programs.py</code>（第一方 harness 清单）。</p>
+（安装流程）、<code>openprogram/programs/_registry.py</code>（加载器）、
+<code>openprogram/programs/_programs.py</code>（第一方 harness 清单）。</p>
 </blockquote>
 <h2 id="0-唯一重要的规则">0. 唯一重要的规则<a class="header-anchor" href="#0-唯一重要的规则">#</a></h2>
-<p><strong>harness 就是任何你放进 <code>&lt;openprogram&gt;/functions/agentics/</code> 并通过
+<p><strong>harness 就是任何你放进 <code>&lt;openprogram&gt;/programs/agentic_functions/</code> 并通过
 <code>&lt;pkg&gt;/agentics/__init__.py</code> 暴露其函数的东西。</strong> host 在启动时（以及在
 开启热重载时，每当该文件夹变化时）遍历该文件夹，找到内层 package，导入
 <code>&lt;pkg&gt;.agentics</code>，随后 <code>@agentic_function</code> 装饰器自行完成注册。除此之外

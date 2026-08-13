@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Agentic Workflows">Agentic workflows</span></nav><h1 id="agentic-workflows">Agentic workflows<a class="header-anchor" href="#agentic-workflows">#</a></h1>
 <p>This page covers the ready-made agents that ship with OpenProgram: how to install them and how to manage them. If you want to use agents directly instead of writing your own functions, start here.</p>
 <h2 id="what-they-are">What they are<a class="header-anchor" href="#what-they-are">#</a></h2>
-<p>An agentic workflow is a finished workflow built with <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> — called a <strong>harness</strong> or <strong>agentic program</strong> in the code: a self-contained git repository holding a set of <code>@agentic_function</code>s. Once installed, its functions register into OpenProgram and appear like built-in functions in chat, on the Web UI Functions page, and in <code>openprogram programs run</code>.</p>
+<p>An agentic workflow is a finished workflow built with <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> — called a <strong>harness</strong> or <strong>agentic program</strong> in the code: a self-contained git repository holding a set of <code>@agentic_function</code>s. Once installed, its functions register into OpenProgram and appear like built-in functions in chat, on the Web UI Programs page, and in <code>openprogram programs run</code>.</p>
 <p>Three first-party workflows:</p>
 <table>
 <thead>
@@ -170,7 +170,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<spa
 openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-a<span class="w"> </span><span class="nv">key</span><span class="o">=</span>value<span class="w">  </span><span class="c1"># run a program directly</span>
 </code></pre>
 <p><code>programs run</code> also accepts <code>--provider</code> (claude-code / openai-codex / gemini-cli / anthropic / openai / gemini, auto-detected by default) and <code>--model</code> to override the model.</p>
-<p><code>programs install</code> clones the harness into <code>openprogram/functions/agentics/</code>, installs the dependencies declared by its <code>pyproject.toml</code> / <code>requirements.txt</code>, and records the approved source. Only recorded harnesses register when the worker restarts; a manual clone can be recorded by running the same install command with its git source.</p>
+<p><code>programs install</code> clones the harness into <code>openprogram/programs/agentic_functions/</code>, installs the dependencies declared by its <code>pyproject.toml</code> / <code>requirements.txt</code>, and records the approved source. Only recorded harnesses register when the worker restarts; a manual clone can be recorded by running the same install command with its git source.</p>
 <h2 id="how-to-trigger-them">How to trigger them<a class="header-anchor" href="#how-to-trigger-them">#</a></h2>
 <ul>
 <li><strong>In chat</strong>: entry functions register as tools (<code>as_tool=True</code>). Describe the task in natural language and the model calls them (e.g. <code>gui_agent</code>, <code>research_agent</code>, <code>wiki_agent</code>).</li>

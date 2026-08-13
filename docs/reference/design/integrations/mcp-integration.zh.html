@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -348,7 +348,7 @@ server 如何配置与连接，以及 MCP 工具如何到达 LLM。
 </table>
 <p>我们是 client。本设计<strong>不涉及</strong>把 OpenProgram 自己的工具暴露给外部 client —— 那个方向是另一个独立模块，不复用 <code>openprogram/mcp/</code> 里的代码，见权威的 <a href="/docs/reference/design/integrations/mcp-server.html">MCP 服务端设计与实现证据</a>。</p>
 <h2 id="目录位置">目录位置<a class="header-anchor" href="#目录位置">#</a></h2>
-<p><code>openprogram/mcp/</code> 是 <strong>top-level module</strong>,跟 <code>openprogram/channels/</code> 平级。<strong>不</strong>放在 <code>openprogram/functions/</code> 下。</p>
+<p><code>openprogram/mcp/</code> 是 <strong>top-level module</strong>,跟 <code>openprogram/channels/</code> 平级。<strong>不</strong>放在 <code>openprogram/programs/</code> 下。</p>
 <p>理由:</p>
 <ul>
 <li>MCP 是<strong>外部协议适配器层</strong>,跟&quot;function 的实现&quot;是两件事。我们的 function 体系(<code>@function</code> / <code>@agentic_function</code> / <code>agentics/</code> 下的代码)是本地实现的工具;MCP 是从外部进程取来的工具。两层概念正交。</li>
@@ -464,7 +464,7 @@ LLM 看到工具结果,生成最终文本回复 &quot;画好了&quot;
 webui 显示
 </code></pre>
 <p>整条链路在 FastAPI 主 loop 上同步完成,<strong>不涉及跨线程 / 跨 event loop 调度</strong>。</p>
-<p><code>/api/run/{name}</code> / CLI <code>programs run</code> / <code>/functions</code> 页面<strong>不</strong>接 MCP 工具——它们是本地 function 的入口。MCP 工具用户不感知,LLM 隐性使用。</p>
+<p><code>/api/run/{name}</code> / CLI <code>programs run</code> / <code>/programs</code> 页面<strong>不</strong>接 MCP 工具——它们是本地 function 的入口。MCP 工具用户不感知,LLM 隐性使用。</p>
 <h2 id="关键技术决策">关键技术决策<a class="header-anchor" href="#关键技术决策">#</a></h2>
 <h3 id="1-持久连接-supervisor-task">1. 持久连接 + supervisor task<a class="header-anchor" href="#1-持久连接-supervisor-task">#</a></h3>
 <p>MCP 协议设计上是 long-lived 双向连接(server 可以推 progress notification、resource update 通知等)。Python 官方 SDK 把 session 暴露成嵌套 async-context-manager:</p>

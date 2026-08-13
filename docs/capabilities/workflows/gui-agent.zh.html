@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>这是三个第一方 workflow 里最重的一个：依赖包含 <code>torch</code> / <code>torchvision</code>、<code>opencv-python</code>、<code>ultralytics</code>、<code>easyocr</code>、<code>pynput</code> 等。在无 GPU 的 Linux 上会自动选择 CPU 版 torch wheel（约 300 MB），而不是约 3 GB 的 CUDA 构建。</p>
 <p>pip 依赖之外还需要模型文件——YOLO 检测器权重（经 <code>huggingface-hub</code> 下载）和 OCR 模型不在 PyPI 上。安装完成后运行 harness 自带的安装器获取它们：</p>
-<pre><code class="language-bash">openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh<span class="w"> </span>--no-host
+<pre><code class="language-bash">openprogram/programs/applications/gui_harness/scripts/install.sh<span class="w"> </span>--no-host
 <span class="c1"># Windows: ...\scripts\install.ps1 -NoHost</span>
 </code></pre>
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
@@ -175,7 +175,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>平台：macOS / Windows / Linux；OCR 后端按平台自动选择。</li>
 <li>运行前需要 runtime 配置好工作目录（截图与运行记录写在那里）。</li>
 </ul>
-<p>源码与 README：<code>openprogram/functions/agentics/GUI-Agent-Harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
+<p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">

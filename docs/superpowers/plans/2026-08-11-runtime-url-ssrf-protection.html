@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,6 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -123,7 +124,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -391,11 +391,11 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <h3 id="task-4-migrate-arbitrary-and-derived-url-consumers">Task 4: Migrate arbitrary and derived URL consumers<a class="header-anchor" href="#task-4-migrate-arbitrary-and-derived-url-consumers">#</a></h3>
 <p><strong>Files:</strong></p>
 <ul>
-<li>Modify: <code>openprogram/functions/tools/web_fetch/web_fetch.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_fetch/web_fetch.py</code></li>
 <li>Modify: <code>openprogram/channels/_attachments.py</code></li>
 <li>Modify: <code>openprogram/channels/_transport.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_generate/image_generate.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_analyze/providers/gemini.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_generate/image_generate.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_analyze/providers/gemini.py</code></li>
 <li>Create: <code>tests/security/test_web_fetch_consumer.py</code></li>
 <li>Create: <code>tests/security/test_runtime_derived_url_consumers.py</code></li>
 </ul>
@@ -417,33 +417,33 @@ Gemini image input URL                 -&gt; tool.image_result.download
 <p>Remove each local redirect, byte-limit, and URL-scheme implementation after the managed client supplies the same or stricter behavior. Preserve consumer-specific MIME validation and user-facing result fields. Never retry with the old network path.</p>
 <p><strong>Step 4: Run GREEN and affected tests</strong></p>
 <pre><code class="language-bash">uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/security/test_web_fetch_consumer.py<span class="w"> </span>tests/security/test_runtime_derived_url_consumers.py<span class="w"> </span>tests/unit/test_channels_attachments.py<span class="w"> </span>tests/unit/test_channels_transport_retry.py<span class="w"> </span>tests/unit/test_channels_telegram_semantics.py
-uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>openprogram/functions/tools/web_fetch<span class="w"> </span>openprogram/channels<span class="w"> </span>openprogram/functions/tools/image_generate<span class="w"> </span>openprogram/functions/tools/image_analyze<span class="w"> </span>tests/security/test_runtime_derived_url_consumers.py
+uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>openprogram/programs/functions/web_fetch<span class="w"> </span>openprogram/channels<span class="w"> </span>openprogram/programs/functions/image_generate<span class="w"> </span>openprogram/programs/functions/image_analyze<span class="w"> </span>tests/security/test_runtime_derived_url_consumers.py
 </code></pre>
 <p>Expected: commands exit 0.</p>
 <p><strong>Step 5: Commit</strong></p>
-<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/functions/tools/web_fetch<span class="w"> </span>openprogram/channels<span class="w"> </span>openprogram/functions/tools/image_generate<span class="w"> </span>openprogram/functions/tools/image_analyze<span class="w"> </span>tests
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/programs/functions/web_fetch<span class="w"> </span>openprogram/channels<span class="w"> </span>openprogram/programs/functions/image_generate<span class="w"> </span>openprogram/programs/functions/image_analyze<span class="w"> </span>tests
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;refactor(security): protect derived URL fetches&quot;</span>
 </code></pre>
 <h3 id="task-5-migrate-fixed-api-configured-api-catalog-and-updater-consumers">Task 5: Migrate fixed API, configured API, catalog, and updater consumers<a class="header-anchor" href="#task-5-migrate-fixed-api-configured-api-catalog-and-updater-consumers">#</a></h3>
 <p><strong>Files:</strong></p>
 <ul>
-<li>Modify: <code>openprogram/functions/tools/web_search/_http.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/brave.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/exa.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/firecrawl.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/google.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/minimax.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/moonshot.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/ollama.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/perplexity.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/searxng.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/web_search/providers/tavily.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_generate/providers/fal.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_generate/providers/gemini.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_generate/providers/openai.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_analyze/providers/anthropic.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_analyze/providers/gemini.py</code></li>
-<li>Modify: <code>openprogram/functions/tools/image_analyze/providers/openai.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/_http.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/brave.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/exa.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/firecrawl.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/google.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/minimax.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/moonshot.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/ollama.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/perplexity.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/searxng.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/web_search/providers/tavily.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_generate/providers/fal.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_generate/providers/gemini.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_generate/providers/openai.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_analyze/providers/anthropic.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_analyze/providers/gemini.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/image_analyze/providers/openai.py</code></li>
 <li>Modify: <code>openprogram/skills/discovery.py</code></li>
 <li>Modify: <code>openprogram/plugins/marketplace.py</code></li>
 <li>Modify: <code>openprogram/plugins/autoupdate.py</code></li>
@@ -468,11 +468,11 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <p>At each configured-service constructor or request boundary, normalize and freeze the configured origin before attaching credentials. Default cross-origin redirect behavior is rejection. ZIP/tar/package installation remains outside this URL-fetch policy after the validated bytes are handed to its existing parser/installer.</p>
 <p><strong>Step 4: Run GREEN and affected tests</strong></p>
 <pre><code class="language-bash">uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>tests/security/test_runtime_catalog_consumers.py<span class="w"> </span>tests/security/test_runtime_api_consumers.py<span class="w"> </span>tests/unit/test_skills_cli.py<span class="w"> </span>tests/unit/test_skills_registry.py<span class="w"> </span>tests/unit/test_web_config_schema.py<span class="w"> </span>tests/providers/test_models_dev_cache.py
-uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>openprogram/functions/tools/web_search<span class="w"> </span>openprogram/functions/tools/image_generate/providers<span class="w"> </span>openprogram/functions/tools/image_analyze/providers<span class="w"> </span>openprogram/skills<span class="w"> </span>openprogram/plugins<span class="w"> </span>openprogram/updater<span class="w"> </span>openprogram/webui/routes/mcp.py<span class="w"> </span>openprogram/webui/_model_listing<span class="w"> </span>tests/security
+uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>openprogram/programs/functions/web_search<span class="w"> </span>openprogram/programs/functions/image_generate/providers<span class="w"> </span>openprogram/programs/functions/image_analyze/providers<span class="w"> </span>openprogram/skills<span class="w"> </span>openprogram/plugins<span class="w"> </span>openprogram/updater<span class="w"> </span>openprogram/webui/routes/mcp.py<span class="w"> </span>openprogram/webui/_model_listing<span class="w"> </span>tests/security
 </code></pre>
 <p>Expected: commands exit 0.</p>
 <p><strong>Step 5: Commit</strong></p>
-<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/functions<span class="w"> </span>openprogram/skills<span class="w"> </span>openprogram/plugins<span class="w"> </span>openprogram/updater<span class="w"> </span>openprogram/webui<span class="w"> </span>tests
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/programs<span class="w"> </span>openprogram/skills<span class="w"> </span>openprogram/plugins<span class="w"> </span>openprogram/updater<span class="w"> </span>openprogram/webui<span class="w"> </span>tests
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;refactor(security): protect runtime API and catalog fetches&quot;</span>
 </code></pre>
 <h3 id="task-6-migrate-channels-tts-provider-http-oauth-and-mcp-sdk-transports">Task 6: Migrate channels, TTS, provider HTTP, OAuth, and MCP SDK transports<a class="header-anchor" href="#task-6-migrate-channels-tts-provider-http-oauth-and-mcp-sdk-transports">#</a></h3>

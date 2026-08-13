@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -167,8 +167,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>description / placeholder / multiline / options / hidden</td>
 </tr>
 <tr>
-<td><code>runtime.exec</code> 渲染出的上下文</td>
-<td>docstring——以 <code>metadata.doc</code> 携带，并作为前缀拼入渲染出的上下文文本。默认 system prompt 来自 <code>runtime.system</code>（外加 skills 区块），而非来自 docstring。</td>
+<td><code>llm()</code> 渲染出的上下文</td>
+<td>docstring——以 <code>metadata.doc</code> 携带，并作为前缀拼入渲染出的上下文文本。默认 system prompt 来自环境 runtime（外加 skills 区块），而非来自 docstring。</td>
 </tr>
 <tr>
 <td>会话 DAG 渲染（<code>render_context</code>）</td>
@@ -217,8 +217,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>inspect.getdoc(fn)</code>，取第一段</td>
 </tr>
 <tr>
-<td>单次调用的 LLM 指令（针对某一次具体 <code>runtime.exec</code> 的 prompt + 数据）</td>
-<td>该次 exec 调用的 <code>content=[...]</code> 列表</td>
+<td>单次调用的 LLM 指令（针对某一次具体 <code>llm()</code> 的 prompt + 数据）</td>
+<td>传给该次 <code>llm()</code> 调用的 prompt</td>
 <td>在调用时直接传入</td>
 </tr>
 <tr>
@@ -262,7 +262,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>模块级</td>
 </tr>
 <tr>
-<td>覆盖 <code>runtime.exec</code> 的 system prompt</td>
+<td>覆盖环境 LLM 的 system prompt</td>
 <td><code>@agentic_function(system=&quot;...&quot;)</code></td>
 <td><code>fn.system</code></td>
 </tr>
@@ -273,7 +273,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>DAG 渲染范围</td>
-<td><code>@agentic_function(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code>——控制<strong>本函数自身</strong>的 <code>runtime.exec</code> 会读取多少 DAG 历史。两者都是基于 <code>seq</code> 的节点数切片：<code>callers</code> = 在本函数帧开始<strong>之前</strong>写入的最近 N 个节点（默认 <code>None</code> = 不设上限，<code>0</code> = 隔绝所有先前上下文）；<code>subcalls</code> = 自本函数帧开始<strong>以来</strong>写入的最近 N 个节点（默认 <code>-1</code> = 不设上限——帧能看到自身的进展；子函数的内部内容是由<em>它们自己</em>的 <code>expose</code> 设置隐藏的，而非由 subcalls 计数隐藏；仅当需要在循环中主动限制 prompt 体积时才设 <code>N&gt;=0</code>）。</td>
+<td><code>@agentic_function(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code>——控制<strong>本函数自身</strong>的 <code>llm()</code> 调用会读取多少 DAG 历史。两者都是基于 <code>seq</code> 的节点数切片：<code>callers</code> = 在本函数帧开始<strong>之前</strong>写入的最近 N 个节点（默认 <code>None</code> = 不设上限，<code>0</code> = 隔绝所有先前上下文）；<code>subcalls</code> = 自本函数帧开始<strong>以来</strong>写入的最近 N 个节点（默认 <code>-1</code> = 不设上限——帧能看到自身的进展；子函数的内部内容是由<em>它们自己</em>的 <code>expose</code> 设置隐藏的，而非由 subcalls 计数隐藏；仅当需要在循环中主动限制 prompt 体积时才设 <code>N&gt;=0</code>）。</td>
 <td><code>fn.render_range</code></td>
 </tr>
 <tr>
@@ -298,12 +298,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tr>
 <td><code>expose</code></td>
 <td><code>&quot;io&quot;</code></td>
-<td>调用方能看到我的 name + input + output。我内部的 <code>runtime.exec</code>（<code>llm</code> Calls）对它们隐藏。</td>
+<td>调用方能看到我的 name + input + output。我内部的 <code>llm()</code> 调用对它们隐藏。</td>
 </tr>
 <tr>
 <td><code>render_range</code></td>
 <td><code>None</code> → <code>render_context</code> 回落到 <code>callers=None, subcalls=-1</code></td>
-<td>帧之前的历史不设上限。帧内节点（帧自身的进展：先前的 <code>runtime.exec</code> 结果、返回的子函数 io）同样不设上限。子 <code>@agentic_function</code> 的内部内容之所以保持隐藏，是因为子函数携带 <code>expose=&quot;io&quot;</code>，而非因为 subcalls 对其做了裁剪。</td>
+<td>帧之前的历史不设上限。帧内节点（帧自身的进展：先前的 <code>llm()</code> 结果、返回的子函数 io）同样不设上限。子 <code>@agentic_function</code> 的内部内容之所以保持隐藏，是因为子函数携带 <code>expose=&quot;io&quot;</code>，而非因为 subcalls 对其做了裁剪。</td>
 </tr>
 <tr>
 <td>顶层对话轮次</td>
@@ -340,13 +340,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>必须有一行摘要。也可以详细描述每一次 LLM 调用做什么、预期输出、边界情况——想写多详细就写多详细，供读者与上下文使用。</td>
 </tr>
 <tr>
-<td><code>runtime.exec(content=[...])</code></td>
-<td>函数内部某一次具体的 LLM 调用。每次 <code>exec</code> 都是它自己的一次“提问”；函数可以用不同的 prompt 发起多次。</td>
+<td><code>llm(prompt)</code></td>
+<td>函数内部某一次具体的 LLM 调用。每次调用都是独立请求；函数可以用不同的 prompt 发起多次。</td>
 <td><em>这一次</em> LLM 调用真正的 prompt + 数据：什么任务、什么输出格式、什么约束，以及待处理的数据。<strong>即便 docstring 已经描述过，这里也必须写。</strong></td>
 </tr>
 </tbody>
 </table>
-<p>一个函数可以有一段详尽的 docstring，说明“本函数通过询问 LLM 并对回复做归一化来分类情感”，但函数体仍然需要一个显式的 <code>runtime.exec(content=[...])</code>，其中包含真正发给 LLM 的指令 + 数据。<strong>docstring 中的文档不会传递进 LLM 调用</strong>——框架把 docstring 作为描述性上下文发送（以 <code>metadata.doc</code> 携带在 DAG 节点上，并渲染进内层调用的 situation prompt），而非作为权威指令。各 provider 的行为各异；codex CLI 尤其会忽略作为指令的 docstring。务必把每次调用的 prompt 放进 <code>content</code>。</p>
+<p>一个函数可以有一段详尽的 docstring，说明“本函数通过询问 LLM 并对回复做归一化来分类情感”，但函数体仍然需要一个显式的 <code>llm(prompt)</code>，其中包含真正发给 LLM 的指令 + 数据。<strong>docstring 中的文档不会传递进 LLM 调用</strong>——框架把 docstring 作为描述性上下文发送（以 <code>metadata.doc</code> 携带在 DAG 节点上，并渲染进内层调用的 situation prompt），而非作为权威指令。务必把每次调用的指令和数据放进 <code>llm()</code> 的 prompt。</p>
 <p>docstring 撰写规则：</p>
 <ul>
 <li>一行摘要（第一段）是必需的——这正是决策菜单和 tool_use spec 所读取的内容。</li>
@@ -357,7 +357,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>content</code> 撰写规则：</p>
 <ul>
 <li>每一项都是形如 <code>{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: ...}</code> 或 <code>{&quot;type&quot;: &quot;image&quot;, &quot;path&quot;: ...}</code> 的字典。</li>
-<li>把这次 LLM 调用的指令<em>与</em>数据都嵌进去。示例：<pre><code class="language-python"><span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
+<li>把这次 LLM 调用的指令<em>与</em>数据都嵌进去。示例：<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;Classify the sentiment of the following text. Reply with exactly one &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)}])</span>

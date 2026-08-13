@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -335,7 +335,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>模型可调工具</td>
-<td><code>openprogram/functions/tools/read_conversation/</code></td>
+<td><code>openprogram/programs/functions/read_conversation/</code></td>
 <td><code>read_conversation</code>——转写器的 <code>@function</code> 封装，缺省读当前会话</td>
 </tr>
 <tr>
@@ -374,7 +374,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>截断分两层。单字段上限防止一次失控的工具结果（读了个大文件）把周围的推理挤掉；总预算切在最后一个放得下的完整轮次上，并写明第一个被丢的轮号（<code>re-read with start_turn=N to continue</code>），被截断的转写不会看起来像完整的，读者也能从断点接着翻。</p>
 <p><code>tools/dag_dump.py</code> 仍是调试视图，看节点 id、lane、tier。两者不重叠。</p>
 <h2 id="会话发现复用已有工具">会话发现复用已有工具<a class="header-anchor" href="#会话发现复用已有工具">#</a></h2>
-<p><code>list_agents</code>（<code>functions/tools/send_message/</code>）已经能列出会话 id 和 <code>SID:HEAD</code> 分支端点。这正是 <code>read_conversation</code> 要的参数，所以不新增列表工具。工具接受整串 <code>SID:HEAD</code> 传进 <code>session_id</code> 并自行拆分，因为那就是 <code>list_agents</code> 打印的形式。</p>
+<p><code>list_agents</code>（<code>programs/functions/send_message/</code>）已经能列出会话 id 和 <code>SID:HEAD</code> 分支端点。这正是 <code>read_conversation</code> 要的参数，所以不新增列表工具。工具接受整串 <code>SID:HEAD</code> 传进 <code>session_id</code> 并自行拆分，因为那就是 <code>list_agents</code> 打印的形式。</p>
 <h2 id="判断放在-skill-里">判断放在 skill 里<a class="header-anchor" href="#判断放在-skill-里">#</a></h2>
 <p>蒸馏本身是判断任务：决定转写里哪些能泛化、哪些只属于那一天。这里没有任何确定性可言，所以不存在 <code>distill()</code> 函数——skill 正文告诉 agent 要提取什么（目标、前置条件、步骤、决策点、坑），它用自己的 <code>Write</code> 工具写出文件。</p>
 <p>这沿用 agentic programming 里删掉 <code>create()</code> / <code>edit()</code> / <code>improve()</code> 封装时定下的先例：函数体全部内容就是一次 LLM 调用加一次文件写入的，这层 agent 不需要。</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -143,14 +143,15 @@ hard-coded in Python.</p>
 <ul>
 <li>Use the <code>@agentic_function</code> decorator</li>
 <li>Call multiple sub-<code>@agentic_function</code>s in a fixed order</li>
-<li><code>exec()</code> is optional: skip it (pure chaining), or call it multiple times
-(each call creates one exec child node)</li>
+<li><code>llm()</code> is optional: skip it (pure chaining), or call it multiple times
+(each call creates one <code>llm</code> child node)</li>
 <li>Data flows between sub-functions through plain Python variables</li>
-<li>One function may call <code>exec()</code> multiple times AND call any number of other
+<li>One function may call <code>llm()</code> multiple times AND call any number of other
 <code>@agentic_function</code>s</li>
 </ul>
-<h2 id="example-no-exec-pure-chaining">Example: no exec, pure chaining<a class="header-anchor" href="#example-no-exec-pure-chaining">#</a></h2>
+<h2 id="example-no-llm-call-pure-chaining">Example: no LLM call, pure chaining<a class="header-anchor" href="#example-no-llm-call-pure-chaining">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
     <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Research topic.&quot;</span><span class="p">},</span>
@@ -163,7 +164,7 @@ hard-coded in Python.</p>
 
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;survey&quot;</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">&quot;gaps&quot;</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">&quot;ideas&quot;</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
 </code></pre>
-<h2 id="example-one-exec-call-to-summarise">Example: one exec call to summarise<a class="header-anchor" href="#example-one-exec-call-to-summarise">#</a></h2>
+<h2 id="example-one-llm-call-to-summarise">Example: one <code>llm()</code> call to summarise<a class="header-anchor" href="#example-one-llm-call-to-summarise">#</a></h2>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
     <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Research topic.&quot;</span><span class="p">},</span>
 <span class="p">})</span>
@@ -173,7 +174,7 @@ hard-coded in Python.</p>
     <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
         <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Survey:</span><span class="se">\n</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;Gaps:</span><span class="se">\n</span><span class="si">{</span><span class="n">gaps</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
@@ -256,8 +257,8 @@ string instead of raising), check the value:</p>
 <div class="toc-list">
 <a class="" href="#when-to-use">When to use</a>
 <a class="" href="#design-points">Design points</a>
-<a class="" href="#example-no-exec-pure-chaining">Example: no exec, pure chaining</a>
-<a class="" href="#example-one-exec-call-to-summarise">Example: one exec call to summarise</a>
+<a class="" href="#example-no-llm-call-pure-chaining">Example: no LLM call, pure chaining</a>
+<a class="" href="#example-one-llm-call-to-summarise">Example: one llm() call to summarise</a>
 <a class="" href="#session-dag">Session DAG</a>
 <a class="" href="#passing-data-between-steps">Passing data between steps</a>
 <a class="" href="#inserting-python-processing-between-steps">Inserting Python processing between steps</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Harness · OpenProgram Docs</title>
-<meta name="description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/functions/agentics/ 下登记其来源，随后其函数会像内置函数一样注册。 这是一套">
+<meta name="description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <meta property="og:title" content="Harness · OpenProgram Docs">
-<meta property="og:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/functions/agentics/ 下登记其来源，随后其函数会像内置函数一样注册。 这是一套">
+<meta property="og:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harness · OpenProgram Docs">
-<meta name="twitter:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/functions/agentics/ 下登记其来源，随后其函数会像内置函数一样注册。 这是一套">
+<meta name="twitter:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harness">Harness<a class="header-anchor" href="#harness">#</a></h1>
 <p><strong>harness</strong>（一个 <em>agentic program</em>）是一个自包含的、由 agentic
 function 组成的 git 仓库。<code>openprogram programs install</code>在
-<code>openprogram/functions/agentics/</code> 下登记其来源，随后其函数会像内置函数一样注册。
+<code>openprogram/programs/agentic_functions/</code> 下登记其来源，随后其函数会像内置函数一样注册。
 这是一套<strong>通用机制</strong>：第一方程序（gui / research / wiki）与任何第三方仓库
 的安装方式完全相同。跨平台（macOS / Linux / Windows）；无需 symlink。</p>
 <blockquote>
@@ -163,7 +163,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>第一方和第三方都是相同的四个步骤：</p>
 <ol>
 <li><strong>浅克隆（shallow-clone）</strong> 仓库到
-<code>openprogram/functions/agentics/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
+<code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
 目录（不是 site-packages）。该克隆被 OpenProgram 加入 git-ignore，
 因此它始终是一份独立的检出（checkout），你可以 <code>git pull</code>
 或就地编辑。</li>
@@ -177,7 +177,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <li><strong>登记owner批准的来源。</strong> 下次启动时，registry只导入已登记的
 <code>&lt;package&gt;.agentics</code>，
 <code>@agentic_function</code> 装饰器触发，函数随即出现在
-chat / Functions 页面 / <code>openprogram programs run</code> 中。</li>
+chat / Programs 页面 / <code>openprogram programs run</code> 中。</li>
 </ol>
 <p>防护机制：对于已存在的 <strong>dev symlink</strong>，<code>install</code>会校验Harness契约并登记该链接，
 但不修改链接目标；同名且不是Git克隆的目录仍会被拒绝。对symlink执行<code>uninstall</code>
@@ -216,7 +216,7 @@ chat / Functions 页面 / <code>openprogram programs run</code> 中。</li>
 一份 YOLO 检测器权重 + OCR 模型，它们不在 PyPI 上。安装完成后，
 运行 harness 自带的安装器来获取它们（由于你已经有了 host，它会
 跳过 host）：
-<code>openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh --no-host</code>
+<code>openprogram/programs/applications/gui_harness/scripts/install.sh --no-host</code>
 （Windows：<code>…\scripts\install.ps1 -NoHost</code>）。参见
 <a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">GUI 安装指南</a>。</p>
 </blockquote>
@@ -232,7 +232,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <details>
 <summary>手动等价方式（镜像 / 无法访问 GitHub）</summary>
 <p><code>&lt;AGENTICS&gt;</code> 是 OpenProgram 的内置函数文件夹：</p>
-<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;functions&#39;,&#39;agentics&#39;))&quot;</span>
+<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;programs&#39;,&#39;applications&#39;))&quot;</span>
 </code></pre>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span>
 pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span><span class="w">        </span><span class="c1"># 或其 requirements.txt</span>

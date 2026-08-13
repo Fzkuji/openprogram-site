@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/framework-overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/framework-overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -742,8 +742,8 @@ named branch via <code>set_branch_name</code> (<code>:109</code>).
 <h3 id="⑤-collaboration-send_message-cross-session-guards">⑤ Collaboration — send_message + cross-session + guards<a class="header-anchor" href="#⑤-collaboration-send_message-cross-session-guards">#</a></h3>
 <p><strong>Responsibility</strong>: deliver messages between branches and sessions, run the
 target branch, and bring the reply back.
-<strong>Key files</strong>: <code>functions/tools/send_message/send_message/send_message.py</code>,
-<code>functions/tools/send_message/list_agents/list_agents.py</code>.
+<strong>Key files</strong>: <code>programs/functions/send_message/send_message/send_message.py</code>,
+<code>programs/functions/send_message/list_agents/list_agents.py</code>.
 <strong>Mechanisms</strong>:</p>
 <ul>
 <li><code>send_message(message, to, agent_id)</code> →
@@ -783,7 +783,7 @@ falls back to legacy (<code>engine.py:218–220</code>).</li>
 <li><strong>The core entry points lack covering tests</strong>: several paths through
 <code>process_user_turn</code> / <code>agent_loop</code> are marked &quot;no covering tests found&quot;.</li>
 <li><strong>A worker thread's ContextVar is unreliable</strong>: <code>subagent.started/ended</code>
-therefore pass the session explicitly (<code>agent/task/runner.py:111–115</code>), and
+therefore pass the session explicitly (<code>agent/job/runner.py:111–115</code>), and
 <code>send_message._resolve_parent</code> carries a head fallback for the same reason.</li>
 <li><strong><code>ContextEngine.after_turn</code> exists at two levels</strong>: the abstract base stub
 (<code>engine.py:124</code>) is <code>pass</code>; the concrete engine implementation

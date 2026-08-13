@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -167,8 +167,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>description / placeholder / multiline / options / hidden</td>
 </tr>
 <tr>
-<td><code>runtime.exec</code> rendered context</td>
-<td>docstring — carried as <code>metadata.doc</code> and prefixed into the rendered context text. The default system prompt comes from <code>runtime.system</code> (plus the skills block), not from the docstring.</td>
+<td><code>llm()</code> rendered context</td>
+<td>docstring — carried as <code>metadata.doc</code> and prefixed into the rendered context text. The default system prompt comes from the ambient runtime (plus the skills block), not from the docstring.</td>
 </tr>
 <tr>
 <td>Session-DAG rendering (<code>render_context</code>)</td>
@@ -217,8 +217,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>inspect.getdoc(fn)</code>, first paragraph</td>
 </tr>
 <tr>
-<td>Per-call LLM instructions (prompt + data for one specific <code>runtime.exec</code>)</td>
-<td>the <code>content=[...]</code> list of that exec call</td>
+<td>Per-call LLM instructions (prompt + data for one specific <code>llm()</code>)</td>
+<td>the prompt passed to that <code>llm()</code> call</td>
 <td>passed directly at call time</td>
 </tr>
 <tr>
@@ -262,7 +262,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>module level</td>
 </tr>
 <tr>
-<td>Override of <code>runtime.exec</code> system prompt</td>
+<td>Override of the ambient LLM system prompt</td>
 <td><code>@agentic_function(system=&quot;...&quot;)</code></td>
 <td><code>fn.system</code></td>
 </tr>
@@ -273,7 +273,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>DAG render range</td>
-<td><code>@agentic_function(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code> — controls how much DAG history <strong>this function's own</strong> <code>runtime.exec</code> reads. Both are node-count slices on <code>seq</code>: <code>callers</code> = most-recent N nodes written <strong>before</strong> this function's frame started (default <code>None</code> = uncapped, <code>0</code> = wall off all prior context); <code>subcalls</code> = most-recent N nodes written <strong>since</strong> this function's frame started (default <code>-1</code> = uncapped — the frame sees its own progress; child internals are hidden by <em>their</em> <code>expose</code> setting, not by subcalls counting; set <code>N&gt;=0</code> only to actively cap prompt size in a loop).</td>
+<td><code>@agentic_function(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code> — controls how much DAG history <strong>this function's own</strong> <code>llm()</code> calls read. Both are node-count slices on <code>seq</code>: <code>callers</code> = most-recent N nodes written <strong>before</strong> this function's frame started (default <code>None</code> = uncapped, <code>0</code> = wall off all prior context); <code>subcalls</code> = most-recent N nodes written <strong>since</strong> this function's frame started (default <code>-1</code> = uncapped — the frame sees its own progress; child internals are hidden by <em>their</em> <code>expose</code> setting, not by subcalls counting; set <code>N&gt;=0</code> only to actively cap prompt size in a loop).</td>
 <td><code>fn.render_range</code></td>
 </tr>
 <tr>
@@ -298,12 +298,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tr>
 <td><code>expose</code></td>
 <td><code>&quot;io&quot;</code></td>
-<td>Callers see my name + input + output. My internal <code>runtime.exec</code> (<code>llm</code> Calls) are hidden from them.</td>
+<td>Callers see my name + input + output. My internal <code>llm()</code> calls are hidden from them.</td>
 </tr>
 <tr>
 <td><code>render_range</code></td>
 <td><code>None</code> → <code>render_context</code> falls through to <code>callers=None, subcalls=-1</code></td>
-<td>Pre-frame history is uncapped. In-frame nodes (the frame's own progress: earlier <code>runtime.exec</code> results, returned sub-function io) are also uncapped. Child <code>@agentic_function</code> internals stay hidden because the child carries <code>expose=&quot;io&quot;</code>, not because subcalls trims them.</td>
+<td>Pre-frame history is uncapped. In-frame nodes (the frame's own progress: earlier <code>llm()</code> results, returned sub-function io) are also uncapped. Child <code>@agentic_function</code> internals stay hidden because the child carries <code>expose=&quot;io&quot;</code>, not because subcalls trims them.</td>
 </tr>
 <tr>
 <td>top-level chat turn</td>
@@ -340,13 +340,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>One-line summary required. May also describe in detail what each LLM call does, expected output, edge cases — as much detail as you want, for readers and for context.</td>
 </tr>
 <tr>
-<td><code>runtime.exec(content=[...])</code></td>
-<td>One specific LLM call inside the function. Each <code>exec</code> is its own &quot;ask&quot;; the function may make several with different prompts.</td>
+<td><code>llm(prompt)</code></td>
+<td>One specific LLM call inside the function. Each call is its own request; the function may make several with different prompts.</td>
 <td>The actual prompt + data for <em>this</em> LLM call: what task, what output format, what constraints, plus the data to operate on. <strong>This must be written even if the docstring already describes it.</strong></td>
 </tr>
 </tbody>
 </table>
-<p>A function may have a rich docstring explaining &quot;this function classifies sentiment by asking the LLM and normalizing the reply&quot;, but the body still needs an explicit <code>runtime.exec(content=[...])</code> containing the actual instruction + data going to the LLM. <strong>Documentation in the docstring does not propagate into the LLM call</strong> — the framework sends the docstring as descriptive context (carried on the DAG node as <code>metadata.doc</code> and rendered into the inner call's situation prompt), not as authoritative instruction. Provider behavior varies; codex CLI in particular ignores docstring as instruction. Always put the per-call prompt in <code>content</code>.</p>
+<p>A function may have a rich docstring explaining &quot;this function classifies sentiment by asking the LLM and normalizing the reply&quot;, but the body still needs an explicit <code>llm(prompt)</code> containing the actual instruction + data going to the LLM. <strong>Documentation in the docstring does not propagate into the LLM call</strong> — the framework sends the docstring as descriptive context (carried on the DAG node as <code>metadata.doc</code> and rendered into the inner call's situation prompt), not as authoritative instruction. Always put the per-call instruction and data in the <code>llm()</code> prompt.</p>
 <p>Docstring writing rules:</p>
 <ul>
 <li>One-line summary (the first paragraph) is required — that's what decision menus and tool_use specs read.</li>
@@ -357,7 +357,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>content</code> writing rules:</p>
 <ul>
 <li>Each item is a dict like <code>{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: ...}</code> or <code>{&quot;type&quot;: &quot;image&quot;, &quot;path&quot;: ...}</code>.</li>
-<li>Embed both the instruction <em>and</em> the data for this LLM call. Example:<pre><code class="language-python"><span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
+<li>Embed both the instruction <em>and</em> the data for this LLM call. Example:<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;Classify the sentiment of the following text. Reply with exactly one &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)}])</span>

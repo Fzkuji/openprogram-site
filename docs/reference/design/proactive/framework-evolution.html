@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/proactive/framework-evolution.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/proactive/framework-evolution.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -322,7 +322,7 @@ subsystem contributes to the bus, and which parts of the framework the design le
 <h2 id="1-the-problem-the-bus-solves">1. The Problem the Bus Solves<a class="header-anchor" href="#1-the-problem-the-bus-solves">#</a></h2>
 <p><img src="diagrams/framework-asis.svg" alt="Six mechanisms each going their own way" /></p>
 <p>Without a bus, a signal exists for one purpose only: letting the frontend see it. That
-purpose wires every signal straight into the webui server's <code>_broadcast</code> — task_status,
+purpose wires every signal straight into the webui server's <code>_broadcast</code> — job_status,
 channel_turn, and skills:changed each connect with their own JSON, while agent events
 arrive through the dispatcher callback chain. webui is a UI component, so making it the
 routing point puts a UI concern in the framework's signal path. The gaps are worse than
@@ -435,7 +435,7 @@ identical frames need no comparison.</p>
 <ul>
 <li>The dispatcher's seven-stage turn orchestration, or the external signature of <code>process_user_turn</code></li>
 <li>session git DAG storage and contextgit</li>
-<li>TaskRunner's thread-pool model</li>
+<li>JobRunner's thread-pool model</li>
 <li>The <code>ApprovalRegistry</code> approval mechanism, which the interrogation point reuses rather than rewrites</li>
 <li>AuthStore itself, which is bridged rather than modified</li>
 <li>The frontend WS protocol, which stays transparent to the frontend because webui broadcasts unchanged frames</li>

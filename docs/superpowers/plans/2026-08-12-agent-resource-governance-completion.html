@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,6 +106,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html">memory</a>
@@ -123,7 +124,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/status.html">status</a>
 <a class="navlink" href="/docs/reference/cli/stop.html">stop</a>
 <a class="navlink" href="/docs/reference/cli/subagent.html">subagent</a>
-<a class="navlink" href="/docs/reference/cli/tasks.html">tasks</a>
 <a class="navlink" href="/docs/reference/cli/trash.html">trash</a>
 <a class="navlink" href="/docs/reference/cli/tui.html">tui</a>
 <a class="navlink" href="/docs/reference/cli/update.html">update</a>
@@ -177,10 +177,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </blockquote>
 <p><strong>Goal:</strong> Complete the approved resource-governance design on current <code>main</code>, including fair durable scheduling, crash-safe ownership, enforceable token/cost/runtime/idle budgets, and one user-visible DTO across all supported surfaces.</p>
 <p><strong>Baseline:</strong> <code>main@990bfe36</code>. The foundation from <code>8f62da5a</code> is present. The branch ending at <code>ace9a907</code> is candidate code only: it may be reused after rebase and review, but it is not implementation evidence. Mixed historical integration branches must not be merged wholesale.</p>
-<p><strong>Architecture:</strong> Keep <code>ResourceGovernor</code> and the usage SQLite database as the durable authority. <code>TaskRunner</code> owns one dispatcher and submits only claimed tasks. A task-scoped ContextVar exposes an immutable governance handle to the existing provider <code>stream()/stream_simple()</code> chokepoint. Budgeted calls reserve before credential/network work, clamp the output/deadline, then atomically settle the existing append-only <code>UsageEvent</code>. Web, CLI, TUI, and model tools serialize the same <code>TaskResourceView</code>; they do not recompute limits independently.</p>
+<p><strong>Architecture:</strong> Keep <code>ResourceGovernor</code> and the usage SQLite database as the durable authority. <code>JobRunner</code> owns one dispatcher and submits only claimed tasks. A task-scoped ContextVar exposes an immutable governance handle to the existing provider <code>stream()/stream_simple()</code> chokepoint. Budgeted calls reserve before credential/network work, clamp the output/deadline, then atomically settle the existing append-only <code>UsageEvent</code>. Web, CLI, TUI, and model tools serialize the same <code>JobResourceView</code>; they do not recompute limits independently.</p>
 <h2 id="fixed-constraints">Fixed constraints<a class="header-anchor" href="#fixed-constraints">#</a></h2>
 <ul>
-<li>Keep the single-user, local, single execution-worker topology and <code>OPENPROGRAM_TASK_WORKERS</code> as the only global capacity.</li>
+<li>Keep the single-user, local, single execution-worker topology and <code>OPENPROGRAM_JOB_WORKERS</code> as the only global capacity.</li>
 <li>Do not add a second usage ledger or edit historical usage events.</li>
 <li>Missing legacy fields mean <code>legacy/unmetered</code>, never zero.</li>
 <li>Queue, live, stopping, cumulative, actual usage, and unsettled reservations remain distinct.</li>
@@ -194,8 +194,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>Primary files:</strong></p>
 <ul>
 <li><code>openprogram/agent/resource_governance.py</code></li>
-<li><code>openprogram/agent/task/runner.py</code></li>
-<li><code>openprogram/agent/task/store.py</code></li>
+<li><code>openprogram/agent/job/runner.py</code></li>
+<li><code>openprogram/agent/job/store.py</code></li>
 <li><code>tests/unit/test_resource_governance.py</code></li>
 <li><code>tests/unit/test_async_task.py</code></li>
 </ul>
@@ -208,12 +208,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Cancellation, watchdog, busy-target withdrawal, worker crash, lease expiry, and finalization failure never release a live claim before execution exits and never leak it permanently.</li>
 <li>Dispatcher restart and repeated reconciliation are idempotent.</li>
 </ul>
-<p><strong>GREEN boundary:</strong> <code>spawn_task()</code> persists and wakes the dispatcher but never submits unclaimed work. The dispatcher atomically claims eligible work and only then submits the executor job. All live mutations require the matching owner id.</p>
+<p><strong>GREEN boundary:</strong> <code>spawn_job()</code> persists and wakes the dispatcher but never submits unclaimed work. The dispatcher atomically claims eligible work and only then submits the executor job. All live mutations require the matching owner id.</p>
 <h2 id="task-2-establish-task-scoped-budget-attribution-and-preflight-estimation">Task 2: Establish task-scoped budget attribution and preflight estimation<a class="header-anchor" href="#task-2-establish-task-scoped-budget-attribution-and-preflight-estimation">#</a></h2>
 <p><strong>Primary files:</strong></p>
 <ul>
 <li><code>openprogram/agent/resource_governance.py</code></li>
-<li><code>openprogram/agent/task/runner.py</code></li>
+<li><code>openprogram/agent/job/runner.py</code></li>
 <li><code>openprogram/usage/context.py</code></li>
 <li><code>openprogram/usage/event.py</code></li>
 <li><code>openprogram/providers/types.py</code></li>
@@ -254,9 +254,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>Primary files:</strong></p>
 <ul>
 <li><code>openprogram/agent/resource_governance.py</code></li>
-<li><code>openprogram/agent/task/runner.py</code></li>
+<li><code>openprogram/agent/job/runner.py</code></li>
 <li><code>openprogram/providers/utils/deadline.py</code></li>
-<li><code>openprogram/functions/_runtime.py</code></li>
+<li><code>openprogram/programs/_runtime.py</code></li>
 <li>tool progress and child-task update boundaries</li>
 <li>runtime/idle focused tests</li>
 </ul>
@@ -273,7 +273,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>CLI/TUI task/status command paths</li>
 <li>contract tests for each surface</li>
 </ul>
-<p>Complete <code>TaskResourceView</code> as the only serializer. It includes scheduler capacity; configured/effective/source limits; queue position; resource state; live/queued/cumulative usage; actual/reserved token and cost; unknown-cost count; runtime/idle used and limit; shared remaining; stable reason code; retryable; and legacy state.</p>
+<p>Complete <code>JobResourceView</code> as the only serializer. It includes scheduler capacity; configured/effective/source limits; queue position; resource state; live/queued/cumulative usage; actual/reserved token and cost; unknown-cost count; runtime/idle used and limit; shared remaining; stable reason code; retryable; and legacy state.</p>
 <p>Surfaces may omit presentation-only labels, but their machine fields and null/unknown semantics must match. Owner-only mutation uses the existing configuration authority path. No surface may infer <code>$0</code>, unlimited, or available capacity from missing data.</p>
 <p><strong>RED requirements:</strong> identical DTO fixtures across all four surfaces, legacy tasks, unknown cost, queued/live/stopping/terminal states, session override changes, lowered limits, stale revision/auth failure, and accessibility for visible status controls.</p>
 <h2 id="task-6-crashconcurrency-release-gate-and-documentation-evidence">Task 6: Crash/concurrency release gate and documentation evidence<a class="header-anchor" href="#task-6-crashconcurrency-release-gate-and-documentation-evidence">#</a></h2>

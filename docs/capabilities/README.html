@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/capabilities/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/capabilities/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="概览">Overview</span></nav><h1 id="overview">Overview<a class="header-anchor" href="#overview">#</a></h1>
 <p>This page answers one question: what OpenProgram can do, and which page covers each capability. Capabilities come in three layers: the programming paradigm, ready-made workflows, and extension mechanisms.</p>
 <h2 id="the-agentic-programming-paradigm">The Agentic Programming paradigm<a class="header-anchor" href="#the-agentic-programming-paradigm">#</a></h2>
-<p>OpenProgram is built on Agentic Programming: <strong>Python controls the flow, the LLM provides the reasoning</strong>. You decompose a task into a function call graph — nodes that need no reasoning are plain Python, nodes that need understanding / generation / judgment are decorated with <code>@agentic_function</code> and call the model via <code>runtime.exec(...)</code> inside the function body. Execution order, state, and retries are ordinary code you can unit-test.</p>
+<p>OpenProgram is built on Agentic Programming: <strong>Python controls the flow, the LLM provides the reasoning</strong>. You decompose a task into a function call graph — nodes that need no reasoning are plain Python, nodes that need understanding / generation / judgment are decorated with <code>@agentic_function</code> and call the model via <code>llm(...)</code> inside the function body. Execution order, state, and retries are ordinary code you can unit-test.</p>
 <ul>
 <li><a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming guide</a> — the learning path for writing functions and the three &quot;choose the next step&quot; mechanisms</li>
 <li><a href="/docs/capabilities/agentic-programming/philosophy.html">Design philosophy</a> — what problem the paradigm solves and why it inverts control</li>

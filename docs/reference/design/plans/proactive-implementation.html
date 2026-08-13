@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/plans/proactive-implementation.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/plans/proactive-implementation.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -358,8 +358,8 @@ codebase:</p>
 </tr>
 <tr>
 <td>The observer's <code>Prepare</code> background task</td>
-<td><code>TaskRunner.spawn_task</code> — ThreadPoolExecutor, state machine, task_status broadcast</td>
-<td><code>openprogram/agent/task/runner.py</code></td>
+<td><code>JobRunner.spawn_job</code> — ThreadPoolExecutor, state machine, job_status broadcast</td>
+<td><code>openprogram/agent/job/runner.py</code></td>
 </tr>
 <tr>
 <td>Landing slot for <code>Inject</code></td>
@@ -418,8 +418,8 @@ rather than adding new detection:</p>
 </tr>
 <tr>
 <td><code>subagent.started</code> / <code>completed</code></td>
-<td><code>task/runner.py</code>, the task_status broadcast</td>
-<td>conversion, funnelled through <code>_broadcast_task_status</code></td>
+<td><code>task/runner.py</code>, the job_status broadcast</td>
+<td>conversion, funnelled through <code>_broadcast_job_status</code></td>
 </tr>
 <tr>
 <td><code>permission.requested</code></td>
@@ -448,7 +448,7 @@ In particular it is not disabled by the <code>permission_mode=&quot;bypass&quot;
 <code>sub_agent_run.py</code> — that bypass is an existing hole this design closes (design
 <code>invariants.md</code> and <code>execution-model.md</code> §2).</p>
 <h2 id="5-prepare-execution">5. Prepare execution<a class="header-anchor" href="#5-prepare-execution">#</a></h2>
-<p><code>Prepare</code> reuses <code>TaskRunner.spawn_task</code> with a restricted tool allowlist that
+<p><code>Prepare</code> reuses <code>JobRunner.spawn_job</code> with a restricted tool allowlist that
 excludes bash, write, and network tools. It runs in a separate small pool at
 concurrency 1–2, is preemptible by user tasks, and yields on 429 (design
 <code>execution-model.md</code> §3).</p>
@@ -504,7 +504,7 @@ touches no subsystem internals and works purely by subscription.</p>
 </tr>
 <tr>
 <td><code>subagent.started</code> / <code>ended</code></td>
-<td><code>openprogram/agent/task/runner.py</code> <code>_broadcast_task_status</code></td>
+<td><code>openprogram/agent/job/runner.py</code> <code>_broadcast_job_status</code></td>
 </tr>
 <tr>
 <td><code>file.changed</code>, emitted after a successful write via lazy import</td>
@@ -534,7 +534,7 @@ touches no subsystem internals and works purely by subscription.</p>
 </table>
 <p>Live validation covered the full event sequence on a real turn, <code>file.changed</code>,
 an end-to-end gate test, <code>skills.changed</code>, and a WebSocket probe confirming that
-all four task_status states reach the frontend through the new chain. One
+all four job_status states reach the frontend through the new chain. One
 environment note carried forward: the worker's working directory is the home
 directory, so the project skills directory resolves to <code>~/skills</code>.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/plans/2026-08-12-mcp-server.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP Server Implementation Plan</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Proactive Layer — Design</span></a></div></article></main>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/execution/turn-cancellation.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/execution/turn-cancellation.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turn Cancellation — 设计 · OpenProgram Docs</title>
-<meta name="description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-task-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
+<meta name="description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-job-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
 <meta property="og:title" content="Turn Cancellation — 设计 · OpenProgram Docs">
-<meta property="og:description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-task-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
+<meta property="og:description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-job-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Turn Cancellation — 设计 · OpenProgram Docs">
-<meta name="twitter:description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-task-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
+<meta name="twitter:description" content="一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见 async-job-lifecycle.zh.md ；一个 task 的取消使用这 里描述的机制。 1. 每轮一个 token #">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink active" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -319,7 +319,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <blockquote>
 <p>一轮正在执行的对话如何被停止。本文是取消信号本身的权威说明：信号由哪个对象承载、
 存活多久、哪些代码检查它。异步 Task 实体自身的生命周期（排队、worker 池、持久化）见
-<a href="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html"><code>async-task-lifecycle.zh.md</code></a>；一个 task 的取消使用这
+<a href="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html"><code>async-job-lifecycle.zh.md</code></a>；一个 task 的取消使用这
 里描述的机制。</p>
 </blockquote>
 <h2 id="1-每轮一个-token">1. 每轮一个 token<a class="header-anchor" href="#1-每轮一个-token">#</a></h2>
@@ -487,7 +487,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 轮一 token 的模型。<code>/api/stop</code> 先恢复再停止，这样被暂停的一轮也能被取消。</p>
 <h2 id="相关文件">相关文件<a class="header-anchor" href="#相关文件">#</a></h2>
 <ul>
-<li><a href="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html"><code>async-task-lifecycle.zh.md</code></a> — 异步 Task 实体</li>
+<li><a href="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html"><code>async-job-lifecycle.zh.md</code></a> — 异步 Task 实体</li>
 <li><a href="/docs/reference/design/runtime/dag/overview.zh.html"><code>../dag/overview.zh.md</code></a> — status 词表、失败与重试</li>
 <li><a href="/docs/reference/design/error-handling.zh.html"><code>../../error-handling.zh.md</code></a> — 异常纪律</li>
 </ul>

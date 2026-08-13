@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/providers/auth/unified-account-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -329,6 +329,15 @@ provider 可以有多个账号，另有可开关的轮换与故障转移。某�
 意味着<strong>一个池里最多只能存活一个 OAuth 凭据</strong>，所以 OAuth 多账号必须是分开的
 profile。既然这个模型同样适用于 api-key provider，那么&quot;账号 = profile&quot;就是唯一
 覆盖所有 provider 的模型，每个具名 api-key 也是一个 profile。</p>
+<h3 id="稳定-id-与显示-label-是两个字段">稳定 ID 与显示 label 是两个字段<a class="header-anchor" href="#稳定-id-与显示-label-是两个字段">#</a></h3>
+<p><code>account_id</code> 是内部存储与路由键，由 Runtime 分配（<code>default</code>、<code>account-2</code>……），
+只允许 ASCII，登录完成后不再改变。<code>label</code> 是面向用户的 Unicode 文本，可以修改，
+但不会移动凭据池，也不会使当前激活账号的 pin 失效。</p>
+<p>新登录的 label 按固定顺序确定：用户明确填写的 label 优先；否则依次使用 OAuth
+邮箱、provider 返回的显示名、稳定 ID。身份信息从 credential metadata、嵌套 OAuth
+account 数据或 OIDC <code>id_token</code> claims 中读取。新 credential 会持久化推导结果；旧
+credential 在读取时推导，因此无需重新登录。label 可以重复，因为所有操作都以
+稳定 ID 定位账号。</p>
 <h2 id="凭据池已经提供的能力">凭据池已经提供的能力<a class="header-anchor" href="#凭据池已经提供的能力">#</a></h2>
 <p>它所依托的存储与轮换机制：</p>
 <ul>
@@ -364,10 +373,13 @@ runtime 把 429/402/5xx 回报给凭据池时才有意义。没有这一步，
 <p>回报是带门控的：除非该 provider 拥有真实的 AuthStore 凭据池，否则它是 no-op，
 因此 env-key 与 OAuth 路径不受影响。</p>
 <h2 id="管理界面">管理界面<a class="header-anchor" href="#管理界面">#</a></h2>
-<p><strong>REST。</strong> <code>/api/providers/{id}/accounts/*</code> 是通用的：
-<code>GET …/accounts</code> 返回 <code>{active, accounts:[{name,label,email?,status,kind}]}</code>；
-<code>POST …/accounts/use {name}</code> 激活某一个（<code>&quot;&quot;</code> 表示取消激活）；<code>…/rename {old,new}</code>；添加复用 <code>/login/start|poll|submit</code> 并带上目标账号名；删除复用既有的
-凭据/池删除。每个 provider 都上报一个 <code>add_mode</code>（<code>code_paste</code> 或 <code>login</code>），
+<p><strong>REST。</strong> <code>/api/providers/{provider}/accounts/*</code> 是通用的：
+<code>GET …/accounts</code> 返回
+<code>{active, accounts:[{id,label,name,email?,status,kind}]}</code>，其中 <code>name</code> 是 <code>label</code>
+的兼容别名；<code>POST …/accounts/use {id}</code> 激活某一个（<code>&quot;&quot;</code> 表示取消激活）；
+<code>…/rename {id,name:&lt;新 label&gt;}</code> 只修改显示文本；删除使用 <code>{id}</code>。登录添加复用
+<code>/login/start|poll|submit</code> 并可传入 <code>label</code>，稳定 ID 由 Runtime 而不是客户端分配。
+每个 provider 都上报一个 <code>add_mode</code>（<code>code_paste</code> 或 <code>login</code>），
 这样前端无需按 provider 身份分支。</p>
 <p><strong>凭据池控制。</strong> <code>GET …/{name}/keys</code> 返回脱敏后的 key、每个 key 的健康度和当前
 策略；<code>POST …/{name}/strategy</code> 设置策略；<code>…/{name}/retry</code> 清除冷却；
@@ -391,13 +403,16 @@ web。</p>
 <p>对 profile 的凭据可以：reveal（显示完整 key）、update（替换）、validate
 （只探测这一个），以及 validate-all。</p>
 <p>只有<strong>添加</strong>按后端分支：api-key 添加会创建一个 profile 并加入 key；登录添加是
-共享登录流程并带 <code>profile=&lt;name&gt;</code>。</p>
+共享登录流程，可选传入 <code>label=&lt;显示文本&gt;</code>。完成结果同时包含稳定账号 <code>name</code>
+（旧响应字段）与 <code>label</code>；后续操作使用账号列表返回的稳定 ID。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>已就位：激活 profile 的基础设施（<code>auth/account_selection.py</code>、CLI
 <code>providers use &lt;provider&gt; [profile]</code>、<code>providers list</code> 中的 <code>← active</code> 标记）；
 通用账号 REST 界面与统一的 web、TUI 组件；以及轮换的接线与其控制界面
 （<code>routes/accounts.py</code> 的 strategy/retry/keys 端点，<code>pool-controls.tsx</code> 中的
-&quot;Keys &amp; rotation&quot; 面板）。</p>
+&quot;Keys &amp; rotation&quot; 面板）。稳定账号 ID 与独立 label 也已覆盖 AuthStore、登录
+driver、REST、web 与 TUI，包括 OAuth 身份自动命名、用户覆盖、重命名但不重新
+分配 ID、旧账号读取投影和严格请求校验。</p>
 <p>尚未完成：UI 中的 <code>fallback_chain</code> 开关；TUI 凭据池控制（web、REST 以及经 REST
 的 CLI 已覆盖同样的操作）；原生 <code>providers pool …</code> CLI 动词；以及在&quot;账号 =
 profile&quot;成为模型之后，退役 api-key 的池内凭据界面
@@ -406,6 +421,7 @@ profile&quot;成为模型之后，退役 api-key 的池内凭据界面
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一个账号就是一个-profile">一个账号就是一个 profile</a>
+<a class="lvl-3" href="#稳定-id-与显示-label-是两个字段">稳定 ID 与显示 label 是两个字段</a>
 <a class="" href="#凭据池已经提供的能力">凭据池已经提供的能力</a>
 <a class="" href="#让凭据池真正生效的两处连接">让凭据池真正生效的两处连接</a>
 <a class="" href="#管理界面">管理界面</a>

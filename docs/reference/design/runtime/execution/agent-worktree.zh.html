@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink active" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -339,7 +339,7 @@ OpenProgram 自己的 session-git 严格区分。</p>
 <li><code>created_at</code>: unix 时间戳</li>
 <li><code>status</code>: <code>active</code> / <code>committing</code> / <code>merged</code> / <code>discarded</code> / <code>kept</code></li>
 <li><code>parent_session_id</code>: 关联的 OpenProgram session（一对一或一对多）</li>
-<li><code>parent_task_id</code>: 关联的 async task（若有）</li>
+<li><code>parent_job_id</code>: 关联的 async task（若有）</li>
 <li><code>created_by_agent</code>: agent id（记录是哪个 agent 开的，UI 上能看出来）</li>
 <li><code>pr_number</code>: 通过 <code>worktree_create</code> 的 <code>pr</code> 参数开出来的 worktree 会记这个值（见 D5b）；
 后续再对同一个 PR 号调用 <code>pr</code> 模式时，靠它识别出重复而不是再开一个</li>
@@ -355,7 +355,7 @@ session 关闭时不自动清理，等 agent 或用户显式 merge / discard。<
 bash 走 <code>get_active_backend().run(...)</code>，目前 <code>LocalBackend.run</code> 接收
 <code>cwd</code> 参数但调用方没传；edit / write / read 强制要求绝对路径。</li>
 </ol>
-<p><code>openprogram/functions/_runtime.py</code> 里的 ContextVar
+<p><code>openprogram/programs/_runtime.py</code> 里的 ContextVar
 <code>_current_worktree_path: Optional[str]</code> 承载当前路径。dispatcher 每次进 turn 时，
 若 session 当前有 active worktree（从 session meta 读），就 <code>set</code> 这个 var。
 工具实现按需消费：</p>
@@ -491,7 +491,7 @@ uncommitted 改动直接丢。</li>
 <p>discard 前不做自动备份。把丢弃的内容打 tar 塞 <code>~/.openprogram/discarded/</code>
 成本不高，可以以后再加，列在 Part 6。</p>
 <h3 id="d10-worktree-跟-task-的关系">D10. Worktree 跟 task 的关系<a class="header-anchor" href="#d10-worktree-跟-task-的关系">#</a></h3>
-<p>async task 系统（见 <code>async-task-lifecycle.md</code>）：</p>
+<p>async task 系统（见 <code>async-job-lifecycle.md</code>）：</p>
 <ul>
 <li>一个 task 可以独占创建并使用 worktree（task_create → worktree_create）。</li>
 <li>task cancel 时，task 持有的 worktree 默认走 <code>discard force=True</code>。
@@ -1064,17 +1064,17 @@ docker backend。</li>
 </tr>
 <tr>
 <td>6</td>
-<td>改 <code>openprogram/functions/tools/bash/bash.py</code></td>
+<td>改 <code>openprogram/programs/functions/bash/bash.py</code></td>
 <td>调 <code>backend.run(cmd, cwd=_current_worktree_path.get())</code></td>
 </tr>
 <tr>
 <td>7</td>
-<td>改 <code>openprogram/functions/tools/edit/edit.py</code> + write/read</td>
+<td>改 <code>openprogram/programs/functions/edit/edit.py</code> + write/read</td>
 <td>路径落在 worktree 之外时写 warning（D6）</td>
 </tr>
 <tr>
 <td>8</td>
-<td>新建 <code>openprogram/functions/tools/worktree/</code></td>
+<td>新建 <code>openprogram/programs/functions/worktree/</code></td>
 <td>4 个 @function 工具：worktree_create / worktree_merge / worktree_discard / worktree_list；走 WorktreeManager</td>
 </tr>
 <tr>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/operations/streaming-resume.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/operations/streaming-resume.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -341,7 +341,7 @@ last_update_at:  float (epoch)
 <li>LLM streaming reply: dispatcher 调 LLM 之前</li>
 <li>tool call: tool dispatcher 调函数之前</li>
 <li>agentic function: <code>_execute/run.py</code> 跑 function 之前</li>
-<li>task spawn: 已经有 (<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/task/runner.py"><code>runner.py</code></a>)</li>
+<li>task spawn: 已经有 (<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner.py"><code>runner.py</code></a>)</li>
 <li>merge: <code>_execute/_run_merge</code> 之前</li>
 </ul>
 <h3 id="2-增量节流持久化">2. 增量节流持久化<a class="header-anchor" href="#2-增量节流持久化">#</a></h3>
@@ -459,7 +459,7 @@ keyspace 后续容易扩展。</li>
 </tbody>
 </table>
 <p>其中 task spawn 的 placeholder 已经有了
-（<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/task/runner.py"><code>runner.py</code></a>），
+（<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner.py"><code>runner.py</code></a>），
 <code>RuntimeBlock</code> 和 attach card 的 <code>status=running</code> 渲染也已具备。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/operations/multi-agent-revert-todo.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Multi-agent branches and per-turn revert</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/rewind.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Rewind — Roll Back to Any Historical Message</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>

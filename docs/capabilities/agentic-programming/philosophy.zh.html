@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -186,19 +186,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>把一个复杂任务拆解成函数调用图。图上的每个节点，你决定：</p>
 <ul>
 <li><strong>不需要推理的</strong> —— 用普通 Python 函数</li>
-<li><strong>需要理解 / 生成 / 判断的</strong> —— 用 <code>@agentic_function</code> 装饰，函数体里调 <code>runtime.exec(...)</code> 触发 LLM</li>
+<li><strong>需要理解 / 生成 / 判断的</strong> —— 用 <code>@agentic_function</code> 装饰，函数体里调 <code>llm(...)</code></li>
 </ul>
 <p>LLM 变成一个工具，被你调用、被你约束、被你组合。</p>
 <h2 id="三个原语">三个原语<a class="header-anchor" href="#三个原语">#</a></h2>
 <p>整个范式只有三样东西：</p>
 <h3 id="1-agentic_function">1. <code>@agentic_function</code><a class="header-anchor" href="#1-agentic_function">#</a></h3>
-<p>一个装饰器。被它装饰的函数，docstring 作为描述性上下文随调用传递，函数体里的 <code>runtime.exec(...)</code> 触发模型调用。<code>runtime</code> 参数自动注入。</p>
+<p>一个装饰器。被它装饰的函数，docstring 作为描述性上下文随调用传递，函数体里的 <code>llm(...)</code> 发起一次模型调用。装饰器提供环境 runtime。</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">summarize</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Summarize a text in one sentence, preserving the core point.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Summarize in one sentence, preserving the core point:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)}])</span>
 </code></pre>
@@ -210,10 +211,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>调用底层 provider（Anthropic / OpenAI / Claude Code / ...）</li>
 <li>把结果写回上下文</li>
 </ul>
-<p><code>Runtime.exec()</code> 是唯一的 LLM 入口。所有模型调用都走这里。</p>
+<p>用户编排代码使用 <code>llm()</code> 发起单次模型请求。<code>Runtime.exec()</code> 保留为其下层的嵌入与基础设施 API。</p>
 <h3 id="3-context">3. <code>Context</code><a class="header-anchor" href="#3-context">#</a></h3>
 <p>执行过程的自动记录。每个用户轮次、每次 LLM 调用、每次函数调用都是同一张<strong>扁平 DAG</strong> 上的一个节点；边有两种：<code>caller</code>（哪个函数发起了这个节点）和 <code>reads</code>（一次 LLM 调用的 prompt 看到了哪些节点）。每个节点记录输入、输出、token 用量、耗时、失败原因。</p>
-<p>这张 DAG 不只是执行轨迹——它同时是<strong>每次 LLM 调用的历史来源</strong>：<code>runtime.exec()</code> 从 DAG 渲染出自己的消息历史。装饰器上的两个旋钮按函数塑造这条数据流：</p>
+<p>这张 DAG 不只是执行轨迹——它同时是<strong>每次 LLM 调用的历史来源</strong>：<code>llm()</code> 通过环境 runtime 从 DAG 渲染消息历史。装饰器上的两个旋钮按函数塑造这条数据流：</p>
 <ul>
 <li><code>expose</code> —— 一次调用完成后向父级暴露什么（默认 <code>&quot;io&quot;</code>：函数名 + 输入 + 输出，内部细节隐藏）。</li>
 <li><code>render_range</code> —— 函数自身的 <code>exec</code> 拉取多少历史。<code>render_range={&quot;callers&quot;: 0}</code> 得到一个隔离的草稿上下文，看不到任何先前对话。</li>
@@ -221,13 +222,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>于是上下文管理不再是 prompt 拼接的体力活，而变成写在函数声明上的属性。同一张 DAG 也兼作你的调试视图：可视化、token 记账、回放失败路径。</p>
 <h2 id="衍生概念">衍生概念<a class="header-anchor" href="#衍生概念">#</a></h2>
 <h3 id="llm-也写代码">LLM 也写代码<a class="header-anchor" href="#llm-也写代码">#</a></h3>
-<p>LLM 不只是运行时的推理引擎，它也可以<strong>写代码</strong>——生成、修改、修复符合规范的 <code>@agentic_function</code>。这件事不需要专门的 <code>create()</code> / <code>fix()</code> 框架函数；agent 直接用普通的文件编辑工具完成，遵循 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> 这份规范——文件放哪、装饰器元数据、docstring 与 <code>content</code> 的分工、校验清单。后台 watcher 会重扫 <code>functions/agentics/</code> 并热加载新模块：import 时 <code>@agentic_function</code> 装饰器触发、自行注册，刚写完的函数无需重启即可调用。</p>
+<p>LLM 不只是运行时的推理引擎，它也可以<strong>写代码</strong>——生成、修改、修复符合规范的 <code>@agentic_function</code>。这件事不需要专门的 <code>create()</code> / <code>fix()</code> 框架函数；agent 直接用普通的文件编辑工具完成，遵循 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> 这份规范——文件放哪、装饰器元数据、docstring 与 <code>content</code> 的分工、校验清单。后台 watcher 会重扫 <code>programs/agentic_functions/</code> 并热加载新模块：import 时 <code>@agentic_function</code> 装饰器触发、自行注册，刚写完的函数无需重启即可调用。</p>
 <p>代码是数据，LLM 是编译器，函数是产品 —— 循环闭合。</p>
 <h3 id="双模式">双模式<a class="header-anchor" href="#双模式">#</a></h3>
 <p>Agentic Programming 同时是：</p>
 <ul>
 <li><strong>一个库</strong> —— 你写 <code>@agentic_function</code>，手动搭 pipeline</li>
-<li><strong>一个跑着的产品</strong> —— 在 CLI 或 WebUI 里聊天，让 agent 帮你把函数写出来；生成的文件落到 <code>functions/agentics/</code> 并热加载</li>
+<li><strong>一个跑着的产品</strong> —— 在 CLI 或 WebUI 里聊天，让 agent 帮你把函数写出来；生成的文件落到 <code>programs/agentic_functions/</code> 并热加载</li>
 </ul>
 <p>初学者从提需求开始，拿到手的就是完整可读的 Python 文件。想深挖的人再 import 手写。这是一个<strong>可以被逐步理解</strong>的工具。</p>
 <h2 id="和传统-agent-框架的对照">和传统 Agent 框架的对照<a class="header-anchor" href="#和传统-agent-框架的对照">#</a></h2>
@@ -264,7 +265,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>不是说 Agent 框架错了，它们适合一类任务（完全开放、目标模糊）。但大多数你想做的事，其实都能用 Agentic Programming 更可靠地完成。</p>
 <h2 id="openprogram-范式的产品化">OpenProgram = 范式的产品化<a class="header-anchor" href="#openprogram-范式的产品化">#</a></h2>
-<p><code>agentic_programming/</code> 子包是范式的引擎代码。<code>context/</code> 实现扁平 DAG 上下文模型。<code>providers/</code> 适配各家 LLM。<code>functions/agentics/</code> 是这个范式下已经写好的函数和应用。<code>webui/</code> 让初学者不写代码也能跑。</p>
+<p><code>agentic_programming/</code> 子包是范式的引擎代码。<code>context/</code> 实现扁平 DAG 上下文模型。<code>providers/</code> 适配各家 LLM。<code>programs/agentic_functions/</code> 是这个范式下已经写好的函数和应用。<code>webui/</code> 让初学者不写代码也能跑。</p>
 <p>范式先行，产品为用。</p>
 <hr />
 <p>延伸阅读：</p>

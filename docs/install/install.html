@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,7 +79,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="the-model-read-this-first">The model — read this first<a class="header-anchor" href="#the-model-read-this-first">#</a></h2>
 <p><strong>OpenProgram is the host. You install it once, then add agent <em>programs</em> into it.</strong></p>
 <pre><code>OpenProgram  (the host runtime — install this first, anywhere you like)
-└── openprogram/functions/agentics/      ← owner-installed programs live here
+└── openprogram/programs/agentic_functions/      ← owner-installed programs live here
     ├── GUI-Agent-Harness/               ← `gui_agent`      (clone in + run its installer)
     ├── Research-Agent-Harness/          ← `research_agent` (openprogram programs install research)
     └── Wiki-Agent-Harness/              ← `wiki_agent`     (openprogram programs install wiki)
@@ -158,7 +158,7 @@ openprogram<span class="w"> </span>web<span class="w">                          
 <tr>
 <td>6</td>
 <td><strong>Agent programs (opt-in)</strong> — menu when a terminal is attached, or <code>--programs &lt;research|wiki|gui|all&gt;</code></td>
-<td><strong>No program installs by default.</strong> When selected: <code>research</code> / <code>wiki</code> are pure Python, cloned into <code>functions/agentics/</code> as in-tree git checkouts that auto-register (<code>research</code> needs nothing beyond openprogram; <code>wiki</code> adds Jinja2 + PyYAML); <code>gui</code> pulls PyTorch (~300 MB — the CPU wheel is auto-selected on GPU-less Linux; ~3 GB only on CUDA boxes). Add any of them later with <code>openprogram programs install &lt;name&gt;</code>.</td>
+<td><strong>No program installs by default.</strong> When selected: <code>research</code> / <code>wiki</code> are pure Python, cloned into <code>programs/agentic_functions/</code> as in-tree git checkouts that auto-register (<code>research</code> needs nothing beyond openprogram; <code>wiki</code> adds Jinja2 + PyYAML); <code>gui</code> pulls PyTorch (~300 MB — the CPU wheel is auto-selected on GPU-less Linux; ~3 GB only on CUDA boxes). Add any of them later with <code>openprogram programs install &lt;name&gt;</code>.</td>
 </tr>
 <tr>
 <td>7</td>
@@ -225,7 +225,7 @@ openprogram<span class="w"> </span>web<span class="w">                          
 </tbody>
 </table>
 <p>Explicit CUDA/CPU PyTorch for the GUI harness: run its own installer after the
-host install — <code>openprogram/functions/agentics/GUI-Agent-Harness/scripts/install.sh --cuda cu124</code>.</p>
+host install — <code>openprogram/programs/applications/gui_harness/scripts/install.sh --cuda cu124</code>.</p>
 <h3 id="non-interactive-ai-agent-installs">Non-interactive / AI-agent installs<a class="header-anchor" href="#non-interactive-ai-agent-installs">#</a></h3>
 <p>For agent-driven installs, <strong>no special flags are needed</strong>: the <code>curl … | bash</code>
 one-liner already runs unattended. Without a terminal (piped, CI) it takes the
@@ -270,17 +270,17 @@ and no prompt is shown:</p>
 </blockquote>
 <hr />
 <h2 id="adding-agent-programs">Adding agent programs<a class="header-anchor" href="#adding-agent-programs">#</a></h2>
-<p>Programs installed through the CLI land in <code>functions/agentics/&lt;Repo&gt;/</code> and
+<p>Programs installed through the CLI land in <code>programs/agentic_functions/&lt;Repo&gt;/</code> and
 register on the next start. The same command works for bundled harnesses and
 third-party repositories; run a harness-specific installer afterward when it
 has additional assets:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;harness-repo&gt;
-<span class="nb">cd</span><span class="w"> </span>openprogram/functions/agentics/&lt;Harness&gt;
+<span class="nb">cd</span><span class="w"> </span>openprogram/programs/agentic_functions/&lt;Harness&gt;
 ./scripts/install.sh<span class="w">          </span><span class="c1"># if it ships one (Windows: .\scripts\install.ps1)</span>
 </code></pre>
 <p>The <strong>GUI agent</strong> has native deps (PyTorch, detector weight, OCR), so it ships its
 own per-platform installer — use it via the steps above; full guide in its
-<a href="https://github.com/Fzkuji/OpenProgram/tree/main/openprogram/functions/agentics/GUI-Agent-Harness#1-install">install section</a>.
+<a href="https://github.com/Fzkuji/OpenProgram/tree/main/openprogram/programs/applications/gui_harness#1-install">install section</a>.
 (When GUI is opted in — checked in the menu, or <code>--programs gui</code>/<code>all</code> — the install script clones it and pulls PyTorch; run the harness's own installer afterwards for its asset setup or an explicit CUDA/CPU torch.)</p>
 <p>For the bundled harnesses there's a one-line shortcut that clones, installs,
 and registers them for you:</p>
@@ -291,7 +291,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>available<spa
 (<strong>non-editable</strong>: deps go to site-packages, the code runs in-tree). For <code>gui</code>
 that includes PyTorch, but <strong>not</strong> native assets like the YOLO weight or the
 OCR warm-up — run the GUI harness's own installer (above) for those.</p>
-<p>After any of these, restart the worker (or hit <strong>Refresh</strong> on the Functions page)
+<p>After any of these, restart the worker (or hit <strong>Refresh</strong> on the Programs page)
 and the program shows in the web UI. Third-party harnesses install the same way —
 <code>openprogram programs install &lt;git-url | owner/repo&gt;</code>; details:
 <a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a>.</p>
@@ -517,7 +517,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>login<span c
 </table>
 <p>* EasyOCR is installed as a cross-platform fallback, so the GUI agent works on
 macOS without Xcode CLT — Apple Vision is just faster. Full GUI specifics:
-<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/functions/agentics/GUI-Agent-Harness/docs/install.md">GUI-Agent-Harness/docs/install.md</a>.</p>
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/applications/gui_harness/docs/install.md">GUI-Agent-Harness/docs/install.md</a>.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
 <ul>
@@ -527,7 +527,7 @@ weren't installed. Re-run the installer, then open <strong>http://localhost:1810
 <li><strong><code>pip</code> can't reinstall: <code>WinError 32 … openprogram.exe is being used</code>.</strong>
 Stop the running <code>openprogram web</code> / worker first, then re-run.</li>
 <li><strong><code>gui_agent</code> doesn't appear in the UI.</strong> Restart the worker (or Refresh the
-Functions page). Confirm it's registered: <code>openprogram programs available</code>.</li>
+Programs page). Confirm it's registered: <code>openprogram programs available</code>.</li>
 <li><strong>NVIDIA GPU unused.</strong> The installer auto-detects it; if it picked CPU (no driver at install time, or you passed <code>--cpu</code>): <code>pip uninstall -y torch torchvision</code>, then re-run the installer.</li>
 <li><strong>GPA weight didn't download</strong> (offline): <code>hf download Salesforce/GPA-GUI-Detector model.pt --local-dir ~/GPA-GUI-Detector</code>.</li>
 </ul>
@@ -539,7 +539,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <span class="o">(</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>cli<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w"> </span><span class="o">)</span><span class="w">         </span><span class="c1"># TUI (POSIX)</span>
 <span class="c1"># GUI program (editable, in-tree → auto-registers):</span>
 pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cpu
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;openprogram/functions/agentics/GUI-Agent-Harness[ocr]&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;openprogram/programs/applications/gui_harness[ocr]&quot;</span>
 hf<span class="w"> </span>download<span class="w"> </span>Salesforce/GPA-GUI-Detector<span class="w"> </span>model.pt<span class="w"> </span>--local-dir<span class="w"> </span>~/GPA-GUI-Detector
 python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import easyocr; easyocr.Reader([&#39;en&#39;,&#39;ch_sim&#39;], gpu=False)&quot;</span>
 </code></pre>

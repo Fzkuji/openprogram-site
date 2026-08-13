@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -344,7 +344,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><strong>规则层</strong></td>
 <td>用户配的 allow / deny / ask 规则（per-tool + per-pattern，<strong>项目级</strong>为主，多来源分层）</td>
 <td>deny/ask 否；allow 是</td>
-<td><code>openprogram/agent/internals/_approval.py:50-68</code>（<code>_match_rule</code>）+ <code>openprogram/functions/permission_rule.py</code></td>
+<td><code>openprogram/agent/internals/_approval.py:50-68</code>（<code>_match_rule</code>）+ <code>openprogram/programs/permission_rule.py</code></td>
 </tr>
 <tr>
 <td><strong>权限模式（会话级）</strong></td>
@@ -479,14 +479,14 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <li><code>read_file(/etc/**)</code> → <code>{tool_name=&quot;read_file&quot;, pattern=&quot;/etc/**&quot;}</code>（路径 glob）</li>
 <li>转义：pattern 内的 <code>(</code> <code>)</code> <code>\</code> 需转义（<code>\( \) \\</code>），它们是语法定界符。序列化/反序列化对偶。</li>
 </ul>
-<pre><code class="language-python"><span class="c1"># openprogram/functions/permission_rule.py:19-22</span>
+<pre><code class="language-python"><span class="c1"># openprogram/programs/permission_rule.py:19-22</span>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">PermissionRuleValue</span><span class="p">:</span>
     <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># None = per-tool；非 None = per-pattern</span>
 </code></pre>
 <h3 id="23-规则来源3-层项目是主要载体">2.3 规则来源（3 层，项目是主要载体）<a class="header-anchor" href="#23-规则来源3-层项目是主要载体">#</a></h3>
-<p>规则可来自多个来源，低优先级在前、高优先级在后，后进覆盖前进。合并在 <code>load_merged_rules(session_id)</code>（<code>openprogram/functions/permission_rule.py:100-146</code>）。<strong>项目层是规则的主要载体</strong>——规则跟项目走，切会话仍在、&quot;总是允许&quot;能长期记住。只映射真实存在的载体（无 local/cliArg/企业策略后台，见第 7 节边界）：</p>
+<p>规则可来自多个来源，低优先级在前、高优先级在后，后进覆盖前进。合并在 <code>load_merged_rules(session_id)</code>（<code>openprogram/programs/permission_rule.py:100-146</code>）。<strong>项目层是规则的主要载体</strong>——规则跟项目走，切会话仍在、&quot;总是允许&quot;能长期记住。只映射真实存在的载体（无 local/cliArg/企业策略后台，见第 7 节边界）：</p>
 <table>
 <thead>
 <tr>
@@ -618,7 +618,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <h3 id="33-各权限模式的分支实现">3.3 各权限模式的分支实现<a class="header-anchor" href="#33-各权限模式的分支实现">#</a></h3>
 <p>对应 3.2 伪代码编号：</p>
 <ul>
-<li><strong>acceptEdits（⑥）</strong>：三部分——① <code>@function</code> 有 <code>accept_edits_safe: bool = False</code> 参数（<code>functions/_runtime.py:767</code>），落到工具对象的 <code>_accept_edits_safe</code>（<code>:1079</code>）；read/write/edit/glob/grep/list 各自的 <code>@function</code> 标 <code>True</code>（如 <code>functions/tools/write/write.py:24</code>、<code>edit/edit.py:25</code>、<code>read/read.py:28</code>、<code>grep/grep.py:101</code>、<code>list/list.py:30</code>、<code>glob/glob.py:43</code>），bash/exec/execute_code 不标（默认 <code>False</code>）；② <code>_path_is_safe</code>（<code>internals/_approval.py:72-87</code>）复用 3.5 的 <code>check_path_safety</code>（路径在工作目录集内、非危险文件/目录、无 Windows 绕过）；③ 命令类工具即使有宽 allow 也 fall-through 到 ⑧ 强制审批。</li>
+<li><strong>acceptEdits（⑥）</strong>：三部分——① <code>@function</code> 有 <code>accept_edits_safe: bool = False</code> 参数（<code>functions/_runtime.py:767</code>），落到工具对象的 <code>_accept_edits_safe</code>（<code>:1079</code>）；read/write/edit/glob/grep/list 各自的 <code>@function</code> 标 <code>True</code>（如 <code>programs/functions/write/write.py:24</code>、<code>edit/edit.py:25</code>、<code>read/read.py:28</code>、<code>grep/grep.py:101</code>、<code>list/list.py:30</code>、<code>glob/glob.py:43</code>），bash/exec/execute_code 不标（默认 <code>False</code>）；② <code>_path_is_safe</code>（<code>internals/_approval.py:72-87</code>）复用 3.5 的 <code>check_path_safety</code>（路径在工作目录集内、非危险文件/目录、无 Windows 绕过）；③ 命令类工具即使有宽 allow 也 fall-through 到 ⑧ 强制审批。</li>
 <li><strong>plan（可见性控制）</strong>：<code>apply_tool_policy(tools, source=&quot;plan&quot;)</code>（<code>dispatcher/__init__.py:798</code>）滤掉写类工具，根本不进模型工具列表。plan 状态存布尔集（<code>agent/plan_mode.py</code> 的 <code>_active</code>），<strong>不切批准强度</strong>——与批准档正交（详见 §3.7）。<code>_gated_execute</code> 无 plan 专属分支（写类已被滤掉，只读工具按当前档常规走）。</li>
 <li><strong>auto（⑦）</strong>：LLM 分类器档，三级过滤省调用（<code>internals/_auto_classifier.py</code>）：明显安全的只读工具在 ⑤ 已放行；<code>RISKY_AUTO_DENYLIST</code>（bash/exec/shell/execute_code/process）直接 <code>[denied]</code>；其余拿不准的调一次 <code>auto_classify_tool</code> 问 haiku。规则层 deny/ask（①）仍在其前生效，allow（④）不受影响。</li>
 <li><strong>ask</strong>：不命中 allow、不在只读白名单、per-tool 不免审的工具全部落 ⑧。</li>
@@ -633,7 +633,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <span class="sd">    再试 per-pattern（rule.pattern 对 parse_command(tool_name, args) 前缀/glob 匹配）。&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">rules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.functions.permission_rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_rule</span><span class="p">,</span> <span class="n">parse_command</span><span class="p">,</span> <span class="n">pattern_matches</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.permission_rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_rule</span><span class="p">,</span> <span class="n">parse_command</span><span class="p">,</span> <span class="n">pattern_matches</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 惰性求值：只在遇到 per-pattern 规则时才解析命令</span>
     <span class="k">for</span> <span class="n">behavior</span><span class="p">,</span> <span class="n">ruleset</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">&quot;deny&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">deny</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">ask</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;allow&quot;</span><span class="p">,</span> <span class="n">rules</span><span class="o">.</span><span class="n">allow</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">ruleset</span><span class="p">:</span>
@@ -652,7 +652,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <li><strong>per-tool</strong>（<code>rv.pattern is None</code>）：<code>rv.tool_name == tool_name</code> 命中整工具。例 <code>deny: [&quot;bash&quot;]</code> 拦所有 bash。</li>
 <li><strong>per-pattern</strong>（<code>rv.pattern</code> 非空）：先取可比命令串 <code>cmd = parse_command(...)</code>，再 <code>pattern_matches</code>（<code>permission_rule.py:149-</code>）：<code>:*</code> 结尾→前缀匹配（<code>git:*</code> 匹配 <code>git status</code>、不匹配 <code>github</code>）；含 glob（<code>*?[</code>）→<code>fnmatch</code>（<code>/etc/**</code> 匹配 <code>/etc/passwd</code>）；否则精确相等。</li>
 </ul>
-<p>命令解析器 + 规则解析（<code>openprogram/functions/permission_rule.py</code>）：</p>
+<p>命令解析器 + 规则解析（<code>openprogram/programs/permission_rule.py</code>）：</p>
 <pre><code class="language-python"><span class="c1"># permission_rule.py:43, 77, 83-98</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_rule</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PermissionRuleValue</span><span class="p">:</span> <span class="o">...</span>        <span class="c1"># &quot;bash(git:*)&quot; → (bash, &quot;git:*&quot;)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">rule_to_string</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">PermissionRuleValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>    <span class="c1"># 与 parse_rule 对偶</span>
@@ -663,7 +663,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <span class="sd">    其余无可比字段 → None（per-pattern 对其不生效，只 per-tool 可拦）。&quot;&quot;&quot;</span>
 </code></pre>
 <p>各层规则合并（<code>load_merged_rules(session_id)</code>，<code>permission_rule.py:100-146</code>）——按优先级 global &lt; project &lt; session 拼接三 list，供 <code>_gated_execute</code> 用（真正跑判定时 <code>req.permission_rules</code> 由构造 TurnRequest 时填入）：</p>
-<pre><code class="language-python"><span class="c1"># openprogram/functions/permission_rule.py:100-146</span>
+<pre><code class="language-python"><span class="c1"># openprogram/programs/permission_rule.py:100-146</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_merged_rules</span><span class="p">(</span><span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PermissionRules</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;合并三层真实载体：全局配置 &lt; 项目（主要载体）&lt; 会话（一次性覆盖）。</span>
 <span class="sd">    项目层经 project_for_session(session_id) 反查 → load_project_settings。</span>
@@ -681,7 +681,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <span class="sd">    medium：其余命令类工具；写/编辑/删除类工具。 low：只读工具。&quot;&quot;&quot;</span>
 </code></pre>
 <p><code>_approval_detail</code>（<code>internals/_approval.py:232-242</code>，生成&quot;工具名 + 参数全文，超长首尾截断&quot;）给审批卡片一段可读摘要（第一版不做危险 token 高亮）。<code>_on_asked</code>（<code>await_user_approval</code> 内）的 <code>question.asked</code> 帧带上 <code>tool</code>/<code>args</code>/<code>risk_level</code>，前端据此上色（§4.2）。</p>
-<p><strong>路径安全</strong>（<code>openprogram/functions/tools/file_safety.py</code>）：</p>
+<p><strong>路径安全</strong>（<code>openprogram/programs/functions/file_safety.py</code>）：</p>
 <pre><code class="language-python"><span class="c1"># file_safety.py:20-40, 63</span>
 <span class="n">DANGEROUS_FILES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.bashrc&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash_profile&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash_login&quot;</span><span class="p">,</span> <span class="s2">&quot;.profile&quot;</span><span class="p">,</span>
                    <span class="s2">&quot;.zshrc&quot;</span><span class="p">,</span> <span class="s2">&quot;.zprofile&quot;</span><span class="p">,</span> <span class="s2">&quot;.zshenv&quot;</span><span class="p">,</span> <span class="s2">&quot;.gitconfig&quot;</span><span class="p">,</span> <span class="s2">&quot;.gitmodules&quot;</span><span class="p">,</span>
@@ -952,11 +952,11 @@ hook 返回 <code>{mode, options, set}</code>。</p>
 </tr>
 <tr>
 <td>规则字符串解析、匹配、多层合并</td>
-<td><code>openprogram/functions/permission_rule.py</code>（<code>parse_rule</code> / <code>parse_command</code> / <code>pattern_matches</code> / <code>load_merged_rules</code>）</td>
+<td><code>openprogram/programs/permission_rule.py</code>（<code>parse_rule</code> / <code>parse_command</code> / <code>pattern_matches</code> / <code>load_merged_rules</code>）</td>
 </tr>
 <tr>
 <td>路径安全 / 危险文件目录 / Windows 绕过</td>
-<td><code>openprogram/functions/tools/file_safety.py</code></td>
+<td><code>openprogram/programs/functions/file_safety.py</code></td>
 </tr>
 <tr>
 <td>gate 硬拦截</td>
@@ -980,7 +980,7 @@ hook 返回 <code>{mode, options, set}</code>。</p>
 </tr>
 <tr>
 <td><code>accept_edits_safe</code> 声明 + per-tool <code>requires_approval</code></td>
-<td><code>openprogram/functions/_runtime.py</code>；工具标记在 <code>openprogram/functions/tools/{read,write,edit,glob,grep,list}/</code></td>
+<td><code>openprogram/programs/_runtime.py</code>；工具标记在 <code>openprogram/programs/functions/{read,write,edit,glob,grep,list}/</code></td>
 </tr>
 <tr>
 <td>web 默认 bypass + effective_permission</td>

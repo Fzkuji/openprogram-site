@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -404,17 +404,17 @@ context_tree 展示 7 层嵌套(4d76→0c07→0964→c6f9→f1c9→4379→8746�
 <li>修法：WS chat action 传 active profile name → dispatcher 用 <code>agent_tools(toolset=&lt;profile&gt;)</code> 解析 → 只给那组工具。</li>
 <li>位置：<code>webui/ws_actions/chat.py:313-316</code> (tools_override 逻辑) + <code>composer/index.tsx</code> submit 函数。</li>
 </ul>
-<h3 id="4-functions-页-agenticbuilt-in-tab-分离进行中">4. Functions 页 Agentic/Built-in tab 分离(进行中)<a class="header-anchor" href="#4-functions-页-agenticbuilt-in-tab-分离进行中">#</a></h3>
+<h3 id="4-programs-页-agenticbuilt-in-tab-分离进行中">4. Programs 页 Agentic/Built-in tab 分离(进行中)<a class="header-anchor" href="#4-programs-页-agenticbuilt-in-tab-分离进行中">#</a></h3>
 <ul>
 <li>设计：顶部 tab 栏(类似 Memory 页的 Wiki/Journal/Core),分 Agentic(函数管理+文件夹)和 Built-in Tools(profile 管理)。</li>
 <li>现状：tab 栏已加、tab 状态已加、sidebar 在 builtin tab 隐藏、agentic 内容在 builtin tab 隐藏、tools 只在 builtin tab 显示。CSS 已加。</li>
 <li>待做：typecheck + build + 浏览器验证,确认分 tab 渲染正确。</li>
 </ul>
-<h3 id="5-functions-页删除操作仍用原生-confirm">5. <s>Functions 页删除操作仍用原生 confirm()</s><a class="header-anchor" href="#5-functions-页删除操作仍用原生-confirm">#</a></h3>
+<h3 id="5-programs-页删除操作仍用原生-confirm">5. <s>Programs 页删除操作仍用原生 confirm()</s><a class="header-anchor" href="#5-programs-页删除操作仍用原生-confirm">#</a></h3>
 <ul>
 <li>✅ 已修复：搜索确认无残留原生 <code>confirm()</code> 调用，已全部替换为 ConfirmDialog。</li>
 </ul>
-<h3 id="6-functions-页工具右键菜单不合理">6. <s>Functions 页工具右键菜单不合理</s><a class="header-anchor" href="#6-functions-页工具右键菜单不合理">#</a></h3>
+<h3 id="6-programs-页工具右键菜单不合理">6. <s>Programs 页工具右键菜单不合理</s><a class="header-anchor" href="#6-programs-页工具右键菜单不合理">#</a></h3>
 <ul>
 <li>✅ 已修复：<code>functions-page.tsx:579</code> 已改为 <code>tab === &quot;agentic&quot; ? contentCtx : undefined</code>，builtin tab 不触发 contentCtx。</li>
 </ul>
@@ -462,9 +462,9 @@ context_tree 展示 7 层嵌套(4d76→0c07→0964→c6f9→f1c9→4379→8746�
 <a class="lvl-3" href="#1-wiki_agent-自递归原因-已查明">1. wiki_agent 自递归原因（✅ 已查明）</a>
 <a class="lvl-3" href="#2-harness-内部工具集是否需要限制">2. Harness 内部工具集是否需要限制</a>
 <a class="lvl-3" href="#3-tool-profile-选择尚未影响实际工具解析">3. Tool Profile 选择尚未影响实际工具解析</a>
-<a class="lvl-3" href="#4-functions-页-agenticbuilt-in-tab-分离进行中">4. Functions 页 Agentic/Built-in tab 分离(进行中)</a>
-<a class="lvl-3" href="#5-functions-页删除操作仍用原生-confirm">5. Functions 页删除操作仍用原生 confirm()</a>
-<a class="lvl-3" href="#6-functions-页工具右键菜单不合理">6. Functions 页工具右键菜单不合理</a>
+<a class="lvl-3" href="#4-programs-页-agenticbuilt-in-tab-分离进行中">4. Programs 页 Agentic/Built-in tab 分离(进行中)</a>
+<a class="lvl-3" href="#5-programs-页删除操作仍用原生-confirm">5. Programs 页删除操作仍用原生 confirm()</a>
+<a class="lvl-3" href="#6-programs-页工具右键菜单不合理">6. Programs 页工具右键菜单不合理</a>
 <a class="" href="#agentic-function-运行时待解决问题">Agentic Function 运行时待解决问题</a>
 <a class="lvl-3" href="#7-断点续跑checkpoint-resume">7. 断点续跑（checkpoint resume）</a>
 <a class="lvl-3" href="#8-bash-工具文件修改不追踪">8. Bash 工具文件修改不追踪</a>

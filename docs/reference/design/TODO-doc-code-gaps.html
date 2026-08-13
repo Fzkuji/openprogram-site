@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -404,17 +404,17 @@ the context_tree shows 7 levels of nesting (4d76→0c07→0964→c6f9→f1c9→4
 <li>Fix: the WS chat action passes the active profile name → the dispatcher resolves it with <code>agent_tools(toolset=&lt;profile&gt;)</code> → only that set of tools is provided.</li>
 <li>Location: <code>webui/ws_actions/chat.py:313-316</code> (the tools_override logic) + the submit function in <code>composer/index.tsx</code>.</li>
 </ul>
-<h3 id="4-splitting-the-functions-page-into-agenticbuilt-in-tabs-in-progress">4. Splitting the Functions page into Agentic/Built-in tabs (in progress)<a class="header-anchor" href="#4-splitting-the-functions-page-into-agenticbuilt-in-tabs-in-progress">#</a></h3>
+<h3 id="4-splitting-the-programs-page-into-agenticbuilt-in-tabs-in-progress">4. Splitting the Programs page into Agentic/Built-in tabs (in progress)<a class="header-anchor" href="#4-splitting-the-programs-page-into-agenticbuilt-in-tabs-in-progress">#</a></h3>
 <ul>
 <li>Design: a tab bar at the top (similar to the Wiki/Journal/Core on the Memory page), splitting into Agentic (function management + folders) and Built-in Tools (profile management).</li>
 <li>Current state: the tab bar is added, tab state is added, the sidebar is hidden on the builtin tab, agentic content is hidden on the builtin tab, and tools show only on the builtin tab. CSS is added.</li>
 <li>To do: typecheck + build + browser verification, to confirm the per-tab rendering is correct.</li>
 </ul>
-<h3 id="5-the-functions-page-delete-action-still-uses-the-native-confirm">5. <s>The Functions page delete action still uses the native confirm()</s><a class="header-anchor" href="#5-the-functions-page-delete-action-still-uses-the-native-confirm">#</a></h3>
+<h3 id="5-the-programs-page-delete-action-still-uses-the-native-confirm">5. <s>The Programs page delete action still uses the native confirm()</s><a class="header-anchor" href="#5-the-programs-page-delete-action-still-uses-the-native-confirm">#</a></h3>
 <ul>
 <li>✅ Fixed: searched and confirmed there are no leftover native <code>confirm()</code> calls; all have been replaced with ConfirmDialog.</li>
 </ul>
-<h3 id="6-the-tool-right-click-menu-on-the-functions-page-is-unreasonable">6. <s>The tool right-click menu on the Functions page is unreasonable</s><a class="header-anchor" href="#6-the-tool-right-click-menu-on-the-functions-page-is-unreasonable">#</a></h3>
+<h3 id="6-the-tool-right-click-menu-on-the-programs-page-is-unreasonable">6. <s>The tool right-click menu on the Programs page is unreasonable</s><a class="header-anchor" href="#6-the-tool-right-click-menu-on-the-programs-page-is-unreasonable">#</a></h3>
 <ul>
 <li>✅ Fixed: <code>functions-page.tsx:579</code> is now <code>tab === &quot;agentic&quot; ? contentCtx : undefined</code>, so the builtin tab does not trigger contentCtx.</li>
 </ul>
@@ -462,9 +462,9 @@ the context_tree shows 7 levels of nesting (4d76→0c07→0964→c6f9→f1c9→4
 <a class="lvl-3" href="#1-cause-of-wiki_agent-self-recursion-identified">1. Cause of wiki_agent self-recursion (✅ identified)</a>
 <a class="lvl-3" href="#2-whether-harness-internal-toolsets-need-to-be-restricted">2. Whether harness-internal toolsets need to be restricted</a>
 <a class="lvl-3" href="#3-tool-profile-selection-does-not-yet-affect-actual-tool-resolution">3. Tool Profile selection does not yet affect actual tool resolution</a>
-<a class="lvl-3" href="#4-splitting-the-functions-page-into-agenticbuilt-in-tabs-in-progress">4. Splitting the Functions page into Agentic/Built-in tabs (in progress)</a>
-<a class="lvl-3" href="#5-the-functions-page-delete-action-still-uses-the-native-confirm">5. The Functions page delete action still uses the native confirm()</a>
-<a class="lvl-3" href="#6-the-tool-right-click-menu-on-the-functions-page-is-unreasonable">6. The tool right-click menu on the Functions page is unreasonable</a>
+<a class="lvl-3" href="#4-splitting-the-programs-page-into-agenticbuilt-in-tabs-in-progress">4. Splitting the Programs page into Agentic/Built-in tabs (in progress)</a>
+<a class="lvl-3" href="#5-the-programs-page-delete-action-still-uses-the-native-confirm">5. The Programs page delete action still uses the native confirm()</a>
+<a class="lvl-3" href="#6-the-tool-right-click-menu-on-the-programs-page-is-unreasonable">6. The tool right-click menu on the Programs page is unreasonable</a>
 <a class="" href="#open-problems-in-the-agentic-function-runtime">Open problems in the Agentic Function runtime</a>
 <a class="lvl-3" href="#7-checkpoint-resume">7. Checkpoint resume</a>
 <a class="lvl-3" href="#8-bash-tool-does-not-track-file-modifications">8. Bash tool does not track file modifications</a>

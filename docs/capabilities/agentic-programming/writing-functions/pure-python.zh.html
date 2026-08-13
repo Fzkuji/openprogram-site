@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/pure-python.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/pure-python.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>纯 Python · OpenProgram Docs</title>
-<meta name="description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 runtime.exec() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例">
+<meta name="description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 llm() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例 # def">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">
 <meta property="og:title" content="纯 Python · OpenProgram Docs">
-<meta property="og:description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 runtime.exec() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例">
+<meta property="og:description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 llm() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例 # def">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="纯 Python · OpenProgram Docs">
-<meta name="twitter:description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 runtime.exec() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例">
+<meta name="twitter:description" content="何时使用 # 任务是纯确定性逻辑，不需要 LLM 推理。例如： 字数统计 文件读取 / 写入 数据格式转换 数学运算 设计要点 # 不要 使用 @agentic_function 装饰器 不要 调用 llm() 不需要 runtime 参数 使用标准的 Google 风格 docstring 示例 # def">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -141,7 +141,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="设计要点">设计要点<a class="header-anchor" href="#设计要点">#</a></h2>
 <ul>
 <li><strong>不要</strong>使用 <code>@agentic_function</code> 装饰器</li>
-<li><strong>不要</strong>调用 <code>runtime.exec()</code></li>
+<li><strong>不要</strong>调用 <code>llm()</code></li>
 <li>不需要 <code>runtime</code> 参数</li>
 <li>使用标准的 Google 风格 docstring</li>
 </ul>

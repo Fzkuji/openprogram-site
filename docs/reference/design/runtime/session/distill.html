@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786598423" data-alt-lang-url="/docs/reference/design/runtime/session/distill.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786599631" data-alt-lang-url="/docs/reference/design/runtime/session/distill.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,7 +259,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-task-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html">Async Task Lifecycle</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
@@ -335,7 +335,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>Model-facing tool</td>
-<td><code>openprogram/functions/tools/read_conversation/</code></td>
+<td><code>openprogram/programs/functions/read_conversation/</code></td>
 <td><code>read_conversation</code> — the renderer as a <code>@function</code>, defaulting to the current session</td>
 </tr>
 <tr>
@@ -374,7 +374,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Truncation is layered. Per-field caps stop one runaway tool result (a large file read) from evicting the reasoning around it; the total budget cuts at the last whole turn that fits and names the first dropped turn (<code>re-read with start_turn=N to continue</code>), so a truncated transcript never looks like a complete one and the reader can page on from where it stopped.</p>
 <p><code>tools/dag_dump.py</code> remains the debugging view — node ids, lanes, tiers. The two do not overlap.</p>
 <h2 id="discovery-reuses-existing-tools">Discovery reuses existing tools<a class="header-anchor" href="#discovery-reuses-existing-tools">#</a></h2>
-<p><code>list_agents</code> (<code>functions/tools/send_message/</code>) already enumerates session ids and <code>SID:HEAD</code> branch tips. Those are exactly the arguments <code>read_conversation</code> takes, so no listing tool is added. The tool accepts a whole <code>SID:HEAD</code> string in <code>session_id</code> and splits it, since that is the form <code>list_agents</code> prints.</p>
+<p><code>list_agents</code> (<code>programs/functions/send_message/</code>) already enumerates session ids and <code>SID:HEAD</code> branch tips. Those are exactly the arguments <code>read_conversation</code> takes, so no listing tool is added. The tool accepts a whole <code>SID:HEAD</code> string in <code>session_id</code> and splits it, since that is the form <code>list_agents</code> prints.</p>
 <h2 id="the-skill-carries-the-judgment">The skill carries the judgment<a class="header-anchor" href="#the-skill-carries-the-judgment">#</a></h2>
 <p>Distillation is a judgment task: deciding what in a transcript generalizes and what was incidental to that day. Nothing about it is deterministic, so there is no <code>distill()</code> function — the skill body tells the agent what to extract (goal, preconditions, steps, decision points, traps) and it writes the output file with its own <code>Write</code> tool.</p>
 <p>This follows the precedent set when the <code>create()</code> / <code>edit()</code> / <code>improve()</code> wrappers were removed from agentic programming: a function whose entire body is one LLM call plus a file write is a layer the agent does not need.</p>

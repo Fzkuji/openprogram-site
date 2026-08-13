@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786598423" data-alt-lang-url="/docs/capabilities/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786599631" data-alt-lang-url="/docs/capabilities/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,8 +99,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
 </div>
 <div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="任务清单">Task lists</div>
-<a class="navlink" href="/docs/capabilities/task-list.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/task-list.html" data-href-zh="/docs/capabilities/task-list.zh.html">Self-programmed agentic workflows</a>
+<div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
+<a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="概览">Overview</span></nav><h1 id="概览">概览<a class="header-anchor" href="#概览">#</a></h1>
 <p>这一页帮你回答一个问题：OpenProgram 能做什么，以及每种能力去哪页看。能力分三层：编程范式、现成的工作流、扩展机制。</p>
 <h2 id="agentic-programming-范式">Agentic Programming 范式<a class="header-anchor" href="#agentic-programming-范式">#</a></h2>
-<p>OpenProgram 的底座是 Agentic Programming：<strong>Python 控制流程，LLM 提供推理</strong>。你把任务拆成函数调用图，不需要推理的节点写普通 Python，需要理解 / 生成 / 判断的节点用 <code>@agentic_function</code> 装饰，在函数体里通过 <code>runtime.exec(...)</code> 调用模型。执行顺序、状态、重试都是普通代码，可以单元测试。</p>
+<p>OpenProgram 的底座是 Agentic Programming：<strong>Python 控制流程，LLM 提供推理</strong>。你把任务拆成函数调用图，不需要推理的节点写普通 Python，需要理解 / 生成 / 判断的节点用 <code>@agentic_function</code> 装饰，在函数体里通过 <code>llm(...)</code> 调用模型。执行顺序、状态、重试都是普通代码，可以单元测试。</p>
 <ul>
 <li><a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming 指南</a> —— 编写函数的学习路径与三种&quot;选择下一步&quot;机制</li>
 <li><a href="/docs/capabilities/agentic-programming/philosophy.html">设计哲学</a> —— 范式解决什么问题、为什么反转控制权</li>

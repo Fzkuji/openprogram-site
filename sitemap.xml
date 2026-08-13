@@ -23,6 +23,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/agentic-workflow.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/agentic-workflow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/distill.html</loc></url>
@@ -43,8 +45,6 @@
   <url><loc>https://openprogram.io/docs/capabilities/security-review.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/skills.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/skills.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/capabilities/task-list.html</loc></url>
-  <url><loc>https://openprogram.io/docs/capabilities/task-list.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/tools.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/tools.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/README.html</loc></url>
@@ -115,6 +115,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/cron-worker.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/diagnostics.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/doctor.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/jobs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/logs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/mcp.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/memory.html</loc></url>
@@ -132,7 +133,6 @@
   <url><loc>https://openprogram.io/docs/reference/cli/status.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/stop.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/subagent.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/cli/tasks.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/trash.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/tui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/update.html</loc></url>
@@ -343,8 +343,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-task-lifecycle.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-task-lifecycle.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html</loc></url>
