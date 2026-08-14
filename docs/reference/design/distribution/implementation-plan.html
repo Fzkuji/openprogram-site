@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786735312">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -357,6 +357,14 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>Tag <code>v0.6.5</code> remained immutable after run <code>31827207974</code> built both macOS Desktop artifacts but exposed that the packaged-runtime smoke script only parsed compact JSON while the runtime manifest is formatted JSON. All four complete runtime and CLI installer jobs passed; no GitHub Release was published from that tag.</li>
 <li>The <code>v0.6.6</code> retry uses the same whitespace-tolerant manifest parser already used by runtime archiving and Desktop preparation, reports actionable failures, and adds a regression test for formatted manifests.</li>
 </ul>
+<h3 id="v066-formal-release-acceptance">v0.6.6 formal release acceptance<a class="header-anchor" href="#v066-formal-release-acceptance">#</a></h3>
+<ul>
+<li>Tag <code>v0.6.6</code> points to <code>d08486953e19cf168fd8aba0704fe968b2a7f3a8</code>; release run <code>31829278086</code> completed successfully without moving any earlier tag.</li>
+<li>The stable GitHub Release was published at <code>https://github.com/Fzkuji/OpenProgram/releases/tag/v0.6.6</code> as a non-draft, non-prerelease release. It contains four complete runtime archives and checksums, unsigned macOS arm64/x64 DMG and ZIP artifacts and checksums, developer wheel/sdist artifacts, and <code>release-manifest.json</code>.</li>
+<li>Native release acceptance passed for macOS arm64/x86_64 and Linux arm64/x86_64. Each runtime was assembled and archived on its native runner; all four CLI installer jobs verified checksum, extraction, complete-product capabilities, worker cold start, atomic activation, and launcher version. Both macOS Desktop jobs verified the same embedded runtime before uploading their artifacts.</li>
+<li>Main CI run <code>31828655714</code> passed Python 3.11/3.12/3.13, Web, and documentation/example jobs. The documentation publication run <code>31828655717</code> also passed.</li>
+<li>Post-release public-entry acceptance resolved <code>https://openprogram.io/install</code> through GitHub <code>latest</code> to <code>v0.6.6</code>, installed the macOS arm64 archive into an isolated state and launcher directory, reported <code>openprogram 0.6.6</code>, passed the installer's complete-runtime and <code>/healthz</code> probes, and passed <code>openprogram doctor</code>.</li>
+</ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
 <li>Base commit: <code>c1886a3fdf7ba196c42ec9a2c19dca7fe86c12e7</code>.</li>
@@ -367,7 +375,7 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>Tests: execute the public root script with a fake <code>curl</code> for automatic latest-version resolution and explicit pinning, assert the tagged installer handoff, build the docs site, verify the assembled root file, and run the existing distribution release suite.</li>
 <li>RED evidence: the two public-entry tests initially failed because the root bootstrap did not exist and the Pages workflow did not publish <code>/install</code>.</li>
 <li>GREEN evidence: the distribution release file reports 25 passed; docs build reports 509 pages; landing check passes; link check reports 0 broken links; an assembled-site probe preserves <code>/docs/install/</code> and validates the root <code>/install</code> script.</li>
-<li>Release-state evidence on 2026-08-15: GitHub <code>latest</code> resolves to <code>v0.6.0</code>, whose release has no assets and whose tag has no <code>scripts/install-release.sh</code>; <code>v0.6.1</code> has not been tagged. The bootstrap therefore fails without installing a reduced product until a complete release is published. This batch does not create or move a tag.</li>
+<li>Pre-release evidence on 2026-08-15: GitHub <code>latest</code> initially resolved to <code>v0.6.0</code>, whose release had no assets and whose tag had no <code>scripts/install-release.sh</code>. The installer correctly failed instead of installing a reduced product. The <code>v0.6.6</code> formal release acceptance above supersedes that observed release state.</li>
 </ul>
 <h2 id="unified-complete-product-batch">Unified complete-product batch<a class="header-anchor" href="#unified-complete-product-batch">#</a></h2>
 <ul>
@@ -601,6 +609,7 @@ git status --short
 <div class="toc-list">
 <a class="" href="#release-gate-repair-for-v061">Release gate repair for v0.6.1</a>
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
+<a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>
 <a class="" href="#short-public-installer-batch">Short public installer batch</a>
 <a class="" href="#unified-complete-product-batch">Unified complete-product batch</a>
 <a class="lvl-3" href="#current-batch-files">Current-batch files</a>
