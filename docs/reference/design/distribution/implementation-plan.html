@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786727023">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786727906">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -344,6 +344,8 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>Root cause: <code>semble 0.2.0</code> constrained <code>tree-sitter-language-pack</code> below 1.8, and the locked 1.6.2 package published no macOS x86_64 wheel.</li>
 <li>Correction: require <code>semble&gt;=0.5.3</code>, whose grammar dependency is <code>semble-grammars</code>; the locked grammar package publishes native wheels for macOS x86_64/arm64 and Linux x86_64/arm64 while preserving the search capability.</li>
 <li>Regression gate: resolve the complete locked product requirements for CPython 3.12 on macOS x86_64 and assert the locked grammar artifact includes that platform. The release retry uses the higher patch version <code>v0.6.2</code>.</li>
+<li>Tag <code>v0.6.2</code> remained immutable after run <code>31822787529</code> passed the search dependency step but found that <code>torch 2.13.0</code> no longer publishes macOS x86_64 wheels. No GitHub Release was published from that tag.</li>
+<li>The <code>v0.6.3</code> retry uses the last upstream macOS x86_64-compatible pair, <code>torch 2.2.2</code> and <code>torchvision 0.17.2</code>, together with <code>numpy 1.26.4</code> for NumPy ABI compatibility. All four release targets must resolve this same GUI stack; Linux continues to use the official CPU wheel index.</li>
 </ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
