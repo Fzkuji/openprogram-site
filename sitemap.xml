@@ -189,6 +189,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/context/memory-introspection.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/automatic-updates.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/implementation-plan.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/installation-packaging.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.html</loc></url>
@@ -249,6 +250,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/memory/written-marker.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/2026-07-08-credential-connection-unification.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/2026-08-12-mcp-server.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/plans/2026-08-15-formal-release-updates.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/cache-control-passthrough.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/cache-control-passthrough.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/proactive-implementation.html</loc></url>
