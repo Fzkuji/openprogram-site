@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Harnesses · OpenProgram Docs</title>
-<meta name="description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. openprogram programs install records its source under">
+<meta name="description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <meta property="og:title" content="Harnesses · OpenProgram Docs">
-<meta property="og:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. openprogram programs install records its source under">
+<meta property="og:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harnesses · OpenProgram Docs">
-<meta name="twitter:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. openprogram programs install records its source under">
+<meta name="twitter:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -131,28 +131,27 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harnesses">Harnesses<a class="header-anchor" href="#harnesses">#</a></h1>
 <p>A <strong>harness</strong> (an <em>agentic program</em>) is a self-contained git repo of
-agentic functions. <code>openprogram programs install</code> records its source under
-<code>openprogram/programs/agentic_functions/</code>, and its functions then register like
-built-ins. This is a <strong>general mechanism</strong>: the first-party programs
-(gui / research / wiki) and any third-party repo install the exact same
-way. Cross-platform (macOS / Linux / Windows); no symlinks required.</p>
+agentic functions. Every supported release already contains the GUI, Research,
+and Wiki first-party Programs, their dependencies, and their default runtime
+assets. <code>openprogram programs install</code> is for additional third-party Programs
+or developer source overlays; it is not a step required to complete a release
+installation. The immutable product runtime rejects in-place Program install,
+upgrade, and uninstall operations.</p>
 <blockquote>
 <p><strong>Where the agent reads this:</strong> this file is the canonical procedure.
 When a user asks to install a harness the agent doesn't have, follow
 the steps below — they're written to be executed step by step.</p>
 </blockquote>
 <h2 id="tldr">TL;DR<a class="header-anchor" href="#tldr">#</a></h2>
-<pre><code class="language-bash"><span class="c1"># First-party programs — by name:</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research<span class="w">      </span><span class="c1"># light (no extra deps)</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui<span class="w">           </span><span class="c1"># heavy (pulls torch/opencv)</span>
+<pre><code class="language-bash"><span class="c1"># First-party Programs are already present:</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>available
 
-<span class="c1"># ANY third-party harness — same command, by git source:</span>
+<span class="c1"># Add a third-party harness in a mutable extension/development environment:</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>https://github.com/&lt;owner&gt;/&lt;Harness-Name&gt;
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;Harness-Name&gt;<span class="w">     </span><span class="c1"># GitHub shorthand</span>
 
 <span class="c1"># Manage:</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">             </span><span class="c1"># status, incl. third-party</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>research<span class="w">    </span><span class="c1"># first-party: by name</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>&lt;Harness-Name&gt;<span class="w">   </span><span class="c1"># third-party: by dir name</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;ref&gt;<span class="w"> </span>--upgrade<span class="w">    </span><span class="c1"># git pull + re-resolve deps</span>
 
@@ -161,7 +160,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <hr />
 <h1 id="part-1-using-harnesses">Part 1 — Using harnesses<a class="header-anchor" href="#part-1-using-harnesses">#</a></h1>
 <h2 id="what-programs-install-does">What <code>programs install</code> does<a class="header-anchor" href="#what-programs-install-does">#</a></h2>
-<p>The same four steps for first-party and third-party:</p>
+<p>For a third-party Program or developer source overlay, the command performs four steps:</p>
 <ol>
 <li><strong>Shallow-clone</strong> the repo into
 <code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code> — a real, editable
@@ -184,45 +183,37 @@ chat / the Programs page / <code>openprogram programs run</code>.</li>
 contract and records the link without modifying its target. It refuses a
 same-named non-git directory. <code>uninstall</code> on a symlink removes only the link,
 never the checkout it points to.</p>
-<h2 id="first-party-programs-gui-research-wiki">First-party programs (gui / research / wiki)<a class="header-anchor" href="#first-party-programs-gui-research-wiki">#</a></h2>
+<h2 id="first-party-programs-gui-research-wiki">First-party Programs (gui / research / wiki)<a class="header-anchor" href="#first-party-programs-gui-research-wiki">#</a></h2>
 <table>
 <thead>
 <tr>
 <th>Program</th>
-<th>Install</th>
+<th>Release status</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
-<td><code>openprogram programs install research</code></td>
-<td>no extra deps</td>
+<td>Included</td>
+<td>Fixed source commit and dependencies are recorded in the product manifest.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
-<td><code>openprogram programs install wiki</code></td>
-<td>Jinja2 + PyYAML (tiny)</td>
+<td>Included</td>
+<td>Fixed source commit and dependencies are recorded in the product manifest.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>
-<td><code>openprogram programs install gui</code></td>
-<td>heavy: PyTorch via ultralytics + OpenCV. On GPU-less Linux the CPU torch wheel (~200 MB) is auto-selected instead of the ~3 GB CUDA build.</td>
+<td>Included</td>
+<td>PyTorch, OpenCV, default EasyOCR data, Playwright Chromium, and the GPA detector model are built into the platform runtime.</td>
 </tr>
 </tbody>
 </table>
-<p><code>openprogram programs install all</code> installs the three; the first-run
-setup wizard's &quot;Agent programs&quot; step offers the same choice
-interactively.</p>
-<blockquote>
-<p><strong>GUI agent — one extra step.</strong> Beyond its pip deps, <code>gui_agent</code> needs
-a YOLO detector weight + OCR models that aren't on PyPI. After the
-install, run the harness's own installer to fetch them (it skips the
-host since you already have it):
-<code>openprogram/programs/applications/gui_harness/scripts/install.sh --no-host</code>
-(Windows: <code>…\scripts\install.ps1 -NoHost</code>). See the
-<a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">GUI install guide</a>.</p>
-</blockquote>
+<p>Release users do not run <code>programs install all</code>, a first-run Program wizard,
+or the GUI harness asset installer. Developers may replace a first-party
+Program with an editable checkout or configure a different OCR/browser backend;
+those overlays add development behavior without changing the product manifest.</p>
 <h2 id="third-party-harnesses">Third-party harnesses<a class="header-anchor" href="#third-party-harnesses">#</a></h2>
 <p>Anyone's harness repo installs with the same command — no catalogue
 edit, no registration step anywhere:</p>
@@ -264,14 +255,20 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>list<span cla
 (in chat, or <code>openprogram programs run &lt;fn&gt; -a key=value</code>).</p>
 <h2 id="platform-notes">Platform notes<a class="header-anchor" href="#platform-notes">#</a></h2>
 <ul>
-<li><strong>Base install is one command, every OS:</strong> clone OpenProgram and run
-<code>./scripts/install.sh</code> (Windows: <code>.\scripts\install.ps1</code>).</li>
-<li><strong>No symlinks needed</strong> — cloning a real directory into <code>&lt;AGENTICS&gt;</code> is
-the supported path, so there's no Windows admin/developer-mode hurdle.</li>
+<li><strong>Supported release hosts are macOS and Linux.</strong> Windows has no supported
+release installer or native package; Windows users may use a browser to
+connect to OpenProgram on a supported remote host.</li>
+<li><strong>These Program commands require a mutable environment.</strong> They work in a
+source-development checkout and may be used by a CLI release only when its
+release notes explicitly support Program mutation. Packaged desktop builds
+refuse the mutation commands until Programs have isolated external
+environments.</li>
+<li><strong>No symlinks are required</strong> in a supported mutable environment: cloning a
+real directory into <code>&lt;AGENTICS&gt;</code> is the standard path.</li>
 <li><strong>A harness can still be platform-specific in its own code</strong> (e.g. a
 desktop-GUI harness may only implement macOS / Linux backends).
-Installing always works; whether every function <em>runs</em> on your OS is
-the harness's concern — check its README.</li>
+Whether installation and every function run on a supported host depends on
+the harness's declared dependencies and platform support; check its README.</li>
 <li><strong>Encoding / paths:</strong> OpenProgram's own tooling is UTF-8 and
 <code>os.path</code>-based throughout; a well-behaved harness should be too.</li>
 </ul>
@@ -305,8 +302,8 @@ the harness's concern — check its README.</li>
 <td>Run <code>openprogram programs install &lt;git-source&gt;</code> once to verify and record it; the installer does not modify the linked checkout.</td>
 </tr>
 <tr>
-<td>A function loads but errors when <em>run</em> on Windows</td>
-<td>The harness's own code is platform-specific — its concern, not the install's. See its README.</td>
+<td>A Windows source checkout fails to install or run a harness</td>
+<td>Windows release installation and compatibility are not supported. Use a supported macOS/Linux host and check the harness README for its own platform requirements.</td>
 </tr>
 </tbody>
 </table>
@@ -403,12 +400,12 @@ with only OpenProgram installed (hard rule 2)</li>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;Harness-Name&gt;
 </code></pre>
 <p>Nothing to register anywhere — the repo URL <em>is</em> the distribution.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/skills.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Skills</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/skills.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Skills</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#tldr">TL;DR</a>
 <a class="" href="#what-programs-install-does">What programs install does</a>
-<a class="" href="#first-party-programs-gui-research-wiki">First-party programs (gui / research / wiki)</a>
+<a class="" href="#first-party-programs-gui-research-wiki">First-party Programs (gui / research / wiki)</a>
 <a class="" href="#third-party-harnesses">Third-party harnesses</a>
 <a class="" href="#developer-setup-work-on-a-harness-youre-writing">Developer setup (work on a harness you're writing)</a>
 <a class="" href="#verify-an-install">Verify an install</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/start/faq.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/start/faq.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,13 +95,9 @@ openprogram<span class="w"> </span>setup<span class="w">                </span><
 <h2 id="where-is-my-data-stored">Where is my data stored?<a class="header-anchor" href="#where-is-my-data-stored">#</a></h2>
 <p>Everything lives under <code>~/.openprogram/</code> by default: <code>config.json</code> (configuration), <code>sessions/</code> (sessions), <code>logs/</code> (logs), <code>memory/</code> (memory), <code>usage.db</code> (token usage). With <code>--profile &lt;name&gt;</code> it moves to <code>~/.openprogram-&lt;name&gt;/</code>.</p>
 <h2 id="how-do-i-update-to-the-latest-version">How do I update to the latest version?<a class="header-anchor" href="#how-do-i-update-to-the-latest-version">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>update<span class="w">           </span><span class="c1"># check and apply updates</span>
-openprogram<span class="w"> </span>update<span class="w"> </span>--check<span class="w">   </span><span class="c1"># check only, don&#39;t apply</span>
-openprogram<span class="w"> </span>update<span class="w"> </span>--force<span class="w">   </span><span class="c1"># bypass the 6-hour throttle, check now</span>
-</code></pre>
-<p>The worker also auto-checks for updates in the background at startup (at most once every 6 hours). See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
+<p>Stable desktop and CLI installations move only to an explicit published version. macOS desktop users replace the DMG; macOS/Linux CLI/server users run the installer from the target version tag. Source-checkout developers use <code>openprogram upgrade</code>. See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
 <h2 id="the-page-opened-by-openprogram-web-wont-load">The page opened by <code>openprogram web</code> won't load?<a class="header-anchor" href="#the-page-opened-by-openprogram-web-wont-load">#</a></h2>
-<p>The page to open is <strong>http://localhost:18100</strong> — the single port that serves both the web UI and the API. If nothing is on 18100 at all, the web UI most likely wasn't built — re-run <code>./scripts/install.sh</code>.</p>
+<p>The page to open is <strong>http://localhost:18100</strong> — the single port that serves both the Web UI and API. A release wheel already contains the Web export; reinstall the exact release if it is missing. In a source checkout, run the development installer to rebuild it.</p>
 <h2 id="the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?<a class="header-anchor" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">#</a></h2>
 <p>In this order:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>status<span class="w">     </span><span class="c1"># is the service running</span>
@@ -115,12 +111,10 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>-f<span class="w">         </span><span class="c1"># follow live</span>
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>runtime<span class="w">    </span><span class="c1"># pick a log: worker / runtime / ink</span>
 </code></pre>
-<h2 id="the-gui-agent-download-is-slow-or-failed">The GUI agent download is slow or failed?<a class="header-anchor" href="#the-gui-agent-download-is-slow-or-failed">#</a></h2>
-<p><code>openprogram programs install gui</code> downloads PyTorch (~300 MB for the CPU build, ~3 GB on CUDA machines) and model weights, so a long download is normal. If it fails, re-run the same command to resume. If the GPA detector weight won't download, fetch it manually:</p>
-<pre><code class="language-bash">hf<span class="w"> </span>download<span class="w"> </span>Salesforce/GPA-GUI-Detector<span class="w"> </span>model.pt<span class="w"> </span>--local-dir<span class="w"> </span>~/GPA-GUI-Detector
-</code></pre>
-<h2 id="i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">I installed an agent program but it doesn't show up in the UI?<a class="header-anchor" href="#i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">#</a></h2>
-<p>Programs register at startup, so run <code>openprogram restart</code> after installing (or hit Refresh on the Programs page). Confirm it's installed with <code>openprogram programs available</code>.</p>
+<h2 id="why-is-the-release-download-large">Why is the release download large?<a class="header-anchor" href="#why-is-the-release-download-large">#</a></h2>
+<p>The complete release includes managed Python, PyTorch, Playwright Chromium, EasyOCR data, the GPA detector, and the GUI, Research, and Wiki Programs. Normal installation does not download these product components separately.</p>
+<h2 id="an-included-agent-program-doesnt-show-up-in-the-ui">An included agent program doesn't show up in the UI?<a class="header-anchor" href="#an-included-agent-program-doesnt-show-up-in-the-ui">#</a></h2>
+<p>Run <code>openprogram programs available</code> to inspect registration, then restart OpenProgram or use Refresh on the Programs page. A missing first-party Program in a release is a packaging defect, not a feature that the user must install separately.</p>
 <h2 id="multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?<a class="header-anchor" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">   </span><span class="c1"># add a second account</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">               </span><span class="c1"># switch to the &quot;work&quot; account</span>
@@ -133,7 +127,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_id&gt;<span class="w">  </span><span class="c1"># resume it in the terminal</span>
 </code></pre>
 <p>You can also open past sessions directly from the web sidebar.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Daily Use</span></a><a class="pn-link pn-next" href="/docs/install/install.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Installation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Daily Use</span></a><a class="pn-link pn-next" href="/docs/install/install.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Installation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#port-18100-is-already-in-use">Port 18100 is already in use?</a>
@@ -143,8 +137,8 @@ openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_i
 <a class="" href="#the-page-opened-by-openprogram-web-wont-load">The page opened by openprogram web won't load?</a>
 <a class="" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?</a>
 <a class="" href="#how-do-i-read-the-logs">How do I read the logs?</a>
-<a class="" href="#the-gui-agent-download-is-slow-or-failed">The GUI agent download is slow or failed?</a>
-<a class="" href="#i-installed-an-agent-program-but-it-doesnt-show-up-in-the-ui">I installed an agent program but it doesn't show up in the UI?</a>
+<a class="" href="#why-is-the-release-download-large">Why is the release download large?</a>
+<a class="" href="#an-included-agent-program-doesnt-show-up-in-the-ui">An included agent program doesn't show up in the UI?</a>
 <a class="" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?</a>
 <a class="" href="#can-one-machine-run-two-openprograms-at-once">Can one machine run two OpenPrograms at once?</a>
 <a class="" href="#how-do-i-get-an-earlier-conversation-back">How do I get an earlier conversation back?</a>

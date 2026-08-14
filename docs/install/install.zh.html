@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/install/install.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/install/install.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>安装 · OpenProgram Docs</title>
-<meta name="description" content="模型概念 —— 请先阅读 # OpenProgram 是宿主。你只需安装它一次，然后把 agent 程序 （programs）加进去。 OpenProgram (the host runtime — install this first, anywhere you like) └──">
+<meta name="description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS arm64 / x64 DMG 支持 本地或远程 Linux x86_64">
 <link rel="canonical" href="https://openprogram.io/docs/install/install.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/install/install.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/install/install.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/install/install.zh.html">
 <meta property="og:title" content="安装 · OpenProgram Docs">
-<meta property="og:description" content="模型概念 —— 请先阅读 # OpenProgram 是宿主。你只需安装它一次，然后把 agent 程序 （programs）加进去。 OpenProgram (the host runtime — install this first, anywhere you like) └──">
+<meta property="og:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS arm64 / x64 DMG 支持 本地或远程 Linux x86_64">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="安装 · OpenProgram Docs">
-<meta name="twitter:description" content="模型概念 —— 请先阅读 # OpenProgram 是宿主。你只需安装它一次，然后把 agent 程序 （programs）加进去。 OpenProgram (the host runtime — install this first, anywhere you like) └──">
+<meta name="twitter:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS arm64 / x64 DMG 支持 本地或远程 Linux x86_64">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -76,471 +76,103 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安装">Installation</span></nav><h1 id="安装">安装<a class="header-anchor" href="#安装">#</a></h1>
-<h2 id="模型概念-请先阅读">模型概念 —— 请先阅读<a class="header-anchor" href="#模型概念-请先阅读">#</a></h2>
-<p><strong>OpenProgram 是宿主。你只需安装它一次，然后把 agent <em>程序</em>（programs）加进去。</strong></p>
-<pre><code>OpenProgram  (the host runtime — install this first, anywhere you like)
-└── openprogram/programs/agentic_functions/      ← owner安装的program位于此处
-    ├── GUI-Agent-Harness/               ← `gui_agent`      (clone in + run its installer)
-    ├── Research-Agent-Harness/          ← `research_agent` (openprogram programs install research)
-    └── Wiki-Agent-Harness/              ← `wiki_agent`     (openprogram programs install wiki)
-</code></pre>
-<p>通过 <code>openprogram programs install</code> 安装的程序会登记来源，并在启动时注册
-（<code>import_installed_programs()</code> 导入它的 <code>agentics</code> 子包，触发
-<code>@agentic_function</code> 装饰器），因此它会出现在 <strong>web UI</strong> 和函数列表中。
-未登记的目录不会被导入。所以安装顺序始终是：<strong>先装 OpenProgram，再装程序。</strong></p>
-<blockquote>
-<p>⚠️ 只安装 Python 包<strong>并不是</strong>全部工作 —— 它不会
-构建 web UI（需要 <code>npm</code>）、不会拉取 GUI agent 的模型权重，也不会预热
-OCR 模型。<strong>下面的安装脚本才是权威来源</strong> —— 它会
-把这些都做好。</p>
-</blockquote>
-<hr />
-<h2 id="一条命令推荐">一条命令（推荐）<a class="header-anchor" href="#一条命令推荐">#</a></h2>
-<p><strong>macOS / Linux</strong></p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Fzkuji/OpenProgram/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<span class="c1"># from a checkout: ./scripts/install.sh   # everything · bare host: --minimal</span>
-</code></pre>
-<p><strong>Windows (PowerShell)</strong></p>
-<pre><code class="language-powershell"><span class="nb">iwr </span><span class="n">-useb</span> <span class="n">https</span><span class="p">://</span><span class="n">raw</span><span class="p">.</span><span class="n">githubusercontent</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Fzkuji</span><span class="p">/</span><span class="n">OpenProgram</span><span class="p">/</span><span class="n">main</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
-<span class="c"># from a checkout: .\scripts\install.ps1   # everything · bare host: -Minimal</span>
-</code></pre>
-<p>不在 checkout 里运行时，脚本会先把仓库 clone 到 <code>~/OpenProgram</code>（<code>--target DIR</code> 可改），再接力安装。默认安装装好 host 的<strong>全部轻量内容</strong>：web UI（已构建）、终端 UI、浏览器工具 + channels。agent 程序（GUI / Research / Wiki）<strong>不随默认安装</strong> —— 有终端时脚本会弹菜单让你挑，或之后用 <code>openprogram programs install &lt;research|wiki|gui&gt;</code> 单独装（GUI 会下载 PyTorch），也可 <code>openprogram setup</code> → programs。<code>--minimal</code> 则改为安装一个裸宿主。</p>
-<p>然后直接启动它 —— <strong>首次运行会引导你完成 provider 配置</strong>，随后
-打开聊天界面：</p>
-<pre><code class="language-bash">openprogram<span class="w">                                   </span><span class="c1"># first run = guided provider setup, then chat</span>
-openprogram<span class="w"> </span>web<span class="w">                               </span><span class="c1"># or the browser UI -&gt; http://localhost:18100</span>
-</code></pre>
-<p>安装脚本是<strong>幂等的</strong> —— 任何时候都可以重新运行以修复或更新。</p>
-<hr />
-<h2 id="安装脚本做了什么">安装脚本做了什么<a class="header-anchor" href="#安装脚本做了什么">#</a></h2>
+<p>OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。source checkout 安装只用于开发。</p>
+<h2 id="支持矩阵">支持矩阵<a class="header-anchor" href="#支持矩阵">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>步骤</th>
-<th>操作</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>校验 / 安装 <strong>Python 3.11+, Node 20+, git</strong></td>
-<td>macOS <code>brew</code> / Linux <code>apt</code>·<code>dnf</code>·<code>pacman</code> / Windows <code>winget</code>。尽力而为。</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>Python 环境</strong></td>
-<td>若存在活动的 <code>venv</code>/conda 则使用，否则创建 <code>./.venv</code>。覆盖方式：<code>--python</code> / <code>-Python</code>。这就是那个“你想放哪儿就放哪儿”的位置。</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>OpenProgram</strong> 可编辑安装（<code>pip install -e .</code>）</td>
-<td>宿主 + 基础依赖。</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Web UI</strong> —— 在 <code>web/</code> 中执行 <code>npm install &amp;&amp; npx next build</code></td>
-<td>构建静态导出（<code>web/out/</code>），由 Python worker 在 <strong>:18100</strong> 上直接提供。Node 只在构建期需要。<code>--minimal</code> 会跳过构建（worker 会在首次启动时构建）。</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>Ink TUI</strong> —— 在 <code>cli/</code> 中执行 <code>npm install &amp;&amp; npm run build</code></td>
-<td>仅限 POSIX；Windows 使用 Rich REPL。<code>--minimal</code> 跳过。</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>agent 程序（可选，opt-in）</strong> —— 有终端时弹菜单挑，或 <code>--programs &lt;research|wiki|gui|all&gt;</code></td>
-<td><strong>默认不装任何程序。</strong> 选中后：<code>research</code> / <code>wiki</code> 是纯 Python，以树内 git checkout 的形式克隆进 <code>programs/agentic_functions/</code> 并自动注册（<code>research</code> 除 openprogram 外无其他依赖；<code>wiki</code> 另需 Jinja2 + PyYAML）；<code>gui</code> 会拉取 PyTorch（约 300 MB —— 无 GPU 的 Linux 自动选 CPU wheel，仅 CUDA 机器约 3 GB）。装完后随时可用 <code>openprogram programs install &lt;name&gt;</code> 再补。</td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>浏览器工具 + channels</strong></td>
-<td><code>pip install -e .[all]</code> + <code>playwright install chromium</code>（约 150 MB）。<code>--minimal</code> 跳过。更重的 stealth 浏览器 / agent-browser 仍需主动开启 —— 见 <a href="#extras">Extras</a>。</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="命令行参数">命令行参数<a class="header-anchor" href="#命令行参数">#</a></h2>
-<p>完整参数矩阵（<code>install.sh --help</code> 会打印；PowerShell 的参数写在 <code>install.ps1</code> 文件头部注释里）：</p>
-<table>
-<thead>
-<tr>
-<th>参数 (POSIX)</th>
-<th>参数 (Windows)</th>
-<th>控制什么</th>
-<th>默认</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--minimal</code></td>
-<td><code>-Minimal</code></td>
-<td>裸宿主：跳过 web 构建 / TUI / 程序 / extras</td>
-<td>关（装全部轻量内容）</td>
-</tr>
-<tr>
-<td><code>--python /path/python</code></td>
-<td><code>-Python C:\path\python.exe</code></td>
-<td>指定 Python 解释器</td>
-<td>自动探测（活动 venv/conda，否则建 <code>./.venv</code>）</td>
-</tr>
-<tr>
-<td><code>--stealth</code></td>
-<td><code>-Stealth</code></td>
-<td>额外装 stealth 浏览器（patchright + camoufox，约 350 MB）</td>
-<td>关</td>
-</tr>
-<tr>
-<td><code>--agent-browser</code></td>
-<td><code>-AgentBrowser</code></td>
-<td>额外装全局 npm <code>agent-browser</code>（约 150 MB）</td>
-<td>关</td>
-</tr>
-<tr>
-<td><code>--programs &lt;gui|research|wiki|all&gt;</code></td>
-<td><code>-Programs &lt;…&gt;</code></td>
-<td>安装时非交互地一并装 agent 程序（可重复或逗号分隔）</td>
-<td>无（首次运行向导里再选）</td>
-</tr>
-<tr>
-<td><code>--target DIR</code></td>
-<td><code>-Target DIR</code></td>
-<td>从网页运行时 clone 到哪里</td>
-<td><code>~/OpenProgram</code>（Win：<code>$HOME\OpenProgram</code>）</td>
-</tr>
-<tr>
-<td><code>--yes</code> / <code>-y</code></td>
-<td><code>-Yes</code></td>
-<td>跳过所有提示、全部取默认值</td>
-<td>关（有终端时弹菜单）</td>
-</tr>
-</tbody>
-</table>
-<p>为 GUI harness 显式指定 CUDA/CPU 版 PyTorch：在宿主安装完成后运行它
-自己的安装脚本 —— <code>openprogram/programs/applications/gui_harness/scripts/install.sh --cuda cu124</code>。</p>
-<h3 id="非交互-ai-agent-安装">非交互 / AI agent 安装<a class="header-anchor" href="#非交互-ai-agent-安装">#</a></h3>
-<p>给 agent 驱动安装用 —— <strong>不必特意加参数</strong>：那条 <code>curl … | bash</code> 一行命令本身就能无人值守跑。没有终端（管道、CI）时它自动取默认值；即便有终端，每个 <code>/dev/tty</code> 读取也有 60 秒超时，到点自动回落到默认值（并打印一行 <code>(no input in 60s — using default)</code>）—— 所以<strong>任何提示都不会永久卡住</strong>。用 <code>OPENPROGRAM_PROMPT_TIMEOUT=&lt;秒&gt;</code> 可改超时时长。</p>
-<p>想立即取默认值、不等超时，就加 <code>--yes</code> / <code>-y</code>；想顺带非交互地装上 agent 程序，再加 <code>--programs all</code>（或 <code>gui</code> / <code>research</code> / <code>wiki</code>）。以下<strong>环境变量</strong>与 <code>--yes</code> 等价 —— 命中任意一个就全部取默认值、不弹任何提示：</p>
-<table>
-<thead>
-<tr>
-<th>环境变量</th>
-<th>生效条件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>CI</code></td>
-<td>非空（GitHub Actions 等 CI 通用约定）</td>
-</tr>
-<tr>
-<td><code>DEBIAN_FRONTEND</code></td>
-<td>等于 <code>noninteractive</code>（Debian/Ubuntu 通用约定）</td>
-</tr>
-<tr>
-<td><code>OPENPROGRAM_INSTALL_YES</code></td>
-<td>非空（本项目自带的开关）</td>
-</tr>
-</tbody>
-</table>
-<p>一条命令即可完全非交互、并顺带装上 agent 程序：</p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Fzkuji/OpenProgram/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-y<span class="w"> </span>--programs<span class="w"> </span>all
-</code></pre>
-<blockquote>
-<p>Windows 的 <code>Read-Host</code> 没有超时机制，所以 <code>install.ps1</code> 的提示<strong>不会</strong>自动
-取默认值 —— agent 在 Windows 上必须传 <code>-Yes</code> 或设上表任一环境变量。</p>
-</blockquote>
-<hr />
-<h2 id="添加-agent-程序">添加 agent 程序<a class="header-anchor" href="#添加-agent-程序">#</a></h2>
-<p>通过CLI安装的程序位于 <code>programs/agentic_functions/&lt;Repo&gt;/</code>，并在下次启动时注册。
-同一条命令适用于已编目的Harness和第三方仓库；如果Harness还有额外资产，随后运行
-它自己的安装脚本：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;harness-repo&gt;
-<span class="nb">cd</span><span class="w"> </span>openprogram/programs/agentic_functions/&lt;Harness&gt;
-./scripts/install.sh<span class="w">          </span><span class="c1"># if it ships one (Windows: .\scripts\install.ps1)</span>
-</code></pre>
-<p><strong>GUI agent</strong> 有原生依赖（PyTorch、检测器权重、OCR），因此它附带了
-自己的分平台安装脚本 —— 按上面的步骤使用它；完整指南见它的
-<a href="https://github.com/Fzkuji/OpenProgram/tree/main/openprogram/programs/applications/gui_harness#1-install">安装章节</a>。
-（选装了 GUI 时 —— 菜单里勾选或 <code>--programs gui</code>/<code>all</code> —— 安装脚本会把它克隆进来并拉 PyTorch；之后运行该 harness 自己的安装脚本来配资产或指定 CUDA/CPU torch。）</p>
-<p>对于已编目的 harness，有一条单行快捷命令，会为你完成克隆、安装并注册：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research<span class="w">     </span><span class="c1"># or: wiki / gui / all</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">            </span><span class="c1"># see install status</span>
-</code></pre>
-<p><code>programs install</code> 会克隆仓库并 pip 安装它声明的依赖（<strong>非可编辑</strong>：依赖装到
-site-packages，代码在源码树内运行）。对 <code>gui</code> 来说这包括 PyTorch，但<strong>不含</strong>
-YOLO 权重、OCR 预热这类原生资产 —— 这些要运行 GUI harness 自己的安装脚本（见上文）。</p>
-<p>执行上述任意操作后，重启 worker（或在 Programs 页面点击 <strong>Refresh</strong>），
-该程序就会出现在 web UI 中。第三方 harness 的安装方式相同 ——
-<code>openprogram programs install &lt;git-url | owner/repo&gt;</code>；详见
-<a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a>。</p>
-<hr />
-<h2 id="extras">Extras<a class="header-anchor" href="#extras">#</a></h2>
-<p><strong>浏览器工具 + 聊天 channels 默认安装</strong>（即 <code>[all]</code> extra），且
-安装脚本会为你拉取 Playwright Chromium 二进制 —— 无需任何主动开启。
-传入 <code>--minimal</code> / <code>-Minimal</code> 以跳过它们（例如 CI / 隔离网络 / 带宽受限场景）。</p>
-<table>
-<thead>
-<tr>
-<th>默认 extra</th>
-<th>安装</th>
-<th>安装后（自动化）</th>
-<th>大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>browser (<code>[browser]</code>)</td>
-<td><code>playwright</code></td>
-<td><code>playwright install chromium</code></td>
-<td>约 150 MB</td>
-</tr>
-<tr>
-<td>channels (<code>[channels]</code>)</td>
-<td><code>discord.py</code>, <code>slack_sdk</code>, <code>qrcode</code></td>
-<td><em>(在 <code>~/.openprogram/config.json</code> 中设置 token)</em></td>
-<td>较小</td>
-</tr>
-</tbody>
-</table>
-<p>更重、仍需主动开启（加上对应参数）：</p>
-<table>
-<thead>
-<tr>
-<th>参数 / extra</th>
-<th>安装</th>
-<th>安装后（自动化）</th>
-<th>大小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--stealth</code> · <code>[browser-stealth]</code></td>
-<td><code>patchright</code>, <code>camoufox</code></td>
-<td><code>patchright install chromium</code>, <code>camoufox fetch</code></td>
-<td>约 350 MB</td>
-</tr>
-<tr>
-<td><code>--agent-browser</code> · <code>[agent-browser]</code></td>
-<td>全局 npm <code>agent-browser</code></td>
-<td><code>agent-browser install</code></td>
-<td>约 150 MB</td>
-</tr>
-</tbody>
-</table>
-<p>Provider SDK（<code>anthropic</code>、<code>openai</code>、<code>google-genai</code>）已包含在基础安装中 ——
-无需额外 extra。</p>
-<hr />
-<h2 id="providers-凭据">Providers / 凭据<a class="header-anchor" href="#providers-凭据">#</a></h2>
-<p>进行任何聊天回合前，至少需要一个 provider：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai-codex<span class="w">      </span><span class="c1"># ChatGPT subscription (recommended)</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>anthropic<span class="w">          </span><span class="c1"># Claude</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-...<span class="w">             </span><span class="c1"># …or an API key (Windows: $env:ANTHROPIC_API_KEY=&quot;...&quot;)</span>
-</code></pre>
-<p>会自动采用已安装的 Claude Code / Codex / Gemini CLI。用 <code>openprogram doctor</code> 检查。</p>
-<hr />
-<h2 id="端口">端口<a class="header-anchor" href="#端口">#</a></h2>
-<p>一个端口承载全部——FastAPI worker 同时提供 API、WebSocket 和 web UI 静态导出：</p>
-<table>
-<thead>
-<tr>
-<th>端口</th>
-<th>服务</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>18100</strong></td>
-<td>Python worker（API + WebSocket + web UI）</td>
-<td><code>http://localhost:18100</code></td>
-</tr>
-</tbody>
-</table>
-<p>使用 <code>openprogram ports --port &lt;p&gt;</code> 修改（单次运行可用 <code>OPENPROGRAM_WEB_PORT</code>）。</p>
-<hr />
-<h2 id="完整依赖矩阵">完整依赖矩阵<a class="header-anchor" href="#完整依赖矩阵">#</a></h2>
-<p><code>pip</code> 之外的全部内容。安装脚本会处理每一行标记为 “auto” 的项。</p>
-<h3 id="宿主openprogram">宿主（OpenProgram）<a class="header-anchor" href="#宿主openprogram">#</a></h3>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>用于</th>
-<th>方式</th>
 <th>平台</th>
-<th>自动？</th>
+<th>桌面</th>
+<th>CLI / Server</th>
+<th>浏览器客户端</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Python ≥ 3.11</td>
-<td>所有功能</td>
-<td>system / pyenv / conda</td>
-<td>全部</td>
-<td>校验</td>
+<td>macOS arm64 / x64</td>
+<td>DMG</td>
+<td>支持</td>
+<td>本地或远程</td>
 </tr>
 <tr>
-<td>Node.js ≥ 20 + npm</td>
-<td>web UI 构建、TUI（仅构建期，运行期只有 Python）</td>
-<td>nodejs.org / 包管理器</td>
-<td>全部</td>
-<td>安装</td>
+<td>Linux x86_64</td>
+<td>不发布桌面产物</td>
+<td>支持</td>
+<td>本地或远程</td>
 </tr>
 <tr>
-<td>git</td>
-<td>会话即 git 仓库</td>
-<td>包管理器</td>
-<td>全部</td>
-<td>安装</td>
+<td>Linux arm64</td>
+<td>不发布桌面产物</td>
+<td>支持</td>
+<td>本地或远程</td>
 </tr>
 <tr>
-<td><code>web/node_modules</code></td>
-<td>web UI (:18100)</td>
-<td>在 <code>web/</code> 中执行 <code>npm install</code></td>
-<td>全部</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td><code>cli/</code> Ink bundle</td>
-<td>TUI</td>
-<td>在 <code>cli/</code> 中执行 <code>npm install &amp;&amp; npm run build</code></td>
-<td>macOS/Linux</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td>provider 凭据</td>
-<td>任何聊天回合</td>
-<td><code>openprogram providers login</code>（或设置界面）</td>
-<td>全部</td>
-<td>手动</td>
-</tr>
-<tr>
-<td>Playwright / patchright / camoufox / agent-browser</td>
-<td>浏览器工具</td>
-<td>上面的参数</td>
-<td>全部</td>
-<td>参数</td>
-</tr>
-</tbody>
-</table>
-<h3 id="gui-agent-harness-程序opt-in选装后-见-添加-agent-程序">GUI-Agent-Harness 程序（opt-in，选装后 —— 见 <a href="#adding-agent-programs">添加 agent 程序</a>）<a class="header-anchor" href="#gui-agent-harness-程序opt-in选装后-见-添加-agent-程序">#</a></h3>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>用于</th>
-<th>方式</th>
-<th>平台</th>
-<th>自动？</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PyTorch（+ torchvision）</td>
-<td>YOLO / OCR</td>
-<td>pip 解析默认构建；该 harness 自己的安装脚本会自动检测 NVIDIA GPU → CUDA（用 <code>--cpu</code> / <code>--cuda cuXXX</code> 强制）</td>
-<td>全部</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td>harness Python 依赖</td>
-<td>核心</td>
-<td><code>pip install -e .[ocr]</code>（ultralytics、opencv、pynput、easyocr）</td>
-<td>全部</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td><strong>GPA YOLO 权重</strong> <code>model.pt</code></td>
-<td>元素检测</td>
-<td><code>Salesforce/GPA-GUI-Detector</code> → <code>~/GPA-GUI-Detector/model.pt</code></td>
-<td>全部</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td>EasyOCR 模型（en + ch_sim）</td>
-<td>文本检测</td>
-<td>预热（<code>~/.EasyOCR/model</code>，约 300 MB）</td>
-<td>Win/Linux</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td><code>xclip</code>（+ wmctrl/xdotool/scrot）</td>
-<td>剪贴板、窗口</td>
-<td><code>apt install …</code></td>
-<td>Linux</td>
-<td><strong>auto</strong></td>
-</tr>
-<tr>
-<td>Xcode CLT（Swift）</td>
-<td>Apple Vision OCR</td>
-<td><code>xcode-select --install</code></td>
-<td>macOS</td>
-<td>尽力而为*</td>
-</tr>
-<tr>
-<td>屏幕录制 + 辅助功能</td>
-<td>截图、点击</td>
-<td>系统设置 → 隐私</td>
-<td>macOS</td>
-<td>手动</td>
-</tr>
-<tr>
-<td>Win32 + PowerShell 剪贴板</td>
-<td>所有功能</td>
-<td>内置</td>
 <td>Windows</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>可以连接受支持的远程主机</td>
+</tr>
+<tr>
+<td>iOS / Android / iPadOS</td>
+<td>无原生应用</td>
 <td>不适用</td>
+<td>可以连接受支持的远程主机；不承诺移动端布局</td>
 </tr>
 </tbody>
 </table>
-<p>* EasyOCR 作为跨平台回退方案被安装，所以 GUI agent 在
-没有 Xcode CLT 的 macOS 上也能工作 —— Apple Vision 只是更快而已。完整的 GUI 细节：
-<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/applications/gui_harness/docs/install.md">GUI-Agent-Harness/docs/install.md</a>。</p>
-<hr />
-<h2 id="故障排查">故障排查<a class="header-anchor" href="#故障排查">#</a></h2>
-<ul>
-<li><strong><code>openprogram web</code> 显示了一个加载不出来的页面。</strong>
-web UI 静态导出（<code>web/out/</code>）没构建——<code>web/</code> 的 <code>node_modules</code> 没有安装。
-重新运行安装脚本，然后打开 <strong>http://localhost:18100</strong>。</li>
-<li><strong><code>pip</code> 无法重装：<code>WinError 32 … openprogram.exe is being used</code>。</strong>
-先停掉正在运行的 <code>openprogram web</code> / worker，然后重新运行。</li>
-<li><strong><code>gui_agent</code> 没有出现在 UI 中。</strong> 重启 worker（或在 Programs 页面点
-Refresh）。用 <code>openprogram programs available</code> 确认它已注册。</li>
-<li><strong>NVIDIA GPU 未被使用。</strong> 安装脚本会自动检测它；如果它选了 CPU（安装时没有驱动，或你传了 <code>--cpu</code>）：执行 <code>pip uninstall -y torch torchvision</code>，然后重新运行安装脚本。</li>
-<li><strong>GPA 权重没有下载下来</strong>（离线）：<code>hf download Salesforce/GPA-GUI-Detector model.pt --local-dir ~/GPA-GUI-Detector</code>。</li>
-</ul>
-<hr />
-<h2 id="手动-进阶">手动 / 进阶<a class="header-anchor" href="#手动-进阶">#</a></h2>
-<pre><code class="language-bash">python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.<span class="w"> </span>.venv/bin/activate<span class="w">      </span><span class="c1"># Windows: .venv\Scripts\activate</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w">                                  </span><span class="c1"># host</span>
-<span class="o">(</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">)</span><span class="w">                         </span><span class="c1"># web UI</span>
-<span class="o">(</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>cli<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w"> </span><span class="o">)</span><span class="w">         </span><span class="c1"># TUI (POSIX)</span>
-<span class="c1"># GUI program (editable, in-tree → auto-registers):</span>
-pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cpu
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;openprogram/programs/applications/gui_harness[ocr]&quot;</span>
-hf<span class="w"> </span>download<span class="w"> </span>Salesforce/GPA-GUI-Detector<span class="w"> </span>model.pt<span class="w"> </span>--local-dir<span class="w"> </span>~/GPA-GUI-Detector
-python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import easyocr; easyocr.Reader([&#39;en&#39;,&#39;ch_sim&#39;], gpu=False)&quot;</span>
+<p>只有发布在 <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a> 中的产物才属于 release 安装。CI artifact 和 source checkout 构建不属于 stable release。</p>
+<h2 id="桌面安装">桌面安装<a class="header-anchor" href="#桌面安装">#</a></h2>
+<p>受支持的 macOS 桌面产物包含 Electron 和完整的平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、默认 OCR/模型数据，以及 GUI、Research、Wiki 三项第一方 Programs；运行时不读取系统 Python、Node.js 或 Git。Linux 当前使用完整 CLI/server release，因为完整 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
+<h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
+<ol>
+<li>从 GitHub Releases 下载与机器架构对应且文件名包含 <code>unsigned</code> 的 DMG。</li>
+<li>用 release checksum 文件验证 SHA-256。</li>
+<li>打开 DMG，把 <code>OpenProgram.app</code> 复制到 <code>/Applications</code>。</li>
+<li>从 Applications 启动。当前 release 没有使用 Apple Developer ID 签名，macOS 可能阻止首次启动。打开“系统设置 → 隐私与安全性”，找到 OpenProgram 提示并选择“仍要打开”。checksum 只验证下载内容，不能说明该应用已经通过 Apple 验证。</li>
+</ol>
+<h2 id="cli-和服务器安装">CLI 和服务器安装<a class="header-anchor" href="#cli-和服务器安装">#</a></h2>
+<p>release installer 支持 macOS 和 Linux。它下载完整的平台 runtime archive，验证 SHA-256 和 capability manifest，再安装到 <code>~/.openprogram/runtime/cli/releases/&lt;version&gt;</code>。在 macOS 上，同一 archive 也作为 Desktop 构建输入。它不在用户机器上解析产品依赖、克隆仓库或构建 JavaScript。</p>
+<p>安装最新 stable release：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>多 repo 本地开发（并排编辑多个 harness）：
-<a href="/docs/server/troubleshooting.html">troubleshooting.md → 本地开发安装（多仓库）</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Upgrading</span></a></div></article></main>
+<p>短 bootstrap 先解析最新 stable GitHub Release，再执行该不可变 tag 下的 installer。需要可复现地安装指定版本时，把版本传给 shell 进程：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.6.1<span class="w"> </span>sh
+</code></pre>
+<p>命令创建 <code>~/.local/bin/openprogram</code>。如果该目录不在 <code>PATH</code>，可以使用绝对路径，或把它加入 shell 配置。</p>
+<p>installer 在切换 <code>current</code> 前会自动执行版本检查和 worker cold-start/health check；失败时不会切换当前版本。安装后可以执行：</p>
+<pre><code class="language-bash">~/.local/bin/openprogram<span class="w"> </span>--version
+~/.local/bin/openprogram<span class="w"> </span>web
+~/.local/bin/openprogram<span class="w"> </span>doctor
+</code></pre>
+<p>Web UI 地址是 <code>http://localhost:18100</code>。runtime 已包含预构建 Web UI，不需要 Node.js。激活前，installer 会验证 Web、providers、MCP、memory、channels、search、Chromium、OCR/模型数据和三项第一方 Programs。<code>doctor</code> 仍可能报告尚未配置 provider credential 等用户配置问题。</p>
+<h2 id="已包含产品能力与额外扩展">已包含产品能力与额外扩展<a class="header-anchor" href="#已包含产品能力与额外扩展">#</a></h2>
+<p>GUI Agent、Research Agent 和 Wiki Agent 属于每个受支持的 release 安装。它们的 Python 依赖、默认 OCR 数据、GPA detector 模型和 Playwright Chromium 已包含，不需要首次使用时补装。</p>
+<p>第三方 Program 是用户主动增加的额外功能，存放在只读 product runtime 之外。第一方 Program editable source、诊断工具、本地前端构建，以及 OCR/Browser 后端替换属于开发者附加能力，不用于补齐普通安装。</p>
+<h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
+<p>贡献者使用 source checkout：</p>
+<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git
+<span class="nb">cd</span><span class="w"> </span>OpenProgram
+./scripts/install.sh
+</code></pre>
+<p>该开发 installer 先安装同一套产品能力，再增加工具链、editable source、测试、诊断、本地 Web/Ink 构建和后端替换选项。它不适用于普通用户，也不定义 <code>stable</code> channel。</p>
+<h2 id="数据与移除">数据与移除<a class="header-anchor" href="#数据与移除">#</a></h2>
+<p>配置、会话、日志、Program 和缓存位于 <code>~/.openprogram</code>；替换桌面应用或 CLI runtime 不会删除这些数据。</p>
+<ul>
+<li>macOS Desktop：删除 <code>OpenProgram.app</code>。</li>
+<li>CLI runtime：删除 <code>~/.local/bin/openprogram</code> 和 <code>~/.openprogram/runtime/cli</code>。</li>
+<li>只有在备份后显式 purge <code>~/.openprogram</code>，才会删除用户数据。</li>
+</ul>
+<p>版本变更见<a href="/docs/install/upgrade.zh.html">升级</a>，隔离状态目录见<a href="/docs/install/profiles.zh.html">Profiles</a>。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Upgrading</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#模型概念-请先阅读">模型概念 —— 请先阅读</a>
-<a class="" href="#一条命令推荐">一条命令（推荐）</a>
-<a class="" href="#安装脚本做了什么">安装脚本做了什么</a>
-<a class="" href="#命令行参数">命令行参数</a>
-<a class="lvl-3" href="#非交互-ai-agent-安装">非交互 / AI agent 安装</a>
-<a class="" href="#添加-agent-程序">添加 agent 程序</a>
-<a class="" href="#extras">Extras</a>
-<a class="" href="#providers-凭据">Providers / 凭据</a>
-<a class="" href="#端口">端口</a>
-<a class="" href="#完整依赖矩阵">完整依赖矩阵</a>
-<a class="lvl-3" href="#宿主openprogram">宿主（OpenProgram）</a>
-<a class="lvl-3" href="#gui-agent-harness-程序opt-in选装后-见-添加-agent-程序">GUI-Agent-Harness 程序（opt-in，选装后 —— 见 添加 agent 程序）</a>
-<a class="" href="#故障排查">故障排查</a>
-<a class="" href="#手动-进阶">手动 / 进阶</a>
+<a class="" href="#支持矩阵">支持矩阵</a>
+<a class="" href="#桌面安装">桌面安装</a>
+<a class="lvl-3" href="#macos">macOS</a>
+<a class="" href="#cli-和服务器安装">CLI 和服务器安装</a>
+<a class="" href="#已包含产品能力与额外扩展">已包含产品能力与额外扩展</a>
+<a class="" href="#开发-checkout">开发 checkout</a>
+<a class="" href="#数据与移除">数据与移除</a>
 </div></aside>
 </div>
 

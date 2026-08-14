@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>升级 · OpenProgram Docs</title>
-<meta name="description" content="这页说明如何把已安装的 OpenProgram 更新到最新版本，以及什么时候需要重跑安装脚本。 openprogram update # openprogram update # 检查并应用更新 openprogram update --check # 只检查，不应用 openprogram update">
+<meta name="description" content="升级行为取决于安装类型。stable 安装只在已发布版本之间变更，不跟随 origin/main 。 桌面 release # 当前 unsigned macOS 分发不启用桌面自动更新。目前从 GitHub Releases 手动升级： macOS：下载与架构匹配且文件名含 unsigned 的新 DMG，验证">
 <link rel="canonical" href="https://openprogram.io/docs/install/upgrade.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/install/upgrade.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/install/upgrade.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/install/upgrade.zh.html">
 <meta property="og:title" content="升级 · OpenProgram Docs">
-<meta property="og:description" content="这页说明如何把已安装的 OpenProgram 更新到最新版本，以及什么时候需要重跑安装脚本。 openprogram update # openprogram update # 检查并应用更新 openprogram update --check # 只检查，不应用 openprogram update">
+<meta property="og:description" content="升级行为取决于安装类型。stable 安装只在已发布版本之间变更，不跟随 origin/main 。 桌面 release # 当前 unsigned macOS 分发不启用桌面自动更新。目前从 GitHub Releases 手动升级： macOS：下载与架构匹配且文件名含 unsigned 的新 DMG，验证">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="升级 · OpenProgram Docs">
-<meta name="twitter:description" content="这页说明如何把已安装的 OpenProgram 更新到最新版本，以及什么时候需要重跑安装脚本。 openprogram update # openprogram update # 检查并应用更新 openprogram update --check # 只检查，不应用 openprogram update">
+<meta name="twitter:description" content="升级行为取决于安装类型。stable 安装只在已发布版本之间变更，不跟随 origin/main 。 桌面 release # 当前 unsigned macOS 分发不启用桌面自动更新。目前从 GitHub Releases 手动升级： macOS：下载与架构匹配且文件名含 unsigned 的新 DMG，验证">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -76,37 +76,39 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="维护">Maintenance</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="升级">Upgrading</span></nav><h1 id="升级">升级<a class="header-anchor" href="#升级">#</a></h1>
-<p>这页说明如何把已安装的 OpenProgram 更新到最新版本，以及什么时候需要重跑安装脚本。</p>
-<h2 id="openprogram-update">openprogram update<a class="header-anchor" href="#openprogram-update">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>update<span class="w">           </span><span class="c1"># 检查并应用更新</span>
-openprogram<span class="w"> </span>update<span class="w"> </span>--check<span class="w">   </span><span class="c1"># 只检查，不应用</span>
-openprogram<span class="w"> </span>update<span class="w"> </span>--force<span class="w">   </span><span class="c1"># 绕过 6 小时节流，立即检查</span>
-</code></pre>
-<p>更新策略按安装方式区分。从 git clone 装的（<code>pip install -e .</code>，即安装脚本的默认方式）走 <code>git fetch</code> + <code>git pull --ff-only</code>：</p>
+<p>升级行为取决于安装类型。stable 安装只在已发布版本之间变更，不跟随 <code>origin/main</code>。</p>
+<h2 id="桌面-release">桌面 release<a class="header-anchor" href="#桌面-release">#</a></h2>
+<p>当前 unsigned macOS 分发不启用桌面自动更新。目前从 GitHub Releases 手动升级：</p>
 <ul>
-<li>工作树有未提交改动时<strong>拒绝 pull</strong>，避免在你改过的代码上制造合并冲突；</li>
-<li>只做 fast-forward，本地有自己的提交时不会强行合并。</li>
+<li>macOS：下载与架构匹配且文件名含 <code>unsigned</code> 的新 DMG，验证 SHA-256 后替换 <code>OpenProgram.app</code>；macOS 可能再次要求通过“隐私与安全性 → 仍要打开”授权。</li>
+<li>Linux：从目标不可变 tag 重新执行 release installer。当前不发布 Linux 桌面包。</li>
 </ul>
-<p>从 PyPI wheel 装的（<code>pip install openprogram</code>）则改走 pip 更新到 PyPI 最新版；<code>openprogram update</code> 会自动识别安装方式并选对路径。</p>
-<p>更新成功后会写入一条记录，下次启动 <code>openprogram</code> 时显示&quot;updated to X&quot;的提示。更新的是代码，正在运行的服务要 <code>openprogram restart</code> 才用上新版本。</p>
-<h2 id="自动更新">自动更新<a class="header-anchor" href="#自动更新">#</a></h2>
-<p>worker 启动时会在后台自动检查并应用更新，每 6 小时至多查一次，失败静默、不影响服务。设置 <code>OPENPROGRAM_NO_AUTO_UPDATE=1</code> 可关闭。</p>
-<h2 id="什么时候重跑安装脚本">什么时候重跑安装脚本<a class="header-anchor" href="#什么时候重跑安装脚本">#</a></h2>
-<p><code>openprogram update</code> 只拉代码，不重装依赖、不重新构建 web 前端。更新后如果出现依赖缺失或页面异常，重跑安装脚本：</p>
-<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>OpenProgram<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./scripts/install.sh<span class="w">    </span><span class="c1"># Windows: .\scripts\install.ps1</span>
+<p>应用外壳与完整 product runtime 一起替换；<code>~/.openprogram</code> 下的状态保持不变。</p>
+<h2 id="cli-和服务器-release">CLI 和服务器 release<a class="header-anchor" href="#cli-和服务器-release">#</a></h2>
+<p>升级到最新 stable release：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>脚本的每一步都是幂等的，任何时候重跑都安全——已装好的步骤会跳过或原地刷新，不会破坏现有配置和会话数据（它们在 <code>~/.openprogram/</code>，脚本不碰）。</p>
-<p>手动升级等价于这几步：</p>
-<pre><code class="language-bash">git<span class="w"> </span>pull
-./scripts/install.sh
-openprogram<span class="w"> </span>restart
+<p>需要指定不可变 release 时使用：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.6.1<span class="w"> </span>sh
 </code></pre>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/install/install.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Installation</span></a><a class="pn-link pn-next" href="/docs/install/profiles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Profiles</span></a></div></article></main>
+<p>installer 下载 Desktop 使用的同平台 runtime archive，在新版本目录验证 checksum 和完整 capability manifest、执行 worker cold-start，随后切换 <code>current</code> symlink。切换前失败时，旧版本仍保持选中状态。</p>
+<p>升级后重启登录服务：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>worker<span class="w"> </span>restart
+</code></pre>
+<h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
+<p><code>openprogram upgrade</code> 只用于 source checkout。它验证 Git 目标，仅在相关源文件变化时更新依赖与构建产物，probe 新 checkout，并且只在 probe 成功后重启 worker：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status
+openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
+openprogram<span class="w"> </span>upgrade
+</code></pre>
+<p>历史 <code>openprogram update</code> 命令保留为已有安装的兼容路径，不定义 stable desktop 或受控 CLI release 行为。</p>
+<p>source checkout 的恢复细节见<a href="/docs/server/upgrading.zh.html">服务器升级</a>。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/install/install.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Installation</span></a><a class="pn-link pn-next" href="/docs/install/profiles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Profiles</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#openprogram-update">openprogram update</a>
-<a class="" href="#自动更新">自动更新</a>
-<a class="" href="#什么时候重跑安装脚本">什么时候重跑安装脚本</a>
+<a class="" href="#桌面-release">桌面 release</a>
+<a class="" href="#cli-和服务器-release">CLI 和服务器 release</a>
+<a class="" href="#开发-checkout">开发 checkout</a>
 </div></aside>
 </div>
 

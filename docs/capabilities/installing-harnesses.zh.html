@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Harness · OpenProgram Docs</title>
-<meta name="description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
+<meta name="description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Programs、依赖和默认 runtime 资产。 openprogram programs">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <meta property="og:title" content="Harness · OpenProgram Docs">
-<meta property="og:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
+<meta property="og:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Programs、依赖和默认 runtime 资产。 openprogram programs">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harness · OpenProgram Docs">
-<meta name="twitter:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。 openprogram programs install 在 openprogram/programs/agentic_functions/">
+<meta name="twitter:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Programs、依赖和默认 runtime 资产。 openprogram programs">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -131,27 +131,25 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harness">Harness<a class="header-anchor" href="#harness">#</a></h1>
 <p><strong>harness</strong>（一个 <em>agentic program</em>）是一个自包含的、由 agentic
-function 组成的 git 仓库。<code>openprogram programs install</code>在
-<code>openprogram/programs/agentic_functions/</code> 下登记其来源，随后其函数会像内置函数一样注册。
-这是一套<strong>通用机制</strong>：第一方程序（gui / research / wiki）与任何第三方仓库
-的安装方式完全相同。跨平台（macOS / Linux / Windows）；无需 symlink。</p>
+function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki
+三项第一方 Programs、依赖和默认 runtime 资产。<code>openprogram programs install</code>
+用于额外第三方 Program 或开发者 source overlay，不是补齐 release 安装的步骤。
+immutable product runtime 拒绝原地安装、升级和卸载 Program。</p>
 <blockquote>
 <p><strong>agent 在哪里读取本文档：</strong> 本文件是规范流程。
 当用户要求安装某个 agent 尚未拥有的 harness 时，请遵循
 下面的步骤——它们被写成可逐步执行的形式。</p>
 </blockquote>
 <h2 id="tldr">TL;DR<a class="header-anchor" href="#tldr">#</a></h2>
-<pre><code class="language-bash"><span class="c1"># 第一方程序——按名称：</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research<span class="w">      </span><span class="c1"># 轻量（无额外依赖）</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui<span class="w">           </span><span class="c1"># 重量级（拉取 torch/opencv）</span>
+<pre><code class="language-bash"><span class="c1"># 第一方 Programs 已经存在：</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>available
 
-<span class="c1"># 任意第三方 harness——同一条命令，按 git 来源：</span>
+<span class="c1"># 在可变扩展或开发环境中增加第三方 harness：</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>https://github.com/&lt;owner&gt;/&lt;Harness-Name&gt;
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;Harness-Name&gt;<span class="w">     </span><span class="c1"># GitHub 简写</span>
 
 <span class="c1"># 管理：</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">             </span><span class="c1"># 状态，含第三方</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>research<span class="w">    </span><span class="c1"># 第一方：按名称</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>&lt;Harness-Name&gt;<span class="w">   </span><span class="c1"># 第三方：按目录名</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;ref&gt;<span class="w"> </span>--upgrade<span class="w">    </span><span class="c1"># git pull + 重新解析依赖</span>
 
@@ -160,7 +158,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <hr />
 <h1 id="第一部分-使用-harness">第一部分 —— 使用 harness<a class="header-anchor" href="#第一部分-使用-harness">#</a></h1>
 <h2 id="programs-install-做了什么"><code>programs install</code> 做了什么<a class="header-anchor" href="#programs-install-做了什么">#</a></h2>
-<p>第一方和第三方都是相同的四个步骤：</p>
+<p>对于第三方 Program 或开发者 source overlay，该命令执行四个步骤：</p>
 <ol>
 <li><strong>浅克隆（shallow-clone）</strong> 仓库到
 <code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
@@ -182,44 +180,36 @@ chat / Programs 页面 / <code>openprogram programs run</code> 中。</li>
 <p>防护机制：对于已存在的 <strong>dev symlink</strong>，<code>install</code>会校验Harness契约并登记该链接，
 但不修改链接目标；同名且不是Git克隆的目录仍会被拒绝。对symlink执行<code>uninstall</code>
 只删除链接，不删除它指向的检出。</p>
-<h2 id="第一方程序gui-research-wiki">第一方程序（gui / research / wiki）<a class="header-anchor" href="#第一方程序gui-research-wiki">#</a></h2>
+<h2 id="第一方-programsgui-research-wiki">第一方 Programs（gui / research / wiki）<a class="header-anchor" href="#第一方-programsgui-research-wiki">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>程序</th>
-<th>安装</th>
+<th>Program</th>
+<th>Release 状态</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
-<td><code>openprogram programs install research</code></td>
-<td>无额外依赖</td>
+<td>已包含</td>
+<td>固定 source commit 和依赖记录在 product manifest 中。</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
-<td><code>openprogram programs install wiki</code></td>
-<td>Jinja2 + PyYAML（极小）</td>
+<td>已包含</td>
+<td>固定 source commit 和依赖记录在 product manifest 中。</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>
-<td><code>openprogram programs install gui</code></td>
-<td>重量级：通过 ultralytics 引入 PyTorch + OpenCV。在无 GPU 的 Linux 上会自动选择 CPU 版 torch wheel（约 200 MB），而非约 3 GB 的 CUDA 构建。</td>
+<td>已包含</td>
+<td>PyTorch、OpenCV、默认 EasyOCR 数据、Playwright Chromium 和 GPA detector 模型均进入平台 runtime。</td>
 </tr>
 </tbody>
 </table>
-<p><code>openprogram programs install all</code> 会安装这三个；首次运行的安装向导
-中的 “Agent programs” 步骤会以交互方式提供相同的选择。</p>
-<blockquote>
-<p><strong>GUI agent —— 一个额外步骤。</strong> 除了 pip 依赖，<code>gui_agent</code> 还需要
-一份 YOLO 检测器权重 + OCR 模型，它们不在 PyPI 上。安装完成后，
-运行 harness 自带的安装器来获取它们（由于你已经有了 host，它会
-跳过 host）：
-<code>openprogram/programs/applications/gui_harness/scripts/install.sh --no-host</code>
-（Windows：<code>…\scripts\install.ps1 -NoHost</code>）。参见
-<a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">GUI 安装指南</a>。</p>
-</blockquote>
+<p>release 用户不执行 <code>programs install all</code>、首次启动 Program wizard 或 GUI
+harness 资产 installer。开发者可以用 editable checkout 替换第一方 Program，
+或配置不同的 OCR/Browser backend；这些 overlay 增加开发行为，但不改变 product manifest。</p>
 <h2 id="第三方-harness">第三方 harness<a class="header-anchor" href="#第三方-harness">#</a></h2>
 <p>任何人的 harness 仓库都用同一条命令安装——无需编辑目录清单，
 任何地方都无需注册步骤：</p>
@@ -260,14 +250,17 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>list<span cla
 （在 chat 中，或 <code>openprogram programs run &lt;fn&gt; -a key=value</code>）。</p>
 <h2 id="平台说明">平台说明<a class="header-anchor" href="#平台说明">#</a></h2>
 <ul>
-<li><strong>基础安装在每个操作系统上都是一条命令：</strong> 克隆 OpenProgram 并运行
-<code>./scripts/install.sh</code>（Windows：<code>.\scripts\install.ps1</code>）。</li>
-<li><strong>无需 symlink</strong>——把一个真实目录克隆到 <code>&lt;AGENTICS&gt;</code> 是受支持的
-路径，因此不存在 Windows 管理员/开发者模式的门槛。</li>
+<li><strong>受支持的 release host 是 macOS 和 Linux。</strong> Windows 没有受支持的
+release installer 或 native package；Windows 用户可以用浏览器连接运行在
+受支持远程主机上的 OpenProgram。</li>
+<li><strong>这些 Program 命令需要可变环境。</strong> source-development checkout 可以使用；
+CLI release 仅在对应 release notes 明确支持 Program mutation 时使用。
+packaged desktop 在 Program 拥有隔离的外部环境前会拒绝这些修改命令。</li>
+<li><strong>受支持的可变环境无需 symlink</strong>——把真实目录克隆到 <code>&lt;AGENTICS&gt;</code> 是规范路径。</li>
 <li><strong>harness 在自身代码中仍可以是平台相关的</strong>（例如，桌面 GUI
 harness 可能只实现 macOS / Linux 后端）。
-安装总能成功；每个函数是否能在你的操作系统上<em>运行</em>则是
-harness 自己的事情——查看它的 README。</li>
+在受支持主机上能否安装、每个函数能否运行，取决于 harness 声明的依赖和
+平台支持；需要检查它的 README。</li>
 <li><strong>编码 / 路径：</strong> OpenProgram 自身的工具链全程基于 UTF-8 和
 <code>os.path</code>；一个表现良好的 harness 也应如此。</li>
 </ul>
@@ -301,8 +294,8 @@ harness 自己的事情——查看它的 README。</li>
 <td>运行一次<code>openprogram programs install &lt;Git来源&gt;</code>完成校验与登记；安装器不会修改链接目标。</td>
 </tr>
 <tr>
-<td>函数能加载，但在 Windows 上<em>运行</em>时报错</td>
-<td>harness 自身代码是平台相关的——这是它的事情，不是安装的事情。查看它的 README。</td>
+<td>Windows source checkout 无法安装或运行 harness</td>
+<td>Windows release 安装和兼容性不受支持。改用受支持的 macOS/Linux 主机，并检查 harness README 中的平台要求。</td>
 </tr>
 </tbody>
 </table>
@@ -397,12 +390,12 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<spa
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;Harness-Name&gt;
 </code></pre>
 <p>任何地方都无需注册——仓库 URL <em>就是</em>分发形式。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/skills.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Skills</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/skills.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Skills</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#tldr">TL;DR</a>
 <a class="" href="#programs-install-做了什么">programs install 做了什么</a>
-<a class="" href="#第一方程序gui-research-wiki">第一方程序（gui / research / wiki）</a>
+<a class="" href="#第一方-programsgui-research-wiki">第一方 Programs（gui / research / wiki）</a>
 <a class="" href="#第三方-harness">第三方 harness</a>
 <a class="" href="#开发者配置开发你正在编写的-harness">开发者配置（开发你正在编写的 harness）</a>
 <a class="" href="#校验一次安装">校验一次安装</a>

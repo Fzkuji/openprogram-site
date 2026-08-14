@@ -126,6 +126,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/recordings.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/rescue.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/restart.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/scheduler-worker.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/secrets.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/sessions.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/setup.html</loc></url>
@@ -188,6 +189,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/context/memory-introspection.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/implementation-plan.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/installation-packaging.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/error-handling.html</loc></url>
@@ -214,6 +217,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/implementation-status.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.zh.html</loc></url>
@@ -406,6 +411,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/scheduler/scheduler-memory.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-discoverability-performance.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-discovery.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-implementation.html</loc></url>
@@ -441,6 +447,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-home-button.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-native-bounds.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/websocket-command-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/usage-metering.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/usage-metering.zh.html</loc></url>

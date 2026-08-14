@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/reference/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/reference/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,6 +119,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -222,7 +223,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>openprogram tui</code>（别名 <code>chat</code>）</td>
-<td>直接启动终端 UI，跳过界面选择（macOS/Linux 用 Ink，Windows 用 Rich）</td>
+<td>直接启动终端 UI，跳过界面选择（受支持的 macOS/Linux 安装使用 Ink 或 Python 终端 UI；Rich 仅保留给不受支持的 Windows source checkout）</td>
 <td><code>--print</code>、<code>--resume</code> 在动词后同样可用</td>
 </tr>
 <tr>
@@ -437,7 +438,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>install</code></td>
-<td>安装浏览器工具依赖（Playwright + Chromium、patchright/camoufox、agent-browser），可选一个目标或 <code>all</code></td>
+<td>开发者用于增加或替换 Browser backend（patchright/camoufox/agent-browser）的命令。release 安装已包含默认 Playwright Chromium backend。</td>
 </tr>
 <tr>
 <td><code>status</code></td>
@@ -546,7 +547,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>install</code> / <code>uninstall</code></td>
-<td>安装 / 卸载 program（gui/research/wiki/all）或第三方 harness（git URL / owner/repo）；<code>install --upgrade</code> 已装也重装</td>
+<td>开发者使用的第一方源码 overlay（gui/research/wiki/all），或安装/卸载额外第三方 harness（git URL / owner/repo）；受支持的 release 已包含全部第一方 Program，并拒绝修改 immutable runtime</td>
 </tr>
 </tbody>
 </table>
@@ -707,13 +708,13 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <td><code>--check</code> 只检查；<code>--force</code> 绕过 6 小时节流</td>
 </tr>
 <tr>
-<td><code>cron-worker</code></td>
-<td>前台循环，触发 <code>cron</code> 工具登记的计划任务和内置承诺心跳</td>
-<td><code>--once</code> 只评估一个 tick 就退出；<code>--list</code> 只显示用户 cron 条目</td>
+<td><code>scheduler-worker</code>（兼容别名 <code>cron-worker</code>）</td>
+<td>前台循环，触发一次性、周期和监控 Scheduler 任务</td>
+<td><code>--once</code> 只评估一个 tick 就退出；<code>--list</code> 显示当前任务匹配状态</td>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">agentic_function</span></a><a class="pn-link pn-next" href="/docs/reference/config.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Configuration</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">agentic_function</span></a><a class="pn-link pn-next" href="/docs/reference/config.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#全局用法">全局用法</a>

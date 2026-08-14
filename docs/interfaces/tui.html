@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/interfaces/tui.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/interfaces/tui.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,7 +84,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">openprogram<span class="w"> </span>tui<span class="w">      </span><span class="c1"># straight into the terminal chat (alias: openprogram chat)</span>
 openprogram<span class="w">          </span><span class="c1"># bare invocation first asks: terminal UI or web UI</span>
 </code></pre>
-<p>On macOS / Linux the TUI is implemented in Node.js (Ink) and connects to the local worker over WebSocket (starting one automatically if none is running); on Windows it falls back to a simpler Rich REPL. Sessions are shared with the Web UI, see the <a href="/docs/interfaces/README.html">interfaces overview</a>.</p>
+<p>The release CLI always has the Python terminal interface. Source-development installations can additionally build the Node.js Ink interface on macOS and Linux. Both connect to the same local worker over WebSocket and share sessions with the Web UI. Windows release installation is not supported.</p>
 <p>Exit: <code>/quit</code>, or press <code>Ctrl-C</code> twice quickly while idle.</p>
 <p>To resume a past session: use <code>/resume</code> inside the TUI to pick one; session ids are listed by <code>openprogram sessions list</code>. (The <code>openprogram --resume &lt;id&gt;</code> flag currently takes effect only for <code>--print</code> one-shots, not when launching the interactive TUI.)</p>
 <h2 id="keys">Keys<a class="header-anchor" href="#keys">#</a></h2>
@@ -228,8 +228,7 @@ openprogram<span class="w">          </span><span class="c1"># bare invocation f
 </table>
 <p>Also available: <code>/search</code>, <code>/review</code>, <code>/diff</code>, <code>/init</code>, <code>/browser</code>, <code>/welcome</code>. The <code>/help</code> output is the authoritative full list.</p>
 <p>Beyond these built-ins, the completion menu also lists every command from the unified command registry — skills, MCP prompts, plugin commands, and your own command files under <code>~/.openprogram/commands/</code> or <code>&lt;project&gt;/.openprogram/commands/</code> (markdown with optional YAML frontmatter). Running one expands its body and sends it as the message, exactly like the Web composer: the TUI and the Web UI read the same registry, so a command defined once appears in both.</p>
-<p>The Windows Rich REPL dispatches through the same registry. Its built-in set is smaller: <code>/help</code>, <code>/web</code>, <code>/model</code>, <code>/agent</code>, <code>/new</code>, <code>/copy</code>, <code>/tools</code>, <code>/skills</code>, <code>/programs</code>, <code>/apps</code>, <code>/mcp</code>, <code>/session</code>, <code>/login</code>, <code>/attach</code>, <code>/detach</code>, <code>/connections</code>, <code>/profile</code>, <code>/compact</code>, <code>/context</code>, <code>/rewind</code>, <code>/sandbox</code>, <code>/clear</code>, <code>/quit</code> — but skill / user / project commands work there too, and <code>/help</code> lists everything. It can also exit via <code>Ctrl-C</code> or <code>Ctrl-D</code>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Web UI</span></a><a class="pn-link pn-next" href="/docs/interfaces/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Web UI</span></a><a class="pn-link pn-next" href="/docs/interfaces/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#entering-and-exiting">Entering and exiting</a>

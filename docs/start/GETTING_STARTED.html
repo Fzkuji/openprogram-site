@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,11 +80,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="第一步">First steps</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="快速上手">Getting Started</span></nav><h1 id="getting-started">Getting Started<a class="header-anchor" href="#getting-started">#</a></h1>
 <p>This page takes you through five minutes of setup: install, connect an LLM provider, open the interfaces, send your first message, and install your first ready-made agent program.</p>
 <h2 id="step-1-install">Step 1: Install<a class="header-anchor" href="#step-1-install">#</a></h2>
-<p>The one-command install script sets up the Python package, web UI, terminal UI, browser tools, and channels:</p>
-<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>OpenProgram
-./scripts/install.sh<span class="w">              </span><span class="c1"># macOS/Linux   ·   Windows:  .\scripts\install.ps1</span>
+<p>Install the complete release runtime with its managed Python on macOS or Linux:</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>Requires Python ≥ 3.11, Node ≥ 20, and git (the script makes a best effort to install what's missing). The script is idempotent — re-run it any time. Agent programs (GUI / Research / Wiki) are not installed by default; pick them in the interactive menu during install, or add them later (see Step 5). Full flags and the dependency matrix: <a href="/docs/install/install.html">Install</a>.</p>
+<p>The installer supplies its own Python and includes the Web UI; Node.js and Git are not runtime requirements. macOS desktop users use the DMG attached to GitHub Releases. Linux users use the complete CLI/server runtime with its Web UI or TUI; no Linux desktop package is currently published. Platform scope and development-checkout instructions are in <a href="/docs/install/install.html">Install</a>.</p>
 <h2 id="step-2-first-run-connect-a-provider">Step 2: First run — connect a provider<a class="header-anchor" href="#step-2-first-run-connect-a-provider">#</a></h2>
 <pre><code class="language-bash">openprogram
 </code></pre>
@@ -104,12 +103,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;Introduce yourself in one sentence&quot;</span>
 </code></pre>
 <p>It sends one message, prints the reply, and exits. Resume an earlier session with <code>openprogram --resume &lt;session_id&gt;</code> — ids come from <code>openprogram sessions list</code> or the web sidebar.</p>
-<h2 id="step-5-install-a-ready-made-agent-program">Step 5: Install a ready-made agent program<a class="header-anchor" href="#step-5-install-a-ready-made-agent-program">#</a></h2>
-<p>OpenProgram is the host; agent programs installed into it show up in the web UI and the function list:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research<span class="w">     </span><span class="c1"># or wiki / gui</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">            </span><span class="c1"># check install status</span>
-</code></pre>
-<p><code>research</code> / <code>wiki</code> are pure Python and install quickly; <code>gui</code> downloads PyTorch and model weights, which is much larger. After installing, run <code>openprogram restart</code> (or hit Refresh on the Programs page) and the program appears in the UI.</p>
+<h2 id="step-5-use-the-included-agent-programs">Step 5: Use the included agent programs<a class="header-anchor" href="#step-5-use-the-included-agent-programs">#</a></h2>
+<p>Every release includes the GUI, Research, and Wiki Programs. They appear in the Web UI and function list without a separate installation step. Use <code>openprogram programs available</code> to inspect their registration status.</p>
+<p>The Program installer is reserved for third-party Programs and developer source overlays. It does not define a reduced or expanded end-user edition.</p>
 <h2 id="next-steps">Next steps<a class="header-anchor" href="#next-steps">#</a></h2>
 <ul>
 <li><a href="/docs/models/README.html">Models &amp; providers</a> — how each provider connects, multi-account, key rotation</li>
@@ -117,14 +113,14 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>available<spa
 <li><a href="/docs/interfaces/README.html">Interfaces</a> — terminal TUI, web UI, and channels</li>
 <li><a href="/docs/start/daily-use.html">Daily use</a> — session management, branching, and rollback</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/features.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Features</span></a><a class="pn-link pn-next" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Daily Use</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/features.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Features</span></a><a class="pn-link pn-next" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Daily Use</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#step-1-install">Step 1: Install</a>
 <a class="" href="#step-2-first-run-connect-a-provider">Step 2: First run — connect a provider</a>
 <a class="" href="#step-3-open-the-web-ui">Step 3: Open the web UI</a>
 <a class="" href="#step-4-send-your-first-message">Step 4: Send your first message</a>
-<a class="" href="#step-5-install-a-ready-made-agent-program">Step 5: Install a ready-made agent program</a>
+<a class="" href="#step-5-use-the-included-agent-programs">Step 5: Use the included agent programs</a>
 <a class="" href="#next-steps">Next steps</a>
 </div></aside>
 </div>

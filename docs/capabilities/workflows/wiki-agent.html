@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,10 +131,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Wiki Agent</span></nav><h1 id="wiki-agent">Wiki Agent<a class="header-anchor" href="#wiki-agent">#</a></h1>
 <p>A personal knowledge-base agent: it pours sessions and notes into a template-driven HTML wiki. Pages are real HTML files — open them in any browser, host them statically, version them with git. The agent only fills named slots in fixed templates and never hand-writes HTML / CSS. It ships with full-text search, automatic folder indexing (each folder's <code>README.html</code> is regenerated from its current contents), and a curating ingest pipeline.</p>
-<h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>wiki
-</code></pre>
-<p>Dependencies are minimal: Jinja2 + PyYAML. The template shell uses Jinja2 + Bootstrap 5 (loaded from a CDN) — zero build steps, no Node required.</p>
+<h2 id="availability">Availability<a class="header-anchor" href="#availability">#</a></h2>
+<p>Every supported release contains this Program with Jinja2 and PyYAML. No Program installation is required. The template shell uses Jinja2 + Bootstrap 5 (loaded from a CDN) and requires no Node build.</p>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
 <p>The entry function is <strong><code>wiki_agent</code></strong>. In chat, describe what you want done to the wiki in natural language, for example:</p>
 <ul>
@@ -155,10 +153,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Downstream projects (paper surveys, memory stores, CRMs, etc.) specialize the ingest pipeline by supplying their own templates and prompts — no fork needed.</li>
 </ul>
 <p>Source and README: <code>openprogram/programs/applications/wiki_agent_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Fzkuji/Wiki-Agent-Harness</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Research Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Research Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#install">Install</a>
+<a class="" href="#availability">Availability</a>
 <a class="" href="#usage">Usage</a>
 <a class="" href="#dependency-notes">Dependency notes</a>
 </div></aside>

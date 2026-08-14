@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,10 +131,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Wiki Agent</span></nav><h1 id="wiki-agent">Wiki Agent<a class="header-anchor" href="#wiki-agent">#</a></h1>
 <p>个人知识库 agent：把会话、笔记灌进一个模板驱动的 HTML wiki。页面是真实的 HTML 文件，任何浏览器直接打开、可静态托管、可用 git 管版本；agent 只往固定模板的具名 slot 里填内容，从不手写 HTML / CSS。自带全文搜索、文件夹自动索引（每个文件夹的 <code>README.html</code> 由当前内容自动生成）和整理式 ingest 流水线。</p>
-<h2 id="安装">安装<a class="header-anchor" href="#安装">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>wiki
-</code></pre>
-<p>依赖极小：Jinja2 + PyYAML。模板 shell 用 Jinja2 + Bootstrap 5（CDN 引入），零构建步骤，不需要 Node。</p>
+<h2 id="可用性">可用性<a class="header-anchor" href="#可用性">#</a></h2>
+<p>每个受支持的 release 都包含该 Program、Jinja2 和 PyYAML，不需要另行安装 Program。模板 shell 使用 Jinja2 + Bootstrap 5（CDN 引入），不需要 Node build。</p>
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>入口函数名为 <strong><code>wiki_agent</code></strong>，聊天里用自然语言描述要对 wiki 做什么即可触发，例如：</p>
 <ul>
@@ -155,10 +153,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>下游项目（论文调研、记忆库、CRM 等）通过传入自己的模板和 prompt 来特化 ingest 流水线，不需要 fork。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/wiki_agent_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Fzkuji/Wiki-Agent-Harness</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Research Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Research Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#安装">安装</a>
+<a class="" href="#可用性">可用性</a>
 <a class="" href="#怎么用">怎么用</a>
 <a class="" href="#依赖注意">依赖注意</a>
 </div></aside>

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/reference/design/runtime/self-update.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/reference/design/runtime/self-update.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs</title>
-<meta name="description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
+<title>source checkout 自更新 · OpenProgram Docs</title>
+<meta name="description" content="范围：本文定义开发/source checkout 的更新行为。正式安装的桌面版和 CLI 更新由 安装、打包、发布与升级设计 定义。正式安装中的 stable 只表示已发布版本，不表示 origin/main 。 1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"自我更新：OpenProgram 一边改自己一边保持可用"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"source checkout 自更新"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
-<meta property="og:title" content="自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs">
-<meta property="og:description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
+<meta property="og:title" content="source checkout 自更新 · OpenProgram Docs">
+<meta property="og:description" content="范围：本文定义开发/source checkout 的更新行为。正式安装的桌面版和 CLI 更新由 安装、打包、发布与升级设计 定义。正式安装中的 stable 只表示已发布版本，不表示 origin/main 。 1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="自我更新：OpenProgram 一边改自己一边保持可用 · OpenProgram Docs">
-<meta name="twitter:description" content="1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。 一次坏改动绝不能让用户失去可用实例——因为可用实例是修复坏改动的唯一途径。 今天的实际风险比表面更大：CLI 是">
+<meta name="twitter:title" content="source checkout 自更新 · OpenProgram Docs">
+<meta name="twitter:description" content="范围：本文定义开发/source checkout 的更新行为。正式安装的桌面版和 CLI 更新由 安装、打包、发布与升级设计 定义。正式安装中的 stable 只表示已发布版本，不表示 origin/main 。 1. 问题 # 当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -112,6 +112,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Distribution</div>
+<a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
+<a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
 <a class="navlink" href="/docs/reference/design/extension-gating/README.html" data-title-zh="扩展门控（Extension Gating）" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html">Extension Gating</a>
 <a class="navlink" href="/docs/reference/design/extension-gating/future-work.html" data-title-zh="未来工作 —— 明确不做的部分" data-href-en="/docs/reference/design/extension-gating/future-work.html" data-href-zh="/docs/reference/design/extension-gating/future-work.zh.html">Future work — explicitly NOT built</a>
@@ -131,6 +136,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="集成">Integrations</div>
 <a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/computer-use-implementation.html">Browser Agent 实施与验证记录</a>
+<a class="navlink" href="/docs/reference/design/integrations/computer-use.html">Computer Use：可见 Surface 感知与内置浏览器控制设计</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html">Editor integration: LSP tools and ACP server</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
 <a class="navlink" href="/docs/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/docs/reference/design/integrations/mcp-integration.html" data-href-zh="/docs/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
@@ -163,7 +170,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</div>
 <a class="navlink" href="/docs/reference/design/proactive/README.html" data-title-zh="Proactive Layer — 设计" data-href-en="/docs/reference/design/proactive/README.html" data-href-zh="/docs/reference/design/proactive/README.zh.html">Proactive Layer — Design</a>
-<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="承诺与心跳" data-href-en="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments and Heartbeat</a>
+<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="Commitments 迁移" data-href-en="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments migration</a>
+<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html">Commitments 迁移说明 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/event-layer.html" data-title-zh="事件层" data-href-en="/docs/reference/design/proactive/event-layer.html" data-href-zh="/docs/reference/design/proactive/event-layer.zh.html">Event Layer</a>
 <a class="navlink" href="/docs/reference/design/proactive/events-and-state.html" data-title-zh="事件与状态（地基）" data-href-en="/docs/reference/design/proactive/events-and-state.html" data-href-zh="/docs/reference/design/proactive/events-and-state.zh.html">Events and State (The Foundation)</a>
 <a class="navlink" href="/docs/reference/design/proactive/framework-evolution.html" data-title-zh="框架信号路由：一条总线当中枢" data-href-en="/docs/reference/design/proactive/framework-evolution.html" data-href-zh="/docs/reference/design/proactive/framework-evolution.zh.html">Framework Signal Routing: One Bus as the Hub</a>
@@ -172,7 +180,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/proactive/event-reference.html">OpenProgram · 事件层 API Reference</a>
 <a class="navlink" href="/docs/reference/design/proactive/event-layer.viz.html">OpenProgram · 事件层设计 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/framework-evolution.viz.html">OpenProgram · 框架演进 (viz)</a>
-<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html">OpenProgram 承诺与心跳 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/overview.html" data-title-zh="总览：跟着一个场景走一遍" data-href-en="/docs/reference/design/proactive/overview.html" data-href-zh="/docs/reference/design/proactive/overview.zh.html">Overview: Walk Through One Scenario End to End</a>
 <a class="navlink" href="/docs/reference/design/proactive/policies-mvp.html" data-title-zh="三条样板规则" data-href-en="/docs/reference/design/proactive/policies-mvp.html" data-href-zh="/docs/reference/design/proactive/policies-mvp.zh.html">Three Template Rules</a>
 </div>
@@ -234,7 +241,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</a>
-<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="自我更新：OpenProgram 一边改自己一边保持可用" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update: staying usable while OpenProgram modifies itself</a>
+<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="source checkout 自更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update for source checkouts</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
@@ -291,6 +298,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/session/index-consistency.html">Session 注册表时间语义与并发一致性</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Scheduler</div>
+<a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -308,6 +319,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
+<a class="navlink" href="/docs/reference/design/ui/web-tab-home-button.html">内置浏览器主页按钮</a>
+<a class="navlink" href="/docs/reference/design/ui/web-tab-native-bounds.html">内置浏览器原生页面边界</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
 <a class="navlink" href="/docs/reference/design/ui/layout-density-mock.html">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
@@ -316,7 +329,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自我更新：OpenProgram 一边改自己一边保持可用">Self-update: staying usable while OpenProgram modifies itself</span></nav><h1 id="自我更新openprogram-一边改自己一边保持可用">自我更新：OpenProgram 一边改自己一边保持可用<a class="header-anchor" href="#自我更新openprogram-一边改自己一边保持可用">#</a></h1>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="source checkout 自更新">Self-update for source checkouts</span></nav><h1 id="source-checkout-自更新">source checkout 自更新<a class="header-anchor" href="#source-checkout-自更新">#</a></h1>
+<blockquote>
+<p>范围：本文定义开发/source checkout 的更新行为。正式安装的桌面版和 CLI
+更新由<a href="/docs/reference/design/distribution/installation-packaging.html">安装、打包、发布与升级设计</a>
+定义。正式安装中的 <code>stable</code> 只表示已发布版本，不表示 <code>origin/main</code>。</p>
+</blockquote>
 <h2 id="1-问题">1. 问题<a class="header-anchor" href="#1-问题">#</a></h2>
 <p>当 OpenProgram 成为用户唯一的 agent 工具时，它也就是开发 OpenProgram 的工具。
 此后每次改动都带着同一个风险：为聊天服务的进程，正是代码被编辑的进程。
@@ -415,12 +433,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="44-扩展点先留口子不先实现">4.4 扩展点（先留口子，不先实现）<a class="header-anchor" href="#44-扩展点先留口子不先实现">#</a></h3>
 <p>刻意保持开放，后续需求接入时不用重塑命令本身：</p>
 <ul>
-<li><strong>渠道（channel）</strong>。<code>upgrade</code> 不硬编码任何 ref：目标一律经一个
-<code>channel → target ref</code> 解析函数得出，今天只有一个内置渠道
-（<code>stable → origin/main</code>）。以后加 <code>beta → origin/beta</code> 或
-<code>dev → &lt;worktree 分支&gt;</code> 只是加一条表项加一个持久化的
-<code>update.channel</code> 配置键（OpenClaw 的模型），不是重写。CLI 形态从
-第一天就预留 <code>upgrade --channel &lt;name&gt;</code> 和 <code>upgrade status</code>。</li>
+<li><strong>渠道（channel）</strong>。当前 source-checkout 实现把历史名称 <code>stable</code> 解析为
+<code>origin/main</code>。该名称与正式 release 安装冲突，分发迁移时改为 <code>dev</code>。
+正式安装中的 <code>stable</code> 只解析到已发布版本。CLI 保留
+<code>upgrade --channel &lt;name&gt;</code> 和 <code>upgrade status</code>。</li>
 <li><strong>分发方式</strong>。步骤链抽象为<em>解析目标 → 物化 → 校验 → 激活</em>四个动词。
 今天&quot;物化&quot;就是 <code>git checkout</code>；将来 pip/npm 包安装实现同样四个动词
 （其&quot;物化&quot;即 OpenClaw 式 staged install）。第 5–7 步（探测、重启、
@@ -488,7 +504,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 监督进程退避固定版本。尚未实现；当前验证失败会打印手动回滚命令，而不是
 自动回滚。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals — the /goal continuation loop</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals — the /goal continuation loop</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-问题">1. 问题</a>

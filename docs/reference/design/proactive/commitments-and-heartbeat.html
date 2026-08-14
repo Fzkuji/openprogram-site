@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Commitments and Heartbeat · OpenProgram Docs</title>
-<meta name="description" content="This document records the implemented boundary and the remaining work. It does not define a general task system. 1. OpenProgram current state # Implemented">
+<title>Commitments migration · OpenProgram Docs</title>
+<meta name="description" content="Commitments is no longer a Memory data type. The current authoritative design is Scheduler and Memory .">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Commitments and Heartbeat"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Commitments migration"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.html">
-<meta property="og:title" content="Commitments and Heartbeat · OpenProgram Docs">
-<meta property="og:description" content="This document records the implemented boundary and the remaining work. It does not define a general task system. 1. OpenProgram current state # Implemented">
+<meta property="og:title" content="Commitments migration · OpenProgram Docs">
+<meta property="og:description" content="Commitments is no longer a Memory data type. The current authoritative design is Scheduler and Memory .">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Commitments and Heartbeat · OpenProgram Docs">
-<meta name="twitter:description" content="This document records the implemented boundary and the remaining work. It does not define a general task system. 1. OpenProgram current state # Implemented">
+<meta name="twitter:title" content="Commitments migration · OpenProgram Docs">
+<meta name="twitter:description" content="Commitments is no longer a Memory data type. The current authoritative design is Scheduler and Memory .">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -112,6 +112,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Distribution</div>
+<a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
+<a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
 <a class="navlink" href="/docs/reference/design/extension-gating/README.html" data-title-zh="扩展门控（Extension Gating）" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html">Extension Gating</a>
 <a class="navlink" href="/docs/reference/design/extension-gating/future-work.html" data-title-zh="未来工作 —— 明确不做的部分" data-href-en="/docs/reference/design/extension-gating/future-work.html" data-href-zh="/docs/reference/design/extension-gating/future-work.zh.html">Future work — explicitly NOT built</a>
@@ -131,6 +136,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="集成">Integrations</div>
 <a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/computer-use-implementation.html">Browser Agent 实施与验证记录</a>
+<a class="navlink" href="/docs/reference/design/integrations/computer-use.html">Computer Use：可见 Surface 感知与内置浏览器控制设计</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html">Editor integration: LSP tools and ACP server</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
 <a class="navlink" href="/docs/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/docs/reference/design/integrations/mcp-integration.html" data-href-zh="/docs/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
@@ -163,7 +170,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</div>
 <a class="navlink" href="/docs/reference/design/proactive/README.html" data-title-zh="Proactive Layer — 设计" data-href-en="/docs/reference/design/proactive/README.html" data-href-zh="/docs/reference/design/proactive/README.zh.html">Proactive Layer — Design</a>
-<a class="navlink active" href="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="承诺与心跳" data-href-en="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments and Heartbeat</a>
+<a class="navlink active" href="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-title-zh="Commitments 迁移" data-href-en="/docs/reference/design/proactive/commitments-and-heartbeat.html" data-href-zh="/docs/reference/design/proactive/commitments-and-heartbeat.zh.html">Commitments migration</a>
+<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html">Commitments 迁移说明 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/event-layer.html" data-title-zh="事件层" data-href-en="/docs/reference/design/proactive/event-layer.html" data-href-zh="/docs/reference/design/proactive/event-layer.zh.html">Event Layer</a>
 <a class="navlink" href="/docs/reference/design/proactive/events-and-state.html" data-title-zh="事件与状态（地基）" data-href-en="/docs/reference/design/proactive/events-and-state.html" data-href-zh="/docs/reference/design/proactive/events-and-state.zh.html">Events and State (The Foundation)</a>
 <a class="navlink" href="/docs/reference/design/proactive/framework-evolution.html" data-title-zh="框架信号路由：一条总线当中枢" data-href-en="/docs/reference/design/proactive/framework-evolution.html" data-href-zh="/docs/reference/design/proactive/framework-evolution.zh.html">Framework Signal Routing: One Bus as the Hub</a>
@@ -172,7 +180,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/proactive/event-reference.html">OpenProgram · 事件层 API Reference</a>
 <a class="navlink" href="/docs/reference/design/proactive/event-layer.viz.html">OpenProgram · 事件层设计 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/framework-evolution.viz.html">OpenProgram · 框架演进 (viz)</a>
-<a class="navlink" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html">OpenProgram 承诺与心跳 (viz)</a>
 <a class="navlink" href="/docs/reference/design/proactive/overview.html" data-title-zh="总览：跟着一个场景走一遍" data-href-en="/docs/reference/design/proactive/overview.html" data-href-zh="/docs/reference/design/proactive/overview.zh.html">Overview: Walk Through One Scenario End to End</a>
 <a class="navlink" href="/docs/reference/design/proactive/policies-mvp.html" data-title-zh="三条样板规则" data-href-en="/docs/reference/design/proactive/policies-mvp.html" data-href-zh="/docs/reference/design/proactive/policies-mvp.zh.html">Three Template Rules</a>
 </div>
@@ -234,7 +241,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="自我更新：OpenProgram 一边改自己一边保持可用" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update: staying usable while OpenProgram modifies itself</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="source checkout 自更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update for source checkouts</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
@@ -291,6 +298,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/session/index-consistency.html">Session 注册表时间语义与并发一致性</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Scheduler</div>
+<a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -308,6 +319,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
+<a class="navlink" href="/docs/reference/design/ui/web-tab-home-button.html">内置浏览器主页按钮</a>
+<a class="navlink" href="/docs/reference/design/ui/web-tab-native-bounds.html">内置浏览器原生页面边界</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
 <a class="navlink" href="/docs/reference/design/ui/layout-density-mock.html">布局密度设计 v4 — 左栏结构 / 纵向空间 / 真浏览器</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
@@ -316,158 +329,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="承诺与心跳">Commitments and Heartbeat</span></nav><h1 id="commitments-and-heartbeat">Commitments and Heartbeat<a class="header-anchor" href="#commitments-and-heartbeat">#</a></h1>
-<p>This document records the implemented boundary and the remaining work. It does
-not define a general task system.</p>
-<h2 id="1-openprogram-current-state">1. OpenProgram current state<a class="header-anchor" href="#1-openprogram-current-state">#</a></h2>
-<h3 id="implemented-data-and-write-path">Implemented data and write path<a class="header-anchor" href="#implemented-data-and-write-path">#</a></h3>
-<p>The existing memory writer now identifies obligations while processing its
-already-selected conversation batch. It calls <code>record_commitments</code>; there is no
-second extraction service. The LLM supplies the obligation sentence, semantic
-due value, Source ref, and an exact one-line quote. The Runtime verifies that
-the quote is a substring of that trusted, in-batch Source, validates the
-absolute <code>YYYY-MM-DD</code> date or <code>null</code>, and derives the speaker and commitment ID.</p>
-<p>The tool schema and Runtime both enforce the same writer limits: at most 64
-commitment creates plus transitions in one batch, at most 2,048 characters for
-normalized commitment text, 8,192 for an exact quote, and 512 for a Source ref.
-The count follows the existing 64-source transaction precedent. Runtime checks
-remain authoritative if a caller bypasses schema validation. The owner Web
-route performs one explicit transition and does not accept writer semantic text
-or quotes, so these writer-batch limits do not create a separate owner limit.</p>
-<p><code>commitments.jsonl</code> is installed in the same staged memory transaction as Topic
-changes. Each record contains <code>id</code>, <code>text</code>, <code>due</code>, <code>speaker_id</code>, <code>source</code>,
-<code>source_quote</code>, <code>status</code>, transition provenance, transition time, and
-<code>notification_steps</code>. IDs are deterministic over Source ref plus exact quote,
-not LLM wording, due-date interpretation, or item order. Distinct quotes allow
-multiple commitments from one Source; reworded extraction of the same evidence
-does not create or reopen another record. Only <code>open</code>, <code>done</code>, and <code>dismissed</code>
-are supported.</p>
-<p>The file is an additive workspace capability: an existing workspace without it
-loads as an empty commitment set, so this release needs no one-time migration.
-Writes use the existing atomic file replacement, staged install, workspace
-lock, and memory Git candidate list. Status and heartbeat tolerate malformed
-rows, count them as invalid, and preserve their raw lines while updating valid
-notification state. Upsert and transition are strict: any malformed row rejects
-the mutation without changing the file. No invalid data is silently deleted or
-reinterpreted as another schema.</p>
-<p>A later trusted writer batch may semantically close a record only by citing a
-trusted Source and exact closure quote from that current batch. The Runtime
-persists that Source, quote, and a Runtime timestamp as transition provenance.
-An explicit transition uses the existing <code>memory_update</code> transaction with the
-current memory revision; only persisted owner authority may request <code>done</code> or
-<code>dismissed</code>, and the Runtime records <code>owner/manual</code> rather than accepting a
-client-supplied provenance label.</p>
-<h3 id="implemented-deterministic-heartbeat">Implemented deterministic heartbeat<a class="header-anchor" href="#implemented-deterministic-heartbeat">#</a></h3>
-<p>The heartbeat is a built-in check in the existing <code>cron-worker</code>, not a new
-scheduler or an agent turn. On each normal cron tick it reads live config:</p>
-<ul>
-<li><code>proactive.heartbeat</code>: <code>daily</code> at 09:00 local time (default), <code>hourly</code> at
-minute 00, or <code>off</code>.</li>
-<li><code>proactive.quiet_hours</code>: <code>23:00-08:00</code> local time by default.</li>
-</ul>
-<p>Invalid manual configuration is skipped without terminating the worker. The
-heartbeat reads only open, dated commitments. It sends once when a
-record becomes due and once when it reaches the current seven-day overdue
-step. Undated records remain visible and are not pushed. Quiet-hour suppression
-does not consume a notification step.</p>
-<p>The deterministic ID deduplicates repeated extraction. The persisted <code>due</code> and
-<code>overdue:7</code> steps bound successful delivery to two notifications per record in
-the current policy. A failed send consumes neither step and is retried by a
-later eligible heartbeat. Concurrent heartbeat passes are serialized by an OS
-file-lock claim, so a normal run sends and stores each step once; the claim is
-released on send failure and automatically when its process exits. Delivery is
-intentionally at-least-once only across abnormal owner death: a process crash
-after the channel accepts a message but before the atomic state write can
-produce one duplicate. The current outbound API has no cross-channel
-idempotency key, so claiming exactly-once delivery or adding a separate delivery
-journal would not remove that external ambiguity.</p>
-<p>Delivery is derived from evidence rather than model output. For an
-<code>openprogram/&lt;session&gt;/&lt;message&gt;</code> Source, the Runtime loads the originating
-session from <code>SessionDB</code> and uses that session's existing channel, account, and
-peer binding. Records without a target remain visible. Due records sharing a
-target are sent as one message through <code>channels.outbound</code>; notification steps
-are written only after that send returns success. The send is network I/O with
-its own retry and backoff budget, so it runs outside the workspace write lock:
-the lock is taken to read the due records and again to record the delivered
-steps, and that second write merges only the step onto the row as it stands by
-then, so a status transition committed while a reminder was in flight survives.
-Tests replace outbound send, so no test uses a real channel or credential.</p>
-<h3 id="implemented-owner-and-model-surfaces">Implemented owner and model surfaces<a class="header-anchor" href="#implemented-owner-and-model-surfaces">#</a></h3>
-<p><code>memory_status</code>, <code>openprogram memory status</code>, and <code>GET /api/memory/status</code>
-expose commitment counts and a bounded-field record projection. The
-model-facing response still omits the host workspace path and does not include
-channel bindings, account data, peer data, exact Source quotes, or arbitrary
-fields found in the JSONL file. It exposes Source refs and transition Source
-refs, which are sufficient to audit provenance without repeating message text.
-The owner CLI and owner-only web route retain their existing <code>workspace_path</code>
-behavior.</p>
-<p>The existing Memory web page has a Commitments tab showing counts and records.
-Open records have confirmed <code>done</code> and <code>dismissed</code> controls. The owner-authenticated
-route passes the displayed revision to the same <code>MemoryWorkspace.update</code>
-transition used underneath <code>memory_update</code>; a stale revision returns conflict,
-malformed/non-object JSON returns structured <code>INVALID_ARGUMENT</code>, and no second
-state writer or authority model was added.</p>
-<h3 id="current-boundary">Current boundary<a class="header-anchor" href="#current-boundary">#</a></h3>
-<p>This feature is a cited flat list and a deterministic reminder check. It has no
-priorities, subtasks, projects, autonomous execution, independent task manager,
-or independent scheduling/storage subsystem. It requires <code>cron-worker</code> to be
-running; the resident web worker does not add a fallback timer.</p>
-<h2 id="2-how-comparable-projects-design-this-area">2. How comparable projects design this area<a class="header-anchor" href="#2-how-comparable-projects-design-this-area">#</a></h2>
-<ul>
-<li><strong>Adopt and modify —</strong> <a href="https://docs.openclaw.ai/gateway/heartbeat">OpenClaw Heartbeat</a> currently
-models heartbeat as a scheduled main-session turn owned by its Automations
-scheduler, with explicit delivery targets and active hours. OpenProgram adopts
-configurable inactive time as quiet hours, but derives the delivery target
-from trusted Source/session state and performs deterministic filtering. It
-rejects a separate scheduler and a heartbeat LLM turn.</li>
-<li><strong>Adopt caution, modify provenance, reject the retired mechanism —</strong> <a href="https://docs.openclaw.ai/concepts/commitments">OpenClaw Inferred commitments</a>
-states that its inferred-commitments experiment is retired: it no longer
-extracts or delivers new follow-ups, while legacy rows remain inspectable and
-dismissible. OpenProgram adopts inspect/dismiss lifecycle visibility and the
-need for evaluation, but requires a trusted cited Source and deterministic
-Runtime fields. It rejects confidence-only autonomous follow-up expansion.</li>
-<li><strong>Adopt the existing memory lifecycle, reject a second manager —</strong> <a href="https://github.com/langchain-ai/langmem">LangMem</a> provides hot-path memory
-tools and a background memory manager that extracts, consolidates, and updates
-knowledge. OpenProgram keeps extraction in its existing writer, then modifies
-the write with Source-batch validation and atomic commitment staging. It does
-not add another memory service.</li>
-<li><strong>Reuse the scheduling principle, reject another scheduling API —</strong> <a href="https://docs.langchain.com/langsmith/cron-jobs">LangSmith Deployment cron jobs</a>
-schedule an assistant and input on a thread or on newly created threads.
-OpenProgram reuses its existing cron-worker and originating session binding;
-it does not add scheduled assistant turns or a second thread scheduler.</li>
-</ul>
-<p>These sources support comparison of individual mechanisms only. They do not
-show that the systems have equivalent trust, storage, transition, or delivery
-semantics.</p>
-<h2 id="3-openprogram-follow-up-plan">3. OpenProgram follow-up plan<a class="header-anchor" href="#3-openprogram-follow-up-plan">#</a></h2>
-<ol>
-<li>Measure extraction precision, missed obligations, incorrect dates, premature
-closure, duplicate reminders, and reminder usefulness on replayed sessions.
-The retired OpenClaw experiment makes this an acceptance gate, not optional
-polish.</li>
-<li>Extend the implemented fake-transport matrix into long-running soak tests,
-especially concurrent writer/heartbeat activity and process termination in
-the post-send/pre-state-write window.</li>
-<li>Add a transport idempotency key only if every supported outbound adapter can
-honor the same contract; until then document and observe at-least-once
-delivery rather than adding a journal that cannot prove external deduplication.</li>
-<li>Consider configurable overdue intervals or timezone selection only after
-observed usage requires them. Keep daily/hourly/off, the seven-day step, and
-host-local time until then.</li>
-<li>Do not add priorities, subtasks, projects, autonomous action, or a new
-scheduler/storage/task-manager subsystem as part of this follow-up.</li>
-</ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/event-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Event Layer</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#1-openprogram-current-state">1. OpenProgram current state</a>
-<a class="lvl-3" href="#implemented-data-and-write-path">Implemented data and write path</a>
-<a class="lvl-3" href="#implemented-deterministic-heartbeat">Implemented deterministic heartbeat</a>
-<a class="lvl-3" href="#implemented-owner-and-model-surfaces">Implemented owner and model surfaces</a>
-<a class="lvl-3" href="#current-boundary">Current boundary</a>
-<a class="" href="#2-how-comparable-projects-design-this-area">2. How comparable projects design this area</a>
-<a class="" href="#3-openprogram-follow-up-plan">3. OpenProgram follow-up plan</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Commitments 迁移">Commitments migration</span></nav><h1 id="commitments-migration">Commitments migration<a class="header-anchor" href="#commitments-migration">#</a></h1>
+<p>Commitments is no longer a Memory data type. The current authoritative design is <a href="/docs/reference/design/scheduler/scheduler-memory.html">Scheduler and Memory</a>.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Commitments 迁移说明 (viz)</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

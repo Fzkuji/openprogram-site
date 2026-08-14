@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overview · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · Any platform Getting Started &amp;middot;">
+<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
 <link rel="canonical" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/">
 <meta property="og:title" content="Overview · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · Any platform Getting Started &amp;middot;">
+<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Overview · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · Any platform Getting Started &amp;middot;">
+<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -86,14 +86,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </p>
 <p align="center">
   <b>OpenProgram: Self-Programming AI Agent Framework</b><br/>
-  Agents create and refine their own workflows · Any LLM · Any platform
+  Agents create and refine their own workflows · Any LLM · macOS and Linux releases
 </p>
 <p align="center">
   <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
-  <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.6.0"><img alt="Release" src="https://img.shields.io/github/v/release/Fzkuji/OpenProgram?style=flat-square&color=blue"></a>
+  <a href="https://github.com/Fzkuji/OpenProgram/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/Fzkuji/OpenProgram?style=flat-square&color=blue"></a>
   <a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square"></a>
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square"></a>
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey?style=flat-square">
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux-lightgrey?style=flat-square">
   <a href="https://github.com/Fzkuji/OpenProgram/actions/workflows/ci.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Fzkuji/OpenProgram/ci.yml?branch=main&style=flat-square&label=build"></a>
   <a href="https://github.com/Fzkuji/GUI-Agent-Harness"><img alt="OSWorld" src="https://img.shields.io/badge/OSWorld_Multi--Apps-79.8%25-brightgreen?style=flat-square"></a>
   <a href="https://github.com/Fzkuji/OpenProgram/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Fzkuji/OpenProgram?style=flat-square"></a>
@@ -116,7 +116,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>🎉 <strong>Paper:</strong> <a href="https://arxiv.org/abs/2606.15874"><em>LLM-as-Code: Agentic Programming for Agent Harness</em></a> — accepted at the <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong>.</p>
 </blockquote>
 <h2 id="what-makes-it-different">What makes it different<a class="header-anchor" href="#what-makes-it-different">#</a></h2>
-<p>Multi-platform, multi-provider, multi-channel — table stakes; OpenProgram has them (macOS / Linux / Windows, any LLM, terminal / browser / chat). What sets it apart are <strong>three mechanisms in the harness itself — each one the foundation for a class of agent you can build on top.</strong></p>
+<p>OpenProgram supports macOS and Linux release installations, multiple providers, and terminal, browser, and chat interfaces. Windows and mobile devices can only act as browser clients to a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
 <h3 id="①-dag-context-for-native-multi-agent-systems">① DAG Context — for native multi-agent systems<a class="header-anchor" href="#①-dag-context-for-native-multi-agent-systems">#</a></h3>
 <p align="center">
   <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
@@ -136,50 +136,43 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>One <strong>process-wide event bus</strong> is the substrate under everything: the agent loop, auth, context, channels, and memory all emit onto it, and any component can subscribe by event type (every event is a uniform <code>Event(type, payload, ts)</code> envelope with <code>id</code> / <code>origin</code> / <code>metadata</code>). This is deliberately a <strong>foundation</strong> — a proactive policy layer that watches the stream and acts is the bus's first intended consumer. The plumbing is in place; the proactivity is yours to build on it.</p>
 <h2 id="quick-start">Quick Start<a class="header-anchor" href="#quick-start">#</a></h2>
 <h3 id="1-install">1. Install<a class="header-anchor" href="#1-install">#</a></h3>
-<p><strong>macOS / Linux:</strong></p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Fzkuji/OpenProgram/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<p><strong>macOS / Linux CLI or server release:</strong></p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p><strong>Windows (PowerShell):</strong></p>
-<pre><code class="language-powershell"><span class="nb">iwr </span><span class="n">-useb</span> <span class="n">https</span><span class="p">://</span><span class="n">raw</span><span class="p">.</span><span class="n">githubusercontent</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Fzkuji</span><span class="p">/</span><span class="n">OpenProgram</span><span class="p">/</span><span class="n">main</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
-</code></pre>
-<p>More options — flags, unattended / AI-agent install, installing from a checkout: <strong><a href="/docs/install/install.html">install.md</a></strong>.</p>
+<p>macOS desktop users download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux users install the complete CLI/server runtime and use its Web UI or TUI; no Linux desktop package is published until a complete package passes the public-entry gate. All supported release installations contain the same complete product capabilities. See <strong><a href="/docs/install/install.html">install.md</a></strong> for verification, platform scope, and source-development installation.</p>
 <h3 id="2-run">2. Run<a class="header-anchor" href="#2-run">#</a></h3>
 <pre><code class="language-bash">openprogram
 </code></pre>
 <p>First run sets up your provider, then asks which surface to open. Skip the prompt with <code>openprogram tui</code> (terminal) or <code>openprogram web</code> (browser → http://localhost:18100).</p>
-<h3 id="3-add-a-harness">3. Add a harness<a class="header-anchor" href="#3-add-a-harness">#</a></h3>
-<p>Harnesses are programs under <code>openprogram/programs/agentic_functions/</code>. Install them with <code>openprogram programs install &lt;name-or-git-source&gt;</code>: the command clones or verifies the repository, records its owner-approved source, and makes it available after the next worker restart. A directory copied there without this install step is not imported.</p>
+<h3 id="3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses<a class="header-anchor" href="#3-included-programs-and-additional-harnesses">#</a></h3>
+<p>Every supported release installation already includes the three first-party Programs and their default runtime assets:</p>
 <table>
 <thead>
 <tr>
-<th>Harness</th>
-<th>Install</th>
+<th>Program</th>
+<th>Release status</th>
 <th>What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>
-<td><code>openprogram programs install gui</code> (pulls PyTorch), then its installer for the detector/OCR assets — <strong><a href="https://github.com/Fzkuji/GUI-Agent-Harness#1-install">guide</a></strong></td>
+<td>Included with PyTorch, default OCR, and the detector model</td>
 <td>Drives desktop apps &amp; OSWorld VMs by vision.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
-<td><code>openprogram programs install research</code></td>
+<td>Included</td>
 <td>Literature survey → experiments → paper draft.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
-<td><code>openprogram programs install wiki</code></td>
+<td>Included</td>
 <td>Turns notes / docs / chats into an Obsidian vault with <code>[[wikilinks]]</code>.</td>
-</tr>
-<tr>
-<td><strong>Any third-party harness</strong></td>
-<td><code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code> (or a full git URL)</td>
-<td>Same flow — clone, deps, contract check, and owner source registration.</td>
 </tr>
 </tbody>
 </table>
+<p>Third-party harnesses are additional functionality. Mutable extension environments use <code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code> (or a full git URL); source editing and replacement OCR/browser backends are developer features.</p>
 <p>Writing your own installable harness is one layout contract away — the
 full guide (install, manage, author, test, publish) is
 <strong><a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a></strong>.</p>
@@ -215,7 +208,7 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
   <img src="images/chat_hero.png" alt="OpenProgram web UI — agentic function call tree, streamed thinking, and the conversation DAG on the right rail" width="880">
 </p>
 <h3 id="terminal-ui-openprogram">Terminal UI — <code>openprogram</code><a class="header-anchor" href="#terminal-ui-openprogram">#</a></h3>
-<p>The same backend without the browser — same commands, same chat history. Picks the native renderer per OS: <strong>Ink</strong> on macOS / Linux, <strong>Rich</strong> on Windows. Best for staying in the terminal or over SSH. One-shot, no UI: <code>openprogram --print &quot;…&quot;</code>.</p>
+<p>The same backend without the browser — same commands, same chat history. Release installs include the Python terminal interface; source-development installs can also build Ink on macOS/Linux. One-shot, no UI: <code>openprogram --print &quot;…&quot;</code>.</p>
 <p align="center">
   <img src="images/tui_hero.png" alt="OpenProgram terminal UI — welcome screen listing the model, agents, sessions, and the registered skills / providers / tools / applications" width="570">
 </p>
@@ -381,7 +374,7 @@ AGPL-3.0.</p>
 </code></pre>
 <h2 id="license">License<a class="header-anchor" href="#license">#</a></h2>
 <p><a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE">AGPL-3.0</a> © 2026 Fzkuji. Free to use, study, modify, and share — but any derivative you distribute <strong>or run as a network service</strong> must also be released under the AGPL, with attribution preserved.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-makes-it-different">What makes it different</a>
@@ -391,7 +384,7 @@ AGPL-3.0.</p>
 <a class="" href="#quick-start">Quick Start</a>
 <a class="lvl-3" href="#1-install">1. Install</a>
 <a class="lvl-3" href="#2-run">2. Run</a>
-<a class="lvl-3" href="#3-add-a-harness">3. Add a harness</a>
+<a class="lvl-3" href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a>
 <a class="" href="#troubleshooting">Troubleshooting</a>
 <a class="lvl-3" href="#power-user-commands">Power-user commands</a>
 <a class="" href="#how-to-use">How to use</a>

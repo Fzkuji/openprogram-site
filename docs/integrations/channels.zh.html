@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/integrations/channels.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/integrations/channels.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,9 +121,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<p>Discord 与 Slack 需要可选依赖：</p>
-<pre><code class="language-bash">pip<span class="w"> </span>install<span class="w"> </span>openprogram<span class="o">[</span>channels<span class="o">]</span>
-</code></pre>
+<p>受支持的 release 已包含 Discord 与 Slack 依赖。开发者从源码安装时，也会通过完整开发安装获得相同的 channel 依赖。</p>
 <h2 id="快速开始">快速开始<a class="header-anchor" href="#快速开始">#</a></h2>
 <p>向导一条命令跑完全部注册——选平台、登录、绑定 agent、启动 worker：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>setup
@@ -263,7 +261,7 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 </tr>
 <tr>
 <td><code>Discord channel requires discord.py</code> / <code>Slack channel requires slack_sdk</code></td>
-<td>缺可选依赖：<code>pip install openprogram[channels]</code>。</td>
+<td>runtime 不完整。重新安装受支持的 release，或重新执行完整的源码开发安装。</td>
 </tr>
 <tr>
 <td>Discord bot 连上了但收不到消息</td>
@@ -288,7 +286,7 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <li><a href="/docs/reference/design/channels/design.zh.html">设计笔记：channel 子系统</a>——架构与消息流</li>
 <li><a href="/docs/interfaces/README.zh.html">界面总览</a>——渠道对话同样出现在 Web UI / TUI</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Overview</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Overview</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#这是什么">这是什么？</a>

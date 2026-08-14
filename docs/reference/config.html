@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,6 +119,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -228,20 +229,6 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td>live</td>
 </tr>
 <tr>
-<td><code>proactive.heartbeat</code></td>
-<td>Memory</td>
-<td>due-commitment reminder cadence: <code>daily</code> at 09:00 local, <code>hourly</code> at minute 00, or <code>off</code>; requires <code>cron-worker</code></td>
-<td>daily</td>
-<td>live</td>
-</tr>
-<tr>
-<td><code>proactive.quiet_hours</code></td>
-<td>Memory</td>
-<td>local-time interval in <code>HH:MM-HH:MM</code> form during which reminders are suppressed</td>
-<td>23:00-08:00</td>
-<td>live</td>
-</tr>
-<tr>
 <td><code>sandbox.mode</code></td>
 <td>Sandbox</td>
 <td><code>danger-full-access</code>, or <code>workspace-write</code> to apply the host-native sandbox to local model-driven commands: writes are limited to the working directory/configured roots, deny-read paths are blocked, and network is disabled</td>
@@ -339,11 +326,6 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>memory</code></td>
 <td><code>{backend, writer: {model}}</code>, see the table above</td>
 <td><code>openprogram/config_schema.py</code>, <code>openprogram/memory/</code></td>
-</tr>
-<tr>
-<td><code>proactive</code></td>
-<td><code>{heartbeat, quiet_hours}</code>, see the table above</td>
-<td><code>openprogram/config_schema.py</code>, <code>openprogram/proactive/heartbeat.py</code></td>
 </tr>
 <tr>
 <td><code>tools</code></td>
@@ -576,7 +558,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </table>
 <h3 id="others">Others<a class="header-anchor" href="#others">#</a></h3>
 <p>The code holds a further batch of more internal variables (HTTP/SSE timeout tuning <code>OPENPROGRAM_HTTPX_*</code> / <code>OPENPROGRAM_SSE_*</code>, TCP keepalive <code>OPENPROGRAM_TCP_*</code>, per-provider retry counts <code>OPENPROGRAM_&lt;PROVIDER&gt;_MAX_RETRIES</code>, <code>OPENPROGRAM_JOB_WORKERS</code>, <code>OPENPROGRAM_IMAGE_DIR</code>, <code>OPENPROGRAM_BROWSER_CDP_URL</code>, etc.). <code>grep -rn &quot;OPENPROGRAM_&quot; openprogram/</code> lists the full set; every variable is commented where it is defined.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-openprogram-config-can-read-and-write">What openprogram config can read and write</a>

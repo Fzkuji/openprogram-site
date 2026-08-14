@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/interfaces/tui.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/interfaces/tui.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>终端 TUI · OpenProgram Docs</title>
-<meta name="description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI macOS / Linux 上的">
+<meta name="description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI release CLI 始终包含">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/tui.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/tui.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/tui.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/tui.zh.html">
 <meta property="og:title" content="终端 TUI · OpenProgram Docs">
-<meta property="og:description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI macOS / Linux 上的">
+<meta property="og:description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI release CLI 始终包含">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="终端 TUI · OpenProgram Docs">
-<meta name="twitter:description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI macOS / Linux 上的">
+<meta name="twitter:description" content="不离开终端使用 OpenProgram 的完整聊天界面。本页覆盖进入退出、按键和斜杠命令。 进入与退出 # openprogram tui # 直接进入终端聊天（别名：openprogram chat） openprogram # 裸命令会先询问：进终端 UI 还是 Web UI release CLI 始终包含">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -84,7 +84,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">openprogram<span class="w"> </span>tui<span class="w">      </span><span class="c1"># 直接进入终端聊天（别名：openprogram chat）</span>
 openprogram<span class="w">          </span><span class="c1"># 裸命令会先询问：进终端 UI 还是 Web UI</span>
 </code></pre>
-<p>macOS / Linux 上的 TUI 是 Node.js（Ink）实现，通过 WebSocket 连接本地 worker（没有在跑会自动拉起）；Windows 上回退到一个较简单的 Rich REPL。会话与 Web UI 共用，见<a href="/docs/interfaces/README.html">界面总览</a>。</p>
+<p>release CLI 始终包含 Python 终端界面。macOS 和 Linux 的 source development 安装还可以构建 Node.js Ink 界面。两者都通过 WebSocket 连接同一个本地 worker，并与 Web UI 共用会话。Windows release 安装不受支持。</p>
 <p>退出：<code>/quit</code>，或空闲时快速按两次 <code>Ctrl-C</code>。</p>
 <p>续聊历史会话：TUI 内用 <code>/resume</code> 挑选；会话 id 可用 <code>openprogram sessions list</code> 查。（<code>openprogram --resume &lt;id&gt;</code> 参数目前只对 <code>--print</code> 单发生效，启动交互式 TUI 时不生效。）</p>
 <h2 id="按键">按键<a class="header-anchor" href="#按键">#</a></h2>
@@ -228,8 +228,7 @@ openprogram<span class="w">          </span><span class="c1"># 裸命令会先�
 </table>
 <p>另有 <code>/search</code>、<code>/review</code>、<code>/diff</code>、<code>/init</code>、<code>/browser</code>、<code>/welcome</code>。完整清单以 <code>/help</code> 输出为准。</p>
 <p>除这些内置命令外，补全菜单还会列出统一命令注册表里的全部命令——skill、MCP prompt、插件命令，以及你放在 <code>~/.openprogram/commands/</code> 或 <code>&lt;项目&gt;/.openprogram/commands/</code> 下的自定义命令文件（markdown，可带 YAML frontmatter）。执行时命令正文展开后作为消息发送，与 Web composer 完全一致：TUI 和 Web UI 读同一张注册表，命令定义一次两边都有。</p>
-<p>Windows 的 Rich REPL 走同一张注册表。它的内置集合较小：<code>/help</code>、<code>/web</code>、<code>/model</code>、<code>/agent</code>、<code>/new</code>、<code>/copy</code>、<code>/tools</code>、<code>/skills</code>、<code>/programs</code>、<code>/apps</code>、<code>/mcp</code>、<code>/session</code>、<code>/login</code>、<code>/attach</code>、<code>/detach</code>、<code>/connections</code>、<code>/profile</code>、<code>/compact</code>、<code>/context</code>、<code>/rewind</code>、<code>/sandbox</code>、<code>/clear</code>、<code>/quit</code>——但 skill / user / project 命令同样可用，<code>/help</code> 列出全部。退出也可用 <code>Ctrl-C</code> 或 <code>Ctrl-D</code>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Web UI</span></a><a class="pn-link pn-next" href="/docs/interfaces/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Web UI</span></a><a class="pn-link pn-next" href="/docs/interfaces/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#进入与退出">进入与退出</a>

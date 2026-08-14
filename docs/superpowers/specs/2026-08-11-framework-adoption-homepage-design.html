@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Framework Adoption Homepage Design · OpenProgram Docs</title>
-<meta name="description" content="Goal # Present OpenProgram first as an installable, general-purpose agent framework. The homepage should help visitors understand what they can use">
+<meta name="description" content="Status: superseded for distribution details by docs/reference/design/distribution/installation-packaging.html . The current product ships GUI, Research, and">
 <link rel="canonical" href="https://openprogram.io/docs/superpowers/specs/2026-08-11-framework-adoption-homepage-design.html">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Framework Adoption Homepage Design"}]}</script>
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/superpowers/specs/2026-08-11-framework-adoption-homepage-design.html">
 <meta property="og:title" content="Framework Adoption Homepage Design · OpenProgram Docs">
-<meta property="og:description" content="Goal # Present OpenProgram first as an installable, general-purpose agent framework. The homepage should help visitors understand what they can use">
+<meta property="og:description" content="Status: superseded for distribution details by docs/reference/design/distribution/installation-packaging.html . The current product ships GUI, Research, and">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Framework Adoption Homepage Design · OpenProgram Docs">
-<meta name="twitter:description" content="Goal # Present OpenProgram first as an installable, general-purpose agent framework. The homepage should help visitors understand what they can use">
+<meta name="twitter:description" content="Status: superseded for distribution details by docs/reference/design/distribution/installation-packaging.html . The current product ships GUI, Research, and">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -117,6 +117,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -172,6 +173,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg">Superpowers · Specs</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Framework Adoption Homepage Design</span></nav><h1 id="framework-adoption-homepage-design">Framework Adoption Homepage Design<a class="header-anchor" href="#framework-adoption-homepage-design">#</a></h1>
+<p>Status: superseded for distribution details by <code>docs/reference/design/distribution/installation-packaging.html</code>. The current product ships GUI, Research, and Wiki in every supported release.</p>
 <h2 id="goal">Goal<a class="header-anchor" href="#goal">#</a></h2>
 <p>Present OpenProgram first as an installable, general-purpose agent framework. The homepage should help visitors understand what they can use immediately, install the framework, select a ready-made harness, or build their own agent. Agentic Programming and the related papers remain supporting technical context rather than the primary message.</p>
 <h2 id="audience">Audience<a class="header-anchor" href="#audience">#</a></h2>
@@ -200,7 +202,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Primary action: <code>Install OpenProgram</code>, linking to Quick Start.</li>
 <li>Secondary action: <code>Explore documentation</code>.</li>
 <li>Visual: use a real OpenProgram Web UI screenshot. Move the code sample to the build-your-own card.</li>
-<li>Facts: Python 3.11+, macOS/Linux/Windows, Web/TUI/CLI, and AGPL-3.0.</li>
+<li>Facts: Python 3.11+, supported macOS/Linux release hosts, remote browser access for Windows/mobile clients, Web/TUI/CLI, and AGPL-3.0. The current distribution matrix is authoritative in <code>docs/reference/design/distribution/installation-packaging.html</code>.</li>
 </ul>
 <h2 id="use-or-build">Use or Build<a class="header-anchor" href="#use-or-build">#</a></h2>
 <p>The section heading is <code>Use an agent or build your own.</code> It contains four paths:</p>
@@ -210,9 +212,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Wiki Agent: organize source material into a maintainable knowledge base.</li>
 <li>Build your own: show a compact <code>@agentic_function</code> example and link to the authoring documentation.</li>
 </ul>
-<p>Each ready-made harness links to its existing repository or installation guide. Do not imply that GUI Agent, Research Agent, or Wiki Agent ships inside the base framework.</p>
+<p>Each ready-made harness links to its existing repository or usage guide. State that GUI Agent, Research Agent, and Wiki Agent ship inside every supported release; third-party harnesses are additional extensions.</p>
 <h2 id="quick-start">Quick Start<a class="header-anchor" href="#quick-start">#</a></h2>
-<p>Place Quick Start before the detailed capability explanation. Show the supported macOS/Linux installer followed by <code>openprogram</code>. Link Windows users and advanced installation options to the installation guide. Keep copy controls and their fallback behavior.</p>
+<p>Place Quick Start before the detailed capability explanation. Show the supported macOS/Linux installer followed by <code>openprogram</code>. Direct Windows users to remote browser access on a supported host and link advanced installation options to the installation guide. Keep copy controls and their fallback behavior.</p>
 <h2 id="included-capabilities">Included Capabilities<a class="header-anchor" href="#included-capabilities">#</a></h2>
 <p>Describe capabilities using recognizable product functions rather than research terminology:</p>
 <ul>
@@ -249,7 +251,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>Inspect desktop and 390px mobile screenshots.</li>
 <li>Publish through the existing <code>Publish openprogram.io</code> workflow and verify the live HTML after GitHub Pages finishes building.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Web Split View and Bookmark Management</span></a><a class="pn-link pn-next" href="/docs/superpowers/specs/2026-08-11-homepage-optimization-design.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram Homepage Optimization Design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop Web Split View and Bookmark Management</span></a><a class="pn-link pn-next" href="/docs/superpowers/specs/2026-08-11-homepage-optimization-design.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram Homepage Optimization Design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#goal">Goal</a>

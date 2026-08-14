@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agentic workflows · OpenProgram Docs</title>
-<meta name="description" content="This page covers the ready-made agents that ship with OpenProgram: how to install them and how to manage them. If you want to use agents directly instead of">
+<meta name="description" content="This page covers the ready-made agents included in every supported OpenProgram release and how to use them. If you want to use agents directly instead of">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/README.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/README.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/README.html">
 <meta property="og:title" content="Agentic workflows · OpenProgram Docs">
-<meta property="og:description" content="This page covers the ready-made agents that ship with OpenProgram: how to install them and how to manage them. If you want to use agents directly instead of">
+<meta property="og:description" content="This page covers the ready-made agents included in every supported OpenProgram release and how to use them. If you want to use agents directly instead of">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Agentic workflows · OpenProgram Docs">
-<meta name="twitter:description" content="This page covers the ready-made agents that ship with OpenProgram: how to install them and how to manage them. If you want to use agents directly instead of">
+<meta name="twitter:description" content="This page covers the ready-made agents included in every supported OpenProgram release and how to use them. If you want to use agents directly instead of">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -130,47 +130,46 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Agentic Workflows">Agentic workflows</span></nav><h1 id="agentic-workflows">Agentic workflows<a class="header-anchor" href="#agentic-workflows">#</a></h1>
-<p>This page covers the ready-made agents that ship with OpenProgram: how to install them and how to manage them. If you want to use agents directly instead of writing your own functions, start here.</p>
+<p>This page covers the ready-made agents included in every supported OpenProgram release and how to use them. If you want to use agents directly instead of writing your own functions, start here.</p>
 <h2 id="what-they-are">What they are<a class="header-anchor" href="#what-they-are">#</a></h2>
-<p>An agentic workflow is a finished workflow built with <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> — called a <strong>harness</strong> or <strong>agentic program</strong> in the code: a self-contained git repository holding a set of <code>@agentic_function</code>s. Once installed, its functions register into OpenProgram and appear like built-in functions in chat, on the Web UI Programs page, and in <code>openprogram programs run</code>.</p>
+<p>An agentic workflow is a finished workflow built with <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> — called a <strong>harness</strong> or <strong>agentic program</strong> in the code: a self-contained git repository holding a set of <code>@agentic_function</code>s. The fixed release versions register into OpenProgram and appear like built-in functions in chat, on the Web UI Programs page, and in <code>openprogram programs run</code>.</p>
 <p>Three first-party workflows:</p>
 <table>
 <thead>
 <tr>
 <th>Workflow</th>
-<th>Install name</th>
+<th>Release status</th>
 <th>In one line</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="/docs/capabilities/workflows/gui-agent.html">GUI Agent</a></td>
-<td><code>gui</code></td>
+<td>Included</td>
 <td>Give it a task in one sentence and it operates the desktop autonomously (screenshot, detect, click, verify loop)</td>
 </tr>
 <tr>
 <td><a href="/docs/capabilities/workflows/research-agent.html">Research Agent</a></td>
-<td><code>research</code></td>
+<td>Included</td>
 <td>From research topic to submission-ready paper, with a deterministic verification layer</td>
 </tr>
 <tr>
 <td><a href="/docs/capabilities/workflows/wiki-agent.html">Wiki Agent</a></td>
-<td><code>wiki</code></td>
+<td>Included</td>
 <td>Distills sessions and notes into a templated HTML knowledge base</td>
 </tr>
 </tbody>
 </table>
 <h2 id="management-commands">Management commands<a class="header-anchor" href="#management-commands">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>list<span class="w">          </span><span class="c1"># all registered functions and programs</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">     </span><span class="c1"># installable items + status of installed third-party harnesses</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui<span class="w">   </span><span class="c1"># gui | research | wiki | all</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">     </span><span class="c1"># first-party status + installed third-party harnesses</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w">   </span><span class="c1"># any third-party harness (git URL also works)</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;ref&gt;<span class="w"> </span>--upgrade<span class="w">  </span><span class="c1"># reinstall / upgrade</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>research<span class="w">       </span><span class="c1"># uninstall</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>&lt;Harness-Name&gt;<span class="w"> </span><span class="c1"># remove a third-party harness</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-a<span class="w"> </span><span class="nv">key</span><span class="o">=</span>value<span class="w">  </span><span class="c1"># run a program directly</span>
 </code></pre>
 <p><code>programs run</code> also accepts <code>--provider</code> (claude-code / openai-codex / gemini-cli / anthropic / openai / gemini, auto-detected by default) and <code>--model</code> to override the model.</p>
-<p><code>programs install</code> clones the harness into <code>openprogram/programs/agentic_functions/</code>, installs the dependencies declared by its <code>pyproject.toml</code> / <code>requirements.txt</code>, and records the approved source. Only recorded harnesses register when the worker restarts; a manual clone can be recorded by running the same install command with its git source.</p>
+<p>First-party Programs are immutable product components. In a mutable extension or development environment, <code>programs install</code> clones an additional third-party harness, installs its declared dependencies, and records the approved source.</p>
 <h2 id="how-to-trigger-them">How to trigger them<a class="header-anchor" href="#how-to-trigger-them">#</a></h2>
 <ul>
 <li><strong>In chat</strong>: entry functions register as tools (<code>as_tool=True</code>). Describe the task in natural language and the model calls them (e.g. <code>gui_agent</code>, <code>research_agent</code>, <code>wiki_agent</code>).</li>
@@ -179,7 +178,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 </ul>
 <h2 id="writing-your-own">Writing your own<a class="header-anchor" href="#writing-your-own">#</a></h2>
 <p>Any repository that follows the directory contract (<code>&lt;package&gt;/agentics/__init__.py</code> exposing <code>AGENTIC_FUNCTIONS</code>) can be installed with the same <code>programs install</code> command. See <a href="/docs/capabilities/installing-harnesses.html">Installing and writing harnesses</a> for the contract, a minimal template, and the publishing flow.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-they-are">What they are</a>

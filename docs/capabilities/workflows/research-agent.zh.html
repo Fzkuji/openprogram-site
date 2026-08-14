@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/capabilities/workflows/research-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/capabilities/workflows/research-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,10 +131,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Research Agent</span></nav><h1 id="research-agent">Research Agent<a class="header-anchor" href="#research-agent">#</a></h1>
 <p>自主科研 agent：接一个研究选题，走完文献调研 → 想法生成 → 实验 → 写作 → 评审 → rebuttal / 展示的完整流程，产出可提交的论文。它不信任自己的输出——引用逐条对着 Crossref / OpenAlex / Semantic Scholar / arXiv 四个索引核验，论文里的数字要能追溯到实验的 <code>run_record.json</code>，评审可以换一个不同的模型来做（作者与审稿人不同模型，避免自评自）。</p>
-<h2 id="安装">安装<a class="header-anchor" href="#安装">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research
-</code></pre>
-<p>无额外依赖——harness 只用 OpenProgram 本身。可选项：PDF 解析（<code>load_paper</code> / wiki ingest 需要）另装 <code>pymupdf</code>；知识库联动另装 wiki harness（<code>openprogram programs install wiki</code>）。</p>
+<h2 id="可用性">可用性<a class="header-anchor" href="#可用性">#</a></h2>
+<p>每个受支持的 release 都同时包含 Research、Wiki Programs 和用于 PDF 解析的 PyMuPDF。安装 OpenProgram 后不需要再安装 Program 或 PDF 依赖。开发者可以用 editable checkout 替换其中任一 Program。</p>
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>入口函数名为 <strong><code>research_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>research</code>）注册，聊天里直接描述研究任务即可触发，例如&quot;Survey recent work on LLM uncertainty&quot;。</p>
 <p>命令行直接运行：</p>
@@ -175,10 +173,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>联网检索（arXiv / Semantic Scholar 等）需要网络可达；LaTeX 编译需要本机有 TeX 发行版。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/research_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/Research-Agent-Harness">Fzkuji/Research-Agent-Harness</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">GUI Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/wiki-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Wiki Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">GUI Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/wiki-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Wiki Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#安装">安装</a>
+<a class="" href="#可用性">可用性</a>
 <a class="" href="#怎么用">怎么用</a>
 <a class="" href="#依赖注意">依赖注意</a>
 </div></aside>

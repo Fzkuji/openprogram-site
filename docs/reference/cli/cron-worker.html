@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>cron-worker · OpenProgram Docs</title>
-<meta name="description" content="usage: openprogram cron-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match status">
+<meta name="description" content="usage: openprogram scheduler-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match">
 <link rel="canonical" href="https://openprogram.io/docs/reference/cli/cron-worker.html">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"cron-worker"}]}</script>
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/cli/cron-worker.html">
 <meta property="og:title" content="cron-worker · OpenProgram Docs">
-<meta property="og:description" content="usage: openprogram cron-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match status">
+<meta property="og:description" content="usage: openprogram scheduler-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="cron-worker · OpenProgram Docs">
-<meta name="twitter:description" content="usage: openprogram cron-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match status">
+<meta name="twitter:description" content="usage: openprogram scheduler-worker [-h] [--once] [--list] Options # Option Description --once Evaluate one tick and exit --list Show each entry with match">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -117,6 +117,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -173,7 +174,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="CLI 命令">CLI commands</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">cron-worker</span></nav><!-- GENERATED FILE — do not edit. Rebuilt by tools/docs_site/generate_reference.py from openprogram/cli.py. -->
 <h1 id="cron-worker">cron-worker<a class="header-anchor" href="#cron-worker">#</a></h1>
-<pre><code>usage: openprogram cron-worker [-h] [--once] [--list]
+<pre><code>usage: openprogram scheduler-worker [-h] [--once] [--list]
 </code></pre>
 <h2 id="options">Options<a class="header-anchor" href="#options">#</a></h2>
 <table>

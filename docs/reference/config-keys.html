@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,6 +117,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -290,18 +291,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>``</td>
 <td>live</td>
 <td>Empty uses the default chat agent's provider and model. Set provider/model to override only background memory writing.</td>
-</tr>
-<tr>
-<td><code>proactive.heartbeat</code></td>
-<td><code>daily</code></td>
-<td>live</td>
-<td>Check due commitments daily at 09:00 local time, hourly at minute 00, or keep them visible without sending reminders.</td>
-</tr>
-<tr>
-<td><code>proactive.quiet_hours</code></td>
-<td><code>23:00-08:00</code></td>
-<td>live</td>
-<td>Local-time interval in HH:MM-HH:MM form. Due reminders wait until a later heartbeat outside this interval.</td>
 </tr>
 </tbody>
 </table>

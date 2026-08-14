@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/start/GETTING_STARTED.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/start/GETTING_STARTED.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>快速上手 · OpenProgram Docs</title>
-<meta name="description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 一条命令的安装脚本会装好 Python 包、网页 UI、终端 UI、浏览器工具和 channels： git clone">
+<meta name="description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 在 macOS 或 Linux 安装包含受控 Python 的完整 release runtime： curl -fsSL">
 <link rel="canonical" href="https://openprogram.io/docs/start/GETTING_STARTED.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/start/GETTING_STARTED.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/start/GETTING_STARTED.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/start/GETTING_STARTED.zh.html">
 <meta property="og:title" content="快速上手 · OpenProgram Docs">
-<meta property="og:description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 一条命令的安装脚本会装好 Python 包、网页 UI、终端 UI、浏览器工具和 channels： git clone">
+<meta property="og:description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 在 macOS 或 Linux 安装包含受控 Python 的完整 release runtime： curl -fsSL">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="快速上手 · OpenProgram Docs">
-<meta name="twitter:description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 一条命令的安装脚本会装好 Python 包、网页 UI、终端 UI、浏览器工具和 channels： git clone">
+<meta name="twitter:description" content="这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。 第 1 步：安装 # 在 macOS 或 Linux 安装包含受控 Python 的完整 release runtime： curl -fsSL">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -80,11 +80,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="第一步">First steps</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="快速上手">Getting Started</span></nav><h1 id="快速上手">快速上手<a class="header-anchor" href="#快速上手">#</a></h1>
 <p>这页带你在五分钟内完成：安装、接入一个 LLM provider、打开界面、发出第一条消息，并装上第一个现成的 agent 程序。</p>
 <h2 id="第-1-步安装">第 1 步：安装<a class="header-anchor" href="#第-1-步安装">#</a></h2>
-<p>一条命令的安装脚本会装好 Python 包、网页 UI、终端 UI、浏览器工具和 channels：</p>
-<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>OpenProgram
-./scripts/install.sh<span class="w">              </span><span class="c1"># macOS/Linux   ·   Windows:  .\scripts\install.ps1</span>
+<p>在 macOS 或 Linux 安装包含受控 Python 的完整 release runtime：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>需要 Python ≥ 3.11、Node ≥ 20、git（缺了脚本会尽力代装）。脚本幂等，任何时候都可以重跑。agent 程序（GUI / Research / Wiki）默认不装，安装时的交互菜单里可挑选，也可以之后再补（见第 5 步）。完整参数与依赖矩阵见 <a href="/docs/install/install.html">安装</a>。</p>
+<p>installer 提供自己的 Python 并包含 Web UI；运行时不需要 Node.js 和 Git。macOS 桌面用户使用 GitHub Releases 中的 DMG。Linux 用户使用带 Web UI 或 TUI 的完整 CLI/server runtime；当前不发布 Linux 桌面包。平台范围和开发 checkout 安装见<a href="/docs/install/install.zh.html">安装</a>。</p>
 <h2 id="第-2-步首次运行接入-provider">第 2 步：首次运行，接入 provider<a class="header-anchor" href="#第-2-步首次运行接入-provider">#</a></h2>
 <pre><code class="language-bash">openprogram
 </code></pre>
@@ -104,12 +103,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;用一句话介绍你自己&quot;</span>
 </code></pre>
 <p>它发送一条消息、打印回复、然后退出。之前的会话可以用 <code>openprogram --resume &lt;session_id&gt;</code> 续上，id 来自 <code>openprogram sessions list</code> 或 web 侧栏。</p>
-<h2 id="第-5-步装一个现成的-agent-程序">第 5 步：装一个现成的 agent 程序<a class="header-anchor" href="#第-5-步装一个现成的-agent-程序">#</a></h2>
-<p>OpenProgram 是宿主，agent 程序装进来就能在 web UI 和函数列表里出现：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>research<span class="w">     </span><span class="c1"># 或 wiki / gui</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">            </span><span class="c1"># 查看安装状态</span>
-</code></pre>
-<p><code>research</code> / <code>wiki</code> 是纯 Python，装得很快；<code>gui</code> 会下载 PyTorch 和模型权重，体积较大。装完后 <code>openprogram restart</code>（或在 Programs 页面点 Refresh），程序就会出现在界面里。</p>
+<h2 id="第-5-步使用内置-agent-program">第 5 步：使用内置 agent Program<a class="header-anchor" href="#第-5-步使用内置-agent-program">#</a></h2>
+<p>每个 release 都包含 GUI、Research 和 Wiki Program，无需单独安装，启动后会出现在 Web UI 和函数列表中。可用 <code>openprogram programs available</code> 查看注册状态。</p>
+<p>Program installer 只用于第三方 Program 和开发者源码 overlay，不用于区分普通用户版本的功能范围。</p>
 <h2 id="下一步">下一步<a class="header-anchor" href="#下一步">#</a></h2>
 <ul>
 <li><a href="/docs/models/README.html">模型与 provider</a> — 各 provider 的接入方式、多账户与密钥轮换</li>
@@ -117,14 +113,14 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>available<spa
 <li><a href="/docs/interfaces/README.html">界面</a> — 终端 TUI、web UI 与 channels</li>
 <li><a href="/docs/start/daily-use.html">日常操作</a> — 会话管理、分支与回退</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/features.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Features</span></a><a class="pn-link pn-next" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Daily Use</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/features.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Features</span></a><a class="pn-link pn-next" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Daily Use</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#第-1-步安装">第 1 步：安装</a>
 <a class="" href="#第-2-步首次运行接入-provider">第 2 步：首次运行，接入 provider</a>
 <a class="" href="#第-3-步打开-web-界面">第 3 步：打开 web 界面</a>
 <a class="" href="#第-4-步发第一条消息">第 4 步：发第一条消息</a>
-<a class="" href="#第-5-步装一个现成的-agent-程序">第 5 步：装一个现成的 agent 程序</a>
+<a class="" href="#第-5-步使用内置-agent-program">第 5 步：使用内置 agent Program</a>
 <a class="" href="#下一步">下一步</a>
 </div></aside>
 </div>

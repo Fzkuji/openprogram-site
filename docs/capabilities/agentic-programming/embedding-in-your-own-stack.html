@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -249,12 +249,12 @@ array:</p>
 <p><code>runtime</code> goes in alongside the model's arguments. The model never sees that
 parameter — it is filtered out of the spec — and never supplies it.</p>
 <h2 id="relationship-to-a-full-install">Relationship to a full install<a class="header-anchor" href="#relationship-to-a-full-install">#</a></h2>
-<p>There is one <code>pip install openprogram</code>, and embedding uses only its library
-face. The web UI and the terminal UI ship in the same package, but the
-embedded path never imports them — the acceptance tests in <code>tests/embed/</code>
-fail if it ever does — so they stay inert, and a deployment that strips
-FastAPI, Uvicorn, or Textual still runs the library face. Start the platform
-later and nothing about your embedded code changes.</p>
+<p>Embedding is a developer integration mode, not a reduced end-user edition.
+Use the complete source-development installation; it includes the same Web,
+terminal, provider, channel, search, browser, and first-party Program baseline
+as a release. The embedded import path uses only the library API and does not
+start the Web UI or TUI. Acceptance tests in <code>tests/embed/</code> enforce that import
+boundary, while the installed product remains complete.</p>
 <h2 id="host-integration-seams">Host integration seams<a class="header-anchor" href="#host-integration-seams">#</a></h2>
 <p>Two hooks let a host that <em>does</em> have a front end wire itself in:
 <code>set_cancellation_check</code> installs the checkpoint the exec loop calls before each
@@ -270,7 +270,7 @@ embedded code that never touches them behaves correctly: nothing cancels, and
 <li><a href="/docs/reference/api/runtime.html">Runtime API</a> — <code>exec()</code> parameters and behaviour</li>
 <li><a href="/docs/reference/design/runtime/overview.html">Embedding seams</a> — the design contract behind this mode</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/philosophy.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Philosophy</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Pure Python</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/philosophy.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Philosophy</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Pure Python</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#when-this-is-the-right-mode">When this is the right mode</a>

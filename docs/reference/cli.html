@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786650124" data-alt-lang-url="/docs/reference/cli.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786723368" data-alt-lang-url="/docs/reference/cli.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,6 +119,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/recordings.html">recordings</a>
 <a class="navlink" href="/docs/reference/cli/rescue.html">rescue</a>
 <a class="navlink" href="/docs/reference/cli/restart.html">restart</a>
+<a class="navlink" href="/docs/reference/cli/scheduler-worker.html">scheduler-worker</a>
 <a class="navlink" href="/docs/reference/cli/secrets.html">secrets</a>
 <a class="navlink" href="/docs/reference/cli/sessions.html">sessions</a>
 <a class="navlink" href="/docs/reference/cli/setup.html">setup</a>
@@ -224,7 +225,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>openprogram tui</code> (alias <code>chat</code>)</td>
-<td>Launch the terminal UI directly, skipping the surface prompt (Ink on macOS/Linux, Rich on Windows)</td>
+<td>Launch the terminal UI directly, skipping the surface prompt (Ink or Python terminal UI on supported macOS/Linux installs; Rich remains available only to unsupported Windows source checkouts)</td>
 <td><code>--print</code>, <code>--resume</code> also work after the verb</td>
 </tr>
 <tr>
@@ -439,7 +440,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>install</code></td>
-<td>Install browser tool dependencies (Playwright + Chromium, patchright/camoufox, agent-browser); pick one target or <code>all</code></td>
+<td>Developer command for adding or replacing browser backends (patchright/camoufox/agent-browser). Release installations already contain the default Playwright Chromium backend.</td>
 </tr>
 <tr>
 <td><code>status</code></td>
@@ -548,7 +549,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>install</code> / <code>uninstall</code></td>
-<td>Install / uninstall a program (gui/research/wiki/all) or a third-party harness (git URL / owner/repo); <code>install --upgrade</code> reinstalls even if present</td>
+<td>Developer-only first-party source overlays (gui/research/wiki/all), or install/uninstall an additional third-party harness (git URL / owner/repo); supported releases already include all first-party Programs and reject mutation of their immutable runtime</td>
 </tr>
 </tbody>
 </table>
@@ -709,13 +710,13 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <td><code>--check</code> only checks; <code>--force</code> bypasses the 6-hour throttle</td>
 </tr>
 <tr>
-<td><code>cron-worker</code></td>
-<td>Foreground loop that fires scheduled <code>cron</code> entries and the built-in commitment heartbeat</td>
-<td><code>--once</code> evaluates one tick and exits; <code>--list</code> shows user cron entries only</td>
+<td><code>scheduler-worker</code> (<code>cron-worker</code> alias)</td>
+<td>Foreground loop that fires one-time, recurring, and monitor Scheduler tasks</td>
+<td><code>--once</code> evaluates one tick and exits; <code>--list</code> shows current task match state</td>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">agentic_function</span></a><a class="pn-link pn-next" href="/docs/reference/config.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Configuration</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">agentic_function</span></a><a class="pn-link pn-next" href="/docs/reference/config.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#global-usage">Global usage</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786650124" data-alt-lang-url="/docs/capabilities/workflows/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786723368" data-alt-lang-url="/docs/capabilities/workflows/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agentic Workflows · OpenProgram Docs</title>
-<meta name="description" content="这一页告诉你 OpenProgram 自带哪些现成的 agent、怎么装、怎么管理。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic program ：一个自包含的">
+<meta name="description" content="这一页介绍每个受支持 OpenProgram release 已包含的现成 agent 及其使用方式。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/README.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/README.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/README.zh.html">
 <meta property="og:title" content="Agentic Workflows · OpenProgram Docs">
-<meta property="og:description" content="这一页告诉你 OpenProgram 自带哪些现成的 agent、怎么装、怎么管理。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic program ：一个自包含的">
+<meta property="og:description" content="这一页介绍每个受支持 OpenProgram release 已包含的现成 agent 及其使用方式。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Agentic Workflows · OpenProgram Docs">
-<meta name="twitter:description" content="这一页告诉你 OpenProgram 自带哪些现成的 agent、怎么装、怎么管理。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic program ：一个自包含的">
+<meta name="twitter:description" content="这一页介绍每个受支持 OpenProgram release 已包含的现成 agent 及其使用方式。如果你想直接用而不是自己写函数，从这里开始。 是什么 # Agentic Workflow 是用 Agentic Programming 写成的成品工作流——代码里叫 harness 或 agentic">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -130,47 +130,46 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Agentic Workflows">Agentic workflows</span></nav><h1 id="agentic-workflows">Agentic Workflows<a class="header-anchor" href="#agentic-workflows">#</a></h1>
-<p>这一页告诉你 OpenProgram 自带哪些现成的 agent、怎么装、怎么管理。如果你想直接用而不是自己写函数，从这里开始。</p>
+<p>这一页介绍每个受支持 OpenProgram release 已包含的现成 agent 及其使用方式。如果你想直接用而不是自己写函数，从这里开始。</p>
 <h2 id="是什么">是什么<a class="header-anchor" href="#是什么">#</a></h2>
-<p>Agentic Workflow 是用 <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> 写成的成品工作流——代码里叫 <strong>harness</strong> 或 <strong>agentic program</strong>：一个自包含的 git 仓库，里面是一组 <code>@agentic_function</code>。安装后其函数注册进 OpenProgram，像内置函数一样出现在聊天、Web UI 的 Programs 页和 <code>openprogram programs run</code> 里。</p>
+<p>Agentic Workflow 是用 <a href="/docs/capabilities/agentic-programming/README.html">Agentic Programming</a> 写成的成品工作流——代码里叫 <strong>harness</strong> 或 <strong>agentic program</strong>：一个自包含的 git 仓库，里面是一组 <code>@agentic_function</code>。release 中固定的版本会注册进 OpenProgram，像内置函数一样出现在聊天、Web UI 的 Programs 页和 <code>openprogram programs run</code> 里。</p>
 <p>三个第一方 workflow：</p>
 <table>
 <thead>
 <tr>
 <th>Workflow</th>
-<th>安装名</th>
+<th>Release 状态</th>
 <th>一句话</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="/docs/capabilities/workflows/gui-agent.html">GUI Agent</a></td>
-<td><code>gui</code></td>
+<td>已包含</td>
 <td>给一句任务，自主操作桌面（截图 → 识别 → 点击 → 验证循环）</td>
 </tr>
 <tr>
 <td><a href="/docs/capabilities/workflows/research-agent.html">Research Agent</a></td>
-<td><code>research</code></td>
+<td>已包含</td>
 <td>从研究选题到可提交论文，带确定性核查层</td>
 </tr>
 <tr>
 <td><a href="/docs/capabilities/workflows/wiki-agent.html">Wiki Agent</a></td>
-<td><code>wiki</code></td>
+<td>已包含</td>
 <td>把会话 / 笔记沉淀成模板化 HTML 知识库</td>
 </tr>
 </tbody>
 </table>
 <h2 id="管理命令">管理命令<a class="header-anchor" href="#管理命令">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>list<span class="w">          </span><span class="c1"># 所有已注册的函数与 program</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">     </span><span class="c1"># 可安装项 + 已装第三方 harness 的状态</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>gui<span class="w">   </span><span class="c1"># gui | research | wiki | all</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>available<span class="w">     </span><span class="c1"># 第一方状态 + 已装第三方 harness</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w">   </span><span class="c1"># 任意第三方 harness（git URL 亦可）</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>&lt;ref&gt;<span class="w"> </span>--upgrade<span class="w">  </span><span class="c1"># 重装 / 升级</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>research<span class="w">       </span><span class="c1"># 卸载</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>uninstall<span class="w"> </span>&lt;Harness-Name&gt;<span class="w"> </span><span class="c1"># 删除第三方 harness</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-a<span class="w"> </span><span class="nv">key</span><span class="o">=</span>value<span class="w">  </span><span class="c1"># 直接运行一个 program</span>
 </code></pre>
 <p><code>programs run</code> 还接受 <code>--provider</code>（claude-code / openai-codex / gemini-cli / anthropic / openai / gemini，默认自动探测）和 <code>--model</code> 覆盖模型。</p>
-<p><code>programs install</code> 把Harness克隆到 <code>openprogram/programs/agentic_functions/</code> 下，安装其 <code>pyproject.toml</code> / <code>requirements.txt</code> 声明的依赖，并登记批准的来源。worker重启时只注册已登记的Harness；已有手动克隆可以通过同一条安装命令和Git来源完成登记。</p>
+<p>第一方 Programs 是 immutable 产品组件。在可变扩展或开发环境中，<code>programs install</code> 会克隆额外第三方 harness、安装其声明的依赖并登记批准的来源。</p>
 <h2 id="用哪种方式触发">用哪种方式触发<a class="header-anchor" href="#用哪种方式触发">#</a></h2>
 <ul>
 <li><strong>聊天里</strong>：入口函数以 <code>as_tool=True</code> 注册为工具，直接用自然语言描述任务，模型会调用它（如 <code>gui_agent</code>、<code>research_agent</code>、<code>wiki_agent</code>）。</li>
@@ -179,7 +178,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 </ul>
 <h2 id="编写你自己的">编写你自己的<a class="header-anchor" href="#编写你自己的">#</a></h2>
 <p>任何满足目录契约（<code>&lt;package&gt;/agentics/__init__.py</code> 暴露 <code>AGENTIC_FUNCTIONS</code>）的仓库都能被同一条 <code>programs install</code> 命令安装。契约、最小模板和发布流程见<a href="/docs/capabilities/installing-harnesses.html">安装与编写 Harness</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#是什么">是什么</a>
