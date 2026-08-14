@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786728748">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786730442">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -348,6 +348,8 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>The <code>v0.6.3</code> retry uses the last upstream macOS x86_64-compatible pair, <code>torch 2.2.2</code> and <code>torchvision 0.17.2</code>, together with <code>numpy 1.26.4</code> for NumPy ABI compatibility. All four release targets must resolve this same GUI stack; Linux continues to use the official CPU wheel index.</li>
 <li>Tag <code>v0.6.3</code> remained immutable after run <code>31823941178</code> showed that unconstrained GUI harness installation upgraded NumPy back to 2.x through the current OpenCV dependency, invalidating the Torch 2.2.2 NumPy ABI. No GitHub Release was published from that tag.</li>
 <li>The <code>v0.6.4</code> retry pins <code>opencv-python 4.11.0.86</code> and applies one constraints file to every first-party Program installation so later dependency resolution cannot replace the verified NumPy, OpenCV, Torch, or Torchvision stack.</li>
+<li>Tag <code>v0.6.4</code> remained immutable after run <code>31824996497</code> built and installed all four complete runtimes but exposed an architecture-name mismatch in the Intel macOS Desktop command: release archives use <code>x86_64</code>, while electron-builder accepts <code>x64</code>. No GitHub Release was published from that tag.</li>
+<li>The <code>v0.6.5</code> retry keeps runtime artifact naming unchanged and maps the Intel Desktop builder argument to <code>x64</code>; a release-workflow regression test enforces the explicit mapping for both macOS architectures.</li>
 </ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
