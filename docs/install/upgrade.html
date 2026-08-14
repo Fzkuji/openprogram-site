@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786745518" data-alt-lang-url="/docs/install/upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786748901" data-alt-lang-url="/docs/install/upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Upgrading · OpenProgram Docs</title>
-<meta name="description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . Desktop">
+<meta name="description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . The first">
 <link rel="canonical" href="https://openprogram.io/docs/install/upgrade.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/install/upgrade.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/install/upgrade.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/install/upgrade.html">
 <meta property="og:title" content="Upgrading · OpenProgram Docs">
-<meta property="og:description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . Desktop">
+<meta property="og:description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . The first">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Upgrading · OpenProgram Docs">
-<meta name="twitter:description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . Desktop">
+<meta name="twitter:description" content="Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows origin/main . The first">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -77,31 +77,36 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="维护">Maintenance</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="升级">Upgrading</span></nav><h1 id="upgrading">Upgrading<a class="header-anchor" href="#upgrading">#</a></h1>
 <p>Upgrade behavior depends on the installation type. A stable installation always moves between published versions; it never follows <code>origin/main</code>.</p>
+<p>The first updater-enabled release needs one transition from v0.6.6: Desktop users install that release's DMG manually; CLI/server users rerun the complete release installer once:</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre>
+<p>After that transition, the Desktop settings and <code>openprogram upgrade</code> commands below handle later stable releases.</p>
 <h2 id="desktop-release">Desktop release<a class="header-anchor" href="#desktop-release">#</a></h2>
-<p>Desktop automatic update is not enabled for the current unsigned macOS distribution. Upgrade manually from GitHub Releases:</p>
+<p>The Desktop checks the latest stable GitHub Release automatically. You can also use <strong>Settings → General → Application → Check now</strong>.</p>
 <ul>
-<li>macOS: download the new architecture-matched <code>unsigned</code> DMG, verify its SHA-256, and replace <code>OpenProgram.app</code>; macOS may require <strong>Privacy &amp; Security → Open Anyway</strong> again.</li>
+<li>macOS: when a release is available, choose <strong>Download and open DMG</strong>. OpenProgram selects the architecture-matched complete <code>unsigned</code> DMG, downloads it to the location you choose, verifies its byte count and SHA-256, and opens it. Quit OpenProgram and replace <code>OpenProgram.app</code>; macOS may require <strong>Privacy &amp; Security → Open Anyway</strong> again.</li>
 <li>Linux: rerun the release installer from the target immutable tag. Linux currently has no published desktop package.</li>
 </ul>
 <p>The application shell and complete product runtime are replaced together. State under <code>~/.openprogram</code> remains unchanged.</p>
 <h2 id="cli-and-server-release">CLI and server release<a class="header-anchor" href="#cli-and-server-release">#</a></h2>
-<p>Upgrade to the latest stable release:</p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<p>Check or upgrade to the latest stable release:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>--check
+openprogram<span class="w"> </span>upgrade
 </code></pre>
 <p>To select a specific immutable release instead:</p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.6.1<span class="w"> </span>sh
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span>X.Y.Z<span class="w"> </span>sh
 </code></pre>
-<p>The installer downloads the platform runtime archive used by Desktop, verifies its checksum and complete capability manifest in a new version directory, cold-starts the worker, then changes the <code>current</code> symlink. A failure before the change leaves the previous version selected.</p>
+<p>The command downloads the versioned installer from the immutable release tag. The installer downloads the platform runtime archive used by Desktop, verifies its checksum and complete capability manifest in a new version directory, cold-starts the worker, then changes the <code>current</code> symlink. A failure before the change leaves the previous version selected. A running worker is not restarted automatically.</p>
 <p>Restart a login service after upgrading:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>worker<span class="w"> </span>restart
 </code></pre>
 <h2 id="development-checkout">Development checkout<a class="header-anchor" href="#development-checkout">#</a></h2>
-<p><code>openprogram upgrade</code> applies only to source checkouts. It validates a Git target, updates dependencies and built assets when their source files changed, probes the new checkout, and restarts the worker only after the probe succeeds:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status
+<p>In a source checkout, the same command uses the development pipeline instead of the release installer. It validates a Git target, updates dependencies and built assets when their source files changed, probes the new checkout, and restarts the worker only after the probe succeeds:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>--check
 openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
 openprogram<span class="w"> </span>upgrade
 </code></pre>
-<p>The historical <code>openprogram update</code> command remains a compatibility path for existing installations. It does not define stable desktop or managed CLI release behavior.</p>
+<p>The historical <code>openprogram update</code> command is a compatibility alias for <code>openprogram upgrade</code>.</p>
 <p>See <a href="/docs/server/upgrading.html">Server upgrading</a> for source-checkout recovery details.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/install/install.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Installation</span></a><a class="pn-link pn-next" href="/docs/install/profiles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Profiles</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786745518">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786748901">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -348,6 +348,13 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>Dependency boundary: use existing Electron/Node and Python facilities; do not add an updater package whose macOS install path cannot run under the current distribution contract.</li>
 <li>Implementation and verification evidence will be recorded here incrementally after each reviewed slice.</li>
 </ul>
+<h3 id="incremental-implementation-evidence">Incremental implementation evidence<a class="header-anchor" href="#incremental-implementation-evidence">#</a></h3>
+<ul>
+<li>Design commit <code>2a1765b8</code> defined the stable Release boundary and passed an independent specification review after correcting the legacy updater, manifest-path, redirect, persistence, install-detection, and CLI transaction contracts.</li>
+<li>Runtime correction commit <code>645de752</code> removed worker-start automatic apply, introduced <code>managed_release</code> / <code>source_checkout</code> detection with immutable-runtime precedence, and added the read-only host version endpoint. The focused source/update suite reported 24 passed.</li>
+<li>Desktop commit <code>55803250</code> added dependency-free GitHub latest checks, strict stable metadata and architecture asset selection, unique manifest-basename matching, atomic state persistence, bounded scheduling, verified DMG download, minimal IPC, and the Settings application panel. Desktop and Web checks passed; a live v0.6.6 check resolved the published Release as up to date.</li>
+<li>Managed CLI implementation resolves the same latest stable Release, requires the platform runtime plus checksum assets, reads the versioned installer from the immutable tag, removes archive/checksum source overrides, switches only after the installer's existing cold-start gate, and never restarts the running worker implicitly.</li>
+</ul>
 <h2 id="release-gate-repair-for-v061">Release gate repair for v0.6.1<a class="header-anchor" href="#release-gate-repair-for-v061">#</a></h2>
 <ul>
 <li>Removed four unreferenced legacy Channel modules after the implementations had moved under <code>openprogram/channels/implementations/</code>; the runtime HTTP inventory now scans only active Channel code.</li>
@@ -622,6 +629,7 @@ git status --short
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#formal-release-update-batch">Formal release update batch</a>
+<a class="lvl-3" href="#incremental-implementation-evidence">Incremental implementation evidence</a>
 <a class="" href="#release-gate-repair-for-v061">Release gate repair for v0.6.1</a>
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>
