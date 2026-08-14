@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786725632">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786727023">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -338,6 +338,13 @@ It tracks the bounded implementation, verification, and review evidence for the 
 <li>Local acceptance: the previously failing four tests pass; affected tests report 461 passed; the full non-integration suite reports 5274 passed, 11 skipped, and 1 expected failure. Desktop, Web, release-script, runtime-HTTP, Ruff, and documentation gates pass.</li>
 <li>Windows native packaging remains deferred for a later release decision. This repair does not add a Windows artifact or introduce constraints that prevent a later implementation.</li>
 </ul>
+<h3 id="native-release-result-and-v062-correction">Native release result and v0.6.2 correction<a class="header-anchor" href="#native-release-result-and-v062-correction">#</a></h3>
+<ul>
+<li>Tag <code>v0.6.1</code> remained immutable after release run <code>31820999574</code> failed while resolving the complete macOS x86_64 runtime. No GitHub Release was published from that tag.</li>
+<li>Root cause: <code>semble 0.2.0</code> constrained <code>tree-sitter-language-pack</code> below 1.8, and the locked 1.6.2 package published no macOS x86_64 wheel.</li>
+<li>Correction: require <code>semble&gt;=0.5.3</code>, whose grammar dependency is <code>semble-grammars</code>; the locked grammar package publishes native wheels for macOS x86_64/arm64 and Linux x86_64/arm64 while preserving the search capability.</li>
+<li>Regression gate: resolve the complete locked product requirements for CPython 3.12 on macOS x86_64 and assert the locked grammar artifact includes that platform. The release retry uses the higher patch version <code>v0.6.2</code>.</li>
+</ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
 <li>Base commit: <code>c1886a3fdf7ba196c42ec9a2c19dca7fe86c12e7</code>.</li>
@@ -581,6 +588,7 @@ git status --short
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#release-gate-repair-for-v061">Release gate repair for v0.6.1</a>
+<a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="" href="#short-public-installer-batch">Short public installer batch</a>
 <a class="" href="#unified-complete-product-batch">Unified complete-product batch</a>
 <a class="lvl-3" href="#current-batch-files">Current-batch files</a>
