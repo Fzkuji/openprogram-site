@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -459,7 +463,7 @@ resolve through <code>resolve_api_key_sync</code>.</li>
 <li><code>providers/anthropic/_claude_code_direct_runtime.py</code> holds the direct
 ClaudeCodeRuntime.</li>
 <li><code>providers/registry.py</code> points <code>claude-code</code> at it.</li>
-<li><code>tests/unit/test_claude_code_direct_oauth.py</code> covers the path;
+<li><code>tests/unit/providers/test_claude_code_direct_oauth.py</code> covers the path;
 <code>test_runtime_key_ladder.py</code> mock points target the unified resolution.</li>
 </ul>
 <p><code>_max_proxy_runtime.py</code>, <code>_claude_max_proxy_registry.py</code>, and <code>_meridian_cli.py</code>

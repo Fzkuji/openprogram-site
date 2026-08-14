@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -543,7 +547,7 @@ the webui displays it
 </table>
 <p>An <code>isError=True</code> return is reflected in <code>details[&quot;is_error&quot;]</code>, and what the LLM sees in chat history is the tool-result text, consistent with the error path of local tools.</p>
 <h3 id="5-test-isolation-beware-of-from-openprogrampaths-import-get_state_dir">5. Test isolation — beware of <code>from openprogram.paths import get_state_dir</code><a class="header-anchor" href="#5-test-isolation-beware-of-from-openprogrampaths-import-get_state_dir">#</a></h3>
-<p><code>tests/integration/test_attach_lazy_session.py</code> uses <code>monkeypatch.setattr(&quot;openprogram.paths.get_state_dir&quot;, ...)</code> to redirect the state directory. If <code>config.py</code> pulls it in via <code>from openprogram.paths import get_state_dir</code>, the first import happens <strong>during</strong> the attach test (because the webui startup hook triggers <code>_start_mcp_servers</code> → import <code>openprogram.mcp</code> → import <code>config</code>), and the lambda gets permanently bound into our module, leaking after the attach test ends.</p>
+<p><code>tests/integration/store/test_attach_lazy_session.py</code> uses <code>monkeypatch.setattr(&quot;openprogram.paths.get_state_dir&quot;, ...)</code> to redirect the state directory. If <code>config.py</code> pulls it in via <code>from openprogram.paths import get_state_dir</code>, the first import happens <strong>during</strong> the attach test (because the webui startup hook triggers <code>_start_mcp_servers</code> → import <code>openprogram.mcp</code> → import <code>config</code>), and the lambda gets permanently bound into our module, leaking after the attach test ends.</p>
 <p>Fix: <code>from openprogram import paths as _paths</code>, and look up the attribute live on every call to <code>_paths.get_state_dir()</code>. Watch out: if the test suite adds a new paths monkeypatch, confirm our <code>config.py</code> still goes through the module reference.</p>
 <h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
 <p>The design above is implemented over the stdio transport. The boundaries of
@@ -554,7 +558,7 @@ what is built:</p>
 <li><strong>A config change takes effect on worker restart.</strong> The server list is not hot-reloaded, and <code>MCPClient</code> has no <code>restart</code> between <code>start()</code> and <code>stop()</code>. A <code>restart_server(name)</code> API would remove the need to restart the whole worker.</li>
 <li><strong>Concurrent calls to one server serialize on the ClientSession lock.</strong> <code>MCPClient._call_lock</code> queues them. This is not a performance problem — an MCP server is single-flight to begin with — but one slow tool blocks other tool calls on the same server.</li>
 <li><strong>The tool list is read once.</strong> The supervisor pulls <code>list_tools</code> at startup and never asks again, so tools a server adds or removes mid-flight are invisible. The protocol's <code>tools/list_changed</code> notification is not listened for.</li>
-<li><strong><code>_loaded</code> is a module global.</strong> Tests reset it before re-testing; see the <code>tests/integration/test_mcp_client.py::_reset_mcp_loader_flag</code> fixture.</li>
+<li><strong><code>_loaded</code> is a module global.</strong> Tests reset it before re-testing; see the <code>tests/integration/programs/test_mcp_client.py::_reset_mcp_loader_flag</code> fixture.</li>
 </ol>
 <p>The webui settings page does not yet render <code>server_status()</code>; doing so would
 surface each server's status, error message, tool count, and most recent call

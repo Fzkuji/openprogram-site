@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/memory/written-marker.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/memory/written-marker.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -989,7 +993,7 @@ legacy后续header、正文伪header、v2非法尾部后的frame和缺口后的�
 </ul>
 <p>验证结果如下：</p>
 <ul>
-<li><code>python -m pytest -q tests/unit/test_memory_written_marker.py tests/unit/test_memory_writing.py tests/unit/test_memory_write_timing.py</code>：59项通过。</li>
+<li><code>python -m pytest -q tests/unit/memory/test_memory_written_marker.py tests/unit/memory/test_memory_writing.py tests/unit/memory/test_memory_write_timing.py</code>：59项通过。</li>
 <li>memory、DAG branch、predecessor和session branch相关回归组：159项通过。</li>
 <li><code>python -m tools.docs_site.build</code>构建415页；<code>python -m tools.docs_site.checklinks</code>
 报告0条断链。修改的Python文件通过ruff、<code>py_compile</code>和<code>git diff --check</code>。</li>

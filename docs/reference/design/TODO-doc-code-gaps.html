@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/TODO-doc-code-gaps.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -398,7 +402,7 @@ the upper-level model receives the error → retries and calls itself again.</li
 <li>The situational hint (<code>runtime._situational_prefix</code>) is injected at the start of the user turn, telling the model &quot;you are inside X, calling X = infinite recursion, use the lower-level tools&quot;, with the docstring demoted to the back → directly negating the premise &quot;this should route to wiki_agent&quot;.</li>
 <li>Backstop: <code>_MAX_AGENTIC_RECURSION_DEPTH=5</code>, counted per function name; exceeding 5 levels for the same name raises <code>RecursionError</code>.</li>
 <li>self-deny has been removed, the tool list contains the function itself, relying on guidance rather than hiding.</li>
-<li>Design doc: <code>docs/reference/design/runtime/execution/agentic-self-recursion.md</code>; tests: <code>tests/agentic_programming/test_self_recursion_guard.py</code> (8 cases).</li>
+<li>Design doc: <code>docs/reference/design/runtime/execution/agentic-self-recursion.md</code>; tests: <code>tests/unit/programs/test_self_recursion_guard.py</code> (8 cases).</li>
 </ul>
 </li>
 <li><strong>Remaining</strong> (to do, see #2): scoping the toolset for each harness's exec + detecting cross-function cycles (A→B→A) (currently only direct self-recursion is guarded).</li>

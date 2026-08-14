@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -614,9 +618,9 @@ side-effect bug involved here does not show up in unit tests of the parts.</p>
 <code>head_id</code> unconditionally and <code>save_messages</code> is gone; the CLI turn path
 writes rows through <code>db.append_message</code>.</li>
 <li>§6 graph contract — <code>webui/graph_builder.py</code>.</li>
-<li>§8 invariants — <code>tests/unit/test_compaction_covers.py</code>,
-<code>tests/unit/test_graph_builder_covers.py</code>,
-<code>tests/integration/test_dag_mutation_scenarios.py</code>.</li>
+<li>§8 invariants — <code>tests/unit/context/test_compaction_covers.py</code>,
+<code>tests/unit/dag/test_graph_builder_covers.py</code>,
+<code>tests/integration/dag/test_dag_mutation_scenarios.py</code>.</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>

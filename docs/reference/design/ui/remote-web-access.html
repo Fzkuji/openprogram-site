@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -1277,7 +1281,7 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Stable per-profile owner principal and explicit owner/paired authority tiers</td>
-<td><code>openprogram/agent/authority.py</code>; Web, TUI, desktop, runtime, and paired channel entry points attach a tier; <code>tests/unit/test_authority_scope.py</code> and permission tests cover the fixed tier table</td>
+<td><code>openprogram/agent/authority.py</code>; Web, TUI, desktop, runtime, and paired channel entry points attach a tier; <code>tests/unit/providers/test_authority_scope.py</code> and permission tests cover the fixed tier table</td>
 </tr>
 <tr>
 <td>Owner process credential</td>
@@ -1297,7 +1301,7 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Authenticated URL command</td>
-<td><code>openprogram web auth-url --base-url ...</code>, <code>build_owner_auth_url()</code>, and <code>tests/unit/test_web_auth_url.py</code> cover active-server lookup and effective-origin validation; normal CLI browser launch uses the same fragment URL</td>
+<td><code>openprogram web auth-url --base-url ...</code>, <code>build_owner_auth_url()</code>, and <code>tests/unit/providers/test_web_auth_url.py</code> cover active-server lookup and effective-origin validation; normal CLI browser launch uses the same fragment URL</td>
 </tr>
 <tr>
 <td>Minimal public liveness</td>
@@ -1309,7 +1313,7 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Secret non-retrievability</td>
-<td>Both plaintext reveal forms are gone: the account reveal route is removed and <code>GET /api/config/key/{env_var}?reveal=1</code> returns <code>404</code>; <code>_credential_secrets</code> supplies the single mask and the declared-name check; <code>/api/config</code>, <code>/api/settings</code>, <code>/api/config/verify</code>, <code>DELETE /api/config/key/{env_var}</code>, and the account routes accept only their exact bounded schemas and never return a full secret; the frontend has no reveal action, control, or response type. MCP server credentials follow the same contract: <code>MCPServerConfig.to_storage_dict()</code> holds full values for the config file while <code>to_response_dict()</code> masks every <code>env</code> and <code>headers</code> value plus the bearer token and OAuth client secret, so <code>/api/mcp/servers</code>, <code>/api/mcp/servers/{name}</code>, <code>/api/mcp/catalog</code>, and <code>/api/mcp/catalog/diff</code> return <code>{has_value, masked}</code> rather than values; <code>PATCH /api/mcp/servers/{name}</code> applies preserve (omitted) / replace (new value) / delete (explicit empty) and persists only after the restart succeeds; <code>mcp_servers.json</code> is written <code>0600</code> through a temp file, <code>fsync</code>, and <code>os.replace</code>; <code>tests/unit/test_mcp_secret_non_retrievability.py</code> and <code>web/scripts/check-secret-non-retrieval.mjs</code> cover the response, permission, preserve, and frontend-display halves</td>
+<td>Both plaintext reveal forms are gone: the account reveal route is removed and <code>GET /api/config/key/{env_var}?reveal=1</code> returns <code>404</code>; <code>_credential_secrets</code> supplies the single mask and the declared-name check; <code>/api/config</code>, <code>/api/settings</code>, <code>/api/config/verify</code>, <code>DELETE /api/config/key/{env_var}</code>, and the account routes accept only their exact bounded schemas and never return a full secret; the frontend has no reveal action, control, or response type. MCP server credentials follow the same contract: <code>MCPServerConfig.to_storage_dict()</code> holds full values for the config file while <code>to_response_dict()</code> masks every <code>env</code> and <code>headers</code> value plus the bearer token and OAuth client secret, so <code>/api/mcp/servers</code>, <code>/api/mcp/servers/{name}</code>, <code>/api/mcp/catalog</code>, and <code>/api/mcp/catalog/diff</code> return <code>{has_value, masked}</code> rather than values; <code>PATCH /api/mcp/servers/{name}</code> applies preserve (omitted) / replace (new value) / delete (explicit empty) and persists only after the restart succeeds; <code>mcp_servers.json</code> is written <code>0600</code> through a temp file, <code>fsync</code>, and <code>os.replace</code>; <code>tests/component/programs/test_mcp_secret_non_retrievability.py</code> and <code>web/scripts/check-secret-non-retrieval.mjs</code> cover the response, permission, preserve, and frontend-display halves</td>
 </tr>
 <tr>
 <td>Internal client authentication</td>
@@ -1321,7 +1325,7 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Real-listener transport acceptance</td>
-<td><code>tests/unit/test_web_owner_auth_listener.py</code> binds a real Uvicorn socket on an ephemeral port and covers authenticated and unauthenticated HTTP, SSE authentication with <code>no-store</code>, the raw WebSocket handshake rejected with <code>401</code> and Bearer-realm/<code>no-store</code> headers before accept, bind-failure cleanup, wire-level token rotation, two-profile cookie isolation, the reverse-proxy origin matrix, and a sweep proving the token appears in no response body, header, log, or rendered page</td>
+<td><code>tests/component/providers/test_web_owner_auth_listener.py</code> binds a real Uvicorn socket on an ephemeral port and covers authenticated and unauthenticated HTTP, SSE authentication with <code>no-store</code>, the raw WebSocket handshake rejected with <code>401</code> and Bearer-realm/<code>no-store</code> headers before accept, bind-failure cleanup, wire-level token rotation, two-profile cookie isolation, the reverse-proxy origin matrix, and a sweep proving the token appears in no response body, header, log, or rendered page</td>
 </tr>
 </tbody>
 </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -1159,7 +1163,7 @@ server。</li>
 </tr>
 <tr>
 <td>稳定的 per-profile owner principal 与显式 owner/paired authority tier</td>
-<td><code>openprogram/agent/authority.py</code>；Web、TUI、desktop、runtime 和已配对 channel 入口附加 tier；<code>tests/unit/test_authority_scope.py</code> 与 permission 测试覆盖固定档位表</td>
+<td><code>openprogram/agent/authority.py</code>；Web、TUI、desktop、runtime 和已配对 channel 入口附加 tier；<code>tests/unit/providers/test_authority_scope.py</code> 与 permission 测试覆盖固定档位表</td>
 </tr>
 <tr>
 <td>Owner 进程 credential</td>
@@ -1179,7 +1183,7 @@ server。</li>
 </tr>
 <tr>
 <td>认证 URL 命令</td>
-<td><code>openprogram web auth-url --base-url ...</code>、<code>build_owner_auth_url()</code> 与 <code>tests/unit/test_web_auth_url.py</code> 覆盖 active-server 查找和 effective-Origin 校验；正常 CLI browser launch 使用同一 fragment URL</td>
+<td><code>openprogram web auth-url --base-url ...</code>、<code>build_owner_auth_url()</code> 与 <code>tests/unit/providers/test_web_auth_url.py</code> 覆盖 active-server 查找和 effective-Origin 校验；正常 CLI browser launch 使用同一 fragment URL</td>
 </tr>
 <tr>
 <td>最小公共 liveness</td>
@@ -1191,7 +1195,7 @@ server。</li>
 </tr>
 <tr>
 <td>Secret 不可取回</td>
-<td>两种明文 reveal 形式都已删除：account reveal route 整体移除，<code>GET /api/config/key/{env_var}?reveal=1</code> 返回 <code>404</code>；<code>_credential_secrets</code> 提供统一掩码与 declared-name 校验；<code>/api/config</code>、<code>/api/settings</code>、<code>/api/config/verify</code>、<code>DELETE /api/config/key/{env_var}</code> 和 account route 只接受各自的精确 bounded schema，且不返回完整 secret；frontend 不存在 reveal action、control 或 response type。MCP 服务器凭证遵循同一套契约：<code>MCPServerConfig.to_storage_dict()</code> 只用于写配置文件、保留完整值，<code>to_response_dict()</code> 把每一个 <code>env</code> 和 <code>headers</code> 值以及 bearer token、OAuth client secret 都替换成掩码，因此 <code>/api/mcp/servers</code>、<code>/api/mcp/servers/{name}</code>、<code>/api/mcp/catalog</code>、<code>/api/mcp/catalog/diff</code> 返回的是 <code>{has_value, masked}</code> 而不是值；<code>PATCH /api/mcp/servers/{name}</code> 采用 preserve（未提交）/ replace（提交新值）/ delete（显式空值）语义，且只在 restart 成功后才落盘；<code>mcp_servers.json</code> 经临时文件、<code>fsync</code>、<code>os.replace</code> 以 <code>0600</code> 写入；<code>tests/unit/test_mcp_secret_non_retrievability.py</code> 与 <code>web/scripts/check-secret-non-retrieval.mjs</code> 分别覆盖响应、权限、preserve 语义和前端显示</td>
+<td>两种明文 reveal 形式都已删除：account reveal route 整体移除，<code>GET /api/config/key/{env_var}?reveal=1</code> 返回 <code>404</code>；<code>_credential_secrets</code> 提供统一掩码与 declared-name 校验；<code>/api/config</code>、<code>/api/settings</code>、<code>/api/config/verify</code>、<code>DELETE /api/config/key/{env_var}</code> 和 account route 只接受各自的精确 bounded schema，且不返回完整 secret；frontend 不存在 reveal action、control 或 response type。MCP 服务器凭证遵循同一套契约：<code>MCPServerConfig.to_storage_dict()</code> 只用于写配置文件、保留完整值，<code>to_response_dict()</code> 把每一个 <code>env</code> 和 <code>headers</code> 值以及 bearer token、OAuth client secret 都替换成掩码，因此 <code>/api/mcp/servers</code>、<code>/api/mcp/servers/{name}</code>、<code>/api/mcp/catalog</code>、<code>/api/mcp/catalog/diff</code> 返回的是 <code>{has_value, masked}</code> 而不是值；<code>PATCH /api/mcp/servers/{name}</code> 采用 preserve（未提交）/ replace（提交新值）/ delete（显式空值）语义，且只在 restart 成功后才落盘；<code>mcp_servers.json</code> 经临时文件、<code>fsync</code>、<code>os.replace</code> 以 <code>0600</code> 写入；<code>tests/component/programs/test_mcp_secret_non_retrievability.py</code> 与 <code>web/scripts/check-secret-non-retrieval.mjs</code> 分别覆盖响应、权限、preserve 语义和前端显示</td>
 </tr>
 <tr>
 <td>内部客户端认证</td>
@@ -1203,7 +1207,7 @@ server。</li>
 </tr>
 <tr>
 <td>真实 listener transport 验收</td>
-<td><code>tests/unit/test_web_owner_auth_listener.py</code> 在 ephemeral 端口绑定真实 Uvicorn socket，覆盖带认证与无认证 HTTP、带 <code>no-store</code> 的 SSE 认证、accept 前以 <code>401</code> 加 Bearer-realm/<code>no-store</code> header 拒绝的原始 WebSocket handshake、bind-failure 清理、wire 层 token 轮换、双 profile cookie 隔离、reverse-proxy Origin 矩阵，以及证明 token 不出现在任何 response body、header、日志和渲染页面中的全面扫描</td>
+<td><code>tests/component/providers/test_web_owner_auth_listener.py</code> 在 ephemeral 端口绑定真实 Uvicorn socket，覆盖带认证与无认证 HTTP、带 <code>no-store</code> 的 SSE 认证、accept 前以 <code>401</code> 加 Bearer-realm/<code>no-store</code> header 拒绝的原始 WebSocket handshake、bind-failure 清理、wire 层 token 轮换、双 profile cookie 隔离、reverse-proxy Origin 矩阵，以及证明 token 不出现在任何 response body、header、日志和渲染页面中的全面扫描</td>
 </tr>
 </tbody>
 </table>

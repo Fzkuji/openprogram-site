@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/context/compaction.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/context/compaction.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -561,9 +565,9 @@ memory prefetch）——每处偏离都是数据，不是隐藏状态。</li>
 <code>webui/persistence.py</code> 的 <code>save_meta</code> 无条件剥离 <code>head_id</code>，<code>save_messages</code>
 已删除；CLI 轮次路径经 <code>db.append_message</code> 写行。</li>
 <li>第六节图契约——<code>webui/graph_builder.py</code>。</li>
-<li>第八节不变量——<code>tests/unit/test_compaction_covers.py</code>、
-<code>tests/unit/test_graph_builder_covers.py</code>、
-<code>tests/integration/test_dag_mutation_scenarios.py</code>。</li>
+<li>第八节不变量——<code>tests/unit/context/test_compaction_covers.py</code>、
+<code>tests/unit/dag/test_graph_builder_covers.py</code>、
+<code>tests/integration/dag/test_dag_mutation_scenarios.py</code>。</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>

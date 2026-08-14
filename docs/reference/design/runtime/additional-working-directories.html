@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -438,10 +442,10 @@ _path_is_safe → check_path_safety(path, dirs)   internals/_approval.py:72-82 �
 <h3 id="36-tests">3.6 Tests<a class="header-anchor" href="#36-tests">#</a></h3>
 <p>Following the style of the existing files:</p>
 <ul>
-<li><code>tests/unit/test_session_config.py</code>: <code>additional_working_dirs</code> save/load round-trip, including &quot;None leaves it unchanged&quot; and <code>_as_str_list</code> sanitizing.</li>
-<li><code>tests/unit/test_permission_rules.py</code>: three <code>_path_is_safe</code> cases — allowed inside an additional directory, blocked outside it, and allowed inside the project cwd bound to the ContextVar (monkeypatching <code>current_worktree_path</code>).</li>
-<li><code>tests/unit/test_ws_working_dirs.py</code>: the ws action's valid write plus broadcast, whole-frame rejection for a non-directory, and the <code>session_loaded</code> round-trip.</li>
-<li><code>tests/unit/test_session_main_workdir.py</code>: the main directory's contrasting rules — the freeze, the missing-directory resolution, the relocate record node — plus the case that ties the two together, adding and removing an additional directory on a session whose main directory has already frozen.</li>
+<li><code>tests/unit/store/test_session_config.py</code>: <code>additional_working_dirs</code> save/load round-trip, including &quot;None leaves it unchanged&quot; and <code>_as_str_list</code> sanitizing.</li>
+<li><code>tests/unit/security/test_permission_rules.py</code>: three <code>_path_is_safe</code> cases — allowed inside an additional directory, blocked outside it, and allowed inside the project cwd bound to the ContextVar (monkeypatching <code>current_worktree_path</code>).</li>
+<li><code>tests/unit/webui/test_ws_working_dirs.py</code>: the ws action's valid write plus broadcast, whole-frame rejection for a non-directory, and the <code>session_loaded</code> round-trip.</li>
+<li><code>tests/unit/store/test_session_main_workdir.py</code>: the main directory's contrasting rules — the freeze, the missing-directory resolution, the relocate record node — plus the case that ties the two together, adding and removing an additional directory on a session whose main directory has already frozen.</li>
 </ul>
 <h2 id="4-end-to-end-flow">4. End-to-end flow<a class="header-anchor" href="#4-end-to-end-flow">#</a></h2>
 <pre><code>WorkingDirChips ＋ button

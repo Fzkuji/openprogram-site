@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -419,7 +423,7 @@ table would change the auth-CLI login flow, so it stays until the auth-CLI
 semantics are reconciled.</p>
 <h2 id="6-verification">6. Verification<a class="header-anchor" href="#6-verification">#</a></h2>
 <ul>
-<li><code>tests/unit/test_api_key_resolution.py</code> pins precedence, the config fallback,
+<li><code>tests/unit/providers/test_api_key_resolution.py</code> pins precedence, the config fallback,
 cloud-credential <code>is_configured</code> returning True with no key, the reverse map,
 Anthropic OAuth-over-key, and Google's three names.</li>
 <li>Cross-surface: for each configured provider, the runtime path and the webui

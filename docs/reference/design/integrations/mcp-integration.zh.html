@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -542,7 +546,7 @@ webui 显示
 </table>
 <p><code>isError=True</code> 的返回会在 <code>details[&quot;is_error&quot;]</code> 体现,LLM 看到的 chat 历史里就是工具结果文本,跟本地工具的 error path 一致。</p>
 <h3 id="5-测试隔离-警惕-from-openprogrampaths-import-get_state_dir">5. 测试隔离 — 警惕 <code>from openprogram.paths import get_state_dir</code><a class="header-anchor" href="#5-测试隔离-警惕-from-openprogrampaths-import-get_state_dir">#</a></h3>
-<p><code>tests/integration/test_attach_lazy_session.py</code> 用 <code>monkeypatch.setattr(&quot;openprogram.paths.get_state_dir&quot;, ...)</code> 重定向 state 目录。如果 <code>config.py</code> 用 <code>from openprogram.paths import get_state_dir</code> 引入,首次 import 发生在 attach 测试<strong>期间</strong>(因为 webui startup hook 触发 <code>_start_mcp_servers</code> → import <code>openprogram.mcp</code> → import <code>config</code>),lambda 会被永久 binding 到我们模块,attach 测试结束后泄漏。</p>
+<p><code>tests/integration/store/test_attach_lazy_session.py</code> 用 <code>monkeypatch.setattr(&quot;openprogram.paths.get_state_dir&quot;, ...)</code> 重定向 state 目录。如果 <code>config.py</code> 用 <code>from openprogram.paths import get_state_dir</code> 引入,首次 import 发生在 attach 测试<strong>期间</strong>(因为 webui startup hook 触发 <code>_start_mcp_servers</code> → import <code>openprogram.mcp</code> → import <code>config</code>),lambda 会被永久 binding 到我们模块,attach 测试结束后泄漏。</p>
 <p>修复:<code>from openprogram import paths as _paths</code>,每次调 <code>_paths.get_state_dir()</code> 现查 attribute。监控:test 套件如果加新的 paths monkeypatch,确认我们的 <code>config.py</code> 仍然走 module reference。</p>
 <h2 id="附录实现状态">附录：实现状态<a class="header-anchor" href="#附录实现状态">#</a></h2>
 <p>上述设计已在 stdio 传输上实现。已建成部分的边界：</p>
@@ -552,7 +556,7 @@ webui 显示
 <li><strong>配置改动在 worker 重启后生效。</strong> server 列表不做热重载，<code>MCPClient</code> 在 <code>start()</code> 与 <code>stop()</code> 之间没有 <code>restart</code>。提供 <code>restart_server(name)</code> API 可以免去重启整个 worker。</li>
 <li><strong>对同一 server 的并发调用在 ClientSession 锁上串行。</strong> <code>MCPClient._call_lock</code> 让它们排队。这不是性能问题——MCP server 本来就是单飞行的——但一个慢工具会阻塞同 server 上的其他工具调用。</li>
 <li><strong>工具列表只读取一次。</strong> supervisor 在启动时拉一次 <code>list_tools</code>，之后不再询问，因此 server 中途增删的工具不可见。协议的 <code>tools/list_changed</code> 通知没有被监听。</li>
-<li><strong><code>_loaded</code> 是模块全局变量。</strong> 测试需要重置后才能复测，见 <code>tests/integration/test_mcp_client.py::_reset_mcp_loader_flag</code> fixture。</li>
+<li><strong><code>_loaded</code> 是模块全局变量。</strong> 测试需要重置后才能复测，见 <code>tests/integration/programs/test_mcp_client.py::_reset_mcp_loader_flag</code> fixture。</li>
 </ol>
 <p>webui 设置页面尚未渲染 <code>server_status()</code>；渲染它可以展示每个 server 的状态、
 错误信息、工具数量与最近一次调用结果。</p>

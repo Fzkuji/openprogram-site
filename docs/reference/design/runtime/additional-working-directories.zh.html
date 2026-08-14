@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -437,10 +441,10 @@ _path_is_safe → check_path_safety(path, dirs)   internals/_approval.py:72-82 �
 <h3 id="36-测试">3.6 测试<a class="header-anchor" href="#36-测试">#</a></h3>
 <p>跟随既有文件风格：</p>
 <ul>
-<li><code>tests/unit/test_session_config.py</code>：<code>additional_working_dirs</code> save/load 往返（含 None 不动、<code>_as_str_list</code> 清洗）。</li>
-<li><code>tests/unit/test_permission_rules.py</code>：<code>_path_is_safe</code> 三例——额外目录内放行、目录外拦、ContextVar 绑定的项目 cwd 内放行（monkeypatch <code>current_worktree_path</code>）。</li>
-<li><code>tests/unit/test_ws_working_dirs.py</code>：ws action 的合法写入+广播、非目录整帧拒绝、<code>session_loaded</code> 回带。</li>
-<li><code>tests/unit/test_session_main_workdir.py</code>：主目录那侧的相反规则——定格、目录缺失时的解析、relocate 记录节点——外加把两者串起来的那条：主目录已定格的会话上照样增删额外目录。</li>
+<li><code>tests/unit/store/test_session_config.py</code>：<code>additional_working_dirs</code> save/load 往返（含 None 不动、<code>_as_str_list</code> 清洗）。</li>
+<li><code>tests/unit/security/test_permission_rules.py</code>：<code>_path_is_safe</code> 三例——额外目录内放行、目录外拦、ContextVar 绑定的项目 cwd 内放行（monkeypatch <code>current_worktree_path</code>）。</li>
+<li><code>tests/unit/webui/test_ws_working_dirs.py</code>：ws action 的合法写入+广播、非目录整帧拒绝、<code>session_loaded</code> 回带。</li>
+<li><code>tests/unit/store/test_session_main_workdir.py</code>：主目录那侧的相反规则——定格、目录缺失时的解析、relocate 记录节点——外加把两者串起来的那条：主目录已定格的会话上照样增删额外目录。</li>
 </ul>
 <h2 id="4-数据流总览">4. 数据流总览<a class="header-anchor" href="#4-数据流总览">#</a></h2>
 <pre><code>WorkingDirChips ＋ 按钮

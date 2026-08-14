@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -473,7 +477,7 @@ a hosted gateway.</li>
 <li><code>get_proxy_mounts()</code> uses httpx's parser. If httpx ever privatises or
 moves <code>get_environment_proxies</code>, mirror its semantics — do not invent
 new ones, since divergent semantics is the problem described in §1.</li>
-<li><code>tests/test_http_proxy.py</code> pins the resolution rules (override
+<li><code>tests/component/security/test_http_proxy.py</code> pins the resolution rules (override
 precedence, NO_PROXY bypass, per-URL transport selection).</li>
 </ol>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/error-and-timeout-mechanism.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 报错与超时机制（现状）</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/record-replay.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Recording and replaying provider calls</span></a></div></article></main>

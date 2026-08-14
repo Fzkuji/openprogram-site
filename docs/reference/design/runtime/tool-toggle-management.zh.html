@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -622,10 +626,10 @@ token 全部按原价重读。</p>
 具计价会把目录高估约一个数量级，因为描述恰恰是目录不发的那部分。</li>
 </ul>
 <p>两半中任何一半算错都很难被发现，因为两个误差方向相反，一个看着合理的总数可以同时
-掩盖两者。因此 <code>tests/context/test_budget.py</code> 拿真实 tokenize 的上线载荷，对两半分别
+掩盖两者。因此 <code>tests/unit/context/test_budget.py</code> 拿真实 tokenize 的上线载荷，对两半分别
 校验，各自不超 15%。</p>
 <h3 id="76-应当成立的性质">7.6 应当成立的性质<a class="header-anchor" href="#76-应当成立的性质">#</a></h3>
-<p>回归保护在 <code>tests/context/test_tool_defer.py</code>：</p>
+<p>回归保护在 <code>tests/unit/context/test_tool_defer.py</code>：</p>
 <ul>
 <li>新会话的常驻数组里不出现任何 <code>DEFERRED_DEFAULT_TOOLS</code> 成员，<code>RESIDENT_TOOLS</code> 里也没有</li>
 <li>它们全都出现在目录里，以及装配后的系统提示里</li>
@@ -677,7 +681,7 @@ token 全部按原价重读。</p>
 <h3 id="92-关键设计点别破坏">9.2 关键设计点（别破坏）<a class="header-anchor" href="#92-关键设计点别破坏">#</a></h3>
 <ul>
 <li><strong>展开必须确定性</strong>：工具数组在 prompt 缓存前缀根部，顺序一抖整段缓存 miss。当前
-<code>agent_tools</code> 按 names/registry 顺序返回，天然稳定——<code>tests/unit/test_tool_expansion_deterministic.py</code>
+<code>agent_tools</code> 按 names/registry 顺序返回，天然稳定——<code>tests/unit/programs/test_tool_expansion_deterministic.py</code>
 锁住它。<strong>以后改 <code>agent_tools</code> / <code>_filter_agent_tools</code> 切勿引入 <code>set()</code> 迭代 /
 dict churn 破坏顺序</strong>，否则缓存会无声失效（不报错，只是悄悄变贵）。</li>
 <li><strong>绝不把&quot;全部工具&quot;物化成 list 存进会话</strong>：全部工具永远由 <code>{enabled: True}</code> 意图
@@ -690,13 +694,13 @@ tool_use↔tool_result 配对 → provider 400）。</li>
 </ul>
 <h3 id="93-测试回归保护">9.3 测试（回归保护）<a class="header-anchor" href="#93-测试回归保护">#</a></h3>
 <ul>
-<li><code>tests/unit/test_tool_expansion_deterministic.py</code> — 展开确定性（缓存前缀稳定）</li>
-<li><code>tests/unit/test_session_config_tools_intent.py</code> — 意图往返、用户精选 list 原样透传、
+<li><code>tests/unit/programs/test_tool_expansion_deterministic.py</code> — 展开确定性（缓存前缀稳定）</li>
+<li><code>tests/unit/store/test_session_config_tools_intent.py</code> — 意图往返、用户精选 list 原样透传、
 端到端：意图展开含新工具（send_message/list_sessions）+ web_search 叠加生效</li>
-<li><code>tests/unit/test_session_config.py::test_tools_enabled_yields_live_intent_not_snapshot</code> —
+<li><code>tests/unit/store/test_session_config.py::test_tools_enabled_yields_live_intent_not_snapshot</code> —
 <code>tools=True</code> 产出 <code>{enabled:True}</code> 意图而非 list 快照</li>
-<li><code>tests/context/test_tool_defer.py</code> — §7.6 的各项 defer 性质，含轮边界冻结</li>
-<li><code>tests/context/test_budget.py</code> — 工具计价两半各自对真实 tokenize 载荷校验（§7.5）</li>
+<li><code>tests/unit/context/test_tool_defer.py</code> — §7.6 的各项 defer 性质，含轮边界冻结</li>
+<li><code>tests/unit/context/test_budget.py</code> — 工具计价两半各自对真实 tokenize 载荷校验（§7.5）</li>
 </ul>
 <h3 id="94-扩展点">9.4 扩展点<a class="header-anchor" href="#94-扩展点">#</a></h3>
 <ul>

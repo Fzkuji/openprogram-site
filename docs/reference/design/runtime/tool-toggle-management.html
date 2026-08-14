@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732020" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786732581" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -300,6 +300,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Scheduler</div>
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
@@ -647,10 +651,10 @@ description is precisely what the catalog does not send.</li>
 </ul>
 <p>Getting either half wrong is easy to miss, because the two errors point in
 opposite directions and a plausible-looking total can hide both.
-<code>tests/context/test_budget.py</code> therefore checks each half against a real
+<code>tests/unit/context/test_budget.py</code> therefore checks each half against a real
 tokenized wire payload separately, within 15%.</p>
 <h3 id="76-properties-that-should-hold">7.6 Properties that should hold<a class="header-anchor" href="#76-properties-that-should-hold">#</a></h3>
-<p>Regression coverage lives in <code>tests/context/test_tool_defer.py</code>:</p>
+<p>Regression coverage lives in <code>tests/unit/context/test_tool_defer.py</code>:</p>
 <ul>
 <li>no member of <code>DEFERRED_DEFAULT_TOOLS</code> appears in the resident array of a
 fresh session, nor in <code>RESIDENT_TOOLS</code></li>
@@ -705,18 +709,18 @@ yet in the array still resolves for dispatch</li>
 </table>
 <h3 id="92-key-design-points-do-not-break">9.2 Key design points (do not break)<a class="header-anchor" href="#92-key-design-points-do-not-break">#</a></h3>
 <ul>
-<li><strong>Expansion must be deterministic</strong>: the tool array is at the root of the prompt cache prefix, and any ordering wobble misses the whole cache. Today <code>agent_tools</code> returns in names/registry order, which is naturally stable, and <code>tests/unit/test_tool_expansion_deterministic.py</code> locks that in. <strong>When changing <code>agent_tools</code> / <code>_filter_agent_tools</code> later, do not introduce <code>set()</code> iteration or dict churn that breaks the order</strong> — the cache would fail silently (no error, just quietly more expensive).</li>
+<li><strong>Expansion must be deterministic</strong>: the tool array is at the root of the prompt cache prefix, and any ordering wobble misses the whole cache. Today <code>agent_tools</code> returns in names/registry order, which is naturally stable, and <code>tests/unit/programs/test_tool_expansion_deterministic.py</code> locks that in. <strong>When changing <code>agent_tools</code> / <code>_filter_agent_tools</code> later, do not introduce <code>set()</code> iteration or dict churn that breaks the order</strong> — the cache would fail silently (no error, just quietly more expensive).</li>
 <li><strong>Never materialize &quot;all tools&quot; into a list stored on the session</strong>: all tools are always expanded live from <code>{enabled: True}</code> intent. <code>list[str]</code> denotes only the few tools a user explicitly picked. This is the design's hard line.</li>
 <li><strong>Do not touch history</strong>: tool toggles govern what can be called next, and never filter or rewrite historical tool_use (that would break tool_use↔tool_result pairing and cause a provider 400).</li>
 <li><strong>The tools array changes only at turn boundaries</strong> (§7.4). Anything that grows it mid-turn discards the cached prefix for the rest of that turn. When a tool needs to become usable sooner, hand the model its schema in a tool result — do not append to the array.</li>
 </ul>
 <h3 id="93-tests-regression-protection">9.3 Tests (regression protection)<a class="header-anchor" href="#93-tests-regression-protection">#</a></h3>
 <ul>
-<li><code>tests/unit/test_tool_expansion_deterministic.py</code> — deterministic expansion (stable cache prefix)</li>
-<li><code>tests/unit/test_session_config_tools_intent.py</code> — intent round-trip, verbatim pass-through of user-picked lists, and end to end: the expanded intent includes new tools (send_message / list_agents) and web_search layering takes effect</li>
-<li><code>tests/unit/test_session_config.py::test_tools_enabled_yields_live_intent_not_snapshot</code> — <code>tools=True</code> produces <code>{enabled:True}</code> intent rather than a list snapshot</li>
-<li><code>tests/context/test_tool_defer.py</code> — the deferral properties of §7.6, including the turn-boundary freeze</li>
-<li><code>tests/context/test_budget.py</code> — each half of the tool pricing against a real tokenized payload (§7.5)</li>
+<li><code>tests/unit/programs/test_tool_expansion_deterministic.py</code> — deterministic expansion (stable cache prefix)</li>
+<li><code>tests/unit/store/test_session_config_tools_intent.py</code> — intent round-trip, verbatim pass-through of user-picked lists, and end to end: the expanded intent includes new tools (send_message / list_agents) and web_search layering takes effect</li>
+<li><code>tests/unit/store/test_session_config.py::test_tools_enabled_yields_live_intent_not_snapshot</code> — <code>tools=True</code> produces <code>{enabled:True}</code> intent rather than a list snapshot</li>
+<li><code>tests/unit/context/test_tool_defer.py</code> — the deferral properties of §7.6, including the turn-boundary freeze</li>
+<li><code>tests/unit/context/test_budget.py</code> — each half of the tool pricing against a real tokenized payload (§7.5)</li>
 </ul>
 <h3 id="94-extension-points">9.4 Extension points<a class="header-anchor" href="#94-extension-points">#</a></h3>
 <ul>

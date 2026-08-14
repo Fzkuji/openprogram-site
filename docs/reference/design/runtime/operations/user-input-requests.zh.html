@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -478,7 +482,7 @@ reply/reject 走与 WS 同一收口 <code>_resolve_question</code>。</p>
 <code>agentic_programming/runtime.py</code>（<code>set_question_transport</code>、<code>_ask_raw</code> 走
 <code>self._question_transport</code>）与 <code>agent/process_runner.py</code>（<code>answer_queue</code>、
 answer-pump、<code>_bridge_question_to_parent</code>、<code>_decline_bridged_question</code>）。
-由 <code>tests/agent/test_questions_subprocess_bridge.py</code>（8 个单测）与一次真 spawn
+由 <code>tests/component/agent/test_questions_subprocess_bridge.py</code>（8 个单测）与一次真 spawn
 子进程的端到端验证覆盖。</p>
 <p>尚未落地：TUI 界面（question/approval 提示放在输入槽位里，在 tui-upgrade.md
 中跟踪），以及上文描述的审批合流、channels 与 <code>runtime.form</code>。</p>

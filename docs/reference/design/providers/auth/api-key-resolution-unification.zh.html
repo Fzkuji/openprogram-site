@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732020" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786732581" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -302,6 +302,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/scheduler/scheduler-memory.html">OpenProgram Scheduler 与 Memory 接口</a>
 </div>
 <div class="nav-sec">
+<div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
 <div class="nav-sec-title">Web UI</div>
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -404,7 +408,7 @@ anthropic 把 OAuth 放在最前。它们回答的是不同的问题，因此 <c
 从规范表派生它会改变 auth-CLI 的登录流程，所以在 auth-CLI 语义理顺之前它保持原样。</p>
 <h2 id="6-验证">6. 验证<a class="header-anchor" href="#6-验证">#</a></h2>
 <ul>
-<li><code>tests/unit/test_api_key_resolution.py</code> 固定了优先级、config 兜底、无 key 时
+<li><code>tests/unit/providers/test_api_key_resolution.py</code> 固定了优先级、config 兜底、无 key 时
 云凭据 <code>is_configured</code> 为 True、反向映射、Anthropic OAuth 优先于 key，以及
 Google 的三个名称。</li>
 <li>跨界面：对每个已配置的 provider，运行时路径与 webui 路径解析结果一致。</li>
