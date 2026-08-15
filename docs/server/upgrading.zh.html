@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786749958" data-alt-lang-url="/docs/server/upgrading.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786753993" data-alt-lang-url="/docs/server/upgrading.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>升级 · OpenProgram Docs</title>
-<meta name="description" content="openprogram upgrade 更新代码并重启服务，但只在验证过新代码确实能启动之后才重启。 它是&quot; git pull 然后 openprogram restart &quot;的安全替代。 它解决的问题是：OpenProgram 以可编辑安装（editable install）的方式装在仓库里，">
+<meta name="description" content="openprogram upgrade 根据安装类型选择行为。managed release 安装最新 stable GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文 记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。">
 <link rel="canonical" href="https://openprogram.io/docs/server/upgrading.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/server/upgrading.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/server/upgrading.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/server/upgrading.zh.html">
 <meta property="og:title" content="升级 · OpenProgram Docs">
-<meta property="og:description" content="openprogram upgrade 更新代码并重启服务，但只在验证过新代码确实能启动之后才重启。 它是&quot; git pull 然后 openprogram restart &quot;的安全替代。 它解决的问题是：OpenProgram 以可编辑安装（editable install）的方式装在仓库里，">
+<meta property="og:description" content="openprogram upgrade 根据安装类型选择行为。managed release 安装最新 stable GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文 记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="升级 · OpenProgram Docs">
-<meta name="twitter:description" content="openprogram upgrade 更新代码并重启服务，但只在验证过新代码确实能启动之后才重启。 它是&quot; git pull 然后 openprogram restart &quot;的安全替代。 它解决的问题是：OpenProgram 以可编辑安装（editable install）的方式装在仓库里，">
+<meta name="twitter:description" content="openprogram upgrade 根据安装类型选择行为。managed release 安装最新 stable GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文 记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -78,15 +78,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="服务与运维">Server &amp; Ops</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运维">Operations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="升级">Upgrading</span></nav><h1 id="升级">升级<a class="header-anchor" href="#升级">#</a></h1>
-<p><code>openprogram upgrade</code> 更新代码并重启服务，但只在验证过新代码确实能启动之后才重启。
-它是&quot;<code>git pull</code> 然后 <code>openprogram restart</code>&quot;的安全替代。</p>
+<p><code>openprogram upgrade</code> 根据安装类型选择行为。managed release 安装最新 stable
+GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文
+记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。</p>
+<p>Desktop 与 managed CLI/server 的 release 升级，以及 v0.6.6 的一次性过渡，见
+<a href="/docs/install/upgrade.zh.html">升级 release 安装</a>。</p>
+<h2 id="source-checkout-行为">Source checkout 行为<a class="header-anchor" href="#source-checkout-行为">#</a></h2>
+<p>对于 source checkout，<code>upgrade</code> 是&quot;<code>git pull</code> 然后 <code>openprogram restart</code>&quot;的安全替代。</p>
 <p>它解决的问题是：OpenProgram 以可编辑安装（editable install）的方式装在仓库里，
 所以它运行的仓库就是它开发的仓库。一个坏提交在下次重启前都看不出来，
 而等到那时，本来能用来修复它的工具正好就是坏掉的那个。<code>upgrade</code> 把这个失败提前，
 挪到一个没人依赖的临时进程里。</p>
 <h2 id="快速参考">快速参考<a class="header-anchor" href="#快速参考">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status<span class="w">          </span><span class="c1"># 会变什么？只读</span>
-openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run<span class="w">       </span><span class="c1"># 打印计划，什么都不改</span>
+openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run<span class="w">       </span><span class="c1"># 打印计划，不移动代码或 worker</span>
 openprogram<span class="w"> </span>upgrade<span class="w">                 </span><span class="c1"># 执行</span>
 </code></pre>
 <h2 id="执行过程">执行过程<a class="header-anchor" href="#执行过程">#</a></h2>
@@ -140,7 +145,8 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 <span class="go">  update         available</span>
 </code></pre>
 <p>加 <code>--json</code> 得到机器可读输出（<code>head_sha</code>、<code>target_sha</code>、<code>update_available</code>）。</p>
-<p><code>--dry-run</code> 解析目标并打印将要执行的步骤，不改动任何东西：</p>
+<p><code>--dry-run</code> 解析目标并打印将要执行的步骤，不修改 checkout、worker 或 upgrade
+state；如果同时显式传入 <code>--channel</code>，该 source-channel 选择仍会持久化：</p>
 <pre><code class="language-console"><span class="gp">$ </span>openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
 <span class="go">  [OK  ] preflight  stable → origin/main: 80d77d1ed44c → 1a4101433b13</span>
 <span class="go">  [OK  ] checkout   planned (dry run)</span>
@@ -161,7 +167,7 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 <tbody>
 <tr>
 <td><code>--dry-run</code></td>
-<td>打印计划步骤，不做改动</td>
+<td>打印计划步骤，不修改 checkout、worker 或 upgrade state；显式传入的 <code>--channel</code> 仍会持久化</td>
 </tr>
 <tr>
 <td><code>--no-restart</code></td>
@@ -181,9 +187,10 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 </tr>
 </tbody>
 </table>
-<h2 id="通道channel">通道（Channel）<a class="header-anchor" href="#通道channel">#</a></h2>
-<p>通道是要跟踪的 ref 的名字。<code>stable</code> 跟随 <code>origin/main</code>，也是唯一内置的通道。
-<code>--channel</code> 会把你的选择持久化为 <code>update.channel</code> 设置，之后运行就不用再加参数。</p>
+<h2 id="source-checkout-通道channel">Source checkout 通道（Channel）<a class="header-anchor" href="#source-checkout-通道channel">#</a></h2>
+<p>source-checkout channel 是要跟踪的 ref 名称。<code>stable</code> 跟随 <code>origin/main</code>，也是唯一
+内置的通道；这里的 stable 是开发 ref，不是 managed installation 使用的 stable GitHub
+Release。<code>--channel</code> 会把选择持久化为 <code>update.channel</code> 设置，之后运行不必重复传参。</p>
 <h2 id="某个步骤失败时">某个步骤失败时<a class="header-anchor" href="#某个步骤失败时">#</a></h2>
 <p>失败会打印原因码（<code>dirty-worktree</code>、<code>probe-failed</code>、<code>build-failed</code>、
 <code>verify-failed</code> 等）并以非零状态退出。</p>
@@ -218,11 +225,12 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#source-checkout-行为">Source checkout 行为</a>
 <a class="" href="#快速参考">快速参考</a>
 <a class="" href="#执行过程">执行过程</a>
 <a class="" href="#决定升级前先确认">决定升级前先确认</a>
 <a class="" href="#参数">参数</a>
-<a class="" href="#通道channel">通道（Channel）</a>
+<a class="" href="#source-checkout-通道channel">Source checkout 通道（Channel）</a>
 <a class="" href="#某个步骤失败时">某个步骤失败时</a>
 <a class="" href="#相关">相关</a>
 </div></aside>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786749958">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -111,8 +111,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
-<a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本更新设计</a>
 <a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
+<a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本自动更新</a>
 <a class="navlink active" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
 </div>
 <div class="nav-sec">
@@ -163,7 +163,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Plans</div>
 <a class="navlink" href="/docs/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/docs/reference/design/plans/cache-control-passthrough.html" data-href-zh="/docs/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
-<a class="navlink" href="/docs/reference/design/plans/2026-08-15-formal-release-updates.html">Formal release updates task brief</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-08-12-mcp-server.html">MCP Server Implementation Plan</a>
 <a class="navlink" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
 </div>
@@ -241,8 +240,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="source checkout 自更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update for source checkouts</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
@@ -336,25 +335,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Distribution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Installation and distribution implementation plan</span></nav><h1 id="installation-and-distribution-implementation-plan">Installation and distribution implementation plan<a class="header-anchor" href="#installation-and-distribution-implementation-plan">#</a></h1>
 <p>This engineering record is intentionally separate from the authoritative HTML design.
 It tracks the bounded implementation, verification, and review evidence for the current distribution work.</p>
-<h2 id="formal-release-update-batch">Formal release update batch<a class="header-anchor" href="#formal-release-update-batch">#</a></h2>
-<ul>
-<li>Authoritative design: <code>docs/reference/design/distribution/automatic-updates.html</code>.</li>
-<li>Task brief: <code>docs/reference/design/plans/2026-08-15-formal-release-updates.md</code>.</li>
-<li>Stable update source: the latest non-draft, non-prerelease GitHub Release; ordinary installations never follow <code>main</code> commits.</li>
-<li>Desktop contract: automatically check, select the complete architecture-matched unsigned DMG, verify size and SHA-256, and open the verified DMG. The current distribution does not claim unattended app replacement.</li>
-<li>CLI/server contract: reuse the existing complete-runtime installer and atomic <code>current</code> switch. Source checkouts keep the separate explicit Git update pipeline.</li>
-<li>Existing-updater correction: remove worker-start automatic apply, prevent immutable runtimes from using Git/PyPI update paths, and make <code>openprogram update</code> a compatibility entry for the explicit upgrade command.</li>
-<li>Runtime transaction boundary: a managed CLI upgrade succeeds when the verified new runtime becomes <code>current</code>; it does not stop or restart an existing worker and tells the user to restart explicitly.</li>
-<li>Dependency boundary: use existing Electron/Node and Python facilities; do not add an updater package whose macOS install path cannot run under the current distribution contract.</li>
-<li>Implementation and verification evidence will be recorded here incrementally after each reviewed slice.</li>
-</ul>
-<h3 id="incremental-implementation-evidence">Incremental implementation evidence<a class="header-anchor" href="#incremental-implementation-evidence">#</a></h3>
-<ul>
-<li>Design commit <code>2a1765b8</code> defined the stable Release boundary and passed an independent specification review after correcting the legacy updater, manifest-path, redirect, persistence, install-detection, and CLI transaction contracts.</li>
-<li>Runtime correction commit <code>645de752</code> removed worker-start automatic apply, introduced <code>managed_release</code> / <code>source_checkout</code> detection with immutable-runtime precedence, and added the read-only host version endpoint. The focused source/update suite reported 24 passed.</li>
-<li>Desktop commit <code>55803250</code> added dependency-free GitHub latest checks, strict stable metadata and architecture asset selection, unique manifest-basename matching, atomic state persistence, bounded scheduling, verified DMG download, minimal IPC, and the Settings application panel. Desktop and Web checks passed; a live v0.6.6 check resolved the published Release as up to date.</li>
-<li>Managed CLI implementation resolves the same latest stable Release, requires the platform runtime plus checksum assets, reads the versioned installer from the immutable tag, removes archive/checksum source overrides, switches only after the installer's existing cold-start gate, and never restarts the running worker implicitly.</li>
-</ul>
+<p>Formal release update architecture, implementation status, verification evidence,
+and release-visible acceptance are maintained together in
+<code>docs/reference/design/distribution/automatic-updates.html</code>. They are not
+duplicated in this historical distribution ledger.</p>
 <h2 id="release-gate-repair-for-v061">Release gate repair for v0.6.1<a class="header-anchor" href="#release-gate-repair-for-v061">#</a></h2>
 <ul>
 <li>Removed four unreferenced legacy Channel modules after the implementations had moved under <code>openprogram/channels/implementations/</code>; the runtime HTTP inventory now scans only active Channel code.</li>
@@ -625,11 +609,9 @@ git status --short
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/distribution/installation-packaging.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 安装、打包、发布与升级设计</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Extension Gating</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/distribution/automatic-updates.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 正式版本自动更新</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Extension Gating</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#formal-release-update-batch">Formal release update batch</a>
-<a class="lvl-3" href="#incremental-implementation-evidence">Incremental implementation evidence</a>
 <a class="" href="#release-gate-repair-for-v061">Release gate repair for v0.6.1</a>
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>

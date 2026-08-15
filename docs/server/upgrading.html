@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786749958" data-alt-lang-url="/docs/server/upgrading.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993" data-alt-lang-url="/docs/server/upgrading.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Upgrading · OpenProgram Docs</title>
-<meta name="description" content="openprogram upgrade updates the code and restarts the service, but only after proving the new code actually boots. It is the safe replacement for &quot; git pull">
+<meta name="description" content="openprogram upgrade selects behavior from the installation type. A managed release installs the latest stable GitHub Release and leaves the running worker">
 <link rel="canonical" href="https://openprogram.io/docs/server/upgrading.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/server/upgrading.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/server/upgrading.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/server/upgrading.html">
 <meta property="og:title" content="Upgrading · OpenProgram Docs">
-<meta property="og:description" content="openprogram upgrade updates the code and restarts the service, but only after proving the new code actually boots. It is the safe replacement for &quot; git pull">
+<meta property="og:description" content="openprogram upgrade selects behavior from the installation type. A managed release installs the latest stable GitHub Release and leaves the running worker">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Upgrading · OpenProgram Docs">
-<meta name="twitter:description" content="openprogram upgrade updates the code and restarts the service, but only after proving the new code actually boots. It is the safe replacement for &quot; git pull">
+<meta name="twitter:description" content="openprogram upgrade selects behavior from the installation type. A managed release installs the latest stable GitHub Release and leaves the running worker">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -78,9 +78,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="服务与运维">Server &amp; Ops</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运维">Operations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="升级">Upgrading</span></nav><h1 id="upgrading">Upgrading<a class="header-anchor" href="#upgrading">#</a></h1>
-<p><code>openprogram upgrade</code> updates the code and restarts the service, but only
-after proving the new code actually boots. It is the safe replacement for
-&quot;<code>git pull</code> then <code>openprogram restart</code>&quot;.</p>
+<p><code>openprogram upgrade</code> selects behavior from the installation type. A managed
+release installs the latest stable GitHub Release and leaves the running worker
+unchanged until you restart it explicitly. A source checkout uses the gated Git
+pipeline documented on this page: it updates the code and restarts the service
+only after proving the new code boots.</p>
+<p>For Desktop and managed CLI/server releases, including the one-time v0.6.6
+transition, see <a href="/docs/install/upgrade.html">Upgrading a release installation</a>.</p>
+<h2 id="source-checkout-behavior">Source checkout behavior<a class="header-anchor" href="#source-checkout-behavior">#</a></h2>
+<p>For a source checkout, <code>upgrade</code> is the safe replacement for &quot;<code>git pull</code> then
+<code>openprogram restart</code>&quot;.</p>
 <p>The problem it solves: OpenProgram is installed as an editable checkout, so
 the repo it serves from is the repo it develops. A bad commit is invisible
 until the next restart, and by then the tool you would use to fix it is the
@@ -88,7 +95,7 @@ tool that is broken. <code>upgrade</code> moves that failure earlier, to a throw
 process that nobody depends on.</p>
 <h2 id="quick-reference">Quick reference<a class="header-anchor" href="#quick-reference">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status<span class="w">          </span><span class="c1"># what would change? read-only</span>
-openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run<span class="w">       </span><span class="c1"># print the plan, change nothing</span>
+openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run<span class="w">       </span><span class="c1"># print the plan; do not move code or worker</span>
 openprogram<span class="w"> </span>upgrade<span class="w">                 </span><span class="c1"># do it</span>
 </code></pre>
 <h2 id="what-happens">What happens<a class="header-anchor" href="#what-happens">#</a></h2>
@@ -146,7 +153,8 @@ probe, and your service keeps serving the old code.</p>
 <p>Add <code>--json</code> for machine output (<code>head_sha</code>, <code>target_sha</code>,
 <code>update_available</code>).</p>
 <p><code>--dry-run</code> resolves the target and prints the steps it would run without
-touching anything:</p>
+moving the checkout, worker, or upgrade state. If it is combined with an
+explicit <code>--channel</code>, that source-channel choice is still persisted:</p>
 <pre><code class="language-console"><span class="gp">$ </span>openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
 <span class="go">  [OK  ] preflight  stable → origin/main: 80d77d1ed44c → 1a4101433b13</span>
 <span class="go">  [OK  ] checkout   planned (dry run)</span>
@@ -167,7 +175,7 @@ touching anything:</p>
 <tbody>
 <tr>
 <td><code>--dry-run</code></td>
-<td>Print the planned steps, change nothing</td>
+<td>Print the planned steps without changing checkout, worker, or upgrade state; an explicit <code>--channel</code> is still persisted</td>
 </tr>
 <tr>
 <td><code>--no-restart</code></td>
@@ -187,10 +195,11 @@ touching anything:</p>
 </tr>
 </tbody>
 </table>
-<h2 id="channels">Channels<a class="header-anchor" href="#channels">#</a></h2>
-<p>A channel is a name for the ref to track. <code>stable</code> follows <code>origin/main</code> and
-is the only one built in. <code>--channel</code> persists your choice as the
-<code>update.channel</code> setting, so later runs need no flag.</p>
+<h2 id="source-checkout-channels">Source checkout channels<a class="header-anchor" href="#source-checkout-channels">#</a></h2>
+<p>A source-checkout channel is a name for the ref to track. <code>stable</code> follows
+<code>origin/main</code> and is the only one built in. It is a development ref here, not
+the stable GitHub Release consumed by managed installations. <code>--channel</code>
+persists the choice as the <code>update.channel</code> setting, so later runs need no flag.</p>
 <h2 id="when-a-step-fails">When a step fails<a class="header-anchor" href="#when-a-step-fails">#</a></h2>
 <p>The failure prints a reason code (<code>dirty-worktree</code>, <code>probe-failed</code>,
 <code>build-failed</code>, <code>verify-failed</code>, …) and exits non-zero.</p>
@@ -228,11 +237,12 @@ the gated Git pipeline described above.</li>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#source-checkout-behavior">Source checkout behavior</a>
 <a class="" href="#quick-reference">Quick reference</a>
 <a class="" href="#what-happens">What happens</a>
 <a class="" href="#checking-before-committing-to-it">Checking before committing to it</a>
 <a class="" href="#flags">Flags</a>
-<a class="" href="#channels">Channels</a>
+<a class="" href="#source-checkout-channels">Source checkout channels</a>
 <a class="" href="#when-a-step-fails">When a step fails</a>
 <a class="" href="#related">Related</a>
 </div></aside>

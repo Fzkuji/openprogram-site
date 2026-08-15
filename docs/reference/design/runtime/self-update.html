@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786749958" data-alt-lang-url="/docs/reference/design/runtime/self-update.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993" data-alt-lang-url="/docs/reference/design/runtime/self-update.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-update for source checkouts · OpenProgram Docs</title>
-<meta name="description" content="Scope: this document defines updates for development/source checkouts. The release-installed desktop and CLI mechanisms are defined by Installation, packaging,">
+<title>Source checkout upgrades · OpenProgram Docs</title>
+<meta name="description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Self-update for source checkouts"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Source checkout upgrades"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<meta property="og:title" content="Self-update for source checkouts · OpenProgram Docs">
-<meta property="og:description" content="Scope: this document defines updates for development/source checkouts. The release-installed desktop and CLI mechanisms are defined by Installation, packaging,">
+<meta property="og:title" content="Source checkout upgrades · OpenProgram Docs">
+<meta property="og:description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Self-update for source checkouts · OpenProgram Docs">
-<meta name="twitter:description" content="Scope: this document defines updates for development/source checkouts. The release-installed desktop and CLI mechanisms are defined by Installation, packaging,">
+<meta name="twitter:title" content="Source checkout upgrades · OpenProgram Docs">
+<meta name="twitter:description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -113,8 +113,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
-<a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本更新设计</a>
 <a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
+<a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本自动更新</a>
 <a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
 </div>
 <div class="nav-sec">
@@ -165,7 +165,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Plans</div>
 <a class="navlink" href="/docs/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/docs/reference/design/plans/cache-control-passthrough.html" data-href-zh="/docs/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
-<a class="navlink" href="/docs/reference/design/plans/2026-08-15-formal-release-updates.html">Formal release updates task brief</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-08-12-mcp-server.html">MCP Server Implementation Plan</a>
 <a class="navlink" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
 </div>
@@ -243,8 +242,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</a>
-<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="source checkout 自更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-update for source checkouts</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
+<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
@@ -335,224 +334,125 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="source checkout 自更新">Self-update for source checkouts</span></nav><h1 id="self-update-for-source-checkouts">Self-update for source checkouts<a class="header-anchor" href="#self-update-for-source-checkouts">#</a></h1>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Source checkout 升级">Source checkout upgrades</span></nav><h1 id="source-checkout-upgrades">Source checkout upgrades<a class="header-anchor" href="#source-checkout-upgrades">#</a></h1>
 <blockquote>
-<p>Scope: this document defines updates for development/source checkouts. The
-release-installed desktop and CLI mechanisms are defined by
-<a href="/docs/reference/design/distribution/installation-packaging.html">Installation, packaging, release, and upgrade</a>.
-In release installations, <code>stable</code> means a published version; it never means
-<code>origin/main</code>.</p>
+<p>Scope: this document defines the gated Git update path for development/source
+checkouts. The current design for Desktop and managed CLI/server releases is
+<a href="/docs/reference/design/distribution/automatic-updates.html">Automatic updates</a>. Installation and
+packaging remain defined by
+<a href="/docs/reference/design/distribution/installation-packaging.html">Installation, packaging, release, and upgrade</a>.</p>
 </blockquote>
-<h2 id="1-problem">1. Problem<a class="header-anchor" href="#1-problem">#</a></h2>
-<p>Once OpenProgram is the user's only agent tool, it is also the tool that
-develops OpenProgram. Every change then carries the same risk: the process
-serving the chat is the process whose code is being edited. A bad edit must
-never leave the user without a working instance, because the working
-instance is the only way to fix the bad edit.</p>
-<p>Concretely today the risk is worse than it looks: the CLI is a <strong>pip
-editable install pointing at the working repo</strong> (<code>pip show openprogram</code> →
-<code>Location: …/OpenProgram</code>). An agent editing files in the repo is editing
-the live code path of the running server. Python only reads files at import
-time, so the running process is safe until restart — but the <em>next</em> restart
-picks up whatever half-finished state is on disk.</p>
-<h2 id="2-what-already-protects-us">2. What already protects us<a class="header-anchor" href="#2-what-already-protects-us">#</a></h2>
+<h2 id="product-boundary">Product boundary<a class="header-anchor" href="#product-boundary">#</a></h2>
+<p><code>openprogram upgrade</code> first detects the installation type and then selects one
+of two separate implementations:</p>
 <table>
 <thead>
 <tr>
-<th>Property</th>
-<th>Effect</th>
+<th>Installation</th>
+<th>Meaning of <code>stable</code></th>
+<th>Upgrade path</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>All state on disk (<code>~/.openprogram/</code>: sessions, DAG, checkpoints, shadow git)</td>
-<td>A restart loses only the WebSocket connection; the frontend reconnects and history is intact.</td>
+<td>Managed release</td>
+<td>Latest non-draft, non-prerelease GitHub Release</td>
+<td>Verify the complete platform runtime and atomically change <code>current</code>; do not restart a running worker</td>
 </tr>
 <tr>
-<td>Frontend is a static export (<code>web/out/</code>) served by the worker</td>
-<td>UI changes need only <code>next build</code>; zero downtime, no restart.</td>
-</tr>
-<tr>
-<td><code>openprogram restart</code></td>
-<td>Python-side changes apply in seconds, between turns.</td>
-</tr>
-<tr>
-<td><code>--profile &lt;name&gt;</code></td>
-<td>Reroutes config/sessions/logs to <code>~/.openprogram-&lt;name&gt;/</code> — a second instance can run with fully isolated state.</td>
-</tr>
-<tr>
-<td><code>openprogram worker install</code></td>
-<td>Login service with crash-restart: if a bad build dies on boot, the supervisor keeps retrying (which also means a <em>broken</em> build crash-loops — see §5).</td>
-</tr>
-<tr>
-<td><code>openprogram doctor</code></td>
-<td>Existing health checks, reusable as the pre-restart gate.</td>
+<td>Source checkout</td>
+<td><code>origin/main</code></td>
+<td>Run the gated Git pipeline below and restart only after the candidate passes its cold-start probe</td>
 </tr>
 </tbody>
 </table>
-<p>Missing pieces: nothing gates a restart on the code actually working, and
-nothing verifies after a restart that the new code is what is serving.</p>
-<h2 id="3-prior-art">3. Prior art<a class="header-anchor" href="#3-prior-art">#</a></h2>
-<p><strong>OpenClaw</strong> (<code>openclaw update</code>, the closest analogue — a resident gateway
-that updates itself):</p>
-<ul>
-<li>Fixed step chain for source checkouts: git fetch/checkout → deps install
-→ build → <code>doctor</code> → restart gateway → <strong>verify the restarted service
-reports the expected new version</strong>. Any failing step aborts with a
-structured reason (<code>doctor-failed</code>, …) and does <em>not</em> restart.</li>
-<li>The gateway never runs the update inside its own process: it spawns a
-detached helper, exits, and the helper runs the normal CLI update path
-from outside the process tree.</li>
-<li>npm installs are <strong>staged</strong>: install into a temp prefix, verify the
-package tree there, only then swap into the real prefix.</li>
-<li>Downgrades require confirmation (old code may not read new config).</li>
-</ul>
-<p><strong>Claude Code / VS Code</strong>: download and activation are separated — the new
-version lands in its own directory while the current session keeps running
-the old one; the switch happens on next launch. A failed download has zero
-impact.</p>
-<p><strong>Home Assistant / Jupyter</strong>: no hot swap at all — state fully persisted,
-restarts cheap, clients auto-reconnect. This is OpenProgram's current
-model.</p>
-<p><strong>nginx / Caddy</strong>: true zero-downtime binary swap by passing listener fds.
-Overkill for a single-user tool; rejected.</p>
-<h2 id="4-design">4. Design<a class="header-anchor" href="#4-design">#</a></h2>
-<p>Two rules, then a command that enforces them.</p>
-<h3 id="41-rule-1-the-serving-checkout-is-not-the-editing-checkout">4.1 Rule 1 — the serving checkout is not the editing checkout<a class="header-anchor" href="#41-rule-1-the-serving-checkout-is-not-the-editing-checkout">#</a></h3>
-<p>Development happens in a <code>git worktree</code>; the running instance serves a
-stable checkout. The agent edits, tests (<code>pytest</code>, <code>npm run check</code>), and
-builds in the worktree. To try Python changes live, a second instance
-starts from the worktree on another port with <code>--profile dev</code> so its state
-is isolated. Only after verification does the change merge into the
-serving checkout.</p>
-<p>This rule alone already guarantees an always-working instance: the worst
-case is a broken <em>candidate</em>, never a broken <em>server</em>.</p>
-<h3 id="42-rule-2-restart-only-through-the-gate">4.2 Rule 2 — restart only through the gate<a class="header-anchor" href="#42-rule-2-restart-only-through-the-gate">#</a></h3>
-<p><code>openprogram upgrade</code> replaces bare <code>restart</code> for code updates. Step chain,
-mirroring OpenClaw:</p>
+<p>An unknown installation is rejected. A source checkout never presents a commit
+on <code>main</code> as a published product release, and a managed installation never
+falls back to Git, PyPI, a wheel, or an npm package.</p>
+<h2 id="problem">Problem<a class="header-anchor" href="#problem">#</a></h2>
+<p>A source checkout is commonly installed as an editable Python project. Changes
+to that checkout therefore become the next worker's code at restart. An
+unverified <code>git pull</code> followed by <code>openprogram restart</code> can replace a working
+worker with code that does not import, build, or start.</p>
+<p>Development should happen in a separate worktree. The serving checkout stays
+unchanged until the candidate has passed its normal tests and review. The
+upgrade command then provides a second, runtime-specific gate before restart.</p>
+<h2 id="implemented-source-checkout-flow">Implemented source-checkout flow<a class="header-anchor" href="#implemented-source-checkout-flow">#</a></h2>
+<p><code>openprogram upgrade</code> executes these steps in order:</p>
 <ol>
-<li><strong>Preflight</strong> — serving checkout clean? Target ref exists? Downgrade →
-ask.</li>
-<li><strong>Fetch + checkout</strong> the target ref (default: <code>origin/main</code>).</li>
-<li><strong>Deps</strong> — <code>pip install -e .</code> (only if dependency files changed) and
-<code>cd web &amp;&amp; npm ci</code> (only if lockfile changed).</li>
-<li><strong>Build</strong> — <code>next build</code>.</li>
-<li><strong>Doctor gate</strong> — <code>openprogram doctor</code> plus a cold-start probe: launch
-the new code with <code>--profile upgrade-probe</code> on a scratch port, wait for
-<code>/healthz</code>, kill it. Import errors, config-schema breaks, and port
-binding failures are all caught here, before the real instance is
-touched.</li>
-<li><strong>Restart</strong> the real instance.</li>
-<li><strong>Verify</strong> — poll <code>/healthz</code> until it reports the expected git SHA (the
-endpoint gains a <code>version</code>/<code>sha</code> field). Mismatch or timeout →
-<strong>rollback</strong>: <code>git checkout &lt;previous sha&gt;</code> + restart + re-verify.</li>
+<li><strong>Preflight</strong> refuses a dirty checkout, resolves the configured ref, and
+requires confirmation before a downgrade.</li>
+<li><strong>Checkout</strong> fetches and fast-forwards to the target commit.</li>
+<li><strong>Dependencies</strong> runs the editable Python install or <code>npm ci</code> only when the
+corresponding dependency files changed.</li>
+<li><strong>Build</strong> rebuilds the Web export when Web sources changed.</li>
+<li><strong>Probe</strong> starts the candidate under an isolated temporary profile, waits for
+<code>/healthz</code>, and runs the applicable doctor checks.</li>
+<li><strong>Restart</strong> restarts the real worker unless <code>--no-restart</code> was requested.</li>
+<li><strong>Verify</strong> polls <code>/healthz</code> and requires the new Git SHA.</li>
 </ol>
-<p>Every step logs a structured result; any failure before step 6 leaves the
-running instance untouched.</p>
-<h3 id="43-detached-execution">4.3 Detached execution<a class="header-anchor" href="#43-detached-execution">#</a></h3>
-<p>Like OpenClaw, the upgrade must not run to completion inside the process
-being replaced. <code>openprogram upgrade</code> runs as a plain CLI process (it
-already is one — the CLI is separate from the worker), and when invoked
-<em>from a chat turn</em> the tool call spawns it detached (<code>start_new_session</code>)
-so the worker's own restart doesn't kill the upgrade mid-flight. The helper
-writes progress to a sentinel file the new worker reads on boot, so the
-first chat turn after an upgrade can report &quot;upgraded to <sha>&quot; or &quot;rolled
-back: <reason>&quot;.</p>
-<h3 id="44-extension-points-design-for-dont-build-yet">4.4 Extension points (design for, don't build yet)<a class="header-anchor" href="#44-extension-points-design-for-dont-build-yet">#</a></h3>
-<p>Kept open deliberately so later needs slot in without reshaping the
-command:</p>
-<ul>
-<li><strong>Channels.</strong> The current source-checkout implementation resolves its
-historical <code>stable</code> name to <code>origin/main</code>. This name is incompatible with
-release installation and must become <code>dev</code> during the distribution
-migration. Release-installed <code>stable</code> resolves only to a published version.
-CLI shape retains <code>upgrade --channel &lt;name&gt;</code> and <code>upgrade status</code>.</li>
-<li><strong>Distribution methods.</strong> The step chain is expressed as
-<em>resolve target → materialize → verify → activate</em>. Today &quot;materialize&quot;
-is <code>git checkout</code>; a future pip/npm package install implements the same
-four verbs (with OpenClaw-style staged install as its &quot;materialize&quot;).
-Steps 5–7 (probe, restart, verify) are distribution-agnostic already.</li>
-<li><strong>Update source.</strong> Target resolution takes a remote name, defaulting to
-<code>origin</code> — a fork or private mirror is a config value.</li>
-</ul>
-<h3 id="45-what-stays-out-of-scope">4.5 What stays out of scope<a class="header-anchor" href="#45-what-stays-out-of-scope">#</a></h3>
-<ul>
-<li>Hot code reload / fd handover — restart is seconds and sessions survive.</li>
-<li>Automatic background updates — the user (or their agent) initiates.</li>
-</ul>
-<h2 id="5-failure-modes">5. Failure modes<a class="header-anchor" href="#5-failure-modes">#</a></h2>
+<p>Everything before restart leaves the running worker unchanged. A verify failure
+returns <code>verify-failed</code>; in normal text output it also prints the exact manual
+checkout/restart recovery command. Automatic rollback and chat-sentinel
+reporting are not implemented.</p>
+<h2 id="commands-and-channels">Commands and channels<a class="header-anchor" href="#commands-and-channels">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status
+openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
+openprogram<span class="w"> </span>upgrade
+</code></pre>
+<p>For source checkouts, the built-in <code>stable</code> channel intentionally resolves to
+<code>origin/main</code>; this is a development-channel name within the source path only.
+Managed releases interpret <code>stable</code> as the latest published GitHub Release.
+<code>--channel</code> persists a source checkout's selected ref, while managed releases
+accept only <code>stable</code>.</p>
+<p><code>openprogram update</code> remains a compatibility alias for <code>openprogram upgrade</code>.
+The complete command, flag, failure, and manual recovery reference is
+<a href="/docs/server/upgrading.html">Server upgrading</a>.</p>
+<h2 id="failure-semantics">Failure semantics<a class="header-anchor" href="#failure-semantics">#</a></h2>
 <table>
 <thead>
 <tr>
 <th>Failure</th>
-<th>Caught by</th>
 <th>Outcome</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Syntax/import error in new code</td>
-<td>Step 5 cold-start probe</td>
-<td>No restart; instance untouched</td>
+<td>Dirty checkout or unresolved ref</td>
+<td>Stop before checkout</td>
 </tr>
 <tr>
-<td>Schema/config incompatibility</td>
-<td>Step 5 doctor</td>
-<td>No restart</td>
+<td>Dependency, build, doctor, or cold-start probe failure</td>
+<td>Stop before restart; the existing worker continues</td>
 </tr>
 <tr>
-<td>New code boots but serves wrong version (stale build, wrong checkout)</td>
-<td>Step 7 verify</td>
-<td>Auto rollback</td>
+<td>Restart failure</td>
+<td>Return a structured non-zero result</td>
 </tr>
 <tr>
-<td>Rollback itself fails</td>
-<td>Step 7 re-verify</td>
-<td>Sentinel records it; worker supervisor keeps last process alive if possible; manual <code>git checkout</code> + <code>openprogram restart</code> is the documented escape hatch</td>
-</tr>
-<tr>
-<td>Crash-loop under <code>worker install</code> supervisor</td>
-<td>Supervisor restart counter</td>
-<td>Supervisor backs off and pins the previous sha</td>
-</tr>
-<tr>
-<td>Upgrade requested while a turn is running</td>
-<td>Step 1 preflight</td>
-<td>Wait for idle or require <code>--force</code></td>
+<td>Restarted service reports the wrong SHA</td>
+<td>Return <code>verify-failed</code>; normal text output also prints the previous-SHA recovery command</td>
 </tr>
 </tbody>
 </table>
-<h2 id="implementation-status">Implementation Status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<p>The design lands in three layers:</p>
-<ul>
-<li><strong>Rule 1, discipline only</strong> — worktree development, a second instance under
-<code>--profile</code> for live testing, merge then <code>restart</code>. Possible with existing
-flags, and current practice.</li>
-<li><strong><code>openprogram upgrade</code></strong> — the §4.2 step chain without automatic rollback:
-preflight, checkout, deps, build, probe, restart, verify, plus the <code>sha</code>
-field on <code>/healthz</code>. Implemented (<code>openprogram/_cli_cmds/upgrade.py</code>, user
-docs at <code>docs/server/upgrading.md</code>), and structured around the §4.4
-extension points even though one channel and one distribution method exist
-today.</li>
-<li><strong>Automatic recovery</strong> — rollback on verify failure, sentinel reporting into
-the first post-upgrade chat turn, and supervisor back-off pinning. Not yet
-implemented; a failed verify currently prints the manual rollback command
-instead of rolling back.</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programmed Agentic Workflow — agent 自己写程序，再自己执行</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/goal.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session goals — the /goal continuation loop</span></a></div></article></main>
+<p>Progress is recorded in <code>~/.openprogram/upgrade-state.json</code>. Without an
+explicit <code>--channel</code>, <code>--dry-run</code> does not change the checkout, worker, or
+upgrade state. Supplying <code>--channel</code> still persists that source-channel choice.
+<code>--json</code> emits one machine-readable JSON document on every exit path.</p>
+<h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
+<p>The source checkout gate, status/dry-run modes, persisted channel, isolated
+probe, restart, SHA verification, structured failures, and manual recovery
+instruction are implemented in <code>openprogram/_cli_cmds/upgrade.py</code>. Automatic
+rollback remains explicitly out of scope for the current implementation.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/goal.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session goals — the /goal continuation loop</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/tool-toggle-management.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tool toggles and toolset management</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#1-problem">1. Problem</a>
-<a class="" href="#2-what-already-protects-us">2. What already protects us</a>
-<a class="" href="#3-prior-art">3. Prior art</a>
-<a class="" href="#4-design">4. Design</a>
-<a class="lvl-3" href="#41-rule-1-the-serving-checkout-is-not-the-editing-checkout">4.1 Rule 1 — the serving checkout is not the editing checkout</a>
-<a class="lvl-3" href="#42-rule-2-restart-only-through-the-gate">4.2 Rule 2 — restart only through the gate</a>
-<a class="lvl-3" href="#43-detached-execution">4.3 Detached execution</a>
-<a class="lvl-3" href="#44-extension-points-design-for-dont-build-yet">4.4 Extension points (design for, don't build yet)</a>
-<a class="lvl-3" href="#45-what-stays-out-of-scope">4.5 What stays out of scope</a>
-<a class="" href="#5-failure-modes">5. Failure modes</a>
-<a class="" href="#implementation-status">Implementation Status</a>
+<a class="" href="#product-boundary">Product boundary</a>
+<a class="" href="#problem">Problem</a>
+<a class="" href="#implemented-source-checkout-flow">Implemented source-checkout flow</a>
+<a class="" href="#commands-and-channels">Commands and channels</a>
+<a class="" href="#failure-semantics">Failure semantics</a>
+<a class="" href="#implementation-status">Implementation status</a>
 </div></aside>
 </div>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786749958" data-alt-lang-url="/docs/start/faq.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993" data-alt-lang-url="/docs/start/faq.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +95,7 @@ openprogram<span class="w"> </span>setup<span class="w">                </span><
 <h2 id="where-is-my-data-stored">Where is my data stored?<a class="header-anchor" href="#where-is-my-data-stored">#</a></h2>
 <p>Everything lives under <code>~/.openprogram/</code> by default: <code>config.json</code> (configuration), <code>sessions/</code> (sessions), <code>logs/</code> (logs), <code>memory/</code> (memory), <code>usage.db</code> (token usage). With <code>--profile &lt;name&gt;</code> it moves to <code>~/.openprogram-&lt;name&gt;/</code>.</p>
 <h2 id="how-do-i-update-to-the-latest-version">How do I update to the latest version?<a class="header-anchor" href="#how-do-i-update-to-the-latest-version">#</a></h2>
-<p>Stable desktop and CLI installations move only to an explicit published version. macOS desktop users replace the DMG; macOS/Linux CLI/server users run the installer from the target version tag. Source-checkout developers use <code>openprogram upgrade</code>. See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
+<p>Stable installations move only to an explicit published version. The first updater-enabled release requires one transition from v0.6.6: macOS Desktop users install its DMG manually, while macOS/Linux CLI/server users rerun the public installer once. Later Desktop releases are discovered in Settings; managed CLI/server and source-checkout users both run <code>openprogram upgrade</code>, which selects the release or gated Git path from the installation type. See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
 <h2 id="the-page-opened-by-openprogram-web-wont-load">The page opened by <code>openprogram web</code> won't load?<a class="header-anchor" href="#the-page-opened-by-openprogram-web-wont-load">#</a></h2>
 <p>The page to open is <strong>http://localhost:18100</strong> — the single port that serves both the Web UI and API. A release wheel already contains the Web export; reinstall the exact release if it is missing. In a source checkout, run the development installer to rebuild it.</p>
 <h2 id="the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?<a class="header-anchor" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">#</a></h2>

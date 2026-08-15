@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786749958">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -189,11 +189,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>--channel</code> <code>NAME</code></td>
-<td>Release line to follow (default: stable). Persisted as the <code>update.channel</code> setting.</td>
+<td>Release line to follow (default: stable). Source checkouts persist it as the <code>update.channel</code> setting.</td>
 </tr>
 <tr>
 <td><code>--dry-run</code></td>
-<td>Print the planned steps and change nothing.</td>
+<td>Print planned steps without changing checkout, worker, or upgrade state. A source checkout still persists an explicit --channel.</td>
 </tr>
 <tr>
 <td><code>--no-restart</code></td>
@@ -214,7 +214,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h2 id="upgrade-status"><code>upgrade status</code><a class="header-anchor" href="#upgrade-status">#</a></h2>
-<p>Show current/target version or SHA and whether an update is available. Read-only.</p>
+<p>Show current/target version or SHA and whether an update is available. Read-only; source checkouts persist an explicit --channel.</p>
 <table>
 <thead>
 <tr>
@@ -229,7 +229,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>--channel</code> <code>NAME</code></td>
-<td>Report against this channel instead of the configured one.</td>
+<td>For a source checkout, report against and persist this channel instead of the configured one.</td>
 </tr>
 </tbody>
 </table>
