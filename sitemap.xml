@@ -219,6 +219,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use-technical-spec.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.html</loc></url>
@@ -337,6 +338,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-layout-spec.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-live.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/external-program-run-node.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/persistence-observability.html</loc></url>
@@ -422,19 +424,26 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/built-in-browser.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/center-tabs-and-split-layout.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-attachments.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-turn-visual-spec.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-local-attachment-paths.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-responsive-controls.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/fn-form-compact-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent-context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/integrated-terminal.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/interaction-feedback.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/programs-source-categories.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace-prototype.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.zh.html</loc></url>
@@ -442,11 +451,13 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/theme-system.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-home-button.html</loc></url>

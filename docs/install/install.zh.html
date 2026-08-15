@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786753993" data-alt-lang-url="/docs/install/install.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786804382" data-alt-lang-url="/docs/install/install.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>只有发布在 <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a> 中的产物才属于 release 安装。CI artifact 和 source checkout 构建不属于 stable release。</p>
 <h2 id="桌面安装">桌面安装<a class="header-anchor" href="#桌面安装">#</a></h2>
-<p>受支持的 macOS 桌面产物包含 Electron 和完整的平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、默认 OCR/模型数据，以及 GUI、Research、Wiki 三项第一方 Programs；运行时不读取系统 Python、Node.js 或 Git。Linux 当前使用完整 CLI/server release，因为完整 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
+<p>受支持的 macOS 桌面产物包含 Electron 和完整的平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、默认 OCR/模型数据，以及 GUI、Research、Wiki 三项第一方 Programs；运行时不读取系统 Python 或 Node.js。Session 与 Memory 历史需要 Git，<code>openprogram doctor</code> 会检查 Git。Linux 当前使用完整 CLI/server release，因为完整 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
 <h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
 <ol>
 <li>从 GitHub Releases 下载与机器架构对应且文件名包含 <code>unsigned</code> 的 DMG。</li>

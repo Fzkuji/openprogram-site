@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786753993" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786804382" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>Only artifacts attached to a published <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a> are release installations. CI artifacts and source-checkout builds are not stable releases.</p>
 <h2 id="desktop-installation">Desktop installation<a class="header-anchor" href="#desktop-installation">#</a></h2>
-<p>The supported macOS desktop artifact contains Electron and the complete platform product runtime. The runtime includes managed CPython, OpenProgram, the prebuilt Web UI, providers, channels, search, Playwright Chromium, default OCR/model data, and the GUI, Research, and Wiki first-party Programs. It does not use a system Python, Node.js, or Git at runtime. Linux currently uses the complete CLI/server release because the complete AppImage failed its packaging gate; no reduced Linux desktop artifact is published.</p>
+<p>The supported macOS desktop artifact contains Electron and the complete platform product runtime. The runtime includes managed CPython, OpenProgram, the prebuilt Web UI, providers, channels, search, Playwright Chromium, default OCR/model data, and the GUI, Research, and Wiki first-party Programs. It does not use a system Python or Node.js at runtime. Git is required for session and Memory history and is checked by <code>openprogram doctor</code>. Linux currently uses the complete CLI/server release because the complete AppImage failed its packaging gate; no reduced Linux desktop artifact is published.</p>
 <h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
 <ol>
 <li>Download the DMG whose name contains <code>unsigned</code> for the machine architecture from GitHub Releases.</li>
