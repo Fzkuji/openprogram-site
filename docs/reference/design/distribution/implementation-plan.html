@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786915050">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786920073">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -381,6 +381,15 @@ duplicated in this historical distribution ledger.</p>
 <li>Main CI run <code>31828655714</code> passed Python 3.11/3.12/3.13, Web, and documentation/example jobs. The documentation publication run <code>31828655717</code> also passed.</li>
 <li>Post-release public-entry acceptance resolved <code>https://openprogram.io/install</code> through GitHub <code>latest</code> to <code>v0.6.6</code>, installed the macOS arm64 archive into an isolated state and launcher directory, reported <code>openprogram 0.6.6</code>, passed the installer's complete-runtime and <code>/healthz</code> probes, and passed <code>openprogram doctor</code>.</li>
 </ul>
+<h3 id="v070-browser-focused-release-acceptance">v0.7.0 browser-focused release acceptance<a class="header-anchor" href="#v070-browser-focused-release-acceptance">#</a></h3>
+<ul>
+<li>Tag <code>v0.7.0</code> resolves to <code>c7f5916b2b3acb67b936081763945ee080f81b9a</code>; it was created once after main CI run <code>31973024049</code> and documentation publication run <code>31973024046</code> completed successfully.</li>
+<li>Release run <code>31973458867</code> completed successfully. Four native product-runtime jobs, four CLI installer jobs, both macOS Desktop jobs, the Python distribution job, and the final publish job passed.</li>
+<li>The stable <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.7.0">OpenProgram 0.7.0 Release</a> is non-draft and non-prerelease, and GitHub <code>latest</code> resolves to <code>v0.7.0</code>. Its 17 uploaded assets comprise four runtime archives and their checksums, arm64/x64 unsigned DMG and ZIP artifacts and checksum lists, developer wheel/sdist artifacts, and <code>release-manifest.json</code>.</li>
+<li>The published manifest reports version <code>0.7.0</code>; its byte counts and SHA-256 values match the GitHub asset metadata for both macOS Desktop architectures and all four runtime archives.</li>
+<li>Release acceptance used CI package/runtime smoke and read-only release metadata checks. It did not install, replace, activate, or restart the user's current <code>/Applications/OpenProgram.app</code>, so foreground updater UI, long-running scheduling, and sleep/resume behavior remain explicitly unverified.</li>
+<li>The browser release scope includes the built-in Browser, profile import, bookmarks/history, and Agent-bound WebTab control. Chrome/Edge extension installation is intentionally excluded and documented in the authoritative built-in browser design and product FAQ.</li>
+</ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
 <li>Base commit: <code>c1886a3fdf7ba196c42ec9a2c19dca7fe86c12e7</code>.</li>
@@ -626,6 +635,7 @@ git status --short
 <a class="" href="#release-gate-repair-for-v061">Release gate repair for v0.6.1</a>
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>
+<a class="lvl-3" href="#v070-browser-focused-release-acceptance">v0.7.0 browser-focused release acceptance</a>
 <a class="" href="#short-public-installer-batch">Short public installer batch</a>
 <a class="" href="#unified-complete-product-batch">Unified complete-product batch</a>
 <a class="lvl-3" href="#current-batch-files">Current-batch files</a>
