@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786804382" data-alt-lang-url="/docs/server/upgrading.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786915050" data-alt-lang-url="/docs/server/upgrading.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,7 +81,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>openprogram upgrade</code> 根据安装类型选择行为。managed release 安装最新 stable
 GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文
 记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。</p>
-<p>Desktop 与 managed CLI/server 的 release 升级，以及 v0.6.6 的一次性过渡，见
+<p>Desktop 与 managed CLI/server 的 release 升级，以及从 v0.6.6 到 v0.7.0 的一次性过渡，见
 <a href="/docs/install/upgrade.zh.html">升级 release 安装</a>。</p>
 <h2 id="source-checkout-行为">Source checkout 行为<a class="header-anchor" href="#source-checkout-行为">#</a></h2>
 <p>对于 source checkout，<code>upgrade</code> 是&quot;<code>git pull</code> 然后 <code>openprogram restart</code>&quot;的安全替代。</p>
@@ -222,7 +222,7 @@ Release。<code>--channel</code> 会把选择持久化为 <code>update.channel</
 <li><code>openprogram update</code> 是 <code>openprogram upgrade</code> 的兼容别名。managed release
 使用 stable GitHub Release 路径；source checkout 使用上文的 Git 升级流程。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#source-checkout-行为">Source checkout 行为</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786804382" data-alt-lang-url="/docs/start/faq.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786915050" data-alt-lang-url="/docs/start/faq.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +95,7 @@ openprogram<span class="w"> </span>setup<span class="w">                </span><
 <h2 id="where-is-my-data-stored">Where is my data stored?<a class="header-anchor" href="#where-is-my-data-stored">#</a></h2>
 <p>Everything lives under <code>~/.openprogram/</code> by default: <code>config.json</code> (configuration), <code>sessions/</code> (sessions), <code>logs/</code> (logs), <code>memory/</code> (memory), <code>usage.db</code> (token usage). With <code>--profile &lt;name&gt;</code> it moves to <code>~/.openprogram-&lt;name&gt;/</code>.</p>
 <h2 id="how-do-i-update-to-the-latest-version">How do I update to the latest version?<a class="header-anchor" href="#how-do-i-update-to-the-latest-version">#</a></h2>
-<p>Stable installations move only to an explicit published version. The first updater-enabled release requires one transition from v0.6.6: macOS Desktop users install its DMG manually, while macOS/Linux CLI/server users rerun the public installer once. Later Desktop releases are discovered in Settings; managed CLI/server and source-checkout users both run <code>openprogram upgrade</code>, which selects the release or gated Git path from the installation type. See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
+<p>Stable installations move only to an explicit published version. Version 0.7.0 is the first updater-enabled release and the one-time transition from v0.6.6: macOS Desktop users install the v0.7.0 DMG manually, while macOS/Linux CLI/server users rerun the public installer once. Later Desktop releases are discovered in Settings; managed CLI/server and source-checkout users both run <code>openprogram upgrade</code>, which selects the release or gated Git path from the installation type. See <a href="/docs/install/upgrade.html">Upgrading</a>.</p>
 <h2 id="the-page-opened-by-openprogram-web-wont-load">The page opened by <code>openprogram web</code> won't load?<a class="header-anchor" href="#the-page-opened-by-openprogram-web-wont-load">#</a></h2>
 <p>The page to open is <strong>http://localhost:18100</strong> — the single port that serves both the Web UI and API. A release wheel already contains the Web export; reinstall the exact release if it is missing. In a source checkout, run the development installer to rebuild it.</p>
 <h2 id="the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?<a class="header-anchor" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">#</a></h2>
@@ -113,6 +113,9 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="
 </code></pre>
 <h2 id="why-is-the-release-download-large">Why is the release download large?<a class="header-anchor" href="#why-is-the-release-download-large">#</a></h2>
 <p>The complete release includes managed Python, PyTorch, Playwright Chromium, EasyOCR data, the GPA detector, and the GUI, Research, and Wiki Programs. Normal installation does not download these product components separately.</p>
+<h2 id="can-i-install-chrome-or-edge-browser-extensions">Can I install Chrome or Edge browser extensions?<a class="header-anchor" href="#can-i-install-chrome-or-edge-browser-extensions">#</a></h2>
+<p>No. Chrome Web Store and Edge Add-ons pages open as ordinary webpages in the built-in browser, but OpenProgram does not add an extension-install button, download CRX packages, import extensions from another browser, or provide an extension manager. The app uses standard Electron/Chromium; Electron supports only part of the Chrome Extensions API and does not target compatibility with arbitrary Chrome Web Store extensions. OpenProgram does not maintain a custom Chromium/Electron fork or add another browser runtime for extension compatibility. The shipped Playwright Chromium is a browser-automation backend and does not host the Desktop Browser Pane or extensions.</p>
+<p>To extend OpenProgram itself, use <a href="/docs/capabilities/plugins.html">Plugins</a>, Skills, MCP servers, Programs, or agent tools. These extend OpenProgram rather than the embedded webpage runtime.</p>
 <h2 id="an-included-agent-program-doesnt-show-up-in-the-ui">An included agent program doesn't show up in the UI?<a class="header-anchor" href="#an-included-agent-program-doesnt-show-up-in-the-ui">#</a></h2>
 <p>Run <code>openprogram programs available</code> to inspect registration, then restart OpenProgram or use Refresh on the Programs page. A missing first-party Program in a release is a packaging defect, not a feature that the user must install separately.</p>
 <h2 id="multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?<a class="header-anchor" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">#</a></h2>
@@ -127,7 +130,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_id&gt;<span class="w">  </span><span class="c1"># resume it in the terminal</span>
 </code></pre>
 <p>You can also open past sessions directly from the web sidebar.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Daily Use</span></a><a class="pn-link pn-next" href="/docs/install/install.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Installation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/daily-use.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Daily Use</span></a><a class="pn-link pn-next" href="/docs/install/install.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Installation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#port-18100-is-already-in-use">Port 18100 is already in use?</a>
@@ -138,6 +141,7 @@ openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_i
 <a class="" href="#the-service-doesnt-seem-to-be-up-behaves-oddly-how-do-i-debug">The service doesn't seem to be up / behaves oddly — how do I debug?</a>
 <a class="" href="#how-do-i-read-the-logs">How do I read the logs?</a>
 <a class="" href="#why-is-the-release-download-large">Why is the release download large?</a>
+<a class="" href="#can-i-install-chrome-or-edge-browser-extensions">Can I install Chrome or Edge browser extensions?</a>
 <a class="" href="#an-included-agent-program-doesnt-show-up-in-the-ui">An included agent program doesn't show up in the UI?</a>
 <a class="" href="#multiple-accounts-or-keys-for-the-same-provider-how-do-i-switch">Multiple accounts or keys for the same provider — how do I switch?</a>
 <a class="" href="#can-one-machine-run-two-openprograms-at-once">Can one machine run two OpenPrograms at once?</a>

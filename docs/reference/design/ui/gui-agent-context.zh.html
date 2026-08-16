@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786804382" data-alt-lang-url="/docs/reference/design/ui/gui-agent-context.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786915050" data-alt-lang-url="/docs/reference/design/ui/gui-agent-context.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -449,7 +449,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>长 task 跑下来 plan_next_action 的 prompt 会不会因为 gui_step 链太长而过大。如果有 token 压力，给 <code>plan_next_action</code> 或 <code>gui_agent</code> 加 <code>render_range={&quot;callers&quot;: N}</code> 显式截断最近 N 个 gui_step</li>
 <li>screenshot 是 image 节点，N 张大图会撑爆 context。可能要走&quot;压缩老 screenshot 为文字描述&quot;路径，但那是 prompt 层的优化，不是 render_range 层的事</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/indicator-dots.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Indicator dot system</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/indicator-dots.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Indicator dot system</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-调用结构">1. 调用结构</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786804382" data-alt-lang-url="/docs/interfaces/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786915050" data-alt-lang-url="/docs/interfaces/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Interfaces · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram can be used three ways: the Web UI in a browser, the TUI in a terminal, and one-shot invocations on the command line. This page explains how the">
+<meta name="description" content="OpenProgram has four user interfaces: the macOS Desktop App, the Web UI in an external browser, the terminal TUI, and one-shot command-line invocations. This">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/README.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/README.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/README.html">
 <meta property="og:title" content="Interfaces · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram can be used three ways: the Web UI in a browser, the TUI in a terminal, and one-shot invocations on the command line. This page explains how the">
+<meta property="og:description" content="OpenProgram has four user interfaces: the macOS Desktop App, the Web UI in an external browser, the terminal TUI, and one-shot command-line invocations. This">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Interfaces · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram can be used three ways: the Web UI in a browser, the TUI in a terminal, and one-shot invocations on the command line. This page explains how the">
+<meta name="twitter:description" content="OpenProgram has four user interfaces: the macOS Desktop App, the Web UI in an external browser, the terminal TUI, and one-shot command-line invocations. This">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -71,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面">Surfaces</div>
+<a class="navlink" href="/docs/interfaces/desktop.html" data-title-zh="桌面 App 与内置浏览器" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html">Desktop App and built-in browser</a>
 <a class="navlink" href="/docs/interfaces/web.html" data-title-zh="Web UI" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html">Web UI</a>
 <a class="navlink" href="/docs/interfaces/tui.html" data-title-zh="终端 TUI" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html">Terminal TUI</a>
 <a class="navlink" href="/docs/interfaces/cli.html" data-title-zh="CLI" data-href-en="/docs/interfaces/cli.html" data-href-zh="/docs/interfaces/cli.zh.html">CLI</a>
@@ -78,17 +79,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="界面">Interfaces</span></nav><h1 id="interfaces">Interfaces<a class="header-anchor" href="#interfaces">#</a></h1>
-<p>OpenProgram can be used three ways: the Web UI in a browser, the TUI in a terminal, and one-shot invocations on the command line. This page explains how the three relate and helps you pick an entry point.</p>
-<h2 id="three-clients-one-service">Three clients, one service<a class="header-anchor" href="#three-clients-one-service">#</a></h2>
-<p>All three interfaces share the same local background service (called the worker in the code): a resident process hosting the FastAPI + WebSocket backend and the web UI itself, all on a single port (18100 by default), plus optional chat-channel adapters. The Web UI and the terminal TUI both connect to it over WebSocket; if no worker is running, the TUI starts one automatically.</p>
-<p>Sessions all live in <code>~/.openprogram/sessions/</code> (each session is a git repository), and all three interfaces read and write the same store. As a result:</p>
+<p>OpenProgram has four user interfaces: the macOS Desktop App, the Web UI in an external browser, the terminal TUI, and one-shot command-line invocations. This page explains how they relate and helps you pick an entry point.</p>
+<h2 id="four-clients-one-service">Four clients, one service<a class="header-anchor" href="#four-clients-one-service">#</a></h2>
+<p>All four interfaces share the same local background service (called the worker in the code): a resident process hosting the FastAPI + WebSocket backend and the web UI itself, all on a single port (18100 by default), plus optional chat-channel adapters. Desktop embeds the same Web UI and adds native panes for the built-in Browser and Terminal. The Web UI and terminal TUI connect to the worker directly; if no worker is running, Desktop or the TUI starts one automatically.</p>
+<p>Sessions all live in <code>~/.openprogram/sessions/</code> (each session is a git repository), and all four interfaces read and write the same store. As a result:</p>
 <ul>
 <li>A chat started in the terminal shows up in the Web UI sidebar; click it to continue.</li>
 <li>A Web session can be resumed in the terminal via <code>/resume</code> inside the TUI, or continued non-interactively with <code>openprogram --resume &lt;session-id&gt; --print &quot;...&quot;</code>. (The <code>--resume</code> flag does not yet select the session when launching the interactive TUI — use <code>/resume</code> there.)</li>
 <li>Conversations from <code>openprogram --print &quot;...&quot;</code> one-shots are also written to the session store and can be revisited later in any interface.</li>
 </ul>
 <p>Worker management commands: <code>openprogram status</code> / <code>stop</code> / <code>restart</code>; <code>openprogram worker install</code> registers it as a login-launch service. See <code>openprogram -h</code> for details.</p>
-<h2 id="the-three-interfaces">The three interfaces<a class="header-anchor" href="#the-three-interfaces">#</a></h2>
+<h2 id="the-four-interfaces">The four interfaces<a class="header-anchor" href="#the-four-interfaces">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -98,6 +99,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="/docs/interfaces/desktop.html">macOS Desktop</a></td>
+<td>Open <code>/Applications/OpenProgram.app</code></td>
+<td>Multi-pane chat, Files, built-in Browser, Terminal, and Agent control of visible internal webpages</td>
+</tr>
 <tr>
 <td><a href="/docs/interfaces/web.html">Web UI</a></td>
 <td><code>openprogram web</code>, open <code>http://localhost:18100</code> in a browser</td>
@@ -117,11 +123,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <h2 id="isolated-workspaces">Isolated workspaces<a class="header-anchor" href="#isolated-workspaces">#</a></h2>
 <p><code>--profile &lt;name&gt;</code> (or the <code>OPENPROGRAM_PROFILE</code> environment variable) switches the entire state directory from <code>~/.openprogram/</code> to <code>~/.openprogram-&lt;name&gt;/</code> — config, sessions, logs, and credentials are all isolated, and each profile has its own worker. Use it to run multiple independent environments in parallel.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming AI Agents</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming AI Agents</span></a><a class="pn-link pn-next" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Desktop App and built-in browser</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#three-clients-one-service">Three clients, one service</a>
-<a class="" href="#the-three-interfaces">The three interfaces</a>
+<a class="" href="#four-clients-one-service">Four clients, one service</a>
+<a class="" href="#the-four-interfaces">The four interfaces</a>
 <a class="" href="#isolated-workspaces">Isolated workspaces</a>
 </div></aside>
 </div>

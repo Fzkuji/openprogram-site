@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786915050" data-alt-lang-url="/docs/interfaces/desktop.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>桌面 App 与内置浏览器 · OpenProgram Docs</title>
+<meta name="description" content="macOS Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 从 GitHub Releases 下载对应架构的">
+<link rel="canonical" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/desktop.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/interfaces/desktop.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"桌面 App 与内置浏览器"}]}</script>
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="OpenProgram">
+<meta property="og:url" content="https://openprogram.io/docs/interfaces/desktop.zh.html">
+<meta property="og:title" content="桌面 App 与内置浏览器 · OpenProgram Docs">
+<meta property="og:description" content="macOS Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 从 GitHub Releases 下载对应架构的">
+<meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="桌面 App 与内置浏览器 · OpenProgram Docs">
+<meta name="twitter:description" content="macOS Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 从 GitHub Releases 下载对应架构的">
+<meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<script>
+(function(){try{var t=localStorage.getItem('op-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
+<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
+<link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+
+</head>
+<body>
+<header class="topbar">
+  <button class="icon hamburger" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
+  <a class="brand" href="/docs/index.html"><img class="mark" src="/docs/assets/mark.svg" alt="">OpenProgram Docs</a>
+  <div class="spacer"></div>
+  <button class="search-trigger" aria-label="Search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span class="label" data-i18n="search">Search docs</span><kbd>⌘K</kbd>
+  </button>
+  <div class="lang-wrap">
+    <button class="icon lang-trigger" id="lang-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4" stroke-linecap="round"/><ellipse cx="8" cy="8" rx="2.8" ry="6.2"/></svg><span class="lang-label">EN</span><svg class="chev" width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="lang-menu" id="lang-menu" role="menu">
+      <button class="lang-opt" data-lang="en" role="menuitem"><span>English</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
+  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+</header>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+
+<div class="scrim"></div>
+<div class="layout">
+  <nav class="sidebar">
+    <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
+           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="界面">Surfaces</div>
+<a class="navlink active" href="/docs/interfaces/desktop.html" data-title-zh="桌面 App 与内置浏览器" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html">Desktop App and built-in browser</a>
+<a class="navlink" href="/docs/interfaces/web.html" data-title-zh="Web UI" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html">Web UI</a>
+<a class="navlink" href="/docs/interfaces/tui.html" data-title-zh="终端 TUI" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html">Terminal TUI</a>
+<a class="navlink" href="/docs/interfaces/cli.html" data-title-zh="CLI" data-href-en="/docs/interfaces/cli.html" data-href-zh="/docs/interfaces/cli.zh.html">CLI</a>
+<a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器（ACP）" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor (ACP)</a>
+</div></div>
+  </nav>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="桌面 App 与内置浏览器">Desktop App and built-in browser</span></nav><h1 id="桌面-app-与内置浏览器">桌面 App 与内置浏览器<a class="header-anchor" href="#桌面-app-与内置浏览器">#</a></h1>
+<p>macOS Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。</p>
+<p>从 <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a> 下载对应架构的 DMG，把 <code>OpenProgram.app</code> 复制到 <code>/Applications</code> 后启动。当前 release 未签名，首次启动可能需要进入“系统设置 → 隐私与安全性 → 仍要打开”。完整步骤见<a href="/docs/install/install.zh.html">安装</a>。</p>
+<h2 id="打开-browser">打开 Browser<a class="header-anchor" href="#打开-browser">#</a></h2>
+<p>新建 Pane 后选择 <strong>Browser</strong>，或从应用 tab 栏新建浏览器 tab。Browser home 与已加载网页使用同一套浏览器控件：</p>
+<ul>
+<li>Back、Forward、Reload/Stop、Home、地址/搜索输入、收藏当前页、Bookmarks、外部打开和 Browser 菜单。</li>
+<li>默认可见的书签栏；可以从 Browser 菜单或 Browser settings 隐藏。</li>
+<li>响应式控件：Pane 变窄时，低频动作移入 Browser 菜单；地址输入、Back、Reload/Stop、收藏当前页和菜单仍然可用。</li>
+</ul>
+<p>Browser 菜单只管理浏览器动作：新建浏览器 tab、Bookmarks、History、书签栏显示、profile 导入、清除浏览数据和 Browser settings。窗口与 Pane 操作仍归 OpenProgram 窗口菜单管理。</p>
+<h2 id="bookmarks-与-history">Bookmarks 与 History<a class="header-anchor" href="#bookmarks-与-history">#</a></h2>
+<p>书签栏直接显示导入或本地维护的 Bookmarks bar 内容。非空的 Other bookmarks 与 Mobile bookmarks 保持为独立文件夹入口。超出宽度的项目进入有限宽度的溢出菜单；嵌套文件夹逐级展开，并在当前窗口高度内滚动。</p>
+<p>Bookmarks manager 提供文件夹树、当前目录列表、搜索、favicon 和条目菜单。History 按本地日期分组，每行只显示时间、favicon、标题和域名。Desktop Browser 数据与后端状态分开：在 macOS 上，History 与持久化 <code>webtabs</code> partition 位于 <code>~/Library/Application Support/openprogram-desktop/</code>，聊天、项目、Programs 和 worker 配置仍位于 <code>~/.openprogram/</code>。清除浏览数据不会删除这些后端状态。</p>
+<h2 id="导入已有浏览器资料">导入已有浏览器资料<a class="header-anchor" href="#导入已有浏览器资料">#</a></h2>
+<p>在 macOS 上，OpenProgram 可以识别本地 Google Chrome、Brave、Microsoft Edge 和 Chromium profile。导入始终由用户显式发起：分别选择来源浏览器、profile 和需要的数据类型。</p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>History</td>
+<td>在支持的数量上限内复制 HTTP/HTTPS 访问记录，并合并到 OpenProgram History</td>
+</tr>
+<tr>
+<td>Bookmarks</td>
+<td>保留 bookmarks bar、other bookmarks、mobile bookmarks 与嵌套文件夹结构，同时过滤无效 URL 和重复项</td>
+</tr>
+<tr>
+<td>Cookies</td>
+<td>用临时来源浏览器进程解密可用 Cookie，经校验后通过 Electron Cookie API 写入；部分网站仍会要求重新登录</td>
+</tr>
+</tbody>
+</table>
+<p>OpenProgram 不导入密码、支付或地址自动填充数据、下载记录、缓存、localStorage、Service Workers、浏览器扩展或扩展存储，也不修改来源 profile。</p>
+<h2 id="agent-访问分屏-browser-pane">Agent 访问分屏 Browser Pane<a class="header-anchor" href="#agent-访问分屏-browser-pane">#</a></h2>
+<p>当一个聊天轮次所在应用窗口中存在可见的内置 Browser Pane 时，OpenProgram 会在模型首次回复前附加该精确 WebTab 的有限页面描述。Agent 会获得页面标题、origin、可见文本、ARIA landmarks 与浏览器控制工具。Browser Pane 在左侧或右侧都不影响访问，也不要求应用窗口或 Browser Pane 获得操作系统焦点。</p>
+<p>动作始终绑定发起聊天的窗口与 WebTab。默认使用 DOM、ARIA、页面文本和 element refs；只有视觉任务或结构化方式无法定位页面时，才使用一张当前 viewport screenshot。该路径不增加 OCR、object detector、多轮裁剪、component memory、vision memory 或 workflow replay。</p>
+<h2 id="浏览器扩展">浏览器扩展<a class="header-anchor" href="#浏览器扩展">#</a></h2>
+<p>Chrome Web Store 与 Edge Add-ons 页面可以作为普通网页打开，但 OpenProgram 不安装浏览器扩展，不下载 CRX，不从其他浏览器导入扩展，也不提供扩展管理页。应用使用标准 Electron/Chromium。Electron 只暴露部分 Chrome Extensions API，并明确不以兼容任意 Chrome Web Store 扩展为目标；OpenProgram 不维护定制 Chromium/Electron 分支，也不为扩展兼容增加另一套浏览器运行时。完整 runtime 内已有的 Playwright Chromium 只属于浏览器自动化后端，不承载 Desktop Browser Pane 或扩展。</p>
+<p>需要扩展 OpenProgram 本身时，使用 <a href="/docs/capabilities/plugins.zh.html">OpenProgram Plugins</a>、Skills、MCP servers、Programs 或 agent tools。这些能力不修改内嵌网页运行时。</p>
+<p>持续维护的工程规范见<a href="/docs/reference/design/ui/built-in-browser.html">内置浏览器设计</a>与 <a href="/docs/reference/design/integrations/computer-use.html">Computer Use 设计</a>。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<div class="toc-list">
+<a class="" href="#打开-browser">打开 Browser</a>
+<a class="" href="#bookmarks-与-history">Bookmarks 与 History</a>
+<a class="" href="#导入已有浏览器资料">导入已有浏览器资料</a>
+<a class="" href="#agent-访问分屏-browser-pane">Agent 访问分屏 Browser Pane</a>
+<a class="" href="#浏览器扩展">浏览器扩展</a>
+</div></aside>
+</div>
+
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" data-i18n-ph="search_ph" placeholder="Search titles or text…" autocomplete="off" spellcheck="false">
+    <div class="search-results"></div>
+  </div>
+</div>
+
+<script src="/docs/assets/site.js?v=a77afd4c"></script>
+</body>
+</html>
