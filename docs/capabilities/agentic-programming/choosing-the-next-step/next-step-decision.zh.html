@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="下一步决策 · OpenProgram Docs">
 <meta name="twitter:description" content="本文档描述 OpenProgram 的 下一步决策 机制：一个 agentic function 把&quot;接下来发生什么&quot;交给 LLM —— 给它一组选项，它选出一个，框架直接把这个选择解析成&quot;下一步的结果&quot;。该机制是一条独立于 provider 原生 tool call 的路径。 它位于框架的">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -372,7 +372,7 @@ schema 的值选项返回 <code>{&quot;decision&quot;: name, **kwargs}</code>）
 的原生 tool，也可以作为一个决策选项 —— 同一个函数，两条调用路径。用哪一条取决于：你是否想依赖
 provider 的 tool use、某个选项是否需要是值而不是函数，以及每次决策和重试是否都应该是一个可追踪的
 DAG 节点。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fixed-order calls</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agentic workflows</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fixed-order calls</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agentic workflows</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#与原生-tool-call-的对比">与原生 tool call 的对比</a>
@@ -397,6 +397,6 @@ DAG 节点。</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

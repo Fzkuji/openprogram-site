@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Function metadata · OpenProgram Docs">
 <meta name="twitter:description" content="This document defines what metadata a function in this framework must carry — whether or not it calls an LLM — where that metadata lives, and which components">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -495,7 +495,7 @@ no description; only parameter name + type
 <p>These names live in two constants in two files: <code>_RUNTIME_PARAMS</code> in <code>agentic_programming/function.py</code> (runtime injection + filtering from tool specs) and <code>_AUTO_PARAMS</code> in <code>agentic_programming/decision.py</code> (hiding from decision menus + dispatch). To add a new auto-injected name, edit both. Do not mark them per-callsite via <code>input={&quot;x&quot;: {&quot;hidden&quot;: True}}</code>.</p>
 <h2 id="8-webui-rendering-behavior">8. WebUI rendering behavior<a class="header-anchor" href="#8-webui-rendering-behavior">#</a></h2>
 <p>The WebUI does not introspect live Python objects: it AST/regex-parses the source files (<code>openprogram/webui/_functions.py</code>). Consequently <code>input=</code> must be written as a literal dict in the decorator call to show up in the form — metadata built dynamically (variables, helper calls) is invisible to the WebUI.</p>
-<p>The WebUI form renders each parameter by the following rules (implemented in <code>web/components/chat/composer/modes/fn-form/fn-form.tsx</code> and <code>fn-form-fields.tsx</code>). When authoring <code>@agentic_function(input={...})</code>, use this table to predict what kind of input control your function will produce:</p>
+<p>The WebUI form renders each parameter by the following rules (implemented in <code>apps/web/components/chat/composer/modes/fn-form/fn-form.tsx</code> and <code>fn-form-fields.tsx</code>). When authoring <code>@agentic_function(input={...})</code>, use this table to predict what kind of input control your function will produce:</p>
 <table>
 <thead>
 <tr>
@@ -629,7 +629,7 @@ no description; only parameter name + type
 <li><code>docs/reference/design/function/calling-unification.md</code> — function/tool calling framework</li>
 <li><code>docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.md</code> — per-turn native tool-use loop mechanics</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">@agentic_function</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tool-call loop</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">@agentic_function</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tool-call loop</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-why-this-spec-exists">1. Why this spec exists</a>
@@ -657,6 +657,6 @@ no description; only parameter name + type
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

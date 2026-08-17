@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DAG Rendering Spec (Layout · Edges · Legend · Default Visibility) · OpenProgram Docs">
 <meta name="twitter:description" content="How the session graph draws: where each node goes, what each edge looks like, and what the user sees by default. This document is the authoritative">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -90,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -167,6 +167,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -301,12 +302,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -373,6 +374,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Dag">Runtime · Dag</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性）">DAG Rendering Spec (Layout · Edges · Legend · Default Visibility)</span></nav><h1 id="dag-rendering-spec-layout-edges-legend-default-visibility">DAG Rendering Spec (Layout · Edges · Legend · Default Visibility)<a class="header-anchor" href="#dag-rendering-spec-layout-edges-legend-default-visibility">#</a></h1>
@@ -409,19 +414,19 @@ lanes, tiers and branch badges that a 288px rail truncates.</p>
 <tbody>
 <tr>
 <td>Perspective state</td>
-<td><code>CenterTab.dagView</code> (<code>web/lib/state/center-tabs-store.ts</code>) — not persisted; a reload opens on the transcript</td>
+<td><code>CenterTab.dagView</code> (<code>apps/web/lib/state/center-tabs-store.ts</code>) — not persisted; a reload opens on the transcript</td>
 </tr>
 <tr>
 <td>Controls</td>
-<td><code>web/components/chat/view-controls.tsx</code></td>
+<td><code>apps/web/components/chat/view-controls.tsx</code></td>
 </tr>
 <tr>
 <td>Graph host</td>
-<td><code>web/components/chat/dag-view.tsx</code> — renders <code>#historyPanel</code> + <code>.history-body</code>, the elements <code>pipeline.ts</code> and <code>render/visibility.ts</code> select</td>
+<td><code>apps/web/components/chat/dag-view.tsx</code> — renders <code>#historyPanel</code> + <code>.history-body</code>, the elements <code>pipeline.ts</code> and <code>render/visibility.ts</code> select</td>
 </tr>
 <tr>
 <td>Perspective swap</td>
-<td><code>.center-pane-chat[data-center-view]</code> in <code>web/app/styles/dag/view-host.css</code></td>
+<td><code>.center-pane-chat[data-center-view]</code> in <code>apps/web/app/styles/dag/view-host.css</code></td>
 </tr>
 </tbody>
 </table>
@@ -519,7 +524,7 @@ cluster's segments, the legend's upward anchoring and rows).</p>
 <tbody>
 <tr>
 <td>Pan / zoom / fit</td>
-<td><code>web/lib/runtime-bridge/dag/canvas.ts</code> (<code>zoomStep</code> / <code>resetZoom</code> for the HUD buttons)</td>
+<td><code>apps/web/lib/runtime-bridge/dag/canvas.ts</code> (<code>zoomStep</code> / <code>resetZoom</code> for the HUD buttons)</td>
 </tr>
 <tr>
 <td>View state</td>
@@ -527,11 +532,11 @@ cluster's segments, the legend's upward anchoring and rows).</p>
 </tr>
 <tr>
 <td>Surface + lattice</td>
-<td><code>.history-body</code> in <code>web/app/styles/dag/canvas.css</code></td>
+<td><code>.history-body</code> in <code>apps/web/app/styles/dag/canvas.css</code></td>
 </tr>
 <tr>
 <td>HUD</td>
-<td><code>DagHud</code> in <code>web/components/chat/dag-view.tsx</code>; pill look from the env-pill rule in <code>composer.module.css</code>, legend frame from <code>MENU_PANEL</code>, internals in <code>styles/dag/hud.css</code></td>
+<td><code>DagHud</code> in <code>apps/web/components/chat/dag-view.tsx</code>; pill look from the env-pill rule in <code>composer.module.css</code>, legend frame from <code>MENU_PANEL</code>, internals in <code>styles/dag/hud.css</code></td>
 </tr>
 </tbody>
 </table>
@@ -967,7 +972,7 @@ larger budget allows further generations). The renderer recurses
 anyway (§12 — a spawn on an agent's thread is a triangle like any other), so
 historical multi-generation delegation chains remain drawable.</p>
 <h2 id="7-render-pipeline-code-map">7. Render pipeline (code map)<a class="header-anchor" href="#7-render-pipeline-code-map">#</a></h2>
-<pre><code>web/lib/runtime-bridge/dag/
+<pre><code>apps/web/lib/runtime-bridge/dag/
   pipeline.ts        orchestration: passes → layout → edges → nodes → badges → canvas
   canvas.ts          the infinite canvas: pan / zoom / fit, and the dot lattice
                      that makes the grid visible
@@ -1015,7 +1020,7 @@ coverage is simply what the fill means.</p>
 <p>The covered set is served by <code>GET /api/sessions/{id}/context-range</code>: the active
 branch walked back from head, stopping at the most recent compaction summary.
 Nodes outside it draw dimmed. <code>enterExclusiveCoverageMode</code>
-(<code>web/lib/runtime-bridge/dag/index.ts</code>) is what the host calls to fetch and
+(<code>apps/web/lib/runtime-bridge/dag/index.ts</code>) is what the host calls to fetch and
 apply it.</p>
 <h3 id="coverage-data-shape">Coverage data shape<a class="header-anchor" href="#coverage-data-shape">#</a></h3>
 <p>The same response carries, per node, the two degradations the context pipeline
@@ -1335,7 +1340,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§1 lane / tier / depth layout</td>
-<td><code>dag/layout/geometry.ts::computeGeometry</code> (tier-packed chain lanes with per-lane tier zeroing, preorder rows, scene-3 fork rows + gap column, recursive thread placement); lattice, no-overlap, thread columns/rows and fork geometry all executed and asserted by <code>web/scripts/check-dag-subagent.mjs</code></td>
+<td><code>dag/layout/geometry.ts::computeGeometry</code> (tier-packed chain lanes with per-lane tier zeroing, preorder rows, scene-3 fork rows + gap column, recursive thread placement); lattice, no-overlap, thread columns/rows and fork geometry all executed and asserted by <code>apps/web/scripts/check-dag-subagent.mjs</code></td>
 </tr>
 <tr>
 <td>§2 rule ③ glyphs are cells</td>
@@ -1379,7 +1384,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>Composer shared by both perspectives</td>
-<td><code>styles/chat/center-pane.css</code> hides <code>#chatArea</code>, not <code>#chatView</code>; asserted by <code>web/scripts/check-center-tabs.mjs</code></td>
+<td><code>styles/chat/center-pane.css</code> hides <code>#chatArea</code>, not <code>#chatView</code>; asserted by <code>apps/web/scripts/check-center-tabs.mjs</code></td>
 </tr>
 <tr>
 <td>In-graph branch tags (checkout buttons)</td>
@@ -1403,7 +1408,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§9 fold + pleats + ghosts</td>
-<td><code>passes/fold-summaries.ts</code> (fold), <code>render/nodes.ts</code> (pleats, <code>已压缩 · N 轮</code> caption, ghost stroke), <code>render/edges.ts</code> (dashed ghost edge), <code>_summaryExpanded</code> in <code>store/globals.ts</code>; executed by <code>web/scripts/check-dag-summary.mjs</code></td>
+<td><code>passes/fold-summaries.ts</code> (fold), <code>render/nodes.ts</code> (pleats, <code>已压缩 · N 轮</code> caption, ghost stroke), <code>render/edges.ts</code> (dashed ghost edge), <code>_summaryExpanded</code> in <code>store/globals.ts</code>; executed by <code>apps/web/scripts/check-dag-summary.mjs</code></td>
 </tr>
 <tr>
 <td>§10 archived failure</td>
@@ -1419,7 +1424,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§12 call thread + agent spawn</td>
-<td><code>shapes.ts</code> (spawn → square), <code>passes/thread.ts</code> (model), <code>layout/geometry.ts</code> (recursive placement), <code>render/edges.ts</code> (dotted thread line, centre-to-centre chain edges, scene-3 bridge), <code>render/nodes.ts</code> (<code>data-thread*</code>, shoulder count), <code>render/interaction.ts</code> (<code>toggleThreadOpen</code>); executed by <code>web/scripts/check-dag-subagent.mjs</code></td>
+<td><code>shapes.ts</code> (spawn → square), <code>passes/thread.ts</code> (model), <code>layout/geometry.ts</code> (recursive placement), <code>render/edges.ts</code> (dotted thread line, centre-to-centre chain edges, scene-3 bridge), <code>render/nodes.ts</code> (<code>data-thread*</code>, shoulder count), <code>render/interaction.ts</code> (<code>toggleThreadOpen</code>); executed by <code>apps/web/scripts/check-dag-subagent.mjs</code></td>
 </tr>
 <tr>
 <td>§12 the name on the wire</td>
@@ -1427,7 +1432,7 @@ chain's, not the node's own flag.</p>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#where-the-graph-lives-a-center-perspective">Where the graph lives: a center perspective</a>
@@ -1465,6 +1470,6 @@ chain's, not the node's own flag.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

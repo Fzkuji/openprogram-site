@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,12 +19,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TODO：待讨论的改进项 · OpenProgram Docs">
 <meta name="twitter:description" content="跨专项分支的已完成状态、未合并实现和后续实施顺序统一记录在 OpenProgram implementation status and handoff 。 本文件只保留尚未定案、需要讨论后再排期的改进项。 2026-08-01 全项目审计产出。明显 bug 已当场修掉（路径穿越、任务运行器泄漏/竞态、">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -32,7 +32,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -88,7 +88,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -97,7 +97,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -165,6 +165,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -299,12 +300,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -371,6 +372,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">TODO：待讨论的改进项</span></nav><h1 id="todo待讨论的改进项">TODO：待讨论的改进项<a class="header-anchor" href="#todo待讨论的改进项">#</a></h1>
@@ -387,12 +392,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>provider.json 损坏被静默吞掉</strong>：<code>providers/_provider_meta.py</code> 读
 provider.json 时静默吞异常，数据文件损坏（而非缺失）表现为
 &quot;provider 列表为空且无报错&quot;。</li>
-<li><strong>pip 装完不可用 web UI 与文档站</strong>：<code>web/out/</code> 与 <code>docs/_site/</code> 是构建产物
-且已 gitignore，运行时由仓库根目录解析路径（<code>parents[2]</code> / <code>parents[3]</code>），
-装进 site-packages 后取不到。要支持&quot;pip 装完即可用&quot;，需把它们改成包内资源。</li>
 </ol>
 <h2 id="前端">前端<a class="header-anchor" href="#前端">#</a></h2>
-<ol start="3">
+<ol start="2">
 <li><strong><code>window.*</code> 退役（state-layer 阶段 3）</strong>：201 处 / 16 文件。四组：
 <code>W.currentSessionId</code> 路由闸门 39 处、<code>window.conversations</code> 20 处、
 <code>W.isRunning</code> 9 处（最便宜，<code>runningTasks</code> 已覆盖）、
@@ -400,24 +402,23 @@ provider.json 时静默吞异常，数据文件损坏（而非缺失）表现为
 无类型字符串事件总线（阶段文档未列的第五类）。按设计文档这是阶段 2
 完成后的事，规模大，需专项排期。</li>
 <li><strong>WS 层用无类型 CustomEvent 二次广播 store 帧</strong>
-（<code>web/lib/net/use-ws.ts</code> 六处）：与 store 平行的第二条状态通路，
+（<code>apps/web/lib/net/use-ws.ts</code> 六处）：与 store 平行的第二条状态通路，
 detail 无类型。属于 window.* 退役的同族问题，可并入第 3 条专项。</li>
 </ol>
 <h2 id="模块规模1400-行且多职责重构窗口另排">模块规模（&gt;1400 行且多职责，重构窗口另排）<a class="header-anchor" href="#模块规模1400-行且多职责重构窗口另排">#</a></h2>
-<ol start="5">
+<ol start="4">
 <li>前端两个大文件已拆完（center-tab-strip 479 行、composer 967 行）。
 剩余为 Python 侧，2026-08-11 复测：
 <code>openprogram/agentic_programming/runtime.py</code>（2162）、
 <code>openprogram/store/session/session_store.py</code>（1803）、
 <code>openprogram/webui/server.py</code>（1780）、
-<code>openprogram/cli.py</code>（1780）、
 <code>openprogram/agentic_programming/function.py</code>（1557）、
 <code>openprogram/auth/cli.py</code>（1537）、
 <code>openprogram/programs/_runtime.py</code>（1502）。
-<code>cli/src/runtime/</code> 下的 yoga-layout 与 ink 运行时属 vendored 移植代码，
+<code>apps/cli/src/runtime/</code> 下的 yoga-layout 与 ink 运行时属 vendored 移植代码，
 不算多职责问题。</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Site discoverability and performance design</span></a><a class="pn-link pn-next" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Usage Metering Subsystem Design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Site discoverability and performance design</span></a><a class="pn-link pn-next" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Usage Metering Subsystem Design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#打包-分发">打包 / 分发</a>
@@ -433,6 +434,6 @@ detail 无类型。属于 window.* 退役的同族问题，可并入第 3 条专
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Remote Web Access — Owner-Only, Self-Hosted Control · OpenProgram Docs">
 <meta name="twitter:description" content="This document defines how the owner reaches OpenProgram&#x27;s existing Web UI from the same machine, a trusted LAN or VPN, an SSH tunnel, or an owner-operated">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -90,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -167,6 +167,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -301,12 +302,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -373,6 +374,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="远程 Web 访问——单一所有者的自托管控制">Remote Web Access — Owner-Only, Self-Hosted Control</span></nav><h1 id="remote-web-access-owner-only-self-hosted-control">Remote Web Access — Owner-Only, Self-Hosted Control<a class="header-anchor" href="#remote-web-access-owner-only-self-hosted-control">#</a></h1>
@@ -383,8 +388,8 @@ owner-operated HTTPS reverse proxy. The English text is normative; the
 Chinese translation and the standalone HTML page present the same design.
 Related code: <code>openprogram/webui/owner_auth.py</code>,
 <code>openprogram/backend_endpoint.py</code>,
-<code>openprogram/webui/server.py</code>, <code>openprogram/_cli_cmds/web.py</code>,
-<code>web/lib/net/owner-auth-bootstrap.ts</code>, and
+<code>apps/server/openprogram_server/server.py</code>, <code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code>,
+<code>apps/web/lib/net/owner-auth-bootstrap.ts</code>, and
 <code>openprogram/agent/authority.py</code>.
 Related designs: <a href="/docs/reference/design/memory/speaker-identity.html">speaker identity</a>,
 <a href="/docs/reference/design/runtime/permission-model.html">permission model</a>, and
@@ -492,7 +497,7 @@ Uvicorn starts with <code>proxy_headers=False</code>; only <code>OwnerAuthMiddle
 single <code>X-Forwarded-Proto</code> supplied by an immediate loopback peer.</p>
 <p>The public <code>POST /api/auth/bootstrap</code> exchanges the fragment token for the
 derived cookie. The frontend coordinator in
-<code>web/lib/net/owner-auth-bootstrap.ts</code> removes the fragment synchronously,
+<code>apps/web/lib/net/owner-auth-bootstrap.ts</code> removes the fragment synchronously,
 performs that exchange before mounting the application subtree, and does not
 use Web Storage. <code>openprogram web auth-url --base-url ...</code> first verifies the
 active listener through the nonce/HMAC ownership challenge, then prints a
@@ -1339,7 +1344,7 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Fragment bootstrap backend and frontend coordinator</td>
-<td><code>POST /api/auth/bootstrap</code>, <code>web/lib/net/owner-auth-bootstrap.ts</code>, and <code>OwnerAuthBoundary</code> implement body-token exchange, synchronous fragment removal, no Web Storage, and application gating; <code>web/scripts/check-owner-auth-bootstrap.mjs</code>, TypeScript checking, and the production Web build exercise the frontend contract</td>
+<td><code>POST /api/auth/bootstrap</code>, <code>apps/web/lib/net/owner-auth-bootstrap.ts</code>, and <code>OwnerAuthBoundary</code> implement body-token exchange, synchronous fragment removal, no Web Storage, and application gating; <code>apps/web/scripts/check-owner-auth-bootstrap.mjs</code>, TypeScript checking, and the production Web build exercise the frontend contract</td>
 </tr>
 <tr>
 <td>Authenticated URL command</td>
@@ -1355,11 +1360,11 @@ production paths and tests.</p>
 </tr>
 <tr>
 <td>Secret non-retrievability</td>
-<td>Both plaintext reveal forms are gone: the account reveal route is removed and <code>GET /api/config/key/{env_var}?reveal=1</code> returns <code>404</code>; <code>_credential_secrets</code> supplies the single mask and the declared-name check; <code>/api/config</code>, <code>/api/settings</code>, <code>/api/config/verify</code>, <code>DELETE /api/config/key/{env_var}</code>, and the account routes accept only their exact bounded schemas and never return a full secret; the frontend has no reveal action, control, or response type. MCP server credentials follow the same contract: <code>MCPServerConfig.to_storage_dict()</code> holds full values for the config file while <code>to_response_dict()</code> masks every <code>env</code> and <code>headers</code> value plus the bearer token and OAuth client secret, so <code>/api/mcp/servers</code>, <code>/api/mcp/servers/{name}</code>, <code>/api/mcp/catalog</code>, and <code>/api/mcp/catalog/diff</code> return <code>{has_value, masked}</code> rather than values; <code>PATCH /api/mcp/servers/{name}</code> applies preserve (omitted) / replace (new value) / delete (explicit empty) and persists only after the restart succeeds; <code>mcp_servers.json</code> is written <code>0600</code> through a temp file, <code>fsync</code>, and <code>os.replace</code>; <code>tests/component/programs/test_mcp_secret_non_retrievability.py</code> and <code>web/scripts/check-secret-non-retrieval.mjs</code> cover the response, permission, preserve, and frontend-display halves</td>
+<td>Both plaintext reveal forms are gone: the account reveal route is removed and <code>GET /api/config/key/{env_var}?reveal=1</code> returns <code>404</code>; <code>_credential_secrets</code> supplies the single mask and the declared-name check; <code>/api/config</code>, <code>/api/settings</code>, <code>/api/config/verify</code>, <code>DELETE /api/config/key/{env_var}</code>, and the account routes accept only their exact bounded schemas and never return a full secret; the frontend has no reveal action, control, or response type. MCP server credentials follow the same contract: <code>MCPServerConfig.to_storage_dict()</code> holds full values for the config file while <code>to_response_dict()</code> masks every <code>env</code> and <code>headers</code> value plus the bearer token and OAuth client secret, so <code>/api/mcp/servers</code>, <code>/api/mcp/servers/{name}</code>, <code>/api/mcp/catalog</code>, and <code>/api/mcp/catalog/diff</code> return <code>{has_value, masked}</code> rather than values; <code>PATCH /api/mcp/servers/{name}</code> applies preserve (omitted) / replace (new value) / delete (explicit empty) and persists only after the restart succeeds; <code>mcp_servers.json</code> is written <code>0600</code> through a temp file, <code>fsync</code>, and <code>os.replace</code>; <code>tests/component/programs/test_mcp_secret_non_retrievability.py</code> and <code>apps/web/scripts/check-secret-non-retrieval.mjs</code> cover the response, permission, preserve, and frontend-display halves</td>
 </tr>
 <tr>
 <td>Internal client authentication</td>
-<td><code>resolve_backend_endpoint()</code> returns a challenge-verified <code>BackendEndpoint</code> (base URL, WebSocket URL, origin, and token) so the credential is read only after the listener proves it holds the same token; <code>cli_ink.py</code> passes it to the TUI environment, <code>_cli_cmds/mcp.py</code> uses it for the MCP CLI, and the Node client sends the Bearer header only to backend URLs (<code>cli/src/utils/backend.ts</code>, <code>cli/tests/backendAuth.test.ts</code>)</td>
+<td><code>resolve_backend_endpoint()</code> returns a challenge-verified <code>BackendEndpoint</code> (base URL, WebSocket URL, origin, and token) so the credential is read only after the listener proves it holds the same token; <code>cli/ink.py</code> passes it to the TUI environment, <code>cli/commands/mcp.py</code> uses it for the MCP CLI, and the Node client sends the Bearer header only to backend URLs (<code>apps/cli/src/utils/backend.ts</code>, <code>apps/cli/tests/backendAuth.test.ts</code>)</td>
 </tr>
 <tr>
 <td>Startup reporting</td>
@@ -1436,7 +1441,7 @@ production paths and tests.</p>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/remote-web-access.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 远程 Web 访问设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-tab-home-button.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">内置浏览器主页按钮</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/remote-web-access.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 远程 Web 访问设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-tab-home-button.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">内置浏览器主页按钮</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-method-and-scope">1. Method and scope</a>
@@ -1478,6 +1483,6 @@ production paths and tests.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

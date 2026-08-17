@@ -68,7 +68,7 @@
   <div class="table-wrap"><table>
     <thead><tr><th>组件</th><th>唯一职责</th><th>禁止行为</th></tr></thead><tbody>
       <tr><td><code>state/send-queue.ts</code></td><td>FIFO、按 session 隔离、发送失败恢复队首。</td><td>不判断服务端权威状态，不持久化 transcript。</td></tr>
-      <tr><td><code>legacy-send.ts</code></td><td>写 WebSocket；成功后立即设置该 session 的 optimistic running。</td><td>不得在同一 session 已有 provisional send 时把第二条视为成功。</td></tr>
+      <tr><td><code>composer/submit/send-chat-message.ts</code></td><td>写 WebSocket；成功后立即设置该 session 的 optimistic running。</td><td>不得在同一 session 已有 provisional send 时把第二条视为成功。</td></tr>
       <tr><td><code>session-store</code></td><td>running→idle 转换触发 drain；服务端真实 clear 可显式重试 drain。</td><td>普通 idle→idle 更新不得触发 drain。</td></tr>
       <tr><td><code>use-ws.ts</code></td><td>连接恢复后，当前 session 通过 <code>load_session</code> 恢复；后台队列通过无焦点副作用的 <code>get_run_state</code> 查询状态。</td><td>不得在未知 run 状态下直接发送队列，也不得为后台队列改变 socket 的 focused session。</td></tr>
       <tr><td><code>ws_actions/chat.py</code></td><td>原子占用 session，成功者才能写 user message 和启动 turn。</td><td>不得把“检查”和“占用”分成可并发穿过的两个阶段。</td></tr>
@@ -100,10 +100,10 @@
   <p><span class="pill ok">实现完成</span>。前端修改集中在发送队列、composer、session running 状态和 WebSocket 重连；后端增加原子 reservation、runtime 接管以及无焦点副作用的运行态查询。停止路径的 optimistic idle 不再提前 drain；服务端真实 clear 即使观察到本地 idle，也会重新尝试队列发送。</p>
   <div class="table-wrap"><table>
     <thead><tr><th>验证命令</th><th>实际结果</th></tr></thead><tbody>
-      <tr><td><code>cd web &amp;&amp; npm run check</code></td><td><span class="pill ok">通过</span>，包含 send-queue、chat-ui、Markdown sanitize 和 WS action 合同。</td></tr>
+      <tr><td><code>npm --prefix apps/web run check</code></td><td><span class="pill ok">通过</span>，包含 send-queue、chat-ui、Markdown sanitize 和 WS action 合同。</td></tr>
       <tr><td><code>python -m pytest tests/unit/webui/test_webui_head_mirror_and_run_guard.py tests/unit/webui/test_webui_chat_dispatcher.py tests/component/runtime/test_turn_cancellation.py tests/unit/programs/test_retry_function.py tests/unit/agent/test_dispatcher_integration.py -q</code></td><td><span class="pill ok">61 passed, 1 skipped</span></td></tr>
-      <tr><td><code>cd web &amp;&amp; npx tsc --noEmit</code></td><td><span class="pill ok">通过</span></td></tr>
-      <tr><td><code>cd web &amp;&amp; npm run build</code></td><td><span class="pill ok">27 个静态页面生成完成</span></td></tr>
+      <tr><td><code>npm --prefix apps/web exec -- tsc -p apps/web/tsconfig.json --noEmit</code></td><td><span class="pill ok">通过</span></td></tr>
+      <tr><td><code>npm --prefix apps/web run build</code></td><td><span class="pill ok">27 个静态页面生成完成</span></td></tr>
     </tbody></table></div>
   <p class="small">同轮追加修复：assistant Markdown 不再依赖 CDN <code>marked</code>；CDN 不可用时使用已安装的 npm 包，因此普通回复不会退化为带边框的 <code>&lt;pre&gt;</code>。</p>
 </main></body></html>

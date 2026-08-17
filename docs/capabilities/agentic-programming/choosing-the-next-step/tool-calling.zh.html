@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="工具调用循环 · OpenProgram Docs">
 <meta name="twitter:description" content="本文描述在一次模型调用内，LLM 在每一轮如何&quot;做出选择&quot;——挑选一个函数去执行，或者输出文本并结束。 配套文档： calling-unification.md 介绍了整个函数调用框架的设计—— @function / @agentic_function 装饰器、共享注册表、6 层">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -213,7 +213,7 @@ inner_iterations &gt; 50                  hard cap MAX_INNER_ITERATIONS against 
 <code>_execute_tool_calls</code> 调用其 <code>.execute</code> → 如果该函数体内又调用了
 <code>runtime.exec</code>，则同一挑选循环的又一层被打开。
 在嵌套的 agentic function 下，&quot;挑选下一个要运行的函数&quot;就是同一机制的递归展开。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Function metadata</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Fixed-order calls</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Function metadata</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Fixed-order calls</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一句话总结">一句话总结</a>
@@ -232,6 +232,6 @@ inner_iterations &gt; 50                  hard cap MAX_INNER_ITERATIONS against 
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

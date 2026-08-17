@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Configuration · OpenProgram Docs">
 <meta name="twitter:description" content="The keys in ~/.openprogram/config.json , what openprogram config can read and write, and the environment variable roundup. For the everyday entry point to">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -321,7 +321,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>api_keys</code></td>
 <td>Environment variable name → API key mapping, written by the setup wizard and exported into the environment at worker startup. Used for web-search / TTS keys; LLM provider keys live in the credential store (<code>openprogram providers login</code>), not here</td>
-<td><code>openprogram/_setup_sections/sections.py</code>, <code>openprogram/webui/server.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/setup_sections/sections.py</code>, <code>apps/server/openprogram_server/server.py</code></td>
 </tr>
 <tr>
 <td><code>spec_migration_version</code></td>
@@ -372,7 +372,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_WEB_PORT</code></td>
 <td>the single worker port (default 18100); below explicit flags, above the persisted preference</td>
-<td><code>openprogram/worker/lifecycle.py</code>, <code>openprogram/_cli_cmds/web.py</code></td>
+<td><code>openprogram/worker/lifecycle.py</code>, <code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_NO_WEB</code></td>
@@ -382,7 +382,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_WEB_NO_FRONTEND</code></td>
 <td><code>1</code> = <code>openprogram web</code> skips the frontend and starts only the backend</td>
-<td><code>openprogram/_cli_cmds/web.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_DOCS_BASE</code></td>
@@ -404,7 +404,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_NO_AUTO_WORKER</code></td>
 <td><code>1</code> = the TUI does not auto-launch a worker; connects only to an existing one</td>
-<td><code>openprogram/cli_ink.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/ink.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_NO_SLEEP</code></td>
@@ -514,7 +514,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </table>
 <h3 id="others">Others<a class="header-anchor" href="#others">#</a></h3>
 <p>The code holds a further batch of more internal variables (HTTP/SSE timeout tuning <code>OPENPROGRAM_HTTPX_*</code> / <code>OPENPROGRAM_SSE_*</code>, TCP keepalive <code>OPENPROGRAM_TCP_*</code>, per-provider retry counts <code>OPENPROGRAM_&lt;PROVIDER&gt;_MAX_RETRIES</code>, <code>OPENPROGRAM_JOB_WORKERS</code>, <code>OPENPROGRAM_IMAGE_DIR</code>, <code>OPENPROGRAM_BROWSER_CDP_URL</code>, etc.). <code>grep -rn &quot;OPENPROGRAM_&quot; openprogram/</code> lists the full set; every variable is commented where it is defined.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-openprogram-config-can-read-and-write">What openprogram config can read and write</a>
@@ -536,6 +536,6 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/models/fast-tier.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/models/fast-tier.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="fast tier · OpenProgram Docs">
 <meta name="twitter:description" content="部分厂商给部分模型提供付费高速档。OpenProgram 把它做成聊天界面的&quot;高速&quot;开关：打开后请求按厂商协议带上高速档参数。 哪些模型有 # 只有两个家族存在 fast 档： 家族 请求形态 GPT 5.4 / 5.5 / 5.6 系（OpenAI priority processing） 请求体">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -111,7 +111,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>请求构建侧只有这些线路透传高速参数：<code>openai_responses</code>、<code>openai_completions</code>、<code>openai_codex</code>（请求体 <code>service_tier</code>），以及 <code>anthropic</code>（仅当模型声明了 fast 时切换到 <code>speed: &quot;fast&quot;</code> + beta 头）。其他 provider 不透传，参数不出网。</p>
 <p>计费提醒：fast 档按量计费。Claude 订阅账户没有充值 usage credits 时，Anthropic 会返回 429 &quot;Usage credits are required for fast mode&quot;——这是账户问题，不代表模型不支持，界面会原样展示该报错。</p>
 <p>实现细节与判定规则的完整记录见<a href="/docs/reference/design/providers/models/fast-tier.html">设计笔记</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/auth.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Authentication</span></a><a class="pn-link pn-next" href="/docs/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking effort</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/auth.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Authentication</span></a><a class="pn-link pn-next" href="/docs/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking effort</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#哪些模型有">哪些模型有</a>
@@ -127,6 +127,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

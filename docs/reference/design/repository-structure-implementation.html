@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787004552">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,12 +19,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Repository structure implementation ledger · OpenProgram Docs">
 <meta name="twitter:description" content="This ledger records implementation evidence for repository-structure.html . The HTML page is the current design contract; this file is operational history.">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -32,7 +32,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -88,7 +88,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -97,7 +97,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -165,6 +165,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -299,12 +300,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -371,6 +372,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Repository structure implementation ledger</span></nav><h1 id="repository-structure-implementation-ledger">Repository structure implementation ledger<a class="header-anchor" href="#repository-structure-implementation-ledger">#</a></h1>
@@ -379,6 +384,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 current design contract; this file is operational history.</p>
 <h2 id="scope">Scope<a class="header-anchor" href="#scope">#</a></h2>
 <ul>
+<li>Migrate from the historical top-level <code>web/</code>, <code>desktop/</code>, <code>cli/</code> and
+<code>openprogram/webui/</code> layout to a core-first monorepo:
+<code>openprogram/</code> remains the Agent core and SDK, while runnable products live
+under <code>apps/{server,web,desktop,cli}</code>.</li>
+<li>Preserve the single-port <code>18100</code> runtime, HTTP/WS contracts, user data,
+browser/desktop behavior, console commands, and required compatibility
+imports throughout the migration.</li>
+<li>Keep generated Web output out of the core source package. Stage it only for
+source execution, wheel construction, or Electron packaging.</li>
+<li>Remove the confirmed-unused legacy static UI and dual-port Next.js process
+only after current callers and release paths use the new application roots.</li>
 <li>Move the existing top-level CLI parser out of <code>openprogram/cli.py</code> without
 changing the public <code>openprogram.cli.build_parser</code> import or command grammar.</li>
 <li>Keep <code>docs/superpowers/</code> in Git but remove it from the public documentation
@@ -392,6 +408,83 @@ have active product changes.</li>
 packaged-skill, Web, and TUI ownership boundaries.</li>
 <li>Remove the Web Programs re-export directory when the public route can import
 the existing implementation directly.</li>
+<li>Consolidate Python CLI parser, handlers, REPL, Ink launcher, and setup
+sections under the stable <code>openprogram.cli</code> package without changing the
+public command tree.</li>
+</ul>
+<h2 id="approved-migration-sequence">Approved migration sequence<a class="header-anchor" href="#approved-migration-sequence">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Batch</th>
+<th>Target</th>
+<th>Required compatibility and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Canonical design and repository contract</td>
+<td>HTML design names the core/application boundary; repository contract fails while old roots remain.</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>Ink TUI <code>cli/</code> workspace to <code>apps/cli/</code></td>
+<td>Node typecheck/tests/build, Python bundle resolution and the real Node auth client use the new path.</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Python CLI application assembly to <code>apps/cli/python/openprogram_cli/</code></td>
+<td>Existing console scripts, <code>python -m openprogram</code>, <code>openprogram.cli.build_parser</code>, Ink TUI launch and parser snapshots remain valid through compatibility imports.</td>
+</tr>
+<tr>
+<td>C</td>
+<td><code>openprogram/webui/</code> to <code>apps/server/openprogram_server/</code></td>
+<td>FastAPI app, REST/WS paths, owner auth, worker startup and package imports remain valid through bounded compatibility modules.</td>
+</tr>
+<tr>
+<td>D</td>
+<td><code>web/</code> to <code>apps/web/</code></td>
+<td>Node checks, TypeScript, static export, Python static serving and release asset staging use the new root.</td>
+</tr>
+<tr>
+<td>E</td>
+<td><code>desktop/</code> to <code>apps/desktop/</code></td>
+<td>Electron checks, runtime packaging, updater, embedded browser and installed-App scripts use the new root.</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Legacy deletion and compatibility exit</td>
+<td>Old static UI, unused dual-port launcher and expired import shims are absent; complete Python/Web/Desktop/docs/package gates pass.</td>
+</tr>
+</tbody>
+</table>
+<p>Each batch is move-only unless a directly exposed path or import must be
+adapted. Large-file decomposition is not part of the directory migration.</p>
+<h2 id="current-migration-audit">Current migration audit<a class="header-anchor" href="#current-migration-audit">#</a></h2>
+<ul>
+<li>Base head observed before batch B1: <code>e0a5fa41de3d390764d557694178426d8570cbdb</code>.</li>
+<li>The checkout contains unrelated in-progress changes in
+<code>openprogram/webui/routes/agents.py</code>, <code>apps/web/components/agents/</code>,
+<code>apps/web/scripts/check-agent-tool-configuration.mjs</code>,
+<code>apps/desktop/build/icon.icns</code>, runtime design pages, and promotional assets.</li>
+<li>Batch D/E preserved those worktree versions while staging their prior Git
+baselines at the new application paths; none of the unrelated content entered
+the migration commit.</li>
+<li>Batch C1 moved the FastAPI application assembly to
+<code>apps/server/openprogram_server/server.py</code>. The existing
+<code>openprogram.webui.server</code> path is a module-identity compatibility alias, not
+a second implementation. Batch C2 moved the Server-owned routes, WebSocket
+actions, owner auth, frontend mounting and helpers under the application
+package. Only the independently edited <code>routes/agents.py</code> remains at the
+compatibility path until that work is committed; this is the final partial
+boundary before Batch C completes.</li>
+<li>Batch F1 removed the unreferenced <code>openprogram/webui/static/</code> interface after
+confirming that runtime and release paths serve only the <code>apps/web</code> export.
+This removes the duplicate legacy UI without changing the current Web app.</li>
+<li>System Git is blocked by the host's unaccepted Xcode licence. The bundled
+fallback Git executable is available for status, diff, staging and commits;
+the migration does not change host licence state.</li>
 </ul>
 <h2 id="workstreams">Workstreams<a class="header-anchor" href="#workstreams">#</a></h2>
 <table>
@@ -458,8 +551,119 @@ the existing implementation directly.</li>
 <td>integrated</td>
 <td>Two-parent merge with current <code>main</code> at <code>e2041770</code>; unrelated local icon and output files remain outside Git.</td>
 </tr>
+<tr>
+<td>Python CLI package consolidation</td>
+<td><code>codex/python-package-layout-cli-20260817</code> / <code>d2ae71cc</code>, <code>5bd809e8</code>, <code>4051edaf</code></td>
+<td>implemented; reviewed</td>
+<td>Replaces three first-level internal CLI directories and four implementation files with one <code>openprogram/cli/</code> package; keeps <code>openprogram.cli</code>, the console script, and both module entry points; repairs current documentation references and adds the executable interactive-import contract required by review.</td>
+</tr>
+<tr>
+<td>Python CLI package main integration</td>
+<td><code>f5878426</code></td>
+<td>integrated</td>
+<td>Two-parent merge with current <code>main</code> at <code>c45617a4</code>; unrelated local icon, runtime-design, promo, and output changes remain outside the integration tree.</td>
+</tr>
+<tr>
+<td>Apps migration B1: Ink TUI workspace</td>
+<td><code>f4a3ea0e</code>, <code>669f5445</code></td>
+<td>implemented; reviewed</td>
+<td>Moves the existing Node workspace from <code>cli/</code> to <code>apps/cli/</code>; updates the Python launcher, rescue probe, source installer, CI cache/working directories, repository contracts and current documentation paths. No UI or protocol behavior changes.</td>
+</tr>
+<tr>
+<td>Apps migration D/E: Web and Desktop workspaces</td>
+<td><code>44765788</code>, <code>f4e44429</code>, <code>e0a4825e</code></td>
+<td>implemented; reviewed</td>
+<td>Moves the complete Next.js and Electron workspaces to <code>apps/web/</code> and <code>apps/desktop/</code>; updates runtime discovery, CI, packaging, release scripts, cross-workspace checks, tests and current documentation references. Existing UI and protocol behavior are unchanged.</td>
+</tr>
+<tr>
+<td>Apps migration C1: Server application assembly</td>
+<td><code>6b981b32</code>, <code>6dc2f1e6</code>, <code>34966b16</code>, <code>c09b7933</code></td>
+<td>implemented; reviewed</td>
+<td>Moves the FastAPI assembly into the installable <code>openprogram_server</code> application package. The legacy import resolves to the same module object, source checkouts reject an already-loaded foreign package, and the release probe imports only from the built wheel outside the checkout. Route and WebSocket modules remain for C2 because one route has unrelated active changes.</td>
+</tr>
+<tr>
+<td>Apps migration C2: Server transport implementation</td>
+<td><code>bd8a9e30</code>, <code>b294256b</code>, <code>72f4cbf4</code>, <code>7e55a38e</code></td>
+<td>implemented; reviewed</td>
+<td>Moves Server-owned routes, WebSocket actions, owner auth, frontend mounting and helpers into <code>openprogram_server/_webui</code>; preserves legacy module names through one shared package path. Review added the missing ignore contract for the generated release staging tree. The independently edited <code>routes/agents.py</code> remains the only temporary exception.</td>
+</tr>
+<tr>
+<td>Legacy cleanup F1: static Web interface</td>
+<td><code>23ac60c2</code></td>
+<td>implemented; reviewed</td>
+<td>Removes the unreferenced 9,227-line static HTML/CSS/JS interface and its obsolete settings-page test. Current source, package and runtime paths continue to serve the <code>apps/web</code> build.</td>
+</tr>
+<tr>
+<td>Apps migration B2: Python CLI application</td>
+<td><code>2a790501</code>, <code>91be4353</code>, <code>51303ea8</code>, <code>09eb3732</code>, <code>252fb4fa</code>, <code>a459c443</code></td>
+<td>implemented; reviewed</td>
+<td>Moves parser, dispatch, Rich fallback, Ink launcher and setup flows into the installable <code>openprogram_cli</code> application package. <code>openprogram.cli</code> remains a bounded compatibility loader; a code-free root module supports raw source checkouts; editable and wheel installs use the application package.</td>
+</tr>
+<tr>
+<td>Legacy cleanup F2: profile state</td>
+<td><code>f0e07310</code>, <code>fb490561</code>, <code>2849fd85</code></td>
+<td>implemented; reviewed</td>
+<td>Removes tracked mutable tool-profile state from the core package. One-time migration resolves the actual legacy compatibility package even though the Server module now lives under <code>apps/server</code>; package-data exclusion remains enforced and both legacy state paths remain ignored.</td>
+</tr>
 </tbody>
 </table>
+<h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: <code>457539c5</code>.</li>
+<li>Remove the tracked package-local <code>functions_meta.json</code>; mutable tool profiles
+remain profile state under <code>~/.openprogram[-profile]/</code> and new wheels continue
+to exclude this file.</li>
+<li>Preserve one-time migration from an actual older
+<code>openprogram/webui/functions_meta.json</code>. Resolve that location from the legacy
+compatibility package, not from the Server application module that now lives
+under <code>apps/server</code>.</li>
+<li>RED/GREEN boundaries: a physical repository ownership contract, a migration
+test whose Server module points elsewhere, profile isolation and atomic state
+writes.</li>
+<li>Exclude changes to profile contents, tool selection behavior, Server routes,
+Web UI and active Agent configuration work.</li>
+</ul>
+<h2 id="implemented-task-brief-apps-migration-b2">Implemented task brief: Apps migration B2<a class="header-anchor" href="#implemented-task-brief-apps-migration-b2">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: <code>2ba6f078</code>.</li>
+<li>Move the Python CLI application files from <code>openprogram/cli/</code> to the
+installable <code>apps/cli/python/openprogram_cli/</code> package. Keep only bounded
+compatibility entry files under <code>openprogram/cli/</code>.</li>
+<li>Preserve <code>openprogram</code>, <code>python -m openprogram</code>, <code>python -m openprogram.cli</code>,
+<code>openprogram.cli.build_parser</code>, and existing <code>openprogram.cli.*</code> imports.</li>
+<li>Preserve command grammar, output, profile/state paths, TUI selection and the
+existing Node launcher. Do not redesign commands or add dependencies.</li>
+<li>RED/GREEN boundaries: repository ownership contract, parser snapshot and
+dispatch tests, module-entry subprocesses, source-checkout precedence, wheel
+contents, isolated wheel imports and CLI <code>--help</code>/<code>--version</code> execution.</li>
+<li>Exclude Server route migration, CLI behavior changes, UI changes and
+decomposition of cohesive command handlers from this batch.</li>
+</ul>
+<h2 id="active-task-brief-apps-migration-c2">Active task brief: Apps migration C2<a class="header-anchor" href="#active-task-brief-apps-migration-c2">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: <code>a459c443</code>.</li>
+<li>Move FastAPI routes, WebSocket actions, owner authentication, static Web
+mounting, response shaping and their Server-only helpers to
+<code>apps/server/openprogram_server/_webui/</code> without changing their established
+<code>openprogram.webui.*</code> import names during the compatibility period.</li>
+<li>Keep <code>openprogram/webui/</code> as a bounded source-checkout and module-entry
+compatibility package. It may locate the installed or checkout Server
+package, but it must not duplicate mutable Server state or eagerly initialize
+the application during an Agent Core import.</li>
+<li>Preserve route order, WebSocket action registration, shared module globals,
+owner-auth enforcement, port <code>18100</code>, static asset lookup, CLI/TUI imports and
+worker startup. Release wheels must contain the moved Python modules and Web
+assets, and isolated imports must resolve outside the checkout.</li>
+<li>First sub-batch excludes only <code>routes/agents.py</code>, whose unrelated active
+worktree changes predate this migration. The route package remains a split
+compatibility path until that file is committed and moved in the final C2
+sub-batch.</li>
+<li>RED/GREEN boundaries: physical ownership contract, legacy import source
+resolution, route/WS application tests, owner-auth tests, built-frontend
+tests, clean wheel contents and isolated wheel import/startup probes.</li>
+<li>Exclude transport behavior redesign, new dependencies, UI changes and
+decomposition based only on line count.</li>
+</ul>
 <h2 id="verification-record">Verification record<a class="header-anchor" href="#verification-record">#</a></h2>
 <pre><code class="language-text">5 passed — focused CLI parser and documentation navigation contracts
 207 passed — post-main-merge CLI component/unit tests plus focused structure contracts
@@ -490,21 +694,87 @@ pass — independent quality review for d9cc9933, including distribution, Web bu
 10 passed — post-merge repository-layout and documentation-information-architecture selection
 pass — post-merge Web full check, 10 unit tests, TypeScript no-emit check, and 31-page production build
 505 pages; 0 broken links; landing and language checks pass — post-merge documentation build
+388 passed, 4 skipped — all tests directly changed by the Python CLI package consolidation
+5664 passed, 11 skipped, 1 xfailed — complete contracts, unit, and component suites for `d2ae71cc`
+pass — Ruff on every changed Python file and `git diff --check`
+pass — wheel contains the new CLI package paths and no removed implementation paths; isolated import and `python -m openprogram.cli --help` succeed
+506 pages; 0 broken links; landing and language checks pass — Python CLI package consolidation documentation build
+changes required — first independent specification review of `d2ae71cc` found only current-document path and evidence-record repairs; code and package compatibility passed
+pass — independent specification re-review at `5bd809e8`
+changes required — first independent quality review of `5bd809e8` found only the missing executable TTY library-import regression; the implementation's dynamic no-side-effect probe passed
+15 passed — CLI entrypoint recognition, interactive library-import side-effect, parser, and repository-layout contracts after the quality repair
+pass — independent specification confirmation at `4051edaf`
+pass — independent quality re-review at `4051edaf`, including a mutation-sensitive interactive-import probe
+166 passed — post-merge CLI parser, repository, formal release, distribution, upgrade, and runtime HTTP catalog selection
+506 pages; 0 broken links; landing and language checks pass — post-merge documentation build
+pass — post-merge Ruff and `git diff --check`
+140 passed, 2 skipped — `apps/cli` Vitest suite after typecheck
+pass — `apps/cli` production bundle build
+6 passed — apps-layout contract and real Node owner-auth paths
+15 passed, 1 deselected — apps-layout, exact CI path and repository contracts after review repair; the deselected generated-README check is affected by unrelated in-progress Python docstring edits
+pass — independent specification re-review at `669f5445`
+pass — independent quality re-review at `669f5445`
+pass — staged-candidate Web full check and TypeScript no-emit check for `44765788`
+14 passed — Web unit tests after the application-root migration
+pass — Web 31-page production build from `apps/web`
+pass — staged-candidate Desktop full npm check for `44765788`
+37 passed — static frontend, upgrade, Desktop harness, packaged-file and Memory cross-language tests
+18 passed, 1 deselected — apps-layout, CI-layer and repository-layout contracts; generated README check excluded because unrelated Python docstrings are in progress
+21 passed; 0 broken links — workspace-command repair and documentation checks for `f4e44429`
+9 passed; pass — executable Node-missing hint regression and corrected TypeScript command for `e0a4825e`
+pass — independent specification and quality re-review for the D/E migration and command repairs
+11 passed — Server package identity, health endpoint and built-frontend checks for `6b981b32`
+80 passed — Server state, route, WebSocket and session compatibility selection
+94 passed — release, distribution, packaged-file and apps-layout checks
+35 passed — Server application ownership, source-package precedence, foreign regular/namespace-package conflict, and release-probe contracts
+pass — external-directory wheel probe imports Agent Core, canonical Server, compatibility Server and packaged frontend only from the built wheel
+pass — independent specification and quality review for Server C1 through `c09b7933`
+47 passed, 1 deselected — repository layout, release config, health, frontend asset and built-frontend CSP checks for `23ac60c2`
+pass — independent specification and quality review for legacy static UI removal
+76 passed — focused CLI application, parser, release and structure contracts for `91be4353`
+522 passed — tracked tests that import the `openprogram.cli` compatibility API
+45 passed — post-commit repository, apps-layout and formal-release contracts
+pass — clean wheel contains only two `openprogram/cli` compatibility files and 40 `openprogram_cli` files
+pass — isolated wheel executes console script plus `python -m openprogram`, `python -m openprogram.cli` and `python -m openprogram_cli`
+510 pages; 0 broken links — documentation candidate build
+changes required — first independent specification review found raw-checkout discovery, canonical TUI detection, release execution and clean-README gaps
+49 passed — raw checkout, stale-package rejection, all module-entry recognition, release and clean README repair contracts
+pass — independent specification re-review for B2 through `a459c443`
+pass — independent quality review for B2 through `a459c443`
+254 passed, 8 warnings — Server ownership, route/WS, auth, frontend, project, run-guard, WebTab, release and distribution selection for C2
+pass — Ruff, compileall and git diff check for the moved Server implementation
+pass — clean wheel contains canonical Server transport modules and no legacy implementation copies; isolated legacy imports resolve to `openprogram_server/_webui`
+pass — independent specification review for Server C2 through `72f4cbf4`
+changes required — first independent quality review found only the generated Server release staging directory missing from `.gitignore`
+4 passed — executable release-staging cleanup and ignore contracts after `7e55a38e`
+pass — independent quality re-review for Server C2 through `7e55a38e`
+2 failed — public RED proved legacy profile migration followed the moved Server module and package-local state was still tracked
+28 passed — profile migration, profile isolation, atomic writes, apps-layout and wheel package-data checks after `fb490561`
+pass — Ruff and git diff check for Legacy cleanup F2
+pass — independent specification review for Legacy cleanup F2 through `8843ae13`
+changes required — first quality review found the deleted legacy profile path missing from `.gitignore`
+1 passed; pass — executable ignore contract, Ruff and diff check after `2849fd85`
+pass — independent quality re-review for Legacy cleanup F2 through `2849fd85`
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>
-<li><code>desktop/main.js</code>: extract existing window lifecycle, native WebView, tab
+<li><code>apps/desktop/main.js</code>: extract existing window lifecycle, native WebView, tab
 transfer, and menu responsibilities after the current Desktop work lands.</li>
-<li><code>web/lib/desktop-bridge.ts</code>: establish executable state/transfer tests before
+<li><code>apps/web/lib/desktop-bridge.ts</code>: establish executable state/transfer tests before
 moving types, view state, and transfer coordination.</li>
 <li>Long cohesive Python state machines remain intact until a separately tested
 responsibility is identified; line count alone is not an implementation task.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/repository-structure.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Repository structure</span></a><a class="pn-link pn-next" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Site discoverability and performance design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/repository-structure.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Repository structure</span></a><a class="pn-link pn-next" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Site discoverability and performance design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#scope">Scope</a>
+<a class="" href="#approved-migration-sequence">Approved migration sequence</a>
+<a class="" href="#current-migration-audit">Current migration audit</a>
 <a class="" href="#workstreams">Workstreams</a>
+<a class="" href="#implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2</a>
+<a class="" href="#implemented-task-brief-apps-migration-b2">Implemented task brief: Apps migration B2</a>
+<a class="" href="#active-task-brief-apps-migration-c2">Active task brief: Apps migration C2</a>
 <a class="" href="#verification-record">Verification record</a>
 <a class="" href="#deferred-boundaries">Deferred boundaries</a>
 </div></aside>
@@ -517,6 +787,6 @@ responsibility is identified; line count alone is not an implementation task.</l
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

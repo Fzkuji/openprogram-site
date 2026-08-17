@@ -188,6 +188,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/context/composition.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/composition.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/context-compaction.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/context-statistics.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/memory-introspection.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.zh.html</loc></url>
@@ -470,6 +471,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sidebars-resizing.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.html</loc></url>

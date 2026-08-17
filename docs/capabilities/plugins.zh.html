@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/capabilities/plugins.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/capabilities/plugins.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Plugins · OpenProgram Docs">
 <meta name="twitter:description" content="插件是打包好的扩展：一个带 manifest 的 pip / npm / git / 本地包，装进宿主后向 OpenProgram 贡献 commands、skills、MCP server、providers、hooks、agents、侧边栏项、web 页面等。这一页讲插件怎么装、怎么管，以及插件长什么样。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -152,7 +152,7 @@ openprogram<span class="w"> </span>plugins<span class="w"> </span>uninstall<span
 </ol>
 <p>manifest 字段包括 <code>name</code>、<code>version</code>、<code>description</code>、<code>trust</code>（community / verified）、<code>entrypoints</code>、<code>sidebar</code>、<code>options</code>、<code>requires</code>。<code>requires</code> 声明插件间依赖：加载器按拓扑序决定 enable 顺序，缺依赖时报 <code>missing dependencies: ...</code>。</p>
 <p>加载时导入 <code>entrypoints</code> 指向的模块（pip entry point 的 <code>module:obj</code>、或 manifest 里的 <code>python</code> / <code>module</code> 键），插件由此向贡献注册表暴露自己的 commands / skills / mcpServers / providers / hooks / agents / sidebar / web 入口，宿主各子系统从注册表读取并接合。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/distill.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Distill</span></a><a class="pn-link pn-next" href="/docs/capabilities/mcp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">MCP</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/distill.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Distill</span></a><a class="pn-link pn-next" href="/docs/capabilities/mcp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">MCP</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#安装与管理">安装与管理</a>
@@ -167,6 +167,6 @@ openprogram<span class="w"> </span>plugins<span class="w"> </span>uninstall<span
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

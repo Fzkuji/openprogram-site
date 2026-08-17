@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/reference/config.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/reference/config.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="配置 · OpenProgram Docs">
 <meta name="twitter:description" content="~/.openprogram/config.json 的键、 openprogram config 能读写什么、以及环境变量汇总。日常改设置的入口见 配置与数据目录 。 openprogram config 能读写什么 # openprogram config list # 全部设置：值、分组、生效方式">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -321,7 +321,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>api_keys</code></td>
 <td>环境变量名 → API key 的映射，setup 向导写入，worker 启动时导出到环境。用于 web 搜索 / TTS 的 key；LLM provider 的 key 存在凭据库（<code>openprogram providers login</code>），不在这里</td>
-<td><code>openprogram/_setup_sections/sections.py</code>、<code>openprogram/webui/server.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/setup_sections/sections.py</code>、<code>apps/server/openprogram_server/server.py</code></td>
 </tr>
 <tr>
 <td><code>spec_migration_version</code></td>
@@ -372,7 +372,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_WEB_PORT</code></td>
 <td>worker 单端口（默认 18100）；优先级低于显式参数、高于持久化偏好</td>
-<td><code>openprogram/worker/lifecycle.py</code>、<code>openprogram/_cli_cmds/web.py</code></td>
+<td><code>openprogram/worker/lifecycle.py</code>、<code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_NO_WEB</code></td>
@@ -382,7 +382,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_WEB_NO_FRONTEND</code></td>
 <td><code>1</code> = <code>openprogram web</code> 跳过前端只起 backend</td>
-<td><code>openprogram/_cli_cmds/web.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_DOCS_BASE</code></td>
@@ -404,7 +404,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <tr>
 <td><code>OPENPROGRAM_NO_AUTO_WORKER</code></td>
 <td><code>1</code> = TUI 不自动拉起 worker，只连已有的</td>
-<td><code>openprogram/cli_ink.py</code></td>
+<td><code>apps/cli/python/openprogram_cli/_impl/ink.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_NO_SLEEP</code></td>
@@ -514,7 +514,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </table>
 <h3 id="其他">其他<a class="header-anchor" href="#其他">#</a></h3>
 <p>代码里还有一批更内部的变量（HTTP/SSE 超时细调 <code>OPENPROGRAM_HTTPX_*</code> / <code>OPENPROGRAM_SSE_*</code>、TCP keepalive <code>OPENPROGRAM_TCP_*</code>、各 provider 单独的重试次数 <code>OPENPROGRAM_&lt;PROVIDER&gt;_MAX_RETRIES</code>、<code>OPENPROGRAM_JOB_WORKERS</code>、<code>OPENPROGRAM_IMAGE_DIR</code>、<code>OPENPROGRAM_BROWSER_CDP_URL</code> 等）。用 <code>grep -rn &quot;OPENPROGRAM_&quot; openprogram/</code> 可以列出全集；每个变量在定义处都有注释。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">CLI</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Diagnostics bundle</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#openprogram-config-能读写什么">openprogram config 能读写什么</a>
@@ -536,6 +536,6 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

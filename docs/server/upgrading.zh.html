@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/server/upgrading.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/server/upgrading.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="升级 · OpenProgram Docs">
 <meta name="twitter:description" content="openprogram upgrade 根据安装类型选择行为。managed release 安装最新 stable GitHub Release，但在用户显式重启前不改变运行中的 worker。source checkout 使用本文 记录的 Git 门禁流程：只有证明新代码能够启动后，才更新代码并重启服务。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -114,7 +114,7 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 </tr>
 <tr>
 <td>deps</td>
-<td><code>pyproject.toml</code> 变了就刷新源码 checkout 的 Python 环境；<code>web/package-lock.json</code> 变了就跑 <code>npm ci</code></td>
+<td><code>pyproject.toml</code> 变了就刷新源码 checkout 的 Python 环境；<code>apps/web/package-lock.json</code> 变了就跑 <code>npm ci</code></td>
 </tr>
 <tr>
 <td>build</td>
@@ -222,7 +222,7 @@ Release。<code>--channel</code> 会把选择持久化为 <code>update.channel</
 <li><code>openprogram update</code> 是 <code>openprogram upgrade</code> 的兼容别名。managed release
 使用 stable GitHub Release 路径；source checkout 使用上文的 Git 升级流程。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/configuration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configuration</span></a><a class="pn-link pn-next" href="/docs/server/backup.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Backup and restore</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#source-checkout-行为">Source checkout 行为</a>
@@ -243,6 +243,6 @@ Release。<code>--channel</code> 会把选择持久化为 <code>update.channel</
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

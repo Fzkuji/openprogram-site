@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性） · OpenProgram Docs">
 <meta name="twitter:description" content="会话图怎么画：每个节点放哪、每条线什么样、默认给用户看什么。 本文是权威 实现标准 ——布局代码照此写，出问题对照本文查。数据语义（节点、两条边）见 dag/overview.md ；本文只管画。 每条规则配示例。 SVG 场景图以 dag-layout-spec.html 为权威 （共 13 个 场景：1–7">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -90,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -167,6 +167,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -301,12 +302,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -373,6 +374,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Dag">Runtime · Dag</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性）">DAG Rendering Spec (Layout · Edges · Legend · Default Visibility)</span></nav><h1 id="dag-渲染规范布局-连线-图例-默认可见性">DAG 渲染规范（布局 · 连线 · 图例 · 默认可见性）<a class="header-anchor" href="#dag-渲染规范布局-连线-图例-默认可见性">#</a></h1>
@@ -403,19 +408,19 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td>视角状态</td>
-<td><code>CenterTab.dagView</code>（<code>web/lib/state/center-tabs-store.ts</code>）——不持久化，刷新后回到会话记录</td>
+<td><code>CenterTab.dagView</code>（<code>apps/web/lib/state/center-tabs-store.ts</code>）——不持久化，刷新后回到会话记录</td>
 </tr>
 <tr>
 <td>控件</td>
-<td><code>web/components/chat/view-controls.tsx</code></td>
+<td><code>apps/web/components/chat/view-controls.tsx</code></td>
 </tr>
 <tr>
 <td>图的宿主</td>
-<td><code>web/components/chat/dag-view.tsx</code>——渲染 <code>#historyPanel</code> + <code>.history-body</code>，即 <code>pipeline.ts</code> 与 <code>render/visibility.ts</code> 选取的元素</td>
+<td><code>apps/web/components/chat/dag-view.tsx</code>——渲染 <code>#historyPanel</code> + <code>.history-body</code>，即 <code>pipeline.ts</code> 与 <code>render/visibility.ts</code> 选取的元素</td>
 </tr>
 <tr>
 <td>视角切换</td>
-<td><code>web/app/styles/dag/view-host.css</code> 的 <code>.center-pane-chat[data-center-view]</code></td>
+<td><code>apps/web/app/styles/dag/view-host.css</code> 的 <code>.center-pane-chat[data-center-view]</code></td>
 </tr>
 </tbody>
 </table>
@@ -495,7 +500,7 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 <tbody>
 <tr>
 <td>平移 / 缩放 / fit</td>
-<td><code>web/lib/runtime-bridge/dag/canvas.ts</code>（HUD 按钮走 <code>zoomStep</code> / <code>resetZoom</code>）</td>
+<td><code>apps/web/lib/runtime-bridge/dag/canvas.ts</code>（HUD 按钮走 <code>zoomStep</code> / <code>resetZoom</code>）</td>
 </tr>
 <tr>
 <td>视角状态</td>
@@ -503,11 +508,11 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 </tr>
 <tr>
 <td>画布与点阵</td>
-<td><code>web/app/styles/dag/canvas.css</code> 的 <code>.history-body</code></td>
+<td><code>apps/web/app/styles/dag/canvas.css</code> 的 <code>.history-body</code></td>
 </tr>
 <tr>
 <td>HUD</td>
-<td><code>web/components/chat/dag-view.tsx</code> 的 <code>DagHud</code>；胶囊外观来自 <code>composer.module.css</code> 的 env-pill 规则，图例框架来自 <code>MENU_PANEL</code>，内部排版在 <code>styles/dag/hud.css</code></td>
+<td><code>apps/web/components/chat/dag-view.tsx</code> 的 <code>DagHud</code>；胶囊外观来自 <code>composer.module.css</code> 的 env-pill 规则，图例框架来自 <code>MENU_PANEL</code>，内部排版在 <code>styles/dag/hud.css</code></td>
 </tr>
 </tbody>
 </table>
@@ -889,7 +894,7 @@ agent_spawn 那样的隔离，隔离规则见 <code>ui/invariants.md</code> 规�
 渲染层本来就递归（第十二节——agent 线程上的 spawn 是一个普通三角形），历史
 数据里的多代委托链照样画得出来。</p>
 <h2 id="七渲染管线代码地图">七、渲染管线（代码地图）<a class="header-anchor" href="#七渲染管线代码地图">#</a></h2>
-<pre><code>web/lib/runtime-bridge/dag/
+<pre><code>apps/web/lib/runtime-bridge/dag/
   pipeline.ts        调度：passes → layout → edges → nodes → badges → visibility
   passes/            数据变换，按顺序：
     merge-runs.ts               合并同一节点的连续 run
@@ -925,7 +930,7 @@ caller/predecessor），<code>graph_layout/</code> 做 lane/tier/depth 标注—
 就只是覆盖这一个意思。</p>
 <p>覆盖集由 <code>GET /api/sessions/{id}/context-range</code> 提供：从 head 回溯活跃分支，
 止于最近一次压缩摘要。集合外的节点变暗。宿主调
-<code>enterExclusiveCoverageMode</code>（<code>web/lib/runtime-bridge/dag/index.ts</code>）拉取并
+<code>enterExclusiveCoverageMode</code>（<code>apps/web/lib/runtime-bridge/dag/index.ts</code>）拉取并
 应用它。</p>
 <h3 id="覆盖数据形状">覆盖数据形状<a class="header-anchor" href="#覆盖数据形状">#</a></h3>
 <p>同一个响应逐节点带上上下文管线对&quot;仍在携带的内容&quot;施加的两级衰减：</p>
@@ -1183,7 +1188,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第一节 lane / tier / depth 布局</td>
-<td><code>dag/layout/geometry.ts::computeGeometry</code>（链 lane 按 tier 打包并 lane 内归零、前序分行、场景3分叉行+间隔列、线程递归安放）；格点性、无重叠、线程列行、分叉几何均由 <code>web/scripts/check-dag-subagent.mjs</code> 真实执行并断言</td>
+<td><code>dag/layout/geometry.ts::computeGeometry</code>（链 lane 按 tier 打包并 lane 内归零、前序分行、场景3分叉行+间隔列、线程递归安放）；格点性、无重叠、线程列行、分叉几何均由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 真实执行并断言</td>
 </tr>
 <tr>
 <td>第二节 规则③ 字形占格</td>
@@ -1227,7 +1232,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>两个视角共用输入框</td>
-<td><code>styles/chat/center-pane.css</code> 隐藏 <code>#chatArea</code> 而非 <code>#chatView</code>；由 <code>web/scripts/check-center-tabs.mjs</code> 断言</td>
+<td><code>styles/chat/center-pane.css</code> 隐藏 <code>#chatArea</code> 而非 <code>#chatView</code>；由 <code>apps/web/scripts/check-center-tabs.mjs</code> 断言</td>
 </tr>
 <tr>
 <td>图内分支标签（checkout 按钮）</td>
@@ -1251,7 +1256,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第九节 折叠 / 褶皱 / 幽灵</td>
-<td><code>passes/fold-summaries.ts</code>（折叠）、<code>render/nodes.ts</code>（褶皱、<code>已压缩 · N 轮</code> 注记、幽灵描边）、<code>render/edges.ts</code>（幽灵虚线边）、<code>store/globals.ts</code> 的 <code>_summaryExpanded</code>；由 <code>web/scripts/check-dag-summary.mjs</code> 实跑</td>
+<td><code>passes/fold-summaries.ts</code>（折叠）、<code>render/nodes.ts</code>（褶皱、<code>已压缩 · N 轮</code> 注记、幽灵描边）、<code>render/edges.ts</code>（幽灵虚线边）、<code>store/globals.ts</code> 的 <code>_summaryExpanded</code>；由 <code>apps/web/scripts/check-dag-summary.mjs</code> 实跑</td>
 </tr>
 <tr>
 <td>第十节 失败留档</td>
@@ -1267,7 +1272,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第十二节 调用线程 + agent spawn</td>
-<td><code>shapes.ts</code>（spawn → 方块）、<code>passes/thread.ts</code>（模型）、<code>layout/geometry.ts</code>（递归安放）、<code>render/edges.ts</code>（线程点线、中心连线、场景3横桥）、<code>render/nodes.ts</code>（<code>data-thread*</code>、肩上折叠数）、<code>render/interaction.ts</code>（<code>toggleThreadOpen</code>）；由 <code>web/scripts/check-dag-subagent.mjs</code> 实跑</td>
+<td><code>shapes.ts</code>（spawn → 方块）、<code>passes/thread.ts</code>（模型）、<code>layout/geometry.ts</code>（递归安放）、<code>render/edges.ts</code>（线程点线、中心连线、场景3横桥）、<code>render/nodes.ts</code>（<code>data-thread*</code>、肩上折叠数）、<code>render/interaction.ts</code>（<code>toggleThreadOpen</code>）；由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 实跑</td>
 </tr>
 <tr>
 <td>第十二节 名字上线</td>
@@ -1275,7 +1280,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#图在哪中央的一个视角">图在哪：中央的一个视角</a>
@@ -1313,6 +1318,6 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>

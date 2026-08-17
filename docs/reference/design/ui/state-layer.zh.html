@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787004552" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Web 状态层：每会话独立 store · OpenProgram Docs">
 <meta name="twitter:description" content="web 前端的状态存放方式是： 每个会话一个 Zustand store 实例，真正共享的数据放在唯一的 全局 store 。这一页说明每类状态各自存在哪里、这条分界线为什么划在这里，以及换成别的 安排会出什么问题。 不预设前端知识。先介绍必要概念，再是对照真实代码的盘点（引用格式为 文件:行号 ）， 第 6">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
+<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=a77afd4c">
+<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -90,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 底部控制栏响应式设计</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
-<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">OpenProgram 内置浏览器扩展设计</a>
+<a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">Center Tabs 与复合分屏 Tab 设计</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
@@ -167,6 +167,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/context/comparison.html" data-title-zh="上下文成分对比 —— 参考项目 vs 我们（按三层组织）" data-href-en="/docs/reference/design/context/comparison.html" data-href-zh="/docs/reference/design/context/comparison.zh.html">Context Composition Comparison — Reference Projects vs. Us (organized by the three layers)</a>
 <a class="navlink" href="/docs/reference/design/context/context-compaction.html">上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/context/memory-introspection.html">记忆的自我认知：agent怎么知道自己记得什么</a>
+<a class="navlink" href="/docs/reference/design/context/context-statistics.html">上下文统计口径</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Distribution</div>
@@ -301,12 +302,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">Self-Programming Workflow — DAG 与管理网页</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
@@ -373,6 +374,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Web 状态层：每会话独立 store">Web state layer: per-session stores</span></nav><h1 id="web-状态层每会话独立-store">Web 状态层：每会话独立 store<a class="header-anchor" href="#web-状态层每会话独立-store">#</a></h1>
@@ -387,7 +392,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a href="https://github.com/pmndrs/zustand">zustand</a>——一个小库，创建一个对象，里面既放数据
 （<code>currentSessionId</code>、<code>composerDrafts</code>），也放修改数据的函数（<code>setCurrentConv</code>、
 <code>setComposerInput</code>）。页面任何位置的组件都能直接读这个盒子里的任何字段，不需要一层层
-传 props。主盒子在 <code>web/lib/session-store/index.ts:400</code>。</p>
+传 props。主盒子在 <code>apps/web/lib/session-store/index.ts:400</code>。</p>
 <p><strong>组件订阅一个切片。</strong> 组件调用 <code>useSessionStore((s) =&gt; s.conversations)</code> 时，只有
 <code>conversations</code> 变化才会触发它重新渲染。那个选择器函数就是订阅关系。</p>
 <p><strong>store 也可以创建多份。</strong> zustand 并不要求只有一个全局盒子。<code>createStore</code> 可以按会话
@@ -397,9 +402,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 单个全局值，两份就会互相抢。第 5 节的大部分问题都是这一句话。</p>
 <hr />
 <h2 id="2-主-store-逐字段盘点">2. 主 store 逐字段盘点<a class="header-anchor" href="#2-主-store-逐字段盘点">#</a></h2>
-<p><code>web/lib/session-store/index.ts</code> 在 <code>ConvState</code> 接口
-（<code>web/lib/session-store/index.ts:46</code>）里声明形状，在
-<code>web/lib/session-store/index.ts:400</code> 给初值。下面把每个字段归入三类之一。标注<strong>已删除</strong>
+<p><code>apps/web/lib/session-store/index.ts</code> 在 <code>ConvState</code> 接口
+（<code>apps/web/lib/session-store/index.ts:46</code>）里声明形状，在
+<code>apps/web/lib/session-store/index.ts:400</code> 给初值。下面把每个字段归入三类之一。标注<strong>已删除</strong>
 的字段列在这里，是因为它们说明了这套设计排除掉什么；代码里已经没有它们了。</p>
 <h3 id="a-类-按会话隔离">A 类 —— 按会话隔离<a class="header-anchor" href="#a-类-按会话隔离">#</a></h3>
 <p>这些字段是 <code>Record&lt;sessionId, T&gt;</code> 形态的表。同屏两个会话不会冲突，因为各读各的键。
@@ -415,75 +420,75 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>conversations</code></td>
-<td><code>web/lib/session-store/index.ts:68</code></td>
+<td><code>apps/web/lib/session-store/index.ts:68</code></td>
 <td>侧栏每会话摘要（虽然按键存，但它是一份<em>列表</em>，见 C 类）</td>
 </tr>
 <tr>
 <td><code>messagesById</code></td>
-<td><code>web/lib/session-store/index.ts:70</code></td>
+<td><code>apps/web/lib/session-store/index.ts:70</code></td>
 <td>所有已加载消息，按消息 id 存</td>
 </tr>
 <tr>
 <td><code>messageOrder</code></td>
-<td><code>web/lib/session-store/index.ts:72</code></td>
+<td><code>apps/web/lib/session-store/index.ts:72</code></td>
 <td>每会话的消息 id 有序列表</td>
 </tr>
 <tr>
 <td><code>pendingProjectsByChat</code></td>
-<td><code>web/lib/session-store/index.ts:81</code></td>
+<td><code>apps/web/lib/session-store/index.ts:81</code></td>
 <td>未发送会话选定的项目，按临时 chat key 存</td>
 </tr>
 <tr>
 <td><code>runningTasks</code></td>
-<td><code>web/lib/session-store/index.ts:90</code></td>
+<td><code>apps/web/lib/session-store/index.ts:90</code></td>
 <td>每会话运行任务；驱动各自 composer 的发送/停止按钮</td>
 </tr>
 <tr>
 <td><code>trees</code></td>
-<td><code>web/lib/session-store/index.ts:96</code></td>
+<td><code>apps/web/lib/session-store/index.ts:96</code></td>
 <td>每会话最新的实时 context 树</td>
 </tr>
 <tr>
 <td><code>tokens</code></td>
-<td><code>web/lib/session-store/index.ts:103</code></td>
+<td><code>apps/web/lib/session-store/index.ts:103</code></td>
 <td>每会话 token 用量</td>
 </tr>
 <tr>
 <td><code>contextWindow</code></td>
-<td><code>web/lib/session-store/index.ts:112</code></td>
+<td><code>apps/web/lib/session-store/index.ts:112</code></td>
 <td>每会话上下文窗口大小</td>
 </tr>
 <tr>
 <td><code>heads</code></td>
-<td><code>web/lib/session-store/index.ts:115</code></td>
+<td><code>apps/web/lib/session-store/index.ts:115</code></td>
 <td>每会话当前 DAG head（选中的分支尖端）</td>
 </tr>
 <tr>
 <td><code>additionalWorkingDirsBySession</code></td>
-<td><code>web/lib/session-store/index.ts:146</code></td>
+<td><code>apps/web/lib/session-store/index.ts:146</code></td>
 <td>每会话附加工作目录</td>
 </tr>
 <tr>
 <td><code>composerDrafts</code></td>
-<td><code>web/lib/session-store/index.ts:182</code></td>
+<td><code>apps/web/lib/session-store/index.ts:182</code></td>
 <td>每会话未发送草稿文本，持久化到 localStorage</td>
 </tr>
 <tr>
 <td><code>composerSettingsBySession</code></td>
-<td><code>web/lib/session-store/index.ts:194</code></td>
+<td><code>apps/web/lib/session-store/index.ts:194</code></td>
 <td>每会话工具开关/思考强度，持久化</td>
 </tr>
 <tr>
 <td><code>contextPanelFor</code></td>
-<td><code>web/lib/session-store/index.ts:211</code></td>
+<td><code>apps/web/lib/session-store/index.ts:211</code></td>
 <td><code>/context</code> 浮窗开在<em>哪个</em>会话上——单字段当按会话标志用，见第 5 节。<strong>已删除</strong>：现在是每会话 store 上的 <code>contextPanelOpen</code>。</td>
 </tr>
 </tbody>
 </table>
-<p><code>pendingDecisions</code>（<code>web/lib/session-store/index.ts:244</code>）是个值得单独说的混合体：
+<p><code>pendingDecisions</code>（<code>apps/web/lib/session-store/index.ts:244</code>）是个值得单独说的混合体：
 它是扁平的 FIFO 数组，但每一项自带 <code>sessionId</code>
-（<code>web/lib/session-store/types.ts:60</code>），composer 在
-<code>web/components/chat/composer/index.tsx:344</code> 把队列过滤到自己的会话。功能上已经按
+（<code>apps/web/lib/session-store/types.ts:60</code>），composer 在
+<code>apps/web/components/chat/composer/index.tsx:344</code> 把队列过滤到自己的会话。功能上已经按
 会话隔离，结构上是一份需要每个消费方都正确过滤的列表。</p>
 <h3 id="b-类-全局单例但语义属于某个会话">B 类 —— 全局单例，但语义属于某个会话<a class="header-anchor" href="#b-类-全局单例但语义属于某个会话">#</a></h3>
 <p>这是问题集合。每一项都是单个值，但它描述的东西属于某一个具体会话或某一个具体窗格。
@@ -499,92 +504,92 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>currentSessionId</code></td>
-<td><code>web/lib/session-store/index.ts:74</code></td>
+<td><code>apps/web/lib/session-store/index.ts:74</code></td>
 <td>&quot;那个&quot;活动会话。两个窗格时有两个，其中一个只是<em>聚焦</em>的那个</td>
 </tr>
 <tr>
 <td><code>activeChatKey</code></td>
-<td><code>web/lib/session-store/index.ts:77</code></td>
+<td><code>apps/web/lib/session-store/index.ts:77</code></td>
 <td>同上，用于未发送草稿的临时 <code>local_*</code> id</td>
 </tr>
 <tr>
 <td><code>runningTask</code></td>
-<td><code>web/lib/session-store/index.ts:86</code></td>
+<td><code>apps/web/lib/session-store/index.ts:86</code></td>
 <td>已废弃，应读 <code>runningTasks[sid]</code>；保留只为让旧的 <code>setRunning(false)</code> 调用方还能用。<strong>已删除。</strong></td>
 </tr>
 <tr>
 <td><code>composerInput</code></td>
-<td><code>web/lib/session-store/index.ts:178</code></td>
+<td><code>apps/web/lib/session-store/index.ts:178</code></td>
 <td>聚焦会话的<em>活动</em>草稿；是 <code>composerDrafts[focused]</code> 的镜像。<strong>已删除。</strong></td>
 </tr>
 <tr>
 <td><code>composerSettings</code></td>
-<td><code>web/lib/session-store/index.ts:193</code></td>
+<td><code>apps/web/lib/session-store/index.ts:193</code></td>
 <td>聚焦会话的<em>活动</em>设置；是 <code>composerSettingsBySession[focused]</code> 的镜像。<strong>已删除。</strong></td>
 </tr>
 <tr>
 <td><code>composerFocusTick</code></td>
-<td><code>web/lib/session-store/index.ts:206</code></td>
+<td><code>apps/web/lib/session-store/index.ts:206</code></td>
 <td>自增计数器，用来让&quot;那个&quot;composer 聚焦输入框；两个 composer 时无法确定谁该响应</td>
 </tr>
 <tr>
 <td><code>fnFormFunction</code></td>
-<td><code>web/lib/session-store/index.ts:217</code></td>
+<td><code>apps/web/lib/session-store/index.ts:217</code></td>
 <td>哪个函数的参数表单替换了输入框。属于某一个 composer，不属于整个应用</td>
 </tr>
 <tr>
 <td><code>fnFormPrefill</code></td>
-<td><code>web/lib/session-store/index.ts:226</code></td>
+<td><code>apps/web/lib/session-store/index.ts:226</code></td>
 <td>该表单的预填参数</td>
 </tr>
 <tr>
 <td><code>fnFormForkOf</code></td>
-<td><code>web/lib/session-store/index.ts:227</code></td>
+<td><code>apps/web/lib/session-store/index.ts:227</code></td>
 <td>重跑时的 fork 锚点节点</td>
 </tr>
 <tr>
 <td><code>fnFormClosing</code></td>
-<td><code>web/lib/session-store/index.ts:235</code></td>
+<td><code>apps/web/lib/session-store/index.ts:235</code></td>
 <td>该表单的关闭动画标志</td>
 </tr>
 <tr>
 <td><code>welcomeVisible</code></td>
-<td><code>web/lib/session-store/index.ts:165</code></td>
+<td><code>apps/web/lib/session-store/index.ts:165</code></td>
 <td>聊天区是否显示欢迎屏——这是每窗格的条件</td>
 </tr>
 <tr>
 <td><code>transcriptLoadingId</code></td>
-<td><code>web/lib/session-store/index.ts:172</code></td>
+<td><code>apps/web/lib/session-store/index.ts:172</code></td>
 <td>只存<em>一个</em>在途会话 id；两个窗格可以同时在加载</td>
 </tr>
 <tr>
 <td><code>branchInfo</code></td>
-<td><code>web/lib/session-store/index.ts:62</code></td>
+<td><code>apps/web/lib/session-store/index.ts:62</code></td>
 <td>&quot;当前会话&quot;的分支 chip</td>
 </tr>
 <tr>
 <td><code>statusBadge</code></td>
-<td><code>web/lib/session-store/index.ts:65</code></td>
+<td><code>apps/web/lib/session-store/index.ts:65</code></td>
 <td>顶栏状态标签；由某一个会话的运行状态推导</td>
 </tr>
 <tr>
 <td><code>paused</code></td>
-<td><code>web/lib/session-store/index.ts:92</code></td>
+<td><code>apps/web/lib/session-store/index.ts:92</code></td>
 <td>暂停标志，原理上应按运行中的会话分</td>
 </tr>
 <tr>
 <td><code>providerInfo</code></td>
-<td><code>web/lib/session-store/index.ts:94</code></td>
+<td><code>apps/web/lib/session-store/index.ts:94</code></td>
 <td>顶栏显示的当前会话 provider/模型</td>
 </tr>
 <tr>
 <td><code>detailNode</code></td>
-<td><code>web/lib/session-store/index.ts:261</code></td>
+<td><code>apps/web/lib/session-store/index.ts:261</code></td>
 <td>右栏显示的选中 DAG 节点</td>
 </tr>
 <tr>
 <td><code>nodeSelected</code></td>
-<td><code>web/lib/session-store/index.ts:271</code></td>
+<td><code>apps/web/lib/session-store/index.ts:271</code></td>
 <td>&quot;有 DAG 节点被选中&quot;的闸门</td>
 </tr>
 </tbody>
@@ -604,74 +609,74 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>wsStatus</code></td>
-<td><code>web/lib/session-store/index.ts:48</code></td>
+<td><code>apps/web/lib/session-store/index.ts:48</code></td>
 <td>WebSocket 连接状态</td>
 </tr>
 <tr>
 <td><code>agentSettings</code></td>
-<td><code>web/lib/session-store/index.ts:51</code></td>
+<td><code>apps/web/lib/session-store/index.ts:51</code></td>
 <td>Chat/Exec 模型徽标，镜像自 <code>window._agentSettings</code></td>
 </tr>
 <tr>
 <td><code>conversations</code></td>
-<td><code>web/lib/session-store/index.ts:68</code></td>
+<td><code>apps/web/lib/session-store/index.ts:68</code></td>
 <td>侧栏的会话<em>列表</em>（所有会话的目录，不是某个会话的视图状态）</td>
 </tr>
 <tr>
 <td><code>rightDock</code></td>
-<td><code>web/lib/session-store/index.ts:256</code></td>
+<td><code>apps/web/lib/session-store/index.ts:256</code></td>
 <td>右侧栏展开/收起及当前视图，持久化到 localStorage</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h2 id="3-其他-store">3. 其他 store<a class="header-anchor" href="#3-其他-store">#</a></h2>
-<p>除主 session store 外，<code>web/lib/state/</code> 下还有若干较小的 store。它们都不在会话隔离的
+<p>除主 session store 外，<code>apps/web/lib/state/</code> 下还有若干较小的 store。它们都不在会话隔离的
 关键路径上，但知道各自管什么可以避免以后重复造状态。</p>
 <ul>
-<li><strong><code>web/lib/state/center-tabs-store.ts</code></strong>（1020 行）—— 标签条与窗格布局：<code>tabs</code>、
+<li><strong><code>apps/web/lib/state/center-tabs-store.ts</code></strong>（1020 行）—— 标签条与窗格布局：<code>tabs</code>、
 <code>activeId</code>、<code>groups</code>、<code>splitWebTabId</code>、<code>splitRatio</code>
-（<code>web/lib/state/center-tabs-store.ts:129</code>）。这是<em>视图</em>状态，全局是正确的：它描述
+（<code>apps/web/lib/state/center-tabs-store.ts:129</code>）。这是<em>视图</em>状态，全局是正确的：它描述
 窗口，不描述会话。它也是唯一知道&quot;当前存在分屏&quot;的 store，所以作用域树的会话 id 从这里来。</li>
-<li><strong><code>web/lib/state/center-tab-groups.ts</code></strong> —— 对标签布局的纯函数（分组、重排、分屏窗格）。
+<li><strong><code>apps/web/lib/state/center-tab-groups.ts</code></strong> —— 对标签布局的纯函数（分组、重排、分屏窗格）。
 自身无状态。</li>
-<li><strong><code>web/lib/state/chat-scroll.ts</code></strong> —— 按 chat key 存的滚动位置助手，通过一个存储接口
-持久化（<code>web/lib/state/chat-scroll.ts:37</code>）。天然按会话分，只是不在 store 里。</li>
-<li><strong><code>web/lib/state/functions-store.ts</code></strong>、<strong><code>skills-store.ts</code></strong>、
+<li><strong><code>apps/web/lib/state/chat-scroll.ts</code></strong> —— 按 chat key 存的滚动位置助手，通过一个存储接口
+持久化（<code>apps/web/lib/state/chat-scroll.ts:37</code>）。天然按会话分，只是不在 store 里。</li>
+<li><strong><code>apps/web/lib/state/functions-store.ts</code></strong>、<strong><code>skills-store.ts</code></strong>、
 <strong><code>plugins-store.ts</code></strong> —— 页面级清单及其筛选/排序/搜索的 UI 状态。确实是全局的；
 这些是设置页，不是会话。</li>
-<li><strong><code>web/lib/state/files-shared.ts</code></strong> —— 项目列表、文件读取、按路径分键的文件草稿
-（<code>web/lib/state/files-shared.ts:144</code>）。按文件分，不按会话分。</li>
+<li><strong><code>apps/web/lib/state/files-shared.ts</code></strong> —— 项目列表、文件读取、按路径分键的文件草稿
+（<code>apps/web/lib/state/files-shared.ts:144</code>）。按文件分，不按会话分。</li>
 </ul>
 <hr />
 <h2 id="4-遗留的-window-层">4. 遗留的 <code>window.*</code> 层<a class="header-anchor" href="#4-遗留的-window-层">#</a></h2>
 <p>还有第二套更老的状态层，早于 React store：直接挂在浏览器 <code>window</code> 对象上的可变属性，
-由 <code>web/lib/runtime-bridge/</code> 下的模块读写。类型就地声明，比如
-<code>web/lib/runtime-bridge/chat-handlers.ts:34</code> 和
-<code>web/lib/runtime-bridge/conversations.ts:75</code>：</p>
+由 <code>apps/web/lib/runtime-bridge/</code> 下的模块读写。类型就地声明，比如
+<code>apps/web/lib/runtime-bridge/chat-handlers.ts:34</code> 和
+<code>apps/web/lib/runtime-bridge/conversations.ts:75</code>：</p>
 <ul>
 <li><code>W.currentSessionId</code> —— 遗留层对&quot;活动会话&quot;的记法。</li>
 <li><code>W.conversations</code> —— 一份重量级的每会话表，存完整消息数组，与 store 里轻量的
 <code>conversations</code> 摘要表不是同一个东西。</li>
 <li><code>W.isRunning</code> —— 单个全局&quot;有东西在跑&quot;标志。</li>
 <li><code>W.__sessionStore</code> —— 让遗留代码伸手进 React store 的逃生口，用在
-<code>web/lib/runtime-bridge/chat-handlers.ts:895</code>。</li>
+<code>apps/web/lib/runtime-bridge/chat-handlers.ts:895</code>。</li>
 </ul>
 <h3 id="两层的关系">两层的关系<a class="header-anchor" href="#两层的关系">#</a></h3>
 <p>它们是<strong>手工保持同步的双轨系统</strong>。WebSocket 帧到达 runtime bridge，bridge 更新
-<code>window.*</code> 的值，<em>同时</em>写穿到 React store。<code>web/lib/runtime-bridge/conv-store-mirror.ts:4</code>
+<code>window.*</code> 的值，<em>同时</em>写穿到 React store。<code>apps/web/lib/runtime-bridge/conv-store-mirror.ts:4</code>
 明确写了这一点：侧栏读 <code>store.conversations</code>，所以每一处改动
 <code>window.conversations</code> 的地方都必须同时走这个镜像，才能让 store 保持权威。</p>
 <p>大部分进入的帧是用遗留全局而非 store 做闸门。<code>data.session_id === W.currentSessionId</code>
-这个模式贯穿 <code>web/lib/runtime-bridge/chat-handlers.ts</code>（第 226、249、251、271、451、
-524、588、747 行）和 <code>web/lib/runtime-bridge/conversations.ts</code>（第 332、387、527、530、
+这个模式贯穿 <code>apps/web/lib/runtime-bridge/chat-handlers.ts</code>（第 226、249、251、271、451、
+524、588、747 行）和 <code>apps/web/lib/runtime-bridge/conversations.ts</code>（第 332、387、527、530、
 536 行）。每一处都是一个&quot;针对<em>非聚焦</em>会话的事件会被丢弃或错投&quot;的地方。</p>
 <p><strong>哪些已经绕开了。</strong> 分屏窗格完全不走遗留 shell。
-<code>web/components/chat/peer-session-pane.tsx:1</code> 解释了原因：遗留的 <code>#chatView</code> shell 是
+<code>apps/web/components/chat/peer-session-pane.tsx:1</code> 解释了原因：遗留的 <code>#chatView</code> shell 是
 单例，键在写死的 DOM id（<code>#chatArea</code>、<code>#chatMessages</code>）上，被大约十个 runtime-bridge
 模块读取，因此不可能挂载两次。分屏时 AppShell 把它整个隐藏
-（<code>web/components/app-shell.tsx:552</code>），每个窗格改为直接从 store 渲染纯 React。窗格
-甚至自己发 <code>load_session</code> 请求（<code>web/components/chat/peer-session-pane.tsx:66</code>），因为
+（<code>apps/web/components/app-shell.tsx:552</code>），每个窗格改为直接从 store 渲染纯 React。窗格
+甚至自己发 <code>load_session</code> 请求（<code>apps/web/components/chat/peer-session-pane.tsx:66</code>），因为
 遗留路径里没有任何东西会去加载非聚焦的会话。</p>
 <p><strong>哪些还在用。</strong> 非分屏路径的消息渲染、会话切换、分支徽标刷新，以及大部分 WebSocket
 帧路由。遗留层没有死；它是默认路径，分屏才是绕开它的例外。</p>
@@ -695,7 +700,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="cm"> *  两个 composer 各渲染一个 badge，按会话区分才不会两边同时弹。*/</span>
 <span class="nx">contextPanelFor</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 </code></pre>
-<p>消费方随即与自己的会话 id 比较（<code>web/components/chat/context-badge.tsx:44</code>）：</p>
+<p>消费方随即与自己的会话 id 比较（<code>apps/web/components/chat/context-badge.tsx:44</code>）：</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">panelOpen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">sid</span><span class="p">);</span>
 </code></pre>
 <p>这就是全局分键模式的缩影，而且它能跑：每一份渲染出来的副本都问&quot;这是我的吗？&quot;，只有一个
@@ -708,12 +713,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <code>composerInput</code> 和 <code>composerSettings</code> 就是这样的两处。每次写都必须更新两份副本，每次切
 会话都必须把镜像换过去（<code>switchChat</code>）。</p>
 <p>镜像还会渗进组件，组件不得不按&quot;是否绑定了明确的会话&quot;分支
-（<code>web/components/chat/composer/index.tsx:166</code>）：</p>
+（<code>apps/web/components/chat/composer/index.tsx:166</code>）：</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
 <span class="w">  </span><span class="nx">bound</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">composerInput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">composerDrafts</span><span class="p">[</span><span class="nx">bound</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">""</span><span class="p">),</span>
 <span class="p">);</span>
 </code></pre>
-<p>同样的三行三元在 <code>fast</code> 和 <code>unattended</code> 上重复，在 <code>composer-session.tsx</code> 里又重复一次。
+<p>同样的三行三元在 <code>fast</code> 和 <code>unattended</code> 上重复，在 <code>composer/state/use-composer-settings.ts</code> 里又重复一次。
 每一次重复都是一次把兜底写错的机会，而且 <code>bound === null</code> 那一支意味着写错的后果是
 &quot;静默用聚焦会话&quot;，而不是报错。跨窗口搬移会话的路径（<code>desktop-bridge.ts</code>、
 <code>tab-transfer-journal.ts</code>）也不得不重建这份镜像。</p>
@@ -774,16 +779,16 @@ Chrome 是最极端的例子：主进程管标签条/书签/设置等全局态�
 </tbody>
 </table>
 <h3 id="组成部件">组成部件<a class="header-anchor" href="#组成部件">#</a></h3>
-<p><code>web/lib/session-store/session-scope-registry.ts</code> 放 store 工厂和模块级
+<p><code>apps/web/lib/session-store/session-scope-registry.ts</code> 放 store 工厂和模块级
 <code>Map&lt;sid, store&gt;</code>。实例会缓存，<strong>窗格卸载不销毁</strong>——切走标签再切回来，正在打的草稿还在。
 只有会话本身被删除时才丢弃（<code>dropSessionStore</code>，由 <code>removeConversation</code> 和
 <code>dropChatDraft</code> 调用）。</p>
-<p><code>web/lib/session-store/session-scope.tsx</code> 是 React 层：<code>SessionScopeProvider sid=…</code>
+<p><code>apps/web/lib/session-store/session-scope.tsx</code> 是 React 层：<code>SessionScopeProvider sid=…</code>
 和 <code>useSessionScope(selector)</code>。</p>
 <p><strong>不存在无绑定路径。</strong> 组件不在 provider 内时 <code>useSessionScope</code> 直接抛错，而不是回落到
 聚焦会话。静默兜底正是这一层要消灭的 bug，而且它只会在分屏、且经过特定交互序列后才暴露；
 抛错让漏包在第一次渲染时就现形。现有两个 provider 覆盖了全部 composer：
-<code>web/components/app-shell.tsx</code> 里的 <code>FocusedComposer</code> 用聚焦 chat key 包住单会话
+<code>apps/web/components/app-shell.tsx</code> 里的 <code>FocusedComposer</code> 用聚焦 chat key 包住单会话
 composer，<code>PeerSessionPane</code> 用各自的会话 id 包住每个分屏窗格。</p>
 <h3 id="为什么用实例而不是全局分键切片">为什么用实例，而不是全局分键切片<a class="header-anchor" href="#为什么用实例而不是全局分键切片">#</a></h3>
 <p>两种形状都能止住冲突。选实例是因为它消除了<strong>写出这个 bug 的可能性</strong>，而不只是消除当下
@@ -822,16 +827,16 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 <li><code>fnFormFunction</code> / <code>fnFormPrefill</code> / <code>fnFormForkOf</code> / <code>fnFormClosing</code> 合成作用域上
 的一个 <code>fnForm</code> 属性。侧栏和收藏列表在<em>打开</em>表单时并不知道该由哪个窗格承载，因此
 它们指定一个明确的目标会话——这是一个真实的行为决策，不是机械映射。消费方：
-<code>web/components/chat/composer/modes/resolve-mode.ts:18</code>、
-<code>web/components/chat/composer/modes/fn-form/use-fn-form-state.ts</code>、
-<code>use-fn-form-wrapper.ts</code>、<code>web/lib/use-pending-run-function.ts</code>、
-<code>web/components/sidebar/favorites-list.tsx</code>、
-<code>web/components/sidebar/sidebar.tsx</code>、
-<code>web/components/chat/messages/runtime-block.tsx</code>、
-<code>web/lib/runtime-bridge/functions-panel.ts</code>。</li>
+<code>apps/web/components/chat/composer/modes/resolve-mode.ts:18</code>、
+<code>apps/web/components/chat/composer/modes/fn-form/use-fn-form-state.ts</code>、
+<code>use-fn-form-wrapper.ts</code>、<code>apps/web/lib/use-pending-run-function.ts</code>、
+<code>apps/web/components/sidebar/favorites-list.tsx</code>、
+<code>apps/web/components/sidebar/sidebar.tsx</code>、
+<code>apps/web/components/chat/messages/runtime-block.tsx</code>、
+<code>apps/web/lib/runtime-bridge/functions-panel.ts</code>。</li>
 <li><code>welcomeVisible</code>、<code>transcriptLoadingId</code> 是每会话布尔值，消费方为
-<code>web/components/chat/welcome-screen.tsx</code> 和
-<code>web/components/chat/messages/message-list.tsx</code>。</li>
+<code>apps/web/components/chat/welcome-screen.tsx</code> 和
+<code>apps/web/components/chat/messages/message-list.tsx</code>。</li>
 <li><code>composerFocusTick</code> 是每会话计数器，这样聚焦一个窗格的输入框不会把另一个拽走。</li>
 <li><code>branchInfo</code>、<code>statusBadge</code>、<code>paused</code>、<code>providerInfo</code> 按会话分。它们喂给顶栏，而顶栏
 显示的是<em>聚焦</em>会话，所以顶栏读聚焦作用域。</li>
@@ -840,18 +845,18 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 跟踪的东西。</li>
 </ul>
 <p><code>pendingDecisions</code> 的路由依赖这套作用域划分正确：它在
-<code>web/components/chat/composer/index.tsx:344</code> 按 <code>sessionId</code> 过滤，作用域搞错的 composer
+<code>apps/web/components/chat/composer/index.tsx:344</code> 按 <code>sessionId</code> 过滤，作用域搞错的 composer
 要么吞掉另一个会话的提问，要么把它显示两遍。</p>
 <h2 id="8-遗留的-window-层是过渡态">8. 遗留的 <code>window.*</code> 层是过渡态<a class="header-anchor" href="#8-遗留的-window-层是过渡态">#</a></h2>
 <p>第 4 节描述的 <code>window.*</code> 层不属于这套设计，它正是 store 要取代的东西。下列条件全部成立
 后即可移除：</p>
 <ol>
-<li><code>web/lib/runtime-bridge/chat-handlers.ts</code> 和 <code>conversations.ts</code> 里每一处
+<li><code>apps/web/lib/runtime-bridge/chat-handlers.ts</code> 和 <code>conversations.ts</code> 里每一处
 <code>data.session_id === W.currentSessionId</code> 闸门都成为按 <code>data.session_id</code> 分键的 store
 写入，让后台会话的帧能落地而不是被丢弃。这要求 store 先把&quot;聚焦&quot;和&quot;那个会话&quot;区分开，
 也就是第 7 节的聚焦指针所做的事。</li>
 <li><code>window.conversations</code> 没有任何 store 按键表覆盖不到的读取方，此时
-<code>web/lib/runtime-bridge/conv-store-mirror.ts</code> 就不再是必需的，可以直接删掉。</li>
+<code>apps/web/lib/runtime-bridge/conv-store-mirror.ts</code> 就不再是必需的，可以直接删掉。</li>
 <li><code>W.isRunning</code> 没有读取方；<code>runningTasks</code> 覆盖它。</li>
 <li>单例的 <code>#chatView</code> DOM shell 消失，换成 <code>PeerSessionPane</code> 已经证明可行的 React 路径。
 这是最重的一条——大约十个 runtime-bridge 模块靠写死的 id 访问那个 shell。</li>
@@ -860,8 +865,8 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 闸门都需要配套验证那个帧仍然到达它的会话。</p>
 <h2 id="9-非目标">9. 非目标<a class="header-anchor" href="#9-非目标">#</a></h2>
 <p><strong>右栏与 DAG 保持单份，跟随聚焦会话。</strong> <code>detailNode</code> 和 <code>nodeSelected</code>
-（<code>web/lib/session-store/index.ts:261</code>、<code>:271</code>）保持全局。没有任何东西把它们渲染两份：
-右栏只有一个 dock（<code>web/components/right-sidebar/right-sidebar.tsx:407</code>、<code>:575</code>），也没有
+（<code>apps/web/lib/session-store/index.ts:261</code>、<code>:271</code>）保持全局。没有任何东西把它们渲染两份：
+右栏只有一个 dock（<code>apps/web/components/right-sidebar/right-sidebar.tsx:407</code>、<code>:575</code>），也没有
 让每个窗格各有一份 DAG 的计划。它们继续读聚焦会话就是正确的。</p>
 <p><code>rightDock</code> 本身、顶栏徽标的<em>显示</em>（按定义就是显示聚焦会话）、以及设置页的各 store，
 同理。</p>
@@ -883,7 +888,7 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 不是新造机制，大约十五到二十个文件，可拆成五次独立可验证的提交。fn-form 那一组最大，
 因为有八个文件消费它。</li>
 <li>第 8 节——遗留 <code>window.*</code> 层仍是非分屏路径的消息渲染、会话切换、分支徽标刷新以及
-大部分 WebSocket 帧路由的默认路径。退役它涉及整个 <code>web/lib/runtime-bridge/</code>（十三个
+大部分 WebSocket 帧路由的默认路径。退役它涉及整个 <code>apps/web/lib/runtime-bridge/</code>（十三个
 模块加 <code>dag</code> 子目录），也是唯一一处&quot;做一半比两个端点都差&quot;的地方，因此排在最后，
 按模块以一次持续的推进完成。</li>
 </ul>
@@ -898,7 +903,7 @@ composer 如何在 idle、fn-form、question、approval 之间仲裁</li>
 <li><a href="/docs/reference/design/ui/interaction-feedback.html"><code>interaction-feedback.md</code></a> —— 塑造这些写入顺序的
 乐观状态优先规则</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Surface system (dark mode)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram 主题系统</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Surface system (dark mode)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram 主题系统</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-三个概念">1. 三个概念</a>
@@ -934,6 +939,6 @@ composer 如何在 idle、fn-form、question、approval 之间仲裁</li>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=a77afd4c"></script>
+<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
 </body>
 </html>
