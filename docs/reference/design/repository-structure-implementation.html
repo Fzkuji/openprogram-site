@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787005513">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787007439">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -602,6 +602,18 @@ the migration does not change host licence state.</li>
 <td>implemented; reviewed</td>
 <td>Removes tracked mutable tool-profile state from the core package. One-time migration resolves the actual legacy compatibility package even though the Server module now lives under <code>apps/server</code>; package-data exclusion remains enforced and both legacy state paths remain ignored.</td>
 </tr>
+<tr>
+<td>Browser v0.7.0 policy closure</td>
+<td><code>bf7dd2ad</code> through <code>537b20aa</code></td>
+<td>implemented; reviewed; released</td>
+<td>Removes the post-release experimental browser-extension installer and management surface, preserves the released Browser, profile import and Agent WebTab capabilities, rejects obsolete persisted Extensions tabs, and records the unsupported-extension boundary in the product and design documentation. The published v0.7.0 assets predate the experimental installer and already match this boundary.</td>
+</tr>
+<tr>
+<td>Post-migration CI repair</td>
+<td><code>15fd5e1f</code>, <code>c7a494ef</code>, <code>eaf34a1b</code>, <code>63c65ad8</code>, <code>35d7edc2</code>, <code>2f40f948</code></td>
+<td>implemented; reviewed</td>
+<td>Aligns landing-page checks, migrated Server test paths, documentation navigation, runtime HTTP inventory and doctor checks with <code>apps/</code>; keeps App package locks portable; moves subprocess coverage to component; and verifies macOS installer behavior on a native runner rather than Ubuntu.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
@@ -752,6 +764,13 @@ pass — independent specification review for Legacy cleanup F2 through `8843ae1
 changes required — first quality review found the deleted legacy profile path missing from `.gitignore`
 1 passed; pass — executable ignore contract, Ruff and diff check after `2849fd85`
 pass — independent quality re-review for Legacy cleanup F2 through `2849fd85`
+pass — browser extension negative contract, Browser/Web/Desktop focused checks, TypeScript and documentation links for `bf7dd2ad` through `537b20aa`
+pass — independent specification and quality review of the browser extension removal and documentation boundary
+published — v0.7.0 stable GitHub Release is non-draft and non-prerelease with 17 assets; the release contains the complete built-in Browser experience and no extension manager
+2587 passed, 3 skipped — complete local unit suite after the apps migration and CI repairs
+8 passed — native macOS Desktop installation, downgrade, rollback, concurrency and stable-lock tests
+pass — CI run 32077688937: quality, Python 3.11/3.12/3.13 unit, component, integration, e2e, coverage, Web, CLI, Desktop, Browser and macOS Desktop installation jobs
+pass — independent quality review for `2f40f948`
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>
