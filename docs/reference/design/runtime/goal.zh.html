@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786954470" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -521,14 +521,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <p>运行中的状态示例：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;写完综述&quot;</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">&quot;spec&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…完整规格…&quot;</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">&quot;checklist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;正文包含 6 个章节&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;done&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;引用不少于 80 篇且逐条核实&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;done&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;包含分类框架图&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;done&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}],</span>
-<span class="w"> </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;turns_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;max_turns&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">&quot;last_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;引用核实未完成&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;judge_parse_failures&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"写完综述"</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…完整规格…"</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">"checklist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"正文包含 6 个章节"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"引用不少于 80 篇且逐条核实"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"包含分类框架图"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}],</span>
+<span class="w"> </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w"> </span><span class="nt">"turns_used"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">"max_turns"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">"last_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"引用核实未完成"</span><span class="p">,</span><span class="w"> </span><span class="nt">"judge_parse_failures"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
 </code></pre>
 <p>徽标显示 <code>goal · 2/3</code>；续轮 prompt 点名第 2 条；裁判勾掉它之前 <code>met</code> 不可达。</p>
 <p>判定独立成一次调用是刻意的。Codex 与 Cline 最初的自报式设计——干活 agent 自己宣布完成——都在 agent 系统性提前宣胜之后被迫打补丁：想停下来的模型不是&quot;能不能停&quot;这个问题的合格回答者。把结论放进一个只看目标与证据的新上下文（并要求把记录当数据、不执行其中指令），去掉了这个激励。</p>

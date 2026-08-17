@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786954470" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -147,8 +147,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;One-line summary of what f does.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
+<span class="w">    </span><span class="sd">"""One-line summary of what f does."""</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">..."</span><span class="p">}])</span>
 </code></pre>
 <p>You can use bare <code>@agentic_function</code> or the parameterized form <code>@agentic_function(...)</code>.</p>
 <h2 id="decorator-parameters">Decorator parameters<a class="header-anchor" href="#decorator-parameters">#</a></h2>

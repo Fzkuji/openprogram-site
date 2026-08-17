@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786954470" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>入口函数名为 <strong><code>gui_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>harness</code>）注册，聊天里直接描述桌面任务即可触发，例如&quot;打开 Firefox 并访问 google.com&quot;。</p>
 <p>命令行直接运行：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Open Firefox and go to google.com&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
 <p>参数（函数签名 <code>gui_agent(task, max_steps=15, app_name=&quot;desktop&quot;, ...)</code>）：</p>
 <table>

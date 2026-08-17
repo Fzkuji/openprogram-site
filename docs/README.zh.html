@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786954470" data-alt-lang-url="/docs/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -216,13 +216,13 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 <h2 id="cli-用法">CLI 用法<a class="header-anchor" href="#cli-用法">#</a></h2>
 <p>聊天 UI 之外,<code>openprogram</code> 命令可以 headless 跑——写脚本、接管道、做自动化。</p>
 <pre><code class="language-bash"><span class="c1"># 一次性:发 prompt、打印答案、退出(可重定向或接管道)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;summarise CHANGELOG.md&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
 
 <span class="c1"># 用 key=value 参数运行指定 agentic function</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">&quot;state-space models&quot;</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">"state-space models"</span>
 
 <span class="c1"># 按 id 继续早前的会话(headless,配合 --print 使用)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">&quot;and now?&quot;</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">"and now?"</span>
 </code></pre>
 <p>与 UI 同一套后端和会话(<code>~/.openprogram/</code>)——<code>--print</code> 的一次运行或恢复的会话同样出现在 web / 终端 UI 里。</p>
 <h2 id="功能详情">功能详情<a class="header-anchor" href="#功能详情">#</a></h2>

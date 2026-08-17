@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786954470" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,10 +135,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
 <span class="c1"># 新建workflow</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;把 auth 模块迁到新客户端并更新它的测试&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"把 auth 模块迁到新客户端并更新它的测试"</span><span class="p">)</span>
 
-<span class="c1"># 自动续跑：任务以&quot;继续&quot;/&quot;接着&quot;开头时，自动找最近的workflow续跑</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;继续上次的优化&quot;</span><span class="p">)</span>
+<span class="c1"># 自动续跑：任务以"继续"/"接着"开头时，自动找最近的workflow续跑</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"继续上次的优化"</span><span class="p">)</span>
 </code></pre>
 <p>每次新调用新建一个独立实例，在会话仓库下有自己的目录：<code>workflows/&lt;run_id&gt;/</code>，存<code>code.py</code>和<code>state.json</code>。实例之间什么都不共享，想同时跑几个流程就跑几个。</p>
 <h2 id="小任务不写程序">小任务不写程序<a class="header-anchor" href="#小任务不写程序">#</a></h2>
@@ -147,20 +147,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>planner有只读工具（read、grep、glob、list），输入是任务加函数注册表（积木清单），产出一个普通Python模块，入口<code>def workflow()</code>：</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">find_issues</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
-        <span class="s2">&quot;审查 openprogram/auth/ 的代码，逐文件检查错误处理与并发安全，&quot;</span>
-        <span class="s2">&quot;输出问题清单，按 HIGH / MEDIUM / LOW 分级，每条带文件路径与行号。&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;find issues&quot;</span><span class="p">)</span>
+        <span class="s2">"审查 openprogram/auth/ 的代码，逐文件检查错误处理与并发安全，"</span>
+        <span class="s2">"输出问题清单，按 HIGH / MEDIUM / LOW 分级，每条带文件路径与行号。"</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"find issues"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">findings</span> <span class="o">=</span> <span class="n">find_issues</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s2">&quot;HIGH&quot;</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
-        <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;按清单修复 HIGH 级问题，改完跑通相关测试：&quot;</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
-              <span class="n">description</span><span class="o">=</span><span class="s2">&quot;fix auth&quot;</span><span class="p">)</span>          <span class="c1"># 干活的 agent，profile 带工具</span>
+    <span class="k">if</span> <span class="s2">"HIGH"</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
+        <span class="n">agent</span><span class="p">(</span><span class="s2">"按清单修复 HIGH 级问题，改完跑通相关测试："</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
+              <span class="n">description</span><span class="o">=</span><span class="s2">"fix auth"</span><span class="p">)</span>          <span class="c1"># 干活的 agent，profile 带工具</span>
         <span class="n">checks</span> <span class="o">=</span> <span class="n">run_tests</span><span class="p">()</span>                    <span class="c1"># 注册表里的 agentic function 直接调</span>
-        <span class="k">if</span> <span class="s2">&quot;failed&quot;</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;修复后测试仍失败：&quot;</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;汇总以上结果写报告&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;report&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"failed"</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"修复后测试仍失败："</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"汇总以上结果写报告"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"report"</span><span class="p">)</span>
 </code></pre>
 <p>程序里禁止<code>import</code>，能调的东西全部由框架注入：</p>
 <table>
@@ -206,24 +206,24 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="c1"># 验证和回溯：第一次结果不满足就重试</span>
     <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
-        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;找 auth 相关文件&quot;</span><span class="p">),</span>
-        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;文件数量&gt;=3 且包含 oauth&quot;</span><span class="p">,</span>
-        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;扩大范围，包括 oauth、openid 相关文件&quot;</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"找 auth 相关文件"</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">"文件数量&gt;=3 且包含 oauth"</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"扩大范围，包括 oauth、openid 相关文件"</span><span class="p">)</span>
     <span class="p">)</span>
     
     <span class="c1"># 路由选择：让llm选策略</span>
     <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
-        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;选择迁移策略&quot;</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;直接迁移&quot;</span><span class="p">,</span> <span class="s2">&quot;重构后迁移&quot;</span><span class="p">],</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">"选择迁移策略"</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"直接迁移"</span><span class="p">,</span> <span class="s2">"重构后迁移"</span><span class="p">],</span>
         <span class="n">context</span><span class="o">=</span><span class="n">files</span>
     <span class="p">)</span>
     
     <span class="c1"># 条件分支：根据llm判定执行不同分支</span>
     <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
-        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;策略是直接迁移&quot;</span><span class="p">,</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">"策略是直接迁移"</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
-        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写直接迁移方案：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
-        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;写重构方案：&quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"写直接迁移方案："</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"写重构方案："</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
     <span class="p">)</span>
     
     <span class="k">return</span> <span class="n">plan</span>
@@ -237,7 +237,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>程序抛异常时（语法错、积木调用失败、planner自己写的检查<code>raise</code>），处理方式和开发者一样：planner拿到异常栈、当前代码和<code>state.json</code>里的运行记录，重写<code>code.py</code>，然后整个程序重跑。没改动的已完成调用照旧回放，所以修订不推翻已完成的工作。旧版代码留档在实例目录里，修订历史进返回值。</p>
 <p>没有abandoned这种状态。无效代码、运行报错都带着具体错误打回planner再改，改到能跑为止。唯一的强制停止是<code>capped</code>：40次真实调用执行（回放不计数）触发，到这个份上程序还在长是规划失败。</p>
 <h2 id="返回什么">返回什么<a class="header-anchor" href="#返回什么">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">&quot;revisions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"completed"</span><span class="p">,</span> <span class="s2">"run_id"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"task"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"result"</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">"revisions"</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
 </code></pre>
 <table>
 <thead>

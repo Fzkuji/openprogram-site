@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786954470" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,10 +135,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
 <span class="c1"># Start a new workflow</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;port the auth module to the new client and update its tests&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"port the auth module to the new client and update its tests"</span><span class="p">)</span>
 
-<span class="c1"># Auto-resume: tasks starting with &quot;continue&quot;/&quot;resume&quot; automatically resume the latest workflow</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">&quot;continue the optimization&quot;</span><span class="p">)</span>
+<span class="c1"># Auto-resume: tasks starting with "continue"/"resume" automatically resume the latest workflow</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"continue the optimization"</span><span class="p">)</span>
 </code></pre>
 <p>Every call creates an independent workflow instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
 <h2 id="small-tasks-are-not-split">Small tasks are not split<a class="header-anchor" href="#small-tasks-are-not-split">#</a></h2>
@@ -147,21 +147,21 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The planner has read-only tools (read, grep, glob, list) and receives the task plus the function registry — the list of building blocks. It produces a plain Python module with a <code>def workflow()</code> entry point:</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">find_issues</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
-        <span class="s2">&quot;Review openprogram/auth/ file by file for error handling and &quot;</span>
-        <span class="s2">&quot;concurrency issues. Output a findings list graded HIGH / MEDIUM / LOW &quot;</span>
-        <span class="s2">&quot;with file paths and line numbers.&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;find issues&quot;</span><span class="p">)</span>
+        <span class="s2">"Review openprogram/auth/ file by file for error handling and "</span>
+        <span class="s2">"concurrency issues. Output a findings list graded HIGH / MEDIUM / LOW "</span>
+        <span class="s2">"with file paths and line numbers."</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"find issues"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">findings</span> <span class="o">=</span> <span class="n">find_issues</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s2">&quot;HIGH&quot;</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
-        <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Fix the HIGH findings and get the related tests passing: &quot;</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
-              <span class="n">description</span><span class="o">=</span><span class="s2">&quot;fix auth&quot;</span><span class="p">)</span>          <span class="c1"># a working agent, its profile carries tools</span>
+    <span class="k">if</span> <span class="s2">"HIGH"</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
+        <span class="n">agent</span><span class="p">(</span><span class="s2">"Fix the HIGH findings and get the related tests passing: "</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
+              <span class="n">description</span><span class="o">=</span><span class="s2">"fix auth"</span><span class="p">)</span>          <span class="c1"># a working agent, its profile carries tools</span>
         <span class="n">checks</span> <span class="o">=</span> <span class="n">run_tests</span><span class="p">()</span>                    <span class="c1"># a registered agentic function, called by name</span>
-        <span class="k">if</span> <span class="s2">&quot;failed&quot;</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;tests still failing after fix: &quot;</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write a report summarizing the results above&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;report&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"failed"</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"tests still failing after fix: "</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write a report summarizing the results above"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"report"</span><span class="p">)</span>
 </code></pre>
 <p>Imports are forbidden — the framework injects everything the program may call:</p>
 <table>
@@ -205,26 +205,26 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The three tiers compose: goal is based on agent, agent is based on llm. Control flow primitives use llm for judgment, simplifying planner's code generation.</p>
 <p><strong>Control flow primitives example</strong>:</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># Validation and retry: retry if first result doesn&#39;t satisfy check</span>
+    <span class="c1"># Validation and retry: retry if first result doesn't satisfy check</span>
     <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
-        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Find auth related files&quot;</span><span class="p">),</span>
-        <span class="n">check</span><span class="o">=</span><span class="s2">&quot;File count &gt;= 3 and includes oauth&quot;</span><span class="p">,</span>
-        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Expand search to include oauth and openid files&quot;</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Find auth related files"</span><span class="p">),</span>
+        <span class="n">check</span><span class="o">=</span><span class="s2">"File count &gt;= 3 and includes oauth"</span><span class="p">,</span>
+        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Expand search to include oauth and openid files"</span><span class="p">)</span>
     <span class="p">)</span>
     
     <span class="c1"># Route selection: let llm choose strategy</span>
     <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
-        <span class="n">question</span><span class="o">=</span><span class="s2">&quot;Choose migration strategy&quot;</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Direct migration&quot;</span><span class="p">,</span> <span class="s2">&quot;Refactor then migrate&quot;</span><span class="p">],</span>
+        <span class="n">question</span><span class="o">=</span><span class="s2">"Choose migration strategy"</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"Direct migration"</span><span class="p">,</span> <span class="s2">"Refactor then migrate"</span><span class="p">],</span>
         <span class="n">context</span><span class="o">=</span><span class="n">files</span>
     <span class="p">)</span>
     
     <span class="c1"># Conditional branch: execute different branches based on llm judgment</span>
     <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
-        <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;strategy is direct migration&quot;</span><span class="p">,</span>
+        <span class="n">condition</span><span class="o">=</span><span class="s2">"strategy is direct migration"</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
-        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write direct migration plan: &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
-        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">&quot;Write refactor plan: &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
+        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write direct migration plan: "</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
+        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write refactor plan: "</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
     <span class="p">)</span>
     
     <span class="k">return</span> <span class="n">plan</span>
@@ -238,7 +238,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>When the program raises — a syntax error, a failed call, or a check the planner wrote itself — the handling is what a developer does: the planner gets the traceback, the current code, and the run records in <code>state.json</code>, rewrites <code>code.py</code>, and the whole program reruns. Untouched completed calls replay as before, so a revision never discards finished work. Old code versions are archived in the instance directory, and the revision history is part of the return value.</p>
 <p>There is no abandoned state. Invalid code and runtime failures both go back to the planner with the concrete error, as many rounds as needed. The only forced stop is <code>capped</code>: 40 real executions (replays don't count) ends the run, because a program still growing at that point is a planning failure.</p>
 <h2 id="what-it-returns">What it returns<a class="header-anchor" href="#what-it-returns">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">,</span> <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">&quot;revisions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"completed"</span><span class="p">,</span> <span class="s2">"run_id"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"task"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"result"</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">"revisions"</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
 </code></pre>
 <table>
 <thead>

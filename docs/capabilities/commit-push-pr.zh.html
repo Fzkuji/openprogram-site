@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/capabilities/commit-push-pr.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786954470" data-alt-lang-url="/docs/capabilities/commit-push-pr.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -158,8 +158,8 @@ would open PR: gh pr create --base main --head fix-commit-trailers --title ... -
 <p>设置关着时，流程做完提交就停下来告诉你，你手上留着一个完整的本地提交，自己推即可。在同一轮里直接要求推送或开 PR，这一次调用就算获得授权，设置管的是长期许可，不是一次性请求。</p>
 <p>闸门做在 argv 构造函数里，所以未授权的调用在 <code>git</code> 或 <code>gh</code> 跑起来之前就失败，而不是之后：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">git_push_argv</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># 可以，不写任何东西</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># 可以，不写任何东西</span>
 </code></pre>
 <h2 id="ai-署名">AI 署名<a class="header-anchor" href="#ai-署名">#</a></h2>
 <p>agent 写的提交带一条 git trailer，把模型记为共同作者：</p>

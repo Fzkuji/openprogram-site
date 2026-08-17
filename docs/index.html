@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786954470" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -182,7 +182,7 @@ full guide (install, manage, author, test, publish) is
 <h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
 <p>Two diagnostic commands cover most &quot;it broke and I don't know why&quot; situations:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>rescue<span class="w">          </span><span class="c1"># 12 platform-agnostic probes, each with a fix command</span>
-openprogram<span class="w"> </span>doctor<span class="w">          </span><span class="c1"># quick &quot;is the install healthy?&quot; check</span>
+openprogram<span class="w"> </span>doctor<span class="w">          </span><span class="c1"># quick "is the install healthy?" check</span>
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w">       </span><span class="c1"># follow the worker log live</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w"> </span><span class="c1"># OAuth tokens — expiring? refresh wired?</span>
 </code></pre>
@@ -219,13 +219,13 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 <h2 id="cli-use">CLI use<a class="header-anchor" href="#cli-use">#</a></h2>
 <p>Beyond the chat UIs, the <code>openprogram</code> command runs headless — script it, pipe it, automate it.</p>
 <pre><code class="language-bash"><span class="c1"># One-shot: send a prompt, print the answer, exit (redirect or pipe it)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;summarise CHANGELOG.md&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
 
 <span class="c1"># Run a specific agentic function with key=value args</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">&quot;state-space models&quot;</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">"state-space models"</span>
 
 <span class="c1"># Continue an earlier session by id (headless; combine with --print)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">&quot;and now?&quot;</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">"and now?"</span>
 </code></pre>
 <p>Same backend and sessions as the UIs (<code>~/.openprogram/</code>) — a <code>--print</code> run or a resumed session shows up in the web / terminal UI too.</p>
 <h2 id="detailed-features">Detailed features<a class="header-anchor" href="#detailed-features">#</a></h2>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/capabilities/commit-push-pr.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786954470" data-alt-lang-url="/docs/capabilities/commit-push-pr.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -158,8 +158,8 @@ would open PR: gh pr create --base main --head fix-commit-trailers --title ... -
 <p>With the setting off, the flow runs through the commit and then stops and tells you, which leaves you a finished local commit to push yourself. Asking for the push or the PR in the same turn authorizes that call on its own — the setting is for standing permission, not for one-off requests.</p>
 <p>The gate lives in the argv builders, so an unauthorized call fails before <code>git</code> or <code>gh</code> runs rather than after:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">git_push_argv</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># fine, writes nothing</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
+<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># fine, writes nothing</span>
 </code></pre>
 <h2 id="ai-attribution">AI attribution<a class="header-anchor" href="#ai-attribution">#</a></h2>
 <p>Commits the agent writes carry a git trailer naming the model as a co-author:</p>
