@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786924020" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,7 +161,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>对于第三方 Program 或开发者 source overlay，该命令执行四个步骤：</p>
 <ol>
 <li><strong>浅克隆（shallow-clone）</strong> 仓库到
-<code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
+<code>openprogram/programs/applications/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
 目录（不是 site-packages）。该克隆被 OpenProgram 加入 git-ignore，
 因此它始终是一份独立的检出（checkout），你可以 <code>git pull</code>
 或就地编辑。</li>
@@ -221,19 +221,19 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 及其契约状态；<code>openprogram programs uninstall &lt;Harness-Name&gt;</code> 按克隆目录名移除其中一个。</p>
 <details>
 <summary>手动等价方式（镜像 / 无法访问 GitHub）</summary>
-<p><code>&lt;AGENTICS&gt;</code> 是 OpenProgram 的内置函数文件夹：</p>
+<p><code>&lt;APPLICATIONS&gt;</code> 是 OpenProgram 登记的外部 Program 文件夹：</p>
 <pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;programs&#39;,&#39;applications&#39;))&quot;</span>
 </code></pre>
-<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span>
-pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span><span class="w">        </span><span class="c1"># 或其 requirements.txt</span>
+<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span>/path/to/Harness-Name
+openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/Harness-Name
 <span class="c1"># 重启 OpenProgram</span>
 </code></pre>
-<p>自动发现会拾取 <code>&lt;AGENTICS&gt;</code> 中任何满足契约的目录——这就是安装命令
+<p>自动发现会拾取 <code>&lt;APPLICATIONS&gt;</code> 中任何已登记且满足契约的目录——这就是安装命令
 所自动化的全部内容。</p>
 </details>
 <h2 id="开发者配置开发你正在编写的-harness">开发者配置（开发你正在编写的 harness）<a class="header-anchor" href="#开发者配置开发你正在编写的-harness">#</a></h2>
 <p>把你的工作检出做成 symlink，而不是克隆一份副本：</p>
-<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/Harness-Checkout&quot;</span>
+<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">&quot;&lt;APPLICATIONS&gt;/Harness-Checkout&quot;</span>
 </code></pre>
 <p>编辑会在下次重启时生效；<code>programs install</code> 会拒绝覆盖该链接，
 而 <code>programs uninstall &lt;name&gt;</code> 只会移除该链接。（Windows 注意：
@@ -256,7 +256,7 @@ release installer 或 native package；Windows 用户可以用浏览器连接运
 <li><strong>这些 Program 命令需要可变环境。</strong> source-development checkout 可以使用；
 CLI release 仅在对应 release notes 明确支持 Program mutation 时使用。
 packaged desktop 在 Program 拥有隔离的外部环境前会拒绝这些修改命令。</li>
-<li><strong>受支持的可变环境无需 symlink</strong>——把真实目录克隆到 <code>&lt;AGENTICS&gt;</code> 是规范路径。</li>
+<li><strong>受支持的可变环境无需 symlink</strong>——安装器默认会把真实 checkout 登记到 <code>&lt;APPLICATIONS&gt;</code>。</li>
 <li><strong>harness 在自身代码中仍可以是平台相关的</strong>（例如，桌面 GUI
 harness 可能只实现 macOS / Linux 后端）。
 在受支持主机上能否安装、每个函数能否运行，取决于 harness 声明的依赖和
@@ -283,7 +283,7 @@ harness 可能只实现 macOS / Linux 后端）。
 </tr>
 <tr>
 <td>harness 自身依赖出现 <code>ModuleNotFoundError</code></td>
-<td>依赖安装步骤失败——对该克隆（或其 requirements.txt）执行 <code>pip install</code> 并检查错误。</td>
+<td>Program 环境准备失败——重新执行 <code>openprogram programs install &lt;source&gt;</code> 并检查错误。</td>
 </tr>
 <tr>
 <td>harness 内部的导入失败（<code>from &lt;pkg&gt;.x import y</code>）</td>

@@ -1,261 +1,29 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-Programmed Agentic Workflow — 可搜索、可修订、可复用的 workflow project</title>
+<title>Self-Programming Agentic Workflow — 设计总览</title>
 <style>
-  :root { color-scheme: dark; }
-  body { background:#12110b; color:#bdb9a6; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-         max-width:1060px; margin:0 auto; padding:40px 24px 80px; line-height:1.72; }
-  h1 { color:#e8e4d4; font-size:26px; letter-spacing:.5px; }
-  h2 { color:#e8e4d4; font-size:19px; margin-top:44px; border-bottom:1px solid #2e2c20; padding-bottom:8px; }
-  h3 { color:#d9d4bf; font-size:15px; margin-top:26px; }
-  p.lead,.muted { color:#8a8675; }
-  .card { background:#181712; border:1px solid #2e2c20; border-radius:10px; padding:18px 20px; margin:16px 0; }
-  .implemented { border-left:3px solid #5aad4e; }
-  .pending { border-left:3px solid #d4843a; }
-  figure { margin:20px 0; }
-  figcaption { color:#8a8675; font-size:13px; margin-top:8px; }
-  svg { max-width:100%; height:auto; display:block; }
-  code { background:#221f18; padding:1px 6px; border-radius:4px; color:#d9d4bf; font-size:.92em; }
-  pre { background:#181712; border:1px solid #2e2c20; border-radius:10px; padding:16px 18px; overflow-x:auto; font-size:13px; line-height:1.6; }
-  pre code { background:none; padding:0; }
-  table { border-collapse:collapse; width:100%; font-size:14px; }
-  th,td { border:1px solid #2e2c20; padding:8px 12px; text-align:left; vertical-align:top; }
-  th { color:#e8e4d4; background:#181712; }
-  a { color:#78a8ff; }
+  :root{color-scheme:dark;--bg:#121316;--surface:#181a1f;--surface2:#1e2127;--line:#30343d;--text:#e8e9ed;--muted:#9ca1ac;--cyan:#58cadb;--green:#72d09a;--orange:#ef9b6b;--red:#ed7777;--purple:#b99cff;--mono:ui-monospace,"SFMono-Regular",Menlo,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.68 var(--sans)}a{color:#79aaff}code{padding:1px 5px;border-radius:4px;background:#24272e;color:#d9dce4;font:13px var(--mono)}.page{width:min(1040px,calc(100% - 32px));margin:auto;padding:30px 0 70px}.set-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}.set-nav a{padding:5px 9px;border:1px solid var(--line);border-radius:7px;color:#aeb3bd;text-decoration:none;font-size:12px}.set-nav a[aria-current="page"]{border-color:#39717b;background:#172126;color:#8ddbe6}header{padding-bottom:23px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--cyan);font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase}h1{max-width:880px;margin:8px 0 9px;font-size:clamp(29px,4vw,42px);line-height:1.16}h2{margin:0 0 13px;font-size:23px}h3{margin:0 0 5px;font-size:16px}.lead{max-width:880px;margin:0;color:#c5c8d0;font-size:17px}.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:17px}.pill{padding:3px 8px;border:1px solid #484e5a;border-radius:999px;color:#a8adb7;font-size:10px}.pill.target{border-color:#39717b;color:#89dbe7}section{padding:30px 0;border-bottom:1px solid var(--line)}p{margin:9px 0}table{width:100%;margin:14px 0;border-collapse:collapse;font-size:13px}th,td{padding:10px 11px;border:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--surface2)}td{color:#bcc0c9}.callout{margin:14px 0;padding:12px 14px;border-left:3px solid var(--cyan);background:#162126;color:#c7d8dc}.warning{border-left-color:var(--orange);background:#241d18;color:#daccc1}.topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:15px}.topic{display:block;min-width:0;padding:15px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit;text-decoration:none}.topic:hover,.topic:focus-visible{border-color:#4b5360;background:var(--surface2);outline:none}.topic .index{display:block;margin-bottom:5px;color:var(--cyan);font:10px var(--mono);letter-spacing:.05em;text-transform:uppercase}.topic p{margin:0;color:var(--muted);font-size:12px}.topic .go{display:block;margin-top:9px;color:#8fb5ef;font-size:11px}.anchor-aliases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:11px}.alias{padding:8px 9px;border:1px solid var(--line);border-radius:7px;background:#15171b}.alias a{font-size:11px}.alias span{display:block;color:#777d89;font-size:9px}.state{display:inline-block;padding:2px 7px;border-radius:999px;font-size:10px}.state.done{background:#183023;color:#8bd9aa}.state.target{background:#222b3d;color:#99b9ef}.state.compat{background:#362020;color:#f09a9a}.foot{color:var(--muted);font-size:11px}@media(max-width:720px){.topics,.anchor-aliases{grid-template-columns:1fr}table{display:block;overflow:auto}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
-<body>
+<body><div class="page">
+  <nav class="set-nav" aria-label="Self-Programming Workflow 文档集"><a href="./self-programmed-agentic-workflow.html" aria-current="page">总览</a><a href="./self-programming-workflow-model.html">编程模型与组合</a><a href="./self-programming-workflow-authoring.html">创建、隔离与发布</a><a href="./self-programming-workflow-ui.html">DAG 与 Programs</a><a href="./agent-tool-configuration-ui.html">Agent 工具配置</a></nav>
+  <header><div class="eyebrow">OpenProgram · Runtime design set</div><h1>Self-Programming Agentic Workflow</h1><p class="lead">Workflow 是独立Git仓库中的普通Python小项目。它使用现有 <code>@agentic_function</code>，通过正常import相互调用，并可按任务组合 <code>goal()</code>、<code>agent()</code> 与 <code>llm()</code>。详细设计已按阅读主题拆成三页。</p><div class="pills"><span class="pill target">唯一装饰器：@agentic_function</span><span class="pill target">组合：Python import</span><span class="pill">版本：Git commits</span><span class="pill">已实现：阶段1–4</span><span class="pill target">待实现：单Agent authoring · 测试门 · 管理网页</span></div></header>
 
-<h1>Self-Programmed Agentic Workflow</h1>
-<p class="lead"><code>agentic_workflow(task)</code> 只有一个入口。每次调用都先检索已有 workflow project，
-再由 planner 根据任务和候选项目决定直接复用、基于已有项目创建新修订，或创建新项目。
-用户不选择“新建”或“继续”模式。workflow project 是可跨会话复用的多文件程序；workflow run
-是一次执行及其固定代码快照、调用记录和终态。两者分别持久化。</p>
+  <section id="question"><h2>1. 设计问题与边界</h2><p>系统需要管理多个可复用Workflow。一个Workflow可以调用另一个Workflow，也可以直接调用普通Function、单次模型请求、Agent loop和Goal loop。调用方不应学习另一套API，生成代码也不应把字符串名称交给额外dispatcher。</p><div class="callout">公开代码只有一种语义：导入Python函数，然后调用。OpenProgram只负责准备可导入代码、建立Runtime context、记录DAG和隔离执行环境。</div><p><strong>不在范围：</strong>Workflow DSL、自定义revision数据库、远程Marketplace、自动push、后台分布式调度和新的模型工具协议。</p></section>
 
-<h2>1. 当前实现与已验证缺口</h2>
-<table>
-<tr><th>当前行为</th><th>缺口</th><th>目标</th></tr>
-<tr><td>每次普通调用在 session 内创建 <code>workflows/&lt;run_id&gt;/code.py</code>。</td>
-<td>代码属于运行，无法跨会话查找或维护。</td><td>代码属于全局 workflow project；运行只保存项目修订的不可变快照。</td></tr>
-<tr><td>以“continue / resume / 继续 / 接着”前缀猜测是否恢复最近一次运行。</td>
-<td>任务文本承担控制协议，容易误选；相似新任务也无法复用已有程序。</td>
-<td>所有新任务统一进入候选检索与 planner 决策；只有明确 <code>run_id</code> 恢复同一次中断运行。</td></tr>
-<tr><td>planner 返回 <code>SINGLE</code> 或单个 Python code block。</td>
-<td>复杂流程全部集中在一个文件，职责、测试和局部修订难以维护。</td>
-<td>planner 返回一个有 manifest、README、入口文件和步骤文件的小项目。</td></tr>
-<tr><td>运行失败后覆盖当前 <code>code.py</code>，旧文件按编号留档。</td>
-<td>失败候选会先改变运行目录，项目没有稳定的可用修订。</td>
-<td>候选先在 staging 校验并复制到 run snapshot；snapshot 执行成功后才发布项目 revision。</td></tr>
-</table>
+  <section id="current"><h2>2. 当前实现与剩余偏差</h2><table><thead><tr><th>当前事实</th><th>剩余偏差</th><th>目标页</th></tr></thead><tbody><tr><td><code>@agentic_function</code> 已支持Python调用、工具注册、Runtime继承和DAG。</td><td>旧设计曾重复增加 <code>@workflow</code> 与调用适配层，现已从目标设计删除。</td><td><a href="./self-programming-workflow-model.html">编程模型</a></td></tr><tr><td>参数化多文件package、独立Git仓库、静态import和固定commit快照已实现。</td><td>选择与编写仍是两次模型调用；生成测试没有在发布前真实执行。</td><td><a href="./self-programming-workflow-authoring.html">创建与发布</a></td></tr><tr><td><code>~/.openprogram/workflows/</code> 已是事实来源。</td><td>Programs尚未展示Exports、Calls / Used by、Git和测试状态。</td><td><a href="./self-programming-workflow-ui.html">DAG与网页</a></td></tr></tbody></table><div class="callout warning"><code>@workflow</code>、<code>call_workflow()</code>、<code>invoke_workflow()</code>、Function sidecar和公开resolver/executor均不属于目标架构。</div></section>
 
-<h2>2. 参考框架比较</h2>
-<p>比较基于当前官方文档，不把这些框架的文件格式直接引入 OpenProgram。</p>
-<table>
-<tr><th>参考</th><th>采用</th><th>调整</th><th>不采用或缺失</th></tr>
-<tr><td><a href="https://docs.langchain.com/oss/python/langgraph/persistence">LangGraph persistence</a></td>
-<td>运行状态和可恢复 checkpoint 分开；已成功任务在恢复时不重复执行。</td>
-<td>OpenProgram 保留现有调用边界 checkpoint，不引入 graph/super-step 数据模型。</td>
-<td>其 checkpoint/store 解决执行状态，不负责搜索和版本化 agent 生成的多文件 workflow project。</td></tr>
-<tr><td><a href="https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows">GitHub reusable workflows</a></td>
-<td>复用稳定定义，并让运行引用确定版本；可维护代码和运行记录分离。</td>
-<td>OpenProgram 用本地目录和 revision，不用 YAML、仓库 ref 或远程分发。</td>
-<td>GitHub Actions 不根据自然语言任务检索并修订 workflow，也不执行 LLM 生成的受限 Python。</td></tr>
-<tr><td>OpenProgram <code>@agentic_function</code> / Runtime</td>
-<td>继续使用现有函数注册表、DAG、调用 checkpoint、provider/model 和 Conclusion。</td>
-<td>增加 project catalog 与多文件加载，不增加第二种运行时函数类型。</td>
-<td>当前没有跨 session workflow catalog、稳定 revision 或项目级搜索。</td></tr>
-</table>
+  <section id="documents"><h2>3. 文档导航</h2><div class="topics"><a class="topic" id="model" href="./self-programming-workflow-model.html#model"><span class="index">Document 1</span><h3>编程模型与组合</h3><p>抽象结构、llm/agent/goal、项目目录、跨Workflow import和运行快照。</p><span class="go">打开专题页 →</span></a><a class="topic" id="author" href="./self-programming-workflow-authoring.html#author"><span class="index">Document 2</span><h3>创建、隔离与发布</h3><p>单一authoring Agent、只读available、唯一candidate、真实测试门和交付顺序。</p><span class="go">打开专题页 →</span></a><a class="topic" id="management" href="./self-programming-workflow-ui.html#management"><span class="index">Document 3</span><h3>DAG 与管理网页</h3><p>运行父子关系、静态Calls / Used by、Programs完整原型和交互合同。</p><span class="go">打开专题页 →</span></a></div>
+    <div class="anchor-aliases" aria-label="原文档锚点兼容导航"><div class="alias" id="primitives"><a href="./self-programming-workflow-model.html#primitives">llm / agent / goal</a><span>原 #primitives</span></div><div class="alias" id="project"><a href="./self-programming-workflow-model.html#project">Workflow项目</a><span>原 #project</span></div><div class="alias" id="compose"><a href="./self-programming-workflow-model.html#compose">import与组合</a><span>原 #compose</span></div><div class="alias" id="runtime"><a href="./self-programming-workflow-model.html#runtime">加载与执行</a><span>原 #runtime</span></div><div class="alias" id="dag"><a href="./self-programming-workflow-ui.html#dag">DAG关系</a><span>原 #dag</span></div><div class="alias" id="acceptance"><a href="./self-programming-workflow-authoring.html#acceptance">公共验收</a><span>原 #acceptance</span></div><div class="alias" id="handoff"><a href="./self-programming-workflow-authoring.html#handoff">实现交付</a><span>原 #handoff</span></div></div>
+  </section>
 
-<h2>3. 统一入口与完整流程</h2>
-<figure>
-<svg viewBox="0 0 1040 650" role="img" aria-label="agentic_workflow 统一流程：接收任务后创建 run，检索已有 workflow projects；planner 第一阶段只选择复用、修订或创建。复用直接把已有 active revision 复制为 run snapshot；修订先读取选中项目全部源码，创建和修订都由第二阶段 planner 生成完整项目并在 staging 校验，再复制为 run snapshot。snapshot 执行成功后才发布不可变 revision 和更新 active；失败时 repair planner 基于失败 snapshot、错误和 checkpoint 生成新候选，取消或 capped 不发布">
-  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8675"/></marker></defs>
-  <rect x="0" y="0" width="1040" height="650" fill="#12110b"/>
-  <rect x="30" y="24" width="250" height="62" rx="10" fill="#181712" stroke="#e8e4d4"/>
-  <text x="155" y="50" fill="#e8e4d4" font-size="14" text-anchor="middle">agentic_workflow(task)</text>
-  <text x="155" y="72" fill="#8a8675" font-size="11" text-anchor="middle">唯一任务入口；先建立独立 run</text>
-  <line x1="155" y1="86" x2="155" y2="122" stroke="#8a8675" marker-end="url(#arrow)"/>
-  <rect x="30" y="126" width="250" height="92" rx="10" fill="#181712" stroke="#4f8ef7"/>
-  <text x="155" y="152" fill="#e8e4d4" font-size="14" text-anchor="middle">确定性候选检索</text>
-  <text x="155" y="176" fill="#8a8675" font-size="11" text-anchor="middle">扫描 manifest 的 name / summary / tags</text>
-  <text x="155" y="196" fill="#8a8675" font-size="11" text-anchor="middle">只返回有限候选，不自动执行</text>
-  <line x1="280" y1="172" x2="350" y2="172" stroke="#8a8675" marker-end="url(#arrow)"/>
-  <rect x="354" y="116" width="310" height="112" rx="10" fill="#181712" stroke="#4f8ef7" stroke-width="1.5"/>
-  <text x="509" y="143" fill="#e8e4d4" font-size="14" text-anchor="middle">planner phase 1：只做语义决策</text>
-  <text x="509" y="168" fill="#8a8675" font-size="11" text-anchor="middle">任务 + 候选 manifest + 函数注册表</text>
-  <text x="509" y="190" fill="#bdb9a6" font-size="11" text-anchor="middle">reuse · revise · create</text>
-  <text x="509" y="211" fill="#8a8675" font-size="11" text-anchor="middle">只返回 action 与选中候选；reuse 不返回文件</text>
-  <line x1="509" y1="228" x2="509" y2="270" stroke="#d4843a" marker-end="url(#arrow)"/>
-  <rect x="354" y="274" width="310" height="112" rx="10" fill="#181712" stroke="#d4843a"/>
-  <text x="509" y="300" fill="#e8e4d4" font-size="14" text-anchor="middle">revise/create：phase 2 + staging</text>
-  <text x="509" y="324" fill="#8a8675" font-size="11" text-anchor="middle">revise 先加载 active README / manifest / 全部源码</text>
-  <text x="509" y="346" fill="#8a8675" font-size="11" text-anchor="middle">生成完整项目后校验路径、AST、入口与文件顺序</text>
-  <text x="509" y="368" fill="#8a8675" font-size="11" text-anchor="middle">失败只重写 staging；尚不发布、不改变 active</text>
-  <path d="M354,330 L320,330 L320,172 L350,172" fill="none" stroke="#d4843a" marker-end="url(#arrow)"/>
-  <line x1="664" y1="330" x2="728" y2="330" stroke="#5aad4e" marker-end="url(#arrow)"/>
-  <text x="696" y="319" fill="#5aad4e" font-size="11" text-anchor="middle">候选通过</text>
-  <rect x="732" y="274" width="278" height="112" rx="10" fill="#181712" stroke="#5aad4e"/>
-  <text x="871" y="301" fill="#e8e4d4" font-size="14" text-anchor="middle">固定 run snapshot（尚不发布）</text>
-  <text x="871" y="326" fill="#8a8675" font-size="11" text-anchor="middle">reuse：复制候选 active revision</text>
-  <text x="871" y="348" fill="#8a8675" font-size="11" text-anchor="middle">revise/create：复制已校验 staging</text>
-  <text x="871" y="370" fill="#8a8675" font-size="11" text-anchor="middle">后续只执行 run/snapshot/</text>
-  <path d="M664,172 L871,172 L871,270" fill="none" stroke="#5aad4e" marker-end="url(#arrow)"/>
-  <text x="760" y="162" fill="#5aad4e" font-size="11" text-anchor="middle">reuse：绕过生成与发布</text>
-  <line x1="871" y1="386" x2="871" y2="430" stroke="#8a8675" marker-end="url(#arrow)"/>
-  <rect x="732" y="434" width="278" height="104" rx="10" fill="#181712" stroke="#5aad4e" stroke-width="1.5"/>
-  <text x="871" y="461" fill="#e8e4d4" font-size="14" text-anchor="middle">按 manifest 顺序加载并执行</text>
-  <text x="871" y="486" fill="#8a8675" font-size="11" text-anchor="middle">共享受限 namespace；调用边界 checkpoint</text>
-  <text x="871" y="510" fill="#8a8675" font-size="11" text-anchor="middle">entry.py 的 workflow() 是唯一入口</text>
-  <path d="M732,486 L682,486 L682,330 L668,330" fill="none" stroke="#d4843a" marker-end="url(#arrow)"/>
-  <text x="690" y="462" fill="#d4843a" font-size="11">运行失败：repair planner 读取</text>
-  <text x="690" y="480" fill="#d4843a" font-size="11">失败 snapshot + error + checkpoint</text>
-  <text x="690" y="498" fill="#d4843a" font-size="11">取消 / capped：终止，不发布</text>
-  <line x1="871" y1="538" x2="871" y2="578" stroke="#5aad4e" marker-end="url(#arrow)"/>
-  <rect x="732" y="582" width="278" height="52" rx="10" fill="#181712" stroke="#5aad4e"/>
-  <text x="871" y="604" fill="#5aad4e" font-size="13" text-anchor="middle">成功后发布 revision + Conclusion</text>
-  <text x="871" y="622" fill="#8a8675" font-size="11" text-anchor="middle">更新 active；reuse 不创建 revision</text>
-  <rect x="30" y="430" width="568" height="178" rx="10" fill="#181712" stroke="#3a382d" stroke-dasharray="5 4"/>
-  <text x="314" y="458" fill="#e8e4d4" font-size="13" text-anchor="middle">两类持久化对象</text>
-  <text x="52" y="488" fill="#bdb9a6" font-size="12">~/.openprogram/workflow-projects/&lt;project_id&gt;/</text>
-  <text x="70" y="511" fill="#8a8675" font-size="11">project.json · README.md(派生) · revisions/&lt;revision&gt;/{README.md, workflow.json, entry.py, steps/*.py}</text>
-  <text x="52" y="546" fill="#bdb9a6" font-size="12">&lt;session-repo&gt;/workflows/&lt;run_id&gt;/</text>
-  <text x="70" y="569" fill="#8a8675" font-size="11">state.json · snapshot/ · project_ref.json</text>
-  <text x="52" y="594" fill="#8a8675" font-size="11">project 跨会话共享；run 只保存一次执行，不参与相似任务检索</text>
-</svg>
-<figcaption>检索是确定性的候选缩减，复用判断由 planner 完成。无候选时仍走同一 planner 协议并创建项目，
-不是另一套执行入口。显式 <code>run_id</code> 只恢复同一次运行。</figcaption>
-</figure>
+  <section id="references"><h2>4. 参考与取舍</h2><table><thead><tr><th>参考</th><th>采用</th><th>不采用</th></tr></thead><tbody><tr><td><a href="https://docs.python.org/3/reference/import.html">Python import system</a> / <a href="https://docs.python.org/3/library/contextvars.html">contextvars</a></td><td>标准package/import与现有调用上下文继承。</td><td>自定义import hook和字符串dispatcher。</td></tr><tr><td><a href="https://git-scm.com/docs/git-commit">Git commits</a> / <a href="https://git-scm.com/docs/git-worktree">git worktree</a></td><td>项目历史、提交快照和隔离修改。</td><td>revisions目录与active pointer。</td></tr><tr><td><a href="https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows">GitHub reusable workflows</a></td><td>独立可复用单元、明确输入和组合调用。</td><td>YAML Workflow DSL。</td></tr><tr><td>现有OpenProgram <code>@agentic_function</code></td><td>工具注册、DAG、Runtime、权限、取消和provider/model继承。</td><td>并行注册体系。</td></tr></tbody></table></section>
 
-<h2>4. Workflow project 目录合同</h2>
-<pre><code>~/.openprogram/workflow-projects/paper-lineage-review/
-├── project.json
-├── README.md
-└── revisions/
-    ├── 0001/
-    │   ├── README.md
-    │   ├── workflow.json
-    │   ├── entry.py
-    │   └── steps/
-    │       ├── discover.py
-    │       ├── inspect.py
-    │       └── synthesize.py
-    └── 0002/
-        ├── README.md
-        ├── workflow.json
-        ├── entry.py
-        └── steps/...
-</code></pre>
-<table>
-<tr><th>文件</th><th>稳定合同</th></tr>
-<tr><td><code>project.json</code></td><td>稳定 <code>project_id</code>、当前名称、任务摘要、tags、active revision。只含索引元数据，不含运行结果或秘密；这些搜索字段与 active revision 同一次发布。</td></tr>
-<tr><td><code>revisions/*/README.md</code></td><td>该 revision 的权威 README：适用任务、输入假设、产物与限制。project 根 <code>README.md</code> 只是 active README 的原子派生副本，搜索与修订读取不依赖该副本。</td></tr>
-<tr><td><code>workflow.json</code></td><td>schema version、项目文件加载顺序、入口文件与入口函数。路径必须是项目内相对路径。</td></tr>
-<tr><td><code>entry.py</code></td><td>只定义一个零参数 <code>workflow()</code> 入口；从共享 namespace 调用步骤函数和受管函数。</td></tr>
-<tr><td><code>steps/*.py</code></td><td>普通 helper function。按 manifest 顺序执行到同一个受限 namespace，首版不实现 Python import。</td></tr>
-</table>
-<div class="card">多文件不是任意 Python package。首版继续禁止 <code>import</code>，也不增加依赖管理和自定义 importer。
-这保留现有受限执行边界，同时允许按职责拆文件。需要第三方包时由受管 function 提供能力，而不是由生成项目直接加载。</div>
-
-<h2>5. 搜索、选择和修订</h2>
-<h3>候选检索</h3>
-<p>框架扫描合法 <code>project.json</code>，把任务和 <code>name + summary + tags</code> 规范化为 token，
-按共有 token 数量排序并截取少量候选。检索不调用模型、不读运行结果、不执行项目。候选只缩小 planner
-需要阅读的范围；零候选、低分候选和高分候选都交给同一 planner phase 1 决策。</p>
-<h3>planner 输出</h3>
-<p>phase 1 返回一个 JSON envelope：<code>action</code> 为 <code>reuse</code>、<code>revise</code> 或
-<code>create</code>。<code>reuse/revise</code> 的 <code>project_id</code> 必须来自本次候选集合，revision
-由框架读取该候选的 active pointer，模型不能指定；<code>create</code> 不接受模型指定的 id，框架根据名称
-分配未占用 id，冲突时追加稳定短后缀，不能把 create 降级成 revise。<code>reuse</code> envelope 不含文件。</p>
-<p>选择 <code>revise</code> 后，框架读取该 active revision 的 README、workflow manifest 和全部源码，
-连同新任务交给 phase 2。选择 <code>create</code> 时 phase 2 没有基础源码。phase 2 和运行 repair 都必须返回
-结构化对象 <code>{project_metadata:{name,summary,tags}, readme, files}</code>；<code>files</code> 是完整 Python
-文件映射，不能只返回 diff。create 的搜索 metadata 由 phase 2 产生，project id 仍由框架分配；revise 可随
-任务更新 metadata。README、metadata 与完整源码一起进入 run staging 和 snapshot。</p>
-<h3>修订发布</h3>
-<p>完整候选先写到 run 私有 staging，逐文件验证后复制到 run snapshot 并执行。执行成功后才在 catalog
-锁内分配 revision，并在 catalog 根内建立临时 revision 目录；框架从 run snapshot 复制 README、manifest
-与源码到该目录并再次校验，再在同一文件系统内原子 rename 到最终 revision。随后原子更新
-<code>project.json</code> 的 metadata 与 active pointer，并原子刷新根 README 派生副本。run snapshot 始终保留且
-字节不变。运行失败时 repair planner 必须接收失败 snapshot、结构化错误和 checkpoint 状态，修好的
-完整候选重新校验并替换该 run 的 snapshot；旧 active revision 在整个过程中保持不变。失败、取消或
-<code>capped</code> 都不发布 revision。<code>reuse</code> 始终不创建 revision。</p>
-
-<h2>6. 执行、恢复与兼容</h2>
-<ul>
-<li>新任务总是创建新 <code>run_id</code>，即使复用同一 project；不同任务不会共享 checkpoint 结果。</li>
-<li>run 开始执行前复制 project revision 到 <code>snapshot/</code>，随后只执行 snapshot。</li>
-<li>明确传入既有 <code>run_id</code> 时恢复该 run；不再根据自然语言前缀猜测恢复。</li>
-<li>恢复仍从 <code>workflow()</code> 第一行重跑，已完成且 key 一致的受管调用从 <code>state.json</code> 回放。</li>
-<li>旧 run 若只有 <code>code.py</code>，继续按单文件兼容路径恢复；它不自动发布到全局 project catalog。</li>
-<li><code>SINGLE</code> 作为旧 run 兼容格式保留；所有新任务即使只需一次 agent，也创建一个最小 project，避免不可复用分支。</li>
-</ul>
-
-<h2>7. 信任边界与失败处理</h2>
-<table>
-<tr><th>边界</th><th>要求</th></tr>
-<tr><td>路径</td><td>project id、revision、manifest file 均拒绝绝对路径、<code>..</code>、重复文件和 symlink；只读取 catalog 根目录内文件。</td></tr>
-<tr><td>代码</td><td>每个 Python 文件先 AST 解析；禁止 import、class、async entry 与非白名单顶层语句；全项目只能有一个 <code>workflow()</code>。</td></tr>
-<tr><td>信息</td><td>catalog manifest 不记录 task 原文、调用参数、结果、错误正文或凭据；这些只保存在受现有策略约束的 run state。</td></tr>
-<tr><td>取消</td><td><code>KeyboardInterrupt</code> / <code>CancelledError</code> 直接传播，不触发 planner 修订，也不发布候选 revision。</td></tr>
-<tr><td>失败</td><td>invalid plan 在 staging 内重写；执行异常生成新的 repair candidate 并替换 run snapshot；只有 candidate 执行成功后才发布 revision。达到真实调用上限后保持 <code>capped</code>，不再修订或发布。</td></tr>
-<tr><td>并发</td><td>catalog 根目录使用跨进程文件锁；revision 分配、目标不存在检查、catalog 临时 revision 目录 rename 与 active pointer 更新全部在锁内。run snapshot 不移动。进程内锁继续保护同一 run checkpoint，不同 run 的执行不持有 catalog 锁。</td></tr>
-</table>
-
-<h2>8. 明确不包含</h2>
-<ul>
-<li>不增加向量数据库、embedding、远程 registry、Marketplace 或项目 UI 编辑器。</li>
-<li>不允许生成项目安装依赖、执行任意 import、访问 catalog 外路径。</li>
-<li>不把 workflow project 和用户聊天 Project、Skills、Programs 分类合并。</li>
-<li>不根据历史运行成功率自动决定复用；planner 必须看到候选元数据后明确给出 action。</li>
-<li>不改变 DAG、聊天折叠、Conclusion、provider/model 继承和 18100 单实例合同。</li>
-</ul>
-
-<h2>9. 公共入口验收</h2>
-<table>
-<tr><th>公共路径</th><th>可观察结果</th></tr>
-<tr><td>首次调用 <code>agentic_workflow(task)</code></td><td>创建 project revision 和独立 run snapshot；多文件 helper 被实际调用；发布后 run snapshot 字节不变并可恢复；结果带 project id/revision。</td></tr>
-<tr><td>另一 session 调用语义相近任务</td><td>planner prompt 收到已有候选；选择 reuse 时不生成新代码，仍创建新的 run 和 checkpoint。</td></tr>
-<tr><td>相近但需要调整的任务</td><td>phase 2 收到选中 active revision 的 README、manifest 与全部源码；发布同一 project 的新 revision，未要求修改的文件与旧 revision 一致，旧 run snapshot 字节不变且可恢复；搜索 metadata、revision README 与 active pointer 属于同一次发布。</td></tr>
-<tr><td>无关任务</td><td>同一入口创建新的 project，不依赖“新建”关键词。</td></tr>
-<tr><td>非法 action / project 绑定</td><td>reuse/revise 指向非候选 project或模型指定 revision时拒绝并重新规划；create 的名称产生已占用 id 时，框架在 catalog 锁内分配唯一短后缀，不覆盖已有 project，也不重新调用 planner。</td></tr>
-<tr><td>项目校验或运行修复失败</td><td>旧 active revision 仍可复用；非法路径、symlink、import 或无效入口都不改变 catalog。</td></tr>
-<tr><td>取消或 capped</td><td>不进入 repair planner，不发布候选 revision，不改变 active pointer。</td></tr>
-<tr><td>两个进程并发修订同一 project</td><td>得到不同 revision；两个目录完整，project.json 指向其中一个完整 revision且仍可读取。</td></tr>
-<tr><td><code>resume_workflow(run_id)</code> 或 Retry</td><td>恢复指定 run snapshot，不重新搜索 project，也不切换到最新 revision。</td></tr>
-<tr><td>旧单文件 run</td><td>仍能恢复并完成；不会被错误加入新 catalog。</td></tr>
-</table>
-
-<h2>10. 实现状态</h2>
-<div class="card implemented"><strong>已实现并保持：</strong>受限 Python 执行、函数注册表注入、调用边界 checkpoint、
-按 run 恢复、运行异常修订、40 次真实调用上限、provider/model 继承、聊天 RuntimeBlock 与 Conclusion。</div>
-<div class="card implemented"><strong>本设计已实现：</strong>全局 workflow project catalog、确定性候选检索、
-单入口两阶段 planner、reuse/revise/create、多文件校验与共享 namespace 执行、不可变 revision、run snapshot、
-事务式 active revision 发布、跨进程 catalog 锁，以及仅在显式 resume 时读取旧 <code>code.py</code>。</div>
-
-<h3>10.1 实现与审阅证据</h3>
-<table>
-<tr><th>项目</th><th>记录</th></tr>
-<tr><td>生产实现</td><td><code>openprogram/programs/agentic_functions/agentic_workflow/__init__.py</code></td></tr>
-<tr><td>公共入口回归</td><td><code>tests/component/agent/test_agentic_workflow.py</code>：首次创建、跨 session reuse、revise、非法候选、取消、capped、故障回滚、显式 resume、旧 run、多进程并发发布。</td></tr>
-<tr><td>协议迁移回归</td><td><code>tests/unit/programs/test_three_tier_architecture.py</code> 与 <code>test_workflow_with_control_flow.py</code> 均通过单参数入口和两阶段多文件项目执行。</td></tr>
-<tr><td>提交</td><td><code>9bb08747</code> 设计；<code>1c7b5788</code> 初始实现；<code>b1297e3b</code> 单入口与多文件约束；<code>382de4b2</code> 事务发布；<code>b2f78ded</code> 并发验证与实现记录。</td></tr>
-<tr><td>独立审阅</td><td>设计 reader test：PASS；specification review：PASS；quality review：PASS。</td></tr>
-</table>
-
-<h3>10.2 验证记录</h3>
-<ul>
-<li>workflow 定向与故障/多进程探针：通过。</li>
-<li><code>tests/component/agent</code>：257 passed，1 skipped。</li>
-<li><code>tests/integration</code>：59 passed，4 skipped。</li>
-<li><code>tests/unit</code>：2457 passed，3 skipped；3 项失败均位于未修改的 process runner 参数位置断言。</li>
-<li><code>tests/contracts</code>：447 passed，1 skipped；2 项失败均位于未修改的 browser-agent 注释和既有测试目录布局合同。</li>
-<li>Ruff、Python compile、文档链接检查（0 broken links）和 <code>git diff --check</code>：通过。</li>
-</ul>
-
-</body>
-</html>
+  <section id="status"><h2>5. 实现状态</h2><table><thead><tr><th>能力</th><th>状态</th><th>说明</th></tr></thead><tbody><tr><td>参数化入口、多文件package、独立Git仓库</td><td><span class="state done">阶段1–3完成</span></td><td>新项目使用与项目同名的 <code>@agentic_function(task)</code>。</td></tr><tr><td>静态跨Workflow imports与可达commit快照</td><td><span class="state done">阶段4完成</span></td><td>缺失/循环拒绝、依赖快照和共享Runtime已有实现证据。</td></tr><tr><td>旧零参数单文件Workflow</td><td><span class="state compat">仅恢复兼容</span></td><td>只服务显式resume的历史run。</td></tr><tr><td>单一Agent authoring</td><td><span class="state target">设计完成 · 待实现</span></td><td>删除decision JSON与独立author turn。</td></tr><tr><td>发布前可执行测试门</td><td><span class="state target">设计完成 · 待实现</span></td><td>失败、超时或取消不得产生commit。</td></tr><tr><td>Programs → Applications</td><td><span class="state target">设计完成 · 待实现</span></td><td>Workflow作为Application的source type；不增加并列的Workflows分类。</td></tr></tbody></table></section>
+  <p class="foot">Canonical design set entry. Implemented evidence through Phase 4 remains distinct from the three approved targets without implementation evidence.</p>
+</div></body></html>
 
 <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

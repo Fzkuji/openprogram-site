@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786924020" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -163,7 +163,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>For a third-party Program or developer source overlay, the command performs four steps:</p>
 <ol>
 <li><strong>Shallow-clone</strong> the repo into
-<code>openprogram/programs/agentic_functions/&lt;Repo-Name&gt;/</code> — a real, editable
+<code>openprogram/programs/applications/&lt;Repo-Name&gt;/</code> — a real, editable
 directory (not site-packages). The clone is git-ignored by
 OpenProgram, so it stays an independent checkout you can <code>git pull</code>
 or edit in place.</li>
@@ -225,19 +225,19 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 with their contract status; <code>openprogram programs uninstall &lt;Harness-Name&gt;</code> removes one by its clone-dir name.</p>
 <details>
 <summary>Manual equivalent (mirror / no GitHub access)</summary>
-<p><code>&lt;AGENTICS&gt;</code> is OpenProgram's bundled-functions folder:</p>
+<p><code>&lt;APPLICATIONS&gt;</code> is OpenProgram's owner-recorded external Program folder:</p>
 <pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),&#39;programs&#39;,&#39;applications&#39;))&quot;</span>
 </code></pre>
-<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span>
-pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/&lt;Harness-Name&gt;&quot;</span><span class="w">        </span><span class="c1"># or its requirements.txt</span>
+<pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span>/path/to/Harness-Name
+openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/Harness-Name
 <span class="c1"># restart OpenProgram</span>
 </code></pre>
-<p>Auto-discovery picks up any directory in <code>&lt;AGENTICS&gt;</code> that satisfies the
+<p>Auto-discovery picks up any recorded directory in <code>&lt;APPLICATIONS&gt;</code> that satisfies the
 contract — that's all the install command automates.</p>
 </details>
 <h2 id="developer-setup-work-on-a-harness-youre-writing">Developer setup (work on a harness you're writing)<a class="header-anchor" href="#developer-setup-work-on-a-harness-youre-writing">#</a></h2>
 <p>Symlink your working checkout instead of cloning a copy:</p>
-<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">&quot;&lt;AGENTICS&gt;/Harness-Checkout&quot;</span>
+<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">&quot;&lt;APPLICATIONS&gt;/Harness-Checkout&quot;</span>
 </code></pre>
 <p>Edits take effect on the next restart; <code>programs install</code> will refuse to
 overwrite the link, and <code>programs uninstall &lt;name&gt;</code> removes only the
@@ -263,8 +263,8 @@ source-development checkout and may be used by a CLI release only when its
 release notes explicitly support Program mutation. Packaged desktop builds
 refuse the mutation commands until Programs have isolated external
 environments.</li>
-<li><strong>No symlinks are required</strong> in a supported mutable environment: cloning a
-real directory into <code>&lt;AGENTICS&gt;</code> is the standard path.</li>
+<li><strong>No symlinks are required</strong> in a supported mutable environment: the
+installer records a real checkout under <code>&lt;APPLICATIONS&gt;</code> by default.</li>
 <li><strong>A harness can still be platform-specific in its own code</strong> (e.g. a
 desktop-GUI harness may only implement macOS / Linux backends).
 Whether installation and every function run on a supported host depends on
@@ -291,7 +291,7 @@ the harness's declared dependencies and platform support; check its README.</li>
 </tr>
 <tr>
 <td><code>ModuleNotFoundError</code> for the harness's own deps</td>
-<td>The dep install step failed — <code>pip install</code> the clone (or its requirements.txt) and check the error.</td>
+<td>The Program environment preparation failed — rerun <code>openprogram programs install &lt;source&gt;</code> and inspect its error.</td>
 </tr>
 <tr>
 <td>Imports inside the harness fail (<code>from &lt;pkg&gt;.x import y</code>)</td>

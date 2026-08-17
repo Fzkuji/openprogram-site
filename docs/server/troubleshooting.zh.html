@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786924020" data-alt-lang-url="/docs/server/troubleshooting.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/server/troubleshooting.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,43 +89,29 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>token 过期 —— 重新登录；<code>openprogram providers doctor</code> 可以诊断凭据的过期 / 刷新 / 冲突</li>
 </ul>
 <h2 id="command-not-found-openprogram">&quot;command not found: openprogram&quot;<a class="header-anchor" href="#command-not-found-openprogram">#</a></h2>
-<p>pip 安装目录不在 PATH 中。两种方案：</p>
-<pre><code class="language-bash"><span class="c1"># 直接调用模块</span>
-python3<span class="w"> </span>-m<span class="w"> </span>openprogram<span class="w"> </span>&lt;args&gt;
-
-<span class="c1"># 或将 user-base 的 bin 加入 PATH（幂等）</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$(python3 -m site --user-base)/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<p>受支持的 CLI/server 安装器会创建 <code>~/.local/bin/openprogram</code>。重新运行安装器，
+然后确保该目录位于 <code>PATH</code>：</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$HOME/.local/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
 </code></pre>
 <h2 id="web-ui-端口被占用">Web UI 端口被占用<a class="header-anchor" href="#web-ui-端口被占用">#</a></h2>
 <p>启动 worker 前设置这个环境变量（API、WebSocket 和 web UI 共用一个端口）：</p>
 <pre><code class="language-bash"><span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_WEB_PORT</span><span class="o">=</span><span class="m">8101</span><span class="w">         </span><span class="c1"># 单端口（默认 18100）</span>
 </code></pre>
 <p>或持久化该偏好：<code>openprogram ports --port 8101</code>。</p>
-<h2 id="本地开发安装多仓库">本地开发安装（多仓库）<a class="header-anchor" href="#本地开发安装多仓库">#</a></h2>
-<p>如需在与 OpenProgram 并列的情况下开发
-<a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI-Agent-Harness</a>
-/ <a href="https://github.com/Fzkuji/Research-Agent-Harness">Research-Agent-Harness</a>：</p>
-<pre><code class="language-bash">pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OPENPROGRAM_DIR</span><span class="s2">&quot;</span><span class="w">                   </span><span class="c1"># 始终最先安装</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GUI_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w">                   </span><span class="c1"># 依赖 openprogram</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESEARCH_HARNESS_DIR</span><span class="s2">&quot;</span>
-</code></pre>
-<p><code>openprogram/programs/agentic_functions/{GUI,Research}-Agent-Harness</code>
-是符号链接 —— 如果仓库移动了需要重新创建：</p>
-<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>openprogram/programs/agentic_functions
-rm<span class="w"> </span>-f<span class="w"> </span>GUI-Agent-Harness<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GUI_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w">      </span>GUI-Agent-Harness
-rm<span class="w"> </span>-f<span class="w"> </span>Research-Agent-Harness<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESEARCH_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w"> </span>Research-Agent-Harness
-</code></pre>
-<p><code>pip install -e</code> 写入的是绝对路径 —— 如果你重命名了某个父目录，请
-从新位置重新运行它。</p>
+<h2 id="本地开发">本地开发<a class="header-anchor" href="#本地开发">#</a></h2>
+<p>源码开发使用 <code>uv sync --locked --extra dev</code>。外部 harness 开发见
+<a href="/docs/capabilities/installing-harnesses.zh.html">安装 harness</a>，它不是普通产品安装入口。</p>
 <h2 id="worker-无法启动-启动在了错误的端口">worker 无法启动 / 启动在了错误的端口<a class="header-anchor" href="#worker-无法启动-启动在了错误的端口">#</a></h2>
 <p><code>openprogram doctor</code> 会运行一次快速的端到端检查：Python/Node/git
 工具链、技能和插件能否加载、provider 凭据、MCP server、磁盘缓存，
 以及 worker 是否在 :18100 监听。<code>openprogram rescue</code> 在诊断之外
 还会直接打印修复命令。在提 issue 之前先读一遍它们的输出。</p>
 <h2 id="import-openprogram-报-modulenotfounderror"><code>import openprogram</code> 报 ModuleNotFoundError<a class="header-anchor" href="#import-openprogram-报-modulenotfounderror">#</a></h2>
-<p>该包没有安装在当前激活的 Python 中。要么运行安装程序
-（克隆 OpenProgram + <code>./scripts/install.sh</code>），要么激活安装了它的
-那个 venv。</p>
+<p>正式产品安装使用内置的私有 Python，不会把 OpenProgram 暴露给 shell 中
+当前激活的 Python。源码开发时，先在 checkout 中运行 <code>uv sync --locked</code>，
+再通过 <code>uv run --project /path/to/OpenProgram python ...</code> 执行脚本；也可以
+先激活该 checkout 的 <code>.venv</code>。</p>
 <h2 id="ci-显示tests-pass但-mac-上表现不同">CI 显示&quot;tests pass&quot;但 Mac 上表现不同<a class="header-anchor" href="#ci-显示tests-pass但-mac-上表现不同">#</a></h2>
 <p>有少数测试在裸 CI runner 上被显式跳过，
 因为它们需要 <code>$HOME</code> 中配置好的 provider。跳过
@@ -138,7 +124,7 @@ rm<span class="w"> </span>-f<span class="w"> </span>Research-Agent-Harness<span 
 <a class="" href="#no-provider-available">"No provider available"</a>
 <a class="" href="#command-not-found-openprogram">"command not found: openprogram"</a>
 <a class="" href="#web-ui-端口被占用">Web UI 端口被占用</a>
-<a class="" href="#本地开发安装多仓库">本地开发安装（多仓库）</a>
+<a class="" href="#本地开发">本地开发</a>
 <a class="" href="#worker-无法启动-启动在了错误的端口">worker 无法启动 / 启动在了错误的端口</a>
 <a class="" href="#import-openprogram-报-modulenotfounderror">import openprogram 报 ModuleNotFoundError</a>
 <a class="" href="#ci-显示tests-pass但-mac-上表现不同">CI 显示"tests pass"但 Mac 上表现不同</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786924020" data-alt-lang-url="/docs/integrations/openclaw.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786951349" data-alt-lang-url="/docs/integrations/openclaw.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,9 +88,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="c1"># 克隆 OpenProgram</span>
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git
 
-<span class="c1"># 安装</span>
+<span class="c1"># 准备源码环境</span>
 <span class="nb">cd</span><span class="w"> </span>OpenProgram
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+uv<span class="w"> </span>sync<span class="w"> </span>--locked
 </code></pre>
 <h2 id="用法-1在-skill-中使用-agentic-function">用法 1：在 Skill 中使用 Agentic Function<a class="header-anchor" href="#用法-1在-skill-中使用-agentic-function">#</a></h2>
 <p>最简单的集成方式 — 把 agentic function 作为 OpenClaw skill 的内部构建块。</p>
@@ -109,7 +109,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="c1"># 把 OpenProgram 加到 path（已 pip install -e 时不需要这行）</span>
+<span class="c1"># 把源码 checkout 加入脚本 path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.openclaw/workspace/OpenProgram&quot;</span><span class="p">))</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
@@ -165,9 +165,13 @@ name: my-agentic-skill
 当用户要求规划、分解或拆解任务时，运行：
 
 \`\`\`bash
-python3 ~/.openclaw/workspace/skills/my-agentic-skill/scripts/analyze.py &quot;任务描述&quot;
+uv run --project ~/.openclaw/workspace/OpenProgram python \
+  ~/.openclaw/workspace/skills/my-agentic-skill/scripts/analyze.py \
+  &quot;任务描述&quot;
 \`\`\`
 </code></pre>
+<p>该命令使用源码 checkout 的锁定环境运行脚本。不要使用系统 Python；系统
+Python 不包含 OpenProgram 的依赖。</p>
 <p>OpenClaw 和 OpenProgram 使用同一套 AgentSkills 兼容的 <code>SKILL.md</code> 格式，为其中一方写的 skill 在另一方也能加载。OpenProgram 自己的 skill 放在仓库根目录的 <a href="https://github.com/Fzkuji/OpenProgram/tree/main/skills"><code>skills/</code></a> 下，可以原样复制进任何 OpenClaw skill 根目录。</p>
 <h2 id="用法-2在-agent-脚本中作为-python-库">用法 2：在 Agent 脚本中作为 Python 库<a class="header-anchor" href="#用法-2在-agent-脚本中作为-python-库">#</a></h2>
 <p>如果你的 OpenClaw agent 运行 Python 脚本，可以直接导入 agentic function：</p>

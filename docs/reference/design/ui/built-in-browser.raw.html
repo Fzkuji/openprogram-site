@@ -206,8 +206,8 @@
     <header>
       <div class="eyebrow">OpenProgram · UI design specification</div>
       <h1>内置浏览器、资料导入与新建 Pane</h1>
-      <p class="lede">新建 Pane 只负责选择内容类型；进入 Browser 后才显示网页导航、书签、History 和资料导入。浏览器工具栏只处理当前网页和浏览资料，整个窗口的菜单只处理 OpenProgram 与 Pane。内置浏览器使用标准 Electron/Chromium，不提供浏览器扩展安装与管理。</p>
-      <div class="meta"><span class="pill"><span class="dot"></span>当前基线已实现</span><span class="pill">产品与工程验收</span><span class="pill">桌面 App</span><span class="pill">独立浏览器 profile</span><span class="pill">Browser chrome 已对齐</span><span class="pill">不安装浏览器扩展</span></div>
+      <p class="lede">新建 Pane 只负责选择内容类型；进入 Browser 后才显示网页导航、书签、History 和资料导入。浏览器工具栏只处理当前网页和浏览资料，整个窗口的菜单只处理 OpenProgram 与 Pane。两类设置共用同一 Settings 页面，但使用不同入口。</p>
+      <div class="meta"><span class="pill"><span class="dot"></span>当前基线已实现</span><span class="pill">桌面 App</span><span class="pill">独立浏览器 profile</span><span class="pill">Browser chrome 已对齐</span></div>
       <details class="mobile-toc">
         <summary>本页目录</summary>
         <nav aria-label="移动端页内导航"><a href="#decisions">产品决策</a><a href="#toolbar">工具栏与菜单</a><a href="#surfaces">可见状态</a><a href="#references">参考行为</a><a href="#architecture">架构与数据流</a><a href="#boundaries">信任边界</a><a href="#acceptance">验收与状态</a></nav>
@@ -217,7 +217,7 @@
     <section class="metrics" aria-label="设计范围摘要">
       <div class="metric"><span class="metric-label">范围</span><span class="metric-value">Pane 层级 · Browser chrome · Profile import</span></div>
       <div class="metric"><span class="metric-label">平台</span><span class="metric-value">桌面 App · 独立 profile · 源数据只读</span></div>
-      <div class="metric"><span class="metric-label">实现状态</span><span class="metric-value">资料导入 · Browser chrome · Agent control 已实现</span></div>
+      <div class="metric"><span class="metric-label">实现状态</span><span class="metric-value">资料导入 · Browser chrome · Browser settings 已实现</span></div>
     </section>
 
     <section class="section" id="decisions">
@@ -229,15 +229,14 @@
       <div class="decision"><strong>书签分为保存与管理</strong><p>地址栏右侧的星标只保存或移除当前页；相邻的 Bookmarks 按钮打开完整书签页。Browser home 只显示用户维护的快捷网站，不展开全部书签。</p></div>
       <div class="decision"><strong>Bookmarks manager 采用 Chrome 式两栏结构</strong><p>完整书签页顶部固定页面标题、搜索框和页级菜单；左栏只显示可折叠的文件夹树并高亮当前目录，右栏只显示当前目录的直接子项。书签行使用 favicon、标题和单一 <code>⋮</code> 菜单，文件夹行进入对应目录；不再把整棵树、URL 和编辑/删除按钮同时铺在一个列表里。左右列表行统一为 <code>36px</code>，搜索框沿用全局 <code>30px</code> 控件高度，行内图标按钮为 <code>28px</code>，页头为 <code>52px</code>；右侧列表的首屏内边距为 <code>16px</code>。Pane 变窄时目录树移到内容列表上方，不能直接消失。</p></div>
       <div class="decision"><strong>书签栏默认显示</strong><p>Browser home 和实际网页默认在地址栏下方显示同一行书签。用户可以从 Browser <code>⋯</code> 或 Settings 关闭；窄分屏临时隐藏该行，仍可通过 Browser <code>⋯</code> 中的 Bookmarks 访问全部内容。</p></div>
-      <div class="decision"><strong>书签栏显示来源目录的内容</strong><p>Chromium 的 <code>Bookmarks bar</code> 是书签栏容器，不作为普通文件夹按钮显示。该容器的直接子项按原顺序进入栏内；<code>Other bookmarks</code> 和 <code>Mobile bookmarks</code> 作为右侧文件夹入口，仅在非空时显示。普通根级书签继续作为栏内项目。</p></div>
-      <div class="decision"><strong>书签菜单保留 Chrome 式层级</strong><p>单行书签栏不出现水平滚动条；被宽度截断的项目由右侧溢出入口列出。菜单固定为 280px 宽，过长标题使用省略号；文件夹以右箭头进入下一级菜单，不把完整路径拼进一行。每一级菜单高度受当前窗口约束，并支持鼠标、触控板与键盘操作。</p></div>
+      <div class="decision"><strong>书签栏显示来源目录的内容</strong><p>Chromium 的 <code>Bookmarks bar</code> 是书签栏容器，不作为普通文件夹按钮显示。该容器的直接子项按原顺序进入栏内；<code>Other bookmarks</code> 和 <code>Mobile bookmarks</code> 作为右侧文件夹入口，仅在非空时显示。普通根级书签继续作为栏内项目。进入溢出菜单的项目不能在可见栏内保留被裁切的半个按钮；最后一个可见按钮必须完整显示背景和两侧圆角。</p></div>
+      <div class="decision"><strong>书签菜单保留 Chrome 式层级</strong><p>单行书签栏不出现水平滚动条；被宽度截断的项目由右侧溢出入口列出。菜单固定为 280px 宽，过长标题使用省略号；文件夹行在既有 14px 图标位显示 Folder 图标，并以右箭头进入下一级菜单，不把完整路径拼进一行。网站行显示书签 favicon；导入数据未包含 favicon 时按 URL 获取，加载失败时显示 Bookmark 图标，不能留下无内容的空白位。桌面 App 中鼠标悬停书签栏文件夹立即打开该文件夹，横向移到相邻文件夹时菜单随目标切换，不设置额外等待时间。连续切换文件夹时复用同一个菜单视图，只替换菜单数据，不能反复重建视图并重新解码已经显示过的 favicon。菜单的原生覆盖层从书签栏下缘开始，不能遮挡书签栏按钮的鼠标命中区域。每一级菜单高度受当前窗口约束，并支持鼠标、触控板与键盘操作。</p></div>
       <div class="decision"><strong>设置只有一个数据源</strong><p>窗口菜单的 Settings 打开 OpenProgram 设置；Browser 的 <code>⋯</code> 直接打开其中的 Browser 分区。工具栏不增加常驻齿轮，也不实现第二套浏览器设置存储。</p></div>
       <div class="decision"><strong>分屏属于 Pane</strong><p>分屏、退出分屏和 Pane 排列适用于 Files、Chat、Browser、Terminal，不属于当前网页动作。它们放在 Tab/Pane 控件或 Tab 上下文菜单，不出现在浏览器工具栏。</p></div>
       <div class="decision"><strong>导入保留来源结构</strong><p>Chromium 的 bookmark bar、other bookmarks 以及嵌套文件夹按原有层级和顺序进入 OpenProgram bookmark tree；导入不得把书签压平成主页下方的独立条目。</p></div>
       <div class="decision"><strong>菜单分别绑定触发按钮</strong><p>Browser <code>⋯</code> 和窗口 <code>⋯</code> 都使用各自触发按钮的实际屏幕矩形定位，菜单右边缘与按钮右边缘对齐，垂直间距为 4px；二者不能共用位置或内容。</p></div>
       <div class="decision"><strong>History 使用紧凑行</strong><p>记录按本地日期分组，每行只显示时间、favicon、标题、域名和操作；完整 URL 不再单独占用第二行。</p></div>
       <div class="decision"><strong>导入必须显式触发</strong><p>来源浏览器、profile 和数据类型分别确认。OpenProgram 不读取或修改用户正在使用的源 profile。</p></div>
-      <div class="decision" id="browser-extension-boundary"><strong>不提供浏览器扩展安装与管理</strong><p>OpenProgram 保持标准 Electron/Chromium <code>WebContentsView</code>，不维护 Electron 或 Chromium 定制分支，也不为扩展兼容增加另一套浏览器运行时。完整 runtime 中已有的 Playwright Chromium 只属于浏览器自动化后端，不承载 Desktop Browser Pane 或扩展。Electron 官方将兼容任意 Chrome Web Store 扩展明确列为非目标；其扩展 API 只覆盖部分能力，因此不能把商店页面上的“安装”解释为可用性承诺。Chrome Web Store 与 Edge Add-ons 在 OpenProgram 中只是普通网页，不显示 OpenProgram 安装按钮，不下载 CRX，也不提供扩展管理页。需要扩展 OpenProgram 本身时，继续使用 Plugins、Skills、MCP servers、Programs 和 Agent tools；这些能力与浏览器扩展是不同产品边界。</p></div>
     </section>
 
     <section class="section" id="toolbar">
@@ -287,7 +286,7 @@
 
       <div class="scope-grid">
         <article class="scope-card"><h3>Browser toolbar</h3><p>只放与当前网页直接相关且频繁使用的动作：导航、地址、保存当前页、打开书签、外部打开和 Browser <code>⋯</code>。</p></article>
-        <article class="scope-card"><h3>Browser <code>⋯</code></h3><p>New browser tab、Bookmarks、History、Show bookmarks bar、Import browser data、Clear browsing data、Browser settings。</p></article>
+        <article class="scope-card"><h3>Browser <code>⋯</code></h3><p>New browser tab、Find in page、Zoom、Print、Bookmarks、History、Downloads、Show bookmarks bar、Import browser data、Clear browsing data、Browser settings。</p></article>
         <article class="scope-card"><h3>Window menu</h3><p>New pane/window、Pane 布局、OpenProgram Settings、Help 与 About。它不再直接放 Bookmarks、History 或网页级设置。</p></article>
       </div>
     </section>
@@ -356,7 +355,6 @@
         <article class="compare-card"><span class="label">Bookmark access</span><h3>Chrome 的分层入口</h3><p>星标保存当前页；书签栏可开关；完整管理器独立存在。OpenProgram 保留三层，但针对分屏定义更严格的收缩规则。</p><span class="choice modified">修改后采用</span></article>
         <article class="compare-card"><span class="label">Settings ownership</span><h3>OpenAI 的 App Settings</h3><p>内置浏览器保持独立状态，Cookies 与历史清理归桌面 App Settings。OpenProgram 增加 Browser <code>⋯</code> 深链，但不复制设置存储。</p><span class="choice modified">修改后采用</span></article>
         <article class="compare-card"><span class="label">Importer</span><h3>Chromium C++ importer</h3><p>组件不作为 Electron JavaScript API 暴露，且不提供通用 Cookies import 实现。</p><span class="choice rejected">不复制</span></article>
-        <article class="compare-card"><span class="label">Browser extensions</span><h3>Chrome / Edge 扩展商店</h3><p>不提供商店安装、CRX 侧载或扩展管理。要承诺任意商店扩展兼容，必须增加外部浏览器依赖或长期维护定制浏览器运行时；两者都不属于当前产品。</p><span class="choice rejected">明确排除</span></article>
       </div>
       <ul class="source-list">
         <li><a href="https://help.openai.com/en/articles/20001277-using-the-built-in-browser-in-the-chatgpt-desktop-app">OpenAI 内置浏览器说明</a>：确认独立浏览状态、外部浏览器边界，以及 Cookies 和 History 由桌面 App Settings 清理。</li>
@@ -365,7 +363,6 @@
         <li><a href="https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md">Chromium user data directory</a>：确认 History、Bookmarks、Cookies 的 profile 存储位置。</li>
         <li><a href="https://chromium.googlesource.com/chromium/src/+/refs/tags/145.0.7573.1/components/user_data_importer/">Chromium user_data_importer</a>：确认原生导入组件的能力与 Electron 暴露边界。</li>
         <li><a href="https://www.electronjs.org/docs/latest/api/session">Electron session</a> 与 <a href="https://www.electronjs.org/docs/latest/api/cookies">Cookies</a>：确认持久化 partition 和逐条 Cookie 写入接口。</li>
-        <li><a href="https://www.electronjs.org/docs/latest/api/extensions/">Electron Chrome Extensions</a>：确认只支持部分 Chrome Extensions API，且任意 Chrome Web Store 扩展兼容不是 Electron 的目标。</li>
       </ul>
     </section>
 
@@ -378,7 +375,7 @@
           <desc id="flow-desc">用户从桌面界面选择来源，main 进程发现 profile 并只读复制到临时目录。History 和 Bookmarks 由解析器读取，Cookies 由源浏览器临时进程解密，最终分别写入 OpenProgram history store、bookmark tree 和 persist webtabs session。</desc>
           <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6f7481"/></marker><marker id="arrow-hot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5d55d7"/></marker></defs>
           <rect x="24" y="42" width="145" height="70" rx="10" fill="#f4f5f8" stroke="#b9bfcc"/><text x="96" y="71" text-anchor="middle" font-family="ui-monospace" font-size="13">Import dialog</text><text x="96" y="92" text-anchor="middle" font-family="ui-sans-serif" font-size="11" fill="#646977">source · profile · types</text>
-          <rect x="238" y="42" width="164" height="70" rx="10" fill="#f4f5f8" stroke="#b9bfcc"/><text x="320" y="68" text-anchor="middle" font-family="ui-monospace" font-size="12">desktop/main.js</text><text x="320" y="90" text-anchor="middle" font-family="ui-sans-serif" font-size="10" fill="#646977">browser-import:* · opaque ids</text>
+          <rect x="238" y="42" width="164" height="70" rx="10" fill="#f4f5f8" stroke="#b9bfcc"/><text x="320" y="68" text-anchor="middle" font-family="ui-monospace" font-size="12">desktop/main.js</text><text x="320" y="90" text-anchor="middle" font-family="ui-sans-serif" font-size="10" fill="#646977">run/cancel · request id</text>
           <rect x="475" y="42" width="160" height="70" rx="10" fill="#eceafd" stroke="#5d55d7"/><text x="555" y="68" text-anchor="middle" font-family="ui-monospace" font-size="11">browser-profile-import.js</text><text x="555" y="90" text-anchor="middle" font-family="ui-sans-serif" font-size="10" fill="#646977">0700 dir · 0600 files</text>
           <path d="M169 77H238" stroke="#6f7481" stroke-width="1.6" marker-end="url(#arrow)"/><path d="M402 77H475" stroke="#5d55d7" stroke-width="1.8" marker-end="url(#arrow-hot)"/><text x="203" y="66" text-anchor="middle" font-family="ui-monospace" font-size="10" fill="#646977">IPC</text><text x="438" y="66" text-anchor="middle" font-family="ui-monospace" font-size="10" fill="#5d55d7">copy only</text>
           <rect x="475" y="184" width="160" height="62" rx="10" fill="#ffffff" stroke="#b9bfcc"/><text x="555" y="211" text-anchor="middle" font-family="ui-monospace" font-size="11">bounded parsers</text><text x="555" y="230" text-anchor="middle" font-family="ui-sans-serif" font-size="10" fill="#646977">History SQLite · Bookmarks JSON</text>
@@ -408,11 +405,12 @@
           <tr><td>源 profile</td><td>只读发现；真实路径必须位于已发现 browser root 内；拒绝符号链接逃逸。</td><td><span class="risk">source_invalid</span></td></tr>
           <tr><td>临时数据</td><td>目录 0700、文件 0600；成功、失败或超时后都删除；日志只记录来源标签、类型、计数和错误码。</td><td><span class="risk">cleanup + stable error</span></td></tr>
           <tr><td>目标 profile</td><td>History 和 Bookmarks 合并；Cookies 通过 Electron API 写入，不替换目标数据库。</td><td><span class="risk">保留导入前数据</span></td></tr>
-          <tr><td>并发</td><td>全 App 同时只允许一个导入任务；当前基线不提供执行中取消。</td><td><span class="risk">import_busy</span></td></tr>
+          <tr><td>并发与取消</td><td>全 App 同时只允许一个导入任务。发起 renderer 生成有界 request id；只有同一 renderer 可以取消。取消在解析阶段边界、临时浏览器启动/CDP 等待以及每条 Cookie 写入前后检查。</td><td><span class="risk">import_busy / import_cancelled</span></td></tr>
+          <tr><td>取消后的目标状态</td><td>接受取消后不合并 History 或 Bookmarks，临时浏览器终止且临时目录删除。Electron Cookie API 没有事务；取消前已经完成的 Cookie 写入保留，取消后不得继续写入。</td><td><span class="risk">cooperative stop</span></td></tr>
         </tbody>
       </table>
       <div class="exclusions">
-        <div class="exclusion">不导入 Passwords、支付信息、地址、浏览器扩展、扩展存储、下载记录、缓存、localStorage 或 Service Workers。</div>
+        <div class="exclusion">资料导入不复制 Passwords、支付信息、地址、扩展、下载记录、缓存、localStorage 或 Service Workers。浏览器扩展使用独立的安装与权限流程，见 <a href="browser-extensions.html">Chromium 浏览器扩展设计</a>。</div>
         <div class="exclusion">不实现密码管理器、系统 Credential Store、自动填充或对运行中的源浏览器进行远程调试。</div>
         <div class="exclusion">Cookie 导入可以减少重复登录，但设备绑定、过期、二次验证或服务端撤销仍会要求重新登录。</div>
         <div class="exclusion">本地浏览器导入仅属于桌面 App；Web-only 模式不得显示为可用能力。</div>
@@ -429,19 +427,21 @@
           <tr><td>新建 Pane 只显示 Files、New chat、Browser、Terminal；四个入口使用同尺寸、不同语义色的圆角图标容器，DOM 中不存在浏览器专属控件。</td><td><span class="status">已实现并通过默认 App 深浅主题验收</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/new-tab-page.tsx"><code>new-tab-page.tsx</code></a>；<code>check-built-in-browser.mjs</code> 的有效级联与语义色 mutation 检查</td></tr>
           <tr><td>选择 Browser 后原位显示与网页页签相同的地址栏和书签栏结构、导入入口和快捷网站；无当前网页语义的动作保持可见但禁用。</td><td><span class="status">已实现并通过默认 App 验收</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/browser-home-page.tsx"><code>browser-home-page.tsx</code></a>；<code>check-built-in-browser.mjs</code>；实际 App 中 toolbar / bookmarks bar 为 <code>40px / 30px</code></td></tr>
           <tr><td>标准宽度的 Browser toolbar 按顺序显示 Back、Forward、Reload/Stop、Home、地址栏、当前页星标、Bookmarks、外部打开和 Browser <code>⋯</code>；不显示分屏与 Settings 齿轮。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/web-tab-pane.tsx"><code>web-tab-pane.tsx</code></a>；<code>check-built-in-browser.mjs</code>；<code>check-web-split.mjs</code></td></tr>
-          <tr><td>Browser <code>⋯</code> 提供 Bookmarks、History、书签栏开关、Import、Clear browsing data 和 Browser settings；窗口主菜单只保留 App、窗口与 Pane 操作。桌面弹层按菜单的 <code>scrollWidth/scrollHeight</code> 回报固有尺寸，不能按当前裁剪高度递归缩小。</td><td><span class="status">已实现并通过默认 App 弹层验收</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/browser-controls.tsx"><code>browser-controls.tsx</code></a>；<code>menu-overlay/context-menu/page.tsx</code>；<code>check-built-in-browser.mjs</code>；实际 Browser 菜单 7 行展开后高度稳定为约 <code>196px</code>，History 动作可点击并打开对应页</td></tr>
-          <tr><td>书签栏默认显示；用户关闭后保持关闭；直接显示 <code>Bookmarks bar</code> 的子项，非空的其他根目录位于右侧；末尾溢出入口可访问被截断的项目。文件夹菜单固定为 280px 宽，标题省略，嵌套文件夹逐级展开；Pane 低于 560px 时隐藏书签栏，但 Bookmarks 页面仍可到达。</td><td><span class="status">已实现并通过默认 App 验收</span></td><td><code>check-bookmarks.mjs</code>、<code>check-built-in-browser.mjs</code>；默认 profile 中书签栏实际可见，高度 <code>30px</code></td></tr>
+          <tr><td>Browser <code>⋯</code> 提供 Bookmarks、History、Downloads、书签栏开关、Import、Clear browsing data 和 Browser settings；窗口主菜单只保留 App、窗口与 Pane 操作。桌面弹层按菜单的 <code>scrollWidth/scrollHeight</code> 回报固有尺寸，不能按当前裁剪高度递归缩小。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/browser-controls.tsx"><code>browser-controls.tsx</code></a>；<code>menu-overlay/context-menu/page.tsx</code>；<code>check-built-in-browser.mjs</code></td></tr>
+          <tr><td>书签栏默认显示；用户关闭后保持关闭；直接显示 <code>Bookmarks bar</code> 的子项，非空的其他根目录位于右侧；末尾溢出入口可访问被截断的项目。进入溢出菜单的项目不再残留被裁切的按钮，最后一个可见按钮必须完整显示背景和两侧圆角。桌面文件夹悬停打开并可横向切换；鼠标从文件夹按钮跨入弹层或子菜单时保持打开，鼠标同时离开按钮及全部菜单面板后在 120ms 内关闭，不要求额外点击。文件夹菜单固定为 280px 宽，标题省略，嵌套文件夹逐级展开；文件夹行显示 Folder 图标，网站行显示 favicon，加载失败时显示 Bookmark 图标，不保留空白图标位；Pane 低于 560px 时隐藏书签栏，但 Bookmarks 页面仍可到达。</td><td><span class="status">已实现并通过默认 App 验收</span></td><td><code>check-bookmarks.mjs</code>、<code>check-built-in-browser.mjs</code>、<code>check-webtab-zoom-bounds.js</code>；默认 App 中溢出的 Writing 按钮保持隐藏，最后可见的 Experiments 按钮完整显示 5px 两侧圆角；Other Bookmarks 悬停弹层可打开，离开后实测约 133ms 关闭</td></tr>
           <tr><td>Bookmarks manager 使用顶部搜索、左侧文件夹树和右侧当前目录列表；普通行只保留 favicon/文件夹图标、标题和 <code>⋮</code>。左右列表行均为 <code>36px</code>，页头为 <code>52px</code>，窄 Pane 改为上下布局。</td><td><span class="status">已实现并通过默认 App 密度验收</span></td><td><code>builtin-tab-pane.tsx</code>；<code>center-tabs.module.css</code>；<code>check-bookmarks.mjs</code>；默认 App 实测页头、文件夹行、内容行、搜索框、图标按钮分别为 <code>52 / 36 / 36 / 30 / 28px</code></td></tr>
           <tr><td>Browser settings 与窗口 Settings 使用同一路由和同一配置源；Browser <code>⋯</code> 直接打开 Browser 分区，toolbar 不显示常驻齿轮。</td><td><span class="status">已实现</span></td><td><code>/settings/browser</code>；<code>browser-settings.tsx</code>；<code>browser-prefs.ts</code></td></tr>
-          <tr><td>导入对话框列出来源浏览器、profile 和支持的数据类型；关闭对话框不产生目标变更。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/desktop/main.js"><code>desktop/main.js</code></a> 的 <code>browser-import:*</code> IPC；<code>check-built-in-browser.mjs</code></td></tr>
-          <tr><td>History 按日期分组，至少 1000 条时保持 36–40px 行高，搜索和滚动可用。</td><td><span class="status limit">实现完成，规模验收待补</span></td><td><code>web-history.css</code> 为 38px；History 分页上限 5000，搜索在 main 进程完成；存储 self-check 覆盖 5000 条上限，尚未记录 1000 条可见 UI 性能数据。</td></tr>
+          <tr><td>导入对话框列出来源浏览器、profile 和支持的数据类型；开始前关闭不产生目标变更。执行期间原 Import 按钮原位变为 Cancel，关闭按钮禁用；接受取消后显示稳定的取消结果并释放全局导入占用，下一次导入可以开始。</td><td><span class="status">已实现并通过默认 App 验收</span></td><td><code>browser-import:run/cancel</code> IPC；<code>browser-profile-import.js</code> cancellation self-check；<code>check-webtab-navigation.js</code> 的 sender ownership、lease release 与 window cleanup 检查；<code>check-built-in-browser.mjs</code>。安装版实际识别 Chrome 的 3 个 profile；运行时显示 Cancel 且禁用关闭按钮，取消返回 <code>import_cancelled</code>，随后新请求不再返回 <code>import_busy</code>。</td></tr>
+          <tr><td>History 按日期分组，至少 1000 条时保持 36–40px 行高，搜索和滚动可用。</td><td><span class="status">已实现并通过默认 App 规模验收</span></td><td><code>web-history.css</code> 为 38px；History 分页上限 5000，搜索在 main 进程完成；存储 self-check 覆盖 5000 条上限。在安装版 App 的现有 5000 条记录上逐批显示到 1000 行，三次增量渲染为 <code>241.6 / 235.1 / 256.2ms</code>，行高全部为 <code>38px</code>，滚动到底部后末行可见；<code>google</code> 搜索在 <code>299.4ms</code> 内得到 250 条匹配结果。</td></tr>
+          <tr><td>内置网页下载进入系统 Downloads 目录；Downloads 页面显示实时进度和最终状态，并支持打开文件、在 Finder 中显示、取消进行中任务和清除记录。</td><td><span class="status ok">已实现，安装版通过</span></td><td><code>desktop/main.js</code> 的 <code>will-download</code> 与 <code>downloads:*</code> IPC；<code>builtin-tab-pane.tsx</code>；<code>check-webtab-navigation.js</code>。安装版 App 实际完成 42 B 附件下载，并取消一个 32 MB 进行中任务；页面分别显示 <code>Completed</code>、<code>Cancelled</code>，取消后 <code>active=false</code>，测试记录可清除。另一次安装版下载验证中，Open 使用系统关联应用打开 58 B 文本文件，Show in Finder 定位并选中同一文件；随后已清除测试记录并将文件移到废纸篓。</td></tr>
+          <tr><td>当前网页支持 Find in page、Zoom in/out/reset 和 Print；命令只作用于请求窗口拥有的精确 WebTab。Print 首先调用系统打印；系统打印失败或没有可用 destination 时，由同一动作打开所属窗口的原生 Save PDF 对话框。用户取消系统打印或保存均返回未完成，不写入文件；系统打印成功时不得额外生成 PDF。PDF 先写入目标目录中的唯一临时文件，完成后再替换用户选择的路径，失败时保留既有目标。Find 提供上一处、下一处、匹配数与关闭，关闭时清除页面选择；<code>⌘/Ctrl+F</code>、<code>⌘/Ctrl++/-/0</code>、<code>⌘/Ctrl+P</code> 与菜单动作一致。Web 前端与桌面壳版本暂时不一致时，前端按 preload 实际暴露的能力启用动作；缺少新 IPC 的旧壳必须禁用对应动作且不能导致页面异常。</td><td><span class="status ok">已实现，安装版通过</span></td><td><code>desktop/main.js</code> 的 <code>webtab:find/zoom/print</code> IPC；<code>web-tab-pane.tsx</code>；<code>check-webtab-navigation.js</code>；<code>check-built-in-browser.mjs</code>。安装版在本地文档页找到 35 处匹配并可前进到第 2 处；Zoom 返回 <code>100 → 110 → 100 → 100</code>。验收机没有打印 destination，系统 Print 失败后实际出现所属窗口的原生 Save PDF 对话框，并从当前文档 WebTab 生成 1 页、8455 B 的 PDF，IPC 返回 <code>true</code>；测试文件已移到废纸篓。自动检查覆盖系统打印取消、保存取消、写入失败保留既有文件，以及 PDF 渲染期间失去 exact ownership 时不写文件。常驻 toolbar 与 tab 栏样式未改变。</td></tr>
           <tr><td>Bookmarks 保留来源根目录、最多 64 层文件夹和同级顺序；无效 URL 被过滤，重复导入不产生重复 URL 或空文件夹。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/lib/bookmarks.ts"><code>web/lib/bookmarks.ts</code></a>；<code>check-bookmarks.mjs</code></td></tr>
           <tr><td>窗口主菜单在桌面 App 和 Web 中都与触发按钮右对齐，按钮底部到菜单顶部的间距为 4px。桌面主菜单、Browser 菜单、书签菜单和 tab 右键菜单从 renderer 传入的 CSS 像素坐标必须按发送页面的 zoom factor 转换为 Electron DIP；在 80%、100%、125% 缩放下都保持贴近原触发按钮。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/components/center-tabs/main-menu.tsx"><code>main-menu.tsx</code></a>；<code>check-center-tabs.mjs</code>；<code>check-webtab-zoom-bounds.js</code></td></tr>
           <tr><td>Cookies 只进入 <code>persist:webtabs</code>；IPC、日志、History 和 renderer 不出现 Cookie 值。</td><td><span class="status">已实现</span></td><td><a href="https://github.com/Fzkuji/OpenProgram/blob/main/desktop/browser-profile-import.js"><code>browser-profile-import.js</code></a> self-check；<code>desktop/main.js</code></td></tr>
           <tr><td>来源损坏、浏览器缺失、临时进程超时和 Cookie 部分失败返回稳定错误码并保留原数据。</td><td><span class="status">已实现</span></td><td><code>browser-profile-import.js</code> 与 <code>browsing-history-store.js</code> self-check</td></tr>
-          <tr><td>Chrome Web Store 与 Edge Add-ons 页面按普通网页打开；产品不显示扩展安装按钮，不暴露扩展 IPC/renderer bridge，不打包扩展 manager，也不导入源浏览器扩展。</td><td><span class="status out">明确排除并受回归检查保护</span></td><td><code>check-built-in-browser.mjs</code> 同时检查 Desktop package、preload、main、renderer、bridge 与本设计边界。</td></tr>
-          <tr><td>依赖 PTY 的全屏终端程序以及执行中取消浏览器导入。</td><td><span class="status limit">当前限制</span></td><td>产品边界，不作为当前验收缺口。</td></tr>
-          <tr><td>Passwords、自动填充、支付/地址数据、浏览器扩展和源浏览器接管。</td><td><span class="status out">明确排除</span></td><td><code>browser-profile-import.js</code> 的导入类型 allowlist；Desktop 与 Web 的扩展能力缺失检查。</td></tr>
+          <tr><td>依赖 PTY 的全屏终端程序。</td><td><span class="status limit">当前限制</span></td><td>产品边界，不作为当前验收缺口。</td></tr>
+          <tr><td>Passwords、自动填充、支付/地址数据和源浏览器接管。</td><td><span class="status out">明确排除</span></td><td><code>browser-profile-import.js</code> 的导入类型 allowlist。</td></tr>
+          <tr><td>从 Edge Add-ons、Chrome Web Store 或本地目录安装 Chromium 浏览器扩展，并进行权限确认、启停、移除与后续 Chrome/Edge 代码导入。</td><td><span class="status limit">已设计，未实现</span></td><td><a href="browser-extensions.html"><code>browser-extensions.html</code></a>；扩展不属于现有 profile data import。</td></tr>
         </tbody>
       </table>
       </div>

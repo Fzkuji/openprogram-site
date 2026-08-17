@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786924020" data-alt-lang-url="/docs/server/troubleshooting.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786951349" data-alt-lang-url="/docs/server/troubleshooting.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,34 +89,20 @@ page collects the recurring &quot;it doesn't work&quot; cases.</p>
 <li>token expired — log in again; <code>openprogram providers doctor</code> diagnoses credential expiry / refresh / conflicts</li>
 </ul>
 <h2 id="command-not-found-openprogram">&quot;command not found: openprogram&quot;<a class="header-anchor" href="#command-not-found-openprogram">#</a></h2>
-<p>pip install dir not on PATH. Two options:</p>
-<pre><code class="language-bash"><span class="c1"># call the module directly</span>
-python3<span class="w"> </span>-m<span class="w"> </span>openprogram<span class="w"> </span>&lt;args&gt;
-
-<span class="c1"># or add the user-base bin to PATH (idempotent)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$(python3 -m site --user-base)/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<p>The supported CLI/server installer creates <code>~/.local/bin/openprogram</code>. Run the
+installer again, then ensure that directory is on <code>PATH</code>:</p>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$HOME/.local/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
 </code></pre>
 <h2 id="web-ui-port-in-use">Web UI port in use<a class="header-anchor" href="#web-ui-port-in-use">#</a></h2>
 <p>Set this env var before starting the worker (one port serves API, WebSocket, and web UI):</p>
 <pre><code class="language-bash"><span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_WEB_PORT</span><span class="o">=</span><span class="m">8101</span><span class="w">         </span><span class="c1"># single port (defaults to 18100)</span>
 </code></pre>
 <p>Or persist the preference: <code>openprogram ports --port 8101</code>.</p>
-<h2 id="local-development-install-multi-repo">Local-development install (multi-repo)<a class="header-anchor" href="#local-development-install-multi-repo">#</a></h2>
-<p>For working on <a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI-Agent-Harness</a>
-/ <a href="https://github.com/Fzkuji/Research-Agent-Harness">Research-Agent-Harness</a>
-side-by-side with OpenProgram:</p>
-<pre><code class="language-bash">pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OPENPROGRAM_DIR</span><span class="s2">&quot;</span><span class="w">                   </span><span class="c1"># always first</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GUI_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w">                   </span><span class="c1"># depends on openprogram</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESEARCH_HARNESS_DIR</span><span class="s2">&quot;</span>
-</code></pre>
-<p><code>openprogram/programs/agentic_functions/{GUI,Research}-Agent-Harness</code>
-are symlinks — recreate if a repo moves:</p>
-<pre><code class="language-bash"><span class="nb">cd</span><span class="w"> </span>openprogram/programs/agentic_functions
-rm<span class="w"> </span>-f<span class="w"> </span>GUI-Agent-Harness<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GUI_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w">      </span>GUI-Agent-Harness
-rm<span class="w"> </span>-f<span class="w"> </span>Research-Agent-Harness<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESEARCH_HARNESS_DIR</span><span class="s2">&quot;</span><span class="w"> </span>Research-Agent-Harness
-</code></pre>
-<p><code>pip install -e</code> writes absolute paths — rerun it from the new
-location if you rename a parent folder.</p>
+<h2 id="local-development">Local development<a class="header-anchor" href="#local-development">#</a></h2>
+<p>Source-checkout development uses <code>uv sync --locked --extra dev</code>. External
+harness development is documented in <a href="/docs/capabilities/installing-harnesses.html">Installing harnesses</a>
+and is not a normal product installation path.</p>
 <h2 id="worker-doesnt-start-starts-on-the-wrong-port">Worker doesn't start / starts on the wrong port<a class="header-anchor" href="#worker-doesnt-start-starts-on-the-wrong-port">#</a></h2>
 <p><code>openprogram doctor</code> runs a fast end-to-end check: the
 Python/Node/git toolchain, skills and plugins loading, provider
@@ -125,9 +111,11 @@ listening on :18100. <code>openprogram rescue</code> goes beyond diagnosis
 and prints the fix commands directly. Read their output before
 raising an issue.</p>
 <h2 id="import-openprogram-raises-modulenotfounderror"><code>import openprogram</code> raises ModuleNotFoundError<a class="header-anchor" href="#import-openprogram-raises-modulenotfounderror">#</a></h2>
-<p>The package isn't installed in the active Python. Either run the installer
-(clone OpenProgram + <code>./scripts/install.sh</code>) or activate the venv where it is
-installed.</p>
+<p>Managed product installations use a private bundled Python and intentionally do
+not expose OpenProgram to whichever Python is active in your shell. For source
+development, run <code>uv sync --locked</code> in the checkout, then execute scripts with
+<code>uv run --project /path/to/OpenProgram python ...</code>; alternatively, activate the
+checkout's <code>.venv</code> first.</p>
 <h2 id="ci-says-tests-pass-but-mac-runs-differently">CI says &quot;tests pass&quot; but Mac runs differently<a class="header-anchor" href="#ci-says-tests-pass-but-mac-runs-differently">#</a></h2>
 <p>A handful of tests are explicitly skipped on bare CI runners
 because they need a configured provider in <code>$HOME</code>. The skip
@@ -140,7 +128,7 @@ full suite.</p>
 <a class="" href="#no-provider-available">"No provider available"</a>
 <a class="" href="#command-not-found-openprogram">"command not found: openprogram"</a>
 <a class="" href="#web-ui-port-in-use">Web UI port in use</a>
-<a class="" href="#local-development-install-multi-repo">Local-development install (multi-repo)</a>
+<a class="" href="#local-development">Local development</a>
 <a class="" href="#worker-doesnt-start-starts-on-the-wrong-port">Worker doesn't start / starts on the wrong port</a>
 <a class="" href="#import-openprogram-raises-modulenotfounderror">import openprogram raises ModuleNotFoundError</a>
 <a class="" href="#ci-says-tests-pass-but-mac-runs-differently">CI says "tests pass" but Mac runs differently</a>

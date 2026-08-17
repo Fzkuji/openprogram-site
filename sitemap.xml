@@ -220,9 +220,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/implementation-status.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use-implementation.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use-technical-spec.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-use.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.zh.html</loc></url>
@@ -231,6 +228,9 @@
   <url><loc>https://openprogram.io/docs/reference/design/integrations/mcp-server.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/skills-and-plugins.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/skills-and-plugins.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-technical-spec.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/authority-handoff.html</loc></url>
@@ -243,6 +243,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-adoption.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-comparison.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-settings-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/speaker-identity.html</loc></url>
@@ -323,17 +324,23 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/llm-fault-tolerance.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/request-build.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/request-build.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/repository-structure-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/repository-structure.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/research/execution-trace-model-selection.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/research/execution-trace-model-selection.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/additional-working-directories.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/additional-working-directories.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-capability-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-comparison.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
@@ -391,6 +398,9 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-authoring.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.html</loc></url>
@@ -423,9 +433,12 @@
   <url><loc>https://openprogram.io/docs/reference/design/testing/test-system.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/app-icon.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/avatar-randomization.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/browser-extensions.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/built-in-browser.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/center-tabs-and-split-layout.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-attachments.html</loc></url>
@@ -452,6 +465,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
@@ -492,37 +506,4 @@
   <url><loc>https://openprogram.io/docs/start/faq.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/start/features.html</loc></url>
   <url><loc>https://openprogram.io/docs/start/features.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-bookmark-manager.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-compact-right-panel.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-compound-tabs.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-multiwindow-transfer.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-07-19-desktop-web-split.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-agent-resource-governance.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-credential-file-hardening.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-framework-adoption-homepage.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-homepage-optimization.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-json-schema-structured-output.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-record-replay-entry.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-runtime-url-ssrf-protection.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-11-search-console-verification.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-agent-resource-governance-completion.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-dag-persistence-observability.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-json-schema-structured-output-completion.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-mark-merged-atomicity.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-provider-metadata-diagnostics.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-provider-runtime-initialization.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-record-replay-reliability.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-record-replay-security-hardening.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-send-queue-reliability.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-session-index-consistency.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-session-store-lock-scope.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-structured-output-retry-budget.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/plans/2026-08-12-websocket-command-lifecycle.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-compound-tabs-multiwindow-and-sidebar-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-icon-flat-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-19-desktop-web-split-and-bookmarks-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-07-22-tailwind-v4-upgrade-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-08-11-framework-adoption-homepage-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-08-11-homepage-optimization-design.html</loc></url>
-  <url><loc>https://openprogram.io/docs/superpowers/specs/2026-08-11-search-console-verification-design.html</loc></url>
 </urlset>
