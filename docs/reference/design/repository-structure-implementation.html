@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787007439">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787011163">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -399,8 +399,8 @@ build. Preserve linked <code>reference/design/plans/</code> pages in a separate 
 section.</li>
 <li>Group the existing UI design pages in navigation without moving their source
 files.</li>
-<li>Record, but do not perform, Desktop and Web bridge splits while those areas
-have active product changes.</li>
+<li>Split Desktop and Web bridge code only at independently executable boundaries;
+preserve orchestration in place until its own behavior has direct coverage.</li>
 <li>Keep the root and workspace READMEs aligned with the current Programs,
 packaged-skill, Web, and TUI ownership boundaries.</li>
 <li>Remove the Web Programs re-export directory when the public route can import
@@ -614,6 +614,12 @@ the migration does not change host licence state.</li>
 <td>implemented; reviewed</td>
 <td>Aligns landing-page checks, migrated Server test paths, documentation navigation, runtime HTTP inventory and doctor checks with <code>apps/</code>; keeps App package locks portable; moves subprocess coverage to component; and verifies macOS installer behavior on a native runner rather than Ubuntu.</td>
 </tr>
+<tr>
+<td>Desktop menu geometry extraction</td>
+<td><code>ec8a988f</code>, <code>ab2fef3b</code></td>
+<td>implemented; reviewed</td>
+<td>Moves three pure placement functions to a directly executable CommonJS module without changing menu behavior; includes the module in packaged and local-refresh file closures and makes the refresh test verify the staged file.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
@@ -647,6 +653,25 @@ dispatch tests, module-entry subprocesses, source-checkout precedence, wheel
 contents, isolated wheel imports and CLI <code>--help</code>/<code>--version</code> execution.</li>
 <li>Exclude Server route migration, CLI behavior changes, UI changes and
 decomposition of cohesive command handlers from this batch.</li>
+</ul>
+<h2 id="implemented-task-brief-desktop-menu-geometry-extraction">Implemented task brief: Desktop menu geometry extraction<a class="header-anchor" href="#implemented-task-brief-desktop-menu-geometry-extraction">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: current <code>main</code> after the
+browser and CI closure.</li>
+<li>Move only the pure menu placement functions from <code>apps/desktop/main.js</code> to
+<code>apps/desktop/menu-geometry.js</code>: requested horizontal placement, bounded
+context-menu placement and cascading bookmark-menu host geometry.</li>
+<li>Keep <code>openMainMenu</code>, <code>resizeMenuOverlay</code>, Electron view ownership, timers,
+IPC registration, constants and renderer behavior in <code>main.js</code>.</li>
+<li>Preserve every current numeric result for start/end alignment, zoom,
+negative coordinates, near-bottom anchors and anchors outside the window.</li>
+<li>Make the existing Desktop checks execute the exported module directly;
+package and local-App refresh lists must include the new runtime file.</li>
+<li>RED boundary: the public CommonJS module import and package-file contract fail
+before the module exists. GREEN boundary: geometry checks, WebTab navigation,
+packaged-file tests, local refresh file-list contract and full Desktop checks.</li>
+<li>Exclude visual changes, new menu behavior, Browser toolbar changes,
+<code>openMainMenu</code> orchestration and the unrelated active App icon work.</li>
 </ul>
 <h2 id="active-task-brief-apps-migration-c2">Active task brief: Apps migration C2<a class="header-anchor" href="#active-task-brief-apps-migration-c2">#</a></h2>
 <ul>
@@ -771,11 +796,20 @@ published — v0.7.0 stable GitHub Release is non-draft and non-prerelease with 
 8 passed — native macOS Desktop installation, downgrade, rollback, concurrency and stable-lock tests
 pass — CI run 32077688937: quality, Python 3.11/3.12/3.13 unit, component, integration, e2e, coverage, Web, CLI, Desktop, Browser and macOS Desktop installation jobs
 pass — independent quality review for `2f40f948`
+1 failed — public RED: `check-webtab-zoom-bounds` could not import the not-yet-created `menu-geometry.js`
+pass — Desktop full `npm run check` after extracting menu geometry
+3 passed — packaged-file closure and local-App refresh staging contracts
+pass — independent specification review for `ec8a988f`
+changes required — first independent quality review found that the refresh fixture did not assert the staged module
+1 passed — refresh staging regression after `ab2fef3b`
+pass — independent quality re-review through `ab2fef3b`
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>
-<li><code>apps/desktop/main.js</code>: extract existing window lifecycle, native WebView, tab
-transfer, and menu responsibilities after the current Desktop work lands.</li>
+<li><code>apps/desktop/main.js</code>: pure menu geometry now lives in
+<code>apps/desktop/menu-geometry.js</code>; keep window lifecycle, native WebView, tab
+transfer and menu-host orchestration in place until each boundary has direct
+executable coverage.</li>
 <li><code>apps/web/lib/desktop-bridge.ts</code>: establish executable state/transfer tests before
 moving types, view state, and transfer coordination.</li>
 <li>Long cohesive Python state machines remain intact until a separately tested
@@ -790,6 +824,7 @@ responsibility is identified; line count alone is not an implementation task.</l
 <a class="" href="#workstreams">Workstreams</a>
 <a class="" href="#implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2</a>
 <a class="" href="#implemented-task-brief-apps-migration-b2">Implemented task brief: Apps migration B2</a>
+<a class="" href="#implemented-task-brief-desktop-menu-geometry-extraction">Implemented task brief: Desktop menu geometry extraction</a>
 <a class="" href="#active-task-brief-apps-migration-c2">Active task brief: Apps migration C2</a>
 <a class="" href="#verification-record">Verification record</a>
 <a class="" href="#deferred-boundaries">Deferred boundaries</a>
