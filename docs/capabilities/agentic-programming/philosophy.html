@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786961687" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Philosophy · OpenProgram Docs">
 <meta name="twitter:description" content="Design philosophy # OpenProgram is the productized implementation of the Agentic Programming paradigm. This document is about the paradigm itself: what problem">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -222,13 +222,13 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <p>So context management stops being prompt plumbing and becomes a property you declare on the function. The same DAG doubles as your debugging view: visualization, token accounting, replaying failure paths.</p>
 <h2 id="derived-concepts">Derived Concepts<a class="header-anchor" href="#derived-concepts">#</a></h2>
 <h3 id="the-llm-writes-code-too">The LLM Writes Code Too<a class="header-anchor" href="#the-llm-writes-code-too">#</a></h3>
-<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the spec. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits, following the <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> as the spec — where files go, decorator metadata, the division of labor between the docstring and <code>content</code>, and the validation checklist. A background watcher rescans <code>programs/agentic_functions/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
+<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the spec. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits, following the <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> as the spec — where files go, decorator metadata, the division of labor between the docstring and <code>content</code>, and the validation checklist. A background watcher rescans <code>programs/functions/agentic/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
 <p>Code is data, the LLM is the compiler, and functions are the product — the loop closes.</p>
 <h3 id="dual-mode">Dual Mode<a class="header-anchor" href="#dual-mode">#</a></h3>
 <p>Agentic Programming is at the same time:</p>
 <ul>
 <li><strong>A library</strong> — you write <code>@agentic_function</code>s and wire up the pipeline by hand</li>
-<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>programs/agentic_functions/</code> and hot-loads</li>
+<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>programs/functions/agentic/</code> and hot-loads</li>
 </ul>
 <p>Beginners start by asking, and what they get is a complete, readable Python file. Those who want to dig deeper can then import and hand-write. This is a tool that <strong>can be understood incrementally</strong>.</p>
 <h2 id="comparison-with-traditional-agent-frameworks">Comparison with Traditional Agent Frameworks<a class="header-anchor" href="#comparison-with-traditional-agent-frameworks">#</a></h2>
@@ -265,7 +265,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 </table>
 <p>This isn't to say agent frameworks are wrong; they suit a class of tasks (fully open-ended, with fuzzy goals). But most of what you want to do can actually be done more reliably with Agentic Programming.</p>
 <h2 id="openprogram-the-productized-paradigm">OpenProgram = the Productized Paradigm<a class="header-anchor" href="#openprogram-the-productized-paradigm">#</a></h2>
-<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>programs/agentic_functions/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
+<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>programs/functions/agentic/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
 <p>The paradigm comes first; the product exists to use it.</p>
 <hr />
 <p>Further reading:</p>

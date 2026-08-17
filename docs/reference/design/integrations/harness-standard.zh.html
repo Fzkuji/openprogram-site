@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786961687" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harness 标准 —— agentic 程序如何接入 OpenProgram · OpenProgram Docs">
 <meta name="twitter:description" content="本文档给出每个 harness （一个作为独立 repo 发布的自包含 agentic 程序）所满足的契约，使得将其克隆进 OpenProgram 的 agentics/ 文件夹后 即可 被自动检测并直接使用，无需改动 host 。三个第一方 harness （GUI / Research /">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -300,6 +300,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
@@ -385,7 +386,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <code>openprogram/programs/_programs.py</code>（第一方 harness 清单）。</p>
 </blockquote>
 <h2 id="0-唯一重要的规则">0. 唯一重要的规则<a class="header-anchor" href="#0-唯一重要的规则">#</a></h2>
-<p><strong>harness 就是任何你放进 <code>&lt;openprogram&gt;/programs/agentic_functions/</code> 并通过
+<p><strong>harness 就是任何你放进 <code>&lt;openprogram&gt;/programs/functions/agentic/</code> 并通过
 <code>&lt;pkg&gt;/agentics/__init__.py</code> 暴露其函数的东西。</strong> host 在启动时（以及在
 开启热重载时，每当该文件夹变化时）遍历该文件夹，找到内层 package，导入
 <code>&lt;pkg&gt;.agentics</code>，随后 <code>@agentic_function</code> 装饰器自行完成注册。除此之外

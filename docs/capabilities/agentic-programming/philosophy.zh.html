@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786961687" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="设计哲学 · OpenProgram Docs">
 <meta name="twitter:description" content="OpenProgram 是 Agentic Programming 这一编程范式的产品化实现。 这篇文档讲的是范式本身：它解决什么问题、为什么要反转控制权、核心原语是什么。 范式的正式表述见论文 LLM-as-Code: Agentic Programming for Agent Harness （">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -222,13 +222,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>于是上下文管理不再是 prompt 拼接的体力活，而变成写在函数声明上的属性。同一张 DAG 也兼作你的调试视图：可视化、token 记账、回放失败路径。</p>
 <h2 id="衍生概念">衍生概念<a class="header-anchor" href="#衍生概念">#</a></h2>
 <h3 id="llm-也写代码">LLM 也写代码<a class="header-anchor" href="#llm-也写代码">#</a></h3>
-<p>LLM 不只是运行时的推理引擎，它也可以<strong>写代码</strong>——生成、修改、修复符合规范的 <code>@agentic_function</code>。这件事不需要专门的 <code>create()</code> / <code>fix()</code> 框架函数；agent 直接用普通的文件编辑工具完成，遵循 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> 这份规范——文件放哪、装饰器元数据、docstring 与 <code>content</code> 的分工、校验清单。后台 watcher 会重扫 <code>programs/agentic_functions/</code> 并热加载新模块：import 时 <code>@agentic_function</code> 装饰器触发、自行注册，刚写完的函数无需重启即可调用。</p>
+<p>LLM 不只是运行时的推理引擎，它也可以<strong>写代码</strong>——生成、修改、修复符合规范的 <code>@agentic_function</code>。这件事不需要专门的 <code>create()</code> / <code>fix()</code> 框架函数；agent 直接用普通的文件编辑工具完成，遵循 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> 这份规范——文件放哪、装饰器元数据、docstring 与 <code>content</code> 的分工、校验清单。后台 watcher 会重扫 <code>programs/functions/agentic/</code> 并热加载新模块：import 时 <code>@agentic_function</code> 装饰器触发、自行注册，刚写完的函数无需重启即可调用。</p>
 <p>代码是数据，LLM 是编译器，函数是产品 —— 循环闭合。</p>
 <h3 id="双模式">双模式<a class="header-anchor" href="#双模式">#</a></h3>
 <p>Agentic Programming 同时是：</p>
 <ul>
 <li><strong>一个库</strong> —— 你写 <code>@agentic_function</code>，手动搭 pipeline</li>
-<li><strong>一个跑着的产品</strong> —— 在 CLI 或 WebUI 里聊天，让 agent 帮你把函数写出来；生成的文件落到 <code>programs/agentic_functions/</code> 并热加载</li>
+<li><strong>一个跑着的产品</strong> —— 在 CLI 或 WebUI 里聊天，让 agent 帮你把函数写出来；生成的文件落到 <code>programs/functions/agentic/</code> 并热加载</li>
 </ul>
 <p>初学者从提需求开始，拿到手的就是完整可读的 Python 文件。想深挖的人再 import 手写。这是一个<strong>可以被逐步理解</strong>的工具。</p>
 <h2 id="和传统-agent-框架的对照">和传统 Agent 框架的对照<a class="header-anchor" href="#和传统-agent-框架的对照">#</a></h2>
@@ -265,7 +265,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>不是说 Agent 框架错了，它们适合一类任务（完全开放、目标模糊）。但大多数你想做的事，其实都能用 Agentic Programming 更可靠地完成。</p>
 <h2 id="openprogram-范式的产品化">OpenProgram = 范式的产品化<a class="header-anchor" href="#openprogram-范式的产品化">#</a></h2>
-<p><code>agentic_programming/</code> 子包是范式的引擎代码。<code>context/</code> 实现扁平 DAG 上下文模型。<code>providers/</code> 适配各家 LLM。<code>programs/agentic_functions/</code> 是这个范式下已经写好的函数和应用。<code>webui/</code> 让初学者不写代码也能跑。</p>
+<p><code>agentic_programming/</code> 子包是范式的引擎代码。<code>context/</code> 实现扁平 DAG 上下文模型。<code>providers/</code> 适配各家 LLM。<code>programs/functions/agentic/</code> 是这个范式下已经写好的函数和应用。<code>webui/</code> 让初学者不写代码也能跑。</p>
 <p>范式先行，产品为用。</p>
 <hr />
 <p>延伸阅读：</p>

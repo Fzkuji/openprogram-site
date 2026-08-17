@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786961687" data-alt-lang-url="/docs/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一次性:发 prompt、打印答案、退出(可重定向或接管道) · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram：自编程 AI Agent 框架 Agent 自动创建并持续优化自身工作流 · 任意 LLM · macOS 与 Linux release 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
+<meta name="description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
 <link rel="canonical" href="https://openprogram.io/docs/README.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/README.zh.html">
@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/README.zh.html">
 <meta property="og:title" content="一次性:发 prompt、打印答案、退出(可重定向或接管道) · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram：自编程 AI Agent 框架 Agent 自动创建并持续优化自身工作流 · 任意 LLM · macOS 与 Linux release 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
+<meta property="og:description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="一次性:发 prompt、打印答案、退出(可重定向或接管道) · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram：自编程 AI Agent 框架 Agent 自动创建并持续优化自身工作流 · 任意 LLM · macOS 与 Linux release 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
+<meta name="twitter:description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. 快速上手 &amp;middot; API 参考 &amp;middot; 设计哲学 &amp;middot; English &quot;The more constraints one">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -85,8 +85,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </picture>
 </p>
 <p align="center">
-  <b>OpenProgram：自编程 AI Agent 框架</b><br/>
-  Agent 自动创建并持续优化自身工作流 · 任意 LLM · macOS 与 Linux release
+  <b>Self-Programming AI Assistant. Capture, automate, and refine all your workflows.</b>
 </p>
 <p align="center">
   <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
@@ -294,32 +293,29 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 </table>
 <details>
 <summary><strong>项目结构</strong></summary>
-<pre><code>openprogram/
-├── __init__.py                      # agentic_function 再导出
-├── cli.py                           # `openprogram` 命令入口
-├── agentic_programming/             # 引擎 — 范式必需的原语
-│   ├── function.py                  #   @agentic_function 装饰器
-│   ├── runtime.py                   #   Runtime（exec + retry + DAG 上下文）
-│   ├── session.py                   #   会话生命周期
-│   └── skills.py                    #   SKILL.md 发现
-├── context/                         # 扁平 DAG 上下文模型 — nodes, storage, render, compute_reads
-├── providers/                       # Anthropic、OpenAI、Gemini、Claude Code、Codex、Gemini CLI
-├── functions/
-│   ├── _registry.py                 #   tools + agentic functions 的统一注册表
-│   ├── tools/                       #   @function 叶子工具 — bash、read、edit、grep、semble_search、web_search 等
-│   └── agentics/                    #   @agentic_function 模块（每个一个目录，代码写在 __init__.py）
-│       ├── ask_user/                #     向用户提澄清问题
-│       ├── deep_work/               #     自主计划-执行-评估循环
-│       ├── extract_pdf_figures/     #     PDF 图表抽取
-│       ├── …                        #     其它 agentics …
-│       ├── GUI-Agent-Harness/       #     GUI agent（独立仓库，克隆进来）
-│       ├── Research-Agent-Harness/  #     研究 agent（独立仓库，克隆进来）
-│       └── Wiki-Agent-Harness/      #     Wiki agent（独立仓库，克隆进来）
-└── webui/                           # `openprogram web` — 浏览器 UI
-skills/                              # 用于 agent 集成的 SKILL.md 文件
-examples/                            # 可运行的示例
-tests/                               # pytest 测试套件
+<pre><code>openprogram/                         # Python 产品包
+├── agent/                           # 模型循环、工具、目标与压缩
+├── agentic_programming/             # @agentic_function 运行时与上下文
+├── programs/
+│   ├── _registry.py                 # 内置 Agentic Function 注册表
+│   ├── agentic_functions/           # 内置 @agentic_function 模块
+│   ├── functions/                   # 确定性 @function 工具
+│   └── applications/                # 用户登记的外部 Program checkout
+├── channels/                        # 外部聊天渠道
+├── scheduler/                       # 持久化调度与执行
+└── webui/                           # worker API 与 WebSocket 层
+cli/                                 # TypeScript Ink 终端客户端
+web/                                 # Next.js 界面
+desktop/                             # Electron 桌面宿主
+tests/                               # pytest：&lt;layer&gt;/&lt;product-domain&gt;
+scripts/                             # 可执行的仓库维护工具
+tools/                               # 可导入的发布和文档工具
 </code></pre>
+<p>各 workspace 的入口说明见
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/README.md"><code>openprogram/</code></a>、
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/README.md"><code>web/</code></a> 和
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/cli/README.md"><code>cli/</code></a>。完整归属规则见
+<a href="/docs/reference/design/repository-structure.html">Repository Structure</a>。</p>
 </details>
 <h2 id="贡献">贡献<a class="header-anchor" href="#贡献">#</a></h2>
 <p>这是一个<strong>范式提案</strong>,附带参考实现。欢迎讨论、其他语言的替代实现、验证或挑战此方法的用例,以及 bug 报告。</p>

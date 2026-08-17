@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786961687" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Self-programmed agentic workflows · OpenProgram Docs">
 <meta name="twitter:description" content="agentic_workflow is OpenProgram&#x27;s self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="self-programmed-agentic-workflows">Self-programmed agentic workflows<a class="header-anchor" href="#self-programmed-agentic-workflows">#</a></h1>
 <p><code>agentic_workflow</code> is OpenProgram's self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The planner composes the program out of the framework's building blocks — three-tier LLM primitives plus registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
 <p>Run it from the Programs panel as <code>agentic_workflow</code>, or call it from Python:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.functions.agentic.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
 
 <span class="c1"># Start a new workflow</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"port the auth module to the new client and update its tests"</span><span class="p">)</span>

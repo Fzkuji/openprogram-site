@@ -22,7 +22,7 @@
 <div class="card">
   <p><strong>批准的设计：</strong><code>docs/reference/design/integrations/web-use.html</code>。</p>
   <p><strong>基线：</strong><code>717d4e17</code>。实现从隔离 worktree 和分支 <code>codex/browser-agent-20260814</code> 开始。</p>
-  <p><strong>生产文件：</strong><code>openprogram/programs/agentic_functions/browser_agent/__init__.py</code>、<code>openprogram/programs/_registry.py</code>、<code>openprogram/programs/__init__.py</code>、<code>openprogram/agent/authority.py</code>。</p>
+  <p><strong>生产文件：</strong><code>openprogram/programs/functions/agentic/browser_agent/__init__.py</code>、<code>openprogram/programs/_registry.py</code>、<code>openprogram/programs/__init__.py</code>、<code>openprogram/agent/authority.py</code>。</p>
   <p><strong>测试文件：</strong><code>tests/unit/test_browser_agent.py</code>。</p>
 </div>
 
@@ -120,9 +120,9 @@
     <tr><td>1. Turn surface reference</td><td>composer 从当前 compound group 生成 version/window/tab/region/access/focused/title/url 引用，并随 chat command 提交；region 按实际 pane 顺序区分 left、right 与 center，surface chip 显示当前绑定目标和位置。</td><td>关闭访问时只保留 disabled descriptor，不提供 preview 或执行工具。</td></tr>
     <tr><td>2. Exact preview</td><td>服务端只向发起 chat 的 WebSocket 请求 preview，并校验 exact window/tab/target；Electron 从当前 viewport 的 DOM、ARIA landmarks、title 与 URL 生成结果。</td><td>文本最多 2,000 字符，landmark 最多 12 项且 name 最多 160 字符；URL 只保留 origin，不包含 query value；不发送 screenshot。</td></tr>
     <tr><td>3. Model context and tool schema</td><td>dispatcher 在首个模型调用前注入 Surface Context。<code>web_use</code> 是 resident tool，但仅在 surface binding 有效时进入 provider tool array；没有 surface 时主动移除。</td><td>模型不能提交 window/tab/CDP target，只能使用当前 turn 的 surface alias。</td></tr>
-    <tr><td>4. Bound execution</td><td>binding registry 保存 originating WebSocket、window、tab、target 与 expiry；subprocess bridge 只允许 exact binding 的 activate。Browser Agent 继续使用 DOM/ARIA refs 和 post-action observation。</td><td>不使用 OS 输入、桌面坐标、app window focus 或默认 active tab；binding 缺失、过期或 identity 不匹配时失败。</td></tr>
+    <tr><td>4. Bound execution</td><td>binding registry 保存 originating WebSocket、window、tab、target 与 expiry。聊天直接调用的 <code>web_use</code> 保留 runtime card，但在持有 renderer WebSocket 与 WebSession registry 的 worker 主进程执行；只有 GUI Agent Harness 的长循环使用 subprocess bridge。Browser Agent 继续使用 DOM/ARIA refs 和 post-action observation。</td><td>不使用 OS 输入、桌面坐标、app window focus 或默认 active tab；binding 缺失、过期或 identity 不匹配时失败。</td></tr>
     <tr><td>5. Approval and verification</td><td>用户发送带 exact surface 的 turn 后，外层 <code>web_use</code> 不请求第二次通用 approval；hard constraints、authority 和显式 deny/ask rules仍先执行。Plan mode 不提供 <code>web_use</code>。父 turn 的 permission rules 以纯数据快照传入 agentic 子进程；内部 <code>browser_page</code> 只在该绑定调用期间使用 scoped bypass，结束后恢复。Runtime assertion 决定终态。</td><td>高风险 action 规则仍可 ask/deny；写动作继续要求新鲜 DOM frame。动态页面的 verification 读取同一 bound target 的当前 DOM，不因无关 mutation 永久 stale。</td></tr>
-    <tr><td>6. Cleanup ownership</td><td>chat query 从 surface capture 开始进入 <code>try/finally</code>，直接 owner 无条件幂等释放 binding；正常 dispatcher teardown 也执行相同释放。</td><td><code>prepare_turn</code>、<code>TurnBindings.bind</code> 或 provider 初始化在 context 建立前失败时，binding 不继续持有 originating WebSocket。</td></tr>
+    <tr><td>6. Cleanup ownership</td><td>chat query 从 surface capture 开始进入 <code>try/finally</code>；dispatcher 为当前 session + assistant turn 生成稳定 Web Use owner，并在正常返回、重试、取消或异常 teardown 时释放该 owner 的全部 WebSession、Page lease 与 binding，不依赖模型显式调用 <code>close</code>。</td><td><code>prepare_turn</code>、<code>TurnBindings.bind</code> 或 provider 初始化失败，以及模型没有调用 <code>close</code> 时，Page 都不能残留为 <code>page_in_use</code>。</td></tr>
   </tbody>
 </table>
 
@@ -214,6 +214,8 @@
   <p><strong>公开能力：</strong>Agent registry、GUI Agent Harness、OpenProgram MCP 与 canonical HTTP API 统一使用 <code>web_use</code> 和 <code>web_session_id</code>；模型工具列表不再公开 <code>computer_use</code>。</p>
   <p><strong>兼容边界：</strong><code>/api/computer-use</code> 与旧请求字段 <code>computer_session_id</code> 只作为隐藏 HTTP 兼容入口保留，映射到同一个 Web Use Runtime，且不出现在 OpenAPI、Agent 或 MCP 工具列表中。</p>
   <p><strong>未来边界：</strong><code>Computer Use</code> 名称只保留给未来桌面应用、应用窗口或整屏截图及 OS 输入能力；本次不增加桌面 adapter、配置或后台进程。</p>
+  <h2>Agent cursor task</h2>
+  <p><code>BrowserPageController</code> 已在 exact Page 上实现 click-only 内部 overlay，官方 MCP adapter 在 click 调用期间复用同一 arming contract。component 验收覆盖 DOM ref click、viewport coordinate click、用户点击不显示、反馈失败不改变 action 结果以及三个 backend；106 项相关回归通过。安装版后台 Page E2E 在目标 <code>visible=false</code> 且原 tab 不变时完成 ref click，页面 click handler 记录 <code>cursor=true</code>。范围不包含系统鼠标、窗口 focus、hover/type 动画、配置项、依赖或常驻进程。</p>
 </div>
 <table>
   <thead><tr><th>交付</th><th>直接证据</th><th>状态</th></tr></thead>

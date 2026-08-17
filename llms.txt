@@ -1,6 +1,6 @@
 # OpenProgram
 
-> OpenProgram is a self-programming AI agent framework. Agents create, run, and refine their own workflows while the runtime manages models, tools, memory, context, and multi-agent collaboration.
+> Self-Programming AI Assistant. Capture, automate, and refine all your workflows.
 
 ## Start
 

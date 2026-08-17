@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786961687">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,12 +19,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Repository structure implementation ledger · OpenProgram Docs">
 <meta name="twitter:description" content="This ledger records implementation evidence for repository-structure.html . The HTML page is the current design contract; this file is operational history.">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -298,6 +298,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
@@ -387,6 +388,10 @@ section.</li>
 files.</li>
 <li>Record, but do not perform, Desktop and Web bridge splits while those areas
 have active product changes.</li>
+<li>Keep the root and workspace READMEs aligned with the current Programs,
+packaged-skill, Web, and TUI ownership boundaries.</li>
+<li>Remove the Web Programs re-export directory when the public route can import
+the existing implementation directly.</li>
 </ul>
 <h2 id="workstreams">Workstreams<a class="header-anchor" href="#workstreams">#</a></h2>
 <table>
@@ -441,6 +446,18 @@ have active product changes.</li>
 <td>implemented</td>
 <td>Moves two real workflow execution tests to component, updates their package schema, and repairs merged documentation, distribution, and optional-dependency regressions.</td>
 </tr>
+<tr>
+<td>Documentation entry points and Programs alias</td>
+<td><code>codex/repository-structure-batch1-20260817</code> / <code>d9cc9933</code></td>
+<td>implemented</td>
+<td>Refreshes the bilingual project map and workspace READMEs; removes only the confirmed re-export and unused stylesheet.</td>
+</tr>
+<tr>
+<td>Documentation-entry main integration</td>
+<td><code>29f8186d</code></td>
+<td>integrated</td>
+<td>Two-parent merge with current <code>main</code> at <code>e2041770</code>; unrelated local icon and output files remain outside Git.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="verification-record">Verification record<a class="header-anchor" href="#verification-record">#</a></h2>
@@ -463,6 +480,16 @@ pass — independent quality review at df3df11d, including wheel-content and iso
 pass — Desktop full npm run check after adding update-service.js to build.files
 0 new, 0 refreshed — second package README generator run
 pending — independent specification and quality review for dbe752eb..d04aa050
+444 passed, 1 skipped — complete repository contract suite for the documentation-entry batch
+43 passed — repository-layout and documentation-information-architecture selection
+pass — Web full check, 10 unit tests, TypeScript no-emit check, and 31-page production build
+505 pages; 0 broken links; landing and language checks pass — documentation-entry candidate
+0 new, 0 refreshed — second package README generator run for the candidate
+pass — independent specification review for d9cc9933
+pass — independent quality review for d9cc9933, including distribution, Web build, README fact, and HTML structure probes
+10 passed — post-merge repository-layout and documentation-information-architecture selection
+pass — post-merge Web full check, 10 unit tests, TypeScript no-emit check, and 31-page production build
+505 pages; 0 broken links; landing and language checks pass — post-merge documentation build
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>

@@ -11,6 +11,7 @@
 <body><div class="page">
   <nav class="set-nav" aria-label="Self-Programming Workflow 文档集">
     <a href="./self-programmed-agentic-workflow.html">总览</a>
+    <a href="./programs-architecture.html">Programs 代码结构</a>
     <a href="./self-programming-workflow-model.html" aria-current="page">编程模型与组合</a>
     <a href="./self-programming-workflow-authoring.html">创建、隔离与发布</a>
     <a href="./self-programming-workflow-ui.html">DAG 与 Programs</a>
@@ -55,7 +56,7 @@ def literature_review(task: str) -> str:
   </section>
 
   <section id="project"><h2>4. 一个 Workflow 是一个 Git 管理的 Python 小项目</h2>
-    <div class="project-tree"><pre><code>~/.openprogram/workflows/literature_review/
+    <div class="project-tree"><pre><code>openprogram/programs/workflows/literature_review/
 ├── .git/
 ├── README.md
 ├── pyproject.toml

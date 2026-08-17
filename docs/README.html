@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786961687" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overview · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta name="description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. Getting Started &amp;middot; Self-Programming Agents &amp;middot; Framework Comparison">
 <link rel="canonical" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/README.zh.html">
@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/">
 <meta property="og:title" content="Overview · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta property="og:description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. Getting Started &amp;middot; Self-Programming Agents &amp;middot; Framework Comparison">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Overview · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta name="twitter:description" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows. Getting Started &amp;middot; Self-Programming Agents &amp;middot; Framework Comparison">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -85,8 +85,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </picture>
 </p>
 <p align="center">
-  <b>OpenProgram: Self-Programming AI Agent Framework</b><br/>
-  Agents create and refine their own workflows · Any LLM · macOS and Linux releases
+  <b>Self-Programming AI Assistant. Capture, automate, and refine all your workflows.</b>
 </p>
 <p align="center">
   <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
@@ -297,32 +296,30 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 </table>
 <details>
 <summary><strong>Project Structure</strong></summary>
-<pre><code>openprogram/
-├── __init__.py                      # agentic_function re-export
-├── cli.py                           # `openprogram` command entry point
-├── agentic_programming/             # engine — paradigm-essential primitives
-│   ├── function.py                  #   @agentic_function decorator
-│   ├── runtime.py                   #   Runtime (exec + retry + DAG context)
-│   ├── session.py                   #   session lifecycle
-│   └── skills.py                    #   SKILL.md discovery
-├── context/                         # flat-DAG context model — nodes, storage, render, compute_reads
-├── providers/                       # Anthropic, OpenAI, Gemini, Claude Code, Codex, Gemini CLI
-├── functions/
-│   ├── _registry.py                 #   unified registry for tools + agentic functions
-│   ├── tools/                       #   @function leaves — bash, read, edit, grep, semble_search, web_search, …
-│   └── agentics/                    #   @agentic_function modules (each its own dir, code in __init__.py)
-│       ├── ask_user/                #     ask the user a clarifying question
-│       ├── deep_work/               #     autonomous plan-execute-evaluate loop
-│       ├── extract_pdf_figures/     #     PDF figure extraction
-│       ├── …                        #     other agentics …
-│       ├── GUI-Agent-Harness/       #     GUI agent (separate repo, cloned in)
-│       ├── Research-Agent-Harness/  #     Research agent (separate repo, cloned in)
-│       └── Wiki-Agent-Harness/      #     Wiki agent (separate repo, cloned in)
-└── webui/                           # `openprogram web` — browser UI
-skills/                              # SKILL.md files for agent integration
-examples/                            # runnable demos
-tests/                               # pytest suite
+<pre><code>openprogram/                         # Python product package
+├── agent/                           # model loop, tools, goals, compaction
+├── agentic_programming/             # @agentic_function runtime and context
+├── programs/
+│   ├── _registry.py                 # internal agentic-function registry
+│   ├── agentic_functions/           # internal @agentic_function modules
+│   ├── functions/                   # deterministic @function tools
+│   └── applications/                # owner-recorded external Program checkouts
+├── channels/                        # external chat transports
+├── scheduler/                       # durable schedules and execution
+└── webui/                           # worker API and WebSocket layer
+cli/                                 # TypeScript Ink terminal client
+web/                                 # Next.js interface
+desktop/                             # Electron desktop host
+tests/                               # pytest: &lt;layer&gt;/&lt;product-domain&gt;
+scripts/                             # executable repository maintenance tools
+tools/                               # importable release and documentation tooling
 </code></pre>
+<p>See the workspace READMEs for
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/README.md"><code>openprogram/</code></a>,
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/web/README.md"><code>web/</code></a>, and
+<a href="https://github.com/Fzkuji/OpenProgram/blob/main/cli/README.md"><code>cli/</code></a>. Complete
+ownership rules are in
+<a href="/docs/reference/design/repository-structure.html">Repository Structure</a>.</p>
 </details>
 <h2 id="contributing">Contributing<a class="header-anchor" href="#contributing">#</a></h2>
 <p>This is a <strong>paradigm proposal</strong> with a reference implementation. We welcome discussions, alternative implementations in other languages, use cases that validate or challenge the approach, and bug reports.</p>

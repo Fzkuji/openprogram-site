@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786961687" data-alt-lang-url="/docs/capabilities/security-review.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1786971330" data-alt-lang-url="/docs/capabilities/security-review.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Security review · OpenProgram Docs">
 <meta name="twitter:description" content="A security review audits what your branch changed, not what your repository contains. It collects everything since the branch&#x27;s baseline — commits, staged">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安全审查">Security review</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安全审查">Security review</span></nav><h1 id="security-review">Security review<a class="header-anchor" href="#security-review">#</a></h1>
 <p>A security review audits what your branch changed, not what your repository contains. It collects everything since the branch's baseline — commits, staged changes, unstaged edits, and files you have not added yet — and hands it to a read-only agent that looks for vulnerabilities the change introduced. A weakness that already existed and that the branch merely moved past is left alone, so what comes back is a list you can act on before you open a pull request.</p>
 <p>Run it from the Programs panel as <code>run_security_review</code>, or call it from Python:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.agentic_functions.security_review</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_security_review</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.functions.agentic.security_review</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_security_review</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">run_security_review</span><span class="p">()</span>
 </code></pre>

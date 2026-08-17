@@ -130,6 +130,7 @@
       <li>OpenProgram 品牌标题为 20px；Settings 分类栏的 <code>Settings</code> 与右侧 <code>LLM Providers</code> 内容页标题均为 18px；按钮与名称同一行，按钮顶边与主侧栏按钮一致。</li>
       <li>Settings 分类列表的前四行与主侧栏前四行具有相同的 <code>y</code> 坐标、32px 行高和 1px 行距。</li>
       <li>Settings 分类链接按 <code>General / LLM Providers / Memory / Web Search / Browser / Channels / Token Usage / System</code> 顺序呈现；URL、图标、激活态和键盘顺序随同一数组保持一致。</li>
+      <li>所有通用 Settings 入口进入 <code>/settings</code>；根路由必须解析到分类列表首项 <code>/settings/general</code>。指向 Browser、Channels 等具体设置的入口继续使用其明确 URL。</li>
       <li>LLM Providers 列表栏不显示新增名称栏头，折叠按钮恢复到搜索框旁；原有状态和 49px 收起行为不变。</li>
       <li>LLM Providers 在列表和详情上方显示页面大标题与介绍，路由 loading 状态保持同一结构。</li>
       <li>Memory 内容区继续不显示重复标题和介绍。</li>
@@ -155,6 +156,7 @@
       <p><strong>导航顺序：已实现并复核。</strong></p>
       <ul>
         <li>生产 DOM、键盘顺序和收起态标题均为 <code>General / LLM Providers / Memory / Web Search / Browser / Channels / Token Usage / System</code>。</li>
+        <li>通用入口继续进入 <code>/settings</code>，根路由解析到首项 <code>/settings/general</code>；定点契约将根重定向与导航数组的首个 href 绑定，具体设置入口保持原 URL。</li>
         <li>默认 OpenProgram App 可视验收确认 General 激活态、图标标签绑定和既有纵向对齐均正确。</li>
         <li>实现提交通过 Settings 定点检查、Memory 设置检查、TypeScript、production build、规格复核和质量复核。</li>
       </ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786961687" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1786971330" data-alt-lang-url="/docs/reference/design/runtime/permission-model.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +21,12 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta property="og:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="权限系统设计（Permission System Design） · OpenProgram Docs">
 <meta name="twitter:description" content="本文是 OpenProgram 权限系统的 实现级设计文档 ：一个不了解代码的人读完，就知道权限系统是什么、有哪些权限、后端怎么写、前端怎么写、代码写在哪些文件。每个数据结构给字段定义，每个关键函数给签名，每个 WS 帧给字段，每个前端组件给结构。所有引用带 file:line 。 阅读顺序： ① 概览">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
-<meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
+<meta name="twitter:image:alt" content="Self-Programming AI Assistant. Capture, automate, and refine all your workflows.">
 <script>
 (function(){try{var t=localStorage.getItem('op-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
@@ -300,6 +300,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink active" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
@@ -740,7 +741,7 @@ ToolName(content)        命令级，per-pattern。例：bash(git:*) / read_file
 <span class="sd">    medium：其余命令类工具；写/编辑/删除类工具。 low：只读工具。"""</span>
 </code></pre>
 <p><code>_approval_detail</code>（<code>internals/_approval.py:232-242</code>，生成&quot;工具名 + 参数全文，超长首尾截断&quot;）给审批卡片一段可读摘要（第一版不做危险 token 高亮）。<code>_on_asked</code>（<code>await_user_approval</code> 内）的 <code>question.asked</code> 帧带上 <code>tool</code>/<code>args</code>/<code>risk_level</code>，前端据此上色（§4.2）。</p>
-<p><strong>路径安全</strong>（<code>openprogram/programs/functions/file_safety.py</code>）：</p>
+<p><strong>路径安全</strong>（<code>openprogram/programs/functions/vanilla/file_safety.py</code>）：</p>
 <pre><code class="language-python"><span class="c1"># file_safety.py:20-40, 63</span>
 <span class="n">DANGEROUS_FILES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">".bashrc"</span><span class="p">,</span> <span class="s2">".bash_profile"</span><span class="p">,</span> <span class="s2">".bash_login"</span><span class="p">,</span> <span class="s2">".profile"</span><span class="p">,</span>
                    <span class="s2">".zshrc"</span><span class="p">,</span> <span class="s2">".zprofile"</span><span class="p">,</span> <span class="s2">".zshenv"</span><span class="p">,</span> <span class="s2">".gitconfig"</span><span class="p">,</span> <span class="s2">".gitmodules"</span><span class="p">,</span>
@@ -1015,7 +1016,7 @@ hook 返回 <code>{mode, options, set}</code>。</p>
 </tr>
 <tr>
 <td>路径安全 / 危险文件目录 / Windows 绕过</td>
-<td><code>openprogram/programs/functions/file_safety.py</code></td>
+<td><code>openprogram/programs/functions/vanilla/file_safety.py</code></td>
 </tr>
 <tr>
 <td>gate 硬拦截</td>
@@ -1039,7 +1040,7 @@ hook 返回 <code>{mode, options, set}</code>。</p>
 </tr>
 <tr>
 <td><code>accept_edits_safe</code> 声明 + per-tool <code>requires_approval</code></td>
-<td><code>openprogram/programs/_runtime.py</code>；工具标记在 <code>openprogram/programs/functions/{read,write,edit,glob,grep,list}/</code></td>
+<td><code>openprogram/programs/_runtime.py</code>；工具标记在 <code>openprogram/programs/functions/vanilla/{read,write,edit,glob,grep,list}/</code></td>
 </tr>
 <tr>
 <td>web 默认 bypass + effective_permission</td>
