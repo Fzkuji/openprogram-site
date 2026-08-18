@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787015033">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787016323">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -638,6 +638,12 @@ the migration does not change host licence state.</li>
 <td>implemented; reviewed</td>
 <td>Moves the preload-facing transfer receipt and API contracts to a dedicated type-only module, preserves the established bridge re-exports and leaves the journal, aggregate bridge and transfer runtime unchanged.</td>
 </tr>
+<tr>
+<td>Desktop worker recovery-state extraction</td>
+<td><code>4e018891</code></td>
+<td>implemented; reviewed</td>
+<td>Moves five pure recovery-state helpers to a directly executable module, preserves one shared spawn coordinator and per-window recovery state, and includes the module in package and refresh closures.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
@@ -744,6 +750,22 @@ TypeScript fails resolution. GREEN boundary: TypeScript, executable Web split
 and complete Web checks.</li>
 <li>Exclude transfer state-machine changes, UI/CSS changes and unrelated active
 Agent configuration work.</li>
+</ul>
+<h2 id="implemented-task-brief-desktop-worker-recovery-state-extraction">Implemented task brief: Desktop worker recovery-state extraction<a class="header-anchor" href="#implemented-task-brief-desktop-worker-recovery-state-extraction">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: current <code>main</code> after the
+Desktop bridge transfer-contract extraction.</li>
+<li>Move only the five pure worker-recovery state helpers from
+<code>apps/desktop/main.js</code> to <code>apps/desktop/worker-recovery-state.js</code>.</li>
+<li>Keep HTTP probes, worker process spawning, timers, BrowserWindow ownership and
+recovery orchestration in <code>main.js</code>.</li>
+<li>Make the existing recovery check import the production module directly; add
+the runtime file to Electron packaging and local-App refresh closure.</li>
+<li>RED boundary: the direct recovery module import fails before the module
+exists. GREEN boundary: worker recovery, packaged-file, refresh fixture and
+complete Desktop checks.</li>
+<li>Exclude recovery behavior changes, timing changes, UI changes and unrelated
+active Agent configuration work.</li>
 </ul>
 <h2 id="active-task-brief-apps-migration-c2">Active task brief: Apps migration C2<a class="header-anchor" href="#active-task-brief-apps-migration-c2">#</a></h2>
 <ul>
@@ -887,13 +909,19 @@ pass — independent quality review for `f6ede2a7`
 pass — complete Web `npm run check`, executable Web split checks and TypeScript no-emit check through `b8c97d41`
 pass — independent specification review through `b8c97d41`
 pass — independent quality review through `b8c97d41`
+1 failed — public RED: the worker recovery check could not resolve the not-yet-created `worker-recovery-state` module
+pass — complete Desktop `npm run check` after extracting worker recovery state
+2 passed — Desktop package-file and local refresh staging contracts for `4e018891`
+pass — independent specification review for `4e018891`
+pass — independent quality review for `4e018891`
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>
-<li><code>apps/desktop/main.js</code>: pure menu geometry now lives in
-<code>apps/desktop/menu-geometry.js</code>; keep window lifecycle, native WebView, tab
-transfer and menu-host orchestration in place until each boundary has direct
-executable coverage.</li>
+<li><code>apps/desktop/main.js</code>: pure menu geometry lives in
+<code>apps/desktop/menu-geometry.js</code>, and pure worker recovery state lives in
+<code>apps/desktop/worker-recovery-state.js</code>. Keep HTTP probes, process/window
+lifecycle, native WebView, tab transfer and menu-host orchestration in place
+until each boundary has direct executable coverage.</li>
 <li><code>apps/web/lib/desktop-bridge.ts</code>: WebTab and Desktop service contracts now
 live in <code>apps/web/lib/desktop-bridge-types.ts</code>; preload-facing transfer
 contracts live in <code>apps/web/lib/desktop-transfer-types.ts</code>. Keep the aggregate
@@ -915,6 +943,7 @@ responsibility is identified; line count alone is not an implementation task.</l
 <a class="" href="#implemented-task-brief-desktop-bridge-type-contract-extraction">Implemented task brief: Desktop bridge type-contract extraction</a>
 <a class="" href="#implemented-task-brief-desktop-bridge-service-contract-extraction">Implemented task brief: Desktop bridge service-contract extraction</a>
 <a class="" href="#implemented-task-brief-desktop-bridge-transfer-contract-extraction">Implemented task brief: Desktop bridge transfer-contract extraction</a>
+<a class="" href="#implemented-task-brief-desktop-worker-recovery-state-extraction">Implemented task brief: Desktop worker recovery-state extraction</a>
 <a class="" href="#active-task-brief-apps-migration-c2">Active task brief: Apps migration C2</a>
 <a class="" href="#verification-record">Verification record</a>
 <a class="" href="#deferred-boundaries">Deferred boundaries</a>
