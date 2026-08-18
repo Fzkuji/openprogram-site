@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787012254">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787013652">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -626,6 +626,12 @@ the migration does not change host licence state.</li>
 <td>implemented; reviewed</td>
 <td>Moves the five public WebTab contracts to a type-only module, preserves re-exports from the established bridge entry and leaves all renderer state and transfer runtime code unchanged.</td>
 </tr>
+<tr>
+<td>Desktop bridge service type extraction</td>
+<td><code>f6ede2a7</code></td>
+<td>implemented; reviewed</td>
+<td>Moves history, downloads, updates, browser import/data, terminal and menu contracts to the same type-only module; direct and compatibility type consumers compile while transfer and runtime coordination remain in place.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
@@ -697,6 +703,23 @@ and TypeScript fails resolution. GREEN boundary: TypeScript, executable Web
 split checks and the complete Web check.</li>
 <li>Exclude runtime behavior, store changes, transfer protocol changes, UI/CSS
 changes and unrelated active Agent configuration work.</li>
+</ul>
+<h2 id="implemented-task-brief-desktop-bridge-service-contract-extraction">Implemented task brief: Desktop bridge service-contract extraction<a class="header-anchor" href="#implemented-task-brief-desktop-bridge-service-contract-extraction">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: current <code>main</code> after the
+WebTab type-contract extraction.</li>
+<li>Move history, downloads, update, browser import/data, terminal and menu API
+contracts into the existing <code>desktop-bridge-types.ts</code> module.</li>
+<li>Keep transfer receipts, transfer API, the aggregate <code>DesktopBridge</code> interface
+and every runtime function in <code>desktop-bridge.ts</code> because the transfer types
+still share contracts with <code>tab-transfer-journal.ts</code>.</li>
+<li>Re-export all moved types from <code>desktop-bridge.ts</code>; direct type-only consumers
+may use the dedicated module without importing the runtime coordinator.</li>
+<li>RED boundary: a production type consumer requests a not-yet-exported service
+contract and TypeScript fails. GREEN boundary: TypeScript, built-in Browser,
+executable Web split and complete Web checks.</li>
+<li>Exclude transfer protocol changes, runtime imports, UI/CSS changes and
+unrelated active Agent configuration work.</li>
 </ul>
 <h2 id="active-task-brief-apps-migration-c2">Active task brief: Apps migration C2<a class="header-anchor" href="#active-task-brief-apps-migration-c2">#</a></h2>
 <ul>
@@ -832,6 +855,10 @@ pass — independent quality re-review through `ab2fef3b`
 pass — complete Web `npm run check`, executable Web split checks and TypeScript no-emit check for `9bdc4a93`
 pass — independent specification review for `9bdc4a93`
 pass — independent quality review for `9bdc4a93`
+1 failed — public RED: `browser-controls.tsx` requested the not-yet-exported `DesktopContextMenuItem`
+pass — complete Web `npm run check`, built-in Browser, bookmarks, theme, terminal, updates, Web split and TypeScript checks for `f6ede2a7`
+pass — independent specification review for `f6ede2a7`
+pass — independent quality review for `f6ede2a7`
 </code></pre>
 <h2 id="deferred-boundaries">Deferred boundaries<a class="header-anchor" href="#deferred-boundaries">#</a></h2>
 <ul>
@@ -839,9 +866,10 @@ pass — independent quality review for `9bdc4a93`
 <code>apps/desktop/menu-geometry.js</code>; keep window lifecycle, native WebView, tab
 transfer and menu-host orchestration in place until each boundary has direct
 executable coverage.</li>
-<li><code>apps/web/lib/desktop-bridge.ts</code>: WebTab contracts now live in
-<code>apps/web/lib/desktop-bridge-types.ts</code>; extract the remaining contract groups,
-view state and transfer coordination only in separately reviewed batches.</li>
+<li><code>apps/web/lib/desktop-bridge.ts</code>: WebTab and Desktop service contracts now
+live in <code>apps/web/lib/desktop-bridge-types.ts</code>; transfer contracts, the
+aggregate bridge, view state and transfer coordination remain for separately
+reviewed batches.</li>
 <li>Long cohesive Python state machines remain intact until a separately tested
 responsibility is identified; line count alone is not an implementation task.</li>
 </ul>
@@ -856,6 +884,7 @@ responsibility is identified; line count alone is not an implementation task.</l
 <a class="" href="#implemented-task-brief-apps-migration-b2">Implemented task brief: Apps migration B2</a>
 <a class="" href="#implemented-task-brief-desktop-menu-geometry-extraction">Implemented task brief: Desktop menu geometry extraction</a>
 <a class="" href="#implemented-task-brief-desktop-bridge-type-contract-extraction">Implemented task brief: Desktop bridge type-contract extraction</a>
+<a class="" href="#implemented-task-brief-desktop-bridge-service-contract-extraction">Implemented task brief: Desktop bridge service-contract extraction</a>
 <a class="" href="#active-task-brief-apps-migration-c2">Active task brief: Apps migration C2</a>
 <a class="" href="#verification-record">Verification record</a>
 <a class="" href="#deferred-boundaries">Deferred boundaries</a>
