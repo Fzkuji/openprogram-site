@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -174,7 +174,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>写一个自己的可安装 harness 只差一份布局契约——完整指南(安装、管理、编写、测试、发布)见
 <strong><a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a></strong>。</p>
 <blockquote>
-<p>需要一条自己的工作流?直接在聊天里让 agent 做——内置的 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> 会处理其余一切。</p>
+<p>需要一条自己的工作流？直接在聊天里让 agent 创建或更新 Program。</p>
 </blockquote>
 <h2 id="排障">排障<a class="header-anchor" href="#排障">#</a></h2>
 <p>两条诊断命令覆盖大多数&quot;坏了但不知道为什么&quot;的情况:</p>
@@ -216,7 +216,7 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 <h2 id="cli-用法">CLI 用法<a class="header-anchor" href="#cli-用法">#</a></h2>
 <p>聊天 UI 之外,<code>openprogram</code> 命令可以 headless 跑——写脚本、接管道、做自动化。</p>
 <pre><code class="language-bash"><span class="c1"># 一次性:发 prompt、打印答案、退出(可重定向或接管道)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise .github/CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
 
 <span class="c1"># 用 key=value 参数运行指定 agentic function</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">"state-space models"</span>
@@ -244,7 +244,7 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 </tr>
 <tr>
 <td><strong>函数编写函数</strong></td>
-<td>新建 / 修复 <code>@agentic_function</code> 由 agent 自己用普通文件编辑工具完成,遵循 <code>agentic-programming</code> skill。没有专门的 <code>create()</code> / <code>fix()</code> 调用。</td>
+<td>新建 / 修复 <code>@agentic_function</code> 由 agent 自己用普通文件编辑工具并按 API 文档完成。没有专门的 <code>create()</code> / <code>fix()</code> 调用。</td>
 </tr>
 <tr>
 <td><strong>对话即 git DAG</strong></td>
@@ -310,8 +310,7 @@ apps/
 web/                                 # Next.js 界面
 desktop/                             # Electron 桌面宿主
 tests/                               # pytest：&lt;layer&gt;/&lt;product-domain&gt;
-scripts/                             # 可执行的仓库维护工具
-tools/                               # 可导入的发布和文档工具
+scripts/                             # 可执行或可导入的仓库维护工具
 </code></pre>
 <p>各 workspace 的入口说明见
 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/README.md"><code>openprogram/</code></a>、
@@ -321,7 +320,7 @@ tools/                               # 可导入的发布和文档工具
 </details>
 <h2 id="贡献">贡献<a class="header-anchor" href="#贡献">#</a></h2>
 <p>这是一个<strong>范式提案</strong>,附带参考实现。欢迎讨论、其他语言的替代实现、验证或挑战此方法的用例,以及 bug 报告。</p>
-<p>详见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>。</p>
+<p>详见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/.github/CONTRIBUTING.md">CONTRIBUTING.md</a>。</p>
 <h2 id="致谢">致谢<a class="header-anchor" href="#致谢">#</a></h2>
 <p>OpenProgram 站在前人的肩膀上。工具框架、provider 抽象和若干工具实现移植或改编自下列项目——各自遵循其原许可证。非常感谢这些作者。</p>
 <ul>
@@ -364,7 +363,7 @@ provider 直接调原生 HTTP API,让 SDK 依赖保持可选。</li>
 </code></pre>
 <h2 id="许可证">许可证<a class="header-anchor" href="#许可证">#</a></h2>
 <p><a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE">AGPL-3.0</a> © 2026 Fzkuji。可自由使用、研究、修改、分享——但任何你分发<strong>或作为联网服务运行</strong>的衍生作品也必须以 AGPL 发布,并保留署名。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#它有什么不同">它有什么不同</a>

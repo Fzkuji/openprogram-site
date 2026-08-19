@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787017175" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787122719" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -177,7 +177,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 full guide (install, manage, author, test, publish) is
 <strong><a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a></strong>.</p>
 <blockquote>
-<p>Need a workflow of your own? Just ask the agent in chat — the bundled <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> handles the rest.</p>
+<p>Need a workflow of your own? Ask the agent in chat to create or update a Program.</p>
 </blockquote>
 <h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
 <p>Two diagnostic commands cover most &quot;it broke and I don't know why&quot; situations:</p>
@@ -219,7 +219,7 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 <h2 id="cli-use">CLI use<a class="header-anchor" href="#cli-use">#</a></h2>
 <p>Beyond the chat UIs, the <code>openprogram</code> command runs headless — script it, pipe it, automate it.</p>
 <pre><code class="language-bash"><span class="c1"># One-shot: send a prompt, print the answer, exit (redirect or pipe it)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise .github/CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
 
 <span class="c1"># Run a specific agentic function with key=value args</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">"state-space models"</span>
@@ -247,7 +247,7 @@ openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span 
 </tr>
 <tr>
 <td><strong>Functions that author functions</strong></td>
-<td>New / fixed <code>@agentic_function</code>s are written by the agent itself via ordinary file-editing tools, guided by the <code>agentic-programming</code> skill. No dedicated <code>create()</code> / <code>fix()</code> calls.</td>
+<td>New / fixed <code>@agentic_function</code>s are written by the agent itself via ordinary file-editing tools and the documented API. No dedicated <code>create()</code> / <code>fix()</code> calls.</td>
 </tr>
 <tr>
 <td><strong>Conversation as a git DAG</strong></td>
@@ -313,8 +313,7 @@ apps/
 web/                                 # Next.js interface
 desktop/                             # Electron desktop host
 tests/                               # pytest: &lt;layer&gt;/&lt;product-domain&gt;
-scripts/                             # executable repository maintenance tools
-tools/                               # importable release and documentation tooling
+scripts/                             # executable and importable repository maintenance tools
 </code></pre>
 <p>See the workspace READMEs for
 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/README.md"><code>openprogram/</code></a>,
@@ -325,7 +324,7 @@ ownership rules are in
 </details>
 <h2 id="contributing">Contributing<a class="header-anchor" href="#contributing">#</a></h2>
 <p>This is a <strong>paradigm proposal</strong> with a reference implementation. We welcome discussions, alternative implementations in other languages, use cases that validate or challenge the approach, and bug reports.</p>
-<p>See <a href="https://github.com/Fzkuji/OpenProgram/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
+<p>See <a href="https://github.com/Fzkuji/OpenProgram/blob/main/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
 <h2 id="acknowledgements">Acknowledgements<a class="header-anchor" href="#acknowledgements">#</a></h2>
 <p>OpenProgram stands on shoulders. The tool framework, provider abstraction, and
 several tool implementations were ported or adapted from the projects below —
@@ -373,7 +372,7 @@ AGPL-3.0.</p>
 </code></pre>
 <h2 id="license">License<a class="header-anchor" href="#license">#</a></h2>
 <p><a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE">AGPL-3.0</a> © 2026 Fzkuji. Free to use, study, modify, and share — but any derivative you distribute <strong>or run as a network service</strong> must also be released under the AGPL, with attribution preserved.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-makes-it-different">What makes it different</a>

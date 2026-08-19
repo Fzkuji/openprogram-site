@@ -303,6 +303,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-account-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-auth-storage.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-auth-storage.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/custom-openai-compatible-provider.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/error-and-timeout-mechanism.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/json-schema-structured-output.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/metadata-load-diagnostics.html</loc></url>
@@ -460,6 +461,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/programs-explorer-template.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/programs-source-categories.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace-prototype.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.html</loc></url>

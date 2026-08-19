@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787017175">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787122719">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -252,6 +252,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Providers</div>
 <a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
+<a class="navlink" href="/docs/reference/design/providers/custom-openai-compatible-provider.html">Custom OpenAI-Compatible Provider</a>
 <a class="navlink" href="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
 <a class="navlink" href="/docs/reference/design/providers/json-schema-structured-output.html">OpenProgram · JSON Schema Structured Output 设计</a>
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html">OpenProgram · Provider metadata 加载诊断</a>
@@ -373,6 +374,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title">Web UI</div>
+<a class="navlink" href="/docs/reference/design/ui/programs-explorer-template.html">OpenProgram · Programs Explorer</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Repository structure implementation ledger</span></nav><h1 id="repository-structure-implementation-ledger">Repository structure implementation ledger<a class="header-anchor" href="#repository-structure-implementation-ledger">#</a></h1>
@@ -594,7 +599,7 @@ the migration does not change host licence state.</li>
 <td>Apps migration B2: Python CLI application</td>
 <td><code>2a790501</code>, <code>91be4353</code>, <code>51303ea8</code>, <code>09eb3732</code>, <code>252fb4fa</code>, <code>a459c443</code></td>
 <td>implemented; reviewed</td>
-<td>Moves parser, dispatch, Rich fallback, Ink launcher and setup flows into the installable <code>openprogram_cli</code> application package. <code>openprogram.cli</code> remains a bounded compatibility loader; a code-free root module supports raw source checkouts; editable and wheel installs use the application package.</td>
+<td>Moves parser, dispatch, Rich fallback, Ink launcher and setup flows into the installable <code>openprogram_cli</code> application package. <code>openprogram.cli</code> remains a bounded compatibility loader; editable and wheel installs use the application package. The later root cleanup removes the temporary raw-checkout canonical-module forwarder.</td>
 </tr>
 <tr>
 <td>Legacy cleanup F2: profile state</td>
@@ -650,8 +655,191 @@ the migration does not change host licence state.</li>
 <td>implemented; reviewed</td>
 <td>Moves transfer payload validation and normalization to a directly executable module, preserves every limit and ownership check, and leaves IPC authorization, coordination and rollback unchanged.</td>
 </tr>
+<tr>
+<td>Root metadata cleanup</td>
+<td><code>ab386e10</code></td>
+<td>implemented; reviewed</td>
+<td>Co-locates the changelog with GitHub release notes, removes the redundant MANIFEST file, and enforces the intentional root-file set without changing the source-checkout CLI entry. Wheel packaging, source-checkout CLI, documentation links, specification review and quality review pass.</td>
+</tr>
+<tr>
+<td>Raw-checkout CLI alias cleanup</td>
+<td><code>daf97a8d</code></td>
+<td>implemented; reviewed</td>
+<td>Removes only the root <code>openprogram_cli.py</code> forwarder and its dedicated raw-checkout compatibility logic. Source checkouts retain <code>python -m openprogram</code> and <code>python -m openprogram.cli</code>; fresh editable installs and wheels retain the console script and canonical <code>python -m openprogram_cli</code>. The retained entries, canonical/compatibility identity, foreign-package rejection, TUI detection, root-file structure, documentation links, Ruff, specification review and quality review pass.</td>
+</tr>
+<tr>
+<td>Core package cleanup G1: Context Git DAG</td>
+<td><code>41151c50</code></td>
+<td>implemented; reviewed</td>
+<td>Moves the two-file ContextGit implementation into <code>openprogram/context/git/</code>, updates every repository-owned import and current path reference, removes the old first-level package without a duplicate compatibility layer, and preserves DAG behavior and wheel discovery. The focused DAG, Server, dispatcher, Ruff, link, wheel, specification and quality gates pass.</td>
+</tr>
+<tr>
+<td>Standard polyglot workspace G2</td>
+<td>G2a release-tool grouping; G2b root npm workspace; Core-layout rollback <code>24f72a39</code>, <code>5c04bb1b</code>, <code>aa0e82ea</code>, <code>defacac1</code>, <code>ddfe06a6</code></td>
+<td>implemented; reviewed</td>
+<td>Keeps applications under <code>apps/</code>, the Agent Core at the repository root <code>openprogram/</code>, one aggregate Python distribution, one npm workspace lock, and formal distribution commands under <code>scripts/release/</code>. The proposed <code>packages/core/src/openprogram</code> migration was rejected and fully reversed because the repository has only one Core Python package and the added directory depth did not establish a useful package boundary.</td>
+</tr>
 </tbody>
 </table>
+<h2 id="active-task-brief-standard-polyglot-workspace-g2">Active task brief: Standard polyglot workspace G2<a class="header-anchor" href="#active-task-brief-standard-polyglot-workspace-g2">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; integrated design commit:
+<code>7f9e63b9</code>; G2a base after reviewed repository-contract repair: <code>1f5aee22</code>.</li>
+<li>Batch G2a moves exactly these formal distribution implementations under
+<code>scripts/release/</code>: <code>build-product-runtime.sh</code>,
+<code>archive-product-runtime.sh</code>, <code>prepare-desktop-runtime.sh</code>,
+<code>stage-release-assets.sh</code>, <code>verify-product-runtime.py</code>,
+<code>verify-release-version.py</code>, <code>create-release-manifest.py</code>,
+<code>smoke-packaged-runtime.sh</code>, <code>product-runtime.json</code>, and the full
+<code>install-release.sh</code> implementation. <code>scripts/install.sh</code>,
+<code>scripts/install.ps1</code>, <code>scripts/refresh-local-app.sh</code> and
+<code>scripts/promote_stable.sh</code> keep their existing paths and behavior.</li>
+<li><code>scripts/install-release.sh</code> remains the single public compatibility entry.
+In a checkout it dispatches to <code>scripts/release/install-release.sh</code>; when
+downloaded alone from the existing immutable-tag URL, it downloads that
+implementation from the same validated repository and tag into a temporary
+file, propagates the environment and exit status, and removes the temporary
+file. No other moved script receives a compatibility wrapper.</li>
+<li><code>stage-release-assets.sh</code> and <code>verify-release-version.py</code> are shared
+distribution helpers, not CI-only files: <code>refresh-local-app.sh</code> continues to
+call their new paths. Every moved shell/Python file updates its repository-root
+calculation, and CI, Desktop packaging, documentation and distribution tests
+update their internal paths without changing public installer URLs.</li>
+<li>Batch G2b adds one private root npm workspace for <code>apps/web</code>,
+<code>apps/desktop</code> and <code>apps/cli</code>, producing one root <code>package-lock.json</code> while
+preserving each application's scripts, dependency versions, build output and
+package identity. It does not add pnpm, Turborepo or another task runner.</li>
+<li>G2b uses npm's default hoisted workspace installation and does not select
+<code>install-strategy=nested</code>. It removes tracked assumptions that dependencies
+or locks live below an application directory. Required production callers
+include Server <code>_webui/frontend.py</code>, CLI <code>commands/web.py</code> and <code>ink.py</code>,
+Desktop <code>scripts/package-and-install-app.sh</code>, root <code>refresh-local-app.sh</code>,
+<code>install.sh</code>, <code>install.ps1</code>, <code>stage-release-assets.sh</code>, <code>upgrade.py</code>, and all
+setup-node cache declarations. Dead child-node_modules helpers are deleted
+instead of extended when no production caller remains. Required tests include
+<code>tests/contracts/repository/test_ci_test_layers.py</code>,
+<code>tests/component/config/test_upgrade_cmd.py</code>, repository/distribution
+contracts and the local-refresh locator fixture. A non-history source scan
+must find no child <code>package-lock.json</code> or fixed <code>apps/*/node_modules</code> lookup.
+Because Web consumes React 18 while Ink CLI consumes React 19, the private
+root package pins the React 18 peer/type layout and a compatible reconciler;
+CLI retains its nested React 19/reconciler pair and carries no external hook
+package that resolves the root React dispatcher.</li>
+<li>The G2c Core move is not part of the accepted structure. The Core remains at
+<code>openprogram/</code>, so raw source-checkout imports, installed imports, module and
+console entries, package data and the aggregate wheel retain their original
+layout. <code>packages/</code> is not created until the repository contains a second
+genuine shared package with an independent ownership boundary.</li>
+<li>G2a RED/GREEN: repository contract; standalone public installer wrapper in a
+temporary directory with fake same-tag download; direct checkout wrapper;
+distribution and formal-update component tests; shell syntax; Python
+compilation; release-version verification; Desktop/runtime callers; docs
+links; stale old-path search.</li>
+<li>Exact G2a RED command (new ownership/wrapper assertions must fail on base):
+<code>uv run --locked --extra dev pytest -q tests/contracts/repository/test_repository_layout.py tests/component/config/test_distribution_release.py tests/component/config/test_formal_release_updates.py</code>.</li>
+<li>Exact G2a GREEN/affected commands after implementation:
+<code>uv run --locked --extra dev pytest -q tests/contracts/repository/test_repository_layout.py tests/component/config/test_distribution_release.py tests/component/config/test_formal_release_updates.py</code>;
+<code>bash -n scripts/install.sh scripts/refresh-local-app.sh scripts/promote_stable.sh scripts/install-release.sh scripts/release/*.sh</code> (the platform-neutral distribution contract continues to inspect <code>scripts/install.ps1</code>);
+<code>python -m compileall -q scripts/release</code>;
+<code>python scripts/release/verify-release-version.py --tag v0.7.0</code>;
+<code>python -m scripts.docs_site.checklinks</code>;
+<code>git grep -nE 'scripts/(build-product-runtime|archive-product-runtime|prepare-desktop-runtime|stage-release-assets|verify-product-runtime|verify-release-version|create-release-manifest|smoke-packaged-runtime)' -- ':!docs/reference/design/repository-structure-implementation.md'</code> must return no old implementation paths;
+<code>git grep -n 'scripts/install-release.sh'</code> may retain only the public URL,
+compatibility-wrapper contract and tests; <code>git diff --check</code>; and
+<code>git status --short</code>. G2a does not run or claim G2b/G2c migration gates.</li>
+<li>G2b RED/GREEN: root workspace/lock ownership contract; clean root <code>npm ci</code>;
+<code>npm ls --workspaces</code>; Web test/typecheck/check/build; CLI
+typecheck/test/build and cold autobuild; Server cold frontend build; Desktop
+checks plus real Electron ABI rebuild/package verification for <code>node-pty</code>;
+release staging; a second clean install with no lock diff.</li>
+<li>G2c RED/GREEN: layout and repository-root resolver contracts; editable
+install and <code>uv run</code>; isolated aggregate wheel/sdist build outside checkout;
+<code>openprogram</code>, <code>openprogram_server</code>, <code>openprogram_cli</code>, console/module entries,
+package data and packaged runtime construction. Bare, uninstalled
+<code>python -m openprogram</code> is not an acceptance criterion after G2c-1.</li>
+<li>Exact compatibility boundary: no UI, protocol, provider, browser, runtime
+capability, installer URL, user-state path or release artifact behavior may
+change. Generated <code>build/</code>, component output and <code>dist/</code> paths remain ignored.</li>
+<li>Full gate manifest after all three batches: repository contracts and documentation links; release
+distribution component tests; Web checks and TypeScript; Desktop checks and
+packaged-file contracts; CLI typecheck/tests/build; Python unit/component/
+integration contracts; isolated wheel and source-checkout entry probes; clean
+diff and worktree status.</li>
+<li>Each batch receives its own implementation commit, specification review,
+quality review and full affected gate before the next batch begins.</li>
+</ul>
+<h3 id="g2a-implementation-evidence">G2a implementation evidence<a class="header-anchor" href="#g2a-implementation-evidence">#</a></h3>
+<ul>
+<li>Integrated implementation: <code>fd078fac</code>, based on reviewed prerequisite
+<code>1f5aee22</code>.</li>
+<li>RED: the new release-ownership contract failed because
+<code>scripts/release/</code> did not exist; standalone and checkout-wrapper assertions
+also failed before the compatibility entry was implemented.</li>
+<li>GREEN: <code>uv run --locked --extra dev pytest -q tests/contracts/repository/test_repository_layout.py tests/component/config/test_distribution_release.py tests/component/config/test_formal_release_updates.py</code> — <code>103 passed</code>.</li>
+<li>Static/entry gates: shell syntax PASS; <code>compileall scripts/release</code> PASS;
+release version <code>v0.7.0</code> PASS; documentation links <code>0 broken link(s)</code>;
+stale internal moved-path scan empty; <code>git diff --check</code> PASS.</li>
+<li>Specification review: PASS. Quality review: PASS.</li>
+<li>Remaining G2a concerns: none. G2b npm workspace and G2c Core relocation
+remain separate pending batches.</li>
+</ul>
+<h3 id="g2b-implementation-evidence">G2b implementation evidence<a class="header-anchor" href="#g2b-implementation-evidence">#</a></h3>
+<ul>
+<li>Integrated implementation: <code>d2f98d46</code>, with repairs <code>ad755cad</code> and
+<code>3c2fe70c</code>, based on reviewed G2a ledger commit <code>b6e19c29</code>.</li>
+<li>RED: the root workspace and lock ownership contract failed before the root
+npm files existed. Real release sequencing then exposed filtered <code>npm ci</code>
+removing dependencies required by another workspace, and runtime inspection
+exposed the CLI hook dependency resolving through the Web React dispatcher.</li>
+<li>GREEN: the affected Python repository, CI, install, upgrade, frontend and
+distribution gate completed with <code>175 passed, 8 warnings</code>.</li>
+<li>Node gates: clean root <code>npm ci</code> PASS; a second install left
+<code>package-lock.json</code> unchanged; <code>npm ls --workspaces --depth=0</code> PASS; Web unit
+tests (<code>14 passed</code>), typecheck, full checks and production build PASS; CLI
+typecheck, tests (<code>140 passed, 2 skipped</code>) and build PASS; Desktop full checks
+PASS.</li>
+<li>Packaging gates: Desktop runtime preparation PASS; non-visible
+<code>electron-builder --dir --mac --publish never</code> PASS; the packaged
+<code>node-pty</code> native module exists and is an arm64 Mach-O bundle.</li>
+<li>Static/documentation gates: Ruff PASS; shell syntax PASS; documentation links
+<code>0 broken link(s)</code>; stale child-lock and fixed child-<code>node_modules</code> scans
+empty; <code>git diff --check</code> PASS.</li>
+<li>Specification review: PASS. Quality/Ponytail full review: PASS.</li>
+<li>Remaining G2b concern: <code>npm audit</code> reports one moderate and seven high
+dependency advisories. No automatic major-version upgrade was applied in
+this structural batch.</li>
+</ul>
+<h3 id="core-layout-rollback-evidence">Core-layout rollback evidence<a class="header-anchor" href="#core-layout-rollback-evidence">#</a></h3>
+<ul>
+<li>Reverts <code>24f72a39</code>, <code>5c04bb1b</code> and <code>aa0e82ea</code> restore the complete tracked
+Core to <code>openprogram/</code>, restore the original package discovery and checkout
+paths, and remove <code>packages/</code>.</li>
+<li>The local GUI, research and wiki Harness checkouts, Agentic Programming logs
+and mutable Programs metadata were returned to their original locations
+under <code>openprogram/</code>. Only generated bytecode and Finder metadata were
+removed from the obsolete directory tree.</li>
+<li>Focused rollback verification passed <code>69</code> Python tests and <code>10</code> CLI tests
+with <code>2</code> environment skips. A clean Git checkout passed <code>57</code> tests with the
+optional local Harness test explicitly skipped. Root imports, both retained
+CLI module entries, wheel, sdist and documentation links pass; package
+artifacts contain <code>openprogram/</code> and no <code>packages/</code> prefix.</li>
+<li>Specification review: PASS. Quality/Ponytail full review: PASS. No src-layout
+compatibility layer is retained.</li>
+</ul>
+<h3 id="g2-main-integration-evidence">G2 main integration evidence<a class="header-anchor" href="#g2-main-integration-evidence">#</a></h3>
+<ul>
+<li>Main integration preserves the already verified provider, Programs explorer
+and Agent-management changes in <code>566f0a3d</code>, <code>47b1b407</code> and <code>f736cb14</code> in the
+root Core. Obsolete unreferenced promotion drafts were removed in <code>5c041a1b</code>.</li>
+<li>Integration repair <code>e310ecf0</code> removes the retired <code>promo/</code> directory from
+the authoritative layout and makes <code>node_modules/</code> ignored at every
+workspace depth. The later Core rollback restores the CLI owner-auth test to
+the root <code>openprogram/</code> path.</li>
+<li>Main affected gate: <code>158 passed</code>; Web Programs/shared-explorer/Agent checks
+PASS; Web TypeScript PASS; CLI typecheck PASS; CLI <code>140 passed, 2 skipped</code>.</li>
+<li>Rollback specification review: PASS. Rollback quality/Ponytail full review:
+PASS. Remaining integration concerns: none.</li>
+</ul>
 <h2 id="implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2<a class="header-anchor" href="#implemented-task-brief-legacy-cleanup-f2">#</a></h2>
 <ul>
 <li>Approved source: <code>repository-structure.html</code>; base: <code>457539c5</code>.</li>
@@ -790,6 +978,22 @@ GREEN boundary: complete Desktop checks, package-file and refresh fixtures.</li>
 <li>Exclude validation-rule changes, protocol changes, UI changes and unrelated
 active Agent configuration work.</li>
 </ul>
+<h2 id="active-task-brief-repository-maintenance-tools-consolidation">Active task brief: Repository maintenance tools consolidation<a class="header-anchor" href="#active-task-brief-repository-maintenance-tools-consolidation">#</a></h2>
+<ul>
+<li>Approved source: <code>repository-structure.html</code>; base: current <code>main</code> after the
+Desktop transfer validation extraction.</li>
+<li>Remove the overlapping root <code>tools/</code> category by moving its existing contents
+directly under <code>scripts/</code>: <code>tools/docs_site/</code> becomes <code>scripts/docs_site/</code>
+and <code>tools/dag_dump.py</code> becomes <code>scripts/dag_dump.py</code>.</li>
+<li>Update Python imports, module commands, CI workflows, documentation and
+repository contracts without changing either tool's behavior.</li>
+<li>RED boundary: the repository layout contract requires the <code>scripts/</code> paths
+and rejects the root <code>tools/</code> directory before the move. GREEN boundary:
+repository contracts, docs-site unit tests, docs build/check commands and
+affected release checks.</li>
+<li>Exclude product runtime behavior, generated frontend files, UI changes and
+unrelated active Agent configuration work.</li>
+</ul>
 <h2 id="active-task-brief-apps-migration-c2">Active task brief: Apps migration C2<a class="header-anchor" href="#active-task-brief-apps-migration-c2">#</a></h2>
 <ul>
 <li>Approved source: <code>repository-structure.html</code>; base: <code>a459c443</code>.</li>
@@ -819,10 +1023,10 @@ decomposition based only on line count.</li>
 <pre><code class="language-text">5 passed — focused CLI parser and documentation navigation contracts
 207 passed — post-main-merge CLI component/unit tests plus focused structure contracts
 158 passed, 2 skipped — independent quality selection of CLI-named and docs IA tests
-497 pages — python -m tools.docs_site.build
-0 broken links — python -m tools.docs_site.checklinks docs/_site
-ok — python -m tools.docs_site.check_landing
-0 Chinese lines — python -m tools.docs_site.checklang
+497 pages — python -m scripts.docs_site.build
+0 broken links — python -m scripts.docs_site.checklinks docs/_site
+ok — python -m scripts.docs_site.check_landing
+0 Chinese lines — python -m scripts.docs_site.checklang
 pass — Ruff and git diff --check
 pass — desktop render at 1280 × 720, no horizontal overflow
 pass — narrow render at 390 × 844, no page overflow; wide tables scroll locally
@@ -960,13 +1164,18 @@ until an independently executable responsibility is identified.</li>
 <li>Long cohesive Python state machines remain intact until a separately tested
 responsibility is identified; line count alone is not an implementation task.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/repository-structure.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Repository structure</span></a><a class="pn-link pn-next" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Site discoverability and performance design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/repository-structure.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Repository structure</span></a><a class="pn-link pn-next" href="/docs/reference/design/site-discoverability-performance.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Site discoverability and performance design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#scope">Scope</a>
 <a class="" href="#approved-migration-sequence">Approved migration sequence</a>
 <a class="" href="#current-migration-audit">Current migration audit</a>
 <a class="" href="#workstreams">Workstreams</a>
+<a class="" href="#active-task-brief-standard-polyglot-workspace-g2">Active task brief: Standard polyglot workspace G2</a>
+<a class="lvl-3" href="#g2a-implementation-evidence">G2a implementation evidence</a>
+<a class="lvl-3" href="#g2b-implementation-evidence">G2b implementation evidence</a>
+<a class="lvl-3" href="#core-layout-rollback-evidence">Core-layout rollback evidence</a>
+<a class="lvl-3" href="#g2-main-integration-evidence">G2 main integration evidence</a>
 <a class="" href="#implemented-task-brief-legacy-cleanup-f2">Implemented task brief: Legacy cleanup F2</a>
 <a class="" href="#implemented-task-brief-apps-migration-b2">Implemented task brief: Apps migration B2</a>
 <a class="" href="#implemented-task-brief-desktop-menu-geometry-extraction">Implemented task brief: Desktop menu geometry extraction</a>
@@ -975,6 +1184,7 @@ responsibility is identified; line count alone is not an implementation task.</l
 <a class="" href="#implemented-task-brief-desktop-bridge-transfer-contract-extraction">Implemented task brief: Desktop bridge transfer-contract extraction</a>
 <a class="" href="#implemented-task-brief-desktop-worker-recovery-state-extraction">Implemented task brief: Desktop worker recovery-state extraction</a>
 <a class="" href="#implemented-task-brief-desktop-tab-transfer-payload-validation-extraction">Implemented task brief: Desktop tab-transfer payload validation extraction</a>
+<a class="" href="#active-task-brief-repository-maintenance-tools-consolidation">Active task brief: Repository maintenance tools consolidation</a>
 <a class="" href="#active-task-brief-apps-migration-c2">Active task brief: Apps migration C2</a>
 <a class="" href="#verification-record">Verification record</a>
 <a class="" href="#deferred-boundaries">Deferred boundaries</a>

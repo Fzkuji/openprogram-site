@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787017175" data-alt-lang-url="/docs/integrations/openclaw.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787122719" data-alt-lang-url="/docs/integrations/openclaw.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -172,7 +172,7 @@ uv run --project ~/.openclaw/workspace/OpenProgram python \
 </code></pre>
 <p>This runs the script with the source checkout's locked environment. Do not run
 it with the system Python, which does not contain OpenProgram's dependencies.</p>
-<p>OpenClaw and OpenProgram use the same AgentSkills-compatible <code>SKILL.md</code> format, so a skill written for one loads in the other. OpenProgram's own skills live in <a href="https://github.com/Fzkuji/OpenProgram/tree/main/skills"><code>skills/</code></a> at the repo root and can be copied into any OpenClaw skill root as-is.</p>
+<p>OpenClaw and OpenProgram use the same AgentSkills-compatible <code>SKILL.md</code> format, so user, project, or plugin skills can be shared between them. OpenProgram does not ship default skills; product workflows are Programs.</p>
 <h2 id="usage-pattern-2-as-a-python-library-in-agent-scripts">Usage Pattern 2: As a Python Library in Agent Scripts<a class="header-anchor" href="#usage-pattern-2-as-a-python-library-in-agent-scripts">#</a></h2>
 <p>If your OpenClaw agent runs Python scripts, you can import agentic functions directly:</p>
 <pre><code class="language-python"><span class="sd">"""</span>
@@ -284,7 +284,7 @@ it with the system Python, which does not contain OpenProgram's dependencies.</p
 <li><strong>Review execution traces</strong> — every function call is recorded in the session DAG; find the session with the Web UI or <code>openprogram sessions list</code> and review it there.</li>
 <li><strong>Keep functions small and focused</strong> — each <code>@agentic_function</code> should do one thing; let Python compose them.</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/claude-code.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Claude Code</span></a><a class="pn-link pn-next" href="/docs/integrations/channels.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Chat Channels</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/claude-code.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Claude Code</span></a><a class="pn-link pn-next" href="/docs/integrations/channels.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Chat Channels</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#what-is-this">What Is This?</a>

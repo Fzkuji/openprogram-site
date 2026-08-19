@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/reference/api/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/reference/api/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -140,7 +140,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Source: <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agentic_programming/function.py"><code>openprogram/agentic_programming/function.py</code></a></p>
 </blockquote>
 <p><code>@agentic_function</code> 把普通 Python 函数变成 Agentic Function:每次调用记录为 session DAG 的一个 <code>code</code> 节点,函数体内的 <code>llm()</code> 调用记录为 <code>llm</code> 节点。</p>
-<p>完整的编写规范——文件布局、docstring 与 <code>content</code> 的分工、参数元数据、校验清单、冒烟测试——见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>。本文只列装饰器本身。</p>
+<p>本文定义 agentic function 的装饰器和编写规范。</p>
 <h2 id="用法">用法<a class="header-anchor" href="#用法">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
@@ -345,7 +345,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>退出函数</strong>:回填同一个 <code>code</code> 节点的 <code>output</code> / <code>status</code>。</li>
 </ul>
 <p><code>expose=&quot;hidden&quot;</code> 时不写任何节点。standalone 运行(没安装 DAG store)时记录全部 no-op,函数照常执行。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#用法">用法</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/start/features.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -120,9 +120,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 因此被中断的工作可以从断点处继续。</p>
 <h2 id="编写函数的函数">编写函数的函数<a class="header-anchor" href="#编写函数的函数">#</a></h2>
 <p>编写、修复和搭建 <code>@agentic_function</code> 本身就是
-agent 的工作 —— 用普通的文件编辑工具完成，由
-<strong><code>agentic-programming</code> skill</strong>
-（<a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>）指导。
+agent 的工作，用普通的文件编辑工具并按照
+<a href="/docs/reference/api/agentic-function.zh.html">Agentic function API</a> 完成。
 没有专门的 <code>create()</code> / <code>fix()</code> 框架调用：
 它们无非是包了一次 LLM 调用加一次文件写入，而 agent
 可以直接做这些事。</p>
@@ -240,7 +239,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 外部传输（Telegram / Discord / Slack / WeChat）映射到按账户区分的身份。
 跨 channel 的消息路由 + 一套声明式的工具可用性系统，
 作为下一批特性在跟踪中。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Getting Started</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Getting Started</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#自动上下文">自动上下文</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787017175" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787122719" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,7 +114,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
 <a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
 <a class="navlink" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
-<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
+<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
 <a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
 <a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
 <a class="navlink" href="/docs/capabilities/tools.html" data-title-zh="内置工具" data-href-en="/docs/capabilities/tools.html" data-href-zh="/docs/capabilities/tools.zh.html">Built-in tools</a>
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
+<a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit、push、PR" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
@@ -222,7 +222,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <p>So context management stops being prompt plumbing and becomes a property you declare on the function. The same DAG doubles as your debugging view: visualization, token accounting, replaying failure paths.</p>
 <h2 id="derived-concepts">Derived Concepts<a class="header-anchor" href="#derived-concepts">#</a></h2>
 <h3 id="the-llm-writes-code-too">The LLM Writes Code Too<a class="header-anchor" href="#the-llm-writes-code-too">#</a></h3>
-<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the spec. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits, following the <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>agentic-programming</code> skill</a> as the spec — where files go, decorator metadata, the division of labor between the docstring and <code>content</code>, and the validation checklist. A background watcher rescans <code>programs/functions/agentic/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
+<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the documented API. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits. A background watcher rescans <code>programs/functions/agentic/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
 <p>Code is data, the LLM is the compiler, and functions are the product — the loop closes.</p>
 <h3 id="dual-mode">Dual Mode<a class="header-anchor" href="#dual-mode">#</a></h3>
 <p>Agentic Programming is at the same time:</p>
@@ -274,7 +274,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <li><a href="/docs/reference/api">API Reference</a></li>
 <li><a href="/docs/reference/design">Design Details</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Embedding in your own stack</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Embedding in your own stack</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#the-problem">The Problem</a>

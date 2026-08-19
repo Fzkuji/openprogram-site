@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/capabilities/skills.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/capabilities/skills.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,7 +114,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
 <a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
 <a class="navlink active" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
-<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
+<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
 <a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
 <a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
 <a class="navlink" href="/docs/capabilities/tools.html" data-title-zh="内置工具" data-href-en="/docs/capabilities/tools.html" data-href-zh="/docs/capabilities/tools.zh.html">Built-in tools</a>
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
+<a class="navlink" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit、push、PR" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
@@ -148,14 +148,9 @@ name: my-skill
 </code></pre>
 <p>front matter 是 <code>key: value</code> 形式的 YAML 子集；<code>name</code> 和 <code>description</code> 缺一不可，缺了该目录直接被跳过。</p>
 <h2 id="查找路径">查找路径<a class="header-anchor" href="#查找路径">#</a></h2>
-<p>system prompt 里的 skills 块按顺序探测两个位置，同名时先见者胜，因此<strong>用户 skill 覆盖仓库 skill</strong>：</p>
-<ol>
-<li><code>~/.openprogram/skills/</code>（用户级）</li>
-<li><code>&lt;OpenProgram 仓库&gt;/skills/</code>（项目级）</li>
-</ol>
-<p>管理 CLI 与 slash command 投射则合并五个来源：bundled（随 OpenProgram 分发）、user（<code>~/.openprogram/skills/</code>）、project（<code>&lt;cwd&gt;/skills/</code>）、插件贡献（见 <a href="/docs/capabilities/plugins.html">Plugins</a>）、remote-cache（<code>~/.openprogram/cache/skills/</code>——<code>skills install</code> 下载落在这里）。</p>
+<p>system prompt、管理 CLI 和 slash command 投射使用同一套四个来源：remote-cache（<code>~/.openprogram/cache/skills/</code>）、插件贡献（见 <a href="/docs/capabilities/plugins.html">Plugins</a>）、user（<code>~/.openprogram/skills/</code>）和 project（<code>&lt;cwd&gt;/skills/</code>）。重名时后面的、更本地的来源覆盖前面的来源。OpenProgram 不随安装包提供默认 skill；产品工作流由 Programs 提供。</p>
 <h2 id="管理命令">管理命令<a class="header-anchor" href="#管理命令">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>skills<span class="w"> </span>list<span class="w">       </span><span class="c1"># 按来源（bundled / user / project / plugin / remote-cache）列出已发现的 skill</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>skills<span class="w"> </span>list<span class="w">       </span><span class="c1"># 按来源（user / project / plugin / remote-cache）列出已发现的 skill</span>
 openprogram<span class="w"> </span>skills<span class="w"> </span>doctor<span class="w">     </span><span class="c1"># 扫描 skill 目录找问题</span>
 openprogram<span class="w"> </span>skills<span class="w"> </span>search<span class="w"> </span>&lt;q&gt;<span class="w">       </span><span class="c1"># 在发现源里搜索（默认 ClawHub）</span>
 openprogram<span class="w"> </span>skills<span class="w"> </span>install<span class="w"> </span>&lt;spec&gt;<span class="w">   </span><span class="c1"># 安装：slug（默认 ClawHub）、clawhub:&lt;slug&gt;、github:owner/repo</span>
@@ -163,7 +158,7 @@ openprogram<span class="w"> </span>skills<span class="w"> </span>update<span cla
 openprogram<span class="w"> </span>skills<span class="w"> </span>remove<span class="w"> </span>&lt;slug&gt;<span class="w">    </span><span class="c1"># 删除已安装 skill（限 project / user / remote-cache）</span>
 </code></pre>
 <p><code>install</code> 支持 <code>--source</code> 指定发现源 URL（<code>clawhub://</code>、GitHub 仓库或 JSON 索引）。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Harnesses</span></a><a class="pn-link pn-next" href="/docs/capabilities/distill.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Distill</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/installing-harnesses.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Harnesses</span></a><a class="pn-link pn-next" href="/docs/capabilities/distill.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Distill</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#工作机制">工作机制</a>

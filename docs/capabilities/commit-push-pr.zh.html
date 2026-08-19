@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/capabilities/commit-push-pr.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/capabilities/commit-push-pr.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Commit, push, PR（提交、推送、开 PR） · OpenProgram Docs</title>
-<meta name="description" content="agent 能把做完的活从工作区一路送到可评审的 pull request：从默认分支切出话题分支、只暂存你要的改动、写提交信息、推送、再用 gh 开 PR。没有新机制，整条流程就是普通的 git 和 gh 走 shell，由内置的 commit-push-pr skill 引导。 怎么用 # 自然语言说，或者用">
+<title>Commit、push、PR · OpenProgram Docs</title>
+<meta name="description" content="OpenProgram 不再随安装包提供默认 commit-push-pr skill 或 /commit-push-pr 命令。Git 操作仍可通过普通工具执行，并继续遵守权限策略；远端写入需要明确授权。 需要复用这套产品流程时应实现为 Program。只需要模型指令的用户也可以自行安装 skill。">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/commit-push-pr.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/commit-push-pr.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/commit-push-pr.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/commit-push-pr.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Commit, push, PR（提交、推送、开 PR）"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Commit、push、PR"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/commit-push-pr.zh.html">
-<meta property="og:title" content="Commit, push, PR（提交、推送、开 PR） · OpenProgram Docs">
-<meta property="og:description" content="agent 能把做完的活从工作区一路送到可评审的 pull request：从默认分支切出话题分支、只暂存你要的改动、写提交信息、推送、再用 gh 开 PR。没有新机制，整条流程就是普通的 git 和 gh 走 shell，由内置的 commit-push-pr skill 引导。 怎么用 # 自然语言说，或者用">
+<meta property="og:title" content="Commit、push、PR · OpenProgram Docs">
+<meta property="og:description" content="OpenProgram 不再随安装包提供默认 commit-push-pr skill 或 /commit-push-pr 命令。Git 操作仍可通过普通工具执行，并继续遵守权限策略；远端写入需要明确授权。 需要复用这套产品流程时应实现为 Program。只需要模型指令的用户也可以自行安装 skill。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Commit, push, PR（提交、推送、开 PR） · OpenProgram Docs">
-<meta name="twitter:description" content="agent 能把做完的活从工作区一路送到可评审的 pull request：从默认分支切出话题分支、只暂存你要的改动、写提交信息、推送、再用 gh 开 PR。没有新机制，整条流程就是普通的 git 和 gh 走 shell，由内置的 commit-push-pr skill 引导。 怎么用 # 自然语言说，或者用">
+<meta name="twitter:title" content="Commit、push、PR · OpenProgram Docs">
+<meta name="twitter:description" content="OpenProgram 不再随安装包提供默认 commit-push-pr skill 或 /commit-push-pr 命令。Git 操作仍可通过普通工具执行，并继续遵守权限策略；远端写入需要明确授权。 需要复用这套产品流程时应实现为 Program。只需要模型指令的用户也可以自行安装 skill。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -114,7 +114,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="扩展">Extending</div>
 <a class="navlink" href="/docs/capabilities/installing-harnesses.html" data-title-zh="Harness" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html">Harnesses</a>
 <a class="navlink" href="/docs/capabilities/skills.html" data-title-zh="Skills" data-href-en="/docs/capabilities/skills.html" data-href-zh="/docs/capabilities/skills.zh.html">Skills</a>
-<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill（经验蒸馏）" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
+<a class="navlink" href="/docs/capabilities/distill.html" data-title-zh="Distill" data-href-en="/docs/capabilities/distill.html" data-href-zh="/docs/capabilities/distill.zh.html">Distill</a>
 <a class="navlink" href="/docs/capabilities/plugins.html" data-title-zh="Plugins" data-href-en="/docs/capabilities/plugins.html" data-href-zh="/docs/capabilities/plugins.zh.html">Plugins</a>
 <a class="navlink" href="/docs/capabilities/mcp.html" data-title-zh="MCP" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html">MCP</a>
 <a class="navlink" href="/docs/capabilities/tools.html" data-title-zh="内置工具" data-href-en="/docs/capabilities/tools.html" data-href-zh="/docs/capabilities/tools.zh.html">Built-in tools</a>
@@ -122,83 +122,18 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink active" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit, push, PR（提交、推送、开 PR）" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
+<a class="navlink active" href="/docs/capabilities/commit-push-pr.html" data-title-zh="Commit、push、PR" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html">Commit, push, PR</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming AI Agents</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Commit, push, PR（提交、推送、开 PR）">Commit, push, PR</span></nav><h1 id="commit-push-pr提交推送开-pr">Commit, push, PR（提交、推送、开 PR）<a class="header-anchor" href="#commit-push-pr提交推送开-pr">#</a></h1>
-<p>agent 能把做完的活从工作区一路送到可评审的 pull request：从默认分支切出话题分支、只暂存你要的改动、写提交信息、推送、再用 <code>gh</code> 开 PR。没有新机制，整条流程就是普通的 <code>git</code> 和 <code>gh</code> 走 shell，由内置的 <code>commit-push-pr</code> skill 引导。</p>
-<h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
-<p>自然语言说，或者用 slash command：</p>
-<pre><code>/commit-push-pr
-</code></pre>
-<p>会命中的常见说法还有：&quot;提交并推送&quot;、&quot;给这些改动开个 PR&quot;、&quot;推上去&quot;、&quot;发个 pull request&quot;。</p>
-<h2 id="它做什么">它做什么<a class="header-anchor" href="#它做什么">#</a></h2>
-<ol>
-<li><strong>先切分支。</strong> 先探测仓库的默认分支（<code>git symbolic-ref refs/remotes/origin/HEAD</code>，失败退到 <code>git remote show origin</code>，没有 remote 时按 <code>main</code>/<code>master</code> 算）。如果 HEAD 就在默认分支上，先建话题分支再提交。绝不往默认分支上提交。</li>
-<li><strong>按路径暂存。</strong> 先读 <code>git status --short -uall</code>，只 add 这次请求涉及的文件。不对没看过的工作区做无差别 <code>git add -A</code>；你没提到的文件保持未暂存状态并如实汇报。</li>
-<li><strong>写提交信息</strong>用 <code>/commit-message</code>：它读暂存区 diff，返回一句祈使式标题，必要时带正文。</li>
-<li><strong>从消息文件提交</strong>（<code>git commit -F</code>），不用容易被引号折断的行内 <code>-m</code>。钩子一律执行，不加 <code>--no-verify</code>。pre-commit 钩子改写了文件就 amend 一次然后停下，不进入循环。</li>
-<li><strong>推送</strong>用 <code>git push -u origin &lt;branch&gt;</code>，前提是下面的远端写入闸门放行。被判 non-fast-forward 就 rebase 后重试一次。强推必须你明确要求，而且用 <code>--force-with-lease</code>。</li>
-<li><strong>开 PR</strong> 用 <code>gh pr create --base &lt;default&gt; --head &lt;branch&gt; --title ... --body-file ...</code>，之前先查 <code>gh auth status</code>。PR 正文由该分支的提交和相对基线的 diff 生成，分为摘要、改了什么、怎么测三节。</li>
-</ol>
-<h2 id="空跑">空跑<a class="header-anchor" href="#空跑">#</a></h2>
-<p>要求空跑时，流程在到达远端之前停下。第 1 到 4 步照常真做，因为建分支、暂存、写消息、提交都在本地、都可撤销；之后 agent 把本该执行的远端动作打印出来，而不是执行：</p>
-<pre><code>would push: git push -u origin fix-commit-trailers
-would open PR: gh pr create --base main --head fix-commit-trailers --title ... --body-file ...
-</code></pre>
-<p><code>git push</code> 和 <code>gh pr create</code> 都不会跑。想看一次推送会送出什么又不写任何东西，用 <code>git push --dry-run -u origin &lt;branch&gt;</code>，它会联系远端报告将要更新的 ref，但不推送。</p>
-<h2 id="远端写入授权">远端写入授权<a class="header-anchor" href="#远端写入授权">#</a></h2>
-<p>推分支和开 PR 是仅有的两个别人能看见的步骤，而且重置本地工作树也撤不掉。它们默认关闭：</p>
-<pre><code>openprogram config set git.allow_remote_write true
-</code></pre>
-<p>设置关着时，流程做完提交就停下来告诉你，你手上留着一个完整的本地提交，自己推即可。在同一轮里直接要求推送或开 PR，这一次调用就算获得授权，设置管的是长期许可，不是一次性请求。</p>
-<p>闸门做在 argv 构造函数里，所以未授权的调用在 <code>git</code> 或 <code>gh</code> 跑起来之前就失败，而不是之后：</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">git_push_argv</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">)</span>            <span class="c1"># RemoteWriteNotAuthorized</span>
-<span class="n">git_push_argv</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"topic"</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># 可以，不写任何东西</span>
-</code></pre>
-<h2 id="ai-署名">AI 署名<a class="header-anchor" href="#ai-署名">#</a></h2>
-<p>agent 写的提交带一条 git trailer，把模型记为共同作者：</p>
-<pre><code>Co-Authored-By: Claude Opus 5 &lt;noreply@openprogram.dev&gt;
-</code></pre>
-<p>知道模型显示名就用它，否则用通用身份 <code>OpenProgram</code>。这条 trailer 是幂等的：重跑流程不会重复追加，而且遇到已有的 trailer 块（比如 <code>Signed-off-by:</code>）会并进那一块，不另起一段。</p>
-<p>生成的 PR 正文结尾固定一行：</p>
-<pre><code>Generated with OpenProgram
-</code></pre>
-<p>用 <code>git.co_author</code> 设置关掉提交 trailer：</p>
-<pre><code>openprogram config set git.co_author false
-</code></pre>
-<p>关掉之后 OpenProgram 不再往提交里加任何署名 trailer。PR 结尾那行不受这个开关影响。</p>
-<p>这些辅助函数可以直接 import，自己复现完全一样的字符串：</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.commands.commit_message</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_trailers</span><span class="p">,</span> <span class="n">co_author_trailer</span><span class="p">,</span> <span class="n">pr_body</span>
-</code></pre>
-<h2 id="审批与安全">审批与安全<a class="header-anchor" href="#审批与安全">#</a></h2>
-<p>每一步都是 <code>bash</code> 调用，所以 <code>git push</code> 和 <code>gh pr create</code> 在 <code>git.allow_remote_write</code> 闸门之外还要走会话原有的审批档位，默认档位下你会逐条看到并批准。OpenProgram 不会为了让流程安静就把你切到绕过档位。</p>
-<p>被 spawn 出来的子 agent 完全拿不到 <code>bash</code>，因此无法提交或推送。这条流程属于顶层会话；活派给了子 agent 的话，子 agent 把分支交回来由你来发。</p>
-<h2 id="什么时候会停">什么时候会停<a class="header-anchor" href="#什么时候会停">#</a></h2>
-<p>出现下列情况 agent 停下汇报，不自作主张：工作区里有它无法归因到你请求的改动、钩子反复改写文件、推送连续两次被拒、<code>gh</code> 缺失或未登录。最后一种情况下分支已经推上去了，你可以在网页上开 PR，或者跑 <code>gh auth login</code> 之后再让它来一遍。</p>
-<h2 id="相关">相关<a class="header-anchor" href="#相关">#</a></h2>
-<ul>
-<li><a href="/docs/capabilities/skills.zh.html">Skills</a>——这条流程所在的 <code>SKILL.md</code> 注册表</li>
-<li><a href="/docs/capabilities/tools.zh.html">内置工具</a>——每一步都经过的 shell 工具</li>
-<li><a href="/docs/reference/config-keys.html">配置项</a>——<code>git.co_author</code>、<code>git.allow_remote_write</code> 及其他</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Language server tools</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#怎么用">怎么用</a>
-<a class="" href="#它做什么">它做什么</a>
-<a class="" href="#空跑">空跑</a>
-<a class="" href="#远端写入授权">远端写入授权</a>
-<a class="" href="#ai-署名">AI 署名</a>
-<a class="" href="#审批与安全">审批与安全</a>
-<a class="" href="#什么时候会停">什么时候会停</a>
-<a class="" href="#相关">相关</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Commit、push、PR">Commit, push, PR</span></nav><h1 id="commitpushpr">Commit、push、PR<a class="header-anchor" href="#commitpushpr">#</a></h1>
+<p>OpenProgram 不再随安装包提供默认 <code>commit-push-pr</code> skill 或 <code>/commit-push-pr</code> 命令。Git 操作仍可通过普通工具执行，并继续遵守权限策略；远端写入需要明确授权。</p>
+<p>需要复用这套产品流程时应实现为 Program。只需要模型指令的用户也可以自行安装 skill。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Language server tools</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

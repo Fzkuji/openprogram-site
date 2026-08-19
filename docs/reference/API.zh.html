@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787017175" data-alt-lang-url="/docs/reference/API.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787122719" data-alt-lang-url="/docs/reference/API.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -168,7 +168,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>会话上下文是一张扁平 DAG(节点 = 用户消息 / LLM 调用 / 函数调用),架构见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/context/README.md"><code>openprogram/context/README.md</code></a>。</p>
 <h2 id="编写函数">编写函数<a class="header-anchor" href="#编写函数">#</a></h2>
-<p>没有 <code>create()</code> / <code>fix()</code> 这类 meta 函数——编写、修改、校验 <code>@agentic_function</code> 直接用普通文件编辑工具完成,遵循 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>。该 skill 是完整规范:文件布局、装饰器元数据、docstring 与 <code>content</code> 的分工、校验清单、冒烟测试。</p>
+<p>没有 <code>create()</code> / <code>fix()</code> 这类 meta 函数——编写、修改、校验 <code>@agentic_function</code> 直接用普通文件编辑工具完成。<a href="/docs/reference/api/agentic-function.zh.html">Agentic function API</a> 定义装饰器和编写合同。</p>
 <h2 id="导入">导入<a class="header-anchor" href="#导入">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
@@ -193,7 +193,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="nb">print</span><span class="p">(</span><span class="n">observe</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s2">"login button"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">))</span>
 <span class="n">rt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/reference/api/runtime.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/reference/api/runtime.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#核心组件">核心组件</a>

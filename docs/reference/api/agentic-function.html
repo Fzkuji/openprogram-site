@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787017175" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787122719" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -140,7 +140,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Source: <a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agentic_programming/function.py"><code>openprogram/agentic_programming/function.py</code></a></p>
 </blockquote>
 <p><code>@agentic_function</code> turns an ordinary Python function into an Agentic Function: each call is recorded as a <code>code</code> node in the session DAG, and the <code>llm()</code> calls inside the function body are recorded as <code>llm</code> nodes.</p>
-<p>For the full authoring conventions—file layout, the division of labor between the docstring and <code>content</code>, parameter metadata, the validation checklist, and smoke tests—see <a href="https://github.com/Fzkuji/OpenProgram/blob/main/skills/agentic-programming/SKILL.md"><code>skills/agentic-programming/SKILL.md</code></a>. This document only covers the decorator itself.</p>
+<p>This document defines the decorator and authoring conventions for agentic functions.</p>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
@@ -345,7 +345,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>Exiting the function</strong>: backfill the same <code>code</code> node's <code>output</code> / <code>status</code>.</li>
 </ul>
 <p>When <code>expose=&quot;hidden&quot;</code>, no nodes are written. In standalone runs (with no DAG store installed), all recording is a no-op and the function executes as usual.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-18</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#usage">Usage</a>
