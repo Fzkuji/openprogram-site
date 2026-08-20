@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787228046">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787229382">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -391,45 +391,23 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>Desktop Chrome</strong> (<code>apps/desktop/main.js</code>) — Electron window chrome</li>
 </ul>
 <p>Each surface evolved independently, resulting in divergent color palettes, typography, and design tokens.</p>
-<h2 id="completed-work-this-pr">Completed Work (This PR)<a class="header-anchor" href="#completed-work-this-pr">#</a></h2>
-<h3 id="settings-ux-fix">Settings UX Fix<a class="header-anchor" href="#settings-ux-fix">#</a></h3>
-<p><strong>Problem:</strong> Settings defaulted to LLM Providers tab instead of General. Appearance was a flat list mixing mode (auto/light/dark) with color styles (beige/neutral/aurora).</p>
-<p><strong>Solution (schema 3):</strong></p>
+<h2 id="current-appearance">Current Appearance<a class="header-anchor" href="#current-appearance">#</a></h2>
+<p>Settings opens on General. Appearance follows an Obsidian-like stack and keeps schema 3 (mode × named package):</p>
 <ul>
-<li>Settings now opens to General first</li>
-<li>Appearance split into two independent controls:
-<ul>
-<li><strong>Mode</strong>: Auto / Light / Dark (system-following auto is a mode, not a theme)</li>
-<li><strong>Color style</strong>: Beige / Neutral / Aurora / Custom</li>
+<li><strong>Mode</strong>: Auto / Light / Dark. Auto follows the system; it is a mode, not a theme.</li>
+<li><strong>Theme package</strong>: Beige / Neutral / Aurora only. Each package has a light and a dark <code>data-theme</code>. Custom is not a fourth skin.</li>
+<li><strong>Accent color</strong>: a color input, presets taken from each package's default <code>--accent-orange</code>, and Reset to theme default. Empty/default uses the current package accent. The override writes <code>--accent-orange</code>, <code>--accent-fill</code>, and a derived <code>--accent-orange-hover</code>.</li>
+<li><strong>CSS overlay</strong>: user CSS sits on top of the selected package, gated by Enable custom CSS. Insert template writes a starter that targets <code>html</code> / current <code>data-theme</code> values. Clear empties the snippet. Old <code>[data-theme=&quot;custom&quot;]</code> / <code>[data-theme=&quot;custom-light&quot;]</code> selectors are rewritten onto <code>data-custom-css</code> so they keep applying.</li>
 </ul>
-</li>
-<li>Each color style supports both light and dark modes (<code>aurora-light</code> and <code>custom-light</code> included)</li>
-<li>Storage migrated from single <code>agentic_theme</code> (schema 2) to <code>agentic_theme_style</code> + <code>agentic_theme_mode</code> (schema 3)</li>
-<li>Theme contract maintained: 6 built-in skins × 58 tokens each, plus Custom slots (<code>custom</code> falls back to <code>:root</code> / beige-dark; <code>custom-light</code> ships beige-light fallback tokens)</li>
-</ul>
-<p><strong>Files changed:</strong></p>
-<ul>
-<li><code>apps/web/app/(shell)/settings/page.tsx</code> — redirect to <code>/settings/general</code></li>
-<li><code>apps/web/lib/prefs/theme-config.ts</code> — new file, defines mode × style matrix</li>
-<li><code>apps/web/lib/prefs/theme-pref.ts</code> — refactored to use <code>style</code> + <code>mode</code> instead of combined <code>theme</code></li>
-<li><code>apps/web/lib/prefs/theme-bootstrap.ts</code> — first-paint script with schema 3 migration</li>
-<li><code>apps/web/app/layout.tsx</code> — uses <code>THEME_BOOTSTRAP_SCRIPT</code> for pre-hydration theme</li>
-<li><code>apps/web/components/settings/general-section.tsx</code> — two separate controls (Mode + Color style)</li>
-<li><code>apps/web/app/styles/themes/aurora-light.css</code> — new light variant of aurora theme</li>
-<li><code>apps/web/app/globals.css</code> — imports aurora-light</li>
-<li><code>apps/web/scripts/check-theme-contract.mjs</code> — updated for schema 3</li>
-<li><code>apps/desktop/main.js</code> — MENU_THEME_IDS follows <code>theme-chrome.js</code> <code>THEME_IDS</code> (includes <code>custom-light</code>)</li>
-</ul>
-<p><strong>Migration:</strong> Existing users on schema 2 (combined theme) are automatically migrated to schema 3 (style + mode) on first page load. Legacy <code>agentic_theme</code> values map as follows:</p>
+<p>Storage stays schema 3 (<code>agentic_theme_style</code> + <code>agentic_theme_mode</code>). Accent uses <code>agentic_theme_accent</code>. Overlay enable uses <code>agentic_custom_css_enabled</code>. Combined <code>agentic_theme</code> values still migrate:</p>
 <ul>
 <li><code>auto</code> → beige + auto</li>
 <li><code>beige-dark</code> / <code>beige-light</code> → beige + dark/light</li>
 <li><code>dark</code> / <code>light</code> (schema 2) → neutral + dark/light</li>
-<li><code>aurora</code> → aurora + dark</li>
-<li><code>custom</code> → custom + dark</li>
-<li><code>custom-light</code> → custom + light</li>
-<li><code>aurora-light</code> → aurora + light</li>
+<li><code>aurora</code> / <code>aurora-light</code> → aurora + dark/light</li>
+<li><code>custom</code> / <code>custom-light</code> → beige + the saved mode; overlay turns on when any custom CSS is saved</li>
 </ul>
+<p><code>custom</code> / <code>custom-light</code> remain fallback theme ids and CSS files for old snippets. They do not appear as style cards. The theme contract still validates the six built-in package token files; default accents stay sourced from those CSS files.</p>
 <h2 id="later-work-prioritized-todo">Later Work (Prioritized TODO)<a class="header-anchor" href="#later-work-prioritized-todo">#</a></h2>
 <p>The following inconsistencies remain and should be addressed in future PRs.</p>
 <h3 id="1-web-token-cleanup-high-priority">1. Web Token Cleanup (High Priority)<a class="header-anchor" href="#1-web-token-cleanup-high-priority">#</a></h3>
@@ -509,7 +487,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="5-desktop-chrome-follows-the-resolved-theme">5. Desktop Chrome Follows the Resolved Theme<a class="header-anchor" href="#5-desktop-chrome-follows-the-resolved-theme">#</a></h3>
 <p>The first pixel of the Electron window matches the already resolved web theme. <code>BrowserWindow</code> is created with <code>--bg-primary</code> from that theme — not <code>#141416</code>.</p>
 <p>Resolution uses the same schema-3 keys the web app writes (<code>agentic_theme_style</code> + <code>agentic_theme_mode</code>, plus legacy <code>agentic_theme</code>). Desktop reads Chromium localStorage under userData, then a <code>theme-prefs.json</code> cache written on theme change. <code>auto</code> follows <code>nativeTheme.shouldUseDarkColors</code>.</p>
-<p><code>apps/desktop/theme-chrome.js</code> holds the <code>--bg-primary</code> map copied from <code>apps/web/app/styles/themes/*.css</code>. <code>custom</code> / <code>custom-light</code> without user CSS use the beige pair (<code>#262624</code> / <code>#faf9f5</code>). Worker error pages and directory-listing HTML use the same chrome tokens. After a theme change the renderer calls <code>theme.setChrome</code>, which updates every <code>BrowserWindow</code> background so the next show/reload does not flash the old color.</p>
+<p><code>apps/desktop/theme-chrome.js</code> holds the <code>--bg-primary</code> / <code>--accent-orange</code> map copied from <code>apps/web/app/styles/themes/*.css</code>. Stored <code>custom</code> / <code>custom-light</code> resolve to the beige pair (<code>#262624</code> / <code>#faf9f5</code>). Worker error pages and directory-listing HTML use the same chrome tokens; when an accent override is set, listing/error link color uses that accent, while window <code>backgroundColor</code> stays the package <code>--bg-primary</code>. After a theme change the renderer calls <code>theme.setChrome</code>, which updates every <code>BrowserWindow</code> background so the next show/reload does not flash the old color.</p>
 <p>Window-state persistence (normal bounds vs maximize/fullscreen, display fallback, titlebar resize hit-testing) is unchanged; see <a href="/docs/reference/design/ui/window-state.html">window-state.md</a>.</p>
 <hr />
 <h3 id="6-ghost-tokens-spec-drift-low-priority">6. Ghost Tokens / Spec Drift (Low Priority)<a class="header-anchor" href="#6-ghost-tokens-spec-drift-low-priority">#</a></h3>
@@ -569,7 +547,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <hr />
 <h2 id="implementation-status">Implementation Status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <ul>
-<li><strong>Settings mode × style</strong>: ✅ Complete (Custom participates like Beige / Neutral / Aurora; Custom + Light is <code>custom-light</code>)</li>
+<li><strong>Settings Appearance</strong>: ✅ Complete (Mode × Beige/Neutral/Aurora × accent picker × CSS overlay; stored Custom migrates to beige)</li>
 <li><strong>Web token cleanup</strong>: ❌ Not started</li>
 <li><strong>Docs palette</strong>: ❌ Not started</li>
 <li><strong>Desktop window-state</strong>: ✅ Complete</li>
@@ -584,8 +562,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#context">Context</a>
-<a class="" href="#completed-work-this-pr">Completed Work (This PR)</a>
-<a class="lvl-3" href="#settings-ux-fix">Settings UX Fix</a>
+<a class="" href="#current-appearance">Current Appearance</a>
 <a class="" href="#later-work-prioritized-todo">Later Work (Prioritized TODO)</a>
 <a class="lvl-3" href="#1-web-token-cleanup-high-priority">1. Web Token Cleanup (High Priority)</a>
 <a class="lvl-3" href="#2-docs-site-palette-drift-high-priority">2. Docs Site Palette Drift (High Priority)</a>
