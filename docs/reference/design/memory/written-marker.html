@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787225495" data-alt-lang-url="/docs/reference/design/memory/written-marker.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787227081" data-alt-lang-url="/docs/reference/design/memory/written-marker.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,6 +78,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
 <a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
+<a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="桌面窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Desktop window state</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="指示点系统" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Indicator dot system</a>
@@ -111,6 +112,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 设置与目录">UI · Settings and catalog</div>
 <a class="navlink" href="/docs/reference/design/ui/avatar-randomization.html">OpenProgram · Avatar randomization</a>
+<a class="navlink" href="/docs/reference/design/ui/programs-explorer-template.html">OpenProgram · Programs Explorer</a>
 <a class="navlink" href="/docs/reference/design/ui/programs-source-categories.html">Programs source categories</a>
 <a class="navlink" href="/docs/reference/design/ui/settings-collapsible-columns.html">Settings 二级导航栏头</a>
 </div>
@@ -377,10 +379,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title">Web UI</div>
-<a class="navlink" href="/docs/reference/design/ui/programs-explorer-template.html">OpenProgram · Programs Explorer</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Memory — 记忆系统设计">Memory — Memory System Design</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="哪些轮次已经写进记忆">Knowing which turns memory has written</span></nav><h1 id="knowing-which-turns-memory-has-written">Knowing which turns memory has written<a class="header-anchor" href="#knowing-which-turns-memory-has-written">#</a></h1>
