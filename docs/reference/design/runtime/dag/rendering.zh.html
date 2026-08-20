@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787229551" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787231424" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -643,7 +643,8 @@ lane 与它分叉出来的 lane 之间<strong>多留一个空列</strong>——�
 分支以一条线开始，不以节点开始。只有胶囊和被取代的旧摘要——lane 里没有自己
 的用户轮次——桥才直接连到字形本身。
 线程条目（第十二节）不占 lane 宽度：它的列在 lane
-落定之后再选，取锚点右侧第一个空列。</p>
+落定之后再选，取锚点右侧第一个空列，选中后立刻占用，第二条展开线程继续往右
+走——两条打开的线程不共享格子。</p>
 <h3 id="tier-分支内往右缩进几格">tier —— 分支内往右缩进几格<a class="header-anchor" href="#tier-分支内往右缩进几格">#</a></h3>
 <p><strong>对话层按 role 固定。</strong> 执行层不再按 caller 深度缩进——展开的线程是一列扁平
 的时间序（第十二节），因为图要回答的是&quot;这一轮干了什么、按什么顺序&quot;；逐调用
@@ -687,7 +688,8 @@ lane 与它分叉出来的 lane 之间<strong>多留一个空列</strong>——�
 的那条分支，而不是跨回主干，虚线桥因此是一段两格长的同行横线。</p>
 <p>线程的行号<strong>递归</strong>分配（第十二节）：锚点的条目从它的下一行起（让开挂在它名下
 的分支行）逐行往下；展开的 spawn 自己的线程接着它的行继续，它占的行把父线程
-后面的条目往下推——展开是插入，不是覆盖。跨会话 spawn 落到目标会话时是该会话
+后面的条目往下推。链上锚点的线程落座后，它后面的对话层节点（以及已经落在插入
+位置下方的线程行）按占用行数下移——展开是插入，不是覆盖。跨会话 spawn 落到目标会话时是该会话
 自己的对话链（lane 0），不是侧枝（场景 12）。</p>
 <hr />
 <h2 id="二三条全局排版规则">二、三条全局排版规则<a class="header-anchor" href="#二三条全局排版规则">#</a></h2>
@@ -910,7 +912,8 @@ agent_spawn 那样的隔离，隔离规则见 <code>ui/invariants.md</code> 规�
                                 按展开集算可见性
   layout/geometry.ts 第一节的实现：链节点按 lane/tier/depth 打包成格点
                      （分支 lane 隔一空列、fork 根落兄弟行），再把每条展开
-                     的线程递归安放在锚点旁边。
+                     的线程递归安放在锚点旁边，按插入行数下移后续链行，并占用
+                     每条线程列。
                      **tier 不在这里算**——由后端
                      `openprogram/webui/graph_layout/tier.py` 算好随节点下发，
                      前端只消费。
@@ -1149,7 +1152,9 @@ tooltip 和检查器里。</p>
 <p><strong>展开就是纯展开</strong>。点节点把线程插进布局：一根注文灰实线沿锚点自己的列竖直
 向下，每个事件用一根右伸横杆挂在线上——先下后右，主干模式下探一层。每个事件
 都是线上的真节点——每次调用一个方块（锚轮 lane 色），spawn
-的 agent 也是方块——一行一个事件，从上到下按调用顺序。收起按规则②
+的 agent 也是方块——一行一个事件，从上到下按调用顺序。后面的 user / assistant
+节点按插入的行数下移，锚点列上的线程竖线在下一颗三角形之前结束。每条打开的
+线程占用自己的列。收起按规则②
 回收行。</p>
 <p><strong>头就是 agent，spawn 就是调用</strong>。spawn 根画成方块——派发 agent 就是一次
 函数调用，方块就是调用词汇。派发调用节点（<code>agent</code> / <code>send_message</code>）归并进
@@ -1161,7 +1166,7 @@ tooltip 和检查器里。</p>
 checkout 成活动分支——接管这个 agent 的对话。徽章永不压住节点：所有可见字形
 都预置进徽章碰撞盒，会压住节点的徽章自动下移一行。模型是递归的，画面也是：每一层都按同样的两
 条规则读，折叠数在肩上、展开成一列。嵌套展开的线程把父线程后面的条目往下推；
-展开是插入，不是覆盖。</p>
+链上锚点的线程同样插入后面的对话轮。展开是插入，不是覆盖。</p>
 <p><strong>没有注文</strong>。agent 的名字住在 tooltip 和 inspector 里（inspector 把节点标题
 写作 <code>子 agent · &lt;名字&gt;</code>，而不是 role 字段所说的 <code>user</code>）；画布只有字形和折叠
 数。名字在线上来自 runner 戳的 label（<code>spawned_from.label</code>），没有时回落到记录
@@ -1189,7 +1194,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第一节 lane / tier / depth 布局</td>
-<td><code>dag/layout/geometry.ts::computeGeometry</code>（链 lane 按 tier 打包并 lane 内归零、前序分行、场景3分叉行+间隔列、线程递归安放）；格点性、无重叠、线程列行、分叉几何均由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 真实执行并断言</td>
+<td><code>dag/layout/geometry.ts::computeGeometry</code>（链 lane 按 tier 打包并 lane 内归零、前序分行、场景3分叉行+间隔列、线程递归安放并下移后续链行、占用线程列）；格点性、无重叠、线程列行、分叉几何均由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 真实执行并断言</td>
 </tr>
 <tr>
 <td>第二节 规则③ 字形占格</td>
