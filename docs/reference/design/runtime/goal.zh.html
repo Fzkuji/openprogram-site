@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787238698" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787251333" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -611,7 +611,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>按上文实现。已知上限：web 记录里的 <code>local_command</code> 回文不持久化（与 REPL 控制台打印对齐）；两个入口同时在一个会话跑轮次时判定可能各跑一次——<code>turns_used</code> 每迭代重读所以封顶仍成立，加上别处的会话级串行（composer 锁、follow-up 锁）使竞态实际不可达。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-20</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programming-workflow-model.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Workflow — 编程模型与组合</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/self-update.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Source checkout upgrades</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programming-workflow-model.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Workflow — 编程模型与组合</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/self-update.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Source checkout upgrades</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#循环位置">循环位置</a>
