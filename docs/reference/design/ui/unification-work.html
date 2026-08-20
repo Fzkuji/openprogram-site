@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787225495" data-alt-lang-url="/docs/reference/design/plans/proactive-implementation.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787225495">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wiring the Proactive Layer into the Code — Design · OpenProgram Docs</title>
-<meta name="description" content="The proactive design itself lives in ../proactive/ . This document covers only where that design meets the existing OpenProgram code: which mechanisms it">
-<link rel="canonical" href="https://openprogram.io/docs/reference/design/plans/proactive-implementation.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/plans/proactive-implementation.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/plans/proactive-implementation.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/plans/proactive-implementation.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Wiring the Proactive Layer into the Code — Design"}]}</script>
+<title>UI Unification Work · OpenProgram Docs</title>
+<meta name="description" content="This document records UI inconsistencies across OpenProgram surfaces and outlines prioritized work for a unified visual identity. Context # OpenProgram">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/unification-work.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"UI Unification Work"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
-<meta property="og:url" content="https://openprogram.io/docs/reference/design/plans/proactive-implementation.html">
-<meta property="og:title" content="Wiring the Proactive Layer into the Code — Design · OpenProgram Docs">
-<meta property="og:description" content="The proactive design itself lives in ../proactive/ . This document covers only where that design meets the existing OpenProgram code: which mechanisms it">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/unification-work.html">
+<meta property="og:title" content="UI Unification Work · OpenProgram Docs">
+<meta property="og:description" content="This document records UI inconsistencies across OpenProgram surfaces and outlines prioritized work for a unified visual identity. Context # OpenProgram">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +21,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Wiring the Proactive Layer into the Code — Design · OpenProgram Docs">
-<meta name="twitter:description" content="The proactive design itself lives in ../proactive/ . This document covers only where that design meets the existing OpenProgram code: which mechanisms it">
+<meta name="twitter:title" content="UI Unification Work · OpenProgram Docs">
+<meta name="twitter:description" content="This document records UI inconsistencies across OpenProgram surfaces and outlines prioritized work for a unified visual identity. Context # OpenProgram">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -77,7 +75,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
-<a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
+<a class="navlink active" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="指示点系统" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Indicator dot system</a>
@@ -228,7 +226,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/plans/cache-control-passthrough.html" data-title-zh="cache_control 透传 — 设计" data-href-en="/docs/reference/design/plans/cache-control-passthrough.html" data-href-zh="/docs/reference/design/plans/cache-control-passthrough.zh.html">Cache-Control Passthrough — Design</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html">Credential Connection Unification</a>
 <a class="navlink" href="/docs/reference/design/plans/2026-08-12-mcp-server.html">MCP Server Implementation Plan</a>
-<a class="navlink active" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
+<a class="navlink" href="/docs/reference/design/plans/proactive-implementation.html" data-title-zh="Proactive Layer 接入代码 — 设计" data-href-en="/docs/reference/design/plans/proactive-implementation.html" data-href-zh="/docs/reference/design/plans/proactive-implementation.zh.html">Wiring the Proactive Layer into the Code — Design</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</div>
@@ -383,239 +381,228 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/programs-explorer-template.html">OpenProgram · Programs Explorer</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Plans</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Proactive Layer 接入代码 — 设计">Wiring the Proactive Layer into the Code — Design</span></nav><h1 id="wiring-the-proactive-layer-into-the-code-design">Wiring the Proactive Layer into the Code — Design<a class="header-anchor" href="#wiring-the-proactive-layer-into-the-code-design">#</a></h1>
-<blockquote>
-<p>The proactive design itself lives in <a href="/docs/reference/design/proactive/README.html"><code>../proactive/</code></a>.
-This document covers only where that design meets the existing OpenProgram
-code: which mechanisms it reuses, where events are emitted, where the gate
-mounts, and what its enforcement actually covers. On any conflict the design
-documents win.</p>
-</blockquote>
-<h2 id="1-where-the-code-lives">1. Where the code lives<a class="header-anchor" href="#1-where-the-code-lives">#</a></h2>
-<p>The event layer is an in-place upgrade of <code>openprogram/events/bus.py</code>:
-<code>Event</code>, subscription by event type, and a process-level singleton. Taps live in
-the individual source files that already know when something happened, not in a
-central collector. The <code>openprogram/proactive/</code> package holds the rule layer and
-is created only when the first rule consumer arrives; the event layer is useful
-on its own before then.</p>
-<p>The event model is the three core fields plus an open <code>metadata</code> pocket (design
-<code>event-layer.md</code> §1). <code>turn</code> and <code>session</code> travel in metadata rather than as
-fixed fields, so a source that has no notion of a turn is not forced to invent
-one.</p>
-<h2 id="2-mechanisms-reused-rather-than-rebuilt">2. Mechanisms reused rather than rebuilt<a class="header-anchor" href="#2-mechanisms-reused-rather-than-rebuilt">#</a></h2>
-<p>Each role the design describes already has a working implementation in the
-codebase:</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">UI Unification Work</span></nav><h1 id="ui-unification-work">UI Unification Work<a class="header-anchor" href="#ui-unification-work">#</a></h1>
+<p>This document records UI inconsistencies across OpenProgram surfaces and outlines prioritized work for a unified visual identity.</p>
+<h2 id="context">Context<a class="header-anchor" href="#context">#</a></h2>
+<p>OpenProgram consists of multiple UI surfaces:</p>
+<ul>
+<li><strong>Web App</strong> (<code>apps/web/</code>) — the main browser-based interface</li>
+<li><strong>CLI/TUI</strong> (<code>apps/cli/</code>) — terminal interface</li>
+<li><strong>Docs Site</strong> (<code>scripts/docs_site/</code>) — documentation website</li>
+<li><strong>Marketing Page</strong> (<code>website/index.html</code>) — landing page</li>
+<li><strong>Desktop Chrome</strong> (<code>apps/desktop/main.js</code>) — Electron window chrome</li>
+</ul>
+<p>Each surface evolved independently, resulting in divergent color palettes, typography, and design tokens.</p>
+<h2 id="completed-work-this-pr">Completed Work (This PR)<a class="header-anchor" href="#completed-work-this-pr">#</a></h2>
+<h3 id="settings-ux-fix">Settings UX Fix<a class="header-anchor" href="#settings-ux-fix">#</a></h3>
+<p><strong>Problem:</strong> Settings defaulted to LLM Providers tab instead of General. Appearance was a flat list mixing mode (auto/light/dark) with color styles (beige/neutral/aurora).</p>
+<p><strong>Solution (schema 3):</strong></p>
+<ul>
+<li>Settings now opens to General first</li>
+<li>Appearance split into two independent controls:
+<ul>
+<li><strong>Mode</strong>: Auto / Light / Dark (system-following auto is a mode, not a theme)</li>
+<li><strong>Color style</strong>: Beige / Neutral / Aurora / Custom</li>
+</ul>
+</li>
+<li>Each color style now supports both light and dark modes (added <code>aurora-light.css</code>)</li>
+<li>Storage migrated from single <code>agentic_theme</code> (schema 2) to <code>agentic_theme_style</code> + <code>agentic_theme_mode</code> (schema 3)</li>
+<li>Theme contract maintained: 6 built-in themes × 58 tokens each</li>
+</ul>
+<p><strong>Files changed:</strong></p>
+<ul>
+<li><code>apps/web/app/(shell)/settings/page.tsx</code> — redirect to <code>/settings/general</code></li>
+<li><code>apps/web/lib/prefs/theme-config.ts</code> — new file, defines mode × style matrix</li>
+<li><code>apps/web/lib/prefs/theme-pref.ts</code> — refactored to use <code>style</code> + <code>mode</code> instead of combined <code>theme</code></li>
+<li><code>apps/web/lib/prefs/theme-bootstrap.ts</code> — first-paint script with schema 3 migration</li>
+<li><code>apps/web/app/layout.tsx</code> — uses <code>THEME_BOOTSTRAP_SCRIPT</code> for pre-hydration theme</li>
+<li><code>apps/web/components/settings/general-section.tsx</code> — two separate controls (Mode + Color style)</li>
+<li><code>apps/web/app/styles/themes/aurora-light.css</code> — new light variant of aurora theme</li>
+<li><code>apps/web/app/globals.css</code> — imports aurora-light</li>
+<li><code>apps/web/scripts/check-theme-contract.mjs</code> — updated for schema 3</li>
+<li><code>apps/desktop/main.js</code> — MENU_THEME_IDS includes aurora-light</li>
+</ul>
+<p><strong>Migration:</strong> Existing users on schema 2 (combined theme) are automatically migrated to schema 3 (style + mode) on first page load. Legacy <code>agentic_theme</code> values map as follows:</p>
+<ul>
+<li><code>auto</code> → beige + auto</li>
+<li><code>beige-dark</code> / <code>beige-light</code> → beige + dark/light</li>
+<li><code>dark</code> / <code>light</code> (schema 2) → neutral + dark/light</li>
+<li><code>aurora</code> → aurora + dark</li>
+<li><code>custom</code> → custom + dark</li>
+</ul>
+<h2 id="later-work-prioritized-todo">Later Work (Prioritized TODO)<a class="header-anchor" href="#later-work-prioritized-todo">#</a></h2>
+<p>The following inconsistencies remain and should be addressed in future PRs.</p>
+<h3 id="1-web-token-cleanup-high-priority">1. Web Token Cleanup (High Priority)<a class="header-anchor" href="#1-web-token-cleanup-high-priority">#</a></h3>
+<p><strong>Issue:</strong> <code>:root</code> fallback in <code>base.css</code> mixes beige surfaces with neutral blue accents.</p>
+<pre><code class="language-css"><span class="c">/* base.css :root claims to be beige-dark but has: */</span>
+<span class="nt">--accent-orange</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">6ea8fe</span><span class="o">;</span><span class="w">  </span><span class="c">/* This is neutral blue, not beige coral */</span>
+</code></pre>
+<p><strong>Files:</strong></p>
+<ul>
+<li><code>apps/web/app/styles/base.css</code> — fallback palette should be consistent beige-dark</li>
+</ul>
+<p><strong>Action:</strong> Decide whether <code>:root</code> fallback should be beige or neutral, then reconcile accent colors.</p>
+<hr />
+<h3 id="2-docs-site-palette-drift-high-priority">2. Docs Site Palette Drift (High Priority)<a class="header-anchor" href="#2-docs-site-palette-drift-high-priority">#</a></h3>
+<p><strong>Issue:</strong> Docs site (<code>scripts/docs_site/assets/site.css</code>) claims to follow <code>base.css</code> but values diverge:</p>
 <table>
 <thead>
 <tr>
-<th>Role in the design</th>
-<th>Existing mechanism</th>
-<th>Location</th>
+<th>Token</th>
+<th>Docs light</th>
+<th>Web beige-light</th>
+<th>Docs dark</th>
+<th>Web beige-dark</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>In-process event fan-out</td>
-<td><code>EventBus</code> — implemented but idle; dispatcher and agent_loop bypassed it with direct callbacks</td>
-<td><code>openprogram/events/bus.py</code></td>
+<td><code>--acc</code> / <code>--accent-orange</code></td>
+<td><code>#b8651f</code></td>
+<td><code>#c15f3c</code></td>
+<td><code>#d19a66</code></td>
+<td><code>#d97757</code></td>
 </tr>
 <tr>
-<td>The gate's <code>ask</code> path</td>
-<td><code>ApprovalRegistry</code> + <code>_wrap_with_approval</code>: request, block and wait, approve or deny; a denial returns an is_error tool result</td>
-<td><code>openprogram/agent/internals/_approval.py</code></td>
-</tr>
-<tr>
-<td>The observer's <code>Prepare</code> background task</td>
-<td><code>JobRunner.spawn_job</code> — ThreadPoolExecutor, state machine, job_status broadcast</td>
-<td><code>openprogram/agent/job/runner.py</code></td>
-</tr>
-<tr>
-<td>Landing slot for <code>Inject</code></td>
-<td>memory prefetch into the system prompt plus steering messages</td>
-<td><code>openprogram/agent/agent_loop.py</code></td>
-</tr>
-<tr>
-<td>Event causality, rewind, branching</td>
-<td>the session git DAG, whose nodes carry parent_id / caller</td>
-<td><code>openprogram/context/git/</code></td>
-</tr>
-<tr>
-<td>The gate's hard enforcement point</td>
-<td>the single point every chat tool call passes through</td>
-<td><code>agent_loop.py</code> <code>_execute_tool_calls</code></td>
+<td><code>--bg</code> / <code>--bg-primary</code></td>
+<td>—</td>
+<td>—</td>
+<td><code>#1f1f1e</code></td>
+<td><code>#262624</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="3-event-taps">3. Event taps<a class="header-anchor" href="#3-event-taps">#</a></h2>
-<p>Events are emitted from the places that already detect the underlying fact.
-Most taps convert an existing callback or internal event into a canonical event
-rather than adding new detection:</p>
-<table>
-<thead>
-<tr>
-<th>Event</th>
-<th>Source</th>
-<th>Nature of the tap</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>user.prompt_submitted</code></td>
-<td><code>dispatcher/__init__.py</code>, at user-message persistence</td>
-<td>added alongside the existing chat_ack / chat_response broadcast, outside the persistence branch so both paths emit</td>
-</tr>
-<tr>
-<td><code>model.response_started</code></td>
-<td><code>agent_loop.py</code>, AgentEventMessageStart</td>
-<td>conversion of an existing event</td>
-</tr>
-<tr>
-<td><code>model.response_completed</code></td>
-<td><code>agent_loop.py</code>, AgentEventMessageEnd</td>
-<td>conversion of an existing event</td>
-</tr>
-<tr>
-<td><code>tool.before</code></td>
-<td><code>agent_loop.py</code>, before every <code>tool.execute()</code></td>
-<td>one event feeds both the notify emit and the gate query</td>
-</tr>
-<tr>
-<td><code>tool.after</code></td>
-<td><code>agent_loop.py</code>, after every tool call finishes</td>
-<td>notify emit with the result text channel</td>
-</tr>
-<tr>
-<td><code>subagent.started</code> / <code>completed</code></td>
-<td><code>task/runner.py</code>, the job_status broadcast</td>
-<td>conversion, funnelled through <code>_broadcast_job_status</code></td>
-</tr>
-<tr>
-<td><code>permission.requested</code></td>
-<td><code>_approval.py</code>, the approval_request envelope</td>
-<td>added tap</td>
-</tr>
-<tr>
-<td><code>artifact.file.changed</code></td>
-<td><code>file_backup.backup_before_edit</code> and <code>project_commit</code></td>
-<td>new emission after a successful write</td>
-</tr>
-</tbody>
-</table>
-<h2 id="4-gate-mounting-and-honest-coverage">4. Gate mounting and honest coverage<a class="header-anchor" href="#4-gate-mounting-and-honest-coverage">#</a></h2>
-<p>The gate mounts at two places with genuinely different guarantees, and the
-difference is stated rather than papered over.</p>
-<p><strong>Chat path — hard enforcement.</strong> The gate is chained into
-<code>_execute_tool_calls</code> in <code>agent_loop.py</code>, ahead of <code>tool.execute</code>. Every chat
-tool call passes through this one point, so nothing routes around the gate.</p>
-<p><strong>Agentic nested path — optional mount.</strong> <code>_pre_invocation_hooks</code> in
-<code>function.py</code>, where the cancel check already hangs. This is a mount point, not
-a chokepoint; its coverage is declared for what it is and no claim of total
-coverage is made for nested calls.</p>
-<p>The gate takes effect on subagent turns <strong>independently of <code>permission_mode</code></strong>.
-In particular it is not disabled by the <code>permission_mode=&quot;bypass&quot;</code> set in
-<code>sub_agent_run.py</code> — that bypass is an existing hole this design closes (design
-<code>invariants.md</code> and <code>execution-model.md</code> §2).</p>
-<h2 id="5-prepare-execution">5. Prepare execution<a class="header-anchor" href="#5-prepare-execution">#</a></h2>
-<p><code>Prepare</code> reuses <code>JobRunner.spawn_job</code> with a restricted tool allowlist that
-excludes bash, write, and network tools. It runs in a separate small pool at
-concurrency 1–2, is preemptible by user tasks, and yields on 429 (design
-<code>execution-model.md</code> §3).</p>
-<h2 id="6-a-known-gap-deliberately-not-blocking">6. A known gap, deliberately not blocking<a class="header-anchor" href="#6-a-known-gap-deliberately-not-blocking">#</a></h2>
-<p><code>@function</code> tool execution does not write a DAG node; only <code>@agentic_function</code>
-does. The DAG tree is therefore incomplete as a causal record. If auditing had
-to rely on the DAG for causal traceback, this would have to be filled first.
-Instead the design records the full event set independently in <code>events.jsonl</code>,
-which makes the DAG gap a known item rather than a prerequisite.</p>
-<h2 id="7-verification-approach">7. Verification approach<a class="header-anchor" href="#7-verification-approach">#</a></h2>
-<p>Every wiring change is checked the same way: <code>py_compile</code>, the relevant unit
-tests, <code>openprogram worker restart</code>, a healthy <code>/healthz</code>, and a real message
-sent through the web UI (frontend changes need <code>npm --prefix apps/web run build</code> first).</p>
-<p>Event ordering is checked by running a turn that calls a tool and reading
-the session's <code>events.jsonl</code> (the event log is always on). The log must
-show <code>user.prompt_submitted → model.response_started → tool.before → tool.after → model.response_completed</code> in that order, each entry
-carrying session and turn in its metadata.</p>
-<h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>The migration runs in five steps, four of them landed. The bus was enabled and
-the in-agent sources connected; <code>file.changed</code> and the synchronous <code>tool.before</code>
-query point followed; then the external-source bridge (a real auth bridge plus
-taps in context, channels, memory, and the web UI); then the web UI was
-converted from an emitter into a subscriber, with external sources emitting
-<code>ws.frame</code> envelopes that the web UI forwards unchanged. Steps one through four
-are pure additions except the fourth, which reroutes an existing path. The fifth
-step — the <code>openprogram/proactive/</code> rule layer with its policy, blocking, and
-observing behaviour — has not landed; its acceptance criterion is that proactive
-touches no subsystem internals and works purely by subscription.</p>
-<p>As built, the pieces sit here:</p>
-<table>
-<thead>
-<tr>
-<th>Part</th>
-<th>Location</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Event</code> / <code>make_event</code> / <code>emit_safe</code> / <code>subscribe(types=)</code> / <code>get_event_bus</code> / the event-log subscriber</td>
-<td><code>openprogram/events/bus.py</code></td>
-</tr>
-<tr>
-<td>Synchronous query point: <code>register_tool_gate</code> / <code>decide_tool_gate</code> / <code>ToolGateDenied</code></td>
-<td><code>openprogram/events/tool_gate.py</code></td>
-</tr>
-<tr>
-<td><code>tool.before</code> observe and query, <code>tool.after</code>, <code>model.*</code> taps</td>
-<td><code>openprogram/agent/agent_loop.py</code></td>
-</tr>
-<tr>
-<td><code>user.prompt_submitted</code></td>
-<td><code>openprogram/agent/dispatcher/__init__.py</code></td>
-</tr>
-<tr>
-<td><code>subagent.started</code> / <code>ended</code></td>
-<td><code>openprogram/agent/job/runner.py</code> <code>_broadcast_job_status</code></td>
-</tr>
-<tr>
-<td><code>file.changed</code>, emitted after a successful write via lazy import</td>
-<td>five sites across the write / edit / apply_patch tools</td>
-</tr>
-<tr>
-<td>External-source bridge, installed idempotently at worker startup</td>
-<td><code>openprogram/events/bridges.py</code> + <code>worker/runner.py</code></td>
-</tr>
-<tr>
-<td>External source taps</td>
-<td><code>context/engine.py</code> (compaction, ×2), <code>channels/_conversation.py</code>, <code>memory/session_watcher.py</code> (×2), <code>webui/server.py</code> (skills / plugins)</td>
-</tr>
-<tr>
-<td><code>emit_ws_frame</code> passthrough envelope + <code>_subscribe_event_bus</code> forwarding</td>
-<td><code>openprogram/events/bus.py</code>, <code>webui/server.py</code></td>
-</tr>
-<tr>
-<td>External sources decoupled from the web UI import</td>
-<td><code>task/runner.py</code>, <code>sub_agent_run.py</code>, <code>worktree/manager.py</code>, <code>functions/watcher.py</code>, <code>channels/_broadcast.py</code></td>
-</tr>
-<tr>
-<td>Unit tests (30)</td>
-<td><code>tests/agent/test_event_bus.py</code>, <code>test_tool_gate.py</code>, <code>test_event_bridges.py</code></td>
-</tr>
-</tbody>
-</table>
-<p>Live validation covered the full event sequence on a real turn, <code>file.changed</code>,
-an end-to-end gate test, <code>skills.changed</code>, and a WebSocket probe confirming that
-all four job_status states reach the frontend through the new chain. One
-environment note carried forward: the worker's working directory is the home
-directory, so the project skills directory resolves to <code>~/skills</code>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-20</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/plans/2026-08-12-mcp-server.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP Server Implementation Plan</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Proactive Layer — Design</span></a></div></article></main>
+<p><strong>Files:</strong></p>
+<ul>
+<li><code>scripts/docs_site/assets/site.css</code></li>
+<li>Storage key is <code>op-docs-theme</code> (light/dark only), independent of app theme</li>
+</ul>
+<p><strong>Additional drift:</strong></p>
+<ul>
+<li>Docs body type is 15.5px vs app <code>--fs-base: 14px</code></li>
+</ul>
+<p><strong>Action:</strong> Align docs palette with Web's beige theme, or explicitly document that docs site is independent.</p>
+<hr />
+<h3 id="3-clitui-theme-mismatch-medium-priority">3. CLI/TUI Theme Mismatch (Medium Priority)<a class="header-anchor" href="#3-clitui-theme-mismatch-medium-priority">#</a></h3>
+<p><strong>Issue:</strong> CLI/TUI always uses Claude orange <code>#d97757</code> regardless of Web theme. Python/Rich setup wizard doesn't read Web tokens.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li><code>apps/cli/src/theme/themes.ts</code> — TypeScript theme definitions</li>
+<li><code>apps/cli/python/openprogram_cli/_impl/repl/banner.py</code> — Rich colors (bright_blue, rainbow)</li>
+<li>Setup wizard comments mention &quot;OpenClaw-style&quot;</li>
+</ul>
+<p><strong>Action:</strong> Either:</p>
+<ul>
+<li>Make CLI/TUI read Web's theme preference and apply consistent colors, or</li>
+<li>Document that CLI is intentionally a separate brand</li>
+</ul>
+<hr />
+<h3 id="4-marketing-page-independent-brand-low-priority">4. Marketing Page Independent Brand (Low Priority)<a class="header-anchor" href="#4-marketing-page-independent-brand-low-priority">#</a></h3>
+<p><strong>Issue:</strong> Marketing page (<code>website/index.html</code>) has a third brand:</p>
+<pre><code class="language-css"><span class="nt">--bg</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">07080a</span>
+<span class="nt">--teal</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">5eead4</span>
+<span class="nt">--violet</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">a78bfa</span>
+</code></pre>
+<p>Desktop icon SVG uses blue/purple (<code>#4A9FE1</code> / <code>#915FD5</code>).</p>
+<p><strong>Action:</strong> Decide whether marketing page should align with Web beige/neutral or remain independent.</p>
+<hr />
+<h3 id="5-desktop-chrome-hardcoded-colors-medium-priority">5. Desktop Chrome Hardcoded Colors (Medium Priority)<a class="header-anchor" href="#5-desktop-chrome-hardcoded-colors-medium-priority">#</a></h3>
+<p><strong>Issue:</strong> Electron window chrome doesn't follow theme preference:</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li><code>apps/desktop/main.js</code> — <code>backgroundColor: &quot;#141416&quot;</code> (hardcoded cold gray)</li>
+<li>Worker error page and embedded file-list HTML have their own light/dark hexes</li>
+</ul>
+<p><strong>Symptom:</strong> Cold gray flash before cream theme loads.</p>
+<p><strong>Action:</strong> Read theme preference from storage and apply background color before window shows.</p>
+<hr />
+<h3 id="6-ghost-tokens-spec-drift-low-priority">6. Ghost Tokens / Spec Drift (Low Priority)<a class="header-anchor" href="#6-ghost-tokens-spec-drift-low-priority">#</a></h3>
+<p><strong>Issue:</strong> Tokens used in code but not in the 58-token contract, or documented in specs but not implemented:</p>
+<p><strong>Used but not contracted:</strong></p>
+<ul>
+<li><code>--text-dim</code> (used in manage-page, files-panel, plugins, skills; contract has <code>--text-muted</code>)</li>
+</ul>
+<p><strong>Documented but not implemented:</strong></p>
+<ul>
+<li><code>--bg-surface</code> (mentioned in <code>surface-system.md</code>)</li>
+<li><code>--text-on-accent</code> (mentioned in specs)</li>
+</ul>
+<p><strong>Files:</strong></p>
+<ul>
+<li><code>docs/reference/design/ui/surface-system.md</code></li>
+</ul>
+<p><strong>Action:</strong> Either add missing tokens to contract or remove references.</p>
+<hr />
+<h3 id="7-button-spec-drift-low-priority">7. Button Spec Drift (Low Priority)<a class="header-anchor" href="#7-button-spec-drift-low-priority">#</a></h3>
+<p><strong>Issue:</strong> <code>button.tsx</code> hover uses <code>bg-secondary</code> instead of brand fill. Comments mention 36px / <code>--ui-button-h</code> but <code>base.css</code> is 30px. Manage-page tabs use <code>border-radius: 6px</code> vs <code>--ui-button-radius</code> 10px.</p>
+<p><strong>Action:</strong> Reconcile button heights and radii across components.</p>
+<hr />
+<h3 id="8-naming-debt-low-priority">8. Naming Debt (Low Priority)<a class="header-anchor" href="#8-naming-debt-low-priority">#</a></h3>
+<p><strong>Issue:</strong></p>
+<ul>
+<li><code>--accent-orange</code> used for blue/teal themes (confusing name)</li>
+<li>shadcn <code>--accent</code> means <code>--bg-hover</code>, not primary color</li>
+<li>Stale comments in <code>dark.css</code> / <code>aurora.css</code> still mention &quot;coral&quot;</li>
+</ul>
+<p><strong>Action:</strong> Rename <code>--accent-orange</code> → <code>--accent-primary</code> or similar. Update stale comments.</p>
+<hr />
+<h3 id="9-mixed-component-kits-low-priority">9. Mixed Component Kits (Low Priority)<a class="header-anchor" href="#9-mixed-component-kits-low-priority">#</a></h3>
+<p><strong>Issue:</strong></p>
+<ul>
+<li>Composer menus use Base UI</li>
+<li>Rest of app uses Radix/shadcn</li>
+<li>Tailwind v3 config (<code>tailwind.config.ts</code>) and v4 <code>@theme</code> both exist</li>
+<li>Effort color logic (<code>effort-color.ts</code>) uses independent HSL, not theme accent</li>
+<li>Browser glyphs (<code>center-tabs.module.css</code>) hardcode <code>#8b5cf6</code></li>
+</ul>
+<p><strong>Action:</strong> Converge on one component library (Radix) and one Tailwind version (v4).</p>
+<hr />
+<h2 id="stale-branch-note">Stale Branch Note<a class="header-anchor" href="#stale-branch-note">#</a></h2>
+<p><code>origin/codex/theme-style-mode</code> started mode × style separation under the old <code>web/</code> tree. This PR supersedes that branch; it can be archived.</p>
+<hr />
+<h2 id="prioritized-roadmap">Prioritized Roadmap<a class="header-anchor" href="#prioritized-roadmap">#</a></h2>
+<ol>
+<li><strong>Web token cleanup</strong> — fix <code>:root</code> fallback, ensure beige-dark is consistent default</li>
+<li><strong>Docs palette</strong> — align with Web beige or document independence</li>
+<li><strong>Desktop chrome</strong> — respect theme preference, eliminate cold flash</li>
+<li><strong>CLI/TUI colors</strong> — either integrate with Web theme or document separate brand</li>
+<li><strong>Ghost tokens</strong> — add to contract or remove from code/specs</li>
+<li><strong>Marketing/icon</strong> — decide alignment or independence</li>
+<li><strong>Button/naming debt</strong> — reconcile heights, radii, and token names</li>
+<li><strong>Component kit</strong> — converge on Radix + Tailwind v4</li>
+</ol>
+<hr />
+<h2 id="implementation-status">Implementation Status<a class="header-anchor" href="#implementation-status">#</a></h2>
+<ul>
+<li><strong>Settings mode × style</strong>: ✅ Complete (this PR)</li>
+<li><strong>Web token cleanup</strong>: ❌ Not started</li>
+<li><strong>Docs palette</strong>: ❌ Not started</li>
+<li><strong>Desktop chrome</strong>: ❌ Not started</li>
+<li><strong>CLI/TUI colors</strong>: ❌ Not started</li>
+<li><strong>Ghost tokens</strong>: ❌ Not started</li>
+<li><strong>Marketing/icon</strong>: ❌ Not started</li>
+<li><strong>Button/naming debt</strong>: ❌ Not started</li>
+<li><strong>Component kit</strong>: ❌ Not started</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-20</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/theme-system.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 主题系统</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-styles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web style organization</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#1-where-the-code-lives">1. Where the code lives</a>
-<a class="" href="#2-mechanisms-reused-rather-than-rebuilt">2. Mechanisms reused rather than rebuilt</a>
-<a class="" href="#3-event-taps">3. Event taps</a>
-<a class="" href="#4-gate-mounting-and-honest-coverage">4. Gate mounting and honest coverage</a>
-<a class="" href="#5-prepare-execution">5. Prepare execution</a>
-<a class="" href="#6-a-known-gap-deliberately-not-blocking">6. A known gap, deliberately not blocking</a>
-<a class="" href="#7-verification-approach">7. Verification approach</a>
-<a class="" href="#appendix-implementation-status">Appendix: Implementation Status</a>
+<a class="" href="#context">Context</a>
+<a class="" href="#completed-work-this-pr">Completed Work (This PR)</a>
+<a class="lvl-3" href="#settings-ux-fix">Settings UX Fix</a>
+<a class="" href="#later-work-prioritized-todo">Later Work (Prioritized TODO)</a>
+<a class="lvl-3" href="#1-web-token-cleanup-high-priority">1. Web Token Cleanup (High Priority)</a>
+<a class="lvl-3" href="#2-docs-site-palette-drift-high-priority">2. Docs Site Palette Drift (High Priority)</a>
+<a class="lvl-3" href="#3-clitui-theme-mismatch-medium-priority">3. CLI/TUI Theme Mismatch (Medium Priority)</a>
+<a class="lvl-3" href="#4-marketing-page-independent-brand-low-priority">4. Marketing Page Independent Brand (Low Priority)</a>
+<a class="lvl-3" href="#5-desktop-chrome-hardcoded-colors-medium-priority">5. Desktop Chrome Hardcoded Colors (Medium Priority)</a>
+<a class="lvl-3" href="#6-ghost-tokens-spec-drift-low-priority">6. Ghost Tokens / Spec Drift (Low Priority)</a>
+<a class="lvl-3" href="#7-button-spec-drift-low-priority">7. Button Spec Drift (Low Priority)</a>
+<a class="lvl-3" href="#8-naming-debt-low-priority">8. Naming Debt (Low Priority)</a>
+<a class="lvl-3" href="#9-mixed-component-kits-low-priority">9. Mixed Component Kits (Low Priority)</a>
+<a class="" href="#stale-branch-note">Stale Branch Note</a>
+<a class="" href="#prioritized-roadmap">Prioritized Roadmap</a>
+<a class="" href="#implementation-status">Implementation Status</a>
 </div></aside>
 </div>
 
