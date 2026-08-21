@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787338161" data-alt-lang-url="/docs/start/features.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787354285" data-alt-lang-url="/docs/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -104,20 +104,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <code>render_range={&quot;callers&quot;: N}</code> 限制函数自身能看到多少此前的历史
 （<code>0</code> 表示完全隔断）；<code>{&quot;subcalls&quot;: N}</code> 在长循环里约束它自己
 帧内历史的规模。</p>
-<h2 id="deep-work-自主质量循环">Deep Work — 自主质量循环<a class="header-anchor" href="#deep-work-自主质量循环">#</a></h2>
-<p>对于需要持续投入和高标准的复杂任务，<code>deep_work</code> 会运行一个
-自主的「规划—执行—评估」循环，直到结果达到指定的质量等级：</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.deep_work</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_work</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">deep_work</span><span class="p">(</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"Write a survey on context management in LLM agents."</span><span class="p">,</span>
-    <span class="n">level</span><span class="o">=</span><span class="s2">"phd"</span><span class="p">,</span>        <span class="c1"># high_school → bachelor → master → phd → professor</span>
-    <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span>
-<span class="p">)</span>
-</code></pre>
-<p>agent 会先在前期厘清需求，然后完全自主地工作 —— 执行、自我评估、
-反复修订，直到产出通过质量审查。状态会持久化到磁盘，
-因此被中断的工作可以从断点处继续。</p>
 <h2 id="编写函数的函数">编写函数的函数<a class="header-anchor" href="#编写函数的函数">#</a></h2>
 <p>编写、修复和搭建 <code>@agentic_function</code> 本身就是
 agent 的工作，用普通的文件编辑工具并按照
@@ -243,7 +229,6 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#自动上下文">自动上下文</a>
-<a class="" href="#deep-work-自主质量循环">Deep Work — 自主质量循环</a>
 <a class="" href="#编写函数的函数">编写函数的函数</a>
 <a class="" href="#对话即-git-dag">对话即 git DAG</a>
 <a class="" href="#自己写自己的记忆">自己写自己的记忆</a>

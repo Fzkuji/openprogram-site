@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787338161" data-alt-lang-url="/docs/reference/design/runtime/permission-model.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787354285" data-alt-lang-url="/docs/reference/design/runtime/permission-model.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -715,13 +715,15 @@ ToolName(content)        Command level, per-pattern. e.g. bash(git:*) / read_fil
                 <span class="k">return</span> <span class="n">behavior</span>
             <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">cmd</span> <span class="o">=</span> <span class="n">parse_command</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>    <span class="c1"># see below</span>
-            <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pattern_matches</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pattern_matches</span><span class="p">(</span>
+                <span class="n">rv</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="n">behavior</span> <span class="o">==</span> <span class="s2">"allow"</span><span class="p">),</span>
+            <span class="p">):</span>
                 <span class="k">return</span> <span class="n">behavior</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <ul>
 <li><strong>per-tool</strong> (<code>rv.pattern is None</code>): <code>rv.tool_name == tool_name</code> matches the whole tool. For example <code>deny: [&quot;bash&quot;]</code> blocks all bash.</li>
-<li><strong>per-pattern</strong> (<code>rv.pattern</code> non-empty): first derive the comparable command string <code>cmd = parse_command(...)</code>, then apply <code>pattern_matches</code> (<code>permission_rule.py:149-</code>): a trailing <code>:*</code> → prefix match (<code>git:*</code> matches <code>git status</code>, not <code>github</code>); containing a glob character (<code>*?[</code>) → <code>fnmatch</code> (<code>/etc/**</code> matches <code>/etc/passwd</code>); otherwise exact equality.</li>
+<li><strong>per-pattern</strong> (<code>rv.pattern</code> non-empty): first derive the comparable command string <code>cmd = parse_command(...)</code>, then apply <code>pattern_matches</code> (<code>permission_rule.py</code>): a trailing <code>:*</code> → prefix match (<code>git:*</code> matches <code>git status</code>, not <code>github</code>); containing a glob character (<code>*?[</code>) → <code>fnmatch</code> (<code>/etc/**</code> matches <code>/etc/passwd</code>); otherwise exact equality. Prefix matching strips leading assignments and <code>env</code> wrapping; allow matching refuses that strip when the dropped assignments include resolution-affecting variables (<code>PATH</code>, <code>LD_PRELOAD</code>, <code>DYLD_INSERT_LIBRARIES</code>, …). Deny matching still strips them so a hijacked command cannot evade a deny rule.</li>
 </ul>
 <p>Command parser and rule parsing (<code>openprogram/programs/permission_rule.py</code>):</p>
 <pre><code class="language-python"><span class="c1"># permission_rule.py:43, 77, 83-98</span>

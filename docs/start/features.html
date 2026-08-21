@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787338161" data-alt-lang-url="/docs/start/features.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787354285" data-alt-lang-url="/docs/start/features.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,22 +106,6 @@ LLM calls:</p>
 <code>render_range={&quot;callers&quot;: N}</code> caps how much pre-existing history
 the function itself sees (<code>0</code> walls it off completely);
 <code>{&quot;subcalls&quot;: N}</code> bounds its own in-frame history in long loops.</p>
-<h2 id="deep-work-autonomous-quality-loop">Deep Work — autonomous quality loop<a class="header-anchor" href="#deep-work-autonomous-quality-loop">#</a></h2>
-<p>For complex tasks that demand sustained effort and high
-standards, <code>deep_work</code> runs an autonomous plan-execute-evaluate
-loop until the result meets the specified quality level:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.deep_work</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_work</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">deep_work</span><span class="p">(</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"Write a survey on context management in LLM agents."</span><span class="p">,</span>
-    <span class="n">level</span><span class="o">=</span><span class="s2">"phd"</span><span class="p">,</span>        <span class="c1"># high_school → bachelor → master → phd → professor</span>
-    <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span>
-<span class="p">)</span>
-</code></pre>
-<p>The agent clarifies requirements upfront, then works fully
-autonomously — executing, self-evaluating, and revising until
-the output passes quality review. State is persisted to disk,
-so interrupted work resumes where it left off.</p>
 <h2 id="functions-that-author-functions">Functions that author functions<a class="header-anchor" href="#functions-that-author-functions">#</a></h2>
 <p>Writing, fixing and scaffolding <code>@agentic_function</code>s is itself
 agent work — done with ordinary file-editing tools following
@@ -264,7 +248,6 @@ set of features.</p>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#automatic-context">Automatic Context</a>
-<a class="" href="#deep-work-autonomous-quality-loop">Deep Work — autonomous quality loop</a>
 <a class="" href="#functions-that-author-functions">Functions that author functions</a>
 <a class="" href="#conversation-as-a-git-dag">Conversation as a git DAG</a>
 <a class="" href="#memory-that-writes-itself">Memory that writes itself</a>
