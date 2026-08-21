@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787310820" data-alt-lang-url="/docs/capabilities/docs-question.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787312768" data-alt-lang-url="/docs/capabilities/docs-question.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -132,7 +132,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram itself</span></nav><h1 id="asking-about-openprogram-itself">Asking about OpenProgram itself<a class="header-anchor" href="#asking-about-openprogram-itself">#</a></h1>
 <p>&quot;Can OpenProgram do X?&quot; and &quot;how do I configure Y?&quot; are questions this documentation site already answers, and a model answering them from memory of some other agent product is how a confident wrong answer reaches you. <code>run_docs_question</code> answers such a question by reading these pages: it spawns one agent that can only read, works only inside the repository's <code>docs/</code> tree, and reports which pages the answer came from.</p>
 <p>Run it as <code>run_docs_question</code> in the Programs panel, or from Python:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.functions.agentic.docs_question</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_docs_question</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.functions.agentic.workflow.docs_question</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_docs_question</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">run_docs_question</span><span class="p">(</span><span class="s2">"Can I keep a session working until a condition holds?"</span><span class="p">)</span>
 </code></pre>
