@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787302973">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -563,17 +563,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 </li>
 <li>
-<p><strong><code>openprogram/programs/functions/agentic/agentic_workflow/__init__.py</code></strong></p>
+<p><strong><code>openprogram/programs/functions/agentic/workflow/__init__.py</code></strong></p>
 <ul>
 <li><code>_build_namespace()</code> 注入控制流原语（和 llm/agent/goal 一起）</li>
 <li>包上 checkpoint 包装器</li>
-</ul>
-</li>
-<li>
-<p><strong><code>openprogram/programs/functions/agentic/agentic_workflow/planner.py</code></strong></p>
-<ul>
-<li>更新 system prompt，教 Planner 使用控制流原语</li>
-<li>添加工具函数的文档和示例</li>
+<li>在现有 Planner instructions 中说明控制流原语及其使用约束；不预设独立的 <code>planner.py</code></li>
 </ul>
 </li>
 <li>
