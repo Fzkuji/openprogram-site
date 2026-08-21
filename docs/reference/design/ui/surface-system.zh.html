@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787316611" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787327982" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>表面系统（深色模式） · OpenProgram Docs</title>
-<meta name="description" content="深色模式 UI 分为两个 表面上下文 。每个表面拥有各自的 交互语言，使眼睛能一眼分辨出当前悬停在应用的哪个 &quot;层&quot;：导航层还是内容层。 两个表面 # ───────────────────────────────────────────────────────────────── surface">
+<title>表面系统 · OpenProgram Docs</title>
+<meta name="description" content="UI 分为两个 表面上下文 。每个表面有各自的交互语言，眼睛能一眼分清当前停在哪一层：导航层还是内容层。这些规则同时约束 浅色和深色 主题。浅色主题最容易踩坑（浅灰侧栏上铺白底）。 两个表面 #">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/surface-system.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/ui/surface-system.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/ui/surface-system.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/ui/surface-system.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"表面系统（深色模式）"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"表面系统"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/surface-system.zh.html">
-<meta property="og:title" content="表面系统（深色模式） · OpenProgram Docs">
-<meta property="og:description" content="深色模式 UI 分为两个 表面上下文 。每个表面拥有各自的 交互语言，使眼睛能一眼分辨出当前悬停在应用的哪个 &quot;层&quot;：导航层还是内容层。 两个表面 # ───────────────────────────────────────────────────────────────── surface">
+<meta property="og:title" content="表面系统 · OpenProgram Docs">
+<meta property="og:description" content="UI 分为两个 表面上下文 。每个表面有各自的交互语言，眼睛能一眼分清当前停在哪一层：导航层还是内容层。这些规则同时约束 浅色和深色 主题。浅色主题最容易踩坑（浅灰侧栏上铺白底）。 两个表面 #">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="表面系统（深色模式） · OpenProgram Docs">
-<meta name="twitter:description" content="深色模式 UI 分为两个 表面上下文 。每个表面拥有各自的 交互语言，使眼睛能一眼分辨出当前悬停在应用的哪个 &quot;层&quot;：导航层还是内容层。 两个表面 # ───────────────────────────────────────────────────────────────── surface">
+<meta name="twitter:title" content="表面系统 · OpenProgram Docs">
+<meta name="twitter:description" content="UI 分为两个 表面上下文 。每个表面有各自的交互语言，眼睛能一眼分清当前停在哪一层：导航层还是内容层。这些规则同时约束 浅色和深色 主题。浅色主题最容易踩坑（浅灰侧栏上铺白底）。 两个表面 #">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -74,7 +74,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html">OpenProgram · macOS App 图标规范</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="UI 跨模块不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">Cross-module UI invariants</a>
-<a class="navlink active" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
+<a class="navlink active" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
 <a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
@@ -381,67 +381,93 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="表面系统（深色模式）">Surface system (dark mode)</span></nav><h1 id="表面系统深色模式">表面系统（深色模式）<a class="header-anchor" href="#表面系统深色模式">#</a></h1>
-<p>深色模式 UI 分为两个<strong>表面上下文</strong>。每个表面拥有各自的
-交互语言，使眼睛能一眼分辨出当前悬停在应用的哪个
-&quot;层&quot;：导航层还是内容层。</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="表面系统">Surface system</span></nav><h1 id="表面系统">表面系统<a class="header-anchor" href="#表面系统">#</a></h1>
+<p>UI 分为两个<strong>表面上下文</strong>。每个表面有各自的交互语言，眼睛能一眼分清当前停在哪一层：导航层还是内容层。这些规则同时约束<strong>浅色和深色</strong>主题。浅色主题最容易踩坑（浅灰侧栏上铺白底）。</p>
 <h2 id="两个表面">两个表面<a class="header-anchor" href="#两个表面">#</a></h2>
 <pre><code>─────────────────────────────────────────────────────────────────
 surface        background tone           where it lives
 ─────────────────────────────────────────────────────────────────
-deep           near-black ``--bg`` /     left sidebar, right
-               ``--bg-secondary``        sidebar (branches /
-                                         worktrees / mini-DAG)
+deep           `--bg` /                  左侧栏、右侧栏
+               `--bg-secondary`          （branches / worktrees /
+                                         mini-DAG）
 ─────────────────────────────────────────────────────────────────
-panel          slightly lifted greyish   chat stream, settings
-               ``--bg-surface`` /        panes, dialog content,
-               ``--bg-tertiary``         function-card grid,
-                                         attach card, runtime
-                                         blocks
+panel          略抬升的                  聊天流、设置页、对话框、
+               `--bg-surface` /          function-card 网格、
+               `--bg-tertiary`           attach 卡片、runtime 块
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p><strong>deep</strong> 与 <strong>panel</strong> 之间的抬升是有意为之的——它替代了
-聊天内容列上显式的边框 / 阴影，使气泡区域看起来像一张
-漂浮在导航之上的独立纸面。</p>
+<p><strong>deep</strong> 与 <strong>panel</strong> 之间的抬升是有意的——它替代聊天内容列上显式的边框 / 阴影，让气泡区读起来像一张浮在导航之上的纸。</p>
 <h2 id="各表面的交互语言">各表面的交互语言<a class="header-anchor" href="#各表面的交互语言">#</a></h2>
-<p>鼠标操作任何按钮时都不绘制外部焦点圈。键盘聚焦普通按钮时只轻微提高亮度，
-不使用 outline 或 box-shadow。顶部 <code>role=&quot;tab&quot;</code> 是唯一例外：它使用当前主题的
-<code>--focus-ring</code>，深色主题更亮，浅色主题更深。</p>
+<p>鼠标点按钮不画外圈焦点环。键盘聚焦普通按钮只轻微提高亮度，不用 outline 或 box-shadow。顶部 <code>role=&quot;tab&quot;</code> 是唯一例外：用当前主题的 <code>--focus-ring</code>，深色更亮，浅色更深。</p>
 <h3 id="deep-表面侧边栏">Deep 表面（侧边栏）<a class="header-anchor" href="#deep-表面侧边栏">#</a></h3>
-<p>deep 表面上的组件是<strong>列表行</strong>——会话项、分支条目、
-函数收藏。它们不应当表现得像按钮：</p>
+<p>deep 表面上的组件是<strong>列表行</strong>——会话项、分支、收藏，以及内容区里同一套行（MCP 的 <code>drawio</code> / <code>linear</code> / <code>+ Add server</code>）。它们不应当表现得像按钮：</p>
 <ul>
-<li>闲置状态下无边框、无描边、无填充</li>
-<li>悬停 / 选中 → 背景切换为<strong>略浅的灰色</strong>
-（<code>--bg-hover</code> / <code>--bg-selected</code>），文本保持
-<code>--text-primary</code> 或 <code>--text-secondary</code></li>
-<li>避免使用品牌色字形处理，唯一例外是极小的状态 /
-活动指示器（<code>.indicator-dot</code>）</li>
+<li>闲置：无边框、无描边、无填充</li>
+<li>悬停 / 选中：背景换成<strong>看得出的灰色</strong>（<code>--bg-hover</code> / <code>--bg-selected</code>），文字仍是 <code>--text-primary</code> 或 <code>--text-secondary</code></li>
+<li>选中行<strong>禁止</strong>用 <code>--bg-input</code> 填充。浅色主题里这个 token 是白的，铺在浅灰侧栏上会发白、发淡</li>
+<li>不用品牌色字形，唯一例外是极小的状态点（<code>.indicator-dot</code>）</li>
 </ul>
-<p>理由：侧边栏密集且被频繁扫视。一片品牌色胶囊会显得
-喧闹，并在视觉上与内容列竞争。悬停变灰让这一层保持
-克制，同时仍为点击目标提供足够的反馈。</p>
+<p>理由：侧栏密、扫得勤。一片品牌色胶囊会吵，还会跟内容列抢视线。悬停变灰让这一层安静，点击目标仍有反馈。</p>
 <h3 id="panel-表面聊天内容-对话框">Panel 表面（聊天内容 + 对话框）<a class="header-anchor" href="#panel-表面聊天内容-对话框">#</a></h3>
 <p>panel 表面上的组件就是按钮 / 胶囊 / 卡片：</p>
 <ul>
-<li>它们位于抬升的背景之上，因此&quot;幽灵描边&quot;模式
-能干净地呈现</li>
-<li>闲置状态——<code>--bg-surface</code> 背景，<code>--text-primary</code>
-文本，主操作则用品牌色文本</li>
-<li>悬停——以品牌色填充，文本切换为其对比配对色
-（<code>--text-on-accent</code>）</li>
-<li>这种反转式悬停让一连串&quot;操作&quot;感觉像同一个设计
-家族——用户知道这种颜色变化在各处都统一表示
-&quot;这会执行某个动作&quot;的可供性</li>
+<li>坐在抬升背景上，&quot;幽灵描边&quot;能干净地呈现</li>
+<li>闲置：<code>--bg-surface</code> 底，<code>--text-primary</code> 字，主操作用品牌色字</li>
+<li>悬停：品牌色填充，字切到对比色（<code>--text-on-accent</code>）</li>
+<li>这种反转式悬停让一串操作读起来是同一家人</li>
+</ul>
+<p>管理页顶部的 <strong>tab 胶囊</strong>（Abilities / Programs / Plugins / Skills）是唯一的亮底例外：选中态用 <code>--bg-input</code>，跟搜索框一样偏亮，而不是更深。这个填充<strong>只给这些胶囊</strong>。不要抄到侧栏行或 MCP 服务器行上。</p>
+<h2 id="列表行只有一套尺寸">列表行只有一套尺寸<a class="header-anchor" href="#列表行只有一套尺寸">#</a></h2>
+<p>侧栏导航（<code>+ New chat</code>、Agents、Abilities、History、Scheduler）和内容区列表行（MCP 的 <code>drawio</code> / <code>linear</code> / <code>+ Add server</code>）共用<strong>同一只盒子</strong>。不要给右边那列另起一套高度、内边距、圆角或选中底。</p>
+<pre><code>属性         token / 值
+─────────────────────────────────────────────────────────────────
+高度         `--ui-list-h` → `--ui-button-h` → 30px
+内边距       6px 8px
+间距         12px
+圆角         `--ui-list-radius`（10px）
+闲置         透明；需要时用 1px 透明边只为对齐盒模型
+悬停         `--bg-hover`
+选中         `--bg-hover`（同一灰，绝不用白 / `--bg-input`）
+</code></pre>
+<p><code>+ Add server</code> 跟 <code>+ New chat</code> 是同一种行：普通列表行，字略淡。不要斜体，不要另做一种&quot;添加&quot;样式。</p>
+<p>实现：<code>apps/web/app/styles/base.css</code> 的 <code>.ui-list-item</code> 是唯一来源。MCP 的 <code>.serverItem</code> 必须对齐这些数（优先 compose <code>.ui-list-item</code>，不要平行再写一套）。</p>
+<h2 id="尺寸系统两套高度相同">尺寸系统——两套，高度相同<a class="header-anchor" href="#尺寸系统两套高度相同">#</a></h2>
+<p>每个交互原语在两套尺寸里选一套。套内没有 sm / md / lg——选定 list 或 button 之后，高度和圆角就锁死。CSS 变量在 <code>apps/web/app/styles/base.css</code>：</p>
+<pre><code>set         height               radius             css tokens
+─────────────────────────────────────────────────────────────────
+list        30 px                10 px              --ui-list-h
+                                                    --ui-list-radius
+─────────────────────────────────────────────────────────────────
+button      30 px（与 list 相同） 10 px              --ui-button-h
+                                                    --ui-button-radius
+─────────────────────────────────────────────────────────────────
+</code></pre>
+<p>以前 list 32px、button 30px。这套高低差已废止：侧栏行、MCP tab 胶囊、MCP 服务器行都走 30px。<code>--ui-list-h: var(--ui-button-h)</code>。</p>
+<p>两套共用 10px 圆角。Claude 形状语言把列表行和小按钮放在 10px，12px（<code>--radius-lg</code>）留给卡片和面板。</p>
+<p>为什么套内无变体：允许 sm / md / lg 之后，每位作者都会跟设计讨价还价，尺寸跟着分叉。两套固定尺寸才能强制执行。</p>
+<p><code>Button</code> 向后兼容：<code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> 仍指向 <code>default</code> 的同一高度。token 名称才是真相。</p>
+<p>页头那一行（搜索 + tab 胶囊 + 图标按钮）必须同一垂直中线。控件之间差 1–2px 高度是 bug，不是变体。</p>
+<h2 id="输入框下拉边框">输入框、下拉、边框<a class="header-anchor" href="#输入框下拉边框">#</a></h2>
+<p>输入框和下拉共用<strong>一层 1px</strong> 边（<code>border: 1px solid var(--border)</code>，底 <code>--bg-input</code>）。</p>
+<ul>
+<li>不要在这 1px 边上再叠 2px 的 <code>:focus-visible</code> 光晕。原生 <code>&lt;select&gt;</code> 收起后焦点还在，叠出来就是双层框。</li>
+<li>悬停必须<strong>保住</strong>这 1px 边。<code>border-color: transparent</code> 会让框像消失了一样（MCP catalog 按钮踩过）。</li>
+<li>不要每个页面另做一套输入框。设置、对话框、插件、MCP 编辑器都用同一套 1px + <code>--bg-input</code>。</li>
+</ul>
+<h2 id="对话框">对话框<a class="header-anchor" href="#对话框">#</a></h2>
+<p>对话框只做<strong>淡入淡出</strong>（大约 300ms）。不要从上往下滑动，不要突然消失。动的是透明度，不是位移。</p>
+<h2 id="设置行">设置行<a class="header-anchor" href="#设置行">#</a></h2>
+<p>设置页（General、Memory、System 以及其余）统一两列：</p>
+<ul>
+<li><strong>左</strong>：名称左对齐。说明文字留在这一列，不要伸进右边控件</li>
+<li><strong>右</strong>：控件 / 取值右对齐</li>
+<li>左右隔开。不要把标签堆在输入框上面</li>
+<li>状态标签（<code>LIVE</code>、<code>NEXT START</code> 等）放在对应控件的<strong>左边</strong>，不要一行左一行右</li>
 </ul>
 <h2 id="按钮变体指南">按钮变体指南<a class="header-anchor" href="#按钮变体指南">#</a></h2>
-<p><code>apps/web/components/ui/button.tsx</code> 已经暴露了两种主要
-模式：</p>
-<p><strong>无边框。</strong> 每个 Button 变体在闲置和悬停状态下都没有
-边框。deep / panel 之间的表面抬升已经分隔了各层；在此
-之上再加显式的 <code>border-input</code> 会给密集行增添视觉噪声，
-并且与本应用在其他各处（function-card 网格、attach 卡片、
-fn-form 胶囊）使用的轻抬升幽灵胶囊约定相比显得过时。</p>
+<p><code>apps/web/components/ui/button.tsx</code> 已经暴露主要模式：</p>
+<p><strong>Button 派生动作无边框。</strong> 每个 Button 变体在闲置和悬停时都没有边框。deep / panel 的表面抬升已经分层；再加 <code>border-input</code> 只会给密行添噪声。</p>
+<p>表单控件不是 Button。它们保留上面的 1px 边。</p>
 <pre><code>variant     idle                              hover
 ─────────────────────────────────────────────────────────────────
 default     bg-background + text-primary      bg-primary +
@@ -461,58 +487,25 @@ destructive bg-background + text-destructive  bg-destructive +
 </code></pre>
 <p>按表面选择：</p>
 <ul>
-<li><strong>Panel + 主操作</strong>（Run、Save、Test、Apply、Check）→
-<code>variant=&quot;default&quot;</code>。默认为品牌色文本，悬停时品牌色
-填充。大多数聊天 / 设置 / 函数对话框操作都应使用它。</li>
-<li><strong>Panel + 次要操作</strong>（Cancel、Close、Reset、Browse）→
-<code>variant=&quot;outline&quot;</code>（淡灰悬停）或 <code>ghost</code>。</li>
-<li><strong>Deep 表面——侧边栏行</strong> → 不要使用 Button 原语。
-使用由 <code>sidebar.module.css</code> 设样式的普通锚点 / div，
-因为行本身就是交互。</li>
-<li><strong>破坏性操作</strong>（Delete、Remove、Force）→
-<code>variant=&quot;destructive&quot;</code>。默认红色文本，悬停时红色填充。</li>
+<li><strong>Panel + 主操作</strong>（Run、Save、Test、Apply、Check）→ <code>variant=&quot;default&quot;</code></li>
+<li><strong>Panel + 次要操作</strong>（Cancel、Close、Reset、Browse）→ <code>variant=&quot;outline&quot;</code> 或 <code>ghost</code>。页头次要按钮要跟搜索框并排读得出来时，给它和搜索框一样的 1px <code>--border</code>，不要无边框、看起来像裸文字</li>
+<li><strong>Deep 表面——侧栏行</strong> → 不用 Button，用 <code>.ui-list-item</code> / <code>nav-classes.ts</code></li>
+<li><strong>破坏性操作</strong> → <code>variant=&quot;destructive&quot;</code></li>
 </ul>
-<p>要警惕的失效模式是：本该用 <code>default</code> 的地方用了 <code>outline</code>。
-<code>outline</code> 是 shadcn 开箱即用的样子，作者会下意识地选它，
-于是主操作拿到的是低调的悬停强调，而非品牌色填充。纠正它
-只能逐个调用点做，因为一个操作属于主还是次要，只有人能判断。</p>
-<h2 id="尺寸系统两套套内无变体">尺寸系统——两套，套内无变体<a class="header-anchor" href="#尺寸系统两套套内无变体">#</a></h2>
-<p>每个交互原语在两套尺寸中选其一。套内没有
-sm / md / lg 的阶梯——一旦你选定 list 还是 button，
-高度和圆角就被锁定。CSS 变量位于
-<code>apps/web/app/styles/base.css</code>：</p>
-<pre><code>set         height               radius             css tokens
-─────────────────────────────────────────────────────────────────
-list        32 px                10 px              --ui-list-h
-                                                    --ui-list-radius
-─────────────────────────────────────────────────────────────────
-button      30 px (slightly      10 px              --ui-button-h
-            shorter than list)                      --ui-button-radius
-─────────────────────────────────────────────────────────────────
-</code></pre>
-<p>为什么 button 比 list 矮：panel 表面上的胶囊在视觉上
-不应当压过它旁边的侧边栏行。两套共用同一个 10px 圆角
-—— Claude 的形状语言把列表行和小按钮都放在 10px，把
-12px（<code>--radius-lg</code>）留给卡片和面板。</p>
-<p>为什么套内无变体：当设计允许一个槽位从 sm / md / lg
-中挑选时，每位作者都会与设计讨价还价而不是遵循它，尺寸
-随之分叉。两套固定尺寸是可强制执行的。</p>
-<p><code>Button</code> 的向后兼容：<code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> 作为
-别名为现有调用点保留，但它们解析到与 <code>default</code> 相同的
-高度。token 名称才是唯一可信来源。</p>
+<p>要警惕的失效：该用 <code>default</code> 的地方用了 <code>outline</code>。</p>
 <h2 id="禁止事项">禁止事项<a class="header-anchor" href="#禁止事项">#</a></h2>
 <ul>
-<li>不要在未先于此处列出的情况下引入新的胶囊背景色。
-三种风味（deep、panel、品牌填充）就是预算上限。</li>
-<li>不要在 deep 表面使用品牌色填充——它与近黑背景的
-对比会让品牌色胶囊看起来像一条警报，而非点击目标。</li>
-<li>不要在任一表面添加悬停时位移（translate-y、scale-105）
-效果。我们仅依赖背景切换；密集行内的运动会被读作
-抖动，而非反馈。</li>
-<li>不要给 Button 派生组件添加 <code>border</code> / <code>ring</code> /
-<code>outline</code>。表面抬升已经把它们与背景分隔开；在抬升
-之上再加边框会被读作一个堆叠的警报对话框或聚焦光晕，
-而非一个安静的点击目标。</li>
+<li>不要每个页面另起一套悬停 / 选中 / 边框。一套配方，反复用。新样子先写进这份文件。</li>
+<li>不要在未先于此处列出的情况下引入新的胶囊底色。预算内：deep 灰悬停、panel、品牌填充，以及上面的页头 tab <code>--bg-input</code> 例外。</li>
+<li>不要在 deep 表面用品牌色填充。</li>
+<li>不要用白色 / <code>--bg-input</code> 做侧栏或内容区<strong>列表行</strong>的选中底。浅色主题会发白。</li>
+<li>不要给 MCP 服务器行（或任何内容区列表）另一套高度、内边距或选中底。</li>
+<li>不要加悬停位移（translate-y、scale-105）。只换背景。</li>
+<li>不要给 Button 派生组件加 <code>border</code> / <code>ring</code> / <code>outline</code>。</li>
+<li>不要在 1px 输入/下拉边上再叠 2px 聚焦光晕。</li>
+<li>不要在悬停时丢掉控件的 1px 边。</li>
+<li>不要让对话框滑动。只淡入淡出。</li>
+<li>不要让设置说明伸进右侧控件列，也不要把标签堆在控件上面。</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Cross-module UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web state layer: per-session stores</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
@@ -521,8 +514,12 @@ button      30 px (slightly      10 px              --ui-button-h
 <a class="" href="#各表面的交互语言">各表面的交互语言</a>
 <a class="lvl-3" href="#deep-表面侧边栏">Deep 表面（侧边栏）</a>
 <a class="lvl-3" href="#panel-表面聊天内容-对话框">Panel 表面（聊天内容 + 对话框）</a>
+<a class="" href="#列表行只有一套尺寸">列表行只有一套尺寸</a>
+<a class="" href="#尺寸系统两套高度相同">尺寸系统——两套，高度相同</a>
+<a class="" href="#输入框下拉边框">输入框、下拉、边框</a>
+<a class="" href="#对话框">对话框</a>
+<a class="" href="#设置行">设置行</a>
 <a class="" href="#按钮变体指南">按钮变体指南</a>
-<a class="" href="#尺寸系统两套套内无变体">尺寸系统——两套，套内无变体</a>
 <a class="" href="#禁止事项">禁止事项</a>
 </div></aside>
 </div>

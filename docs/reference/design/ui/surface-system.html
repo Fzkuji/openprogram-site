@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787316611" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787327982" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Surface system (dark mode) · OpenProgram Docs</title>
-<meta name="description" content="The dark-mode UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it">
+<title>Surface system · OpenProgram Docs</title>
+<meta name="description" content="The UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it is">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/surface-system.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/ui/surface-system.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/ui/surface-system.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/ui/surface-system.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Surface system (dark mode)"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Surface system"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/surface-system.html">
-<meta property="og:title" content="Surface system (dark mode) · OpenProgram Docs">
-<meta property="og:description" content="The dark-mode UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it">
+<meta property="og:title" content="Surface system · OpenProgram Docs">
+<meta property="og:description" content="The UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it is">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Surface system (dark mode) · OpenProgram Docs">
-<meta name="twitter:description" content="The dark-mode UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it">
+<meta name="twitter:title" content="Surface system · OpenProgram Docs">
+<meta name="twitter:description" content="The UI splits into two surface contexts . Each surface has its own interaction language so the eye can tell at a glance which &quot;layer&quot; of the app it is">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -74,7 +74,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="Web UI" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html">OpenProgram · macOS App 图标规范</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="UI 跨模块不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">Cross-module UI invariants</a>
-<a class="navlink active" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统（深色模式）" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system (dark mode)</a>
+<a class="navlink active" href="/docs/reference/design/ui/surface-system.html" data-title-zh="表面系统" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">Surface system</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="Web 状态层：每会话独立 store" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">Web state layer: per-session stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
 <a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
@@ -381,22 +381,23 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="表面系统（深色模式）">Surface system (dark mode)</span></nav><h1 id="surface-system-dark-mode">Surface system (dark mode)<a class="header-anchor" href="#surface-system-dark-mode">#</a></h1>
-<p>The dark-mode UI splits into two <strong>surface contexts</strong>. Each
-surface has its own interaction language so the eye can tell at a
-glance which &quot;layer&quot; of the app it is hovering: navigation vs
-content.</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 基础">UI · Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="表面系统">Surface system</span></nav><h1 id="surface-system">Surface system<a class="header-anchor" href="#surface-system">#</a></h1>
+<p>The UI splits into two <strong>surface contexts</strong>. Each surface has its
+own interaction language so the eye can tell at a glance which
+&quot;layer&quot; of the app it is hovering: navigation vs content. These
+rules apply in <strong>light and dark</strong> themes. Light-theme tokens are
+the ones that usually go wrong (white fill on a pale rail).</p>
 <h2 id="the-two-surfaces">The two surfaces<a class="header-anchor" href="#the-two-surfaces">#</a></h2>
 <pre><code>─────────────────────────────────────────────────────────────────
 surface        background tone           where it lives
 ─────────────────────────────────────────────────────────────────
-deep           near-black ``--bg`` /     left sidebar, right
-               ``--bg-secondary``        sidebar (branches /
+deep           `--bg` /                  left sidebar, right
+               `--bg-secondary`          sidebar (branches /
                                          worktrees / mini-DAG)
 ─────────────────────────────────────────────────────────────────
-panel          slightly lifted greyish   chat stream, settings
-               ``--bg-surface`` /        panes, dialog content,
-               ``--bg-tertiary``         function-card grid,
+panel          slightly lifted           chat stream, settings
+               `--bg-surface` /          panes, dialog content,
+               `--bg-tertiary`           function-card grid,
                                          attach card, runtime
                                          blocks
 ─────────────────────────────────────────────────────────────────
@@ -412,13 +413,17 @@ The top tab strip is the exception: its <code>role=&quot;tab&quot;</code> target
 own <code>--focus-ring</code>, which is lighter in dark themes and darker in light themes.</p>
 <h3 id="deep-surface-sidebars">Deep surface (sidebars)<a class="header-anchor" href="#deep-surface-sidebars">#</a></h3>
 <p>Components on the deep surface are <strong>list rows</strong> — conversation
-items, branch entries, function favourites. They should NOT
-behave like buttons:</p>
+items, branch entries, function favourites, and the same row used
+in a content-pane rail (MCP <code>drawio</code> / <code>linear</code> / <code>+ Add server</code>).
+They should NOT behave like buttons:</p>
 <ul>
 <li>no border, no outline, no fill in the idle state</li>
-<li>hover / selected → switch background to a <strong>slightly lighter
-grey</strong> (<code>--bg-hover</code> / <code>--bg-selected</code>), text stays in
+<li>hover / selected → switch background to a <strong>visible grey</strong>
+(<code>--bg-hover</code> / <code>--bg-selected</code>), text stays in
 <code>--text-primary</code> or <code>--text-secondary</code></li>
+<li>never fill selected rows with <code>--bg-input</code>. In light theme
+that token is white; on a light-grey rail the selected row
+washes out and looks faded</li>
 <li>avoid the brand-coloured glyph treatment except for the very
 small status / activity indicators (<code>.indicator-dot</code>)</li>
 </ul>
@@ -440,15 +445,99 @@ like one design family — the user knows that the colour
 shift is universally the &quot;this is going to do something&quot;
 affordance</li>
 </ul>
+<p>Header <strong>tab pills</strong> on a manage page (Abilities / Programs /
+Plugins / Skills) are the one bright exception: the selected tab
+uses <code>--bg-input</code> so it reads like the search box (lighter, not
+darker). That fill is <strong>only</strong> for those pills. Do not copy it
+onto sidebar rows or MCP server rows.</p>
+<h2 id="one-list-row-recipe">One list-row recipe<a class="header-anchor" href="#one-list-row-recipe">#</a></h2>
+<p>Sidebar nav (<code>+ New chat</code>, Agents, Abilities, History, Scheduler)
+and content-pane list rows (MCP <code>drawio</code> / <code>linear</code> / <code>+ Add server</code>)
+share <strong>one</strong> box. Do not invent a second height, padding, radius,
+or selected fill for the rail on the right.</p>
+<pre><code>property     token / value
+─────────────────────────────────────────────────────────────────
+height       `--ui-list-h` → `--ui-button-h` → 30px
+padding      6px 8px
+gap          12px
+radius       `--ui-list-radius` (10px)
+idle         transparent, 1px transparent border if needed for
+             box-sizing only
+hover        `--bg-hover`
+selected     `--bg-hover`  (same grey, never white / `--bg-input`)
+</code></pre>
+<p><code>+ Add server</code> is the same row as <code>+ New chat</code>: a normal list
+row, slightly muted text. Not italic, not a different add-style.</p>
+<p>Implementation: <code>.ui-list-item</code> in <code>apps/web/app/styles/base.css</code>
+is the source. MCP <code>.serverItem</code> must match those metrics (prefer
+composing <code>.ui-list-item</code> over a parallel recipe).</p>
+<h2 id="size-system-two-sets-same-height">Size system — two sets, same height<a class="header-anchor" href="#size-system-two-sets-same-height">#</a></h2>
+<p>Every interactive primitive picks ONE of two size sets. There is
+no sm / md / lg ladder inside a set — once you choose list vs
+button, height and radius are locked. CSS variables in
+<code>apps/web/app/styles/base.css</code>:</p>
+<pre><code>set         height               radius             css tokens
+─────────────────────────────────────────────────────────────────
+list        30 px                10 px              --ui-list-h
+                                                    --ui-list-radius
+─────────────────────────────────────────────────────────────────
+button      30 px (same as       10 px              --ui-button-h
+            list)                                   --ui-button-radius
+─────────────────────────────────────────────────────────────────
+</code></pre>
+<p>List used to be 32px and button 30px. That split is retired:
+sidebar rows, MCP tab pills, and MCP server rows must sit on the
+same 30px rhythm. <code>--ui-list-h: var(--ui-button-h)</code>.</p>
+<p>Both sets share the same 10 px radius — the Claude shape language
+puts list rows and small buttons at 10 px and reserves 12 px
+(<code>--radius-lg</code>) for cards and panels.</p>
+<p>Why no in-set variants: when the design lets one slot pick from
+sm / md / lg, every author negotiates with the design instead of
+following it, and the sizes drift apart. Two fixed sets is
+enforceable.</p>
+<p>Backward-compat for <code>Button</code>: <code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> are
+kept as aliases for existing call sites, but they resolve to the
+same height as <code>default</code>. The token names are the source of
+truth.</p>
+<p>A header row (search + tab pills + icon buttons) must share one
+vertical center. A 1–2 px height mismatch between those controls
+is a bug, not a variant.</p>
+<h2 id="inputs-selects-and-borders">Inputs, selects, and borders<a class="header-anchor" href="#inputs-selects-and-borders">#</a></h2>
+<p>Inputs and dropdowns share <strong>one single-layer 1px</strong> edge
+(<code>border: 1px solid var(--border)</code>, fill <code>--bg-input</code>).</p>
+<ul>
+<li>Do not stack a 2px <code>:focus-visible</code> halo on that 1px edge.
+After a native <code>&lt;select&gt;</code> closes and focus remains, the stacked
+ring reads as a double frame.</li>
+<li>Hover must <strong>keep</strong> the 1px border. Setting <code>border-color: transparent</code> on hover makes the box look like it vanished
+(MCP catalog buttons had this).</li>
+<li>Do not invent a second input chrome per page. Settings,
+dialogs, plugins, and MCP editors use the same 1px +
+<code>--bg-input</code> treatment.</li>
+</ul>
+<h2 id="dialogs">Dialogs<a class="header-anchor" href="#dialogs">#</a></h2>
+<p>Dialogs <strong>fade</strong> in and out only (about 300ms). No slide from
+the top, no snap-close. Motion is opacity, not translate.</p>
+<h2 id="settings-rows">Settings rows<a class="header-anchor" href="#settings-rows">#</a></h2>
+<p>Settings pages (General, Memory, System, and the rest) use one
+two-column row:</p>
+<ul>
+<li><strong>left</strong>: name, left-aligned. Description stays in this column
+and does not run into the control</li>
+<li><strong>right</strong>: the control / value, right-aligned</li>
+<li>left and right are isolated columns. Do not stack the label
+above the input</li>
+<li>status chips (<code>LIVE</code>, <code>NEXT START</code>, …) sit to the <strong>left</strong> of
+their control, never mixed left/right across rows</li>
+</ul>
 <h2 id="button-variant-guidance">Button variant guidance<a class="header-anchor" href="#button-variant-guidance">#</a></h2>
 <p><code>apps/web/components/ui/button.tsx</code> already exposes the two main
 patterns:</p>
-<p><strong>No borders.</strong> Every Button variant is border-less in both idle
-and hover state. The surface lift between deep / panel already
-separates layers; an explicit <code>border-input</code> on top of that
-adds visual noise to dense rows and looks dated against the
-slightly-lifted ghost-pill convention this app uses everywhere
-else (function-card grid, attach card, fn-form pills).</p>
+<p><strong>No borders on Button-derived actions.</strong> Every Button variant is
+border-less in both idle and hover state. The surface lift
+between deep / panel already separates layers; an explicit
+<code>border-input</code> on top of that adds visual noise to dense rows.</p>
+<p>Form fields are not Buttons. They keep the 1px edge above.</p>
 <pre><code>variant     idle                              hover
 ─────────────────────────────────────────────────────────────────
 default     bg-background + text-primary      bg-primary +
@@ -473,61 +562,46 @@ destructive bg-background + text-destructive  bg-destructive +
 filled on hover. This is what most chat / settings / function
 dialog actions should use.</li>
 <li><strong>Panel + secondary action</strong> (Cancel, Close, Reset, Browse) →
-<code>variant=&quot;outline&quot;</code> (subtle grey hover) or <code>ghost</code>.</li>
+<code>variant=&quot;outline&quot;</code> (subtle grey hover) or <code>ghost</code>. When a
+header secondary action needs to read as a real control next
+to the search box, give it the same 1px <code>--border</code> as the
+search field (not a borderless outline that looks like naked
+text).</li>
 <li><strong>Deep surface — sidebar rows</strong> → don't use the Button
-primitive. Use plain anchors / divs styled by
-<code>sidebar.module.css</code>, since the row IS the interaction.</li>
+primitive. Use <code>.ui-list-item</code> / <code>nav-classes.ts</code>.</li>
 <li><strong>Destructive</strong> (Delete, Remove, Force) →
 <code>variant=&quot;destructive&quot;</code>. Red-text default, red fill on hover.</li>
 </ul>
 <p>The failure mode to watch for is <code>outline</code> used where <code>default</code>
 belongs. <code>outline</code> is what shadcn looks like out of the box, so
 authors reach for it by reflex, and primary actions end up with
-the muted hover-accent treatment instead of the brand fill.
-Correcting it is per-call-site work, because only a human can say
-whether a given action is primary or secondary.</p>
-<h2 id="size-system-two-sets-no-in-set-variants">Size system — two sets, no in-set variants<a class="header-anchor" href="#size-system-two-sets-no-in-set-variants">#</a></h2>
-<p>Every interactive primitive picks ONE of two size sets. There is
-no sm / md / lg ladder inside a set — once you choose list vs
-button, height and radius are locked. CSS variables in
-<code>apps/web/app/styles/base.css</code>:</p>
-<pre><code>set         height               radius             css tokens
-─────────────────────────────────────────────────────────────────
-list        32 px                10 px              --ui-list-h
-                                                    --ui-list-radius
-─────────────────────────────────────────────────────────────────
-button      30 px (slightly      10 px              --ui-button-h
-            shorter than list)                      --ui-button-radius
-─────────────────────────────────────────────────────────────────
-</code></pre>
-<p>Why button shorter than list: a pill on the panel surface should
-not visually outweigh the sidebar rows it sits next to. Both sets
-share the same 10 px radius — the Claude shape language puts list
-rows and small buttons at 10 px and reserves 12 px
-(<code>--radius-lg</code>) for cards and panels.</p>
-<p>Why no in-set variants: when the design lets one slot pick from
-sm / md / lg, every author negotiates with the design instead of
-following it, and the sizes drift apart. Two fixed sets is
-enforceable.</p>
-<p>Backward-compat for <code>Button</code>: <code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> are
-kept as aliases for existing call sites, but they resolve to the
-same height as <code>default</code>. The token names are the source of
-truth.</p>
+the muted hover-accent treatment instead of the brand fill.</p>
 <h2 id="donts">Don'ts<a class="header-anchor" href="#donts">#</a></h2>
 <ul>
+<li>Don't invent a new hover / selected / border treatment per
+page. One recipe, then reuse it. A new look needs a line in
+this file first.</li>
 <li>Don't introduce a new pill background colour without listing it
-here first. Three flavours (deep, panel, brand-fill) is the
-budget.</li>
+here first. Flavours in budget: deep grey hover, panel, brand
+fill, and the header-tab <code>--bg-input</code> exception above.</li>
 <li>Don't put brand-coloured fills on the deep surface — the
-contrast against near-black makes a brand pill look like an
+contrast against the rail makes a brand pill look like an
 alert, not a click target.</li>
+<li>Don't use white / <code>--bg-input</code> as the selected fill on sidebar
+or content-pane <strong>list rows</strong>. Light theme washes out.</li>
+<li>Don't give MCP server rows (or any other content-pane list) a
+different height, padding, or selected fill than sidebar nav.</li>
 <li>Don't add the SHIFT-on-hover (translate-y, scale-105) effect
 on either surface. We rely on background swap alone; motion
 inside dense rows reads as jitter, not feedback.</li>
 <li>Don't add <code>border</code> / <code>ring</code> / <code>outline</code> to Button-derived
 components. The surface lift already separates them from the
-background; a border on top of the lift reads as a stacked
-alert dialog or a focus halo, not a quiet click target.</li>
+background.</li>
+<li>Don't stack a 2px focus glow on a 1px input/select edge.</li>
+<li>Don't drop a control's 1px border on hover.</li>
+<li>Don't slide dialogs. Fade only.</li>
+<li>Don't let a settings description overflow into the right-hand
+control column, or stack label above control.</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Cross-module UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web state layer: per-session stores</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
@@ -536,8 +610,12 @@ alert dialog or a focus halo, not a quiet click target.</li>
 <a class="" href="#interaction-language-per-surface">Interaction language per surface</a>
 <a class="lvl-3" href="#deep-surface-sidebars">Deep surface (sidebars)</a>
 <a class="lvl-3" href="#panel-surface-chat-content-dialogs">Panel surface (chat content + dialogs)</a>
+<a class="" href="#one-list-row-recipe">One list-row recipe</a>
+<a class="" href="#size-system-two-sets-same-height">Size system — two sets, same height</a>
+<a class="" href="#inputs-selects-and-borders">Inputs, selects, and borders</a>
+<a class="" href="#dialogs">Dialogs</a>
+<a class="" href="#settings-rows">Settings rows</a>
 <a class="" href="#button-variant-guidance">Button variant guidance</a>
-<a class="" href="#size-system-two-sets-no-in-set-variants">Size system — two sets, no in-set variants</a>
 <a class="" href="#donts">Don'ts</a>
 </div></aside>
 </div>
