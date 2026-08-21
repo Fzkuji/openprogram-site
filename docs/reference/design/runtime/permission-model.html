@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787327982" data-alt-lang-url="/docs/reference/design/runtime/permission-model.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787329833" data-alt-lang-url="/docs/reference/design/runtime/permission-model.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink active" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -689,7 +689,7 @@ ToolName(content)        Command level, per-pattern. e.g. bash(git:*) / read_fil
 <h3 id="33-per-mode-branch-implementation">3.3 Per-mode branch implementation<a class="header-anchor" href="#33-per-mode-branch-implementation">#</a></h3>
 <p>Numbering matches the pseudocode in 3.2:</p>
 <ul>
-<li><strong>acceptEdits (⑥)</strong>: three parts — ① <code>@function</code> takes an <code>accept_edits_safe: bool = False</code> parameter (<code>functions/_runtime.py:767</code>) that lands on the tool object as <code>_accept_edits_safe</code> (<code>:1079</code>); read/write/edit/glob/grep/list each mark <code>True</code> in their <code>@function</code> (e.g. <code>programs/functions/write/write.py:24</code>, <code>edit/edit.py:25</code>, <code>read/read.py:28</code>, <code>grep/grep.py:101</code>, <code>list/list.py:30</code>, <code>glob/glob.py:43</code>), while bash/exec/execute_code do not (default <code>False</code>); ② <code>_path_is_safe</code> (<code>internals/_approval.py:72-87</code>) reuses <code>check_path_safety</code> from 3.5 (path inside the working directory set, not a dangerous file/directory, no Windows bypass); ③ command-class tools fall through to ⑧ forced approval even when a broad allow exists.</li>
+<li><strong>acceptEdits (⑥)</strong>: three parts — ① <code>@function</code> takes an <code>accept_edits_safe: bool = False</code> parameter (<code>functions/_runtime.py:767</code>) that lands on the tool object as <code>_accept_edits_safe</code> (<code>:1079</code>); read/write/edit/glob/grep/list each mark <code>True</code> in their <code>@function</code> (e.g. <code>programs/tools/write/write.py:24</code>, <code>edit/edit.py:25</code>, <code>read/read.py:28</code>, <code>grep/grep.py:101</code>, <code>list/list.py:30</code>, <code>glob/glob.py:43</code>), while bash/exec/execute_code do not (default <code>False</code>); ② <code>_path_is_safe</code> (<code>internals/_approval.py:72-87</code>) reuses <code>check_path_safety</code> from 3.5 (path inside the working directory set, not a dangerous file/directory, no Windows bypass); ③ command-class tools fall through to ⑧ forced approval even when a broad allow exists.</li>
 <li><strong>plan (visibility control)</strong>: <code>apply_tool_policy(tools, source=&quot;plan&quot;)</code> (<code>dispatcher/__init__.py:798</code>) filters out write-class tools so they never enter the model's tool list. Plan state lives in a boolean set (<code>_active</code> in <code>agent/plan_mode.py</code>) and <strong>does not switch approval strength</strong> — it is orthogonal to the approval tier (details in §3.7). <code>_gated_execute</code> has no plan-specific branch (write-class tools are already filtered, read-only tools follow the current tier as usual).</li>
 <li><strong>auto (⑦)</strong>: the LLM classifier tier, with three levels of filtering to save calls (<code>internals/_auto_classifier.py</code>): obviously safe read-only tools already passed at ⑤; <code>RISKY_AUTO_DENYLIST</code> (bash/exec/shell/execute_code/process) returns <code>[denied]</code> outright; anything else uncertain gets one <code>auto_classify_tool</code> call to haiku. Rule-layer deny/ask (①) still applies ahead of it, and allow (④) is unaffected.</li>
 <li><strong>ask</strong>: every tool that misses allow, is not on the read-only allowlist, and is not per-tool exempt lands at ⑧.</li>
@@ -754,7 +754,7 @@ ToolName(content)        Command level, per-pattern. e.g. bash(git:*) / read_fil
 <span class="sd">    medium: other command-class tools; write/edit/delete tools. low: read-only tools."""</span>
 </code></pre>
 <p><code>_approval_detail</code> (<code>internals/_approval.py:232-242</code>, producing &quot;tool name + full arguments, head and tail truncated when too long&quot;) gives the approval card a readable summary (the first version does not highlight dangerous tokens). The <code>question.asked</code> frame from <code>_on_asked</code> (inside <code>await_user_approval</code>) carries <code>tool</code>/<code>args</code>/<code>risk_level</code>, which the frontend uses for coloring (§4.2).</p>
-<p><strong>Path safety</strong> (<code>openprogram/programs/functions/vanilla/files/file_safety.py</code>):</p>
+<p><strong>Path safety</strong> (<code>openprogram/programs/tools/files/file_safety.py</code>):</p>
 <pre><code class="language-python"><span class="c1"># file_safety.py:20-40, 63</span>
 <span class="n">DANGEROUS_FILES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">".bashrc"</span><span class="p">,</span> <span class="s2">".bash_profile"</span><span class="p">,</span> <span class="s2">".bash_login"</span><span class="p">,</span> <span class="s2">".profile"</span><span class="p">,</span>
                    <span class="s2">".zshrc"</span><span class="p">,</span> <span class="s2">".zprofile"</span><span class="p">,</span> <span class="s2">".zshenv"</span><span class="p">,</span> <span class="s2">".gitconfig"</span><span class="p">,</span> <span class="s2">".gitmodules"</span><span class="p">,</span>
@@ -1024,7 +1024,7 @@ so this path is permanently <code>None</code>: dead code left uncleaned, not a l
 </tr>
 <tr>
 <td>Path safety / dangerous files and directories / Windows bypass</td>
-<td><code>openprogram/programs/functions/vanilla/files/file_safety.py</code></td>
+<td><code>openprogram/programs/tools/files/file_safety.py</code></td>
 </tr>
 <tr>
 <td>gate hard block</td>
@@ -1048,7 +1048,7 @@ so this path is permanently <code>None</code>: dead code left uncleaned, not a l
 </tr>
 <tr>
 <td><code>accept_edits_safe</code> declaration + per-tool <code>requires_approval</code></td>
-<td><code>openprogram/programs/_runtime.py</code>; tool markings in <code>openprogram/programs/functions/vanilla/{read,write,edit,glob,grep,list}/</code></td>
+<td><code>openprogram/programs/_runtime.py</code>; tool markings in <code>openprogram/programs/tools/{read,write,edit,glob,grep,list}/</code></td>
 </tr>
 <tr>
 <td>Web default bypass + effective_permission</td>
@@ -1086,7 +1086,7 @@ so this path is permanently <code>None</code>: dead code left uncleaned, not a l
 <li><strong>Sandbox isolation (security boundary)</strong>: the permission system is a decision and awareness layer, not a security boundary, and does no process or file isolation. Real isolation is a separate sandbox work stream.</li>
 <li><strong>Bypass-immune safetyCheck forced approval</strong>: <code>tool_requires_approval</code> remains <code>(bool, reason)</code> without <code>classifier_approvable</code>; path safety only takes effect in the acceptEdits branch, and writing a dangerous file under bypass is not forcibly blocked. <code>is_dangerous_allow_rule</code> (<code>file_safety.py:94-100</code>) is implemented but unwired. Adding bypass immunity requires extending <code>tool_requires_approval</code> into a triple and treating &quot;path unsafe&quot; as ask at point ① of <code>_gated_execute</code>.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/p3-three-surface-sync.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/ssrf-protection.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime outbound URL and SSRF protection</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/p3-three-surface-sync.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/ssrf-protection.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime outbound URL and SSRF protection</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-overview">1. Overview</a>

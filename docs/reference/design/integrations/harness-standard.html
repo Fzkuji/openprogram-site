@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787327982" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787329833" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -393,7 +393,7 @@ Related: <a href="/docs/capabilities/installing-harnesses.html"><code>../install
 <code>openprogram/programs/_programs.py</code> (the first-party harness list).</p>
 </blockquote>
 <h2 id="0-the-one-rule-that-matters">0. The one rule that matters<a class="header-anchor" href="#0-the-one-rule-that-matters">#</a></h2>
-<p><strong>A harness is anything you drop into <code>&lt;openprogram&gt;/programs/functions/agentic/</code>
+<p><strong>A harness is anything you drop into <code>&lt;openprogram&gt;/programs/workflow/</code>
 that exposes its functions through <code>&lt;pkg&gt;/agentics/__init__.py</code>.</strong> The host
 walks that folder on startup (and, with hot-reload, whenever it changes),
 finds the inner package, imports <code>&lt;pkg&gt;.agentics</code>, and the
@@ -571,7 +571,7 @@ The remaining gaps:</p>
 </table>
 <p>All three still declare <code>openprogram @ git+…</code> as a dependency, which §4
 rules out; removing it is a shared fix.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/editor-integration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Editor integration: LSP tools and ACP server</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/mcp-integration.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">MCP Tool Integration</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/editor-integration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Editor integration: LSP tools and ACP server</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/mcp-integration.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">MCP Tool Integration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#0-the-one-rule-that-matters">0. The one rule that matters</a>

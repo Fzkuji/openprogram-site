@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787327982" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787329833" data-alt-lang-url="/docs/reference/design/runtime/session/distill.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -401,7 +401,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>模型可调工具</td>
-<td><code>openprogram/programs/functions/vanilla/knowledge/read_conversation/</code></td>
+<td><code>openprogram/programs/tools/knowledge/read_conversation/</code></td>
 <td><code>read_conversation</code>——转写器的 <code>@function</code> 封装，缺省读当前会话</td>
 </tr>
 <tr>
@@ -435,7 +435,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>截断分两层。单字段上限防止一次失控的工具结果（读了个大文件）把周围的推理挤掉；总预算切在最后一个放得下的完整轮次上，并写明第一个被丢的轮号（<code>re-read with start_turn=N to continue</code>），被截断的转写不会看起来像完整的，读者也能从断点接着翻。</p>
 <p><code>scripts/dag_dump.py</code> 仍是调试视图，看节点 id、lane、tier。两者不重叠。</p>
 <h2 id="会话发现复用已有工具">会话发现复用已有工具<a class="header-anchor" href="#会话发现复用已有工具">#</a></h2>
-<p><code>list_agents</code>（<code>programs/functions/send_message/</code>）已经能列出会话 id 和 <code>SID:HEAD</code> 分支端点。这正是 <code>read_conversation</code> 要的参数，所以不新增列表工具。工具接受整串 <code>SID:HEAD</code> 传进 <code>session_id</code> 并自行拆分，因为那就是 <code>list_agents</code> 打印的形式。</p>
+<p><code>list_agents</code>（<code>programs/tools/send_message/</code>）已经能列出会话 id 和 <code>SID:HEAD</code> 分支端点。这正是 <code>read_conversation</code> 要的参数，所以不新增列表工具。工具接受整串 <code>SID:HEAD</code> 传进 <code>session_id</code> 并自行拆分，因为那就是 <code>list_agents</code> 打印的形式。</p>
 <h2 id="判断放在-skill-里">判断放在 skill 里<a class="header-anchor" href="#判断放在-skill-里">#</a></h2>
 <p>蒸馏本身是判断任务：决定转写里哪些能泛化、哪些只属于那一天。这里没有任何确定性可言，所以不存在 <code>distill()</code> 函数——skill 正文告诉 agent 要提取什么（目标、前置条件、步骤、决策点、坑），它用自己的 <code>Write</code> 工具写出文件。</p>
 <p>这沿用 agentic programming 里删掉 <code>create()</code> / <code>edit()</code> / <code>improve()</code> 封装时定下的先例：函数体全部内容就是一次 LLM 调用加一次文件写入的，这层 agent 不需要。</p>
@@ -451,7 +451,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>产品词是 <strong>distill</strong>，不是 &quot;workflow&quot;。在本仓库里 &quot;workflow&quot; 已经指 agentic program——一个预置的完整 agent harness，文档在 <code>docs/capabilities/workflows/</code>。蒸馏出的流程是更小的东西：从一次会话里提取的知识，不是一个分发的程序。复用这个词会把同一个文档 Tab 里并排出现的两个概念混成一个。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>已按本文实现。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session Subsystem</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/name.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">LLM Title Generation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session Subsystem</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/name.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">LLM Title Generation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#组成">组成</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787327982" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787329833" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -444,7 +444,7 @@ SessionRunConfig.additional_working_dirs        session_config.py:61（字段）
 TurnRequest.additional_working_dirs             dispatcher/types.py:112
    ↑ 填充：webui/_execute/chat.py:259、channels/_conversation.py:243
    ↓
-_path_is_safe → check_path_safety(path, dirs)   internals/_approval.py:72-82 → programs/functions/file_safety.py:63
+_path_is_safe → check_path_safety(path, dirs)   internals/_approval.py:72-82 → programs/tools/file_safety.py:63
 </code></pre>
 <p><code>save_session_run_config(..., additional_working_dirs=...)</code> 接受该参数，传 None 表示不改动，聊天路径因此不会误清已有目录。</p>
 <h2 id="3-各环节设计">3. 各环节设计<a class="header-anchor" href="#3-各环节设计">#</a></h2>
@@ -518,7 +518,7 @@ TurnRequest.additional_working_dirs
 <li>额外目录在整个会话期内保持可编辑。定格只属于主目录；把它扩到这份列表上，会话中途就再没有扩围栏的办法了。</li>
 <li>目录缺失的主项目解析为 <code>None</code>，绝不解析成另一个目录。换成默认项目的家目录，等于把一个看着合理、用户却从未选择的 cwd 交给模型。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Runtime</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-core-configuration-ui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agent 基础配置</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Runtime</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-core-configuration-ui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agent 基础配置</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-语义做什么不做什么">1. 语义（做什么、不做什么）</a>

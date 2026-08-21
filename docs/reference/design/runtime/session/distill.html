@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787327982" data-alt-lang-url="/docs/reference/design/runtime/session/distill.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787329833" data-alt-lang-url="/docs/reference/design/runtime/session/distill.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -401,7 +401,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td>Model-facing tool</td>
-<td><code>openprogram/programs/functions/vanilla/knowledge/read_conversation/</code></td>
+<td><code>openprogram/programs/tools/knowledge/read_conversation/</code></td>
 <td><code>read_conversation</code> — the renderer as a <code>@function</code>, defaulting to the current session</td>
 </tr>
 <tr>
@@ -435,7 +435,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Truncation is layered. Per-field caps stop one runaway tool result (a large file read) from evicting the reasoning around it; the total budget cuts at the last whole turn that fits and names the first dropped turn (<code>re-read with start_turn=N to continue</code>), so a truncated transcript never looks like a complete one and the reader can page on from where it stopped.</p>
 <p><code>scripts/dag_dump.py</code> remains the debugging view — node ids, lanes, tiers. The two do not overlap.</p>
 <h2 id="discovery-reuses-existing-tools">Discovery reuses existing tools<a class="header-anchor" href="#discovery-reuses-existing-tools">#</a></h2>
-<p><code>list_agents</code> (<code>programs/functions/send_message/</code>) already enumerates session ids and <code>SID:HEAD</code> branch tips. Those are exactly the arguments <code>read_conversation</code> takes, so no listing tool is added. The tool accepts a whole <code>SID:HEAD</code> string in <code>session_id</code> and splits it, since that is the form <code>list_agents</code> prints.</p>
+<p><code>list_agents</code> (<code>programs/tools/send_message/</code>) already enumerates session ids and <code>SID:HEAD</code> branch tips. Those are exactly the arguments <code>read_conversation</code> takes, so no listing tool is added. The tool accepts a whole <code>SID:HEAD</code> string in <code>session_id</code> and splits it, since that is the form <code>list_agents</code> prints.</p>
 <h2 id="the-skill-carries-the-judgment">The skill carries the judgment<a class="header-anchor" href="#the-skill-carries-the-judgment">#</a></h2>
 <p>Distillation is a judgment task: deciding what in a transcript generalizes and what was incidental to that day. Nothing about it is deterministic, so there is no <code>distill()</code> function — the skill body tells the agent what to extract (goal, preconditions, steps, decision points, traps) and it writes the output file with its own <code>Write</code> tool.</p>
 <p>This follows the precedent set when the <code>create()</code> / <code>edit()</code> / <code>improve()</code> wrappers were removed from agentic programming: a function whose entire body is one LLM call plus a file write is a layer the agent does not need.</p>
@@ -451,7 +451,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The product word is <strong>distill</strong>, not &quot;workflow&quot;. In this repository &quot;workflow&quot; already denotes an agentic program — a complete pre-built agent harness, documented under <code>docs/capabilities/workflows/</code>. A distilled procedure is a smaller thing: knowledge extracted from one session, not a shipped program. Reusing the word would have merged two concepts that appear side by side in the same documentation tab.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <p>Implemented as described.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session Subsystem</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/name.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">LLM Title Generation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session Subsystem</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/name.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">LLM Title Generation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#components">Components</a>

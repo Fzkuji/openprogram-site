@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787327982" data-alt-lang-url="/docs/reference/design/usage-metering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787329833" data-alt-lang-url="/docs/reference/design/usage-metering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -405,7 +405,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>职责分离</strong>。计费记账、compaction 阈值估算、热路径 budget 缓存的生命周期与消费者各不相同，分属不同对象。</p>
 </li>
 </ol>
-<p>聊天主循环之外抵达 provider 的路径——<code>context/summarize.py</code>、<code>programs/functions/mixture_of_agents</code>、<code>memory/llm_bridge.py</code>，以及 <code>@agentic_function</code> 子进程（<code>process_runner.py</code>）——都由同一个收口点加一个显式来源 scope 覆盖。</p>
+<p>聊天主循环之外抵达 provider 的路径——<code>context/summarize.py</code>、<code>programs/tools/mixture_of_agents</code>、<code>memory/llm_bridge.py</code>，以及 <code>@agentic_function</code> 子进程（<code>process_runner.py</code>）——都由同一个收口点加一个显式来源 scope 覆盖。</p>
 <p><code>providers/models.py:calculate_cost(model, usage)</code> 已能从 <code>Model.cost</code> 算成本。metering 层在收口点调用它，不新建定价逻辑。</p>
 <h2 id="3-分层架构">3. 分层架构<a class="header-anchor" href="#3-分层架构">#</a></h2>
 <pre><code>消费层  webui 面板 / CLI / 导出 / 未来配额引擎
@@ -534,7 +534,7 @@ tokens（provider 权威值，缺失为 0）：<code>input_tokens</code>、<code
 <li>原 <code>agent/compaction/</code> 目录（约 1180 行）是死代码，无任何 import、动态引用或副作用加载，已删除；其中没有任何路径需要 usage scope。</li>
 </ul>
 <p>已设计未实现：第 9 节的扩展留口，以及 CLI <code>op usage</code> 命令。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/TODO-improvements.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">TODO：待讨论的改进项</span></a><a class="pn-link pn-next" href="/docs/reference/design/framework-overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Framework Overview — One Conversation from Input to Output</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/TODO-improvements.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">TODO：待讨论的改进项</span></a><a class="pn-link pn-next" href="/docs/reference/design/framework-overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Framework Overview — One Conversation from Input to Output</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-目标">1. 目标</a>

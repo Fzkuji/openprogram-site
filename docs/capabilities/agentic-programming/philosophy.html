@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787327982" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787329833" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,7 +78,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="纯 Python" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Pure Python</a>
-<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a>
 </div>
 <div class="nav-sec">
@@ -127,6 +126,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming AI Agents</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="指南 · 编写函数">Guide · Writing functions</div>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Programming</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="设计哲学">Philosophy</span></nav><h1 id="design-philosophy">Design philosophy<a class="header-anchor" href="#design-philosophy">#</a></h1>
@@ -222,13 +225,13 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <p>So context management stops being prompt plumbing and becomes a property you declare on the function. The same DAG doubles as your debugging view: visualization, token accounting, replaying failure paths.</p>
 <h2 id="derived-concepts">Derived Concepts<a class="header-anchor" href="#derived-concepts">#</a></h2>
 <h3 id="the-llm-writes-code-too">The LLM Writes Code Too<a class="header-anchor" href="#the-llm-writes-code-too">#</a></h3>
-<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the documented API. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits. A background watcher rescans <code>programs/functions/agentic/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
+<p>The LLM isn't just the runtime's reasoning engine; it can also <strong>write code</strong> — generating, modifying, and fixing <code>@agentic_function</code>s that conform to the documented API. This needs no dedicated <code>create()</code> / <code>fix()</code> framework functions; the agent authors new functions with ordinary file edits. A background watcher rescans <code>programs/workflow/</code> and hot-loads new modules: their <code>@agentic_function</code> decorators fire on import and self-register, so a freshly written function is callable without a restart.</p>
 <p>Code is data, the LLM is the compiler, and functions are the product — the loop closes.</p>
 <h3 id="dual-mode">Dual Mode<a class="header-anchor" href="#dual-mode">#</a></h3>
 <p>Agentic Programming is at the same time:</p>
 <ul>
 <li><strong>A library</strong> — you write <code>@agentic_function</code>s and wire up the pipeline by hand</li>
-<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>programs/functions/agentic/</code> and hot-loads</li>
+<li><strong>A running product</strong> — chat in the CLI or WebUI and ask the agent to write the function for you; the generated file lands in <code>programs/workflow/</code> and hot-loads</li>
 </ul>
 <p>Beginners start by asking, and what they get is a complete, readable Python file. Those who want to dig deeper can then import and hand-write. This is a tool that <strong>can be understood incrementally</strong>.</p>
 <h2 id="comparison-with-traditional-agent-frameworks">Comparison with Traditional Agent Frameworks<a class="header-anchor" href="#comparison-with-traditional-agent-frameworks">#</a></h2>
@@ -265,7 +268,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 </table>
 <p>This isn't to say agent frameworks are wrong; they suit a class of tasks (fully open-ended, with fuzzy goals). But most of what you want to do can actually be done more reliably with Agentic Programming.</p>
 <h2 id="openprogram-the-productized-paradigm">OpenProgram = the Productized Paradigm<a class="header-anchor" href="#openprogram-the-productized-paradigm">#</a></h2>
-<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>programs/functions/agentic/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
+<p>The <code>agentic_programming/</code> subpackage is the paradigm's engine code. <code>context/</code> implements the flat-DAG context model. <code>providers/</code> adapts the various LLMs. <code>programs/workflow/</code> holds the functions and applications already written under this paradigm. <code>webui/</code> lets beginners run things without writing code.</p>
 <p>The paradigm comes first; the product exists to use it.</p>
 <hr />
 <p>Further reading:</p>
@@ -274,7 +277,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <li><a href="/docs/reference/api">API Reference</a></li>
 <li><a href="/docs/reference/design">Design Details</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Embedding in your own stack</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Embedding in your own stack</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#the-problem">The Problem</a>

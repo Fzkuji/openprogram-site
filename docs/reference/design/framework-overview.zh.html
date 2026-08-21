@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787327982" data-alt-lang-url="/docs/reference/design/framework-overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787329833" data-alt-lang-url="/docs/reference/design/framework-overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,7 +307,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
+<a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="权限系统设计（Permission System Design）" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Permission System Design</a>
@@ -683,7 +683,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <h3 id="⑤-协作send_message-跨-session-防护">⑤ 协作　send_message + 跨 session + 防护<a class="header-anchor" href="#⑤-协作send_message-跨-session-防护">#</a></h3>
 <p><strong>职责</strong>：分支/会话之间投递消息、跑分支、把回复带回来。
-<strong>关键文件</strong>：<code>programs/functions/send_message/send_message/send_message.py</code>、<code>programs/functions/send_message/list_agents/list_agents.py</code>。
+<strong>关键文件</strong>：<code>programs/tools/send_message/send_message/send_message.py</code>、<code>programs/tools/send_message/list_agents/list_agents.py</code>。
 <strong>关键机制</strong>：</p>
 <ul>
 <li><code>send_message(message, to, agent_id)</code>（→ <code>_send_message_impl</code>）。</li>
@@ -707,7 +707,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <hr />
 <h2 id="主线锚点速查">主线锚点速查<a class="header-anchor" href="#主线锚点速查">#</a></h2>
 <p>dispatcher 入口 <code>dispatcher/__init__.py:97</code>；turn_id 绑定 <code>:379</code>；历史/分支解析 <code>:186–198</code>；user 节点写入 <code>:298</code>；<strong>调模型前 prepare/auto-compact</strong> <code>_run_loop_blocking :885/:896/:1074</code>；finalize <code>:711</code>/<code>dispatcher/finalize.py:175</code>（ContextCommit 回填 <code>:283</code>、after_turn <code>:308</code>→<code>engine.py:437</code>）。事件总线 <code>events/bus.py:141/159/241</code>；tool.before 拦截 <code>agent_loop.py:695/:701</code> + <code>events/tool_gate.py:53</code>。上下文 <code>engine.py:194</code> + 两条压缩路径（auto-compact <code>_run_loop_blocking:896</code> / microcompact <code>microcompact.py:76</code>）。agent loop <code>agent_loop.py:114/205/654</code>；子 agent <code>sub_agent_run.py:41</code>。协作 <code>send_message.py:186/393</code>，深度上限 <code>:35</code>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Usage Metering Subsystem Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/framework-comparison.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">整框架对标：我们和十二家放在一起看</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Usage Metering Subsystem Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/framework-comparison.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">整框架对标：我们和十二家放在一起看</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#第一部分一次对话的生命周期主线">第一部分　一次对话的生命周期（主线）</a>
