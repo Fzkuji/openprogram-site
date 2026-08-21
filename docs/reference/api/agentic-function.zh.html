@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787251333" data-alt-lang-url="/docs/reference/api/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787276472" data-alt-lang-url="/docs/reference/api/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,6 +108,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/execution.html">execution</a>
 <a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
@@ -180,12 +181,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>dict</code></td>
 <td><code>None</code></td>
 <td>每个参数的 UI 元数据,WebUI 据此渲染输入表单。每个参数支持的字段:<code>description</code>(参数名旁的标签)、<code>placeholder</code>(示例文字)、<code>multiline</code>(<code>True</code> = textarea)、<code>options</code>(允许值列表,渲染为下拉框并写进 JSON-schema <code>enum</code>)、<code>hidden</code>(<code>True</code> = 从表单和 LLM 工具 schema 里排除)</td>
-</tr>
-<tr>
-<td><code>workdir_mode</code></td>
-<td><code>str</code></td>
-<td><code>None</code></td>
-<td>工作目录选择器模式:<code>&quot;optional&quot;</code> / <code>&quot;hidden&quot;</code> / <code>&quot;required&quot;</code>,其余值抛 <code>ValueError</code>。消费方是 WebUI——它通过 AST 解析源码文本读取,所以必须以字面量写在装饰器调用里才生效</td>
 </tr>
 <tr>
 <td><code>system</code></td>

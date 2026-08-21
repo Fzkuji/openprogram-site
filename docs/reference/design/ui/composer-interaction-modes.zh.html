@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787251333" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787276472" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -305,7 +305,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
-<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
@@ -313,13 +313,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
@@ -345,7 +345,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html">运行取消：命名、协议与生命周期设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>

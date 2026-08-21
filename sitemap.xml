@@ -117,6 +117,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/cron-worker.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/diagnostics.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/doctor.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/execution.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/jobs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/logs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/mcp.html</loc></url>
@@ -369,7 +370,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.html</loc></url>

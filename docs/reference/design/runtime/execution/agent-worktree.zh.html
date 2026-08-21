@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787251333" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787276472" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -305,7 +305,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
-<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
@@ -313,13 +313,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
@@ -345,7 +345,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html">运行取消：命名、协议与生命周期设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
@@ -472,15 +472,12 @@ worktree path（若有），否则 session-git 的 <code>workdir/</code>。</li>
 那个是在 session-git 内部开分支跑 sub-agent，本设计是在用户真实代码
 仓库开 worktree 给 agent 跑改动，两者用途无关。</p>
 <h3 id="d5-source-repo-来源">D5. Source repo 来源<a class="header-anchor" href="#d5-source-repo-来源">#</a></h3>
-<p>三个入口，优先级从高到低：</p>
+<p>两个入口，优先级从高到低：</p>
 <ol>
 <li><strong>agent 显式传</strong>：worktree_create 工具的 <code>source_repo</code> 参数（绝对路径）。
 适合 plan agent 列任务时已经知道目标仓库。</li>
-<li><strong>fn-form 的 &quot;Working in a folder&quot;</strong>：用户在 web UI 给程序输入的
-<code>_work_dir</code>。dispatcher 在进 turn 前若发现这个 path 是个 git repo 根，
-就当作 default source_repo（worktree_create 不传 source_repo 时用）。</li>
-<li><strong>session 当前 cwd 的祖先 git root</strong>：用 <code>git rev-parse --show-toplevel</code>
-走一遍。一般是用户启动 OpenProgram 的目录。</li>
+<li><strong>选中的 Project</strong>：dispatcher 把会话 Project 目录绑定为 cwd，再通过
+<code>git rev-parse --show-toplevel</code> 解析其祖先 git root。</li>
 </ol>
 <p>入口都失败 → worktree_create 报错 <code>source_repo_not_a_git_repo</code>。
 不会自动 <code>git init</code> 给用户建仓库（破坏性太大）。</p>
@@ -633,8 +630,8 @@ into source_repo (ff-only, 3 files changed)&quot;。</p>
 <li><strong>Composer 工具栏</strong>：当前 session 有 active worktree 时，PromptInput 上方
 显示一个 chip <code>worktree: wt_abc1234 (3 files changed)</code>，hover 弹 panel
 显示 worktree_path / branch / 改动文件列表 / Merge / Discard / Keep 按钮。</li>
-<li><strong>fn-form 的 &quot;Working in a folder&quot;</strong>：保持不变，只显示 source_repo 路径。
-worktree 作为内部 detail 不在 fn-form 里 surface。</li>
+<li><strong>函数表单</strong>：只包含函数参数。选中的 Project 仍是 source_repo，worktree
+不在表单中显示。</li>
 <li><strong>DAG 时间线</strong>：worktree create / merge / discard marker 节点用区分色
 渲染（跟 attach marker 一致风格）。</li>
 <li><strong>不在范围内</strong>：worktree 文件 diff 的内联预览（用户可以点开&quot;open in editor&quot;
@@ -693,7 +690,7 @@ worktree 从 base_ref（默认 HEAD）创建，不受 source_repo working tree �
 </tr>
 <tr>
 <td><strong>D5 source</strong></td>
-<td>fn-form 传的 <code>_work_dir</code> 当 source_repo；agent 也可显式传</td>
+<td>选中的 Project 作为 source_repo；agent 也可显式传</td>
 </tr>
 <tr>
 <td><strong>D6 安全</strong></td>
@@ -1130,17 +1127,17 @@ docker backend。</li>
 </tr>
 <tr>
 <td>6</td>
-<td>改 <code>openprogram/programs/functions/vanilla/bash/bash.py</code></td>
+<td>改 <code>openprogram/programs/functions/vanilla/files/bash/bash.py</code></td>
 <td>调 <code>backend.run(cmd, cwd=_current_worktree_path.get())</code></td>
 </tr>
 <tr>
 <td>7</td>
-<td>改 <code>openprogram/programs/functions/vanilla/edit/edit.py</code> + write/read</td>
+<td>改 <code>openprogram/programs/functions/vanilla/files/edit/edit.py</code> + write/read</td>
 <td>路径落在 worktree 之外时写 warning（D6）</td>
 </tr>
 <tr>
 <td>8</td>
-<td>新建 <code>openprogram/programs/functions/vanilla/worktree/</code></td>
+<td>新建 <code>openprogram/programs/functions/vanilla/files/worktree/</code></td>
 <td>4 个 @function 工具：worktree_create / worktree_merge / worktree_discard / worktree_list；走 WorktreeManager</td>
 </tr>
 <tr>

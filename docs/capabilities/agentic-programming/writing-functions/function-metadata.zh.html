@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787251333" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787276472" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -250,11 +250,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>动态选项来源</td>
 <td><code>@agentic_function(input={&quot;x&quot;: {&quot;options_from&quot;: &quot;functions&quot;}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;options_from&quot;]</code></td>
-</tr>
-<tr>
-<td>工作目录选择器模式</td>
-<td><code>@agentic_function(workdir_mode=&quot;optional&quot;|&quot;hidden&quot;|&quot;required&quot;)</code>——由装饰器校验并存储在实例上</td>
-<td><code>fn.workdir_mode</code>。其消费方是 WebUI，它不会反射对象——而是对源码文本做 AST 解析（<code>openprogram/webui/_functions.py:_extract_workdir_mode</code>），因此该值必须在装饰器调用中写成字面量</td>
 </tr>
 <tr>
 <td>框架自动注入的参数</td>
@@ -535,29 +530,6 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 <tr>
 <td>有 Python 默认值且无显式 <code>placeholder</code></td>
 <td>原始默认值成为占位符的灰字提示（无 <code>&quot;default: &quot;</code> 前缀）；在空字段中按 Tab 会把它提升为实际值；<code>None</code> 或以 <code>_</code> 开头的默认值会被抑制</td>
-</tr>
-</tbody>
-</table>
-<p>工作目录选择器单独渲染在参数行上方，由顶层的 <code>workdir_mode</code> 控制：</p>
-<table>
-<thead>
-<tr>
-<th><code>workdir_mode</code> 取值</th>
-<th>表单行为</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&quot;optional&quot;</code>（默认）</td>
-<td>显示选择器；可以留空</td>
-</tr>
-<tr>
-<td><code>&quot;hidden&quot;</code></td>
-<td>不显示选择器（函数不依赖文件系统位置）</td>
-</tr>
-<tr>
-<td><code>&quot;required&quot;</code></td>
-<td>显示选择器且为必填；未填值时表单阻止提交</td>
 </tr>
 </tbody>
 </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787251333">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -303,7 +303,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
-<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
@@ -311,13 +311,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
@@ -343,7 +343,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html">运行取消：命名、协议与生命周期设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
@@ -483,7 +483,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <li>Modify: <code>openprogram/agent/agent_loop.py</code></li>
 <li>Modify: <code>openprogram/agent/internals/_approval.py</code></li>
 <li>Modify: <code>openprogram/agentic_programming/function.py</code></li>
-<li>Modify: <code>openprogram/programs/functions/vanilla/bash/bash.py</code></li>
+<li>Modify: <code>openprogram/programs/functions/vanilla/files/bash/bash.py</code></li>
 <li>Modify: <code>tests/unit/test_tools_runtime.py</code></li>
 <li>Modify: <code>tests/agent/test_loop_options.py</code></li>
 <li>Modify: <code>tests/agent/test_tool_gate.py</code></li>
@@ -503,7 +503,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <p><strong>GREEN:</strong> Add the defaulted field; populate it in <code>_normalize_result()</code>, MCP client conversion, approval <code>_denied()</code>, timeout/exception paths, and explicit failing tools. Replace <code>details.get(&quot;is_error&quot;)</code> in caching and agent-loop conversion with <code>result.is_error</code>. Keep the default false so unrelated constructors remain source-compatible. Do not change ACP protocol shapes.</p>
 <p>Run the same command; expected: PASS.</p>
 <p><strong>Commit:</strong></p>
-<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/agent/types.py<span class="w"> </span>openprogram/programs/_runtime.py<span class="w"> </span>openprogram/mcp/adapter.py<span class="w"> </span>openprogram/agent/agent_loop.py<span class="w"> </span>openprogram/agent/internals/_approval.py<span class="w"> </span>openprogram/agentic_programming/function.py<span class="w"> </span>openprogram/programs/functions/vanilla/bash/bash.py<span class="w"> </span>tests/unit/test_tools_runtime.py<span class="w"> </span>tests/agent/test_loop_options.py<span class="w"> </span>tests/agent/test_tool_gate.py<span class="w"> </span>tests/unit/test_acp_server.py
+<pre><code class="language-bash">git<span class="w"> </span>add<span class="w"> </span>openprogram/agent/types.py<span class="w"> </span>openprogram/programs/_runtime.py<span class="w"> </span>openprogram/mcp/adapter.py<span class="w"> </span>openprogram/agent/agent_loop.py<span class="w"> </span>openprogram/agent/internals/_approval.py<span class="w"> </span>openprogram/agentic_programming/function.py<span class="w"> </span>openprogram/programs/functions/vanilla/files/bash/bash.py<span class="w"> </span>tests/unit/test_tools_runtime.py<span class="w"> </span>tests/agent/test_loop_options.py<span class="w"> </span>tests/agent/test_tool_gate.py<span class="w"> </span>tests/unit/test_acp_server.py
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"refactor: type runtime tool error results"</span>
 </code></pre>
 <h3 id="task-3-add-default-empty-exposure-paired-mcp-identity-and-non-interactive-gates">Task 3: Add default-empty exposure, paired MCP identity, and non-interactive gates<a class="header-anchor" href="#task-3-add-default-empty-exposure-paired-mcp-identity-and-non-interactive-gates">#</a></h3>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787251333" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,6 +108,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/cron-worker.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/execution.html">execution</a>
 <a class="navlink" href="/docs/reference/cli/jobs.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html">mcp</a>
@@ -180,12 +181,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>dict</code></td>
 <td><code>None</code></td>
 <td>Per-parameter UI metadata; the WebUI renders the input form from it. Supported fields per parameter: <code>description</code> (label next to the name), <code>placeholder</code> (example text), <code>multiline</code> (<code>True</code> = textarea), <code>options</code> (list of allowed values, rendered as a dropdown and emitted as a JSON-schema <code>enum</code>), <code>hidden</code> (<code>True</code> = exclude from the form and from the LLM tool schema)</td>
-</tr>
-<tr>
-<td><code>workdir_mode</code></td>
-<td><code>str</code></td>
-<td><code>None</code></td>
-<td>Working-directory picker mode: <code>&quot;optional&quot;</code> / <code>&quot;hidden&quot;</code> / <code>&quot;required&quot;</code>; any other value raises <code>ValueError</code>. The consumer is the WebUI—it reads the value by AST-parsing the source text, so it must be written as a literal inside the decorator call to take effect</td>
 </tr>
 <tr>
 <td><code>system</code></td>

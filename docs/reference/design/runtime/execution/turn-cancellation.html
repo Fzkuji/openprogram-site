@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787251333" data-alt-lang-url="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Turn Cancellation — Design · OpenProgram Docs</title>
-<meta name="description" content="How a running turn is stopped. This document is authoritative for the cancellation signal itself: what object carries it, how long it lives, and which code">
+<title>运行取消：命名、协议与生命周期设计 · OpenProgram Docs</title>
+
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Turn Cancellation — Design"}]}</script>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"运行取消：命名、协议与生命周期设计"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html">
-<meta property="og:title" content="Turn Cancellation — Design · OpenProgram Docs">
-<meta property="og:description" content="How a running turn is stopped. This document is authoritative for the cancellation signal itself: what object carries it, how long it lives, and which code">
+<meta property="og:title" content="运行取消：命名、协议与生命周期设计 · OpenProgram Docs">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +21,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Turn Cancellation — Design · OpenProgram Docs">
-<meta name="twitter:description" content="How a running turn is stopped. This document is authoritative for the cancellation signal itself: what object carries it, how long it lives, and which code">
+<meta name="twitter:title" content="运行取消：命名、协议与生命周期设计 · OpenProgram Docs">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -305,7 +303,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
-<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">llm 与 agent：编排层的两个原语</a>
+<a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 四层代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
@@ -313,13 +311,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Self-Programming Workflow — 创建、隔离与发布</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">Self-Programming Workflow — 编程模型与组合</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="沙箱（Sandbox）" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">沙箱：现状、八家对标与完整修复顺序</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
@@ -345,7 +343,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink active" href="/docs/reference/design/runtime/execution/turn-cancellation.html" data-title-zh="Turn Cancellation — 设计" data-href-en="/docs/reference/design/runtime/execution/turn-cancellation.html" data-href-zh="/docs/reference/design/runtime/execution/turn-cancellation.zh.html">Turn Cancellation — Design</a>
+<a class="navlink active" href="/docs/reference/design/runtime/execution/turn-cancellation.html">运行取消：命名、协议与生命周期设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
@@ -381,218 +379,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Execution">Runtime · Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Turn Cancellation — 设计">Turn Cancellation — Design</span></nav><h1 id="turn-cancellation-design">Turn Cancellation — Design<a class="header-anchor" href="#turn-cancellation-design">#</a></h1>
-<blockquote>
-<p>How a running turn is stopped. This document is authoritative for the
-cancellation signal itself: what object carries it, how long it lives, and
-which code checks it. The async Task entity's own lifecycle (queueing,
-worker pool, persistence) is
-<a href="/docs/reference/design/runtime/execution/async-job-lifecycle.html"><code>async-job-lifecycle.md</code></a>; a task's cancellation
-uses the mechanism described here.</p>
-</blockquote>
-<h2 id="1-one-token-per-turn">1. One token per turn<a class="header-anchor" href="#1-one-token-per-turn">#</a></h2>
-<p><strong>A turn opens exactly one cancellation token. Everything inside the turn
-checks that one object, and the token is retired when the turn ends.</strong></p>
-<p>Stopping means tripping the token of the turn that is running <em>now</em>. A token
-belonging to a turn that already finished refuses to be tripped, so a stop
-arriving late cannot reach the next turn. There is no session-level flag to
-reset, because there is no state that outlives the turn: the next turn simply
-gets a different object.</p>
-<p>This is the property that makes the design correct rather than merely tidy. A
-sticky per-session boolean has to be cleared by whoever finishes the turn, and
-every path that forgets — an early return, a swallowed exception, a stop that
-lands between turns — poisons the next message. Scoping the signal to the turn
-removes the cleanup obligation instead of adding another place to remember it.</p>
-<h2 id="2-the-token">2. The token<a class="header-anchor" href="#2-the-token">#</a></h2>
-<p><code>CancelToken</code> in <code>openprogram/agent/run_control.py</code>:</p>
-<pre><code>CancelToken:
-  session_id   which session this turn belongs to
-  turn_id      the turn, when the caller supplies one
-  event        a threading.Event, so blocked worker threads can wait on it
-  retired      once True, cancel() does nothing
-</code></pre>
-<p>The Event is the interoperability surface. Worker threads block on it, the
-dispatcher bridges it into asyncio, and provider streams take it as their abort
-signal — all without knowing about the token wrapper.</p>
-<table>
-<thead>
-<tr>
-<th>Operation</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>begin_turn(session_id, turn_id=None)</code></td>
-<td>Open a fresh token and register it as the session's current one. Any token still registered belongs to a turn that already ended and is retired here.</td>
-</tr>
-<tr>
-<td><code>end_turn(session_id, token=None)</code></td>
-<td>Retire the token and deregister it. Passing the token deregisters only that one, so a turn finishing late never unregisters its successor.</td>
-</tr>
-<tr>
-<td><code>current_token(session_id)</code></td>
-<td>The token of the turn running on this session; <code>None</code> between turns.</td>
-</tr>
-<tr>
-<td><code>token.cancel()</code></td>
-<td>Trip it. Returns <code>False</code> when the turn already ended.</td>
-</tr>
-<tr>
-<td><code>token.is_cancelled()</code></td>
-<td>Whether this turn was stopped.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-life-of-a-token">3. Life of a token<a class="header-anchor" href="#3-life-of-a-token">#</a></h2>
-<pre><code>begin_turn ──▶ running ──┬──▶ cancel()  ──▶ cancelled ──▶ end_turn ──▶ retired
-                         └──────────────────────────────▶ end_turn ──▶ retired
-</code></pre>
-<p>A token is created at turn start, is the only cancellation signal for the
-duration of the turn, and is retired at turn end whether the turn succeeded,
-failed, or was stopped. Retirement is one-way. After it, <code>cancel()</code> returns
-<code>False</code> and the token can never influence anything again.</p>
-<p>Two races are closed by construction:</p>
-<ul>
-<li><strong>A stop racing turn teardown.</strong> It lands on a retired token and dies there,
-rather than setting a flag the next turn would read.</li>
-<li><strong>A turn finishing after its successor started.</strong> <code>end_turn</code> deregisters only
-the token it was given, and <code>begin_turn</code> retires whatever it displaced, so
-neither turn can retire the other's token.</li>
-</ul>
-<h2 id="4-who-checks-the-token">4. Who checks the token<a class="header-anchor" href="#4-who-checks-the-token">#</a></h2>
-<p>Every layer inside a turn checks the same object. There is no second signal.</p>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Where</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>@agentic_function</code> entry and <code>Runtime.exec</code></td>
-<td><code>_cancel_hook</code>, registered once at import via <code>add_pre_invocation_hook</code>; raises <code>CancelledError</code>.</td>
-</tr>
-<tr>
-<td>LLM calls</td>
-<td><code>check_cancelled()</code> immediately before the provider call, converted to <code>ExecInterrupt(&quot;cancelled&quot;)</code>.</td>
-</tr>
-<tr>
-<td>The agent loop and streaming</td>
-<td>The token's Event, bridged into an <code>asyncio.Event</code> and passed to <code>agent_loop</code> as its abort signal.</td>
-</tr>
-<tr>
-<td>Tool execution</td>
-<td>The same Event, handed to <code>tool.execute(...)</code> as its <code>cancel</code> argument.</td>
-</tr>
-<tr>
-<td>Long-running tool bodies</td>
-<td><code>check_cancelled()</code> between heavy synchronous stages, so a stop lands without waiting for the next function boundary.</td>
-</tr>
-<tr>
-<td>Sub-tasks and sub-agents</td>
-<td>The task's token; the runner registers its Event via <code>register_cancel_event</code>.</td>
-</tr>
-</tbody>
-</table>
-<p><code>CancelledError</code> derives from <code>BaseException</code> on purpose, so a tool body's
-<code>except Exception</code> cannot swallow a stop.</p>
-<h3 id="resolving-which-token-a-frame-checks">Resolving which token a frame checks<a class="header-anchor" href="#resolving-which-token-a-frame-checks">#</a></h3>
-<p>A frame checks the context-bound token first, and only falls back to the
-session registry when no token is bound. This matters when a session has moved
-on to a new turn while an older frame is still live: the old frame keeps
-checking its own turn's token, so a stop aimed at the new turn does not abort
-it, and a stop aimed at its own turn still does.</p>
-<h2 id="5-the-cancel-bridge">5. The cancel bridge<a class="header-anchor" href="#5-the-cancel-bridge">#</a></h2>
-<p>The dispatcher runs the agent loop in a fresh asyncio loop on a worker thread,
-so the thread-side Event must reach the coroutine. A bridge thread waits on the
-Event and sets an <code>asyncio.Event</code> through <code>call_soon_threadsafe</code>.</p>
-<p>The bridge also watches a turn-over Event, released when the drain loop
-finishes. Without it the bridge parks on <code>cancel_event.wait()</code> for the life of
-the process — one leaked thread per turn — and would eventually post to a
-closed loop.</p>
-<h2 id="6-compatibility">6. Compatibility<a class="header-anchor" href="#6-compatibility">#</a></h2>
-<p>The public names keep their meaning, so callers and the WS protocol are
-unchanged:</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Now means</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mark_cancelled(session_id)</code></td>
-<td>Stop the turn running on this session. A no-op between turns.</td>
-</tr>
-<tr>
-<td><code>is_cancelled(session_id)</code></td>
-<td>Whether the current turn is cancelled. <code>False</code> once it ends.</td>
-</tr>
-<tr>
-<td><code>clear_cancel(session_id)</code></td>
-<td>Retire the session's token — the turn is over.</td>
-</tr>
-<tr>
-<td><code>register_cancel_event(session_id, ev)</code></td>
-<td>Adopt a caller-owned Event as this turn's token.</td>
-</tr>
-</tbody>
-</table>
-<p>Call sites that create their own Event — the chat path and the task runner —
-keep doing so; <code>register_cancel_event</code> wraps it in a token, which retires the
-previous turn's token in the same call.</p>
-<p>The two-stage WS <code>stop</code> action is unchanged: a graceful stop first, escalating
-after a grace period to tripping the token, killing the exec subprocess,
-unblocking pending questions, and marking still-running rows <code>cancelled</code>.</p>
-<h2 id="7-recorded-outcome">7. Recorded outcome<a class="header-anchor" href="#7-recorded-outcome">#</a></h2>
-<p>A user cancel writes <code>status = cancelled</code> on the node, never <code>error</code> — see the
-status vocabulary in
-<a href="/docs/reference/design/runtime/dag/overview.html"><code>../dag/overview.md</code></a>. A cancelled turn is
-terminated like any other turn: it keeps whatever output was streamed before
-the stop, and it is committed.</p>
-<h2 id="8-invariants">8. Invariants<a class="header-anchor" href="#8-invariants">#</a></h2>
-<ol>
-<li>A turn checks exactly one cancellation token, and every layer inside the
-turn checks that same one.</li>
-<li>A stop affects only the turn running when it arrives. It can never affect a
-later turn.</li>
-<li>A token is retired exactly once, at turn end, regardless of outcome.</li>
-<li>No cancellation state survives a turn, so no cleanup path is obliged to
-reset anything.</li>
-<li>No thread outlives the turn that started it.</li>
-</ol>
-<h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>Implemented. <code>CancelToken</code>, <code>begin_turn</code>, <code>end_turn</code> and <code>current_token</code> live
-in <code>openprogram/agent/run_control.py</code>; the cancel bridge is in
-<code>openprogram/agent/dispatcher/__init__.py</code>. Tests:
-<code>tests/component/runtime/test_turn_cancellation.py</code>.</p>
-<p>Pause/resume (<code>pause_execution</code> / <code>resume_execution</code>) is a separate, global,
-cooperative mechanism and is not part of the per-turn token model. <code>/api/stop</code>
-resumes before stopping so a paused turn can be cancelled.</p>
-<h2 id="related-files">Related Files<a class="header-anchor" href="#related-files">#</a></h2>
-<ul>
-<li><a href="/docs/reference/design/runtime/execution/async-job-lifecycle.html"><code>async-job-lifecycle.md</code></a> — the async Task entity</li>
-<li><a href="/docs/reference/design/runtime/dag/overview.html"><code>../dag/overview.md</code></a> — status vocabulary, failure and retry</li>
-<li><a href="/docs/reference/design/error-handling.html"><code>../../error-handling.md</code></a> — exception discipline</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Recursion Guard for Agentic Functions</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#1-one-token-per-turn">1. One token per turn</a>
-<a class="" href="#2-the-token">2. The token</a>
-<a class="" href="#3-life-of-a-token">3. Life of a token</a>
-<a class="" href="#4-who-checks-the-token">4. Who checks the token</a>
-<a class="lvl-3" href="#resolving-which-token-a-frame-checks">Resolving which token a frame checks</a>
-<a class="" href="#5-the-cancel-bridge">5. The cancel bridge</a>
-<a class="" href="#6-compatibility">6. Compatibility</a>
-<a class="" href="#7-recorded-outcome">7. Recorded outcome</a>
-<a class="" href="#8-invariants">8. Invariants</a>
-<a class="" href="#appendix-implementation-status">Appendix: Implementation Status</a>
-<a class="" href="#related-files">Related Files</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Execution">Runtime · Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">运行取消：命名、协议与生命周期设计</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/execution/turn-cancellation.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Recursion Guard for Agentic Functions</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

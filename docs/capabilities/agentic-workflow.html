@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787251333" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Self-programmed agentic workflows · OpenProgram Docs</title>
-<meta name="description" content="agentic_workflow is OpenProgram&#x27;s self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The">
+<meta name="description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <meta property="og:title" content="Self-programmed agentic workflows · OpenProgram Docs">
-<meta property="og:description" content="agentic_workflow is OpenProgram&#x27;s self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The">
+<meta property="og:description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Self-programmed agentic workflows · OpenProgram Docs">
-<meta name="twitter:description" content="agentic_workflow is OpenProgram&#x27;s self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The">
+<meta name="twitter:description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -130,17 +130,46 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="self-programmed-agentic-workflows">Self-programmed agentic workflows<a class="header-anchor" href="#self-programmed-agentic-workflows">#</a></h1>
-<p><code>agentic_workflow</code> is OpenProgram's self-programmed agentic workflow: the agent writes an actual Python program for the task, and the framework executes it. The planner composes the program out of the framework's building blocks — three-tier LLM primitives plus registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
-<p>Run it from the Programs panel as <code>agentic_workflow</code>, or call it from Python:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.functions.agentic.agentic_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_workflow</span>
-
-<span class="c1"># Start a new workflow</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"port the auth module to the new client and update its tests"</span><span class="p">)</span>
-
-<span class="c1"># Auto-resume: tasks starting with "continue"/"resume" automatically resume the latest workflow</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">agentic_workflow</span><span class="p">(</span><span class="s2">"continue the optimization"</span><span class="p">)</span>
-</code></pre>
-<p>Every call creates an independent workflow instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
+<p>OpenProgram's self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework's building blocks — three-tier LLM primitives plus registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
+<p>The former single <code>agentic_workflow(task)</code> call is being split into four public entries. Search, create, revise, and run stay independent; <code>auto_workflow</code> only orchestrates those steps. This split is being implemented — use the four names below for new work.</p>
+<table>
+<thead>
+<tr>
+<th>Entry</th>
+<th>Who can call it</th>
+<th>Responsibility</th>
+<th>Must not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>search_workflows(task)</code></td>
+<td>Agent and user</td>
+<td>Deterministically return ranked candidates with fixed revisions, contracts, permissions, and hit evidence.</td>
+<td>Call a model, write files, execute a candidate, or publish.</td>
+</tr>
+<tr>
+<td><code>create_workflow(task)</code></td>
+<td>Agent and user</td>
+<td>Read candidate components, generate one new package, validate it, publish it, and return a ref.</td>
+<td>Execute the user task or modify an existing project.</td>
+</tr>
+<tr>
+<td><code>revise_workflow(workflow_id, request)</code></td>
+<td>Agent and user</td>
+<td>Create a new candidate from a specified revision, validate it, and publish a new revision.</td>
+<td>Run as a silent follow-up to an ordinary failure, or overwrite an old revision.</td>
+</tr>
+<tr>
+<td><code>auto_workflow(task)</code></td>
+<td>User form only</td>
+<td>Call search, let one visible selection agent choose reuse or create, then run the chosen workflow.</td>
+<td>Appear in the Agent tool list or search candidates, or auto-revise a published project.</td>
+</tr>
+</tbody>
+</table>
+<p>A Chat Agent that already has a matching Program or Workflow calls it directly. It searches only when the catalog is large or a candidate is not loaded. It never calls <code>auto_workflow</code>. Use <code>auto_workflow</code> from the Programs panel or a function form when you want one request to search, choose, create if needed, and run. On the Programs page these four names are Workflow capabilities; <code>auto_workflow</code> is labeled as a user-only auto entry.</p>
+<p>Every workflow run still creates an independent instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
 <h2 id="small-tasks-are-not-split">Small tasks are not split<a class="header-anchor" href="#small-tasks-are-not-split">#</a></h2>
 <p>The planner's first decision is whether the task needs a program at all. A task one agent finishes in a single pass — a small edit, one question answered, one file written — is executed directly, because writing a program for it costs more than doing it. Programs are for tasks that genuinely exceed one pass: several deliverables, work spread across stages, or steps that depend on earlier output.</p>
 <h2 id="the-generated-program">The generated program<a class="header-anchor" href="#the-generated-program">#</a></h2>
@@ -233,7 +262,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>There is no checkpoint syntax in the program. Recording is the framework's job: every injected callable is wrapped, and each real execution is written to <code>state.json</code> before and after it happens, keyed by function name, invocation order, and an argument digest. Verification is not imposed by the framework either — the planner writes checks into the program and raises when they fail, which routes into the revision loop.</p>
 <h2 id="resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls<a class="header-anchor" href="#resuming-rerun-the-whole-program-replay-completed-calls">#</a></h2>
 <p>There is no scheduler and no &quot;next item&quot; logic. Resuming means executing <code>workflow()</code> again from its first line. The only mechanism is short-circuiting at call boundaries: a call already completed in <code>state.json</code> — same name, same order, same arguments — is not executed again; it returns its recorded result instantly. The rerun flashes past finished work and starts doing real work at the first incomplete call. Control flow is re-evaluated every time (<code>if</code> re-branches, <code>for</code> re-loops); only the expensive call results are restored.</p>
-<p>A killed process resumes the same way: state changes hit disk before the work happens, so rerunning the instance by its <code>run_id</code> continues it. Resuming is explicit — each <code>agentic_workflow(task)</code> call creates a fresh instance and returns its <code>run_id</code>; to continue an existing one, pass that <code>run_id</code> back. Nothing is matched by task text.</p>
+<p>A killed process resumes the same way: state changes hit disk before the work happens, so rerunning the instance by its <code>run_id</code> continues it. Resuming is explicit — each new run creates a fresh instance and returns its <code>run_id</code>; to continue an existing one, pass that <code>run_id</code> back. Nothing is matched by task text.</p>
 <h2 id="revision-after-an-error">Revision after an error<a class="header-anchor" href="#revision-after-an-error">#</a></h2>
 <p>When the program raises — a syntax error, a failed call, or a check the planner wrote itself — the handling is what a developer does: the planner gets the traceback, the current code, and the run records in <code>state.json</code>, rewrites <code>code.py</code>, and the whole program reruns. Untouched completed calls replay as before, so a revision never discards finished work. Old code versions are archived in the instance directory, and the revision history is part of the return value.</p>
 <p>There is no abandoned state. Invalid code and runtime failures both go back to the planner with the concrete error, as many rounds as needed. The only forced stop is <code>capped</code>: 40 real executions (replays don't count) ends the run, because a program still growing at that point is a planning failure.</p>

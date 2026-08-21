@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787251333" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787276472" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -250,11 +250,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>Dynamic option source</td>
 <td><code>@agentic_function(input={&quot;x&quot;: {&quot;options_from&quot;: &quot;functions&quot;}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;options_from&quot;]</code></td>
-</tr>
-<tr>
-<td>Working-directory picker mode</td>
-<td><code>@agentic_function(workdir_mode=&quot;optional&quot;|&quot;hidden&quot;|&quot;required&quot;)</code> — validated by the decorator and stored on the instance</td>
-<td><code>fn.workdir_mode</code>. Its consumer is the WebUI, which does not introspect the object — it AST-parses the source text (<code>openprogram/webui/_functions.py:_extract_workdir_mode</code>), so the value must be written as a literal in the decorator call</td>
 </tr>
 <tr>
 <td>Framework-auto-injected parameters</td>
@@ -535,29 +530,6 @@ no description; only parameter name + type
 <tr>
 <td>Has a Python default and no explicit <code>placeholder</code></td>
 <td>the raw default value becomes the placeholder ghost text (no <code>&quot;default: &quot;</code> prefix); pressing Tab in the empty field promotes it into the actual value; defaults of <code>None</code> or starting with <code>_</code> are suppressed</td>
-</tr>
-</tbody>
-</table>
-<p>The working-directory picker is rendered separately above the parameter rows, governed by the top-level <code>workdir_mode</code>:</p>
-<table>
-<thead>
-<tr>
-<th><code>workdir_mode</code> value</th>
-<th>Form behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&quot;optional&quot;</code> (default)</td>
-<td>Picker shown; may be left empty</td>
-</tr>
-<tr>
-<td><code>&quot;hidden&quot;</code></td>
-<td>Picker not shown (function doesn't depend on filesystem location)</td>
-</tr>
-<tr>
-<td><code>&quot;required&quot;</code></td>
-<td>Picker shown and required; the form blocks submission without a value</td>
 </tr>
 </tbody>
 </table>

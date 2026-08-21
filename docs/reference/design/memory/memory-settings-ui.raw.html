@@ -249,14 +249,15 @@
   .settings-link { height: 35px; padding: 0 10px; border-radius: 7px; display: flex; align-items: center; gap: 10px; color: var(--muted); text-decoration: none; white-space: nowrap; }
   .settings-link:hover { background: var(--hover); color: var(--text); }
   .settings-link.active { background: var(--selected); color: var(--text); }
-  .settings-content { min-width: 0; overflow: auto; }
-  .settings-page { width: min(820px,calc(100% - 48px)); margin: 0 auto; padding: 28px 0 80px; }
-  .settings-intro { margin-bottom: 26px; }
-  .settings-intro h1 { margin: 0 0 5px; font-size: 22px; letter-spacing: -.02em; }
-  .settings-intro p { margin: 0; color: var(--muted); }
+  .settings-content { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .settings-page { min-height: 0; flex: 1; display: flex; flex-direction: column; }
+  .settings-intro { flex-shrink: 0; padding: 20px 28px 16px; border-bottom: 1px solid var(--border); }
+  .settings-intro h1 { margin: 0 0 6px; font-size: 18px; letter-spacing: -.01em; }
+  .settings-intro p { max-width: 760px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+  .settings-scroll { min-height: 0; flex: 1; display: flex; flex-direction: column; gap: 28px; padding: 24px 28px 32px; overflow: auto; }
   .memory-route {
-    display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; margin: 20px 0 28px;
-    border: 1px solid var(--border); border-radius: 9px; overflow: hidden; background: var(--panel);
+    display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0;
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--panel-2);
   }
   .route-step { position: relative; padding: 12px 13px; border-right: 1px solid var(--border); }
   .route-step:last-child { border-right: 0; }
@@ -264,10 +265,10 @@
   .route-step strong { display: block; margin-top: 4px; font-size: 12px; font-weight: 560; }
   .route-dot { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(117,199,154,.12); }
   .route-dot.warn { background: var(--amber); box-shadow: 0 0 0 3px rgba(216,173,101,.12); }
-  .settings-section { margin-top: 26px; }
+  .settings-section { margin: 0; }
   .settings-section h2 { margin: 0 0 9px; color: var(--text-2); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; }
-  .settings-card { border: 1px solid var(--border); border-radius: 9px; background: var(--panel); overflow: hidden; }
-  .setting-row { min-height: 66px; padding: 13px 15px; display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,280px); gap: 24px; align-items: center; }
+  .settings-card { padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel-2); }
+  .setting-row { min-height: 52px; padding: 10px 0; display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,280px); gap: 24px; align-items: start; }
   .setting-row + .setting-row { border-top: 1px solid var(--border); }
   .setting-label strong { display: block; margin-bottom: 3px; font-size: 13px; font-weight: 570; }
   .setting-label span { display: block; color: var(--muted); font-size: 12px; }
@@ -288,10 +289,6 @@
   .switch input:checked + .switch-track::after { transform: translateX(16px); background: #eef7f1; }
   .switch input:focus-visible + .switch-track { outline: 2px solid var(--blue); outline-offset: 2px; }
   .path-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font: 11px var(--mono); }
-  .save-strip { margin-top: 16px; display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
-  .saved-text { color: var(--green); font-size: 12px; opacity: 0; transition: opacity .15s; }
-  .saved-text.show { opacity: 1; }
-
   .design-notes {
     max-width: 1440px; margin: 18px auto 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
   }
@@ -450,6 +447,7 @@
         <section class="settings-content">
           <div class="settings-page">
             <div class="settings-intro"><h1>Memory</h1><p>Choose how OpenProgram writes, stores, and recalls long-term memory.</p></div>
+            <div class="settings-scroll">
             <div class="memory-route" aria-label="Memory lifecycle">
               <div class="route-step"><small>Capture</small><strong><span class="route-dot"></span>Conversation archive</strong></div>
               <div class="route-step"><small>Write</small><strong><span class="route-dot"></span>MiniMax-M3</strong></div>
@@ -469,8 +467,8 @@
             </div></section>
 
             <section class="settings-section"><h2>Retrieval</h2><div class="settings-card">
-              <div class="setting-row"><div class="setting-label"><strong>Recall method</strong><span>Select the retrieval path used before each model turn.</span></div><div class="setting-control"><select class="select" aria-label="Recall method"><option>Keyword · BM25</option><option disabled>Semantic · Embeddings (unavailable)</option><option disabled>Hybrid · BM25 + Embeddings (unavailable)</option></select><span class="status live">Live</span></div></div>
-              <div class="setting-row"><div class="setting-label"><strong>Embedding model</strong><span>Required for semantic and hybrid retrieval.</span></div><div class="setting-control"><span class="status missing">Not installed</span></div></div>
+              <div class="setting-row"><div class="setting-label"><strong>Recall method</strong><span>Select automatic ranked recall or let the Agent inspect Memory only when needed.</span></div><div class="setting-control"><select class="select" aria-label="Recall method"><option>Agent · On demand</option><option>Keyword · BM25</option><option disabled>Semantic · Embeddings (unavailable)</option><option disabled>Hybrid · BM25 + Embeddings (unavailable)</option></select><span class="status live">Live</span></div></div>
+              <div class="setting-row"><div class="setting-label"><strong>Embedding model</strong><span>Required only for semantic and hybrid retrieval.</span></div><div class="setting-control"><span class="status missing">Not installed</span><button class="button">Install</button></div></div>
               <div class="setting-row"><div class="setting-label"><strong>Recall depth</strong><span>Maximum number of matching records added to a turn.</span></div><div class="setting-control"><select class="select" aria-label="Recall depth"><option>5 records</option><option>8 records</option><option>10 records</option></select></div></div>
               <div class="setting-row"><div class="setting-label"><strong>Search Source evidence</strong><span>Include archived evidence alongside curated Topic records.</span></div><div class="setting-control"><label class="switch"><input type="checkbox" checked aria-label="Search Source evidence"><span class="switch-track"></span></label></div></div>
             </div></section>
@@ -480,7 +478,7 @@
               <div class="setting-row"><div class="setting-label"><strong>Recent view size</strong><span>Number of latest records kept in the Recent derived view.</span></div><div class="setting-control"><select class="select" aria-label="Recent view size"><option>50 records</option><option>25 records</option><option>100 records</option></select></div></div>
               <div class="setting-row"><div class="setting-label"><strong>Workspace</strong><span>Current Memory data location. Runtime-managed files remain read-only.</span></div><div class="setting-control"><span class="path-value">~/.openprogram/memory</span></div></div>
             </div></section>
-            <div class="save-strip"><span class="saved-text" id="savedText">Settings saved</span><button class="button primary" id="saveSettings">Save changes</button></div>
+            </div>
           </div>
         </section>
       </div>
@@ -493,11 +491,24 @@
       <li>Topics, Timeline, Recent, and Core form a vertical section list above the Topic tree.</li>
       <li>At a 720px viewport the section list, tree, and content stack without removing Memory navigation.</li>
       <li>Settings reads and writes the same schema used by the CLI and TUI.</li>
+      <li>Memory reuses the shared Settings page, body, typography, section-card, and compact row contracts, but does not render a repeated content header. The lifecycle summary is the only Memory-specific visual structure.</li>
+      <li>Every editable Memory control persists through <code>POST /api/settings</code> immediately after the user changes it. The page has no separate Save button; a rejected write restores the previous value and exposes an inline error.</li>
+      <li>Opening <code>/settings/memory</code> renders the editable settings as soon as their configuration requests finish; workspace and embedding status load independently and never gate the whole page.</li>
+      <li><code>GET /api/memory/status?settings=true</code> returns only the workspace path and fixed embedding snapshot availability. It does not parse Topics, walk Sources, compute revisions, or scan sessions and writer state.</li>
+      <li>The status path checks whether the fixed embedding snapshot exists locally without constructing the encoder or loading model weights. Encoder initialization belongs to semantic retrieval, not Settings.</li>
+      <li>Memory Settings does not request agent runtime settings on entry. The default writer option uses the generic “Default chat model” label, avoiding cold provider initialization and model discovery.</li>
+      <li>Entering Settings does not speculatively fetch Providers, Search, or Channels data; each page requests its own data when opened.</li>
+      <li><strong>Agent · On demand</strong> performs no automatic BM25, embedding, or hybrid query. The Agent may inspect Memory explicitly with <code>memory_browse</code>, <code>memory_get</code>, and <code>memory_grep</code>; ranked <code>memory_search</code> reports that it is disabled in this mode.</li>
+      <li>An unavailable embedding snapshot exposes an explicit <strong>Install</strong> action. The product runtime includes <code>sentence-transformers</code>; <code>POST /api/memory/embedding/install</code> downloads only the fixed encoder configuration, tokenizer, and safetensors weights in a worker thread. It does not construct the encoder and returns a retryable error without changing the active recall method.</li>
     </ul></article>
     <article class="note-card"><h2>Implementation and acceptance</h2><ul>
-      <li>Public entries: <code>/memory</code>, <code>/settings/memory</code>, <code>GET/POST /api/settings</code>, automatic recall, <code>memory_search</code>, and Topic/API writes.</li>
-      <li>Runtime settings cover automatic writing, write frequency, recall method, recall depth, Source scope, Core injection, and Recent size.</li>
-      <li>Semantic and Hybrid remain disabled until an embedding model is actually available.</li>
+      <li>Public entries: <code>/memory</code>, <code>/settings/memory</code>, immediate <code>GET/POST /api/settings</code> updates, automatic recall, <code>memory_search</code>, and Topic/API writes.</li>
+      <li>Runtime settings cover automatic writing, write frequency, recall method including <code>agent</code>, recall depth, Source scope, Core injection, and Recent size.</li>
+      <li>Semantic and Hybrid remain disabled until the local embedding snapshot is present; saving either method still performs the existing full availability validation.</li>
+      <li>In Agent mode, automatic turn recall is empty and depth/Source controls are disabled because they do not participate in that mode. Core Memory injection remains an independent setting.</li>
+      <li>The four lifecycle cards remain visible at their intrinsic height inside the scrollable settings column; they must not flex-shrink behind <code>overflow: hidden</code> when the page contains more sections than the viewport.</li>
+      <li>Acceptance checks fail if the settings status path calls the complete workspace inspector, initializes the encoder, remains inside the page's blocking request group, or if Settings entry triggers sibling-page prefetch.</li>
+      <li>Cold-process verification resolves the local embedding snapshot without importing <code>sentence_transformers</code>; editable settings and the bounded settings status have separate completion boundaries.</li>
       <li>No external API permission controls are added to this page.</li>
       <li>Accepted with focused and affected tests, TypeScript validation, independent specification and quality reviews, and visible default-App checks at normal and 720px widths.</li>
     </ul></article>
@@ -528,11 +539,6 @@
       toggleEmpty.setAttribute('aria-pressed', String(next));
       toggleEmpty.textContent = next ? 'Show populated state' : 'Show empty state';
       setView('memory');
-    });
-    document.getElementById('saveSettings').addEventListener('click', function () {
-      var saved = document.getElementById('savedText');
-      saved.classList.add('show');
-      window.setTimeout(function () { saved.classList.remove('show'); }, 1600);
     });
     document.querySelectorAll('a[href="#"]').forEach(function (link) {
       link.addEventListener('click', function (event) { event.preventDefault(); });
