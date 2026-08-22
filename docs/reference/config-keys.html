@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787361738">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787405904">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -481,6 +481,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>['~/.ssh/**', '~/.aws/**', '~/.gnupg/**', '~/.openprogram/auth/**', '~/.claude.json', '~/.claude/.credentials.json', '~/.config/gh/**', '~/.netrc', '~/Library/Keychains/**', '**/.env']</code></td>
 <td>live</td>
 <td>Globs a sandboxed command cannot read, as a JSON list. Ships loaded with the credential paths, because a command that reads a key can still deliver it without any network: the memory writer's output returns to a later session's context. <code>**</code> matches any depth; on Linux a pattern containing a wildcard in the middle has no equivalent and is skipped, since bubblewrap masks paths rather than matching them. Protect sensitive Linux content with an exact path or a directory-level deny whose prefix is concrete, such as <code>/absolute/path/to/secrets/**</code>; do not rely on <code>**/.env</code> there.</td>
+</tr>
+<tr>
+<td><code>sandbox.allow_read</code></td>
+<td><code>[]</code></td>
+<td>live</td>
+<td>Concrete paths re-opened inside a wider sandbox.deny_read entry. Narrower path wins; an equally-specific deny still blocks. Cannot open ~/.openprogram/auth or the agentics directory.</td>
 </tr>
 <tr>
 <td><code>sandbox.deny_write</code></td>
