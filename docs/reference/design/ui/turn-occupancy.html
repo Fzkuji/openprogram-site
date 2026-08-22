@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787356920" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787359471" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -427,6 +427,11 @@ and the runtime unregister.</li>
 <p><code>_finish_owned_run</code> no-ops if <code>msg_id</code> does not match — a newer
 reservation is safe. The cancelled turn's <code>finally</code> also calls
 <code>_finish_owned_run</code>; the second call is a no-op.</p>
+<p>Also retire that execution's cancel token. Occupancy is the slot;
+the token is the stop flag. Leaving a cancelled token in
+<code>_current_tokens</code> makes the next <code>claim_cancel_event</code> fail, or a
+reused <code>{msg_id}_reply</code> start already cancelled. The old stream
+still sees its own Event (<code>opts.signal</code>), which is already set.</p>
 <p>Do <strong>not</strong> wait for <code>process_user_turn</code> to return before the next
 <code>_try_reserve_run</code>.</p>
 <h2 id="0ms-ui">0ms UI<a class="header-anchor" href="#0ms-ui">#</a></h2>

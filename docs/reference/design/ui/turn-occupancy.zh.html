@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787356920" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787359471" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -413,6 +413,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>广播 <code>running_task_clear</code>，让其他客户端对齐。</li>
 </ul>
 <p><code>msg_id</code> 对不上时 <code>_finish_owned_run</code> 是空操作 — 更新的预占不会被抢走。被取消的 turn 的 <code>finally</code> 也会再调一次，第二次是空操作。</p>
+<p>同时退役这次 execution 的取消 token。占用是槽位，token 是停止旗标。cancelled 的 token 留在 <code>_current_tokens</code> 里，下一轮 <code>claim_cancel_event</code> 会失败，或者复用的 <code>{msg_id}_reply</code> 一上来就是已取消。旧流仍看着自己的 Event（<code>opts.signal</code>），那个已经被 set。</p>
 <p><strong>不要</strong>等 <code>process_user_turn</code> 返回才允许下一次 <code>_try_reserve_run</code>。</p>
 <h2 id="0ms-ui">0ms UI<a class="header-anchor" href="#0ms-ui">#</a></h2>
 <p>0ms 规则已经写了：停止立刻清掉 <code>runningTask</code> 并补丁 assistant。停止也在同一瞬间把发送队列出队。</p>
