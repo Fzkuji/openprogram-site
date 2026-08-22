@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787414928" data-alt-lang-url="/docs/reference/design/ui/window-state.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787419363" data-alt-lang-url="/docs/reference/design/ui/window-state.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -200,6 +200,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="集成">Integrations</div>
 <a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html">Editor integration: LSP tools and ACP server</a>
+<a class="navlink" href="/docs/reference/design/integrations/extension-management.html">Extension Management Web UI</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="Harness 标准 —— agentic 程序如何接入 OpenProgram" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness Standard — how an agentic program plugs into OpenProgram</a>
 <a class="navlink" href="/docs/reference/design/integrations/mcp-integration.html" data-title-zh="MCP 工具集成" data-href-en="/docs/reference/design/integrations/mcp-integration.html" data-href-zh="/docs/reference/design/integrations/mcp-integration.zh.html">MCP Tool Integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/skills-and-plugins.html" data-title-zh="Skills &amp; Plugins" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html">Skills &amp; Plugins</a>
@@ -515,7 +516,7 @@ debounce 300ms，避免拖动中狂写。chrome 事件和关闭立即落盘。</
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>已实现：schema v2、旧文件迁移、先恢复普通尺寸再套 chrome、铺满工作区按最大化处理、显示器回退、主窗口 debounce 持久化、撕下窗口一次性尺寸、标题栏缩放内缩，以及 <code>apps/desktop/scripts/check-window-state.js</code> 测试。</p>
 <p>桌面窗口底色跟随已解析的 Web 主题（<code>theme-chrome.js</code>），规则写在 <a href="/docs/reference/design/ui/unification-work.html">unification-work.md</a>。窗口几何持久化不保存、不恢复背景色。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/unification-work.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">UI Unification Work</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-styles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web style organization</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-23</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/unification-work.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">UI Unification Work</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-styles.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web style organization</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#为什么贴边的普通窗口拖不动">为什么贴边的普通窗口拖不动</a>
