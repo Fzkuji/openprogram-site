@@ -49,6 +49,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/tools.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/gui-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/research-agent.html</loc></url>
@@ -143,6 +145,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/upgrade.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/web.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/worker.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/workflows.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/config-keys.html</loc></url>

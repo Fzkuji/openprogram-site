@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787405904" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787414445" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-programmed agentic workflows · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
+<title>Self-programming Workflows · OpenProgram Docs</title>
+<meta name="description" content="OpenProgram can create, version, find, and run reusable Python Workflow packages. A Workflow is appropriate when a task needs a stable multi-stage structure,">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/agentic-workflow.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Self-programmed agentic workflows"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Self-programming Workflows"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-workflow.html">
-<meta property="og:title" content="Self-programmed agentic workflows · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
+<meta property="og:title" content="Self-programming Workflows · OpenProgram Docs">
+<meta property="og:description" content="OpenProgram can create, version, find, and run reusable Python Workflow packages. A Workflow is appropriate when a task needs a stable multi-stage structure,">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Self-programmed agentic workflows · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram&#x27;s self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework&#x27;s">
+<meta name="twitter:title" content="Self-programming Workflows · OpenProgram Docs">
+<meta name="twitter:description" content="OpenProgram can create, version, find, and run reusable Python Workflow packages. A Workflow is appropriate when a task needs a stable multi-stage structure,">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -89,6 +89,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
+<a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写 Workflow package" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write a Workflow package</a>
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
@@ -99,7 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
-<a class="navlink active" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程agentic workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programmed agentic workflows</a>
+<a class="navlink active" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程 Workflow" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Self-programming Workflows</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="询问 OpenProgram 自身">Asking about OpenProgram</div>
@@ -132,175 +133,53 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程agentic workflow">Self-programmed agentic workflows</span></nav><h1 id="self-programmed-agentic-workflows">Self-programmed agentic workflows<a class="header-anchor" href="#self-programmed-agentic-workflows">#</a></h1>
-<p>OpenProgram's self-programmed workflow path writes a real Python program for a task and then executes it. The planner composes the program from the framework's building blocks — three-tier LLM primitives plus registered agentic functions — and control flow is plain Python: <code>if</code>, <code>for</code>, exceptions. The run model is the same as a developer's: the whole program runs top to bottom; if it crashes, the planner reads the traceback, fixes the code, and reruns it, with completed calls replayed from recorded results so the rerun effectively continues from the point of failure.</p>
-<p>The former single <code>agentic_workflow(task)</code> call is being split into four public entries. Search, create, revise, and run stay independent; <code>auto_workflow</code> only orchestrates those steps. This split is being implemented — use the four names below for new work.</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程 Workflow">Self-programming Workflows</span></nav><h1 id="self-programming-workflows">Self-programming Workflows<a class="header-anchor" href="#self-programming-workflows">#</a></h1>
+<p>OpenProgram can create, version, find, and run reusable Python Workflow packages. A Workflow is appropriate when a task needs a stable multi-stage structure, explicit recovery, repeated use, or reviewable version history. A one-off task that one Agent can finish directly does not need a new Workflow.</p>
+<h2 id="the-four-current-entries">The four current entries<a class="header-anchor" href="#the-four-current-entries">#</a></h2>
 <table>
 <thead>
 <tr>
 <th>Entry</th>
-<th>Who can call it</th>
 <th>Responsibility</th>
-<th>Must not</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>search_workflows(task)</code></td>
-<td>Agent and user</td>
-<td>Deterministically return ranked candidates with fixed revisions, contracts, permissions, and hit evidence.</td>
-<td>Call a model, write files, execute a candidate, or publish.</td>
+<td>Search the local catalog without calling a model, writing files, or running a candidate.</td>
 </tr>
 <tr>
 <td><code>create_workflow(task)</code></td>
-<td>Agent and user</td>
-<td>Read candidate components, generate one new package, validate it, publish it, and return a ref.</td>
-<td>Execute the user task or modify an existing project.</td>
+<td>Author and statically validate one new package, then publish its first Git revision. It does not execute the user's task.</td>
 </tr>
 <tr>
 <td><code>revise_workflow(workflow_id, request)</code></td>
-<td>Agent and user</td>
-<td>Create a new candidate from a specified revision, validate it, and publish a new revision.</td>
-<td>Run as a silent follow-up to an ordinary failure, or overwrite an old revision.</td>
+<td>Author and statically validate a new revision of one named package. Previous revisions remain available.</td>
 </tr>
 <tr>
 <td><code>auto_workflow(task)</code></td>
-<td>User form only</td>
-<td>Call search, let one visible selection agent choose reuse or create, then run the chosen workflow.</td>
-<td>Appear in the Agent tool list or search candidates, or auto-revise a published project.</td>
+<td>User-only orchestration: search, choose reuse or justified creation, then run the selected fixed revision.</td>
 </tr>
 </tbody>
 </table>
-<p>A Chat Agent that already has a matching Program or Workflow calls it directly. It searches only when the catalog is large or a candidate is not loaded. It never calls <code>auto_workflow</code>. Use <code>auto_workflow</code> from the Programs panel or a function form when you want one request to search, choose, create if needed, and run. On the Programs page these four names are Workflow capabilities; <code>auto_workflow</code> is labeled as a user-only auto entry.</p>
-<p>Every workflow run still creates an independent instance with its own directory under the session repository — <code>workflows/&lt;run_id&gt;/</code> holding <code>code.py</code> and <code>state.json</code>. Instances share nothing: run as many concurrent workflows as you want.</p>
-<h2 id="small-tasks-are-not-split">Small tasks are not split<a class="header-anchor" href="#small-tasks-are-not-split">#</a></h2>
-<p>The planner's first decision is whether the task needs a program at all. A task one agent finishes in a single pass — a small edit, one question answered, one file written — is executed directly, because writing a program for it costs more than doing it. Programs are for tasks that genuinely exceed one pass: several deliverables, work spread across stages, or steps that depend on earlier output.</p>
-<h2 id="the-generated-program">The generated program<a class="header-anchor" href="#the-generated-program">#</a></h2>
-<p>The planner has read-only tools (read, grep, glob, list) and receives the task plus the function registry — the list of building blocks. It produces a plain Python module with a <code>def workflow()</code> entry point:</p>
-<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">find_issues</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
-        <span class="s2">"Review openprogram/auth/ file by file for error handling and "</span>
-        <span class="s2">"concurrency issues. Output a findings list graded HIGH / MEDIUM / LOW "</span>
-        <span class="s2">"with file paths and line numbers."</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">"find issues"</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">findings</span> <span class="o">=</span> <span class="n">find_issues</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s2">"HIGH"</span> <span class="ow">in</span> <span class="n">findings</span><span class="p">:</span>
-        <span class="n">agent</span><span class="p">(</span><span class="s2">"Fix the HIGH findings and get the related tests passing: "</span> <span class="o">+</span> <span class="n">findings</span><span class="p">,</span>
-              <span class="n">description</span><span class="o">=</span><span class="s2">"fix auth"</span><span class="p">)</span>          <span class="c1"># a working agent, its profile carries tools</span>
-        <span class="n">checks</span> <span class="o">=</span> <span class="n">run_tests</span><span class="p">()</span>                    <span class="c1"># a registered agentic function, called by name</span>
-        <span class="k">if</span> <span class="s2">"failed"</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"tests still failing after fix: "</span> <span class="o">+</span> <span class="n">checks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write a report summarizing the results above"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"report"</span><span class="p">)</span>
+<p>A Chat Agent can call search, create, revise, or a concrete Workflow directly. It cannot call <code>auto_workflow</code>; that complete orchestration entry is available from the Programs UI.</p>
+<h2 id="published-packages-and-runs-are-different">Published packages and runs are different<a class="header-anchor" href="#published-packages-and-runs-are-different">#</a></h2>
+<p>A published Workflow is a multi-file Python package with its own Git history. Every execution copies one immutable revision into the session repository and creates a separate <code>run_id</code> with <code>state.json</code>, checkpoints, results, and a <code>project_ref.json</code> record.</p>
+<p>Running a published package never edits or republishes it. If execution fails, the run becomes <code>failed</code> and preserves the original error and checkpoints. Changing the package requires an explicit <code>revise_workflow</code> call.</p>
+<p>Legacy <code>code.py</code> runs can still be resumed for compatibility, but the legacy single-module format is not accepted for new authoring and is excluded from Workflow search.</p>
+<h2 id="writing-a-package-yourself">Writing a package yourself<a class="header-anchor" href="#writing-a-package-yourself">#</a></h2>
+<p>The current authoring contract is documented in <a href="/docs/capabilities/workflows/authoring.html">Write a Workflow package</a>. It includes the required files, metadata, entry-point signature, allowed imports, validation command, and current integration limits.</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./my_workflow
+openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./my_workflow<span class="w"> </span>--json
 </code></pre>
-<p>Imports are forbidden — the framework injects everything the program may call:</p>
-<table>
-<thead>
-<tr>
-<th>Injected name</th>
-<th>What it is</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>llm</code></td>
-<td>Single model request, no tools, no loop. Signature: <code>llm(prompt, model=&quot;&quot;, effort=&quot;&quot;, response_format=None, ...)</code></td>
-</tr>
-<tr>
-<td><code>agent</code></td>
-<td>Tool loop, repeatedly calls llm + executes tools until done. Signature: <code>agent(prompt, model=&quot;&quot;, effort=&quot;&quot;, tools=None, max_iterations=20, ...)</code></td>
-</tr>
-<tr>
-<td><code>goal</code></td>
-<td>Judgment loop, repeatedly calls agent + uses llm to judge condition until satisfied. Signature: <code>goal(prompt, condition, model=&quot;&quot;, effort=&quot;&quot;, max_rounds=10, ...)</code></td>
-</tr>
-<tr>
-<td><code>validate_and_retry</code></td>
-<td>Validation and retry: execute action, use llm to check result, retry if failed. Signature: <code>validate_and_retry(action, check, retry, max_retries=2)</code></td>
-</tr>
-<tr>
-<td><code>route</code></td>
-<td>Route selection: let llm choose one option from a list. Signature: <code>route(question, options, context=&quot;&quot;)</code></td>
-</tr>
-<tr>
-<td><code>conditional</code></td>
-<td>Conditional branch: llm judges condition (YES/NO) and executes corresponding branch. Signature: <code>conditional(condition, context=&quot;&quot;, if_true, if_false)</code></td>
-</tr>
-<tr>
-<td>registered agentic functions</td>
-<td>Every function in the <code>AGENTIC_MODULES</code> registry, callable by name. The planner's prompt carries this catalog.</td>
-</tr>
-</tbody>
-</table>
-<p>The three tiers compose: goal is based on agent, agent is based on llm. Control flow primitives use llm for judgment, simplifying planner's code generation.</p>
-<p><strong>Control flow primitives example</strong>:</p>
-<pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># Validation and retry: retry if first result doesn't satisfy check</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">validate_and_retry</span><span class="p">(</span>
-        <span class="n">action</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Find auth related files"</span><span class="p">),</span>
-        <span class="n">check</span><span class="o">=</span><span class="s2">"File count &gt;= 3 and includes oauth"</span><span class="p">,</span>
-        <span class="n">retry</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Expand search to include oauth and openid files"</span><span class="p">)</span>
-    <span class="p">)</span>
-    
-    <span class="c1"># Route selection: let llm choose strategy</span>
-    <span class="n">strategy</span> <span class="o">=</span> <span class="n">route</span><span class="p">(</span>
-        <span class="n">question</span><span class="o">=</span><span class="s2">"Choose migration strategy"</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"Direct migration"</span><span class="p">,</span> <span class="s2">"Refactor then migrate"</span><span class="p">],</span>
-        <span class="n">context</span><span class="o">=</span><span class="n">files</span>
-    <span class="p">)</span>
-    
-    <span class="c1"># Conditional branch: execute different branches based on llm judgment</span>
-    <span class="n">plan</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span>
-        <span class="n">condition</span><span class="o">=</span><span class="s2">"strategy is direct migration"</span><span class="p">,</span>
-        <span class="n">context</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span>
-        <span class="n">if_true</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write direct migration plan: "</span> <span class="o">+</span> <span class="n">files</span><span class="p">),</span>
-        <span class="n">if_false</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">agent</span><span class="p">(</span><span class="s2">"Write refactor plan: "</span> <span class="o">+</span> <span class="n">files</span><span class="p">)</span>
-    <span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">plan</span>
-</code></pre>
-<p>The module is validated before it runs: it must parse, it must define <code>workflow()</code>, and it must not import. Invalid code is sent back to the planner with the concrete error, as many times as it takes.</p>
-<p>There is no checkpoint syntax in the program. Recording is the framework's job: every injected callable is wrapped, and each real execution is written to <code>state.json</code> before and after it happens, keyed by function name, invocation order, and an argument digest. Verification is not imposed by the framework either — the planner writes checks into the program and raises when they fail, which routes into the revision loop.</p>
-<h2 id="resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls<a class="header-anchor" href="#resuming-rerun-the-whole-program-replay-completed-calls">#</a></h2>
-<p>There is no scheduler and no &quot;next item&quot; logic. Resuming means executing <code>workflow()</code> again from its first line. The only mechanism is short-circuiting at call boundaries: a call already completed in <code>state.json</code> — same name, same order, same arguments — is not executed again; it returns its recorded result instantly. The rerun flashes past finished work and starts doing real work at the first incomplete call. Control flow is re-evaluated every time (<code>if</code> re-branches, <code>for</code> re-loops); only the expensive call results are restored.</p>
-<p>A killed process resumes the same way: state changes hit disk before the work happens, so rerunning the instance by its <code>run_id</code> continues it. Resuming is explicit — each new run creates a fresh instance and returns its <code>run_id</code>; to continue an existing one, pass that <code>run_id</code> back. Nothing is matched by task text.</p>
-<h2 id="revision-after-an-error">Revision after an error<a class="header-anchor" href="#revision-after-an-error">#</a></h2>
-<p>When the program raises — a syntax error, a failed call, or a check the planner wrote itself — the handling is what a developer does: the planner gets the traceback, the current code, and the run records in <code>state.json</code>, rewrites <code>code.py</code>, and the whole program reruns. Untouched completed calls replay as before, so a revision never discards finished work. Old code versions are archived in the instance directory, and the revision history is part of the return value.</p>
-<p>There is no abandoned state. Invalid code and runtime failures both go back to the planner with the concrete error, as many rounds as needed. The only forced stop is <code>capped</code>: 40 real executions (replays don't count) ends the run, because a program still growing at that point is a planning failure.</p>
-<h2 id="what-it-returns">What it returns<a class="header-anchor" href="#what-it-returns">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"completed"</span><span class="p">,</span> <span class="s2">"run_id"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"task"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"result"</span><span class="p">:</span> <span class="err">…</span><span class="p">,</span> <span class="s2">"revisions"</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}</span>
-</code></pre>
-<table>
-<thead>
-<tr>
-<th>Status</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>completed</code></td>
-<td><code>workflow()</code> returned. The result and full run records come with it.</td>
-</tr>
-<tr>
-<td><code>capped</code></td>
-<td>The run hit its ceiling of 40 real executions.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="compared-to-a-session-goal">Compared to a session goal<a class="header-anchor" href="#compared-to-a-session-goal">#</a></h2>
-<p>A <a href="/docs/capabilities/goal.html">goal</a> keeps one session working until a condition holds; the conversation is continuous and grows with every turn. A workflow writes the plan down as a program and runs each call in its own bounded context. Use a goal when the finish line is clear but the path is not; use a workflow when the work is long enough that carrying all of it in one context is the problem. The todo planning board is not involved — a workflow's state lives in its own instance directory.</p>
+<p>Static validation does not import the package or execute <code>tests/test_workflow.py</code>. A forced-sandbox behavior-test gate and a manual publish command are not yet public capabilities; the CLI reports this distinction explicitly.</p>
+<p>For installable repositories that expose a set of agentic functions rather than one generated Workflow package, use the separate <a href="/docs/capabilities/installing-harnesses.html">harness installation contract</a>.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/goal.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Session goals</span></a><a class="pn-link pn-next" href="/docs/capabilities/docs-question.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Asking about OpenProgram itself</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#small-tasks-are-not-split">Small tasks are not split</a>
-<a class="" href="#the-generated-program">The generated program</a>
-<a class="" href="#resuming-rerun-the-whole-program-replay-completed-calls">Resuming: rerun the whole program, replay completed calls</a>
-<a class="" href="#revision-after-an-error">Revision after an error</a>
-<a class="" href="#what-it-returns">What it returns</a>
-<a class="" href="#compared-to-a-session-goal">Compared to a session goal</a>
+<a class="" href="#the-four-current-entries">The four current entries</a>
+<a class="" href="#published-packages-and-runs-are-different">Published packages and runs are different</a>
+<a class="" href="#writing-a-package-yourself">Writing a package yourself</a>
 </div></aside>
 </div>
 

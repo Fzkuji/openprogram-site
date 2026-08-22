@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787405904" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787414445" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -464,6 +464,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   → project_relocated {ok, old_path, path, node_id} + a fresh projects_list
 </code></pre>
 <p>It changes the <strong>project's path</strong>, never the session→project binding, which is why it stays legal after the freeze. Every session bound to that project follows the move. The default project refuses to relocate: its path is the home directory, restored on every <code>get_default_project</code> read.</p>
+<h3 id="following-a-move-automatically">Following a move automatically<a class="header-anchor" href="#following-a-move-automatically">#</a></h3>
+<p>The project's identity is its stable id; the path is a mutable attribute. (Claude Code and Codex CLI both key sessions on the absolute path itself and therefore lose history on a folder move; OpenProgram's model is deliberately the opposite.) Three mechanisms make a moved folder reconnect without the user knowing the word &quot;relocate&quot;:</p>
+<ol>
+<li><strong>Relocation rewrites the location index.</strong> <code>sessions/locations.json</code> snapshots each session repo's absolute path at create time. <code>relocate_project</code> rewrites the entry of every session bound to the project to <code>&lt;new&gt;/.openprogram/sessions/&lt;id&gt;</code> (<code>SessionStore.relocate_project_sessions</code>) and drops cached repo objects. Ad-hoc sessions in the home root have no entry and stay put.</li>
+<li><strong>Lookup heals itself.</strong> When <code>_session_dir</code> finds no repo at the recorded location, it falls back to the bound project's <strong>current</strong> registry path and rewrites the index on a hit. This covers any ordering of move → relocate → restart across processes.</li>
+<li><strong>Opening the new location claims the moved project.</strong> Before <code>resolve_project</code> mints a path-derived id for an unknown directory, it checks the directory's <code>.openprogram/sessions/&lt;id&gt;</code> footprint against every registered project whose own path is gone. Session ids matching exactly one such project are deterministic evidence of a move: the old project is relocated (id kept) instead of a duplicate being created. A folder whose registered path still exists is a copy, never claimed. No folder-name or background-scan guessing.</li>
+</ol>
+<p>Startup cleanup respects the same reality: a project-bound session whose recorded location is unreachable is <strong>not</strong> an empty shell — the repo exists elsewhere on disk — so it is never purged for missing history while the project is un-relocated.</p>
+<p>The composer's draft picker lists <code>path_missing</code> projects (clicking one opens the locate flow instead of selecting it), and the <code>/projects</code> page shows the warning with a &quot;Locate folder…&quot; action; neither surface silently hides a project whose folder moved.</p>
 <h3 id="the-relocate-record-node">The relocate record node<a class="header-anchor" href="#the-relocate-record-node">#</a></h3>
 <p>The move changes where every later turn runs, so it is recorded in the session graph rather than mutating the registry silently (<code>openprogram/store/project/relocate_node.py</code>):</p>
 <table>
@@ -737,6 +746,7 @@ jumping to the top. Messages, branches, and history files are untouched;
 <a class="" href="#main-project-binding">Main project binding</a>
 <a class="lvl-3" href="#where-the-choice-is-made">Where the choice is made</a>
 <a class="lvl-3" href="#repairing-a-missing-directory">Repairing a missing directory</a>
+<a class="lvl-3" href="#following-a-move-automatically">Following a move automatically</a>
 <a class="lvl-3" href="#the-relocate-record-node">The relocate record node</a>
 <a class="" href="#writing-a-message">Writing a message</a>
 <a class="lvl-3" href="#preview-truncation">preview truncation</a>
