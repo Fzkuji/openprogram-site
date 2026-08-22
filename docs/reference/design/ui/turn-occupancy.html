@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787359471" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787359887" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -446,10 +446,12 @@ unwind.</p>
 <h2 id="http-abort-do-not-wait-for-the-next-token">HTTP abort — do not wait for the next token<a class="header-anchor" href="#http-abort-do-not-wait-for-the-next-token">#</a></h2>
 <p>Anthropic and OpenAI Completions used to <code>async for</code> the SDK stream
 and only then check the cancel signal. Mid-reasoning that is seconds.</p>
-<p><code>iter_until_cancelled</code> waits for the next iterator event with a ≤250ms
-poll of the cancel signal (Codex already does this). On cancel it
-exits so the <code>async with</code> closes the HTTP stream. Grok Subscription
-uses the Completions path and gets the same abort.</p>
+<p><code>iter_until_cancelled</code> polls the cancel signal every ≤250ms while
+<strong>one</strong> <code>__anext__</code> stays outstanding. Do not <code>wait_for</code> the next
+chunk: a timeout cancels that read and kills httpx/OpenAI SSE
+iterators. Grok thinking often has no chunk for longer than 250ms;
+that finalized a completed assistant with empty content.
+On cancel it exits so the <code>async with</code> closes the HTTP stream.</p>
 <h2 id="4s-grace-is-for-real-child-processes">4s grace is for real child processes<a class="header-anchor" href="#4s-grace-is-for-real-child-processes">#</a></h2>
 <p><code>CANCEL_GRACE_S = 4.0</code> stays. It applies when the owner has a
 subprocess or a terminate hook that kills a child (tools, process
