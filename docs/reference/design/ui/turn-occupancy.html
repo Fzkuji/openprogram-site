@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787359887" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787361738" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -452,6 +452,11 @@ chunk: a timeout cancels that read and kills httpx/OpenAI SSE
 iterators. Grok thinking often has no chunk for longer than 250ms;
 that finalized a completed assistant with empty content.
 On cancel it exits so the <code>async with</code> closes the HTTP stream.</p>
+<p><code>finish_reason</code> is the end of the turn. Do not wait forever for
+<code>[DONE]</code> or a trailing <code>include_usage</code> chunk — Grok/xAI often leave
+the SSE open after the last token, which looks like &quot;still answering&quot;
+with the text already on screen. Drain usage for a short window
+(<code>USAGE_DRAIN_S</code>), then emit <code>EventDone</code>.</p>
 <h2 id="4s-grace-is-for-real-child-processes">4s grace is for real child processes<a class="header-anchor" href="#4s-grace-is-for-real-child-processes">#</a></h2>
 <p><code>CANCEL_GRACE_S = 4.0</code> stays. It applies when the owner has a
 subprocess or a terminate hook that kills a child (tools, process
