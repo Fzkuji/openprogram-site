@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787414445" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787414928" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -396,6 +396,44 @@ mechanics). Code: <code>use-chat-submit.ts</code> (<code>stopSession</code>),
 <code>server.py</code> (<code>_finish_owned_run</code> / <code>_try_reserve_run</code>),
 <code>run_control.py</code> (<code>cancel_execution</code>, <code>CANCEL_GRACE_S</code>),
 <code>providers/utils/cancelable_stream.py</code>.</p>
+<h2 id="invariants-from-codex-cli-and-claude-code">Invariants (from Codex CLI and Claude Code)<a class="header-anchor" href="#invariants-from-codex-cli-and-claude-code">#</a></h2>
+<p>The reference implementations agree on five rules; OpenProgram follows
+them. Codex CLI: cancellation authority lives on the core session's
+running turn; UI running-state derives only from <code>TurnStarted</code> /
+<code>TurnCompleted</code> / <code>TurnAborted</code>; there is no protocol-level
+<code>cancelling</code> state. Claude Code: ESC flips a synchronous state machine
+(<code>QueryGuard</code>) to idle in the same frame, commits partial streamed
+text as a normal assistant message, then aborts; an interrupted turn
+has no intermediate status.</p>
+<ol>
+<li><strong>One occupancy source of truth per side.</strong> Client: <code>runningTasks</code>
+in the session store, mirrored to the composer. Server:
+<code>_running_tasks</code> + active runtime. Message <code>status</code> renders bubbles;
+it never gates the composer, and the composer state never gates
+bubble rendering.</li>
+<li><strong>Terminal states are irreversible.</strong> Once a message is <code>cancelled</code>
+/ <code>completed</code> / <code>failed</code> / <code>error</code> / <code>interrupted</code> / <code>done</code>, no
+later frame (<code>execution.updated</code> with <code>cancelling</code>, late
+<code>running_task</code>, late <code>tree_update</code>) may move it back to a running
+look. <code>cancelling</code> is a server-internal grace state; the client
+treats it as already-cancelled and never stores it on the running
+task or renders it as &quot;thinking&quot;.</li>
+<li><strong>Placeholders never overwrite identity.</strong> An empty
+<code>{ msg_id: &quot;&quot; }</code> occupancy reservation may only be written into an
+empty slot. A slot holding <code>msg_id</code> / <code>execution_id</code> is what makes
+stop able to send <code>execution.cancel</code>; stomping it downgrades stop
+to the fallback <code>stop</code> action.</li>
+<li><strong>Only the turn's own terminal frame releases occupancy.</strong> A
+nested <code>display:&quot;runtime&quot;</code> result (inline @agentic_function, spawn
+attach) finalizes its card, not the turn. Late <code>running_task</code>
+frames for a turn the user already cancelled must not revive the
+slot.</li>
+<li><strong>Stop never fails silently.</strong> If the server cannot resolve an
+execution to cancel it answers with an error frame (the HTTP
+route's 404 equivalent), so a dead stop is visible instead of a
+turn that keeps streaming while the client already dropped
+occupancy.</li>
+</ol>
 <h2 id="queue-vs-interrupt-claude-code">Queue vs interrupt (Claude Code)<a class="header-anchor" href="#queue-vs-interrupt-claude-code">#</a></h2>
 <p>Claude Code: type+Enter while a turn is running = <strong>queue</strong>. Esc/stop
 interrupts the live turn and then immediately sends what was queued.</p>
@@ -466,6 +504,7 @@ cancel + HTTP abort is enough; occupancy is already released.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/window-lifecycle.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop window lifecycle</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#invariants-from-codex-cli-and-claude-code">Invariants (from Codex CLI and Claude Code)</a>
 <a class="" href="#queue-vs-interrupt-claude-code">Queue vs interrupt (Claude Code)</a>
 <a class="" href="#occupancy-is-released-on-cancel-intent">Occupancy is released on cancel intent</a>
 <a class="" href="#0ms-ui">0ms UI</a>
