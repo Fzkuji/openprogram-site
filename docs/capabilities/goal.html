@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787436547" data-alt-lang-url="/docs/capabilities/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787478602" data-alt-lang-url="/docs/capabilities/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Session goals · OpenProgram Docs</title>
-<meta name="description" content="A goal is a condition the session keeps working toward. You set it once with /goal ; after every turn the runtime checks whether the condition holds, and while">
+<title>Goal Workflow · OpenProgram Docs</title>
+<meta name="description" content="Goal repeatedly runs an agent and asks a separate completion judge whether a condition has been met. There is one Goal Workflow with two ways to supply its">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/goal.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/goal.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/goal.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/goal.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Session goals"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Goal Workflow"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/goal.html">
-<meta property="og:title" content="Session goals · OpenProgram Docs">
-<meta property="og:description" content="A goal is a condition the session keeps working toward. You set it once with /goal ; after every turn the runtime checks whether the condition holds, and while">
+<meta property="og:title" content="Goal Workflow · OpenProgram Docs">
+<meta property="og:description" content="Goal repeatedly runs an agent and asks a separate completion judge whether a condition has been met. There is one Goal Workflow with two ways to supply its">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Session goals · OpenProgram Docs">
-<meta name="twitter:description" content="A goal is a condition the session keeps working toward. You set it once with /goal ; after every turn the runtime checks whether the condition holds, and while">
+<meta name="twitter:title" content="Goal Workflow · OpenProgram Docs">
+<meta name="twitter:description" content="Goal repeatedly runs an agent and asks a separate completion judge whether a condition has been met. There is one Goal Workflow with two ways to supply its">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -96,7 +96,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
-<a class="navlink active" href="/docs/capabilities/goal.html" data-title-zh="会话目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Session goals</a>
+<a class="navlink active" href="/docs/capabilities/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Goal Workflow</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
@@ -133,67 +133,73 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="会话目标">Session goals</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="会话目标">Session goals</span></nav><h1 id="session-goals">Session goals<a class="header-anchor" href="#session-goals">#</a></h1>
-<p>A goal is a condition the session keeps working toward. You set it once with <code>/goal</code>; after every turn the runtime checks whether the condition holds, and while it does not, the agent continues on its own — each continuation is a normal turn you can watch, steer, or stop. The session does not go quiet just because the model stopped talking.</p>
-<pre><code>/goal all unit tests pass and the README documents the new flag
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="会话目标">Session goals</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Goal Workflow</span></nav><h1 id="goal-workflow">Goal Workflow<a class="header-anchor" href="#goal-workflow">#</a></h1>
+<p>Goal repeatedly runs an agent and asks a separate completion judge whether a
+condition has been met. There is one Goal Workflow with two ways to supply its
+inputs.</p>
+<h2 id="use-the-programs-form">Use the Programs form<a class="header-anchor" href="#use-the-programs-form">#</a></h2>
+<p>Open <strong>Programs → Workflow → goal → Use</strong> and fill in <code>prompt</code> and <code>condition</code>.
+This is a direct invocation: the GoalRun starts without reading earlier chat
+history. Its runtime card is still recorded in the owning conversation.</p>
+<h2 id="use-the-current-conversation">Use the current conversation<a class="header-anchor" href="#use-the-current-conversation">#</a></h2>
+<p>Type a condition after <code>/goal</code>:</p>
+<pre><code class="language-text">/goal all unit tests pass and the README documents the new flag
 </code></pre>
-<p>This stores the goal on the session and immediately starts a first turn with the condition text as the instruction. From then on, whenever a turn ends and the goal is still unmet, the runtime sends a localized follow-up turn prefixed with <code>[goal]</code>, carrying the judge's reason for why it is not done yet. Continuation turns always have web search available on top of the session's tool settings — they run unattended, so they get the search tool you could have toggled on; your session settings themselves are not changed.</p>
-<h2 id="your-one-liner-is-refined-automatically">Your one-liner is refined automatically<a class="header-anchor" href="#your-one-liner-is-refined-automatically">#</a></h2>
-<p>A single sentence cannot cover everything a judge needs, so right after you set a goal a background step expands it into a full specification: a checklist of verifiable completion criteria (including process requirements such as &quot;read these sources before writing that section&quot;), explicit boundaries for what is out of scope, and the checklist the judge walks item by item. It may glance at the working directory to understand the task context. The result appears as a system row in the transcript, so you see exactly what the system understood the goal to be — if it misread your intent, <code>/goal clear</code> and set the goal again with more detail. Your original text is kept unchanged; judging uses the refined specification, and falls back to your text if the refinement has not finished or failed. The refinement never delays the goal: the first working turn starts in parallel.</p>
-<h2 id="how-a-goal-is-judged">How a goal is judged<a class="header-anchor" href="#how-a-goal-is-judged">#</a></h2>
-<p>One decision agent decides. After each turn, a spawned judge turn reads the goal text plus a compacted view of the conversation (the active summary when one exists, plus the latest turns and tool results) and answers a strict yes/no with a reason. It has inspection tools (bash, read, grep, glob, list) and checks the working directory when it deems that necessary — the judgment is entirely its own, and only its &quot;met&quot; counts as completion. The judge is deliberately not the working agent asking itself &quot;am I done?&quot; — self-reports run optimistic; the verdict comes from a separate context. The whole judgment is one agentic function — <code>goal</code> in the Programs panel — so you can run it by hand against any goal text and see exactly how a verdict is reached. The judge may also decide the run must pause and ask you something; how freely it asks depends on whether the session is attended, and it can ask at most once per hour — further questions inside that window make it pick the most reasonable option itself and continue with the decision written down. A goal session stops only through this judge or <code>/goal clear</code>; the <code>turn.stop</code> hook gate applies to sessions without a goal.</p>
-<h2 id="writing-a-condition-that-works">Writing a condition that works<a class="header-anchor" href="#writing-a-condition-that-works">#</a></h2>
-<p>Write the condition as something the transcript can prove, not a feeling:</p>
-<ul>
-<li>Good: &quot;<code>tests/unit</code> passes and the new page is registered in <code>nav.py</code>&quot; — the judge can see test output and file edits.</li>
-<li>Good: &quot;the script prints <code>OK</code> for all 12 inputs&quot; — provable by output.</li>
-<li>Weak: &quot;the code is clean&quot; / &quot;the feature works well&quot; — nothing in the transcript settles it, so the judge guesses and the loop wanders.</li>
-</ul>
-<h2 id="status-clearing-stopping">Status, clearing, stopping<a class="header-anchor" href="#status-clearing-stopping">#</a></h2>
-<pre><code>/goal            # show the goal, its status, turns used, and the last reason
-/goal clear      # remove it (aliases: stop / off / cancel)
+<p>This invokes the same Goal Workflow, but includes the current conversation's
+compacted context as initial evidence. The Workflow then uses the same
+refinement, judge, round limit, question handling, progress state, and terminal
+statuses as the Programs form.</p>
+<p>The active Goal appears in the composer GoalChip. A question from the judge
+uses the standard question panel and resumes the same Workflow execution after
+you answer.</p>
+<h2 id="status-and-control">Status and control<a class="header-anchor" href="#status-and-control">#</a></h2>
+<pre><code class="language-text">/goal
+/goal clear
 </code></pre>
-<p>The Stop button (and any cancel) works during continuation turns exactly as during your own turns — a continuation is an ordinary turn. Stopping does not clear the goal; it stays <code>active</code> and resumes judging after your next message. Use <code>/goal clear</code> to actually remove it.</p>
-<p>In the web UI an active goal shows as <code>◎ goal · N</code> in the chip row above the composer (N = turns used so far; <code>N/M</code> when you set a turn cap). It flips to <code>goal achieved</code> / <code>goal capped</code> / <code>goal error</code> when the loop ends.</p>
-<h2 id="when-the-loop-stops-by-itself">When the loop stops by itself<a class="header-anchor" href="#when-the-loop-stops-by-itself">#</a></h2>
+<p><code>/goal</code> reports the Goal associated with the current session. <code>/goal clear</code>
+marks an active or waiting Goal as cleared; the Workflow checks that state
+between rounds and stops without replacing it.</p>
+<p>The ordinary Stop control cancels the current Goal function run. Clearing and
+cancelling are different: clear changes the Goal state, while Stop cancels the
+execution boundary.</p>
+<h2 id="terminal-statuses">Terminal statuses<a class="header-anchor" href="#terminal-statuses">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>Outcome</th>
+<th>Status</th>
 <th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>achieved</code></td>
-<td>The decision agent answered met.</td>
+<td>The judge accepted the condition and every checklist item.</td>
 </tr>
 <tr>
 <td><code>capped</code></td>
-<td>The goal used its turn budget — only possible when you set one (setting <code>goal.max_turns</code>; empty by default = no cap). Raise the budget or split the goal.</td>
+<td>The configured round limit was reached.</td>
 </tr>
 <tr>
 <td><code>error</code></td>
-<td>A continuation turn did no tool work while the goal stayed unmet (spinning), or the judge failed three times in a row. The goal state and last reason stay visible in <code>/goal</code>.</td>
+<td>Repeated judge failure or checklist stall stopped the run.</td>
+</tr>
+<tr>
+<td><code>waiting_user</code></td>
+<td>The judge asked a question and is waiting for an answer.</td>
 </tr>
 <tr>
 <td><code>cleared</code></td>
-<td>You removed it.</td>
+<td>The current session cleared the Goal.</td>
 </tr>
 </tbody>
 </table>
-<p>A failed turn (provider error, cancellation) pauses the loop without consuming the goal — the goal stays <code>active</code> and judging resumes after the next completed turn.</p>
-<h2 id="where-it-works">Where it works<a class="header-anchor" href="#where-it-works">#</a></h2>
-<p><code>/goal</code> is a built-in command: the web composer, the TUI, and the Rich REPL all accept it, and the continuation loop runs in the worker, so it keeps going even if you close the tab. Goals set in one surface are visible from every other one — the state lives on the session.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-23</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/wiki-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Wiki Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-workflow.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-programming Workflows</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#your-one-liner-is-refined-automatically">Your one-liner is refined automatically</a>
-<a class="" href="#how-a-goal-is-judged">How a goal is judged</a>
-<a class="" href="#writing-a-condition-that-works">Writing a condition that works</a>
-<a class="" href="#status-clearing-stopping">Status, clearing, stopping</a>
-<a class="" href="#when-the-loop-stops-by-itself">When the loop stops by itself</a>
-<a class="" href="#where-it-works">Where it works</a>
+<a class="" href="#use-the-programs-form">Use the Programs form</a>
+<a class="" href="#use-the-current-conversation">Use the current conversation</a>
+<a class="" href="#status-and-control">Status and control</a>
+<a class="" href="#terminal-statuses">Terminal statuses</a>
 </div></aside>
 </div>
 

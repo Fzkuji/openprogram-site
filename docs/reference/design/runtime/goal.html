@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787436547" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787478602" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Session goals — the /goal continuation loop · OpenProgram Docs</title>
-<meta name="description" content="A session goal is a per-session condition stored in session meta; while it is active and unmet, the dispatcher keeps launching follow-up turns after every">
+<title>Goal Workflow · OpenProgram Docs</title>
+<meta name="description" content="The Goal capability has one executable Workflow: goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/goal.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/goal.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/goal.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/goal.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Session goals — the /goal continuation loop"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Goal Workflow"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/goal.html">
-<meta property="og:title" content="Session goals — the /goal continuation loop · OpenProgram Docs">
-<meta property="og:description" content="A session goal is a per-session condition stored in session meta; while it is active and unmet, the dispatcher keeps launching follow-up turns after every">
+<meta property="og:title" content="Goal Workflow · OpenProgram Docs">
+<meta property="og:description" content="The Goal capability has one executable Workflow: goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Session goals — the /goal continuation loop · OpenProgram Docs">
-<meta name="twitter:description" content="A session goal is a per-session condition stored in session meta; while it is active and unmet, the dispatcher keeps launching follow-up turns after every">
+<meta name="twitter:title" content="Goal Workflow · OpenProgram Docs">
+<meta name="twitter:description" content="The Goal capability has one executable Workflow: goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -310,6 +310,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
 <a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
+<a class="navlink active" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -318,7 +319,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink active" href="/docs/reference/design/runtime/goal.html" data-title-zh="会话目标 —— /goal 续轮循环" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Session goals — the /goal continuation loop</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
@@ -388,250 +388,85 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/turn-occupancy.html" data-title-zh="轮次占用 — 停止、队列与 session 槽位" data-href-en="/docs/reference/design/ui/turn-occupancy.html" data-href-zh="/docs/reference/design/ui/turn-occupancy.zh.html">Turn occupancy — stop, queue, and the session slot</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="会话目标 —— /goal 续轮循环">Session goals — the /goal continuation loop</span></nav><h1 id="session-goals-the-goal-continuation-loop">Session goals — the /goal continuation loop<a class="header-anchor" href="#session-goals-the-goal-continuation-loop">#</a></h1>
-<p>A session goal is a per-session condition stored in session meta; while it is active and unmet, the dispatcher keeps launching follow-up turns after every completed turn. The design converges Claude Code's <code>/goal</code>, Codex goals, and OpenHands <code>run_goal</code>: an outer loop around whole turns, a verdict source separate from the working model, and hard stop rules so the loop cannot run away.</p>
-<h2 id="where-the-loop-lives">Where the loop lives<a class="header-anchor" href="#where-the-loop-lives">#</a></h2>
-<p>The loop is inside <code>process_user_turn</code> (<code>openprogram/agent/dispatcher/__init__.py</code>). The former body of <code>process_user_turn</code> is now <code>_process_turn_once</code>; the public entry runs one full turn — persistence, agent loop, finalize (phase 6/7), idle marking, result event — and then hands the request plus its <code>TurnResult</code> to <code>continue_goal_turns</code> (<code>openprogram/programs/workflow/goal/</code>).</p>
-<p>Placement consequences:</p>
-<ul>
-<li>Every caller inherits the behavior — webui <code>_execute/chat.py</code>, channels, the CLI paths that route through the dispatcher, and the task runner's follow-up delivery all call <code>process_user_turn</code>, so none of them needs goal awareness.</li>
-<li>Each continuation runs the full turn pipeline: <code>continue_goal_turns</code> calls <code>_process_turn_once</code> (never <code>process_user_turn</code>, so the loop cannot nest) with a <code>TurnRequest</code> built by <code>dataclasses.replace</code> — <code>source=&quot;goal_continue&quot;</code>, <code>user_text=&quot;[goal] 未达成：&lt;reason&gt;。继续。&quot;</code>, fresh <code>user_msg_id</code>, <code>branch_from=INHERIT_PARENT</code>; model / permission settings carry over from the triggering request. Tools also carry over, with one forced addition: a continuation is unattended autonomous work, so <code>_tools_with_forced_web_search</code> overlays <code>web_search</code> onto the inherited per-turn tools override (a <code>None</code> override becomes the dict intent <code>{&quot;enabled&quot;: true, &quot;web_search&quot;: true}</code>, a dict intent gets <code>web_search: true</code>, an explicit name list gets the name appended). This is per-turn only — the session's persisted <code>web_search</code> setting is untouched — and the judge's <code>DECISION_TOOLS</code> stay inspection-only. Each continuation turn is persisted, git-committed and compacted like any user-sent turn, mirroring the task runner's follow-up construction (<code>agent/job/runner.py</code>).</li>
-<li>The loop never uses <code>agent_loop</code>'s in-turn follow-up mechanism: a goal continuation is a conversation-level event, and it must survive worker restarts, compaction, and branch operations the same way a user message would.</li>
-<li>A crash anywhere in the goal machinery is caught in the wrapper and returns the already-finished turn's result — the goal loop can fail, a user's turn result cannot be lost to it.</li>
-</ul>
-<h2 id="setting-a-goal-spec-refinement">Setting a goal: spec refinement<a class="header-anchor" href="#setting-a-goal-spec-refinement">#</a></h2>
-<p><code>/goal &lt;text&gt;</code> stores the user's sentence verbatim as <code>text</code> and immediately starts a background <strong>spec refinement</strong> step (<code>_start_spec_refinement</code> → <code>refine_goal_spec</code>, a daemon thread — setting the goal never waits on it). The refinement is one spawned same-session agent turn via the internal <code>refine</code> function in the goal module (<code>openprogram/programs/workflow/goal/</code> — same module as the judge, deliberately NOT an <code>@agentic_function</code>, so the Programs panel keeps its single <code>goal</code> entry; the prompt IS <code>refine</code>'s docstring). The agent has inspection tools plus search (<code>read</code>, <code>glob</code>, <code>grep</code>, <code>list</code>, <code>bash</code>, <code>web_search</code>) and may look at the working directory to understand the task context. It expands the one-liner into a full specification — verifiable completion criteria (formal outcomes plus process requirements such as &quot;read sources X and Y before writing section Z&quot;, &quot;verify every citation individually&quot;), explicit out-of-scope boundaries, and the acceptance checklist the judge walks item by item — and answers strict JSON <code>{&quot;spec&quot;: str, &quot;checklist&quot;: [str, …]}</code> (3–12 short, independently verifiable items in the goal's language; the parser cleans to non-empty strings and truncates at 20; a plain-prose reply still counts as a spec, with an empty checklist).</p>
-<p><strong>Reference anchoring — a reference is a floor, not a style suggestion.</strong> Any goal, not just papers, can carry a reference anchor: when the goal names or implies a comparable existing work — or an established one is findable — refinement reads it and turns it into countable acceptance criteria, and the judge verifies the deliverable meets or exceeds the reference on each one. The refinement toolset includes <code>web_search</code> for this.</p>
-<table>
-<thead>
-<tr>
-<th>Goal kind</th>
-<th>Reference anchor</th>
-<th>Extracted criteria (examples)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Literature survey</td>
-<td>A published survey in the field (user-given or searched)</td>
-<td>Section count and per-section length, total references, per-paper annotation ratio, taxonomy figure / comparison tables present</td>
-</tr>
-<tr>
-<td>Code feature</td>
-<td>An existing implementation / competing library</td>
-<td>Feature list covered, edge cases handled, test coverage shape</td>
-</tr>
-<tr>
-<td>Document / page</td>
-<td>A prior version or a competitor's page</td>
-<td>Sections covered, depth per topic, examples per concept</td>
-</tr>
-<tr>
-<td>No reference given or findable</td>
-<td>—</td>
-<td>Skipped — refinement must not invent one</td>
-</tr>
-</tbody>
-</table>
-<p>Countable structure alone is not enough — a deliverable can match the reference's chapter and citation counts and still read as bullet-point notes. Refinement therefore also extracts a <strong>form anchor</strong> (how the reference presents its content) and a <strong>verification-depth rule</strong>, both as checkable items:</p>
-<table>
-<thead>
-<tr>
-<th>Anchor dimension</th>
-<th>Example checklist items</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Form (prose deliverables)</td>
-<td>&quot;Body sections argue in connected paragraphs; list lines under 10% of body lines&quot;, &quot;every major section carries ≥ N words of connected prose&quot;, &quot;figure count meets the reference's&quot;</td>
-</tr>
-<tr>
-<td>Verification depth</td>
-<td>&quot;Citation realness is accepted only by sampled re-checking (open or search a random handful), never by the writer's own 'verified' notes&quot;</td>
-</tr>
-</tbody>
-</table>
-<p>Judge-side enforcement (not just for anchors): whenever the spec carries verifiable criteria — a checklist, countable thresholds, files, passing commands — the judge MUST verify each with its tools before <code>met=true</code>; on an anchored goal it also opens the reference and confirms meet-or-exceed. The working agent's &quot;I have completed…&quot; narrative may only decide criteria that cannot be tool-checked. For source/citation realness criteria the judge samples a random handful itself — opens or searches each and checks the cited fact; sampled failures (nonexistent work, mismatched numbering, fabricated name) falsify the criterion regardless of what the transcript claims. This closes the main early-exit failure mode — quality requirements stated only in the first task message get compacted out of the session view, while the anchor lives in the spec the judge re-reads every turn.</p>
-<p>On success the spec lands in <code>goal[&quot;spec&quot;]</code> (the original <code>text</code> is never touched), a <code>goal.update</code> event carries it, and the spec is shown to the user as a <code>local_command</code> system row in the transcript — the user sees what the system understood the goal to be, and <code>/goal clear</code> plus a fresh <code>/goal</code> re-set fixes a misread. From then on the judge evaluates against <code>spec</code>; without one (refinement still running, or failed) it falls back to <code>text</code>. Failure is <strong>fail-open but never silent</strong>: an unparseable reply or a failed spawn logs, leaves the goal spec-less, and posts a system row telling the user the judge will check only the raw one-liner — it never blocks the goal or the first turn, which launches in parallel with the refinement. <code>refine_goal_spec</code> re-reads the goal after the refinement turn returns, so a racing <code>/goal clear</code> or replacement goal is never overwritten with a stale spec. The refinement turn runs with <code>source=&quot;agent_spawn&quot;</code> and <code>advance_head=False</code> like every same-session spawn, so it neither triggers the goal loop nor steals the session head.</p>
-<h2 id="verdict-judge-separated-from-worker">Verdict: judge separated from worker<a class="header-anchor" href="#verdict-judge-separated-from-worker">#</a></h2>
-<p><code>evaluate_goal</code> returns <code>(&quot;met&quot; | &quot;unmet&quot; | &quot;needs_user&quot; | &quot;judge_failure&quot;, reason, question)</code>.</p>
-<p><strong>One decision agent</strong> — the <code>goal</code> agentic function (<code>openprogram/programs/workflow/goal/</code>): the framework eats its own dog food, so the judgment point is a single <code>@agentic_function</code> whose docstring IS the decision prompt, runnable standalone from the Programs panel (the panel shows exactly this one entry). There is only this one judgment, and only its &quot;met&quot; counts as completion. Each evaluation is one spawned same-session agent turn (<code>run_agent_turn</code> with <code>advance_head=False</code>, anchored on the judged turn via <code>spawn_caller</code> so it renders as a sub-agent square) whose input is the goal text plus the session's <strong>compacted context view</strong> — <code>rendered_history</code>, the same shape the working model reads: the active summary (when compaction has produced one) followed by the tail of the kept turns (last 8 messages' content plus each assistant row's persisted tool blocks, clipped per-field and capped at ~24 k chars; the summary is never cut by the cap). The decision agent has inspection tools available (<code>bash</code>, <code>read</code>, <code>grep</code>, <code>glob</code>, <code>list</code> — no edit/apply_patch/task, deciding must not modify anything or spawn further agents) and decides for itself whether checking the working directory helps; the prompt does not force it to. It must answer strict JSON <code>{&quot;met&quot;: bool, &quot;reason&quot;: str, &quot;need_user&quot;: bool, &quot;question&quot;: str}</code> — plus a per-item <code>&quot;checklist&quot;</code> bool list when the goal carries an acceptance checklist (see below); <code>goal.py</code> retries a malformed reply or failed turn once within the same evaluation.</p>
-<p><strong>The pause decision lives in the same judgment, with two modes and a rate limit.</strong> The decision prompt carries the session's attended/unattended mode (<code>agent/attended.py</code>, passed as <code>attended</code> into the function; the panel's manual run defaults to attended). <em>Attended</em> — a human is watching — allows <code>need_user=true</code> for decisions genuinely hard to make on the user's behalf: an irreversible/destructive action pending approval, a missing credential/resource, a direction-deciding ambiguity, a failure repeating beyond recovery, or another choice where guessing wrong wastes many turns. <em>Unattended</em> raises the bar: pausing must be rare, and severity is a property of the concrete object, not the operation category — &quot;deletion&quot; or &quot;irreversible&quot; alone never pauses. The judge is told to inspect the actual stakes with its tools (open the directory, check content and recoverability); verified-trivial stakes are decided and recorded, and only inspected-severe stakes (the user's own documents, unpushed work, production data, real money, effects on other people), an unobtainable credential/resource, or an approval the goal text itself demands may pause; for ambiguity or repeated failures the agent thinks it through, picks the most reasonable plan, states the decision and reasoning, and continues. On top of the prompt policy, the loop enforces a hard rate limit in code: at most <strong>one question per hour</strong> (<code>last_question_at</code> in the goal state, <code>QUESTION_MIN_INTERVAL_SECONDS</code>). A <code>needs_user</code> verdict inside the window does not pause — it degrades into a continuation whose prompt says the ask budget is spent and instructs the agent to choose the most reasonable option and record the decision and its reasoning. The timestamp persists across a resume (answering one question does not refill the hour). This puts &quot;should we interrupt the user&quot; in the same fresh-context call that already judges completion each turn — no extra call, and no reliance on the working model's own restraint. <code>need_user=true</code> with an empty question is not actionable and is treated as plain unmet.</p>
-<p><strong>Unattended and undecidable — the full resolution chain.</strong> When nobody is watching, &quot;can't decide&quot; resolves in exactly one of two ways:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Decidable but uncertain</th>
-<th>Truly blocked</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Examples</td>
-<td>&quot;Should the survey use IEEE or ACM citation style?&quot; · a flaky test failed 3 times · two equally plausible file layouts · deleting a directory the judge inspected and verified holds only regenerable test/cache data</td>
-<td>API key missing / expired · deleting data inspection shows is genuinely unrecoverable (user documents, unpushed work, production data) · spending real money · an approval the goal text itself demands</td>
-</tr>
-<tr>
-<td>Resolution</td>
-<td>Decide itself: pick the most reasonable plan, <strong>record the decision and its reasoning</strong> in the transcript, continue</td>
-<td>Park: status → <code>waiting_user</code>, no continuation launches (no spinning, no budget burn)</td>
-</tr>
-<tr>
-<td>How it surfaces</td>
-<td>The recorded decision in the turn's output</td>
-<td>System row &quot;[goal] 需要你的确认才能继续：…&quot; + goal chip &quot;等你回答&quot;</td>
-</tr>
-<tr>
-<td>How it resolves</td>
-<td>Already resolved — the run keeps going</td>
-<td>The next real user message IS the answer; the loop flips back to <code>active</code> and judges as usual</td>
-</tr>
-<tr>
-<td>Enforcement</td>
-<td>Judge prompt forbids pausing for these <strong>and</strong> the tool layer strips <code>ask_user_question</code> from every unattended turn (<code>denied_ask_tools</code>, <code>agent/attended.py</code>) — asking is impossible even if the prompt slips</td>
-<td>Only <code>need_user=true</code> verdicts from the judge reach this path; the hourly rate limit still applies</td>
-</tr>
-</tbody>
-</table>
-<p>Invariant: an unattended run never guesses its way through an irreversible action, and never loops idle on an unanswerable question — it either decides-and-records or parks-and-waits. Known ceiling: a parked question is only visible in the session itself; there is no push notification channel yet, so the user discovers the pause on their next visit.</p>
-<h2 id="checklist">Checklist<a class="header-anchor" href="#checklist">#</a></h2>
-<p>The refinement's checklist is the goal's fixed acceptance list: refinement writes it once, the judge only reports per-item status, and the loop enforces it in code. This closes the remaining early-exit gap — a judge cannot summarize its way past a list it is only allowed to tick.</p>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Who</th>
-<th>What happens</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create</td>
-<td><code>refine</code> (once, at refinement)</td>
-<td><code>{&quot;checklist&quot;: [str, …]}</code> lands in goal state as <code>[{&quot;text&quot;, &quot;done&quot;: false}, …]</code>. The list is fixed from here on — nobody adds, removes or rewrites items.</td>
-</tr>
-<tr>
-<td>Tick</td>
-<td>judge (every evaluation)</td>
-<td>The decision prompt renders a numbered <code>&lt;checklist&gt;</code> block; the judge must verify each item with its tools and answer <code>&quot;checklist&quot;: [true|false, …]</code> — same order, same length, status only. A valid list overwrites every item's <code>done</code> in order (true→false included — evidence wins over an earlier tick); a missing, wrong-length or non-bool list means this evaluation carries no per-item information and the stored ticks stand.</td>
-</tr>
-<tr>
-<td>Enforce</td>
-<td>loop code (<code>evaluate_goal</code>)</td>
-<td><code>met</code> with any undone item is forced down to <code>unmet</code>, and the reason names the undone items (&quot;清单未全部完成：3) …&quot;). The judge's prompt already demands all-true before met; the code makes it non-negotiable.</td>
-</tr>
-<tr>
-<td>Call out</td>
-<td>continuation prompt</td>
-<td>While undone items exist, the <code>goal_continue</code> turn text appends &quot;未完成项：&quot; plus the numbered undone items — the working agent is pointed at exactly what is left.</td>
-</tr>
-<tr>
-<td>Show</td>
-<td>goal chip / <code>/goal</code> status</td>
-<td>The chip reads <code>goal · done/total</code> while a checklist exists (turn count otherwise); <code>/goal</code> status prints <code>checklist: done/total</code> plus one <code>[ ]</code> line per undone item.</td>
-</tr>
-</tbody>
-</table>
-<p>State example mid-run:</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"写完综述"</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…full specification…"</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">"checklist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"正文包含 6 个章节"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"引用不少于 80 篇且逐条核实"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
-<span class="w">   </span><span class="p">{</span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"包含分类框架图"</span><span class="p">,</span><span class="w"> </span><span class="nt">"done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}],</span>
-<span class="w"> </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w"> </span><span class="nt">"turns_used"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">"max_turns"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">"last_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"引用核实未完成"</span><span class="p">,</span><span class="w"> </span><span class="nt">"judge_parse_failures"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Goal Workflow</span></nav><h1 id="goal-workflow">Goal Workflow<a class="header-anchor" href="#goal-workflow">#</a></h1>
+<p>The Goal capability has one executable Workflow:</p>
+<pre><code class="language-python"><span class="n">goal</span><span class="p">(</span>
+    <span class="n">prompt</span><span class="p">,</span>
+    <span class="n">condition</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+    <span class="n">effort</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+    <span class="n">max_rounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">context_mode</span><span class="o">=</span><span class="s2">"isolated"</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre>
-<p>The chip shows <code>goal · 2/3</code>; the continuation prompt names item 2; <code>met</code> stays unreachable until the judge ticks it.</p>
-<p>The judge is a separate call on purpose. Codex's and Cline's original self-report designs — the working agent declaring its own completion — both had to be patched after agents systematically declared victory early: the model that wants to stop is the wrong entity to ask whether it may. Keeping the verdict in a fresh context that sees only the goal and the evidence (and is told to treat the transcript as data, not instructions) removes that incentive.</p>
-<h2 id="state">State<a class="header-anchor" href="#state">#</a></h2>
-<p>Goal state lives in session meta (<code>update_session</code> is schemaless), key <code>goal</code>:</p>
-<pre><code>{&quot;text&quot;: str,
- &quot;spec&quot;: str (refined specification — absent until the background
-         refinement lands; judging falls back to text),
- &quot;checklist&quot;: [{&quot;text&quot;: str, &quot;done&quot;: bool}] (refinement-fixed
-         acceptance items — absent when refinement produced none;
-         the judge only flips &quot;done&quot;, the loop enforces all-done
-         before met),
- &quot;status&quot;: &quot;active&quot; | &quot;waiting_user&quot; | &quot;achieved&quot; | &quot;cleared&quot; | &quot;capped&quot;
-           | &quot;error&quot;,
- &quot;created_at&quot;: float, &quot;turns_used&quot;: int,
- &quot;max_turns&quot;: int | None (None = unlimited, the default),
- &quot;last_reason&quot;: str, &quot;last_question&quot;: str,
- &quot;last_question_options&quot;: [{&quot;label&quot;: str, &quot;description&quot;: str}] (≤4,
-         judge-supplied one-click answers; empty when the question is
-         open-ended), &quot;last_question_at&quot;: float,
- &quot;judge_parse_failures&quot;: int,
- &quot;last_done_count&quot;: int, &quot;stall_rounds&quot;: int  (read-only-spin guard:
-         consecutive judged rounds without a new checklist tick)}
-</code></pre>
-<p>The loop re-reads the meta at the top of every iteration, so a <code>/goal clear</code> issued from any surface takes effect at the next check. <code>turns_used</code> counts every judged turn while the goal is active — the initiating turn, continuations, and any manual turns the user interleaves. <code>max_turns</code> is stamped at set time from the <code>goal.max_turns</code> setting (<code>config_schema</code>); its default is <strong>None — no turn cap</strong>, matching Claude Code's and Codex's stop hooks, which also carry no default numeric limit: runaway protection is the internal stop rules (3 consecutive judge failures, idle-spin detection), the user's interrupt, and <code>/goal clear</code>. An explicitly set positive value is honoured, and each goal keeps the bound it started with.</p>
-<h2 id="stop-rules">Stop rules<a class="header-anchor" href="#stop-rules">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Rule</th>
-<th>Terminal status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Decision answers met</td>
-<td><code>achieved</code></td>
-</tr>
-<tr>
-<td>Decision answers <code>need_user</code> with a question (and the hourly ask budget is free)</td>
-<td><code>waiting_user</code> — the loop pauses, no continuation launches, the question surfaces as a system row and on the goal chip, and <code>last_question_at</code> starts the rate-limit clock. A <code>goal_continue</code> turn can never resume it; the next real user turn flips the goal back to <code>active</code> (that message IS the answer) and judging proceeds as usual. Waiting consumes no budget beyond the turn that just ran. <code>/goal clear</code> clears a waiting goal too. Inside the hourly window the verdict degrades to a continuation instead (see above).</td>
-</tr>
-<tr>
-<td><code>turns_used</code> reaches <code>max_turns</code> (only when a cap was explicitly set)</td>
-<td><code>capped</code></td>
-</tr>
-<tr>
-<td>Decision fails 3 consecutive evaluations (unparseable or failed twice in one evaluation = one failure; a successful parse resets the count)</td>
-<td><code>error</code></td>
-</tr>
-<tr>
-<td>A <code>goal_continue</code> turn made zero tool calls and the goal is still unmet — idle spin</td>
-<td><code>error</code></td>
-</tr>
-<tr>
-<td>The checklist tick count did not increase for 3 consecutive <code>goal_continue</code> rounds — read-only spin (tools called, deliverable never advanced)</td>
-<td><code>error</code></td>
-</tr>
-<tr>
-<td>User clears</td>
-<td><code>cleared</code></td>
-</tr>
-<tr>
-<td>Turn failed, or cancel is set (<code>cancel_event</code> / <code>run_control.is_cancelled</code>)</td>
-<td>loop exits, status stays <code>active</code></td>
-</tr>
-</tbody>
-</table>
-<p>The last row is deliberate: cancellation and provider failures pause the loop rather than consuming the goal, because the continuation turns share the caller's cancel token — a continuation is an ordinary turn and the Stop button already reaches it.</p>
-<p>Ordering inside one iteration: met wins first (a final turn that achieves the goal without tool calls is a success, not idle spin), then judge-failure accounting, then the idle-spin check, then the checklist-stall check, then the cap.</p>
-<p>Goal sessions and the <code>turn.stop</code> gate divide the stop decision cleanly: a session with a goal (active or waiting) never enters <code>continue_stop_hook_turns</code> — its goal loop is the sole stop decider, and the only external intervention is <code>/goal clear</code>. The <code>turn.stop</code> gate is the extension point for sessions <strong>without</strong> a goal (see <code>docs/reference/design/proactive/event-layer.md</code>).</p>
-<h2 id="events-and-surfaces">Events and surfaces<a class="header-anchor" href="#events-and-surfaces">#</a></h2>
-<p>Every status change and every pre-continuation progress tick goes through <code>_emit_goal_update</code>: a <code>chat_response</code> envelope <code>{&quot;type&quot;: &quot;goal_update&quot;, &quot;session_id&quot;, &quot;goal&quot;: {…}}</code> on the dispatcher's <code>on_event</code> stream, plus a top-level <code>goal_update</code> WS broadcast via the webui server (best-effort — absent server, e.g. bare CLI or tests, is a no-op).</p>
+<p><code>goal()</code> alone owns specification refinement, working-agent rounds, completion
+judgment, user questions, progress state, stopping rules, and the terminal
+result. The dispatcher and slash-command layer do not contain a second Goal
+loop.</p>
+<h2 id="two-call-surfaces">Two call surfaces<a class="header-anchor" href="#two-call-surfaces">#</a></h2>
+<p>The Programs form invokes <code>goal()</code> with <code>context_mode=&quot;isolated&quot;</code>. Its DAG and
+runtime card may belong to the current session, but model calls inside the
+Workflow cannot read conversation history that predates the Goal call.</p>
+<p><code>/goal &lt;condition&gt;</code> invokes the same function with
+<code>context_mode=&quot;session&quot;</code>. At function entry, it snapshots the current compacted
+session view and supplies that view as initial evidence. The context source is
+the only behavioral difference between the form and slash command.</p>
+<p><code>/goal</code> with no arguments reports the current Goal state. <code>/goal clear</code> marks
+the active or waiting Goal as cleared; the running Workflow re-reads this state
+between work rounds and stops without overwriting the clear.</p>
+<h2 id="one-state-machine">One state machine<a class="header-anchor" href="#one-state-machine">#</a></h2>
+<p>Both surfaces use the same Goal state and statuses:</p>
 <ul>
-<li><strong>Web</strong>: <code>session_loaded</code> carries the goal (<code>ws_actions/session.py</code>) for hydration; the composer's <code>GoalChip</code> (<code>apps/web/components/chat/goal-chip.tsx</code>, shared <code>useSessionGoal</code> hook) renders <code>◎ goal · N/M</code> from that plus live <code>goal_update</code> frames (delivered through <code>use-ws</code>'s catch-all <code>op:ws-message</code> event). While <code>status === &quot;waiting_user&quot;</code> a <strong>question panel</strong> (<code>composer/modes/question/question-panel.tsx</code>, shared with <code>ask_user_question</code>'s ask/confirm decisions — real asks take priority) grows UPWARD from the top of the input box: a one-line badge (&quot;goal · 等你回答&quot;, Target icon), the question, and the option pills with their descriptions. Everything else stays put — textarea, bottom bar and env-chip row do not move or change; the transcript's bottom padding tracks the composer's measured height (<code>--main-composer-height</code> CSS variable, ResizeObserver) so the last message is never covered. Picking a pill or typing in the normal input sends the answer through the normal chat send path — exactly a typed message, so the loop's resume rule needs nothing special (real asks route through <code>question_reply</code> instead). The panel is driven by goal state, so a reload while parked re-shows it. Composer-typed <code>/goal …</code> is executed backend-side by the local-builtin branch in <code>ws_actions/chat.py</code>: a status/clear reply returns as a <code>local_command</code> envelope rendered as a transient system row; a set replaces the turn text with the goal directive and falls through into the normal turn flow.</li>
-<li><strong>Commands registry</strong>: <code>/goal</code> is a <code>builtin</code>-layer command with a callable handler (<code>registry.register_shared_builtins</code>), so it lists in <code>/api/commands</code> and resolves for any host. The Rich REPL shadows it in its own process with a marker action (<code>cli/repl/handlers.py:_handle_goal</code>) that prints locally and launches the set-form's first turn through <code>process_user_turn</code> — the REPL's bare <code>rt.exec</code> turn runner bypasses the dispatcher and would never reach the loop.</li>
+<li><code>active</code>: the Workflow is refining, working, or judging;</li>
+<li><code>waiting_user</code>: the judge requested a decision and the Runtime question is
+waiting for an answer;</li>
+<li><code>achieved</code>: the judge accepted the condition and every checklist item;</li>
+<li><code>capped</code>: the configured round limit was reached;</li>
+<li><code>error</code>: repeated judge failure or checklist stall stopped the Workflow;</li>
+<li><code>cleared</code>: the user cleared the Goal.</li>
 </ul>
+<p>The Workflow persists this state under the owning session so GoalChip,
+status/clear, reload, and every invocation surface observe the same object.
+The state stores control data, not the copied session-context snapshot.</p>
+<h2 id="context-and-trust-boundary">Context and trust boundary<a class="header-anchor" href="#context-and-trust-boundary">#</a></h2>
+<p><code>render_range={&quot;callers&quot;: 0}</code> isolates every Goal invocation from pre-call DAG
+history. Session mode restores only the explicit session snapshot produced at
+entry. The working model is told that this snapshot is untrusted conversation
+data. The completion judge receives the same initial snapshot plus the results
+produced by the current GoalRun.</p>
+<p>Refinement and judgment run as inspection-only spawned calls. They may inspect
+the working directory with their existing restricted tool sets, do not move the
+session head, and do not create another Goal.</p>
+<h2 id="user-questions-and-cancellation">User questions and cancellation<a class="header-anchor" href="#user-questions-and-cancellation">#</a></h2>
+<p><code>need_user</code> uses the Runtime question channel inside the same Workflow
+execution. The Goal state changes to <code>waiting_user</code>, the question crosses the
+existing subprocess question bridge, and the answer resumes the same loop.
+No ordinary chat message is reinterpreted as an answer to a separate session
+loop.</p>
+<p>The normal function-run cancellation boundary owns Stop. <code>/goal clear</code> is a
+cooperative state change checked between rounds; it does not introduce another
+execution controller.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<p>Implemented as described. Known ceilings: <code>local_command</code> replies in the web transcript are not persisted (parity with REPL console prints); concurrent turns on one session from two surfaces could each run the judge — <code>turns_used</code> is re-read per iteration so the cap still holds, and per-session serialization elsewhere (composer lock, follow-up lock) makes the race practically unreachable.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-23</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Agentic Workflow — 设计总览</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/self-update.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Source checkout upgrades</span></a></div></article></main>
+<p>The single-Workflow contract is implemented when all of the following hold:</p>
+<ul>
+<li>Programs and <code>/goal</code> both reach the registered <code>goal</code> function;</li>
+<li>no <code>continue_goal_turns</code> dispatcher loop remains;</li>
+<li>isolated mode never reads or adopts session Goal context;</li>
+<li>session mode explicitly supplies the session snapshot;</li>
+<li>focused Goal, command, dispatcher, Web, question, cancellation, and reload
+checks pass;</li>
+<li>default App verification shows the same Goal state and runtime execution for
+both surfaces.</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-23</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Controllability of long-running agent tasks + three-surface consistency</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/llm-and-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#where-the-loop-lives">Where the loop lives</a>
-<a class="" href="#setting-a-goal-spec-refinement">Setting a goal: spec refinement</a>
-<a class="" href="#verdict-judge-separated-from-worker">Verdict: judge separated from worker</a>
-<a class="" href="#checklist">Checklist</a>
-<a class="" href="#state">State</a>
-<a class="" href="#stop-rules">Stop rules</a>
-<a class="" href="#events-and-surfaces">Events and surfaces</a>
+<a class="" href="#two-call-surfaces">Two call surfaces</a>
+<a class="" href="#one-state-machine">One state machine</a>
+<a class="" href="#context-and-trust-boundary">Context and trust boundary</a>
+<a class="" href="#user-questions-and-cancellation">User questions and cancellation</a>
 <a class="" href="#implementation-status">Implementation status</a>
 </div></aside>
 </div>
