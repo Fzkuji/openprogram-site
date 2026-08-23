@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787482245" data-alt-lang-url="/docs/reference/design/ui/window-state.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787486740" data-alt-lang-url="/docs/reference/design/ui/window-state.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -473,9 +473,11 @@ dropped on that fallback so the window opens usable.</li>
 treat it as maximized and replace the normal size with the inset
 default. The <code>BrowserWindow</code> is never constructed at work-area size.</li>
 <li>Clamp the normal rectangle onto the chosen work area.</li>
-<li>Create the window at that normal size with <code>minWidth</code> / <code>minHeight</code>
-set. Then call <code>maximize()</code> and/or <code>setFullScreen(true)</code> when those
-flags were saved.</li>
+<li>Create the window <strong>hidden</strong> at that normal size with <code>minWidth</code> /
+<code>minHeight</code> set. If maximized, <code>setBounds</code> to the work area first,
+then <code>maximize()</code> / <code>setFullScreen(true)</code> while still hidden. Show
+on <code>ready-to-show</code> so macOS never animates from the small first
+frame (often the top-left).</li>
 </ol>
 <p>Green Zoom therefore restores to the remembered normal size, not to a
 flush rectangle.</p>
