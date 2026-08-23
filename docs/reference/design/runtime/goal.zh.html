@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787480022" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787482245" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -413,15 +413,26 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><code>waiting_user</code>：judge 请求决定，Runtime 问题正在等待回答；</li>
 <li><code>achieved</code>：judge 接受条件，并且所有 checklist 项完成；</li>
 <li><code>capped</code>：达到轮次上限；</li>
-<li><code>error</code>：连续 judge 失败或 checklist 停滞导致终止；</li>
+<li><code>error</code>：连续 judge 失败、checklist 停滞、零工具空转，或 worker 重启和解导致终止；</li>
 <li><code>cleared</code>：用户清除 Goal。</li>
 </ul>
 <p>Workflow 将状态写入所属 session，因此 GoalChip、status/clear、页面恢复和所有调用界面观察同一个对象。状态只保存控制数据，不保存复制的 session context 快照。</p>
 <h2 id="上下文与信任边界">上下文与信任边界<a class="header-anchor" href="#上下文与信任边界">#</a></h2>
 <p><code>render_range={&quot;callers&quot;: 0}</code> 让每个 Goal 调用与调用前 DAG 历史隔离。session 模式只恢复函数入口显式生成的 session 快照。工作模型收到明确说明：该快照是非可信会话数据。完成 judge 接收同一份初始快照，加上当前 GoalRun 已产生的结果。</p>
 <p>refinement 与 judgment 使用只读 spawn 调用。它们沿用现有受限工具集，可以检查工作目录，不移动 session head，也不创建另一个 Goal。</p>
+<h2 id="停止规则">停止规则<a class="header-anchor" href="#停止规则">#</a></h2>
+<p>循环在第一条命中的规则处停止：</p>
+<ul>
+<li><strong>轮次预算。</strong> 每次运行带一个轮次预算：config 的 <code>goal.max_turns</code>，未设时为 150。显式配 0 或负数（config 或 <code>max_rounds</code> 参数）表示无上限。达到预算以 <code>capped</code> 结束。</li>
+<li><strong>judge 失败。</strong> 连续三次判定输出不合法或失败，以 <code>error</code> 结束。</li>
+<li><strong>checklist 停滞。</strong> 存在 checklist 且打勾数连续三个 <code>unmet</code> 轮不增长，以 <code>error</code> 结束。</li>
+<li><strong>零工具空转。</strong> 每个工作轮通过 ambient Runtime 冻结的 block 列表检查是否用过工具。零工具且判定仍 <code>unmet</code> 的一轮会在下一轮工作 prompt 中注入明确警告（&quot;本轮必须实际动手使用工具，连续不使用工具会被判定为放弃并终止&quot;）；连续第二个零工具轮以 <code>error</code> 结束，原因标注 idle spin。任何用过工具的轮都会把计数清零。</li>
+</ul>
+<p>传给完成 judge 的证据按 judge 的视图预算（24 000 字符）保留尾部截断；截断时在头部保留一行 <code>[earlier evidence truncated]</code>。</p>
+<p>worker 启动时的运行状态和解也会收敛死 worker 留下的 <code>active</code> / <code>waiting_user</code> goal：它们被置为 <code>error</code>，原因是 &quot;worker restarted while the goal loop was running&quot;。</p>
 <h2 id="用户提问与取消">用户提问与取消<a class="header-anchor" href="#用户提问与取消">#</a></h2>
 <p><code>need_user</code> 在同一 Workflow execution 中使用 Runtime question channel。Goal 状态先变为 <code>waiting_user</code>，问题经过现有子进程 question bridge，回答返回后恢复同一循环。不再把下一条普通聊天消息解释成另一套 session loop 的回答。</p>
+<p>问题无限等待——未回答的问题不会让 goal 超时。用户拒绝、答案为空或提问通道失败时，运行不报错：降级为一次 <code>unmet</code> 续跑，下一轮工作 prompt 告知 agent 用户未回答，自行选择最合理方案继续并写清决定与理由。拿到有效回答会重置失控计数——轮次预算、空转计数、停滞计数与 judge 失败计数全部归零，已收集的证据保留。</p>
 <p>Stop 使用普通 function run 的 cancellation boundary。<code>/goal clear</code> 是每轮之间检查的协作式状态变化，不新增执行控制器。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>满足下列条件后，单一 Workflow 合同才算实现：</p>
@@ -439,6 +450,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#两种调用界面">两种调用界面</a>
 <a class="" href="#一个状态机">一个状态机</a>
 <a class="" href="#上下文与信任边界">上下文与信任边界</a>
+<a class="" href="#停止规则">停止规则</a>
 <a class="" href="#用户提问与取消">用户提问与取消</a>
 <a class="" href="#实现状态">实现状态</a>
 </div></aside>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787480022" data-alt-lang-url="/docs/capabilities/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787482245" data-alt-lang-url="/docs/capabilities/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,8 +150,10 @@ compacted context as initial evidence. The Workflow then uses the same
 refinement, judge, round limit, question handling, progress state, and terminal
 statuses as the Programs form.</p>
 <p>The active Goal appears in the composer GoalChip. A question from the judge
-uses the standard question panel and resumes the same Workflow execution after
-you answer.</p>
+uses the standard question panel and waits indefinitely; answering resumes the
+same Workflow execution and restarts its round budget. If you decline or leave
+the answer empty, the Workflow continues on its own with the most reasonable
+plan instead of stopping.</p>
 <h2 id="status-and-control">Status and control<a class="header-anchor" href="#status-and-control">#</a></h2>
 <pre><code class="language-text">/goal
 /goal clear
@@ -177,11 +179,11 @@ execution boundary.</p>
 </tr>
 <tr>
 <td><code>capped</code></td>
-<td>The configured round limit was reached.</td>
+<td>The round limit was reached (<code>goal.max_turns</code>, default 150; zero or negative in config = unlimited).</td>
 </tr>
 <tr>
 <td><code>error</code></td>
-<td>Repeated judge failure or checklist stall stopped the run.</td>
+<td>Repeated judge failure, checklist stall, or consecutive tool-less rounds stopped the run.</td>
 </tr>
 <tr>
 <td><code>waiting_user</code></td>

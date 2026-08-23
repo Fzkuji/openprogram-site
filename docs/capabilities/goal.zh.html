@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787480022" data-alt-lang-url="/docs/capabilities/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787482245" data-alt-lang-url="/docs/capabilities/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,7 +143,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-text">/goal 所有单元测试通过，并且 README 说明了新参数
 </code></pre>
 <p>这会调用同一个 Goal Workflow，同时把当前会话的压缩上下文作为初始证据。此后 refinement、judge、轮次上限、用户提问、进度状态和终态都与 Programs 表单相同。</p>
-<p>active Goal 显示在 composer 的 GoalChip 中。judge 提问时使用标准问题面板，用户回答后恢复同一个 Workflow execution。</p>
+<p>active Goal 显示在 composer 的 GoalChip 中。judge 提问时使用标准问题面板并无限等待；回答后恢复同一个 Workflow execution 并重置轮次预算。拒绝回答或答案为空时，Workflow 不会停止，而是自行选择最合理方案继续。</p>
 <h2 id="状态与控制">状态与控制<a class="header-anchor" href="#状态与控制">#</a></h2>
 <pre><code class="language-text">/goal
 /goal clear
@@ -165,11 +165,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>capped</code></td>
-<td>达到配置的轮次上限。</td>
+<td>达到轮次上限（<code>goal.max_turns</code>，默认 150；config 里配 0 或负数表示无限）。</td>
 </tr>
 <tr>
 <td><code>error</code></td>
-<td>连续 judge 失败或 checklist 停滞导致终止。</td>
+<td>连续 judge 失败、checklist 停滞或连续零工具轮导致终止。</td>
 </tr>
 <tr>
 <td><code>waiting_user</code></td>

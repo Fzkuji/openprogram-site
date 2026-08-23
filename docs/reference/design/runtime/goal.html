@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787480022" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787482245" data-alt-lang-url="/docs/reference/design/runtime/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -424,7 +424,8 @@ between work rounds and stops without overwriting the clear.</p>
 waiting for an answer;</li>
 <li><code>achieved</code>: the judge accepted the condition and every checklist item;</li>
 <li><code>capped</code>: the configured round limit was reached;</li>
-<li><code>error</code>: repeated judge failure or checklist stall stopped the Workflow;</li>
+<li><code>error</code>: repeated judge failure, checklist stall, zero-tool idle spin,
+or worker-restart reconciliation stopped the Workflow;</li>
 <li><code>cleared</code>: the user cleared the Goal.</li>
 </ul>
 <p>The Workflow persists this state under the owning session so GoalChip,
@@ -439,12 +440,43 @@ produced by the current GoalRun.</p>
 <p>Refinement and judgment run as inspection-only spawned calls. They may inspect
 the working directory with their existing restricted tool sets, do not move the
 session head, and do not create another Goal.</p>
+<h2 id="stopping-rules">Stopping rules<a class="header-anchor" href="#stopping-rules">#</a></h2>
+<p>The loop stops on the first rule that fires:</p>
+<ul>
+<li><strong>Round budget.</strong> Every run starts with a turn budget: <code>goal.max_turns</code> from
+config, or 150 when unset. An explicit zero or negative value (in config or
+as the <code>max_rounds</code> argument) removes the cap. Reaching the budget ends the
+run with status <code>capped</code>.</li>
+<li><strong>Judge failure.</strong> Three consecutive malformed or failed judge decisions end
+the run with status <code>error</code>.</li>
+<li><strong>Checklist stall.</strong> When a checklist exists and the done count does not
+grow for three consecutive <code>unmet</code> rounds, the run ends with status <code>error</code>.</li>
+<li><strong>Zero-tool idle spin.</strong> Each work round is checked for tool use via the
+ambient Runtime's frozen block list. A zero-tool round whose verdict is
+still <code>unmet</code> injects an explicit warning into the next work prompt (&quot;you
+must actually use tools; consecutive tool-less rounds are treated as giving
+up&quot;); a second consecutive zero-tool round ends the run with status <code>error</code>
+and an idle-spin reason. Any round that uses a tool resets the counter.</li>
+</ul>
+<p>The evidence passed to the completion judge is tail-truncated to the judge's
+view budget (24 000 characters); truncation keeps the tail and prefixes a
+single <code>[earlier evidence truncated]</code> line.</p>
+<p>On worker startup, run-state reconciliation also settles goals a dead worker
+left at <code>active</code> or <code>waiting_user</code>: they become <code>error</code> with a
+&quot;worker restarted while the goal loop was running&quot; reason.</p>
 <h2 id="user-questions-and-cancellation">User questions and cancellation<a class="header-anchor" href="#user-questions-and-cancellation">#</a></h2>
 <p><code>need_user</code> uses the Runtime question channel inside the same Workflow
 execution. The Goal state changes to <code>waiting_user</code>, the question crosses the
 existing subprocess question bridge, and the answer resumes the same loop.
 No ordinary chat message is reinterpreted as an answer to a separate session
 loop.</p>
+<p>The question waits indefinitely — an unanswered question never times a goal
+out. When the user declines, the answer is empty, or the ask channel fails,
+the run does not error: it downgrades to an <code>unmet</code> continuation whose next
+work prompt tells the agent the user did not answer and to pick the most
+reasonable plan itself, stating the decision and its rationale. A real answer
+resets the runaway accounting — turn budget, idle counter, stall counter, and
+judge-failure counter restart while collected evidence is kept.</p>
 <p>The normal function-run cancellation boundary owns Stop. <code>/goal clear</code> is a
 cooperative state change checked between rounds; it does not introduce another
 execution controller.</p>
@@ -466,6 +498,7 @@ both surfaces.</li>
 <a class="" href="#two-call-surfaces">Two call surfaces</a>
 <a class="" href="#one-state-machine">One state machine</a>
 <a class="" href="#context-and-trust-boundary">Context and trust boundary</a>
+<a class="" href="#stopping-rules">Stopping rules</a>
 <a class="" href="#user-questions-and-cancellation">User questions and cancellation</a>
 <a class="" href="#implementation-status">Implementation status</a>
 </div></aside>
