@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787478602" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787480022" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -462,8 +462,14 @@ the task map is popped.</p>
 <code>{msg_id}_reply</code>).</li>
 <li>Call <code>_finish_owned_run(session_id, msg_id)</code> so both the task entry
 and the runtime unregister.</li>
-<li>Broadcast <code>running_task_clear</code> so every client matches.</li>
+<li>Broadcast <code>running_task_clear</code> so every client matches. The
+clear names the finished turn (<code>msg_id</code> / <code>execution_id</code>).</li>
 </ul>
+<p>A late clear or cancelled/result frame for the old turn must
+<strong>not</strong> idle a newer reservation, including the just-sent
+placeholder <code>{ msg_id: &quot;&quot; }</code>. Honor the clear only when it
+matches the slot's execution. An unscoped clear is stale after
+stop-and-send.</p>
 <p><code>_finish_owned_run</code> no-ops if <code>msg_id</code> does not match — a newer
 reservation is safe. The cancelled turn's <code>finally</code> also calls
 <code>_finish_owned_run</code>; the second call is a no-op.</p>
