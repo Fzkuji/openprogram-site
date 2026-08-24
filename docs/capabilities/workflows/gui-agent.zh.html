@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787503796" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787539988" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
 <p>给一句自然语言任务，它自主操作桌面：截图、识别界面组件、点击、输入、验证结果，循环直到任务完成或达到步数上限。适用于本机桌面，也可以通过 VM 接口操作远程虚拟机。感知层是 YOLO 组件检测（GPA-GUI-Detector）+ OCR（macOS 用 Apple Vision，Linux / Windows 用 EasyOCR）+ 模板匹配；动作层覆盖鼠标、键盘、剪贴板。在 OSWorld 基准的 Multi-Apps 子集上得分 79.8%（<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">结果</a>）。</p>
 <h2 id="可用性">可用性<a class="header-anchor" href="#可用性">#</a></h2>
-<p>每个受支持的 release 都包含该 Program、PyTorch/OpenCV、Playwright Chromium、默认 EasyOCR 数据和固定 GPA detector 模型。安装 OpenProgram 后不需要再安装 Program 或模型。开发者可以使用 editable GUI harness checkout，或替换 OCR/Browser backend 进行调试和后端开发。</p>
+<p>每个受支持的 release 都会注册该 Program，并带上 Playwright Chromium 和 GPA detector 权重。不附带 PyTorch、OpenCV 或 EasyOCR，因此依赖这些库的桌面感知在打包产品里不可用。源码开发 checkout 仍可安装 harness 自己的依赖。开发者可以使用 editable GUI harness checkout，或替换 OCR/Browser backend 进行调试和后端开发。</p>
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>入口函数名为 <strong><code>gui_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>harness</code>）注册，聊天里直接描述桌面任务即可触发，例如&quot;打开 Firefox 并访问 google.com&quot;。</p>
 <p>命令行直接运行：</p>
@@ -168,9 +168,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>每一步执行 观察（截图 + 组件检测 + 状态识别）→ 验证上一步结果 → 规划下一动作 → 执行 → 构造下一轮反馈，步与步之间传递结构化反馈，进度不依赖 LLM 上下文记忆。已学过的界面转换会作为捷径复用（组件记忆）。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
 <ul>
-<li>PyTorch + OpenCV 占 release artifact 体积的主要部分之一；不包含 transformers / accelerate 依赖。</li>
-<li>default OCR 数据或 detector 模型缺失时，release capability probe 会拒绝该 artifact。</li>
-<li>受支持的产品平台是 macOS 和 Linux；两者均可使用打包的 EasyOCR backend。</li>
+<li>产品 runtime 不安装 PyTorch 或 EasyOCR。</li>
+<li>detector 模型缺失时，release capability probe 会拒绝该 artifact。</li>
+<li>受支持的产品平台是 macOS 和 Linux。</li>
 <li>运行前需要 runtime 配置好工作目录（截图与运行记录写在那里）。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>

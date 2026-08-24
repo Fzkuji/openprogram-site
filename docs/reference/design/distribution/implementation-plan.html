@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787503796">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787539988">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -614,10 +614,10 @@ copied frontend are absent after installation.</li>
 </ul>
 <h3 id="current-batch-public-entry-acceptance">Current-batch public-entry acceptance<a class="header-anchor" href="#current-batch-public-entry-acceptance">#</a></h3>
 <ol>
-<li>Each platform runtime archive contains a manifest with <code>present</code> and <code>verified</code> entries for <code>web</code>, <code>providers</code>, <code>mcp</code>, <code>memory</code>, <code>channels</code>, <code>search</code>, <code>browser.playwright</code>, <code>ocr.default</code>, <code>model.gpa_detector</code>, <code>program.gui</code>, <code>program.research</code>, and <code>program.wiki</code>.</li>
+<li>Each platform runtime archive contains a manifest with <code>present</code> and <code>verified</code> entries for <code>web</code>, <code>providers</code>, <code>mcp</code>, <code>memory</code>, <code>channels</code>, <code>search</code>, <code>browser.playwright</code>, <code>model.gpa_detector</code>, <code>program.gui</code>, <code>program.research</code>, and <code>program.wiki</code>. The archive does not install torch, sentence-transformers, EasyOCR, or NVIDIA/CUDA wheels.</li>
 <li>Supported Desktop packaging consumes the already-built runtime archive. The CLI installer consumes the byte-identical archive from GitHub Release. Neither path resolves product dependencies independently.</li>
-<li>A normal-user install performs no PyPI dependency resolution, repository clone, npm build, or first-use download for the default browser, OCR, detector model, or first-party Programs.</li>
-<li>Public-entry probes verify the worker, Web assets, first-party Program registration, channel/search imports, Playwright Chromium executable, OCR model data, and detector model before an artifact is published or a CLI <code>current</code> link is switched.</li>
+<li>A normal-user install performs no PyPI dependency resolution, repository clone, npm build, or first-use download for the default browser, detector model, or first-party Programs.</li>
+<li>Public-entry probes verify the worker, Web assets, first-party Program registration, channel/search imports, Playwright Chromium executable, and detector model before an artifact is published or a CLI <code>current</code> link is switched.</li>
 <li>macOS artifact names and documentation state <code>unsigned</code>; the release workflow requires no Apple or PyPI credentials and does not run signing, notarization, or PyPI publication.</li>
 <li>Documentation does not present <code>pip install openprogram</code>, optional GUI/Research/Wiki installation, component-selection prompts, or an unverified Linux Desktop package as normal product installation.</li>
 </ol>

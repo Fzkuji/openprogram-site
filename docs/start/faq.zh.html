@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787503796" data-alt-lang-url="/docs/start/faq.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787539988" data-alt-lang-url="/docs/start/faq.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,7 +112,7 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>runtime<span class="w">    </span><span class="c1"># 指定日志：worker / runtime / ink</span>
 </code></pre>
 <h2 id="为什么-release-下载体积较大">为什么 release 下载体积较大？<a class="header-anchor" href="#为什么-release-下载体积较大">#</a></h2>
-<p>完整 release 已包含 managed Python、PyTorch、Playwright Chromium、EasyOCR 数据、GPA 检测模型，以及 GUI、Research、Wiki Program。普通安装不会再单独下载这些产品组件。</p>
+<p>完整 release 已包含 managed Python、Playwright Chromium、GPA 检测模型权重，以及 GUI、Research、Wiki Program。不包含 PyTorch 或 EasyOCR。普通安装不会再单独下载这些产品组件。</p>
 <h2 id="可以安装-chrome-或-edge-浏览器扩展吗">可以安装 Chrome 或 Edge 浏览器扩展吗？<a class="header-anchor" href="#可以安装-chrome-或-edge-浏览器扩展吗">#</a></h2>
 <p>不可以。Chrome Web Store 与 Edge Add-ons 页面可以作为普通网页在内置浏览器中打开，但 OpenProgram 不增加扩展安装按钮，不下载 CRX，不从其他浏览器导入扩展，也不提供扩展管理页。应用使用标准 Electron/Chromium；Electron 只支持部分 Chrome Extensions API，也不以兼容任意 Chrome Web Store 扩展为目标。OpenProgram 不维护定制 Chromium/Electron 分支，也不为扩展兼容增加另一套浏览器运行时。release 内已有的 Playwright Chromium 只用于浏览器自动化后端，不承载 Desktop Browser Pane 或扩展。</p>
 <p>需要扩展 OpenProgram 本身时，使用 <a href="/docs/capabilities/plugins.zh.html">Plugins</a>、Skills、MCP servers、Programs 或 agent tools。这些能力扩展的是 OpenProgram，不是内嵌网页运行时。</p>

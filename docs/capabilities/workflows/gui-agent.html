@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787503796" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787539988" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
 <p>Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results, looping until the task completes or the step limit is reached. It works on the local desktop and can also drive remote virtual machines through a VM interface. The perception layer combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching; the action layer covers mouse, keyboard, and clipboard. On the OSWorld benchmark it scores 79.8% on the Multi-Apps split (<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">results</a>).</p>
 <h2 id="availability">Availability<a class="header-anchor" href="#availability">#</a></h2>
-<p>Every supported release contains this Program, PyTorch/OpenCV, Playwright Chromium, default EasyOCR data, and the fixed GPA detector model. No Program or model installation is required after installing OpenProgram. Developers can use an editable GUI harness checkout or replace the OCR/browser backend for debugging and backend work.</p>
+<p>Every supported release registers this Program and ships Playwright Chromium plus the GPA detector weight. It does not ship PyTorch, OpenCV, or EasyOCR, so desktop perception that needs those libraries is unavailable in the packaged product. Source-development checkouts can still install the harness's own dependencies. Developers can use an editable GUI harness checkout or replace the OCR/browser backend for debugging and backend work.</p>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
 <p>The entry function is <strong><code>gui_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>harness</code>). In chat, just describe a desktop task to trigger it, e.g. &quot;Open Firefox and go to google.com&quot;.</p>
 <p>Run it directly from the command line:</p>
@@ -168,9 +168,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Each step runs observe (screenshot + component detection + state recognition) → verify the previous step's result → plan the next action → execute → build feedback for the next round. Structured feedback is passed between steps, so progress does not depend on the LLM's context memory. Previously learned UI transitions are reused as shortcuts (component memory).</p>
 <h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
 <ul>
-<li>PyTorch + OpenCV account for a substantial part of the release artifact size. No transformers / accelerate dependency is included.</li>
-<li>The release capability probe rejects an artifact if the default OCR data or detector model is missing.</li>
-<li>Supported product platforms are macOS and Linux; the bundled EasyOCR backend is available on both.</li>
+<li>Product runtimes do not install PyTorch or EasyOCR.</li>
+<li>The release capability probe rejects an artifact if the detector model is missing.</li>
+<li>Supported product platforms are macOS and Linux.</li>
 <li>The runtime needs a working directory configured before running (screenshots and run records are written there).</li>
 </ul>
 <p>Source and README: <code>openprogram/programs/applications/gui_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>

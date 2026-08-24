@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787503796" data-alt-lang-url="/docs/start/faq.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787539988" data-alt-lang-url="/docs/start/faq.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,7 +112,7 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>runtime<span class="w">    </span><span class="c1"># pick a log: worker / runtime / ink</span>
 </code></pre>
 <h2 id="why-is-the-release-download-large">Why is the release download large?<a class="header-anchor" href="#why-is-the-release-download-large">#</a></h2>
-<p>The complete release includes managed Python, PyTorch, Playwright Chromium, EasyOCR data, the GPA detector, and the GUI, Research, and Wiki Programs. Normal installation does not download these product components separately.</p>
+<p>The complete release includes managed Python, Playwright Chromium, the GPA detector weight, and the GUI, Research, and Wiki Programs. It does not include PyTorch or EasyOCR. Normal installation does not download these product components separately.</p>
 <h2 id="can-i-install-chrome-or-edge-browser-extensions">Can I install Chrome or Edge browser extensions?<a class="header-anchor" href="#can-i-install-chrome-or-edge-browser-extensions">#</a></h2>
 <p>No. Chrome Web Store and Edge Add-ons pages open as ordinary webpages in the built-in browser, but OpenProgram does not add an extension-install button, download CRX packages, import extensions from another browser, or provide an extension manager. The app uses standard Electron/Chromium; Electron supports only part of the Chrome Extensions API and does not target compatibility with arbitrary Chrome Web Store extensions. OpenProgram does not maintain a custom Chromium/Electron fork or add another browser runtime for extension compatibility. The shipped Playwright Chromium is a browser-automation backend and does not host the Desktop Browser Pane or extensions.</p>
 <p>To extend OpenProgram itself, use <a href="/docs/capabilities/plugins.html">Plugins</a>, Skills, MCP servers, Programs, or agent tools. These extend OpenProgram rather than the embedded webpage runtime.</p>
