@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787545182" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787549155" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +67,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
            placeholder="Filter docs…" autocomplete="off" spellcheck="false">
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink active" href="/docs/README.html" data-title-zh="一次性:发 prompt、打印答案、退出(可重定向或接管道)" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
+<a class="navlink active" href="/docs/README.html" data-title-zh="Readme.Zh" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
 <a class="navlink" href="/docs/start/features.html" data-title-zh="功能详解" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html">Features</a>
 </div>
 <div class="nav-sec">
@@ -77,7 +77,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/start/faq.html" data-title-zh="常见问题" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html">FAQ</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="一次性:发 prompt、打印答案、退出(可重定向或接管道)">Overview</span></nav><p align="center">
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Readme.Zh">Overview</span></nav><p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="images/logo-lockup.gif">
     <source media="(prefers-color-scheme: light)" srcset="images/logo-lockup-light.gif">
@@ -132,20 +132,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a></li>
 </ul>
 </li>
-<li><a href="#troubleshooting">Troubleshooting</a>
-<ul>
-<li><a href="#power-user-commands">1. Power-user commands</a></li>
-</ul>
-</li>
-<li><a href="#how-to-use">How to use</a>
-<ul>
-<li><a href="#web-ui--openprogram-web">1. Web UI — <code>openprogram web</code></a></li>
-<li><a href="#terminal-ui--openprogram">2. Terminal UI — <code>openprogram</code></a></li>
-</ul>
-</li>
-<li><a href="#cli-use">CLI use</a></li>
-<li><a href="#detailed-features">Detailed features</a></li>
-<li><a href="#integration">Integration</a></li>
 <li><a href="#contributing">Contributing</a></li>
 <li><a href="#acknowledgements">Acknowledgements</a></li>
 <li><a href="#citation">Citation</a></li>
@@ -164,7 +150,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>2026-04-03</strong> — <strong>v0.1.0</strong> — first release: the <code>@agentic_function</code> decorator and the execution DAG.</li>
 </ul>
 <h2 id="why-openprogram">Why OpenProgram?<a class="header-anchor" href="#why-openprogram">#</a></h2>
-<p>The current OpenProgram release supports macOS and Linux installations, multiple providers, and terminal, browser, and chat interfaces. Windows native packaging is deferred for a later release decision; Windows and mobile devices can currently use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
+<p>The current OpenProgram release supports macOS and Linux installations, multiple providers, and a Web interface (desktop App or <code>openprogram web</code> → http://localhost:18100). Windows native packaging is deferred for a later release decision; Windows and mobile devices can currently use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
 <h3 id="1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems<a class="header-anchor" href="#1-dag-context-for-native-multi-agent-systems">#</a></h3>
 <p align="center">
   <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
@@ -187,11 +173,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>macOS / Linux CLI or server release:</strong></p>
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>macOS desktop users download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux users install the complete CLI/server runtime and use its Web UI or TUI; no Linux desktop package is published until a complete package passes the public-entry gate. All supported release installations contain the same complete product capabilities. See <strong><a href="/docs/install/install.html">install.md</a></strong> for verification, platform scope, and source-development installation.</p>
+<p>macOS desktop users download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux users install the complete CLI/server runtime and open the Web UI; no Linux desktop package is published until a complete package passes the public-entry gate. All supported release installations contain the same complete product capabilities. See <strong><a href="/docs/install/install.html">install.md</a></strong> for verification, platform scope, and source-development installation.</p>
 <h3 id="2-run">2. Run<a class="header-anchor" href="#2-run">#</a></h3>
-<pre><code class="language-bash">openprogram
+<p>On macOS, open the desktop App. Or start the Web UI from the command line:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>web
 </code></pre>
-<p>First run sets up your provider, then asks which surface to open. Skip the prompt with <code>openprogram tui</code> (terminal) or <code>openprogram web</code> (browser → http://localhost:18100).</p>
+<p>Either way opens <strong>http://localhost:18100</strong>.</p>
 <h3 id="3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses<a class="header-anchor" href="#3-included-programs-and-additional-harnesses">#</a></h3>
 <p>Every supported release installation already includes the three first-party Programs and their default runtime assets:</p>
 <table>
@@ -232,145 +219,7 @@ full guide (install, manage, author, test, publish) is
 <blockquote>
 <p>Need a workflow of your own? Ask the agent in chat to create or update a Program.</p>
 </blockquote>
-<h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
-<p>Two diagnostic commands cover most &quot;it broke and I don't know why&quot; situations:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>rescue<span class="w">          </span><span class="c1"># 12 platform-agnostic probes, each with a fix command</span>
-openprogram<span class="w"> </span>doctor<span class="w">          </span><span class="c1"># quick "is the install healthy?" check</span>
-openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w">       </span><span class="c1"># follow the worker log live</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w"> </span><span class="c1"># OAuth tokens — expiring? refresh wired?</span>
-</code></pre>
-<p><code>rescue</code> is the one to reach for first when something doesn't work — it doesn't depend on an LLM being reachable, walks through provider config, ports, dependencies, build artefacts, and prints the exact command to fix each finding. Case-by-case docs live in <a href="/docs/server/troubleshooting.html">troubleshooting.md</a>.</p>
-<p>For platform-builder topics (<code>Runtime</code> retry semantics, the full <code>@agentic_function</code> decorator API, the flat-DAG context model) see <a href="/docs/reference/API.html">API.md</a> and the per-topic notes under <a href="/docs/reference/README.html">reference/api/</a>.</p>
-<h3 id="power-user-commands">Power-user commands<a class="header-anchor" href="#power-user-commands">#</a></h3>
-<pre><code class="language-bash">openprogram<span class="w"> </span>logs<span class="w"> </span>list<span class="w">                </span><span class="c1"># all log files with size + age</span>
-openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>worker<span class="w"> </span>-f<span class="w">      </span><span class="c1"># follow worker.log</span>
-openprogram<span class="w"> </span>completion<span class="w"> </span>bash<span class="w">          </span><span class="c1"># autocomplete: bash | zsh | powershell</span>
-openprogram<span class="w"> </span>secrets<span class="w"> </span>list<span class="w">             </span><span class="c1"># same as `providers list` (openclaw-style alias)</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>&lt;prov&gt;<span class="w"> </span><span class="o">[</span>profile<span class="o">]</span><span class="w">  </span><span class="c1"># pick which account a provider runs on</span>
-openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>&lt;prov&gt;<span class="w"> </span>--account<span class="w"> </span>work<span class="w">  </span><span class="c1"># add a second account</span>
-openprogram<span class="w"> </span>worker<span class="w"> </span>status<span class="w">            </span><span class="c1"># is the backend up? on what port?</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>&lt;id&gt;<span class="w">    </span><span class="c1"># continue a previous chat headlessly</span>
-</code></pre>
-<p><strong>Providers &amp; models</strong> live in <strong>Settings → Providers</strong> (web UI). Each provider takes multiple accounts and multiple API keys under one credential pool — keys auto-rotate, cooling off a rate-limited one. Need a provider that isn't in the built-in list? <strong>Add custom provider</strong> takes just a <strong>Name</strong> and <strong>Base URL</strong> (id auto-generated) for any OpenAI-compatible endpoint; browse its models from the provider's <code>/models</code> endpoint or add a model by id, same multi-key management as the rest.</p>
-<hr />
-<h2 id="how-to-use">How to use<a class="header-anchor" href="#how-to-use">#</a></h2>
-<p>Two ways to interact day-to-day — same backend, same sessions, switch freely.</p>
-<h3 id="web-ui-openprogram-web">Web UI — <code>openprogram web</code><a class="header-anchor" href="#web-ui-openprogram-web">#</a></h3>
-<p>Opens at <code>http://localhost:18100</code>. The full surface: a live <strong>mini-DAG</strong> of the session on the right rail, <strong>branch / merge / attach</strong> on any node, <strong>multi-agent</strong> rows tagged by producer, and drag-and-drop <strong>file attachments</strong>. Best when you want to <em>see and steer</em> the execution tree, or for longer, branching work.</p>
-<p align="center">
-  <img src="images/chat_hero.png" alt="OpenProgram web UI — agentic function call tree, streamed thinking, and the conversation DAG on the right rail" width="880">
-</p>
-<h3 id="terminal-ui-openprogram">Terminal UI — <code>openprogram</code><a class="header-anchor" href="#terminal-ui-openprogram">#</a></h3>
-<p>The same backend without the browser — same commands, same chat history. Release installs include the Python terminal interface; source-development installs can also build Ink on macOS/Linux. One-shot, no UI: <code>openprogram --print &quot;…&quot;</code>.</p>
-<p align="center">
-  <img src="images/tui_hero.png" alt="OpenProgram terminal UI — welcome screen listing the model, agents, sessions, and the registered skills / providers / tools / applications" width="570">
-</p>
-<blockquote>
-<p>Sessions live in <code>~/.openprogram/</code> and are shared by both — start in the terminal, pick it up in the browser tab, and vice versa.</p>
-</blockquote>
-<hr />
-<h2 id="cli-use">CLI use<a class="header-anchor" href="#cli-use">#</a></h2>
-<p>Beyond the chat UIs, the <code>openprogram</code> command runs headless — script it, pipe it, automate it.</p>
-<pre><code class="language-bash"><span class="c1"># One-shot: send a prompt, print the answer, exit (redirect or pipe it)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"summarise .github/CHANGELOG.md"</span><span class="w"> </span>&gt;<span class="w"> </span>summary.md
-
-<span class="c1"># Run a specific agentic function with key=value args</span>
-openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research<span class="w"> </span>--arg<span class="w"> </span><span class="nv">topic</span><span class="o">=</span><span class="s2">"state-space models"</span>
-
-<span class="c1"># Continue an earlier session by id (headless; combine with --print)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span>--resume<span class="w"> </span>local_d9a16a6b06<span class="w"> </span><span class="s2">"and now?"</span>
-</code></pre>
-<p>Same backend and sessions as the UIs (<code>~/.openprogram/</code>) — a <code>--print</code> run or a resumed session shows up in the web / terminal UI too.</p>
-<h2 id="detailed-features">Detailed features<a class="header-anchor" href="#detailed-features">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>One-line summary</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Automatic context</strong></td>
-<td>Every <code>@agentic_function</code> call is a tree node; the runtime threads it through nested LLM calls — no manual prompt assembly.</td>
-</tr>
-<tr>
-<td><strong>Functions that author functions</strong></td>
-<td>New / fixed <code>@agentic_function</code>s are written by the agent itself via ordinary file-editing tools and the documented API. No dedicated <code>create()</code> / <code>fix()</code> calls.</td>
-</tr>
-<tr>
-<td><strong>Conversation as a git DAG</strong></td>
-<td>Sessions are commits + branches + merges, with the right sidebar exposing the operations. File-touching branches run in isolated git worktrees.</td>
-</tr>
-<tr>
-<td><strong>Memory that writes itself</strong></td>
-<td>Markdown under <code>~/.openprogram/memory/</code>: <code>core.md</code> (always loaded), <code>topics/</code> (one file per subject, every paragraph citing its source), <code>sources/</code> (the conversations those citations point at). Conversations are folded into topics in the background, and every write lands whole or not at all.</td>
-</tr>
-<tr>
-<td><strong>Mini-DAG execution view</strong></td>
-<td>The right rail draws every node + edge of the active session and scrolls with the chat.</td>
-</tr>
-<tr>
-<td><strong>Multi-agent + multi-channel</strong></td>
-<td>Every row tagged with its producer agent; channel layer wires external transports (Telegram, Discord, Slack, WeChat).</td>
-</tr>
-</tbody>
-</table>
-<p>The detailed tour of each one — code samples, design rationale, where to look in the codebase — lives in <a href="/docs/start/features.html"><strong>features.md</strong></a>.</p>
-<h2 id="integration">Integration<a class="header-anchor" href="#integration">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Guide</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="/docs/start/GETTING_STARTED.html">Getting Started</a></td>
-<td>3-minute setup and runnable examples</td>
-</tr>
-<tr>
-<td><a href="/docs/integrations/claude-code.html">Claude Code</a></td>
-<td>Use without API key via Claude Code CLI</td>
-</tr>
-<tr>
-<td><a href="/docs/integrations/openclaw.html">OpenClaw</a></td>
-<td>Use as OpenClaw skill</td>
-</tr>
-<tr>
-<td><a href="/docs/reference/API.html">API Reference</a></td>
-<td>Full API documentation</td>
-</tr>
-</tbody>
-</table>
-<details>
-<summary><strong>Project Structure</strong></summary>
-<pre><code>openprogram/                         # Python product package
-├── agent/                           # model loop, compaction, session runtime
-├── agentic_programming/             # llm() / agent() primitives and @agentic_function
-├── programs/
-│   ├── _registry.py                 # Workflow registry and discovery
-│   ├── tools/                       # deterministic @function tools
-│   ├── workflow/                    # llm()/agent() Workflows, including goal/
-│   └── applications/                # owner-recorded external Program checkouts
-├── channels/                        # external chat transports
-├── scheduler/                       # durable schedules and execution
-└── webui/                           # worker API and WebSocket layer
-apps/
-└── cli/                            # TypeScript Ink terminal client
-web/                                 # Next.js interface
-desktop/                             # Electron desktop host
-tests/                               # pytest: &lt;layer&gt;/&lt;product-domain&gt;
-scripts/                             # executable and importable repository maintenance tools
-</code></pre>
-<p>See the workspace READMEs for
-<a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/README.md"><code>openprogram/</code></a>,
-<a href="https://github.com/Fzkuji/OpenProgram/blob/main/apps/web/README.md"><code>web/</code></a>, and
-<a href="https://github.com/Fzkuji/OpenProgram/blob/main/apps/cli/README.md"><code>apps/cli/</code></a>. Complete
-ownership rules are in
-<a href="/docs/reference/design/repository-structure.html">Repository Structure</a>.</p>
-</details>
+<p>For details, see <a href="/docs/start/GETTING_STARTED.html">Getting Started</a>, <a href="/docs/install/install.html">Install</a>, and <a href="/docs/start/features.html">Features</a>.</p>
 <h2 id="contributing">Contributing<a class="header-anchor" href="#contributing">#</a></h2>
 <p>This is a <strong>paradigm proposal</strong> with a reference implementation. We welcome discussions, alternative implementations in other languages, use cases that validate or challenge the approach, and bug reports.</p>
 <p>See <a href="https://github.com/Fzkuji/OpenProgram/blob/main/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
@@ -433,14 +282,6 @@ AGPL-3.0.</p>
 <a class="lvl-3" href="#1-install">1. Install</a>
 <a class="lvl-3" href="#2-run">2. Run</a>
 <a class="lvl-3" href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a>
-<a class="" href="#troubleshooting">Troubleshooting</a>
-<a class="lvl-3" href="#power-user-commands">Power-user commands</a>
-<a class="" href="#how-to-use">How to use</a>
-<a class="lvl-3" href="#web-ui-openprogram-web">Web UI — openprogram web</a>
-<a class="lvl-3" href="#terminal-ui-openprogram">Terminal UI — openprogram</a>
-<a class="" href="#cli-use">CLI use</a>
-<a class="" href="#detailed-features">Detailed features</a>
-<a class="" href="#integration">Integration</a>
 <a class="" href="#contributing">Contributing</a>
 <a class="" href="#acknowledgements">Acknowledgements</a>
 <a class="" href="#citation">Citation</a>
