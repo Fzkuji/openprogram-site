@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787549155" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787550253" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,9 +112,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 — <strong>Igor Stravinsky</strong>, <em>Poetics of Music</em></p>
 </blockquote>
 <p><strong>We propose <em>Agentic Programming</em>.</strong> An LLM is flexible; code is deterministic. Let the model run everything and you get chaos — unpredictable execution, context explosion, no output guarantees; hard-code everything and you lose the intelligence. A <strong>harness</strong> balances the two, interleaved moment to moment — <strong>Python for the flow you want fixed, the LLM for the judgement you can't script.</strong> (<a href="/docs/capabilities/agentic-programming/philosophy.html">the full rationale →</a>)</p>
-<blockquote>
-<p>🎉 <strong>Paper:</strong> <a href="https://arxiv.org/abs/2606.15874"><em>LLM-as-Code: Agentic Programming for Agent Harness</em></a> — accepted at the <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong>.</p>
-</blockquote>
 <p><strong>Contents</strong></p>
 <ul>
 <li><a href="#news">News</a></li>
@@ -132,22 +129,22 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a></li>
 </ul>
 </li>
-<li><a href="#contributing">Contributing</a></li>
-<li><a href="#acknowledgements">Acknowledgements</a></li>
+<li><a href="/docs/comparisons/related-projects.html">Related projects</a></li>
+<li><a href="/docs/comparisons/related-projects.html#acknowledgements">Acknowledgements</a></li>
+<li><a href="/docs/comparisons/related-projects.html#contributing">Contributing</a></li>
 <li><a href="#citation">Citation</a></li>
 <li><a href="#license">License</a></li>
 </ul>
 <h2 id="news">News<a class="header-anchor" href="#news">#</a></h2>
 <ul>
-<li><strong>2026-08-24</strong> — <strong>v0.8.1</strong> — smaller installers: the product no longer bundles PyTorch.</li>
-<li><strong>2026-08-24</strong> — <strong>v0.8.0</strong> — context compaction you can follow (automatic compact, summary cards, folded originals, message navigation in sync) and a Chrome-style bookmarks bar on the built-in Browser.</li>
-<li><strong>2026-08-17</strong> — <strong>v0.7.0</strong> — complete built-in browser release: multi-pane Browser, bookmarks and compact History, Chrome/Brave/Edge/Chromium profile import, and DOM-first Agent control of visible internal webpages.</li>
-<li><strong>2026-07-21</strong> — <strong>v0.6.0</strong> — multi-agent collaboration: <code>spawn</code> N sub-agents, message them across sessions, run file-touching branches in isolated git worktrees.</li>
+<li><strong>2026-08-24</strong> — <strong>v0.8.0</strong> — context compaction you can see and expand back to the original, plus a bookmarks bar on the built-in Browser.</li>
+<li><strong>2026-08-17</strong> — <strong>v0.7.0</strong> — built-in browser: multiple panes, bookmarks, History, and Agent control of visible pages.</li>
+<li><strong>2026-07-21</strong> — <strong>v0.6.0</strong> — multi-agent: <code>spawn</code> sub-agents, message across sessions, file-touching branches in git worktrees.</li>
 <li><strong>2026-06-22</strong> — <strong>Paper accepted</strong> at the KDD 2026 Workshop on Agentic Software Engineering (<a href="https://arxiv.org/abs/2606.15874">arXiv:2606.15874</a>).</li>
-<li><strong>2026-06-07</strong> — <strong>v0.5.0</strong> — installable harnesses (<code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code>), one-command install on every platform, multi-account providers with automatic key rotation, and the <code>rescue</code> / <code>doctor</code> diagnostics.</li>
-<li><strong>2026-05-28</strong> — <strong>v0.4.0</strong> — the design-system foundation behind the web UI and TUI.</li>
+<li><strong>2026-06-07</strong> — <strong>v0.5.0</strong> — installable harnesses and multi-account providers with automatic key rotation.</li>
+<li><strong>2026-05-28</strong> — <strong>v0.4.0</strong> — the Web UI design system.</li>
 <li><strong>2026-04-04</strong> — <strong>v0.3.0</strong> — built-in Anthropic / OpenAI / Gemini providers.</li>
-<li><strong>2026-04-03</strong> — <strong>v0.1.0</strong> — first release: the <code>@agentic_function</code> decorator and the execution DAG.</li>
+<li><strong>2026-04-03</strong> — <strong>v0.1.0</strong> — first release: <code>@agentic_function</code> and the execution DAG.</li>
 </ul>
 <h2 id="why-openprogram">Why OpenProgram?<a class="header-anchor" href="#why-openprogram">#</a></h2>
 <p>The current OpenProgram release supports macOS and Linux installations, multiple providers, and a Web interface (desktop App or <code>openprogram web</code> → http://localhost:18100). Windows native packaging is deferred for a later release decision; Windows and mobile devices can currently use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
@@ -220,39 +217,6 @@ full guide (install, manage, author, test, publish) is
 <p>Need a workflow of your own? Ask the agent in chat to create or update a Program.</p>
 </blockquote>
 <p>For details, see <a href="/docs/start/GETTING_STARTED.html">Getting Started</a>, <a href="/docs/install/install.html">Install</a>, and <a href="/docs/start/features.html">Features</a>.</p>
-<h2 id="contributing">Contributing<a class="header-anchor" href="#contributing">#</a></h2>
-<p>This is a <strong>paradigm proposal</strong> with a reference implementation. We welcome discussions, alternative implementations in other languages, use cases that validate or challenge the approach, and bug reports.</p>
-<p>See <a href="https://github.com/Fzkuji/OpenProgram/blob/main/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
-<h2 id="acknowledgements">Acknowledgements<a class="header-anchor" href="#acknowledgements">#</a></h2>
-<p>OpenProgram stands on shoulders. The tool framework, provider abstraction, and
-several tool implementations were ported or adapted from the projects below —
-each under its own license. Enormous thanks to their authors.</p>
-<ul>
-<li><a href="https://github.com/openclaw/openclaw"><strong>OpenClaw</strong></a> (MIT) — layout of the
-tool registry (<code>name / description / parameters / execute</code>), provider
-abstraction with <code>check_fn</code> + <code>requires_env</code> gating, <code>TOOLSETS</code> presets,
-skill loading via SKILL.md frontmatter + late-bound <code>read</code>. Our full clone
-lives under <code>references/openclaw/</code> (gitignored) for browsing.</li>
-<li><a href="https://github.com/himanshuishere/hermes-agent"><strong>hermes-agent</strong></a>
-(MIT) — starting point for <code>execute_code</code> (we trimmed the
-Docker / Modal layers), <code>mixture_of_agents</code>, and the general shape of the
-multi-provider <code>web_search</code> / <code>image_generate</code> / <code>image_analyze</code> tools.</li>
-<li><a href="https://github.com/mariozechner/pi-coding-agent"><strong>pi-coding-agent</strong></a>
-(MIT) — via OpenClaw's import, the canonical AgentSkill shape
-(<code>&lt;available_skills&gt;</code> XML formatter, name / description / location).</li>
-<li><a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> — overall ergonomics
-of the <code>DEFAULT_TOOLS</code> set (bash + read / write / edit + glob / grep / list
-<ul>
-<li>apply_patch + the todo planning board) and the todo tools' JSON schema.</li>
-</ul>
-</li>
-<li><strong>Anthropic / OpenAI / Google SDKs</strong> — provider HTTP contracts; our
-providers call the raw HTTP APIs to keep SDK dependencies optional.</li>
-</ul>
-<p>Individual tool files call out their direct inspirations in file-level
-docstrings where the lineage is more specific. These MIT-licensed components
-keep their original MIT terms; the combined work is distributed under
-AGPL-3.0.</p>
 <h2 id="citation">Citation<a class="header-anchor" href="#citation">#</a></h2>
 <p>Using OpenProgram in your work, or building on the code? Please cite our paper — and under the AGPL, any derivative you <strong>distribute or run as a network service</strong> must itself be open-sourced under the AGPL, with attribution preserved (see <a href="#license">License</a>).</p>
 <blockquote>
@@ -282,8 +246,6 @@ AGPL-3.0.</p>
 <a class="lvl-3" href="#1-install">1. Install</a>
 <a class="lvl-3" href="#2-run">2. Run</a>
 <a class="lvl-3" href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a>
-<a class="" href="#contributing">Contributing</a>
-<a class="" href="#acknowledgements">Acknowledgements</a>
 <a class="" href="#citation">Citation</a>
 <a class="" href="#license">License</a>
 </div></aside>

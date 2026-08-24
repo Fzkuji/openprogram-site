@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787549155" data-alt-lang-url="/docs/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787550253" data-alt-lang-url="/docs/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,9 +110,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 —— <strong>Igor Stravinsky</strong>，《Poetics of Music》</p>
 </blockquote>
 <p><strong>我们提出 <em>Agentic Programming</em>。</strong> LLM 灵活,代码确定。让模型掌控一切,得到的是混乱——不可预测的执行、上下文爆炸、没有输出保证;把一切硬编码,又丢掉了智能。<strong>Harness</strong> 在两者之间取得平衡,逐时逐刻地交织——<strong>想固定的流程交给 Python,写不进脚本的判断交给 LLM。</strong>(<a href="/docs/capabilities/agentic-programming/philosophy.html">完整论证 →</a>)</p>
-<blockquote>
-<p>🎉 <strong>论文:</strong> <a href="https://arxiv.org/abs/2606.15874"><em>LLM-as-Code: Agentic Programming for Agent Harness</em></a> —— 已被 <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong> 接收。</p>
-</blockquote>
 <p><strong>目录</strong></p>
 <ul>
 <li><a href="#%E6%96%B0%E9%97%BB">新闻</a></li>
@@ -130,22 +127,22 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="#3-%E5%B7%B2%E5%8C%85%E5%90%AB-programs-%E4%B8%8E%E9%A2%9D%E5%A4%96-harness">3. 已包含 Programs 与额外 harness</a></li>
 </ul>
 </li>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-<li><a href="#%E8%87%B4%E8%B0%A2">致谢</a></li>
+<li><a href="/docs/comparisons/related-projects.html">相关项目</a></li>
+<li><a href="/docs/comparisons/related-projects.html#acknowledgements">致谢</a></li>
+<li><a href="/docs/comparisons/related-projects.html#contributing">贡献</a></li>
 <li><a href="#%E5%BC%95%E7%94%A8">引用</a></li>
 <li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81">许可证</a></li>
 </ul>
 <h2 id="新闻">新闻<a class="header-anchor" href="#新闻">#</a></h2>
 <ul>
-<li><strong>2026-08-24</strong> — <strong>v0.8.1</strong> — 更小的安装包：产品不再捆绑 PyTorch。</li>
-<li><strong>2026-08-24</strong> — <strong>v0.8.0</strong> — 上下文压缩整条链路（自动压缩、摘要卡片、折叠原文、消息导航同步），以及内置浏览器上可点击展开、样式与工具栏一致的书签栏。</li>
-<li><strong>2026-08-17</strong> — <strong>v0.7.0</strong> — 完整内置浏览器：多窗格 Browser、书签与紧凑 History、Chrome/Brave/Edge/Chromium 配置导入，以及 Agent 对可见内部网页的 DOM 优先操控。</li>
-<li><strong>2026-07-21</strong> — <strong>v0.6.0</strong> — 多 Agent 协作：<code>spawn</code> N 个子 Agent，跨会话传信，在隔离的 git worktree 里跑会改文件的分支。</li>
+<li><strong>2026-08-24</strong> — <strong>v0.8.0</strong> — 看得见、能展开回原文的上下文压缩，以及内置浏览器的书签栏。</li>
+<li><strong>2026-08-17</strong> — <strong>v0.7.0</strong> — 内置浏览器：多窗格、书签、History，以及 Agent 对可见页面的操控。</li>
+<li><strong>2026-07-21</strong> — <strong>v0.6.0</strong> — 多 Agent：<code>spawn</code> 子 Agent，跨会话传信，会改文件的分支跑在 git worktree 里。</li>
 <li><strong>2026-06-22</strong> — <strong>论文接收</strong> —— KDD 2026 Workshop on Agentic Software Engineering（<a href="https://arxiv.org/abs/2606.15874">arXiv:2606.15874</a>）。</li>
-<li><strong>2026-06-07</strong> — <strong>v0.5.0</strong> — 可安装 harness（<code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code>）、全平台一键安装、多账户 provider 与自动 key 轮换，以及 <code>rescue</code> / <code>doctor</code> 诊断。</li>
-<li><strong>2026-05-28</strong> — <strong>v0.4.0</strong> — Web UI 与 TUI 的设计系统基础。</li>
+<li><strong>2026-06-07</strong> — <strong>v0.5.0</strong> — 可安装 harness，以及多账户 provider 与自动 key 轮换。</li>
+<li><strong>2026-05-28</strong> — <strong>v0.4.0</strong> — Web UI 设计系统。</li>
 <li><strong>2026-04-04</strong> — <strong>v0.3.0</strong> — 内置 Anthropic / OpenAI / Gemini provider。</li>
-<li><strong>2026-04-03</strong> — <strong>v0.1.0</strong> — 首个版本：<code>@agentic_function</code> 装饰器与执行 DAG。</li>
+<li><strong>2026-04-03</strong> — <strong>v0.1.0</strong> — 首个版本：<code>@agentic_function</code> 与执行 DAG。</li>
 </ul>
 <h2 id="为什么是-openprogram">为什么是 OpenProgram？<a class="header-anchor" href="#为什么是-openprogram">#</a></h2>
 <p>OpenProgram 当前 release 支持 macOS 和 Linux 安装、多 provider，以及 Web 界面（桌面 App 或 <code>openprogram web</code> → http://localhost:18100）。Windows 原生打包暂缓到后续 release 决策；目前 Windows 与移动设备可以作为浏览器客户端访问受支持的远程主机。harness 本体提供<strong>三种构建 agent Program 的机制</strong>。</p>
@@ -217,34 +214,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>需要一条自己的工作流？直接在聊天里让 agent 创建或更新 Program。</p>
 </blockquote>
 <p>详情见 <a href="/docs/start/GETTING_STARTED.html">快速上手</a>、<a href="/docs/install/install.html">安装</a> 和 <a href="/docs/start/features.html">功能</a>。</p>
-<h2 id="贡献">贡献<a class="header-anchor" href="#贡献">#</a></h2>
-<p>这是一个<strong>范式提案</strong>,附带参考实现。欢迎讨论、其他语言的替代实现、验证或挑战此方法的用例,以及 bug 报告。</p>
-<p>详见 <a href="https://github.com/Fzkuji/OpenProgram/blob/main/.github/CONTRIBUTING.md">CONTRIBUTING.md</a>。</p>
-<h2 id="致谢">致谢<a class="header-anchor" href="#致谢">#</a></h2>
-<p>OpenProgram 站在前人的肩膀上。工具框架、provider 抽象和若干工具实现移植或改编自下列项目——各自遵循其原许可证。非常感谢这些作者。</p>
-<ul>
-<li><a href="https://github.com/openclaw/openclaw"><strong>OpenClaw</strong></a>(MIT)—— 工具注册表的布局
-(<code>name / description / parameters / execute</code>)、带 <code>check_fn</code> + <code>requires_env</code>
-门禁的 provider 抽象、<code>TOOLSETS</code> 预设、经 SKILL.md frontmatter + 延迟绑定 <code>read</code>
-的 skill 加载。完整克隆放在 <code>references/openclaw/</code>(已 gitignore)供浏览。</li>
-<li><a href="https://github.com/himanshuishere/hermes-agent"><strong>hermes-agent</strong></a>
-(MIT)—— <code>execute_code</code> 的起点(我们裁掉了 Docker / Modal 层)、
-<code>mixture_of_agents</code>,以及多 provider 的 <code>web_search</code> / <code>image_generate</code> /
-<code>image_analyze</code> 工具的整体形态。</li>
-<li><a href="https://github.com/mariozechner/pi-coding-agent"><strong>pi-coding-agent</strong></a>
-(MIT)—— 经 OpenClaw 引入的规范 AgentSkill 形态
-(<code>&lt;available_skills&gt;</code> XML 格式器,name / description / location)。</li>
-<li><a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> —— <code>DEFAULT_TOOLS</code>
-集合的整体人机工学(bash + read / write / edit + glob / grep / list
-<ul>
-<li>apply_patch + todo 规划板)以及 todo 工具的 JSON schema。</li>
-</ul>
-</li>
-<li><strong>Anthropic / OpenAI / Google SDK</strong> —— provider 的 HTTP 契约;我们的
-provider 直接调原生 HTTP API,让 SDK 依赖保持可选。</li>
-</ul>
-<p>血缘更具体的工具文件在文件级 docstring 里各自注明了直接灵感来源。这些 MIT
-许可的组件保留其原 MIT 条款;组合作品整体以 AGPL-3.0 分发。</p>
 <h2 id="引用">引用<a class="header-anchor" href="#引用">#</a></h2>
 <p>在你的工作中使用了 OpenProgram,或基于这份代码构建?请引用我们的论文——并注意在 AGPL 下,任何你<strong>分发或作为联网服务运行</strong>的衍生作品必须同样以 AGPL 开源,并保留署名(见<a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81">许可证</a>)。</p>
 <blockquote>
@@ -274,8 +243,6 @@ provider 直接调原生 HTTP API,让 SDK 依赖保持可选。</li>
 <a class="lvl-3" href="#1-安装">1. 安装</a>
 <a class="lvl-3" href="#2-运行">2. 运行</a>
 <a class="lvl-3" href="#3-已包含-programs-与额外-harness">3. 已包含 Programs 与额外 harness</a>
-<a class="" href="#贡献">贡献</a>
-<a class="" href="#致谢">致谢</a>
 <a class="" href="#引用">引用</a>
 <a class="" href="#许可证">许可证</a>
 </div></aside>
