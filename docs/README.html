@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787552421" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787579203" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,6 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </p>
 <p align="center">
   <a href="/docs/start/GETTING_STARTED.html">Getting Started</a> &middot;
+  <a href="/docs/install/install.html">Install</a> &middot;
   <a href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming Agents</a> &middot;
   <a href="/docs/comparisons/ai-agent-frameworks.html">Framework Comparison</a> &middot;
   <a href="/docs/reference/API.html">API Reference</a> &middot;
@@ -114,6 +115,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>We propose <em>Agentic Programming</em>.</strong> An LLM is flexible; code is deterministic. Let the model run everything and you get chaos — unpredictable execution, context explosion, no output guarantees; hard-code everything and you lose the intelligence. A <strong>harness</strong> balances the two, interleaved moment to moment — <strong>Python for the flow you want fixed, the LLM for the judgement you can't script.</strong> (<a href="/docs/capabilities/agentic-programming/philosophy.html">the full rationale →</a>)</p>
 <p><strong>Contents</strong></p>
 <ul>
+<li><a href="#install">Install</a></li>
+<li><a href="#quick-start">Quick start</a></li>
 <li><a href="#news">News</a></li>
 <li><a href="#why-openprogram">Why OpenProgram?</a>
 <ul>
@@ -122,19 +125,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="#3-event-infrastructure--for-proactive-agents">3. Event Infrastructure — for proactive agents</a></li>
 </ul>
 </li>
-<li><a href="#quick-start">Quick Start</a>
-<ul>
-<li><a href="#1-install">1. Install</a></li>
-<li><a href="#2-run">2. Run</a></li>
-<li><a href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a></li>
-</ul>
-</li>
 <li><a href="/docs/comparisons/related-projects.html">Related projects</a></li>
 <li><a href="/docs/comparisons/related-projects.html#acknowledgements">Acknowledgements</a></li>
 <li><a href="/docs/comparisons/related-projects.html#contributing">Contributing</a></li>
 <li><a href="#citation">Citation</a></li>
 <li><a href="#license">License</a></li>
 </ul>
+<h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre>
+<p>macOS desktop: download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux uses the same CLI/server runtime and the Web UI; no Linux desktop package is published. Windows native packaging is not in this release.</p>
+<p>Platform matrix, PATH, <code>openprogram doctor</code>, and source-checkout install: <strong><a href="/docs/install/install.html">Installation</a></strong>.</p>
+<h2 id="quick-start">Quick start<a class="header-anchor" href="#quick-start">#</a></h2>
+<p>The first <code>openprogram</code> run opens a provider setup wizard, then the terminal chat. Re-run the wizard with <code>openprogram setup</code>.</p>
+<pre><code class="language-bash">openprogram
+</code></pre>
+<p>Open the Web UI at http://localhost:18100:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>web
+</code></pre>
+<p>Confirm with one printed reply:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"Introduce yourself in one sentence"</span>
+</code></pre>
+<p>GUI Agent, Research Agent, and Wiki Agent ship with every supported release. Third-party Programs use <code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code>. Details: <a href="/docs/start/GETTING_STARTED.html">Getting Started</a>.</p>
 <h2 id="news">News<a class="header-anchor" href="#news">#</a></h2>
 <ul>
 <li><strong>2026-08-24</strong> — ✨ context compaction you can see and expand back to the original, plus a bookmarks bar on the built-in Browser.</li>
@@ -150,73 +162,33 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The current OpenProgram release supports macOS and Linux installations, multiple providers, and a Web interface (desktop App or <code>openprogram web</code> → http://localhost:18100). Windows native packaging is deferred for a later release decision; Windows and mobile devices can currently use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
 <h3 id="1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems<a class="header-anchor" href="#1-dag-context-for-native-multi-agent-systems">#</a></h3>
 <p align="center">
-  <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/01-dag-context.png">
+    <source media="(prefers-color-scheme: light)" srcset="images/highlights/01-dag-context-light.png">
+    <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
+  </picture>
 </p>
 <p>Every user turn, LLM call, and function call is <strong>one node on a single flat DAG</strong>. Two edges give it meaning: <code>caller</code> (who invoked whom) and <code>reads</code> (whose output fed this prompt) — so context is assembled from the graph, not hand-stitched. Each <code>@agentic_function</code> is <strong>programmable context in one line</strong>: <code>expose</code> controls what a call reveals to its parent, and <code>render_range</code> controls how much history a call pulls in (<code>{&quot;callers&quot;: 0}</code> gives a throwaway, self-isolated scratch context that's reclaimed when it returns — no unbounded prompt growth).</p>
 <p>Because context is an <strong>addressable node rather than a per-agent buffer</strong>, multi-agent stops being a bolt-on: fork a branch, <code>spawn</code> a clean sub-agent, <code>send_message</code> across sessions, or run a file-touching branch in an isolated <code>git worktree</code> — each is just &quot;select a different node set as context&quot; on the same DAG.</p>
 <h3 id="2-agentic-workflow-for-trustworthy-self-evolving-agents">2. Agentic Workflow — for trustworthy &amp; self-evolving agents<a class="header-anchor" href="#2-agentic-workflow-for-trustworthy-self-evolving-agents">#</a></h3>
 <p align="center">
-  <img src="images/highlights/02-agentic-workflow.png" alt="Agentic Workflow — Python drives the flow and code gates enforce the critical steps; a failed validation makes the model re-decide so it cannot skip checks; the agent writes and hot-loads its own @agentic_functions" width="900">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/02-agentic-workflow.png">
+    <source media="(prefers-color-scheme: light)" srcset="images/highlights/02-agentic-workflow-light.png">
+    <img src="images/highlights/02-agentic-workflow.png" alt="Agentic Workflow — Python drives the flow and code gates enforce the critical steps; a failed validation makes the model re-decide so it cannot skip checks; the agent writes and hot-loads its own @agentic_functions" width="900">
+  </picture>
 </p>
 <p><strong>Python drives the flow; the LLM reasons only when asked.</strong> Critical steps become <strong>code gates</strong> — the model's choice is parsed and validated by code, and a failed check makes it <em>re-decide</em> instead of quietly moving on, so validation can't be skipped. Every call is a retryable, observable DAG node. That's what makes execution <em>trustworthy</em>: the guarantees live in code, not in the model's goodwill.</p>
 <p><em>Self-evolving</em> is a mechanism, not a black box: the agent writes and fixes its own <code>@agentic_function</code>s with <strong>ordinary file-edit tools</strong>, a file watcher hot-loads them, and the new tool is live on the next turn — no dedicated <code>create()</code> / <code>fix()</code> machinery.</p>
 <h3 id="3-event-infrastructure-for-proactive-agents">3. Event Infrastructure — for proactive agents<a class="header-anchor" href="#3-event-infrastructure-for-proactive-agents">#</a></h3>
 <p align="center">
-  <img src="images/highlights/03-event-infrastructure.png" alt="Event Infrastructure — a unified process-wide event bus that the agent loop, auth, context, channels, and memory all emit onto; anything can subscribe by event type, and a proactive policy layer builds on top" width="900">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/03-event-infrastructure.png">
+    <source media="(prefers-color-scheme: light)" srcset="images/highlights/03-event-infrastructure-light.png">
+    <img src="images/highlights/03-event-infrastructure.png" alt="Event Infrastructure — a unified process-wide event bus that the agent loop, auth, context, channels, and memory all emit onto; anything can subscribe by event type, and a proactive policy layer builds on top" width="900">
+  </picture>
 </p>
 <p>One <strong>process-wide event bus</strong> is the substrate under everything: the agent loop, auth, context, channels, and memory all emit onto it, and any component can subscribe by event type (every event is a uniform <code>Event(type, payload, ts)</code> envelope with <code>id</code> / <code>origin</code> / <code>metadata</code>). This is deliberately a <strong>foundation</strong> — a proactive policy layer that watches the stream and acts is the bus's first intended consumer. The plumbing is in place; the proactivity is yours to build on it.</p>
-<h2 id="quick-start">Quick Start<a class="header-anchor" href="#quick-start">#</a></h2>
-<h3 id="1-install">1. Install<a class="header-anchor" href="#1-install">#</a></h3>
-<p><strong>macOS / Linux CLI or server release:</strong></p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-</code></pre>
-<p>macOS desktop users download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux users install the complete CLI/server runtime and open the Web UI; no Linux desktop package is published until a complete package passes the public-entry gate. All supported release installations contain the same complete product capabilities. See <strong><a href="/docs/install/install.html">install.md</a></strong> for verification, platform scope, and source-development installation.</p>
-<h3 id="2-run">2. Run<a class="header-anchor" href="#2-run">#</a></h3>
-<p>On macOS, open the desktop App. Or start the Web UI from the command line:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>web
-</code></pre>
-<p>Either way opens <strong>http://localhost:18100</strong>.</p>
-<h3 id="3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses<a class="header-anchor" href="#3-included-programs-and-additional-harnesses">#</a></h3>
-<p>Every supported release installation already includes the three first-party Programs and their default runtime assets:</p>
-<table>
-<thead>
-<tr>
-<th>Program</th>
-<th>Release status</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>
-<td>Included; the product runtime does not ship PyTorch or EasyOCR</td>
-<td>Drives desktop apps &amp; OSWorld VMs by vision.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
-<td>Included</td>
-<td>Literature survey → experiments → paper draft.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
-<td>Included</td>
-<td>Turns notes / docs / chats into an Obsidian vault with <code>[[wikilinks]]</code>.</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Fzkuji/Scriptorium">Scriptorium</a></td>
-<td>Related</td>
-<td>Agent memory you can read; Markdown notes; facts cited to source messages; MCP for Claude Code.</td>
-</tr>
-</tbody>
-</table>
-<p>Third-party harnesses are additional functionality. Mutable extension environments use <code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code> (or a full git URL); source editing and replacement OCR/browser backends are developer features.</p>
-<p>Writing your own installable harness is one layout contract away — the
-full guide (install, manage, author, test, publish) is
-<strong><a href="/docs/capabilities/installing-harnesses.html">installing-harnesses.md</a></strong>.</p>
-<blockquote>
-<p>Need a workflow of your own? Ask the agent in chat to create or update a Program.</p>
-</blockquote>
-<p>For details, see <a href="/docs/start/GETTING_STARTED.html">Getting Started</a>, <a href="/docs/install/install.html">Install</a>, and <a href="/docs/start/features.html">Features</a>.</p>
 <h2 id="citation">Citation<a class="header-anchor" href="#citation">#</a></h2>
 <p>Using OpenProgram in your work, or building on the code? Please cite our paper — and under the AGPL, any derivative you <strong>distribute or run as a network service</strong> must itself be open-sourced under the AGPL, with attribution preserved (see <a href="#license">License</a>).</p>
 <blockquote>
@@ -237,15 +209,13 @@ full guide (install, manage, author, test, publish) is
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-24</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#install">Install</a>
+<a class="" href="#quick-start">Quick start</a>
 <a class="" href="#news">News</a>
 <a class="" href="#why-openprogram">Why OpenProgram?</a>
 <a class="lvl-3" href="#1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems</a>
 <a class="lvl-3" href="#2-agentic-workflow-for-trustworthy-self-evolving-agents">2. Agentic Workflow — for trustworthy &amp; self-evolving agents</a>
 <a class="lvl-3" href="#3-event-infrastructure-for-proactive-agents">3. Event Infrastructure — for proactive agents</a>
-<a class="" href="#quick-start">Quick Start</a>
-<a class="lvl-3" href="#1-install">1. Install</a>
-<a class="lvl-3" href="#2-run">2. Run</a>
-<a class="lvl-3" href="#3-included-programs-and-additional-harnesses">3. Included Programs and additional harnesses</a>
 <a class="" href="#citation">Citation</a>
 <a class="" href="#license">License</a>
 </div></aside>
