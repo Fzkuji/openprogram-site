@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787669736" data-alt-lang-url="/docs/reference/design/ui/attachment-handling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787690632" data-alt-lang-url="/docs/reference/design/ui/attachment-handling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -487,7 +487,7 @@ sha256 会话内去重与 <code>attachments/.opdedup.json</code>；提及括号�
 <li><code>MAX_ATTACH_BYTES</code>（建议 32MB）。压制 git workdir blob 膨胀(提交进 git 的 blob 在历史里永久,是真实成本)vs 容纳更大真实 PDF。默认 32MB。</li>
 </ol>
 <p>有一个面向产品的问题仍然开放：大二进制永久累积在 per-session git 历史里（这是&quot;workdir = 自包含已提交状态&quot;不变式的代价）是否可接受，还是将来需要一个 git 之外的内容存储。那样的存储会牺牲重放可复现性，所以设计有意保留这个不变式。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-25</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/attachment-handling.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 附件处理设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-attachments.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">聊天附件：双向流转与预览</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/attachment-handling.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 附件处理设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-attachments.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">聊天附件：双向流转与预览</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一句话原则">一句话原则</a>
