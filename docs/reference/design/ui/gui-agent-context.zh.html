@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787741019" data-alt-lang-url="/docs/reference/design/ui/gui-agent-context.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787743388" data-alt-lang-url="/docs/reference/design/ui/gui-agent-context.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,6 +101,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
 <a class="navlink active" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/ui/turn-occupancy.html" data-title-zh="轮次占用 — 停止、队列与 session 槽位" data-href-en="/docs/reference/design/ui/turn-occupancy.html" data-href-zh="/docs/reference/design/ui/turn-occupancy.zh.html">Turn occupancy — stop, queue, and the session slot</a>
@@ -186,6 +187,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
 <a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本自动更新</a>
 <a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
+<a class="navlink" href="/docs/reference/design/distribution/windows-support.html">Windows support</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
@@ -491,7 +493,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>长 task 跑下来 plan_next_action 的 prompt 会不会因为 gui_step 链太长而过大。如果有 token 压力，给 <code>plan_next_action</code> 或 <code>gui_agent</code> 加 <code>render_range={&quot;callers&quot;: N}</code> 显式截断最近 N 个 gui_step</li>
 <li>screenshot 是 image 节点，N 张大图会撑爆 context。可能要走&quot;压缩老 screenshot 为文字描述&quot;路径，但那是 prompt 层的优化，不是 render_range 层的事</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/send-queue-reliability.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · 聊天发送队列可靠性</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/head-bugs.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · HEAD 缺陷清单</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-调用结构">1. 调用结构</a>

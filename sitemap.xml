@@ -202,6 +202,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/distribution/automatic-updates.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/implementation-plan.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/installation-packaging.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/windows-support.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/error-handling.html</loc></url>
@@ -456,6 +457,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/fn-form-compact-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent-context.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/head-bugs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/integrated-terminal.html</loc></url>
