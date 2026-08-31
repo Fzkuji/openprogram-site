@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1787760707" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788212504" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -142,8 +142,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Run it directly from the command line:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>The Programs card only asks for <code>task</code>. Other parameters keep their defaults; CLI and agent calls can still pass them.</p>
-<p>Parameters (function signature <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, ...)</code>):</p>
+<p>The Programs card asks for <code>task</code> and a <code>surface</code>. Keep <code>desktop</code> for foreground OS input, or select <code>browser</code> to operate an exact Page in OpenProgram's built-in browser. Browser actions use the Page's DOM/CDP target and do not activate its tab, raise the OpenProgram window, or move the system pointer.</p>
+<p>Run against the built-in browser Page:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Inspect and complete the visible form"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
+</code></pre>
+<p>Parameters (function signature <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, surface=&quot;desktop&quot;, ...)</code>):</p>
 <table>
 <thead>
 <tr>
@@ -162,24 +165,32 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>max_seconds</code></td>
-<td>Web-path wall-clock limit only. Default is no time limit. <code>0</code> or a negative value means no cap. Desktop does not use this field.</td>
+<td>Whole-process deadline for runs dispatched through OpenProgram Programs or Functions, on either surface. Default 300 seconds; a positive value overrides it, while <code>0</code> or a negative value removes the deadline. In a direct Python bridge call, the browser loop also enforces this value internally; the desktop harness has no separate internal timer.</td>
 </tr>
 <tr>
 <td><code>app_name</code></td>
 <td>Application name used for component memory, e.g. <code>firefox</code>, <code>libreoffice_calc</code>; default <code>desktop</code></td>
 </tr>
+<tr>
+<td><code>surface</code></td>
+<td><code>desktop</code> for foreground OS/VM input or <code>browser</code> for an exact built-in Page. The browser route uses the default Page backend unless a trusted caller supplies <code>backend</code>.</td>
+</tr>
 </tbody>
 </table>
-<p>Each step runs observe (screenshot + component detection + state recognition) → verify the previous step's result → plan the next action → execute → build feedback for the next round. Structured feedback is passed between steps, so progress does not depend on the LLM's context memory. Previously learned UI transitions are reused as shortcuts (component memory).</p>
+<p>Each desktop step runs observe (one screenshot + component detection + state recognition) → verify the previous step's result → plan one action → execute → build feedback for the next round. A first-step <code>done</code> decision receives a separate current-screen completion check. Feedback keeps the latest eight action outcomes; selecting the same failed action four times stops the run instead of repeating indefinitely. Previously learned UI transitions remain available, but learning is an explicit operation rather than an implicit pre-step side effect. When the agent cannot finish or a human must take over, it chooses fail, stops, and returns <code>success=false</code>; both <code>summary</code> and <code>handoff_instruction</code> preserve the handoff text.</p>
+<p>Desktop observations include the frontmost application and screenshot coordinate bounds. If the target application's windows are minimized or located in another macOS Space and remain unavailable after one bounded Window-menu recovery, the run stops as infeasible and asks the user to move or unminimize the window. It does not create additional windows indefinitely.</p>
+<p>Desktop coordinate input always applies to the current foreground GUI; it is not a background-window API. Use <code>surface=browser</code> when a built-in Page must be inspected or changed without bringing OpenProgram or that Page to the foreground.</p>
+<p>Desktop and built-in-browser runs share the same terminal fields: <code>status</code> (<code>succeeded</code>, <code>infeasible</code>, <code>failed</code>, or <code>cancelled</code>), <code>success</code>, <code>reason_code</code>, <code>summary</code>, and <code>handoff_instruction</code>. The runner, not the conclusion model, determines success. Desktop results additionally include step history and timing; browser results include backend and WebSession details.</p>
+<p>The Function card displays that task result directly: <code>Succeeded</code> for a verified result, <code>Failed</code> when the task ended without satisfying the request, and <code>Needs takeover</code> when the handoff instruction requires user action. <code>Error</code> identifies a runtime exception or an invalid GUI result contract. An internal completed worker state never changes a failed GUI result into <code>Completed</code>.</p>
 <h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
 <ul>
 <li>Product runtimes do not install PyTorch or EasyOCR.</li>
 <li>The release capability probe rejects an artifact if the detector model is missing.</li>
 <li>Supported product platforms are macOS and Linux.</li>
-<li>The runtime needs a working directory configured before running (screenshots and run records are written there).</li>
+<li>The runtime needs a working directory configured before running. Workflow records are stored under the OpenProgram state directory (<code>gui_harness/workflows/</code>), not in the source tree.</li>
 </ul>
 <p>Source and README: <code>openprogram/programs/applications/gui_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#availability">Availability</a>

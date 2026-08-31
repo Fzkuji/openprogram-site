@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787760707" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788212504" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,7 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/docs/reference/design/ui/gui-agent.html">GUI Agent execution design</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
@@ -431,6 +431,13 @@ disabled / title 也随当前形态变。</li>
 <p>问题（runtime.ask）现在没走这套，是独立浮窗（<code>apps/web/components/ui/question-prompt.tsx</code>，
 监听 <code>op:question-asked</code> window 事件、发 <code>question_reply</code>/<code>question_reject</code>）。
 本设计让它退役，改成一种 mode。</p>
+<p>函数调用有两种前端输入形式。选择一个已注册函数会打开 <code>FunctionForm</code>；在 idle
+composer 中输入完整且精确的表达式，例如
+<code>gui_agent(task=&quot;Verify the title&quot;, surface=&quot;browser&quot;, max_steps=3)</code>，则不打开表单，
+直接调用同一个函数。只有去除首尾空白后的全部输入恰好是一个已注册的
+<code>name(parameter=literal, ...)</code> 调用时，才识别为函数表达式。两种输入都会经过同一套
+参数归一化和 schema 校验，再交给同一个 <code>FunctionInvocation</code> dispatcher。包含
+函数调用的说明文本，以及被行内或代码块反引号包裹的调用文本，仍作为普通聊天输入。</p>
 <h2 id="模型容器-变换mode">模型：容器 + 变换（mode）<a class="header-anchor" href="#模型容器-变换mode">#</a></h2>
 <h3 id="容器composer">容器（composer）<a class="header-anchor" href="#容器composer">#</a></h3>
 <p>composer 任一时刻处于<strong>一种</strong> mode：</p>
@@ -509,7 +516,7 @@ body：</p>
 <tr>
 <td><strong>请求（command）</strong></td>
 <td>HTTP POST / RPC，一来一回</td>
-<td>fn-form 点&quot;运行&quot; → <code>POST /api/function/{name}</code>；mode 答复 → <code>question_reply</code> WS action</td>
+<td>FunctionForm 或精确函数表达式 → <code>POST /api/function/{name}</code>；mode 答复 → <code>question_reply</code> WS action</td>
 <td>&quot;我要你做件事 + 给我答复&quot;（运行后回 <code>session_id</code>、resolve 哪个问题）。请求/响应模型最贴，总线是 fire-and-forget 拿不到回话</td>
 </tr>
 <tr>
@@ -520,9 +527,11 @@ body：</p>
 </tr>
 </tbody>
 </table>
-<p><strong>fn-form 一条线看全</strong>：点函数（直接 store，开表单）→ 填参数（前端本地 state）→
-点运行（<strong>请求</strong>：POST 发起，回 session_id）→ 函数在子进程跑、动态回流（<strong>广播</strong>：
-运行事件 / 中途 <code>runtime.ask</code> 都经事件层 → WS）。三段三种通道，各取最贴的工具。</p>
+<p><strong>函数调用的完整链路</strong>：入口可以是选择函数（直接 store，打开 FunctionForm，填写
+参数），也可以是在 idle composer 输入精确的已注册函数表达式（在前端解析并校验）。
+两条入口都生成相同的 <code>FunctionInvocation</code>，再调用共享 dispatcher（<strong>请求</strong>：POST
+发起并返回 <code>session_id</code>），不会调用聊天消息发送器，也不会创建用户聊天回合。随后函数
+在子进程运行；运行事件和中途 <code>runtime.ask</code> 更新经事件层 → WS 返回（<strong>广播</strong>）。</p>
 <p>反例（防以后踩）：别把&quot;发起运行&quot;做成 fire-and-forget 的总线事件——那就拿不到
 <code>session_id</code>，前端无从跳转/绑定会话。发起用请求、过程用广播。</p>
 <h2 id="事件如何路由进来">事件如何路由进来<a class="header-anchor" href="#事件如何路由进来">#</a></h2>
@@ -609,7 +618,7 @@ token 高亮（第一版从简）。</li>
 <li>事件层（统一事件流，这是它在前端的对齐落点）：
 <a href="/docs/reference/design/proactive/event-reference.html">../proactive/event-reference.html</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一句话">一句话</a>

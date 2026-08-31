@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787760707" data-alt-lang-url="/docs/reference/design/proactive/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788212504" data-alt-lang-url="/docs/reference/design/proactive/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,7 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/docs/reference/design/ui/gui-agent.html">GUI Agent execution design</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
@@ -567,7 +567,7 @@ agent，要么挡路的为了快牺牲了能力。分开各管各的，互不拖
 <li>复杂的打扰预算、自动熔断——改用最简单的冷却（同一提醒隔一阵才再来）承担这件事。</li>
 </ul>
 <p>这套设计的目标只有一个：<strong>一个能跑、能不断加规则、规则能记住过去的事件驱动地基。</strong></p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/framework-evolution.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 框架演进 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/policies-mvp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Three Template Rules</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/framework-evolution.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 框架演进 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/policies-mvp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Three Template Rules</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#场景模型想跑-rm--rf-build框架把它拦下来">场景：模型想跑 rm -rf build，框架把它拦下来</a>

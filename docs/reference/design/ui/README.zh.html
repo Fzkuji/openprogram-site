@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787760707" data-alt-lang-url="/docs/reference/design/ui/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788212504" data-alt-lang-url="/docs/reference/design/ui/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,7 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink" href="/docs/reference/design/ui/gui-agent.html">GUI Agent execution design</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
@@ -408,7 +408,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="/docs/reference/design/ui/composer-interaction-modes.html"><code>composer-interaction-modes.md</code></a> — Composer 交互模式</li>
 <li><a href="/docs/reference/design/ui/attachment-handling.html"><code>attachment-handling.md</code></a> — 附件处理：附件怎么进模型上下文（<a href="/docs/reference/design/ui/attachment-handling.html">已渲染</a>）</li>
 <li><a href="/docs/reference/design/ui/chat-attachments.html"><code>chat-attachments.html</code></a> — 聊天附件双向流转：聊天流里显示成什么、agent 怎么把文件交回来、可读文件怎么点开</li>
-<li><a href="/docs/reference/design/ui/gui-agent-context.html"><code>gui-agent-context.md</code></a> — GUI agent 上下文流转</li>
+<li><a href="/docs/reference/design/ui/gui-agent.html"><code>gui-agent.html</code></a> — GUI agent 入口、状态机、结果契约与实现状态</li>
 <li><a href="/docs/reference/design/ui/indicator-dots.html"><code>indicator-dots.md</code></a> — 指示点</li>
 <li><a href="/docs/reference/design/ui/surface-system.html"><code>surface-system.md</code></a> — Surface 系统</li>
 <li><a href="/docs/reference/design/ui/theme-system.html"><code>theme-system.html</code></a> — 主题入口、完整 token 契约、组件消费与桌面浮层传播的权威设计</li>
@@ -418,7 +418,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><a href="/docs/reference/design/ui/window-state.html"><code>window-state.md</code></a> — 桌面窗口普通尺寸、最大化/全屏与标题栏缩放命中</li>
 <li><a href="/docs/reference/design/ui/window-lifecycle.html"><code>window-lifecycle.md</code></a> — 一个主窗口：启动、Dock、二次启动共用同一次创建</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/operations/file-management.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">文件修改、Review 与历史恢复</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/app-icon.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · macOS App 图标规范</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/operations/file-management.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">文件修改、Review 与历史恢复</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/app-icon.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · macOS App 图标规范</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 

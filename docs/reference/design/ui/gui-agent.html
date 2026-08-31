@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787760707" data-alt-lang-url="/docs/reference/design/ui/gui-agent-context.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788212504">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GUI agent — 调用结构与上下文流 · OpenProgram Docs</title>
-<meta name="description" content="本文档说明 gui_agent 在 expose / render_range 默认语义下的上下文是怎么流动的，以及每个 @agentic_function 上的装饰器参数为什么这么设。 参考： 装饰器语义： agentic-programming/function-metadata.md">
-<link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/gui-agent-context.zh.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/ui/gui-agent-context.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/ui/gui-agent-context.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/ui/gui-agent-context.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"GUI agent — 调用结构与上下文流"}]}</script>
+<title>GUI Agent execution design · OpenProgram Docs</title>
+
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/gui-agent.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"GUI Agent execution design"}]}</script>
 <meta property="og:type" content="article">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
-<meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/gui-agent-context.zh.html">
-<meta property="og:title" content="GUI agent — 调用结构与上下文流 · OpenProgram Docs">
-<meta property="og:description" content="本文档说明 gui_agent 在 expose / render_range 默认语义下的上下文是怎么流动的，以及每个 @agentic_function 上的装饰器参数为什么这么设。 参考： 装饰器语义： agentic-programming/function-metadata.md">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/gui-agent.html">
+<meta property="og:title" content="GUI Agent execution design · OpenProgram Docs">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +21,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GUI agent — 调用结构与上下文流 · OpenProgram Docs">
-<meta name="twitter:description" content="本文档说明 gui_agent 在 expose / render_range 默认语义下的上下文是怎么流动的，以及每个 @agentic_function 上的装饰器参数为什么这么设。 参考： 装饰器语义： agentic-programming/function-metadata.md">
+<meta name="twitter:title" content="GUI Agent execution design · OpenProgram Docs">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -100,7 +98,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form compact — 设计示例</a>
-<a class="navlink active" href="/docs/reference/design/ui/gui-agent-context.html" data-title-zh="GUI agent — 调用结构与上下文流" data-href-en="/docs/reference/design/ui/gui-agent-context.html" data-href-zh="/docs/reference/design/ui/gui-agent-context.zh.html">GUI agent — call structure &amp; context flow</a>
+<a class="navlink active" href="/docs/reference/design/ui/gui-agent.html">GUI Agent execution design</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · 聊天发送队列可靠性</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
@@ -389,122 +387,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="GUI agent — 调用结构与上下文流">GUI agent — call structure &amp; context flow</span></nav><h1 id="gui-agent-调用结构与上下文流">GUI agent — 调用结构与上下文流<a class="header-anchor" href="#gui-agent-调用结构与上下文流">#</a></h1>
-<p>本文档说明 <code>gui_agent</code> 在 <code>expose</code> / <code>render_range</code> 默认语义下的上下文是怎么流动的，以及每个 <code>@agentic_function</code> 上的装饰器参数为什么这么设。</p>
-<p>参考：</p>
-<ul>
-<li>装饰器语义：<a href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html"><code>agentic-programming/function-metadata.md</code></a></li>
-<li>render_context 实现：<code>openprogram/context/nodes.py</code></li>
-<li>代码：<code>openprogram/programs/applications/gui_harness/gui_harness/</code></li>
-</ul>
-<h2 id="1-调用结构">1. 调用结构<a class="header-anchor" href="#1-调用结构">#</a></h2>
-<pre><code>gui_agent(task)                   ← 顶层 @agentic_function (no render_range)
-  └─ loop N 次：
-     gui_step(task, feedback)     ← @agentic_function 编排 (no runtime.exec)
-       ├─ observe()               Python: 截图 + 检测组件 + 识别状态
-       ├─ verify_step(...)        @agentic_function LLM leaf
-       ├─ plan_next_action(...)   @agentic_function LLM leaf
-       └─ dispatch_action(...)    Python: 执行 plan 选的动作
-     ↓ return dict(goal, action, target, success, error, ...)
-     ↓ 作为下一个 gui_step 的 feedback 传入
-  └─ conclusion(task, ...)        @agentic_function LLM leaf
-</code></pre>
-<p><code>gui_step</code> 不直接调 <code>runtime.exec</code>，它的作用是把四个阶段串起来。所有 LLM 调用发生在 <code>verify_step</code> / <code>plan_next_action</code> / <code>conclusion</code> 这三个 leaf 函数里。</p>
-<h2 id="2-各函数的-render_range-配置">2. 各函数的 render_range 配置<a class="header-anchor" href="#2-各函数的-render_range-配置">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>render_range</th>
-<th>理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>gui_agent</code></td>
-<td>不设（用默认）</td>
-<td>顶层，应该看到完整对话历史 + 自己 frame 内所有 gui_step 的 io。<code>callers=None</code>（全保留 chat 历史）+ <code>subcalls=-1</code>（gui_step 链自然累积）正好是想要的</td>
-</tr>
-<tr>
-<td><code>gui_step</code></td>
-<td>不设</td>
-<td>自己不调 <code>runtime.exec</code>，render_range 对它没有任何实际意义</td>
-</tr>
-<tr>
-<td><code>verify_step</code></td>
-<td><code>{&quot;callers&quot;: 0}</code></td>
-<td>一次快照判断&quot;上一步做没做成&quot;。所需信息（前一步 goal/action/target/outcome、当前 screenshot、本步检测到的组件）全部通过 <code>content=[...]</code> 显式塞进去。<code>callers=0</code> 把上层 chat 历史和之前的 gui_step 链全墙掉，避免淹没快照判断</td>
-</tr>
-<tr>
-<td><code>plan_next_action</code></td>
-<td>不设（用默认）</td>
-<td><strong>planner 必须看见历史</strong>才能做出非重复决策。默认 <code>callers=None</code> 让它看到 task 描述 + 之前所有 gui_step 的 io（goal/action/target/success）+ 本轮 verify 的 io。<code>subcalls=-1</code> 在 leaf 里没作用（leaf 没有 in-frame 节点）</td>
-</tr>
-<tr>
-<td><code>conclusion</code></td>
-<td><code>{&quot;callers&quot;: 0}</code></td>
-<td>总结要 ground 在最终屏幕状态，不让 step-by-step 叙述污染。所需信息（task、completed、steps_taken、final screenshot）显式塞进 <code>content=[...]</code></td>
-</tr>
-</tbody>
-</table>
-<p>辅助 leaf（component_memory 里的几个、<code>learn</code>、<code>observe</code>、<code>general_action</code>）都用 <code>{&quot;callers&quot;: 0}</code> —— 它们是独立判断器，输入都通过 <code>content=[...]</code> 给齐，不需要对话上下文。</p>
-<h2 id="3-关键设计点">3. 关键设计点<a class="header-anchor" href="#3-关键设计点">#</a></h2>
-<h3 id="plan_next_action-看见什么">plan_next_action 看见什么<a class="header-anchor" href="#plan_next_action-看见什么">#</a></h3>
-<p>从 plan 第 5 步的视角，<code>render_context</code> 的输入：</p>
-<ul>
-<li><code>frame_entry_seq</code> = plan_next_action #5 这个 code 节点的 seq</li>
-<li><code>head_seq</code> = DAG 当前最大 seq</li>
-<li><code>render_range</code> = <code>None</code>（用默认 <code>callers=None, subcalls=-1</code>）</li>
-</ul>
-<p>走 render_context：</p>
-<ul>
-<li>pre-frame = 所有 seq ≤ frame_entry_seq 的节点 = 顶层 chat 那条 user 消息、gui_agent 的 code 节点、gui_step #1..#4 的 code 节点（含各自 io）、本轮 gui_step #5 的 verify_step code 节点（含 io）、observe Python 结果对应的节点（如果走 DAG 的话）</li>
-<li>in-frame = plan_next_action #5 自己 frame 内的节点 = 空（leaf 还没发 exec）</li>
-<li>pre-frame 不截断；in-frame 不截断（也没东西可截）</li>
-<li>expose 过滤：每个 gui_step 是 <code>expose=&quot;io&quot;</code>，所以 gui_step 的 io 节点保留、gui_step 内部的 verify_step / plan_next_action 的 LLM 调用被藏掉</li>
-</ul>
-<p>最后 plan_next_action #5 的 prompt 里有：</p>
-<pre><code>user: &lt;原始 task&gt;
-... 之前 chat 历史 ...
-[gui_step #1] input={...} output={&quot;goal&quot;: &quot;open Firefox&quot;, &quot;action&quot;: &quot;click&quot;, &quot;target&quot;: &quot;Firefox icon&quot;, &quot;success&quot;: true}
-[gui_step #2] input={...} output={&quot;goal&quot;: &quot;open url bar&quot;, &quot;action&quot;: &quot;click&quot;, ...}
-[gui_step #3] input={...} output={...}
-[gui_step #4] input={...} output={...}
-[verify_step #5] input={...} output={&quot;step_succeeded&quot;: true, &quot;observation&quot;: ...}
-[plan_next_action #5] input={...}   ← 自己
-</code></pre>
-<p>planner 因此能看到&quot;前四步都做了什么、最近一步 verify 怎么判的&quot;，做出不重复的下一步决策。</p>
-<h3 id="verify_step-为什么相反">verify_step 为什么相反<a class="header-anchor" href="#verify_step-为什么相反">#</a></h3>
-<p>verify_step 是被动判断：&quot;上一步做的事情，从当前截图看成功了吗？&quot;判断材料完全是局部的：</p>
-<ul>
-<li>上一步 feedback dict（goal/action/target/success/error）— 已经通过 <code>content=[feedback_text]</code> 塞进</li>
-<li>当前 screenshot — 已经通过 <code>content=[{&quot;type&quot;: &quot;image&quot;, ...}]</code> 塞进</li>
-<li>当前检测到的组件 — 已经通过 <code>content=[component_info]</code> 塞进</li>
-</ul>
-<p>如果让它看完整 chat + gui_step 链，反而会引入噪音让&quot;上一步是否成功&quot;这个简单判断被宏观叙述带偏。所以显式 <code>callers=0</code> 墙掉。</p>
-<h3 id="conclusion-同理">conclusion 同理<a class="header-anchor" href="#conclusion-同理">#</a></h3>
-<p>总结要写出&quot;最终屏幕上 visibly 是什么&quot;，不要写&quot;step 3 干了什么、step 7 又干了什么&quot;那种过程叙述。<code>callers=0</code> + 在 prompt 里硬约束&quot;用屏幕上具体可见的文字&quot;。</p>
-<h3 id="曾考虑的替代方案所有函数一律全墙">曾考虑的替代方案：所有函数一律全墙<a class="header-anchor" href="#曾考虑的替代方案所有函数一律全墙">#</a></h3>
-<p>另一条路是到处全墙——每个函数都用 <code>{&quot;callers&quot;: 0, &quot;subcalls&quot;: 0}</code>——再通过 Python 显式构造 feedback dict 一层层往下传。没有采用，是因为这样 planner 只看得到上一步的 feedback，看不到完整 trace，会重复执行同样的动作。</p>
-<p>让 planner 走 DAG 默认行为看见历史，就完全免掉了显式累加，只有真正需要隔离的 leaf（verify / conclusion / 工具型判断器）才显式带 <code>callers=0</code>。这也意味着不存在&quot;top-level 是特例&quot;的分支——gui_agent 顶层和它内部的 gui_step 走完全相同的 <code>render_context</code> 代码路径。</p>
-<p>同理也不需要单独的 &quot;collapsed&quot; 暴露模式。<code>expose=&quot;io&quot;</code> 的语义就是 frame 自己的 input/output 露、frame 内部的 LLM 藏，嵌套子函数用自己的 <code>expose</code> 决定它的 io 露不露——不存在&quot;既要露 io 又要藏嵌套孙子&quot;的中间情形需要覆盖。</p>
-<h2 id="4-需要观察什么">4. 需要观察什么<a class="header-anchor" href="#4-需要观察什么">#</a></h2>
-<ul>
-<li>长 task 跑下来 plan_next_action 的 prompt 会不会因为 gui_step 链太长而过大。如果有 token 压力，给 <code>plan_next_action</code> 或 <code>gui_agent</code> 加 <code>render_range={&quot;callers&quot;: N}</code> 显式截断最近 N 个 gui_step</li>
-<li>screenshot 是 image 节点，N 张大图会撑爆 context。可能要走&quot;压缩老 screenshot 为文字描述&quot;路径，但那是 prompt 层的优化，不是 render_range 层的事</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/head-bugs.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · HEAD 缺陷清单</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#1-调用结构">1. 调用结构</a>
-<a class="" href="#2-各函数的-render_range-配置">2. 各函数的 render_range 配置</a>
-<a class="" href="#3-关键设计点">3. 关键设计点</a>
-<a class="lvl-3" href="#plan_next_action-看见什么">plan_next_action 看见什么</a>
-<a class="lvl-3" href="#verify_step-为什么相反">verify_step 为什么相反</a>
-<a class="lvl-3" href="#conclusion-同理">conclusion 同理</a>
-<a class="lvl-3" href="#曾考虑的替代方案所有函数一律全墙">曾考虑的替代方案：所有函数一律全墙</a>
-<a class="" href="#4-需要观察什么">4. 需要观察什么</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent execution design</span></nav><iframe class="viz-frame" src="/docs/reference/design/ui/gui-agent.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/fn-form-compact-mock.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">fn-form compact — 设计示例</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/head-bugs.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram · HEAD 缺陷清单</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

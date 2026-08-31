@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1787760707" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788212504" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -142,8 +142,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>命令行直接运行：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>Programs 卡片只填 <code>task</code>。其余参数保持默认；命令行和 agent 仍可传入。</p>
-<p>参数（函数签名 <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, ...)</code>）：</p>
+<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。</p>
+<p>操作内置浏览器 Page：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"检查并完成当前可见表单"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
+</code></pre>
+<p>参数（函数签名 <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, surface=&quot;desktop&quot;, ...)</code>）：</p>
 <table>
 <thead>
 <tr>
@@ -162,24 +165,32 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>max_seconds</code></td>
-<td>仅 web 路径的墙钟上限。默认不限时。<code>0</code> 或负数表示不封顶。桌面路径不用这个字段。</td>
+<td>通过 OpenProgram Programs 或 Functions 调度时，它是两种 surface 共用的整个子进程截止时间。默认 300 秒；正数会覆盖默认值，<code>0</code> 或负数表示不限时。直接调用 Python bridge 时，browser 循环还会在内部执行该限制；desktop harness 没有单独的内部计时器。</td>
 </tr>
 <tr>
 <td><code>app_name</code></td>
 <td>用于组件记忆的应用名，如 <code>firefox</code>、<code>libreoffice_calc</code>，默认 <code>desktop</code></td>
 </tr>
+<tr>
+<td><code>surface</code></td>
+<td><code>desktop</code> 使用前台 OS/VM 输入，<code>browser</code> 使用精确的内置 Page。浏览器路径默认使用标准 Page backend；受信任调用方仍可显式传 <code>backend</code>。</td>
+</tr>
 </tbody>
 </table>
-<p>每一步执行 观察（截图 + 组件检测 + 状态识别）→ 验证上一步结果 → 规划下一动作 → 执行 → 构造下一轮反馈，步与步之间传递结构化反馈，进度不依赖 LLM 上下文记忆。已学过的界面转换会作为捷径复用（组件记忆）。</p>
+<p>桌面路径每一步执行 观察（一次截图 + 组件检测 + 状态识别）→ 验证上一步结果 → 规划一个动作 → 执行 → 构造下一轮反馈。第一步直接选择 <code>done</code> 时，还要单独验证当前屏幕是否已经满足任务。反馈只保留最近八个动作结果；同一个失败动作被第四次选择时会终止，不再无限重复。已学过的界面转换仍可复用，但学习改为显式操作，不再作为主循环之前的隐式步骤。做不完或需要人接手时，agent 会选 fail 停下并返回 <code>success=false</code>；<code>summary</code> 和 <code>handoff_instruction</code> 都保留接手说明。</p>
+<p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
+<p>桌面坐标输入始终作用于当前前台 GUI，不是后台窗口接口。需要在不置顶 OpenProgram 或目标 Page 的情况下操作内置页面时，应使用 <code>surface=browser</code>。</p>
+<p>桌面和内置浏览器运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code>、<code>failed</code> 或 <code>cancelled</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。桌面结果还包含步骤历史和耗时；浏览器结果还包含 backend 和 WebSession 信息。</p>
+<p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
 <ul>
 <li>产品 runtime 不安装 PyTorch 或 EasyOCR。</li>
 <li>detector 模型缺失时，release capability probe 会拒绝该 artifact。</li>
 <li>受支持的产品平台是 macOS 和 Linux。</li>
-<li>运行前需要 runtime 配置好工作目录（截图与运行记录写在那里）。</li>
+<li>运行前需要 runtime 配置好工作目录。工作流记录写入 OpenProgram 状态目录下的 <code>gui_harness/workflows/</code>，不再写入源码目录。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#可用性">可用性</a>
