@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788245034" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -142,7 +142,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>命令行直接运行：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。GUI Agent 会复用提交消息或 Function 表单的 OpenProgram 窗口中已有的 Page。该窗口没有 Page 时，它才会创建一个初始地址为 <code>https://www.google.com/</code> 的后台 Page，在同一次函数运行中继续执行，并在运行结束时只关闭这个由 agent 创建的 Page；当前选中的标签页保持不变。如果没有可用的来源桌面窗口，结果会是带接手说明的 <code>infeasible</code>，而不是运行时异常。如果桌面端拒绝清理，结果同样是 <code>infeasible</code>，并要求用户手动关闭残留的后台 Page。</p>
+<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。ref 点击在 Page DOM 内触发，截图使用 Electron 的隐藏 Page capture，两者都不需要显示 Page。GUI Agent 会复用提交消息或 Function 表单的 OpenProgram 窗口中已有的 Page。该窗口没有 Page 时，它才会创建一个初始地址为 <code>https://www.google.com/</code> 的后台 Page，在同一次函数运行中继续执行，并在运行结束时只关闭这个由 agent 创建的 Page；当前选中的标签页保持不变。如果没有可用的来源桌面窗口，结果会是带接手说明的 <code>infeasible</code>，而不是运行时异常。如果桌面端拒绝清理，结果同样是 <code>infeasible</code>，并要求用户手动关闭残留的后台 Page。</p>
 <p>输入完整的已注册函数表达式，例如 <code>gui_agent(task=&quot;检查这个 Page&quot;, surface=&quot;browser&quot;)</code>，会使用与 Programs 表单相同的 Function dispatcher，不会作为普通聊天消息保存或执行。Retry 会重新运行该精确 Function 节点及其保存的来源窗口/Page 身份，不会改用点击 Retry 时当前选中的 Page。</p>
 <p>操作内置浏览器 Page：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"检查并完成当前可见表单"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
@@ -191,7 +191,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>运行前需要 runtime 配置好工作目录。工作流记录写入 OpenProgram 状态目录下的 <code>gui_harness/workflows/</code>，不再写入源码目录。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-08-31</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-01</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write a Workflow package</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#可用性">可用性</a>
