@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -136,8 +136,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harnesses">Harnesses<a class="header-anchor" href="#harnesses">#</a></h1>
 <p>A <strong>harness</strong> (an <em>agentic program</em>) is a self-contained git repo of
 agentic functions. Every supported release already contains the GUI, Research,
-and Wiki first-party Programs, their dependencies, and their default runtime
-assets. <code>openprogram programs install</code> is for additional third-party Programs
+and Wiki first-party Program packages and their supported runtime assets.
+The GUI package is installed without PyTorch, OpenCV, or EasyOCR, as described
+below. <code>openprogram programs install</code> is for additional third-party Programs
 or developer source overlays; it is not a step required to complete a release
 installation. The immutable product runtime rejects in-place Program install,
 upgrade, and uninstall operations.</p>
@@ -200,12 +201,12 @@ never the checkout it points to.</p>
 <tr>
 <td><a href="https://github.com/Fzkuji/Research-Agent-Harness">Research Agent</a></td>
 <td>Included</td>
-<td>Fixed source commit and dependencies are recorded in the product manifest.</td>
+<td>The product manifest records the fixed source commit; the builder installs the declared PDF dependencies, and the runtime manifest records the resolved distributions.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/Wiki-Agent-Harness">Wiki Agent</a></td>
 <td>Included</td>
-<td>Fixed source commit and dependencies are recorded in the product manifest.</td>
+<td>The product manifest records the fixed source commit; the builder installs the declared dependencies, and the runtime manifest records the resolved distributions.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI Agent</a></td>

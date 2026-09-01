@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/install/install.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/install/install.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>安装 · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都具有相同的完整产品能力，只有启动外壳不同。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS">
+<meta name="description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都包含相同的 product runtime，只有启动外壳不同。可选 backend 依赖的边界见下文。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面">
 <link rel="canonical" href="https://openprogram.io/docs/install/install.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/install/install.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/install/install.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/install/install.zh.html">
 <meta property="og:title" content="安装 · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都具有相同的完整产品能力，只有启动外壳不同。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS">
+<meta property="og:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都包含相同的 product runtime，只有启动外壳不同。可选 backend 依赖的边界见下文。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="安装 · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都具有相同的完整产品能力，只有启动外壳不同。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面 CLI / Server 浏览器客户端 macOS">
+<meta name="twitter:description" content="OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都包含相同的 product runtime，只有启动外壳不同。可选 backend 依赖的边界见下文。source checkout 安装只用于开发。 支持矩阵 # 平台 桌面">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -76,7 +76,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安装">Installation</span></nav><h1 id="安装">安装<a class="header-anchor" href="#安装">#</a></h1>
-<p>OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都具有相同的完整产品能力，只有启动外壳不同。source checkout 安装只用于开发。</p>
+<p>OpenProgram 分别提供桌面 release 安装和 CLI/server release 安装。所有受支持的 release 安装都包含相同的 product runtime，只有启动外壳不同。可选 backend 依赖的边界见下文。source checkout 安装只用于开发。</p>
 <h2 id="支持矩阵">支持矩阵<a class="header-anchor" href="#支持矩阵">#</a></h2>
 <table>
 <thead>
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>只有发布在 <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a> 中的产物才属于 release 安装。CI artifact 和 source checkout 构建不属于 stable release。</p>
 <h2 id="桌面安装">桌面安装<a class="header-anchor" href="#桌面安装">#</a></h2>
-<p>受支持的 macOS 桌面产物包含 Electron 和完整的平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、默认 OCR/模型数据，以及 GUI、Research、Wiki 三项第一方 Programs；运行时不读取系统 Python 或 Node.js。Session 与 Memory 历史需要 Git，<code>openprogram doctor</code> 会检查 Git。Linux 当前使用完整 CLI/server release，因为完整 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
+<p>受支持的 macOS 桌面产物包含 Electron 和平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、GPA detector 权重，以及 GUI、Research、Wiki 三项第一方 Programs。GUI Program 已注册，但 product runtime 明确不含 PyTorch、OpenCV 和 EasyOCR；需要这些依赖的 GUI perception 路径必须单独配置 backend 或 development overlay。runtime 不读取系统 Python 或 Node.js。Session 与 Memory 历史需要 Git，<code>openprogram doctor</code> 会检查 Git。Linux 当前使用同一套 CLI/server runtime，因为 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
 <h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
 <ol>
 <li>从 GitHub Releases 下载与机器架构对应且文件名包含 <code>unsigned</code> 的 DMG。</li>
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
 <p>短 bootstrap 先解析最新 stable GitHub Release，再执行该不可变 tag 下的 installer。需要可复现地安装指定版本时，把版本传给 shell 进程：</p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.7.0<span class="w"> </span>sh
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.8.1<span class="w"> </span>sh
 </code></pre>
 <p>命令创建 <code>~/.local/bin/openprogram</code>。如果该目录不在 <code>PATH</code>，可以使用绝对路径，或把它加入 shell 配置。</p>
 <p>installer 在切换 <code>current</code> 前会自动执行版本检查和 worker cold-start/health check；失败时不会切换当前版本。安装后可以执行：</p>
@@ -144,10 +144,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 ~/.local/bin/openprogram<span class="w"> </span>web
 ~/.local/bin/openprogram<span class="w"> </span>doctor
 </code></pre>
-<p>Web UI 地址是 <code>http://localhost:18100</code>。runtime 已包含预构建 Web UI，不需要 Node.js。激活前，installer 会验证 Web、providers、MCP、memory、channels、search、Chromium、OCR/模型数据和三项第一方 Programs。<code>doctor</code> 仍可能报告尚未配置 provider credential 等用户配置问题。</p>
+<p>Web UI 地址是 <code>http://localhost:18100</code>。runtime 已包含预构建 Web UI，不需要 Node.js。激活前，installer 会验证 Web、providers、MCP、memory、channels、search、Chromium、GPA detector 权重，以及三项第一方 Programs 的注册和导入。<code>doctor</code> 仍可能报告尚未配置 provider credential 等用户配置问题。</p>
 <h2 id="已包含产品能力与额外扩展">已包含产品能力与额外扩展<a class="header-anchor" href="#已包含产品能力与额外扩展">#</a></h2>
-<p>GUI Agent、Research Agent 和 Wiki Agent 属于每个受支持的 release 安装。它们的 Python 依赖、默认 OCR 数据、GPA detector 模型和 Playwright Chromium 已包含，不需要首次使用时补装。</p>
-<p>第三方 Program 是用户主动增加的额外功能，存放在只读 product runtime 之外。第一方 Program editable source、诊断工具、本地前端构建，以及 OCR/Browser 后端替换属于开发者附加能力，不用于补齐普通安装。</p>
+<p>GUI Agent、Research Agent 和 Wiki Agent 属于每个受支持的 release 安装。其 Program package、GPA detector 权重和 Playwright Chromium 已包含。GUI Program 使用不解析依赖的方式安装：product runtime 不含 PyTorch、OpenCV 和 EasyOCR，因此使用这些依赖的 GUI perception 路径需要单独配置 backend 或 development overlay。</p>
+<p>第三方 Program 是用户主动增加的额外功能，存放在只读 product runtime 之外。第一方 Program editable source、诊断工具、本地前端构建，以及 OCR/Browser 后端替换属于开发者附加能力。只有使用 product runtime 未包含依赖的 GUI perception 路径才需要替换 backend 或补充依赖；这些附加项不会改变基础 runtime manifest。</p>
 <h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
 <p>贡献者使用 source checkout：</p>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git

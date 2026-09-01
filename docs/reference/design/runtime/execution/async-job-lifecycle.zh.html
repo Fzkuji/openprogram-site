@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -475,12 +476,15 @@ Cancel API 触发时：</p>
 </ol>
 <p>工具自身原子操作（比如一个 <code>Write</code> 写一半）不中断，等当前 atomic 完成再退出。</p>
 <h3 id="d6-task-session-的关系">D6. Task ↔ session 的关系<a class="header-anchor" href="#d6-task-session-的关系">#</a></h3>
-<p>一个 task 永远跑在<strong>一个</strong> parent session 上。跨 session 在概念上等于 merge /
-attach（已有），不在 task 范畴。</p>
+<p>一个 task 永远只在<strong>一个</strong>目标 session 执行。caller 可以位于另一个 session，
+但执行并不会因此跨多个 session：canonical entity 保持
+<code>parent_session_id=&lt;target&gt;</code>，两者不同时再记录
+<code>caller_session_id=&lt;source&gt;</code>。</p>
 <p><code>task.parent_session_id</code> 就是 sub-agent <code>process_user_turn(session_id=...)</code>
 用的那个——与 <code>run_agent_turn</code> 的行为一致。sub-agent 的输出落地为该 session 的
-一个 branch（或新 root，看 <code>context_mode</code>），所以 session repo 既存了 task
-entity 又存了 task 产出，自洽。</p>
+一个 branch（或新 root，看 <code>context_mode</code>），所以目标 session repo 同时存 task
+entity 和 task 产出。源 session 的 linked mirror 只负责可见性和 ownership 检查，
+不是第二个执行身份。</p>
 <h3 id="d7-task-sub-agent-的关系">D7. Task ↔ sub-agent 的关系<a class="header-anchor" href="#d7-task-sub-agent-的关系">#</a></h3>
 <p>所有 spawn 都走 task entity，因此 <code>/task</code> 不同步阻塞。语义如下：</p>
 <ul>
@@ -493,7 +497,7 @@ caller 是 WS handler 而非 LLM。</p>
 <h3 id="d8-task-contextcommit-的关系">D8. Task ↔ ContextCommit 的关系<a class="header-anchor" href="#d8-task-contextcommit-的关系">#</a></h3>
 <p>attach pointer（<code>function=&quot;attach&quot;</code> 节点）由 <code>_run_spawn</code> / <code>_task_impl</code> 写入：</p>
 <ul>
-<li>spawn 时立刻写一个 <strong>placeholder attach card</strong>（<code>function=&quot;attach&quot;</code>，<code>extra.attach.job_id = &lt;job_id&gt;</code>，<code>extra.attach.status = &quot;running&quot;</code>），content=&quot;(running)&quot;，<code>source_commit_id</code> 留空。</li>
+<li>admission 成功后、dispatch 开始前写一个 <strong>placeholder attach card</strong>（<code>function=&quot;attach&quot;</code>，<code>extra.attach.job_id = &lt;job_id&gt;</code>，<code>extra.attach.status = &quot;running&quot;</code>），content=&quot;(running)&quot;，<code>source_commit_id</code> 留空。跨 session spawn 的卡片存在源 session，但 <code>attach.session_id</code> 指向目标 session。</li>
 <li>task 完成时 runner update 同一个 attach card 节点：填 <code>head_id</code> / <code>source_commit_id</code> / 替换 content 为 <code>final_text</code>，<code>status</code> 改 <code>completed</code> / <code>cancelled</code> / <code>errored</code>。</li>
 <li>generator 看到 <code>status=&quot;running&quot;</code> 的 attach 节点：跳过展开（不进 commit items），只在 UI 显示卡片占位。看到 <code>status=&quot;completed&quot;</code> 走现有 attach 展开路径（见 <code>context.md</code> 场景 B）。</li>
 </ul>
@@ -880,7 +884,7 @@ agent 自己想撤。</p>
 <li><strong>Task 优先级 / SLA</strong>：FIFO 即可，没有高优先级抢占。后续按需加 priority queue。</li>
 <li><strong>Resume / 续跑</strong>：cancelled / errored task 不能&quot;接着跑&quot;。用户 retry 等于新 spawn 一个 task。</li>
 <li><strong>Task 重试策略</strong>：runner 不自动 retry；上层 agent / plan 自己决定。</li>
-<li><strong>跨 session task</strong>：一个 task 只绑一个 session。跨 session 用 attach / merge。</li>
+<li><strong>多目标 task</strong>：一个 task 只有一个不可变的执行 session。跨 session caller 通过 <code>caller_session_id</code> 与源侧 attach 支持，但同一 entity 不会在多个目标 session 执行。</li>
 <li><strong>DAG-shaped task 依赖</strong>：<code>await_tasks(mode=&quot;all&quot;|&quot;any&quot;)</code> 已经够 plan mode；显式 DAG / pipeline 留给后续。</li>
 <li><strong>Task 输出流式订阅</strong>：初版只在 task 完成时拿 final_text。中途订阅 stream（让父 agent 看到 sub-agent 边想边说）留给后续。</li>
 <li><strong>资源配额</strong>：单 user 同时 task 数 / token 上限不在本设计，需要先有 multi-tenant 模型。</li>

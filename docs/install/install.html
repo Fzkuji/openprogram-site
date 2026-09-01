@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Installation · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same complete product">
+<meta name="description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same product runtime;">
 <link rel="canonical" href="https://openprogram.io/docs/install/install.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/install/install.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/install/install.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/install/install.html">
 <meta property="og:title" content="Installation · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same complete product">
+<meta property="og:description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same product runtime;">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Installation · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same complete product">
+<meta name="twitter:description" content="OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same product runtime;">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -76,7 +76,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="安装">Install</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="安装">Installation</span></nav><h1 id="installation">Installation<a class="header-anchor" href="#installation">#</a></h1>
-<p>OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same complete product capabilities; only the launch shell differs. Source checkout installation is for development only.</p>
+<p>OpenProgram has separate release installations for desktop users and CLI/server users. All supported release installations contain the same product runtime; only the launch shell differs. Optional backend dependencies are described below. Source checkout installation is for development only.</p>
 <h2 id="supported-installation-matrix">Supported installation matrix<a class="header-anchor" href="#supported-installation-matrix">#</a></h2>
 <table>
 <thead>
@@ -122,7 +122,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>Only artifacts attached to a published <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a> are release installations. CI artifacts and source-checkout builds are not stable releases.</p>
 <h2 id="desktop-installation">Desktop installation<a class="header-anchor" href="#desktop-installation">#</a></h2>
-<p>The supported macOS desktop artifact contains Electron and the complete platform product runtime. The runtime includes managed CPython, OpenProgram, the prebuilt Web UI, providers, channels, search, Playwright Chromium, default OCR/model data, and the GUI, Research, and Wiki first-party Programs. It does not use a system Python or Node.js at runtime. Git is required for session and Memory history and is checked by <code>openprogram doctor</code>. Linux currently uses the complete CLI/server release because the complete AppImage failed its packaging gate; no reduced Linux desktop artifact is published.</p>
+<p>The supported macOS desktop artifact contains Electron and the platform product runtime. The runtime includes managed CPython, OpenProgram, the prebuilt Web UI, providers, channels, search, Playwright Chromium, the GPA detector weight, and the GUI, Research, and Wiki first-party Programs. The GUI Program is registered, but the product runtime deliberately excludes PyTorch, OpenCV, and EasyOCR; GUI perception paths that require those dependencies need a separately configured backend or development overlay. The runtime does not use a system Python or Node.js. Git is required for session and Memory history and is checked by <code>openprogram doctor</code>. Linux currently uses the same CLI/server runtime because the AppImage failed its packaging gate; no reduced Linux desktop artifact is published.</p>
 <h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
 <ol>
 <li>Download the DMG whose name contains <code>unsigned</code> for the machine architecture from GitHub Releases.</li>
@@ -136,7 +136,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
 <p>The short bootstrap resolves the latest stable GitHub Release and then runs the installer from that immutable tag. For a reproducible install of a specific release, pass the version to the shell process:</p>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.7.0<span class="w"> </span>sh
+<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span><span class="m">0</span>.8.1<span class="w"> </span>sh
 </code></pre>
 <p>The command creates <code>~/.local/bin/openprogram</code>. If that directory is not already on <code>PATH</code>, invoke it by its absolute path or add the directory to the shell configuration.</p>
 <p>Before switching <code>current</code>, the installer automatically runs the version probe and a worker cold-start/health check. A failed probe leaves the current version unchanged. After installation, run:</p>
@@ -144,10 +144,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 ~/.local/bin/openprogram<span class="w"> </span>web
 ~/.local/bin/openprogram<span class="w"> </span>doctor
 </code></pre>
-<p>The Web UI is served at <code>http://localhost:18100</code>. The runtime contains the prebuilt Web UI, so Node.js is not required. Before activation, the installer verifies Web, providers, MCP, memory, channels, search, Chromium, OCR/model data, and all three first-party Programs. <code>doctor</code> may still report missing user configuration such as provider credentials.</p>
+<p>The Web UI is served at <code>http://localhost:18100</code>. The runtime contains the prebuilt Web UI, so Node.js is not required. Before activation, the installer verifies Web, providers, MCP, memory, channels, search, Chromium, the GPA detector weight, and registration and import of all three first-party Programs. <code>doctor</code> may still report missing user configuration such as provider credentials.</p>
 <h2 id="included-product-and-additional-extensions">Included product and additional extensions<a class="header-anchor" href="#included-product-and-additional-extensions">#</a></h2>
-<p>GUI Agent, Research Agent, and Wiki Agent are part of every supported release installation. Their Python dependencies, default OCR data, GPA detector model, and Playwright Chromium are included and require no first-use installation.</p>
-<p>Third-party Programs are additional user-selected functionality and are stored separately from the read-only product runtime. Editable first-party Program sources, diagnostics, local frontend builds, and replacement OCR/browser backends are developer additions; they are not required to make a normal installation complete.</p>
+<p>GUI Agent, Research Agent, and Wiki Agent are part of every supported release installation. Their Program packages, the GPA detector weight, and Playwright Chromium are included. The GUI Program is installed without dependency resolution: PyTorch, OpenCV, and EasyOCR are not in the product runtime, so GUI perception paths that use them require a separately configured backend or development overlay.</p>
+<p>Third-party Programs are additional user-selected functionality and are stored separately from the read-only product runtime. Editable first-party Program sources, diagnostics, local frontend builds, and replacement OCR/browser backends are developer additions. Replacement backends or dependencies are required only for GUI perception paths that use libraries omitted from the product runtime; they do not change the base runtime manifest.</p>
 <h2 id="development-checkout">Development checkout<a class="header-anchor" href="#development-checkout">#</a></h2>
 <p>Contributors use a source checkout:</p>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Fzkuji/OpenProgram.git

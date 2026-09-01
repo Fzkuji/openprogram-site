@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -891,7 +892,7 @@ placeholder box:</p>
 </tr>
 <tr>
 <td><code>↗</code> (top-right corner)</td>
-<td>marked on <strong>both sides</strong> of a cross-session spawn: the branch root in the target session (caller lives in another session's graph, hangs on ROOT here, tooltip &quot;spawned from <source session>&quot;); and the initiating node in the source session (tooltip &quot;dispatched to <target session>&quot; — otherwise the dispatch leaves no trace in its own graph). Click jumps to the peer session (implementation may come later). <strong>Cross-session only</strong>: a same-session spawn has both ends in the graph and the head's place on the thread already expresses the relationship — no ↗ there</td>
+<td>marked on <strong>both sides</strong> of a cross-session spawn: <code>spawn_remote</code> on the first target-session user node and <code>spawn_out</code> on the initiating source-session node. The target projection places the external caller at ROOT; the source attach card stores the target session and branch head. A cross-session attach does not create an in-graph <code>attach_returns</code> edge because its endpoint belongs to another graph. The glyph currently indicates the cross-session relation only; clicking it does not navigate. <strong>Cross-session only</strong>: a same-session spawn has both ends in one graph and keeps the ordinary return edge, so it has no ↗</td>
 </tr>
 </tbody>
 </table>
@@ -1394,7 +1395,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§4 cross-session ↗</td>
-<td><code>graph_builder</code> stamps <code>spawn_remote</code> (target side); <code>nodes.ts</code> draws ↗ (source-side <code>spawn_out</code> rendering is ready, awaiting a data source that stamps it)</td>
+<td><code>graph_builder</code> stamps <code>spawn_remote</code> from target-root provenance and <code>spawn_out</code> from the source attach's target session; <code>nodes.ts</code> draws ↗ on both sides. Cross-session badge navigation is not implemented</td>
 </tr>
 <tr>
 <td>§1 spawn root tier</td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/capabilities/agentic-workflow.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,6 +166,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="published-packages-and-runs-are-different">Published packages and runs are different<a class="header-anchor" href="#published-packages-and-runs-are-different">#</a></h2>
 <p>A published Workflow is a multi-file Python package with its own Git history. Every execution copies one immutable revision into the session repository and creates a separate <code>run_id</code> with <code>state.json</code>, checkpoints, results, and a <code>project_ref.json</code> record.</p>
 <p>Running a published package never edits or republishes it. If execution fails, the run becomes <code>failed</code> and preserves the original error and checkpoints. Changing the package requires an explicit <code>revise_workflow</code> call.</p>
+<p>An explicit user cancellation stores <code>cancelled</code> as a terminal run state. Resuming that <code>run_id</code> returns the saved cancelled result without executing it again. A process-level <code>KeyboardInterrupt</code> stores <code>interrupted</code> instead; a later call can reuse that run's saved artifact and checkpoints. This status is the Workflow run projection, not the canonical Execution record. Assigning a new canonical <code>execution_id</code> to a resumed attempt remains part of the incomplete unified Execution integration.</p>
 <p>Legacy <code>code.py</code> runs can still be resumed for compatibility, but the legacy single-module format is not accepted for new authoring and is excluded from Workflow search.</p>
 <h2 id="writing-a-package-yourself">Writing a package yourself<a class="header-anchor" href="#writing-a-package-yourself">#</a></h2>
 <p>The current authoring contract is documented in <a href="/docs/capabilities/workflows/authoring.html">Write a Workflow package</a>. It includes the required files, metadata, entry-point signature, allowed imports, validation command, and current integration limits.</p>

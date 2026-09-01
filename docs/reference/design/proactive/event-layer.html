@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/reference/design/proactive/event-layer.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/reference/design/proactive/event-layer.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -691,7 +692,7 @@ hooks — no numeric cap): <code>payload[&quot;stop_hook_active&quot;]</code> is
 it already forced a continuation and is expected to allow the stop. Failed or cancelled turns return without
 asking the gate. Head movement stays with the normal TurnWriter path inside each turn.</p>
 <h2 id="6-the-event-log">6. The Event Log<a class="header-anchor" href="#6-the-event-log">#</a></h2>
-<p>The process-wide bus appends every typed event as one JSON line, always on:</p>
+<p>The process-wide bus appends every completed typed dispatch as one JSON line, always on:</p>
 <ul>
 <li><code>~/.openprogram/sessions/&lt;sid&gt;/events.jsonl</code> when the event carries a session whose directory exists;</li>
 <li><code>~/.openprogram/logs/events.jsonl</code> otherwise.</li>
@@ -699,6 +700,12 @@ asking the gate. Head movement stays with the normal TurnWriter path inside each
 <p>A file past 5 MB rotates to <code>.1</code> (replacing the previous <code>.1</code>). Gate verdicts are recorded on the same line as
 a <code>gate</code> field — <code>{allowed, reasons, duration_ms, subscribers}</code> — not emitted as a second event. This is the
 layer's observability: read the log after a real turn to see the full stream and every gate decision.</p>
+<p>When a registered gate event first passes through <code>emit(event)</code> for typed observers, that notify phase defers
+the disk write. The same Event must then reach <code>emit_gate(event)</code>, which writes the single verdict-enriched row.
+Calling <code>emit</code> alone for a gate type is an incomplete dispatch: observers still receive it, but no event-log row
+is written before the verdict exists. <code>emit_gate(event)</code> is also a complete gate-only dispatch—the current
+<code>turn.stop</code> path uses it directly—so it writes one verdict row without invoking typed observers. Notify-kind
+events continue to log during <code>emit</code>.</p>
 <h2 id="7-placement-a-process-level-singleton-bus">7. Placement: a Process-Level Singleton Bus<a class="header-anchor" href="#7-placement-a-process-level-singleton-bus">#</a></h2>
 <p>All the relevant components (webui, agent loop, channels, memory, auth, task runner) run in <strong>the same worker
 process</strong> (each as a daemon thread). So the bus is a <strong>process-level singleton</strong> in <code>openprogram/events/bus.py</code>, with
@@ -733,7 +740,7 @@ the layer, not part of it.</li>
 </tr>
 <tr>
 <td>plugin <code>hooks</code> entrypoint</td>
-<td><code>plugins/hooks.register_plugin_hooks</code> subscribes each handler on the bus, keyed by bus event name — notify events via <code>subscribe</code>, gate events (<code>tool.before</code>) via <code>subscribe_gate</code> with the veto protocol (falsy return allows, a reason string or <code>ToolGateDenied</code> denies, any other exception is logged and fail-open)</td>
+<td><code>plugins/hooks.register_plugin_hooks</code> subscribes each handler on the bus, keyed by bus event name — notify events via <code>subscribe</code>, gate events (<code>tool.before</code> and <code>turn.stop</code>) via <code>subscribe_gate</code> with the veto protocol (falsy return allows, a reason string or <code>ToolGateDenied</code> denies, any other exception is logged and fail-open)</td>
 </tr>
 <tr>
 <td><code>/goal</code> state changes</td>

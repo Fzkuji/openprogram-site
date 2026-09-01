@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,6 +166,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="已发布-package-与一次运行不是一回事">已发布 package 与一次运行不是一回事<a class="header-anchor" href="#已发布-package-与一次运行不是一回事">#</a></h2>
 <p>已发布 Workflow 是带独立 Git 历史的多文件 Python package。每次执行会把一个不可变 revision 复制到会话仓库，并创建独立 <code>run_id</code>，记录 <code>state.json</code>、checkpoint、结果和 <code>project_ref.json</code>。</p>
 <p>运行已发布 package 不会修改或重新发布它。执行失败时，run 进入 <code>failed</code>，保留原错误和 checkpoint；修改 package 必须显式调用 <code>revise_workflow</code>。</p>
+<p>用户明确取消时，run 会把 <code>cancelled</code> 保存为终态。再次恢复该 <code>run_id</code> 只返回已保存的取消结果，不会重新执行。进程级 <code>KeyboardInterrupt</code> 则保存为 <code>interrupted</code>；后续调用可以复用该 run 保存的 artifact 和 checkpoint。这里的状态是 Workflow run 投影，不是 canonical Execution record。为恢复尝试分配新的 canonical <code>execution_id</code> 仍属于尚未完成的统一 Execution 接入。</p>
 <p>历史 <code>code.py</code> run 仍可兼容恢复，但 legacy 单模块格式不再接受新 authoring，也不会出现在 Workflow 搜索结果中。</p>
 <h2 id="自己编写-package">自己编写 package<a class="header-anchor" href="#自己编写-package">#</a></h2>
 <p>当前 authoring 合同见<a href="/docs/capabilities/workflows/authoring.html">编写 Workflow package</a>，其中列出必需文件、metadata、入口签名、允许的 import、校验命令和当前接入限制。</p>

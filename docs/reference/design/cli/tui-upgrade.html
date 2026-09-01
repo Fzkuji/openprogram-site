@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -417,8 +418,8 @@ expand it — no keybind, no verbose mode.</li>
 tool looks the same.</li>
 <li>There is no diff rendering; <code>/diff</code> prints raw <code>git diff</code> text.</li>
 <li>Streaming text shows raw markdown source and jumps visually when the final
-render lands (<code>Turn.tsx:123</code>); <code>renderMarkdown</code> is un-memoized under a
-full-redraw renderer.</li>
+render lands (<code>Turn.tsx:123</code>). Committed text is memoized per mounted text
+segment and terminal width under the full-redraw renderer.</li>
 <li><code>follow_up_question</code> and <code>approval_request</code> envelopes are typed in
 <code>ws/client.ts</code> but dropped without notice, so agent questions time out and
 the <code>ask</code> permission mode is unreachable (shift+tab only cycles
@@ -509,12 +510,15 @@ per-turn rendering above depends on memoizing markdown and diff output.</li>
 ctrl+q.</li>
 </ul>
 <h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>Research is complete; implementation has not started. The intended landing
-order is:</p>
+<p>Research is complete; implementation is in progress. Markdown output is
+memoized by streaming state, text, and terminal width for each mounted text
+segment, so updates to a separate streaming turn do not parse unchanged
+committed text again while terminal resizes still re-render width-sensitive
+Markdown. The remaining work follows this order:</p>
 <ul>
 <li><strong>P0 — transcript density</strong> (pure TUI, no server changes): tool render
-shell, 3-line truncation, the ctrl+o transcript screen, the diff
-component, memoized <code>renderMarkdown</code>. Accepted when a run with mixed tools
+shell, 3-line truncation, the ctrl+o transcript screen, and the diff
+component remain. Accepted when a run with mixed tools
 reads as two-line entries, ctrl+o shows everything, an edit shows a
 colored diff, and long bash output folds with an accurate +N count.</li>
 <li><strong>P1 — interaction</strong>: queued messages with ↑ editing, the composite

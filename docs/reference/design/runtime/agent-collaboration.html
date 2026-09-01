@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -592,6 +593,21 @@ full chain; <code>&quot;SID:MSG_ID&quot;</code> forks off that exact node (any s
 inheriting the chain up to it. <code>run_in_background=true</code> returns a <code>job_id</code>; its
 companions <code>job_output(job_id)</code> (block for the result) and
 <code>job_stop(job_id)</code> (cancel) manage the background form.</p>
+<p><code>&quot;SID:MSG_ID&quot;</code> is an exact fork address. Both the session and the message must
+exist before the spawn is admitted; the message is not snapped to a branch's
+current tip. An archived branch may still be used because this operation reads
+recorded history and creates a new branch rather than delivering work to the
+archived branch.</p>
+<p>When the address names another session, keep the two session roles separate.
+If session S at node A starts from <code>&quot;T:M&quot;</code>, the new branch and the canonical
+Job run in target session T, with M as the exact predecessor. The Job records
+<code>parent_session_id=T</code>, <code>parent_msg_id=M</code>, <code>caller_session_id=S</code>, and
+<code>caller_msg_id=A</code>. Its attach card is stored beside A in source session S, but
+the card's <code>attach.session_id</code> is T and its terminal <code>head_id</code> is the new target
+branch tip. Writing or finalising that card does not move S's HEAD, and the
+spawned turn uses <code>advance_head=false</code>, so it does not replace T's selected
+HEAD either. An asynchronous completion may subsequently advance S's HEAD by
+writing the ordinary reply-back turn described in §2.5.</p>
 <p><strong><code>to=</code> — dispatch a tracked task to an EXISTING agent.</strong> With <code>to</code> set the
 tool creates no branch: the prompt is handed to the named existing branch
 as a formal task. Addressing is send_message's, verbatim (<code>&quot;SID:HEAD&quot;</code>
@@ -740,6 +756,17 @@ pointer</strong> written at spawn time does hang off
 sub-branch forked from and which branch each result flowed back from.
 The sub-branch itself stays a parallel independent branch and <strong>does not
 merge back into the mainline</strong>.</p>
+<p>For a cross-session spawn, the pointer remains in the initiator's session but
+references the target <code>(session_id, head_id)</code>. Terminal finalisation reads the
+target branch and its ContextCommit in the target session, then patches the
+card in the initiator's session. The source-side initiating node is marked
+<code>spawn_out</code>; the target-side first <code>agent_spawn</code> user node records
+<code>caller=&lt;source node&gt;</code> plus <code>metadata.spawned_from_session=&lt;source session&gt;</code>
+and is projected as <code>spawn_remote</code>. Because the source session has a real
+attach pointer, its asynchronous follow-up consumes the result through attach
+expansion rather than duplicating the reply inline. <code>send_message</code> and
+<code>agent(to=...)</code> create no branch and no attach pointer, so their replies remain
+inline and receive neither spawn marker.</p>
 <h3 id="26-archiving-removing-an-agent-from-the-agent-list">2.6 Archiving: removing an agent from the agent list<a class="header-anchor" href="#26-archiving-removing-an-agent-from-the-agent-list">#</a></h3>
 <p>Branches live forever in the session DAG — fork, replay, and
 <code>read_conversation</code> all depend on that — so without an archive flag
@@ -1259,7 +1286,7 @@ session event log.</p>
 </tr>
 <tr>
 <td>Cross-session</td>
-<td>A sending to another session takes the same path; both sides update live</td>
+<td>A delivery to another session updates both sides live. <code>send_message</code> / <code>agent(to=...)</code> remain message-only. <code>agent(start_from=&quot;T:M&quot;)</code> creates the branch and canonical Job in T, keeps its card in the initiating session, and marks the source and target DAG nodes <code>spawn_out</code> / <code>spawn_remote</code> without moving either selected HEAD</td>
 </tr>
 <tr>
 <td>Robustness (§5)</td>

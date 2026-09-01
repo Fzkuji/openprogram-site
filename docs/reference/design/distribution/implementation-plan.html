@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,6 +70,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -578,10 +579,16 @@ copied frontend are absent after installation.</li>
 <ul>
 <li>Tag <code>v0.7.0</code> resolves to <code>c7f5916b2b3acb67b936081763945ee080f81b9a</code>; it was created once after main CI run <code>31973024049</code> and documentation publication run <code>31973024046</code> completed successfully.</li>
 <li>Release run <code>31973458867</code> completed successfully. Four native product-runtime jobs, four CLI installer jobs, both macOS Desktop jobs, the Python distribution job, and the final publish job passed.</li>
-<li>The stable <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.7.0">OpenProgram 0.7.0 Release</a> is non-draft and non-prerelease, and GitHub <code>latest</code> resolves to <code>v0.7.0</code>. Its 17 uploaded assets comprise four runtime archives and their checksums, arm64/x64 unsigned DMG and ZIP artifacts and checksum lists, developer wheel/sdist artifacts, and <code>release-manifest.json</code>.</li>
+<li>The stable <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.7.0">OpenProgram 0.7.0 Release</a> is non-draft and non-prerelease. At that acceptance checkpoint, GitHub <code>latest</code> resolved to <code>v0.7.0</code>. Its 17 uploaded assets comprise four runtime archives and their checksums, arm64/x64 unsigned DMG and ZIP artifacts and checksum lists, developer wheel/sdist artifacts, and <code>release-manifest.json</code>.</li>
 <li>The published manifest reports version <code>0.7.0</code>; its byte counts and SHA-256 values match the GitHub asset metadata for both macOS Desktop architectures and all four runtime archives.</li>
 <li>Release acceptance used CI package/runtime smoke and read-only release metadata checks. It did not install, replace, activate, or restart the user's current <code>/Applications/OpenProgram.app</code>, so foreground updater UI, long-running scheduling, and sleep/resume behavior remain explicitly unverified.</li>
 <li>The browser release scope includes the built-in Browser, profile import, bookmarks/history, and Agent-bound WebTab control. Chrome/Edge extension installation is intentionally excluded and documented in the authoritative built-in browser design and product FAQ.</li>
+</ul>
+<h3 id="current-v081-release-acceptance">Current v0.8.1 release acceptance<a class="header-anchor" href="#current-v081-release-acceptance">#</a></h3>
+<ul>
+<li>Tag <code>v0.8.1</code> resolves to <code>3288758691a568b2975efb0abb60c28145907fbc</code>; release run <code>32684756787</code> completed successfully.</li>
+<li>The stable <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.8.1">OpenProgram 0.8.1 Release</a> is non-draft and non-prerelease, GitHub <code>latest</code> resolves to <code>v0.8.1</code>, and the release contains 17 uploaded assets.</li>
+<li>The v0.8.1 product manifest defines the current 11-capability boundary, and GUI installs with <code>--no-deps</code>. The immutable v0.8.1 verifier rejects PyTorch, torchvision, sentence-transformers, triton, and NVIDIA/CUDA distributions while verifying Playwright Chromium, the GPA detector, Research PDF support, and all three first-party Program registrations; it does not explicitly reject OpenCV or EasyOCR. The current-source verifier adds those explicit exclusions and distribution-name normalization.</li>
 </ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
@@ -599,8 +606,8 @@ copied frontend are absent after installation.</li>
 <ul>
 <li>Base commit: <code>e6ec8694977080153a3c94e50a5080d2ff43b69b</code>.</li>
 <li>Product contract: every supported non-developer installation contains the same complete capability set for its platform and architecture. A Desktop artifact must use the same runtime archive as CLI/server and may differ only by its Electron shell. If that complete packaged entry does not pass, the Desktop artifact is absent rather than reduced.</li>
-<li>Required capabilities: Web, providers, MCP, memory, channels, search, default Playwright Chromium, default OCR, the GUI detector model, and the GUI, Research, and Wiki first-party Programs.</li>
-<li>Developer installations add editable sources, tests, diagnostics, local frontend builds, and replaceable OCR/browser backends. They do not define a smaller or different product edition.</li>
+<li>Required capabilities: Web, providers, MCP, memory, channels, search, Playwright Chromium, the GPA detector model, and the GUI, Research, and Wiki first-party Programs. Research includes its PDF support. The product runtime explicitly excludes PyTorch, torchvision, OpenCV, EasyOCR, sentence-transformers, triton, and NVIDIA/CUDA distributions.</li>
+<li>Developer installations add editable sources, tests, diagnostics, local frontend builds, and explicitly configured GUI perception/OCR/browser overlays. Paths that need excluded perception dependencies are not product-manifest capabilities. The product runtime never implicitly installs excluded dependencies; model assets required by an explicit overlay remain that overlay's setup responsibility.</li>
 <li>Ordinary users install from GitHub Release artifacts. PyPI wheels remain internal build inputs and developer artifacts, not a product installation path.</li>
 <li>macOS artifacts are explicitly unsigned DMG/ZIP files. Apple Developer ID signing and notarization are not release requirements. Linux publishes complete x86_64/arm64 CLI/server runtimes; no Linux Desktop artifact is published after the complete AppImage failed its packaging gate.</li>
 <li>Windows native packaging is deferred from this release, while the runtime/Desktop separation must preserve later implementation feasibility. OS credential-store integration remains excluded.</li>
@@ -609,16 +616,16 @@ copied frontend are absent after installation.</li>
 <ul>
 <li>Product contract: <code>docs/reference/design/distribution/installation-packaging.html</code> and this implementation record.</li>
 <li>Runtime assembly: a checked-in product manifest, runtime builder/archive scripts, desktop runtime staging, and the CLI release installer.</li>
-<li>Launchers: Electron and CLI launch paths that set bundled browser/OCR/model locations and validate the capability manifest.</li>
+<li>Launchers: Electron and CLI launch paths that set bundled Playwright Chromium and GPA detector locations and validate the capability manifest. Session and Memory Git history use the host's system Git; neither launcher bundles Git.</li>
 <li>Release: <code>.github/workflows/release.yml</code>, desktop artifact naming, runtime archives, checksums, and public-entry smoke checks.</li>
 <li>Product documentation: install, desktop, server, upgrade, Programs, and README entry points that describe one complete product rather than optional first-party components.</li>
 <li>Tests: <code>tests/unit/test_distribution_release.py</code> plus focused Program/runtime and packaged-entry probes.</li>
 </ul>
 <h3 id="current-batch-public-entry-acceptance">Current-batch public-entry acceptance<a class="header-anchor" href="#current-batch-public-entry-acceptance">#</a></h3>
 <ol>
-<li>Each platform runtime archive contains a manifest with <code>present</code> and <code>verified</code> entries for <code>web</code>, <code>providers</code>, <code>mcp</code>, <code>memory</code>, <code>channels</code>, <code>search</code>, <code>browser.playwright</code>, <code>model.gpa_detector</code>, <code>program.gui</code>, <code>program.research</code>, and <code>program.wiki</code>. The archive does not install torch, sentence-transformers, EasyOCR, or NVIDIA/CUDA wheels.</li>
+<li>Each platform runtime archive contains a manifest with <code>present</code> and <code>verified</code> entries for <code>web</code>, <code>providers</code>, <code>mcp</code>, <code>memory</code>, <code>channels</code>, <code>search</code>, <code>browser.playwright</code>, <code>model.gpa_detector</code>, <code>program.gui</code>, <code>program.research</code>, and <code>program.wiki</code>. GUI installs with <code>--no-deps</code>; Research installs with its PDF support. The archive does not install PyTorch, torchvision, OpenCV, EasyOCR, sentence-transformers, triton, or NVIDIA/CUDA distributions.</li>
 <li>Supported Desktop packaging consumes the already-built runtime archive. The CLI installer consumes the byte-identical archive from GitHub Release. Neither path resolves product dependencies independently.</li>
-<li>A normal-user install performs no PyPI dependency resolution, repository clone, npm build, or first-use download for the default browser, detector model, or first-party Programs.</li>
+<li>A normal-user install performs no PyPI dependency resolution, repository clone, npm build, or first-use download for Playwright Chromium, the GPA detector, or first-party Programs. It also never downloads excluded GUI perception dependencies implicitly; users must configure an explicit development or backend overlay for those paths.</li>
 <li>Public-entry probes verify the worker, Web assets, first-party Program registration, channel/search imports, Playwright Chromium executable, and detector model before an artifact is published or a CLI <code>current</code> link is switched.</li>
 <li>macOS artifact names and documentation state <code>unsigned</code>; the release workflow requires no Apple or PyPI credentials and does not run signing, notarization, or PyPI publication.</li>
 <li>Documentation does not present <code>pip install openprogram</code>, optional GUI/Research/Wiki installation, component-selection prompts, or an unverified Linux Desktop package as normal product installation.</li>
@@ -653,12 +660,12 @@ git status --short
 <td>Distribution, packaged-file, and Web frontend suite: 35 passed after removing the unverified Linux Desktop target. Desktop and Web checks, shell syntax, Ruff, docs build (507 pages), link check (0 broken), and diff checks passed.</td>
 </tr>
 <tr>
-<td>Real macOS arm64 runtime</td>
-<td>CPython 3.12.10, locked OpenProgram dependencies, GUI/Research/Wiki pinned commits, Playwright Chromium, EasyOCR English/Chinese data, GPA detector, and all 12 capabilities built successfully. The complete runtime was about 2.5 GB before compression.</td>
+<td>Current macOS arm64 runtime boundary</td>
+<td>CPython 3.12.10, locked OpenProgram dependencies, GUI/Research/Wiki pinned commits, Playwright Chromium, GPA detector, Research PDF support, and all 11 manifest capabilities are packaged. GUI installs with <code>--no-deps</code>; excluded GUI perception dependencies are not part of the product runtime.</td>
 </tr>
 <tr>
 <td>Runtime verification</td>
-<td>The schema 2 verifier launched a real headless Chromium page, imported channels/search/OCR/PDF dependencies, checked Web assets and model files, and required GUI/Research/Wiki registration. It records the product-manifest hash, <code>uv.lock</code> hash, exact installed distributions, platform, and architecture.</td>
+<td>The schema 2 verifier launches a real headless Chromium page, imports channels/search/PDF dependencies, checks Web assets and the GPA detector file, requires GUI/Research/Wiki registration, and rejects PyTorch, torchvision, OpenCV, EasyOCR, sentence-transformers, triton, and NVIDIA/CUDA distributions. It records the product-manifest hash, <code>uv.lock</code> hash, exact installed distributions, platform, and architecture.</td>
 </tr>
 <tr>
 <td>Archive and CLI entry</td>
@@ -802,11 +809,11 @@ git status --short
 </tr>
 <tr>
 <td>Native Linux</td>
-<td>GitHub Actions run <code>31798379681</code> at pushed <code>main</code> commit <code>17db67dc</code> passed the x86_64 AppImage job, x86_64 CLI job, and arm64 CLI job. The AppImage job executed the public AppImage/Electron entry and repeated the smoke in Debian 11/glibc 2.31 with no system Python, Node.js, Git, or external network.</td>
+<td>GitHub Actions run <code>31798379681</code> at pushed <code>main</code> commit <code>17db67dc</code> passed the x86_64 AppImage job, x86_64 CLI job, and arm64 CLI job. That historical AppImage smoke used Debian 11/glibc 2.31 with no system Python, Node.js, Git, or external network, but did not exercise Session/Memory Git history and is not evidence that current product use can omit system Git.</td>
 </tr>
 <tr>
 <td>CLI isolation</td>
-<td>A native arm64 Debian 12 container with no system Python, Node.js, or Git installed uv 0.11.16, managed CPython 3.12.10, and the 0.6.1 wheel. A second install while the existing worker remained active completed its isolated cold-start and preserved the existing worker PID.</td>
+<td>A historical native arm64 Debian 12 probe with no system Python, Node.js, or Git installed uv 0.11.16, managed CPython 3.12.10, and the 0.6.1 wheel. It tested installer isolation and worker preservation only; current Session/Memory history still requires host Git.</td>
 </tr>
 <tr>
 <td>Specification review</td>
@@ -832,6 +839,7 @@ git status --short
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>
 <a class="lvl-3" href="#v070-browser-focused-release-acceptance">v0.7.0 browser-focused release acceptance</a>
+<a class="lvl-3" href="#current-v081-release-acceptance">Current v0.8.1 release acceptance</a>
 <a class="" href="#short-public-installer-batch">Short public installer batch</a>
 <a class="" href="#unified-complete-product-batch">Unified complete-product batch</a>
 <a class="lvl-3" href="#current-batch-files">Current-batch files</a>

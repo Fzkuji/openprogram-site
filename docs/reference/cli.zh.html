@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -673,8 +673,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>scheduler-worker</code>（兼容别名 <code>cron-worker</code>）</td>
-<td>前台循环，触发一次性、周期和监控 Scheduler 任务</td>
-<td><code>--once</code> 只评估一个 tick 就退出；<code>--list</code> 显示当前任务匹配状态</td>
+<td>前台循环，触发一次性、周期和监控 Scheduler 任务；daemon 的普通 tick 失败会把 warning 和 traceback 写入 stderr，并在下一分钟边界继续，不重放失败的初始 <code>@reboot</code> tick（常驻 worker 重定向后的 stderr 进入其 worker 日志）</td>
+<td><code>--once</code> 只评估一个 tick，失败原样传播后退出；<code>--list</code> 显示当前任务匹配状态</td>
 </tr>
 </tbody>
 </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -571,6 +572,17 @@ Claude Code 同名同义，这是刻意的：认识那批名字的模型就已�
 session）fork、继承到该节点为止的链。<code>run_in_background=true</code> 返回 <code>job_id</code>，配套
 <code>job_output(job_id)</code>（阻塞取结果）和 <code>job_stop(job_id)</code>（取消）管理
 异步形态。</p>
+<p><code>&quot;SID:MSG_ID&quot;</code> 是精确 fork 地址。在接收任务前必须同时确认 session 和
+message 存在；这个 message 不会被改为分支当前 tip。已归档分支仍可作为
+fork 来源，因为该操作只读历史并创建新分支，不是向已归档分支投递任务。</p>
+<p>地址指向另一个 session 时，必须分开两种 session 角色。session S 的节点 A
+从 <code>&quot;T:M&quot;</code> 启动时，新分支和 canonical Job 在目标 session T 执行，M 是精确
+predecessor。Job 记录 <code>parent_session_id=T</code>、<code>parent_msg_id=M</code>、
+<code>caller_session_id=S</code>、<code>caller_msg_id=A</code>。attach 卡片存在源 session S 的 A
+旁边，但卡片中的 <code>attach.session_id</code> 是 T，终态 <code>head_id</code> 是目标分支的
+tip。创建或终态化卡片不移动 S 的 HEAD；派生轮使用 <code>advance_head=false</code>，
+也不替换 T 当前选中的 HEAD。异步完成后，第 2.5 节的普通回送 turn 可以再
+推进 S 的 HEAD。</p>
 <p><strong><code>to=</code> — 给已有 agent 派受管任务。</strong> 传了 <code>to</code> 就不新建分支：prompt 作为
 一件正式任务派给指认的已有分支。寻址与 send_message 完全一致
 （<code>&quot;SID:HEAD&quot;</code> 归位到分支当前末端；分支名先精确匹配、再唯一前缀；歧义列出
@@ -682,6 +694,14 @@ HEAD 并推进它。**每个投递 session 有一把回送串行锁
 <p>这样锚定不丢回流出处：派生时写下的 <strong>attach 指针</strong>仍然挂
 <code>predecessor = caller_msg_id</code>，DAG 上照样能看出每条子分支从哪一轮 fork 出去、
 每个结果从哪条分支回流。子分支本身是并列的独立一支，<strong>不并回主线</strong>。</p>
+<p>跨会话派生时，指针仍位于发起方 session，但引用目标
+<code>(session_id, head_id)</code>。终态化从目标 session 读目标分支及其 ContextCommit，
+然后更新发起方 session 里的卡片。源侧发起节点标记 <code>spawn_out</code>；目标侧第一个
+<code>agent_spawn</code> user 节点记录 <code>caller=&lt;source node&gt;</code> 与
+<code>metadata.spawned_from_session=&lt;source session&gt;</code>，并投影为 <code>spawn_remote</code>。
+因为源 session 里有真实 attach 指针，它的异步 followup 通过 attach 展开获取结果，
+不再内联一份重复回复。<code>send_message</code> 与 <code>agent(to=...)</code> 不创建分支和 attach
+指针，因此它们的回复仍内联，也不会得到任何 spawn 标记。</p>
 <h3 id="26-归档把一个-agent-从-agent-列表里移出">2.6 归档：把一个 agent 从 agent 列表里移出<a class="header-anchor" href="#26-归档把一个-agent-从-agent-列表里移出">#</a></h3>
 <p>分支在 session DAG 里永久存在，fork、回放、<code>read_conversation</code> 都依赖这一点，
 所以没有归档标记时 <code>list_agents</code> 会攒下历史上派生过的每一个 agent，模型还会
@@ -1076,7 +1096,7 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 </tr>
 <tr>
 <td>跨 session</td>
-<td>A 发给别的 session 走同一路径；两边实时更新</td>
+<td>向另一个 session 投递时两边实时更新。<code>send_message</code> / <code>agent(to=...)</code> 仍是纯消息投递。<code>agent(start_from=&quot;T:M&quot;)</code> 在 T 创建分支和 canonical Job，卡片留在发起 session，源与目标 DAG 节点分别标记 <code>spawn_out</code> / <code>spawn_remote</code>，不移动任一选中 HEAD</td>
 </tr>
 <tr>
 <td>健壮性（§5）</td>

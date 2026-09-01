@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/design/proactive/event-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/design/proactive/event-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -682,7 +683,7 @@ channel）根本没有意义。开放 dict 也让以后新增关联维度不用�
 之后每次 <code>payload[&quot;stop_hook_active&quot;]</code> 为 True，hook 由此知道自己已经强制续过轮，应当放行。轮
 失败/被取消不再问闸门直接返回。head 移动始终走每轮内部正常的 TurnWriter 路径。</p>
 <h2 id="6-事件日志">6. 事件日志<a class="header-anchor" href="#6-事件日志">#</a></h2>
-<p>进程级总线把每个类型化事件追加为一行 JSON，常开：</p>
+<p>进程级总线把每个完成派发的类型化事件追加为一行 JSON，常开：</p>
 <ul>
 <li>事件带 session 且该会话目录存在时：<code>~/.openprogram/sessions/&lt;sid&gt;/events.jsonl</code>；</li>
 <li>否则：<code>~/.openprogram/logs/events.jsonl</code>。</li>
@@ -690,6 +691,11 @@ channel）根本没有意义。开放 dict 也让以后新增关联维度不用�
 <p>单文件超 5 MB 轮转为 <code>.1</code>（覆盖旧 <code>.1</code>）。gate 结论作为同一日志行的 <code>gate</code> 字段记录——
 <code>{allowed, reasons, duration_ms, subscribers}</code>——不二次 emit。这就是这一层的可观测性：跑一个真实
 轮后读日志，事件流与每次闸门裁决尽在其中。</p>
+<p>已注册的 gate event 先通过 <code>emit(event)</code> 通知 typed observer 时，notify 阶段延迟磁盘写入；同一个
+Event 随后必须进入 <code>emit_gate(event)</code>，由它写入唯一一条包含 verdict 的记录。gate 类型只调用
+<code>emit</code> 属于未完成的派发：observer 仍能收到事件，但 verdict 产生前不写 event log。
+<code>emit_gate(event)</code> 也可以单独完成一次 gate-only 派发；当前 <code>turn.stop</code> 就直接使用该路径，它会写一条
+verdict 记录且不触发 typed observer。notify 类型仍在 <code>emit</code> 阶段记录。</p>
 <h2 id="7-落位进程级单例总线">7. 落位：进程级单例总线<a class="header-anchor" href="#7-落位进程级单例总线">#</a></h2>
 <p>相关组件（webui、agent loop、channels、memory、auth、task runner）都跑在<strong>同一个 worker 进程</strong>里
 （各自 daemon 线程）。所以总线是 <code>openprogram/events/bus.py</code> 里的<strong>进程级单例</strong>，
@@ -722,7 +728,7 @@ webui 的存在。</p>
 </tr>
 <tr>
 <td>插件 <code>hooks</code> entrypoint</td>
-<td><code>plugins/hooks.register_plugin_hooks</code> 把每个 handler 按总线事件名订阅到总线——notify 事件走 <code>subscribe</code>，gate 事件（<code>tool.before</code>）走 <code>subscribe_gate</code> 并参与否决（返回 falsy 放行，返回理由字符串或抛 <code>ToolGateDenied</code> 否决，其他异常记 warning 后 fail-open）</td>
+<td><code>plugins/hooks.register_plugin_hooks</code> 把每个 handler 按总线事件名订阅到总线——notify 事件走 <code>subscribe</code>，gate 事件（<code>tool.before</code> 和 <code>turn.stop</code>）走 <code>subscribe_gate</code> 并参与否决（返回 falsy 放行，返回理由字符串或抛 <code>ToolGateDenied</code> 否决，其他异常记 warning 后 fail-open）</td>
 </tr>
 <tr>
 <td><code>/goal</code> 状态变化</td>

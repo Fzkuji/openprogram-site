@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/design/cli/tui-upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -409,8 +410,9 @@ BottomBar、命令面板（ctrl+k）、fish 风格自动建议、<code>@file</co
 键位绑定，没有 verbose 模式。</li>
 <li>工具参数只有一行截断显示；没有按工具区分的渲染，每个工具看起来都一样。</li>
 <li>没有 diff 渲染；<code>/diff</code> 直接输出原始的 <code>git diff</code> 文本。</li>
-<li>流式文本显示原始 markdown 源码，等最终渲染落地时画面会跳动
-（<code>Turn.tsx:123</code>）；<code>renderMarkdown</code> 在全量重绘的渲染器下未做 memoize。</li>
+<li>流式文本显示原始 markdown 源码，等最终渲染完成时画面会跳动
+（<code>Turn.tsx:123</code>）。已提交文本在全量重绘的渲染器下按挂载的文本段和终端
+列宽进行 memoize。</li>
 <li><code>follow_up_question</code> / <code>approval_request</code> 信封在 <code>ws/client.ts</code> 中已有类型
 定义，但被无声丢弃，导致 agent 的提问超时、<code>ask</code> permission mode 无法触达
 （shift+tab 只在 bypass↔auto 之间循环）。</li>
@@ -484,10 +486,13 @@ markdown 与 diff 输出的 memoize。</li>
 <li>ctrl+o 作为全局按键是安全的：终端流控用的是 ctrl+s 与 ctrl+q。</li>
 </ul>
 <h2 id="附录实现状态">附录：实现状态<a class="header-anchor" href="#附录实现状态">#</a></h2>
-<p>调研已完成，实现尚未开始。计划的落地顺序：</p>
+<p>调研已完成，实现正在进行。Markdown 输出按每个已挂载文本段的 streaming
+状态、文本和终端列宽进行 memoize，因此另一个流式 turn 更新时，不会再次解析
+未变化的已提交文本；终端尺寸变化时，依赖列宽的 Markdown 仍会重新渲染。其余
+工作按以下顺序进行：</p>
 <ul>
 <li><strong>P0 —— 会话记录密度</strong>（纯 TUI，无服务端改动）：工具渲染外壳、3 行截断、
-ctrl+o 会话记录界面、diff 组件、memoize 的 <code>renderMarkdown</code>。验收标准是：
+ctrl+o 会话记录界面和 diff 组件仍待实现。验收标准是：
 一次混合工具的运行读起来是一条条两行的条目，ctrl+o 显示全部内容，一次
 edit 显示带颜色的 diff，冗长的 bash 输出折叠并给出准确的 +N 计数。</li>
 <li><strong>P1 —— 交互</strong>：忙碌时排队的消息与 ↑ 编辑、复合 spinner/状态行、命令注册

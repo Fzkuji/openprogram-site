@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -482,13 +483,16 @@ entity). When the Cancel API fires:</p>
 <p>A tool's own atomic operation (e.g. a <code>Write</code> halfway through) is not
 interrupted; it waits for the current atomic operation to finish before exiting.</p>
 <h3 id="d6-the-relationship-between-task-and-session">D6. The relationship between Task and session<a class="header-anchor" href="#d6-the-relationship-between-task-and-session">#</a></h3>
-<p>A task always runs on <strong>one</strong> parent session. Cross-session is conceptually
-equivalent to merge / attach (already exists) and is out of scope for tasks.</p>
+<p>A task always runs on <strong>one</strong> target session. A caller may live in another
+session, but that does not make execution multi-session: the canonical entity
+keeps <code>parent_session_id=&lt;target&gt;</code> and, when different, records
+<code>caller_session_id=&lt;source&gt;</code>.</p>
 <p><code>task.parent_session_id</code> is exactly the one the sub-agent uses in
 <code>process_user_turn(session_id=...)</code> — consistent with how <code>run_agent_turn</code>
 behaves. The sub-agent's output lands as a branch of that session (or a new
 root, depending on <code>context_mode</code>), so the session repo holds both the task
-entity and the task's product, which is self-consistent.</p>
+entity and the task's product. A linked mirror in the source session provides
+visibility and ownership checks; it is not a second execution identity.</p>
 <h3 id="d7-the-relationship-between-task-and-sub-agent">D7. The relationship between Task and sub-agent<a class="header-anchor" href="#d7-the-relationship-between-task-and-sub-agent">#</a></h3>
 <p>All spawns go through the task entity, so <code>/task</code> does not block
 synchronously. The semantics:</p>
@@ -504,7 +508,7 @@ LLM.</p>
 <p>The attach pointer (the <code>function=&quot;attach&quot;</code> node) is written by <code>_run_spawn</code> /
 <code>_task_impl</code>:</p>
 <ul>
-<li>On spawn, a <strong>placeholder attach card</strong> is written immediately (<code>function=&quot;attach&quot;</code>, <code>extra.attach.job_id = &lt;job_id&gt;</code>, <code>extra.attach.status = &quot;running&quot;</code>), content=&quot;(running)&quot;, with <code>source_commit_id</code> left empty.</li>
+<li>After admission succeeds and before dispatch starts, a <strong>placeholder attach card</strong> is written (<code>function=&quot;attach&quot;</code>, <code>extra.attach.job_id = &lt;job_id&gt;</code>, <code>extra.attach.status = &quot;running&quot;</code>), content=&quot;(running)&quot;, with <code>source_commit_id</code> left empty. For a cross-session spawn the card is stored in the source session but its <code>attach.session_id</code> names the target.</li>
 <li>When the task completes, the runner updates the same attach card node: fill in <code>head_id</code> / <code>source_commit_id</code>, replace content with <code>final_text</code>, and change <code>status</code> to <code>completed</code> / <code>cancelled</code> / <code>errored</code>.</li>
 <li>When the generator sees an attach node with <code>status=&quot;running&quot;</code>, it skips expansion (does not enter commit items) and only shows the card placeholder in the UI. When it sees <code>status=&quot;completed&quot;</code>, it follows the existing attach-expansion path (see scenario B in <code>context.md</code>).</li>
 </ul>
@@ -898,7 +902,7 @@ Stop in the UI or the agent decides to abort.</p>
 <li><strong>Task priority / SLA</strong>: FIFO is enough, with no high-priority preemption. A priority queue can be added later as needed.</li>
 <li><strong>Resume / continuation</strong>: cancelled / errored tasks can't &quot;pick up where they left off.&quot; A user retry equals spawning a new task.</li>
 <li><strong>Task retry policy</strong>: the runner does not auto-retry; the upper-layer agent / plan decides for itself.</li>
-<li><strong>Cross-session tasks</strong>: a task binds to only one session. Use attach / merge for cross-session.</li>
+<li><strong>Multi-target tasks</strong>: one task has exactly one immutable execution session. A cross-session caller is supported through <code>caller_session_id</code> plus a source-side attach, but one entity never executes in several target sessions.</li>
 <li><strong>DAG-shaped task dependencies</strong>: <code>await_tasks(mode=&quot;all&quot;|&quot;any&quot;)</code> is already enough for plan mode; an explicit DAG / pipeline is left for later.</li>
 <li><strong>Streaming subscription of task output</strong>: the first version only retrieves final_text on task completion. Subscribing to the stream mid-flight (so the parent agent sees the sub-agent thinking out loud) is left for later.</li>
 <li><strong>Resource quotas</strong>: per-user concurrent task count / token caps are out of scope for this design and require a multi-tenant model first.</li>

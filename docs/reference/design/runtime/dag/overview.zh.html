@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788250642" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788275267" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +72,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
+<a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 基础">UI · Foundations</div>
@@ -608,13 +609,19 @@ shadow-git 提交、快照淘汰。那些以&quot;已有完整回复&quot;为前
 </ul>
 <h3 id="spawn">Spawn<a class="header-anchor" href="#spawn">#</a></h3>
 <p><code>SessionStore.spawn_branch(session_id, caller_node_id, *, source, name=…)</code> 是开
-spawn 分支的<strong>唯一</strong>原语。它创建分支根 user 节点（<code>predecessor=None</code>、
+干净 spawn 根的<strong>唯一</strong>原语。它创建分支根 user 节点（<code>predecessor=None</code>、
 <code>caller=caller_node_id</code>、<code>metadata.source</code>、<code>metadata.spawn_branch_root=True</code>），
 注册为 head，返回节点 id。spawn 调用方（task runner、协作消息、后台 agent）一律调
-用原语、绝不手工组装边，新调用点不可能把边写错。</p>
+用该原语创建干净起点。继承式 spawn 是普通的精确 fork：它的第一个 user 节点以
+指定节点为 <code>predecessor</code>。</p>
 <p>spawn 分支根<strong>不</strong>挂在 ROOT 上：它的 <code>caller</code> 指向发起它的节点，经该节点维持单连通
-图不变量。（例外：跨会话 spawn 的分支根指向另一会话的图；在本会话内挂在 ROOT 上，
-渲染层打 ↗ 徽标——见 <a href="/docs/reference/design/runtime/dag/rendering.zh.html"><code>rendering.zh.md</code></a> 图例。）</p>
+图不变量。对于跨会话精确 fork，源 session S 把 attach 卡片保留在发起节点 A 旁边，
+目标 session T 存储新 user 节点：<code>predecessor=M</code>、<code>caller=A</code>、
+<code>metadata.spawned_from_session=S</code>。单个 session 的图无法画出指向另一个 session 节点的边，
+所以目标图投影把该外部 caller 归到 ROOT，并把节点标记为 <code>spawn_remote</code>；源节点标记为
+<code>spawn_out</code>。源卡片指向 <code>attach.session_id=T</code> 和目标分支 head。跨会话 spawn 不移动任一
+session 当前选中的 HEAD；目标结果只注册为分支 tip，后续异步回送再作为普通 turn
+推进源 session 的 HEAD。</p>
 <p>spawn 分支的上下文是干净的：spawn 分支上的 <code>get_branch</code> 止步于 spawn 根，不会经
 caller 边漏进父分支。spawn 分支的聊天视图只显示本分支自己的历史。反向同样成立：从
 父分支 head 做 <code>render_path</code> 时，不会沿 <code>caller</code> 下探进 spawn 分支（见 §6）。</p>
