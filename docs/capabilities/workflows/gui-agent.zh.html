@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788212504" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788245034" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -142,7 +142,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>命令行直接运行：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。</p>
+<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。GUI Agent 会复用提交消息或 Function 表单的 OpenProgram 窗口中已有的 Page。该窗口没有 Page 时，它才会创建一个初始地址为 <code>https://www.google.com/</code> 的后台 Page，在同一次函数运行中继续执行，并在运行结束时只关闭这个由 agent 创建的 Page；当前选中的标签页保持不变。如果没有可用的来源桌面窗口，结果会是带接手说明的 <code>infeasible</code>，而不是运行时异常。如果桌面端拒绝清理，结果同样是 <code>infeasible</code>，并要求用户手动关闭残留的后台 Page。</p>
+<p>输入完整的已注册函数表达式，例如 <code>gui_agent(task=&quot;检查这个 Page&quot;, surface=&quot;browser&quot;)</code>，会使用与 Programs 表单相同的 Function dispatcher，不会作为普通聊天消息保存或执行。Retry 会重新运行该精确 Function 节点及其保存的来源窗口/Page 身份，不会改用点击 Retry 时当前选中的 Page。</p>
 <p>操作内置浏览器 Page：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"检查并完成当前可见表单"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
 </code></pre>
@@ -179,7 +180,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>桌面路径每一步执行 观察（一次截图 + 组件检测 + 状态识别）→ 验证上一步结果 → 规划一个动作 → 执行 → 构造下一轮反馈。第一步直接选择 <code>done</code> 时，还要单独验证当前屏幕是否已经满足任务。反馈只保留最近八个动作结果；同一个失败动作被第四次选择时会终止，不再无限重复。已学过的界面转换仍可复用，但学习改为显式操作，不再作为主循环之前的隐式步骤。做不完或需要人接手时，agent 会选 fail 停下并返回 <code>success=false</code>；<code>summary</code> 和 <code>handoff_instruction</code> 都保留接手说明。</p>
 <p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
-<p>桌面坐标输入始终作用于当前前台 GUI，不是后台窗口接口。需要在不置顶 OpenProgram 或目标 Page 的情况下操作内置页面时，应使用 <code>surface=browser</code>。</p>
+<p>桌面坐标输入始终作用于当前前台 GUI，不是后台窗口接口。需要在不置顶 OpenProgram 或目标 Page 的情况下操作内置页面时，应使用 <code>surface=browser</code>。App 同时打开多个窗口时，自动 Page 只创建在提交该聊天消息或 Function 调用的窗口中。正常完成、失败、取消、超时以及子进程被强制终止都会尝试精确清理自动创建的 Page。清理被拒绝时不能报告成功：OpenProgram 会保留 Page 身份并执行一次有界重试；仍无法确认清理时返回手动关闭的接手说明。</p>
 <p>桌面和内置浏览器运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code>、<code>failed</code> 或 <code>cancelled</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。桌面结果还包含步骤历史和耗时；浏览器结果还包含 backend 和 WebSession 信息。</p>
 <p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
