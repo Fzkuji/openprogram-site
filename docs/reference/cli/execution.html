@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275754">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788378669">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>execution · OpenProgram Docs</title>
-<meta name="description" content="usage: openprogram execution [-h] verb ... execution cancel # Cancel one execution by id Option Description execution_id Execution id to cancel">
+<meta name="description" content="usage: openprogram execution [-h] verb ... execution pause # Pause at the next safe point Option Description execution_id Execution id --expected-version">
 <link rel="canonical" href="https://openprogram.io/docs/reference/cli/execution.html">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"execution"}]}</script>
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/cli/execution.html">
 <meta property="og:title" content="execution · OpenProgram Docs">
-<meta property="og:description" content="usage: openprogram execution [-h] verb ... execution cancel # Cancel one execution by id Option Description execution_id Execution id to cancel">
+<meta property="og:description" content="usage: openprogram execution [-h] verb ... execution pause # Pause at the next safe point Option Description execution_id Execution id --expected-version">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="execution · OpenProgram Docs">
-<meta name="twitter:description" content="usage: openprogram execution [-h] verb ... execution cancel # Cancel one execution by id Option Description execution_id Execution id to cancel">
+<meta name="twitter:description" content="usage: openprogram execution [-h] verb ... execution pause # Pause at the next safe point Option Description execution_id Execution id --expected-version">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -140,8 +140,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h1 id="execution">execution<a class="header-anchor" href="#execution">#</a></h1>
 <pre><code>usage: openprogram execution [-h] verb ...
 </code></pre>
-<h2 id="execution-cancel"><code>execution cancel</code><a class="header-anchor" href="#execution-cancel">#</a></h2>
-<p>Cancel one execution by id</p>
+<h2 id="execution-pause"><code>execution pause</code><a class="header-anchor" href="#execution-pause">#</a></h2>
+<p>Pause at the next safe point</p>
 <table>
 <thead>
 <tr>
@@ -152,14 +152,266 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>execution_id</code></td>
-<td>Execution id to cancel</td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-continue"><code>execution continue</code><a class="header-anchor" href="#execution-continue">#</a></h2>
+<p>Continue a paused execution</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-step"><code>execution step</code><a class="header-anchor" href="#execution-step">#</a></h2>
+<p>Apply exactly one managed action</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-steer"><code>execution steer</code><a class="header-anchor" href="#execution-steer">#</a></h2>
+<p>Apply a bounded instruction at the next safe point</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+<tr>
+<td><code>--message</code> <code>MESSAGE</code></td>
+<td>Bounded steering instruction</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-cancel"><code>execution cancel</code><a class="header-anchor" href="#execution-cancel">#</a></h2>
+<p>Cancel one execution</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-fork"><code>execution fork</code><a class="header-anchor" href="#execution-fork">#</a></h2>
+<p>Create a child execution from a checkpoint and revision</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+<tr>
+<td><code>--checkpoint-id</code> <code>CHECKPOINT_ID</code></td>
+<td>Published source checkpoint id</td>
+</tr>
+<tr>
+<td><code>--manifest-id</code> <code>MANIFEST_ID</code></td>
+<td>Published revision manifest id</td>
+</tr>
+<tr>
+<td><code>--proof-hash</code> <code>PROOF_HASH</code></td>
+<td>Validated revision frontier proof hash</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-retry"><code>execution retry</code><a class="header-anchor" href="#execution-retry">#</a></h2>
+<p>Create a same-revision child from a legal checkpoint</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+<tr>
+<td><code>--checkpoint-id</code> <code>CHECKPOINT_ID</code></td>
+<td>Optional published source checkpoint id</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-wait-answer"><code>execution wait-answer</code><a class="header-anchor" href="#execution-wait-answer">#</a></h2>
+<p>Answer one durable question or approval</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>wait_id</code></td>
+<td>Exact durable wait id</td>
+</tr>
+<tr>
+<td><code>generation</code></td>
+<td>Observed wait generation</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+<tr>
+<td><code>--answer-json</code> <code>WAIT_VALUE</code></td>
+<td>JSON answer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="execution-wait-decline"><code>execution wait-decline</code><a class="header-anchor" href="#execution-wait-decline">#</a></h2>
+<p>Decline one durable question or approval</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution_id</code></td>
+<td>Execution id</td>
+</tr>
+<tr>
+<td><code>wait_id</code></td>
+<td>Exact durable wait id</td>
+</tr>
+<tr>
+<td><code>generation</code></td>
+<td>Observed wait generation</td>
+</tr>
+<tr>
+<td><code>--expected-version</code> <code>EXPECTED_VERSION</code></td>
+<td>Exact execution status_version observed by the caller</td>
+</tr>
+<tr>
+<td><code>--command-id</code> <code>COMMAND_ID</code></td>
+<td>Caller command id for idempotent retry</td>
+</tr>
+<tr>
+<td><code>--reason</code> <code>WAIT_VALUE</code></td>
+<td>Optional decline reason</td>
 </tr>
 </tbody>
 </table>
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/doctor.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">doctor</span></a><a class="pn-link pn-next" href="/docs/reference/cli/jobs.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">jobs</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#execution-pause">execution pause</a>
+<a class="" href="#execution-continue">execution continue</a>
+<a class="" href="#execution-step">execution step</a>
+<a class="" href="#execution-steer">execution steer</a>
 <a class="" href="#execution-cancel">execution cancel</a>
+<a class="" href="#execution-fork">execution fork</a>
+<a class="" href="#execution-retry">execution retry</a>
+<a class="" href="#execution-wait-answer">execution wait-answer</a>
+<a class="" href="#execution-wait-decline">execution wait-decline</a>
 </div></aside>
 </div>
 

@@ -352,8 +352,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-layout-spec.html</loc></url>
@@ -375,9 +373,9 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/turn-cancellation.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.html</loc></url>
@@ -395,8 +393,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/overview.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/p3-three-surface-sync.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/p3-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/permission-model.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/permission-model.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/programs-architecture.html</loc></url>

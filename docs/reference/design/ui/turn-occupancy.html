@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788275754" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788378669" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -316,13 +316,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
-<a class="navlink" href="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-title-zh="长跑 agent 任务的可控性 + 三端一致性" data-href-en="/docs/reference/design/runtime/controllability-and-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html">Controllability of long-running agent tasks + three-surface consistency</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
-<a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="P3 — 三端同步(补全)+ P1/P2 上三端" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">P3 — Three-Surface Sync (filling gaps) + P1/P2 onto all three surfaces</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
@@ -357,7 +355,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/turn-cancellation.html">运行取消：命名、协议与生命周期设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/execution-control.html">统一运行控制：暂停、继续、单步、调整与取消</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
@@ -398,7 +396,8 @@ a second turn. Stop is an interrupt: occupancy is released on cancel
 <a href="/docs/reference/design/ui/send-queue-reliability.html"><code>send-queue-reliability.html</code></a> (queue
 mechanics). Code: <code>use-chat-submit.ts</code> (<code>stopSession</code>),
 <code>server.py</code> (<code>_finish_owned_run</code> / <code>_try_reserve_run</code>),
-<code>run_control.py</code> (<code>cancel_execution</code>, <code>CANCEL_GRACE_S</code>),
+<code>execution/control.py</code> (<code>RuntimeControlService.request_cancel</code>),
+<code>run_control.py</code> (<code>CANCEL_GRACE_S</code>),
 <code>providers/utils/cancelable_stream.py</code>.</p>
 <h2 id="invariants-from-codex-cli-and-claude-code">Invariants (from Codex CLI and Claude Code)<a class="header-anchor" href="#invariants-from-codex-cli-and-claude-code">#</a></h2>
 <p>The reference implementations agree on five rules; OpenProgram follows
@@ -412,7 +411,7 @@ has no intermediate status.</p>
 <ol>
 <li><strong>One occupancy source of truth per side.</strong> Client: <code>runningTasks</code>
 in the session store, mirrored to the composer. Server:
-<code>_running_tasks</code> + active runtime. Message <code>status</code> renders bubbles;
+<code>_running_tasks</code> plus the canonical execution driver. Message <code>status</code> renders bubbles;
 it never gates the composer, and the composer state never gates
 bubble rendering.</li>
 <li><strong>Terminal states are irreversible.</strong> Once a message is <code>cancelled</code>
@@ -425,8 +424,7 @@ task or renders it as &quot;thinking&quot;.</li>
 <li><strong>Placeholders never overwrite identity.</strong> An empty
 <code>{ msg_id: &quot;&quot; }</code> occupancy reservation may only be written into an
 empty slot. A slot holding <code>msg_id</code> / <code>execution_id</code> is what makes
-stop able to send <code>execution.cancel</code>; stomping it downgrades stop
-to the fallback <code>stop</code> action.</li>
+stop able to send <code>execution.cancel</code>.</li>
 <li><strong>Only the turn's own terminal frame releases occupancy.</strong> A
 nested <code>display:&quot;runtime&quot;</code> result (inline @agentic_function, spawn
 attach) finalizes its card, not the turn. Late <code>running_task</code>
@@ -446,7 +444,7 @@ the model. Do not wait for the next token.</p>
 <p>OpenProgram copies both. The send queue already parks a typed message
 while <code>runningTask</code> is set. Stop must:</p>
 <ol>
-<li>Send <code>execution.cancel</code> (or the <code>stop</code> fallback).</li>
+<li>Send <code>execution.cancel</code> for the canonical execution.</li>
 <li>Patch the live assistant to <code>cancelled</code> (keep streamed text).</li>
 <li><code>setRunningTaskFor(sessionId, null, &quot;always&quot;)</code> so the queue drains
 at 0ms.</li>
@@ -455,15 +453,12 @@ at 0ms.</li>
 locks the composer and waits for <code>running_task_clear</code>. That is the
 old bug.</p>
 <h2 id="occupancy-is-released-on-cancel-intent">Occupancy is released on cancel intent<a class="header-anchor" href="#occupancy-is-released-on-cancel-intent">#</a></h2>
-<p>The session slot is <code>_running_tasks</code> <strong>and</strong> the active runtime.
-<code>_is_run_active</code> still returns True via <code>_has_active_runtime</code> if only
-the task map is popped.</p>
+<p>The session slot is <code>_running_tasks</code>, and the canonical driver owns the
+active attempt. The transport slot is not a second lifecycle authority.</p>
 <p>When <code>cancel_execution</code> succeeds:</p>
 <ul>
-<li>Map <code>execution_id</code> to <code>session_id</code> + <code>msg_id</code> (chat executions are
-<code>{msg_id}_reply</code>).</li>
-<li>Call <code>_finish_owned_run(session_id, msg_id)</code> so both the task entry
-and the runtime unregister.</li>
+<li>Match the admitted <code>execution_id</code> to <code>session_id</code> + <code>msg_id</code>.</li>
+<li>Call <code>_finish_owned_run(session_id, msg_id)</code> to remove the transport slot.</li>
 <li>Broadcast <code>running_task_clear</code> so every client matches. The
 clear names the finished turn (<code>msg_id</code> / <code>execution_id</code>).</li>
 </ul>
@@ -475,12 +470,10 @@ stop-and-send.</p>
 <p><code>_finish_owned_run</code> no-ops if <code>msg_id</code> does not match — a newer
 reservation is safe. The cancelled turn's <code>finally</code> also calls
 <code>_finish_owned_run</code>; the second call is a no-op.</p>
-<p>Also retire that execution's cancel token. Occupancy is the slot;
-the token is the stop flag. Leaving a cancelled token in
-<code>_current_tokens</code> makes the next <code>claim_cancel_event</code> fail, or a
-reused <code>{msg_id}_reply</code> start already cancelled. The old stream
-still sees its own Event (<code>opts.signal</code>), which is already set.</p>
-<p>Do <strong>not</strong> wait for <code>process_user_turn</code> to return before the next
+<p>The canonical Agent driver owns the cooperative cancel event and exact
+attempt generation. Transport reservations do not claim a <code>run_control</code>
+token or derive an execution identifier from <code>{msg_id}_reply</code>.</p>
+<p>Do <strong>not</strong> wait for the old driver thread to return before the next
 <code>_try_reserve_run</code>.</p>
 <h2 id="0ms-ui">0ms UI<a class="header-anchor" href="#0ms-ui">#</a></h2>
 <p>The 0ms rule already says: Stop clears <code>runningTask</code> and patches the
@@ -511,7 +504,7 @@ subprocess or a terminate hook that kills a child (tools, process
 runners). Token-only chat owners — no process, no child-killing
 terminate — must not wait another 4s after cancel intent. Cooperative
 cancel + HTTP abort is enough; occupancy is already released.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-01</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/slash-and-compact.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">斜杠命令与上下文压缩</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/websocket-command-lifecycle.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">WebSocket 命令与交互等待生命周期</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-02</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/slash-and-compact.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">斜杠命令与上下文压缩</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/websocket-command-lifecycle.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">WebSocket 命令与交互等待生命周期</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#invariants-from-codex-cli-and-claude-code">Invariants (from Codex CLI and Claude Code)</a>
