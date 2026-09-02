@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788382417" data-alt-lang-url="/docs/reference/design/runtime/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788383649" data-alt-lang-url="/docs/reference/design/runtime/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -510,12 +510,12 @@ into registration hooks, mirroring <code>add_pre_invocation_hook</code>:</p>
 <tr>
 <td><code>set_cancellation_check</code></td>
 <td>no-op — nothing cancels</td>
-<td><code>webui/_pause_stop.py</code> registers its pause/cancel check at import</td>
+<td><code>openprogram.agent.run_control</code> registers the exact execution check at import</td>
 </tr>
 <tr>
 <td><code>set_session_id_provider</code></td>
 <td><code>None</code> — <code>runtime.can_ask()</code> is <code>False</code></td>
-<td>same module provides the active session id</td>
+<td><code>openprogram.agent.run_control</code> provides the active session id</td>
 </tr>
 <tr>
 <td><code>session_scope(store, id)</code></td>
@@ -524,11 +524,10 @@ into registration hooks, mirroring <code>add_pre_invocation_hook</code>:</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Why hooks instead of the previous lazy <code>import webui._pause_stop</code>?</strong> That
-import made the core depend on the web UI and formed a cycle
-(<code>webui/_pause_stop</code> imports from <code>function.py</code>), survivable only because both
-sides happened to import lazily. The hook keeps the dependency one-way:
-platform → core.</p>
+<p><strong>Why hooks instead of a web UI cancellation module?</strong> The previous
+session-scoped module duplicated cancellation state and made the core depend
+on the Web UI. The hook keeps the dependency one-way while <code>run_control</code>
+checks the exact execution token.</p>
 <p><strong><code>ImportError</code> during <code>exec()</code> is permanent, not transient.</strong> The retry loop
 classifies it as non-retryable: a missing subsystem does not appear by
 retrying, and burning the full backoff schedule turned a 0-second failure into

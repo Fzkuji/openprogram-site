@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788382417" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788383649" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -395,7 +395,8 @@ explicit task entity, a background worker pool, and a queryable, cancellable
 lifecycle. The surface aligns with Claude Code's TaskCreate / TaskList /
 TaskGet / TaskUpdate / TaskStop.</p>
 <p>The chassis it builds on already exists in the WebUI: one worker thread per
-session (<code>_execute_in_context</code>), a <code>_cancel_events</code> dict (<code>_pause_stop.py</code>),
+session (<code>_execute_in_context</code>) and the exact execution token registry in
+<code>openprogram.agent.run_control</code>,
 and a <code>_running_tasks</code> dict for the UI spinner. <code>run_agent_turn</code>
 (<code>openprogram/agent/sub_agent_run.py</code>) is the synchronous path that the
 <code>/task</code> tool, the <code>/spawn</code> WS action, and <code>_merge.process_merge_turn</code> all
@@ -473,9 +474,14 @@ retrieved, so making the user re-spawn is the cleanest semantics.</p>
 entity). When the Cancel API fires:</p>
 <ol>
 <li>Write <code>cancel_requested_at</code> to the entity and transition status to <code>cancelled</code> (if still queued / pending), or keep it <code>running</code> and wait for the worker to exit naturally.</li>
-<li><code>cancel_event.set()</code> — via the contract already defined by <code>_pause_stop.register_cancel_event</code>, this propagates to <code>process_user_turn(cancel_event=...)</code>.</li>
+<li><code>cancel_event.set()</code> — via the exact execution registration in
+<code>openprogram.agent.run_control</code>, this propagates to
+<code>process_user_turn(cancel_event=...)</code>.</li>
 <li><code>process_user_turn</code> already bridges cancel_event into an asyncio.Event (the <code>agent_loop</code> call), and the LLM provider stream checks for the cancel on the next chunk and then breaks.</li>
-<li>BashTool / other subprocesses: reuse <code>_pause_stop.kill_active_runtime</code> (already exists). Cancellation at the tool layer is cooperative: each <code>@agentic_function</code>'s pre-invocation hook checks <code>is_cancelled</code> (already exists), and the next tool-call entry raises <code>CancelledError</code>.</li>
+<li>BashTool / other subprocesses use the exact execution id with
+<code>process_runner.kill_active_subprocess</code>. Cancellation at the tool layer is
+cooperative: each <code>@agentic_function</code>'s pre-invocation hook checks
+<code>is_cancelled</code>, and the next tool-call entry raises <code>CancelledError</code>.</li>
 <li>Fallback timeout: if the worker still hasn't exited 30 seconds after the cancel, the runner marks the entity <code>cancelled</code> (error=&quot;cancel timed out, worker may be stuck&quot;) and detaches the worker thread (no hard kill; let GC handle it).</li>
 </ol>
 <p>A tool's own atomic operation (e.g. a <code>Write</code> halfway through) is not

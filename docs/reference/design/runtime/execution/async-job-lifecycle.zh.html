@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788382417" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788383649" data-alt-lang-url="/docs/reference/design/runtime/execution/async-job-lifecycle.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -394,7 +394,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 一套可查询、可取消的生命周期。接口形态对齐 Claude Code 的 TaskCreate /
 TaskList / TaskGet / TaskUpdate / TaskStop。</p>
 <p>它所依托的底盘 WebUI 已经具备：每个 session 一个 worker thread
-（<code>_execute_in_context</code>）、一个 <code>_cancel_events</code> dict（<code>_pause_stop.py</code>），
+（<code>_execute_in_context</code>），以及 <code>openprogram.agent.run_control</code> 中按 execution
+精确登记的 token，
 一个供 UI spinner 用的 <code>_running_tasks</code> dict。<code>run_agent_turn</code>
 （<code>openprogram/agent/sub_agent_run.py</code>）是那条同步路径，<code>/task</code> tool、
 <code>/spawn</code> WS action、<code>_merge.process_merge_turn</code> 都复用它；task 抽象在其之上
@@ -467,9 +468,13 @@ task 在 startup 时一律标记 <code>errored</code>（error=&quot;worker died 
 Cancel API 触发时：</p>
 <ol>
 <li>写 <code>cancel_requested_at</code> 到 entity，状态转 <code>cancelled</code>（如果还在 queued / pending），或保持 <code>running</code> 等 worker 自然退出。</li>
-<li><code>cancel_event.set()</code> — 通过 <code>_pause_stop.register_cancel_event</code> 已经定义的 contract，传到 <code>process_user_turn(cancel_event=...)</code>。</li>
+<li><code>cancel_event.set()</code> — 通过 <code>openprogram.agent.run_control</code> 的精确 execution 登记，
+传到 <code>process_user_turn(cancel_event=...)</code>。</li>
 <li><code>process_user_turn</code> 已经把 cancel_event bridge 进 asyncio.Event（<code>agent_loop</code> 调用），LLM provider stream 会在下一个 chunk 检查到 cancel 然后中断。</li>
-<li>BashTool / 其他 subprocess：复用 <code>_pause_stop.kill_active_runtime</code>（已有）。Tool 层的 cancel 是合作式：每个 <code>@agentic_function</code> 的 pre-invocation hook 检查 <code>is_cancelled</code>（已有），下一个 tool call 入口会 raise <code>CancelledError</code>。</li>
+<li>BashTool / 其他 subprocess 使用精确 execution id 调用
+<code>process_runner.kill_active_subprocess</code>。Tool 层的 cancel 是合作式：每个
+<code>@agentic_function</code> 的 pre-invocation hook 检查 <code>is_cancelled</code>，下一个 tool call
+入口会 raise <code>CancelledError</code>。</li>
 <li>兜底 timeout：cancel 后 30 秒 worker 还没退出，runner 把 entity 标 <code>cancelled</code>（error=&quot;cancel timed out, worker may be stuck&quot;），然后 detach worker thread（不强杀，等 GC）。</li>
 </ol>
 <p>工具自身原子操作（比如一个 <code>Write</code> 写一半）不中断，等当前 atomic 完成再退出。</p>

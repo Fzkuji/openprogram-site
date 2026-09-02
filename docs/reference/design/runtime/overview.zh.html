@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788382417" data-alt-lang-url="/docs/reference/design/runtime/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788383649" data-alt-lang-url="/docs/reference/design/runtime/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -506,12 +506,12 @@ id,以便函数体内 LLM 调用有 frame 可参照)。</p>
 <tr>
 <td><code>set_cancellation_check</code></td>
 <td>空实现——没有任何东西会取消</td>
-<td><code>webui/_pause_stop.py</code> 在 import 时注册暂停/取消检查</td>
+<td><code>openprogram.agent.run_control</code> 在 import 时注册精确 execution 检查</td>
 </tr>
 <tr>
 <td><code>set_session_id_provider</code></td>
 <td><code>None</code>——<code>runtime.can_ask()</code> 为 <code>False</code></td>
-<td>同一模块提供当前会话 id</td>
+<td><code>openprogram.agent.run_control</code> 提供当前会话 id</td>
 </tr>
 <tr>
 <td><code>session_scope(store, id)</code></td>
@@ -520,9 +520,9 @@ id,以便函数体内 LLM 调用有 frame 可参照)。</p>
 </tr>
 </tbody>
 </table>
-<p><strong>为什么用钩子而不是原来的懒 <code>import webui._pause_stop</code>？</strong> 那个 import 让核心
-依赖 Web UI，且构成循环（<code>webui/_pause_stop</code> 反过来 import <code>function.py</code>），仅靠
-双方恰好都懒加载才没炸。钩子让依赖保持单向：平台 → 核心。</p>
+<p><strong>为什么用钩子而不是 Web UI 取消模块？</strong> 原来的 session 级模块重复维护取消状态，
+并让核心依赖 Web UI。现在由 <code>run_control</code> 检查精确 execution token，同时保持依赖
+方向为平台 → 核心。</p>
 <p><strong><code>exec()</code> 里的 <code>ImportError</code> 按永久错误处理，不算瞬态。</strong> retry 循环把它归为不可
 重试：缺失的子系统不会因为重试而出现，烧完整个退避表只是把 0 秒的失败拖成约 52 秒。</p>
 <h2 id="相关实现文件">相关实现文件<a class="header-anchor" href="#相关实现文件">#</a></h2>
