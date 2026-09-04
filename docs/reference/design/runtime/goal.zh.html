@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788457440" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788514046" data-alt-lang-url="/docs/reference/design/runtime/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Goal Workflow · OpenProgram Docs</title>
-<meta name="description" content="Goal 能力只有一个可执行 Workflow： goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode = &quot;isolated&quot; , ) goal()">
+<title>Goal Workflow 设计 · OpenProgram Docs</title>
+<meta name="description" content="Goal 的权威工程设计、框架实现对比、状态流程、Web/TUI 界面规范和实现证据统一维护在 goal-framework-implementation-comparison.html 。 产品使用说明见 ../../../capabilities/goal.zh.md 。">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/goal.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/goal.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/goal.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/goal.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Goal Workflow"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Goal Workflow 设计"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/goal.zh.html">
-<meta property="og:title" content="Goal Workflow · OpenProgram Docs">
-<meta property="og:description" content="Goal 能力只有一个可执行 Workflow： goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode = &quot;isolated&quot; , ) goal()">
+<meta property="og:title" content="Goal Workflow 设计 · OpenProgram Docs">
+<meta property="og:description" content="Goal 的权威工程设计、框架实现对比、状态流程、Web/TUI 界面规范和实现证据统一维护在 goal-framework-implementation-comparison.html 。 产品使用说明见 ../../../capabilities/goal.zh.md 。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Goal Workflow · OpenProgram Docs">
-<meta name="twitter:description" content="Goal 能力只有一个可执行 Workflow： goal ( prompt , condition , * , model = &quot;&quot; , effort = &quot;&quot; , max_rounds = None , timeout_s = None , context_mode = &quot;isolated&quot; , ) goal()">
+<meta name="twitter:title" content="Goal Workflow 设计 · OpenProgram Docs">
+<meta name="twitter:description" content="Goal 的权威工程设计、框架实现对比、状态流程、Web/TUI 界面规范和实现证据统一维护在 goal-framework-implementation-comparison.html 。 产品使用说明见 ../../../capabilities/goal.zh.md 。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -71,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -316,7 +317,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
-<a class="navlink active" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow</a>
+<a class="navlink active" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -388,73 +389,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Goal Workflow</span></nav><h1 id="goal-workflow">Goal Workflow<a class="header-anchor" href="#goal-workflow">#</a></h1>
-<p>Goal 能力只有一个可执行 Workflow：</p>
-<pre><code class="language-python"><span class="n">goal</span><span class="p">(</span>
-    <span class="n">prompt</span><span class="p">,</span>
-    <span class="n">condition</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
-    <span class="n">effort</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
-    <span class="n">max_rounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">context_mode</span><span class="o">=</span><span class="s2">"isolated"</span><span class="p">,</span>
-<span class="p">)</span>
-</code></pre>
-<p><code>goal()</code> 独占规格完善、工作 Agent 轮次、完成判定、用户提问、进度状态、停止规则和终态。dispatcher 与 slash command 层不再维护第二个 Goal 循环。</p>
-<h2 id="两种调用界面">两种调用界面<a class="header-anchor" href="#两种调用界面">#</a></h2>
-<p>Programs 表单用 <code>context_mode=&quot;isolated&quot;</code> 调用 <code>goal()</code>。DAG 和 runtime card 可以归属当前 session，但 Workflow 内的模型调用不能读取 Goal 调用之前的聊天历史。</p>
-<p><code>/goal &lt;condition&gt;</code> 用 <code>context_mode=&quot;session&quot;</code> 调用同一个函数。函数开始时读取当前会话的压缩视图，并把它作为初始证据。表单与 slash command 唯一允许的行为差异是上下文来源。</p>
-<p>不带参数的 <code>/goal</code> 查询当前 Goal 状态。<code>/goal clear</code> 把 active 或 waiting Goal 标为 cleared；正在运行的 Workflow 在工作轮次之间重新读取状态，停止时不得覆盖 clear。</p>
-<h2 id="一个状态机">一个状态机<a class="header-anchor" href="#一个状态机">#</a></h2>
-<p>两种界面使用同一个 Goal 状态与终态：</p>
-<ul>
-<li><code>active</code>：正在完善、工作或判定；</li>
-<li><code>waiting_user</code>：judge 请求决定，Runtime 问题正在等待回答；</li>
-<li><code>achieved</code>：judge 接受条件，并且所有 checklist 项完成；</li>
-<li><code>capped</code>：达到轮次上限；</li>
-<li><code>error</code>：连续 judge 失败、checklist 停滞、零工具空转，或 worker 重启和解导致终止；</li>
-<li><code>cleared</code>：用户清除 Goal。</li>
-</ul>
-<p>Workflow 将状态写入所属 session，因此 GoalChip、status/clear、页面恢复和所有调用界面观察同一个对象。状态只保存控制数据，不保存复制的 session context 快照。</p>
-<h2 id="上下文与信任边界">上下文与信任边界<a class="header-anchor" href="#上下文与信任边界">#</a></h2>
-<p><code>render_range={&quot;callers&quot;: 0}</code> 让每个 Goal 调用与调用前 DAG 历史隔离。session 模式只恢复函数入口显式生成的 session 快照。工作模型收到明确说明：该快照是非可信会话数据。完成 judge 接收同一份初始快照，加上当前 GoalRun 已产生的结果。</p>
-<p>refinement 与 judgment 使用只读 spawn 调用。它们沿用现有受限工具集，可以检查工作目录，不移动 session head，也不创建另一个 Goal。完成 judge 使用 <code>goal.judge_model</code>：非空时为 <code>provider/model</code> 或裸模型名；空（默认）使用会话当前选中的模型。</p>
-<p>这些 spawn 调用各自打开独立的 DAG 分支（<code>metadata.spawn_branch_root</code>）。<code>render_path</code> 不会沿父分支的 <code>caller</code> 边进入 spawn 分支根，因此工作 Agent 不会从自己的 DAG 历史里读到 judge / refine 的指令和裁决。排除是单向的：从 spawn 分支内部的 head 渲染时，仍通过主链看到该分支本身。结果经 spawn 的返回值回流（调用方写入 attach pointer 时也走指针），而不是把 spawn 内部泄漏进父上下文。</p>
-<h2 id="停止规则">停止规则<a class="header-anchor" href="#停止规则">#</a></h2>
-<p>循环在第一条命中的规则处停止：</p>
-<ul>
-<li><strong>轮次预算。</strong> 每次运行带一个轮次预算：config 的 <code>goal.max_turns</code>，未设时为 150。显式配 0 或负数（config 或 <code>max_rounds</code> 参数）表示无上限。达到预算以 <code>capped</code> 结束。</li>
-<li><strong>judge 失败。</strong> 连续三次判定输出不合法或失败，以 <code>error</code> 结束。</li>
-<li><strong>checklist 停滞。</strong> 存在 checklist 且打勾数连续三个 <code>unmet</code> 轮不增长，以 <code>error</code> 结束。</li>
-<li><strong>零工具空转。</strong> 每个工作轮通过 ambient Runtime 冻结的 block 列表检查是否用过工具。零工具且判定仍 <code>unmet</code> 的一轮会在下一轮工作 prompt 中注入明确警告（&quot;本轮必须实际动手使用工具，连续不使用工具会被判定为放弃并终止&quot;）；连续第二个零工具轮以 <code>error</code> 结束，原因标注 idle spin。任何用过工具的轮都会把计数清零。</li>
-</ul>
-<p>传给完成 judge 的证据按 judge 的视图预算（24 000 字符）保留尾部截断；截断时在头部保留一行 <code>[earlier evidence truncated]</code>。</p>
-<p>worker 启动时的运行状态和解也会收敛死 worker 留下的 <code>active</code> / <code>waiting_user</code> goal：它们被置为 <code>error</code>，原因是 &quot;worker restarted while the goal loop was running&quot;。</p>
-<h2 id="用户提问与取消">用户提问与取消<a class="header-anchor" href="#用户提问与取消">#</a></h2>
-<p><code>need_user</code> 在同一 Workflow execution 中使用 Runtime question channel。Goal 状态先变为 <code>waiting_user</code>，问题经过现有子进程 question bridge，回答返回后恢复同一循环。不再把下一条普通聊天消息解释成另一套 session loop 的回答。</p>
-<p>问题无限等待——未回答的问题不会让 goal 超时。用户拒绝、答案为空或提问通道失败时，运行不报错：降级为一次 <code>unmet</code> 续跑，下一轮工作 prompt 告知 agent 用户未回答，自行选择最合理方案继续并写清决定与理由。拿到有效回答会重置失控计数——轮次预算、空转计数、停滞计数与 judge 失败计数全部归零，已收集的证据保留。</p>
-<p>Stop 使用普通 function run 的 cancellation boundary。<code>/goal clear</code> 是每轮之间检查的协作式状态变化，不新增执行控制器。</p>
-<h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
-<p>满足下列条件后，单一 Workflow 合同才算实现：</p>
-<ul>
-<li>Programs 与 <code>/goal</code> 都进入已注册的 <code>goal</code> 函数；</li>
-<li>dispatcher 不再存在 <code>continue_goal_turns</code> 循环；</li>
-<li>isolated 模式不读取或采用 session Goal 上下文；</li>
-<li>session 模式显式传入 session 快照；</li>
-<li>Goal、command、dispatcher、Web、question、cancellation 和 reload 的聚焦检查通过；</li>
-<li>默认 App 验证两种界面显示同一 Goal 状态和 runtime execution。</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-03</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/agent-configuration-ui.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agent 配置框架</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/llm-and-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#两种调用界面">两种调用界面</a>
-<a class="" href="#一个状态机">一个状态机</a>
-<a class="" href="#上下文与信任边界">上下文与信任边界</a>
-<a class="" href="#停止规则">停止规则</a>
-<a class="" href="#用户提问与取消">用户提问与取消</a>
-<a class="" href="#实现状态">实现状态</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Goal Workflow 设计">Goal Workflow Design</span></nav><h1 id="goal-workflow-设计">Goal Workflow 设计<a class="header-anchor" href="#goal-workflow-设计">#</a></h1>
+<p>Goal 的权威工程设计、框架实现对比、状态流程、Web/TUI 界面规范和实现证据统一维护在
+<a href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html"><code>goal-framework-implementation-comparison.html</code></a>。</p>
+<p>产品使用说明见 <a href="/docs/capabilities/goal.zh.html"><code>../../../capabilities/goal.zh.md</code></a>。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/agent-configuration-ui.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agent 配置框架</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/llm-and-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

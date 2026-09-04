@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788457440" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788514046" data-alt-lang-url="/docs/reference/design/proactive/commitments-and-heartbeat.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -316,7 +317,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
-<a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -390,7 +391,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Proactive Layer — 设计">Proactive Layer — Design</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Commitments 迁移">Commitments migration</span></nav><h1 id="commitments-迁移">Commitments 迁移<a class="header-anchor" href="#commitments-迁移">#</a></h1>
 <p>Commitments 不再属于 Memory。当前权威设计见 <a href="/docs/reference/design/scheduler/scheduler-memory.html">Scheduler 与 Memory 接口</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-03</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Commitments 迁移说明 (viz)</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/proactive/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Proactive Layer — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/proactive/commitments-and-heartbeat.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Commitments 迁移说明 (viz)</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 

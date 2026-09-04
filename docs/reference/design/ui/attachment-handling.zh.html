@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788457440" data-alt-lang-url="/docs/reference/design/ui/attachment-handling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788514046" data-alt-lang-url="/docs/reference/design/ui/attachment-handling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,6 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -316,7 +317,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
-<a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -488,7 +489,7 @@ sha256 会话内去重与 <code>attachments/.opdedup.json</code>；提及括号�
 <li><code>MAX_ATTACH_BYTES</code>（建议 32MB）。压制 git workdir blob 膨胀(提交进 git 的 blob 在历史里永久,是真实成本)vs 容纳更大真实 PDF。默认 32MB。</li>
 </ol>
 <p>有一个面向产品的问题仍然开放：大二进制永久累积在 per-session git 历史里（这是&quot;workdir = 自包含已提交状态&quot;不变式的代价）是否可接受，还是将来需要一个 git 之外的内容存储。那样的存储会牺牲重放可复现性，所以设计有意保留这个不变式。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-03</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/attachment-handling.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 附件处理设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-attachments.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">聊天附件：双向流转与预览</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/attachment-handling.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 附件处理设计 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-attachments.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">聊天附件：双向流转与预览</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一句话原则">一句话原则</a>

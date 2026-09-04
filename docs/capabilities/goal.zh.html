@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788457440" data-alt-lang-url="/docs/capabilities/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788514046" data-alt-lang-url="/docs/capabilities/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Goal Workflow · OpenProgram Docs</title>
-<meta name="description" content="Goal 反复执行 Agent，并由独立 completion judge 判断完成条件是否满足。产品里只有一个 Goal Workflow；是否带上当前会话，取决于怎么启动。judge 默认使用会话当前选中的模型；配置 goal.judge_model 为 provider/model 或裸模型名可覆盖。 自己启动">
+<meta name="description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/goal.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/goal.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/goal.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/goal.zh.html">
 <meta property="og:title" content="Goal Workflow · OpenProgram Docs">
-<meta property="og:description" content="Goal 反复执行 Agent，并由独立 completion judge 判断完成条件是否满足。产品里只有一个 Goal Workflow；是否带上当前会话，取决于怎么启动。judge 默认使用会话当前选中的模型；配置 goal.judge_model 为 provider/model 或裸模型名可覆盖。 自己启动">
+<meta property="og:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Goal Workflow · OpenProgram Docs">
-<meta name="twitter:description" content="Goal 反复执行 Agent，并由独立 completion judge 判断完成条件是否满足。产品里只有一个 Goal Workflow；是否带上当前会话，取决于怎么启动。judge 默认使用会话当前选中的模型；配置 goal.judge_model 为 provider/model 或裸模型名可覆盖。 自己启动">
+<meta name="twitter:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -134,22 +134,35 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="会话目标">Session goals</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Goal Workflow</span></nav><h1 id="goal-workflow">Goal Workflow<a class="header-anchor" href="#goal-workflow">#</a></h1>
-<p>Goal 反复执行 Agent，并由独立 completion judge 判断完成条件是否满足。产品里只有一个 Goal Workflow；是否带上当前会话，取决于怎么启动。judge 默认使用会话当前选中的模型；配置 <code>goal.judge_model</code> 为 <code>provider/model</code> 或裸模型名可覆盖。</p>
-<h2 id="自己启动">自己启动<a class="header-anchor" href="#自己启动">#</a></h2>
-<p>用户手动启动一律带上当前会话作为初始证据（<code>context_mode=session</code>）：Programs 表单、<code>/goal</code>、welcome 按钮、Retry。打开 <strong>Programs → Workflow → goal → Use</strong>，只填任务（<code>prompt</code>）；<code>condition</code> 保持隐藏，默认等于这段话。或在输入框键入：</p>
+<p>Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。</p>
+<h2 id="启动-goal">启动 Goal<a class="header-anchor" href="#启动-goal">#</a></h2>
+<p>打开 <strong>Programs → Workflow → goal → Use</strong>，或输入：</p>
 <pre><code class="language-text">/goal 所有单元测试通过，并且 README 说明了新参数
 </code></pre>
-<p>runtime card 仍记录在所属会话中。此后 refinement、judge、轮次上限、用户提问、进度状态和终态对每种入口都相同。</p>
-<h2 id="agent-或-python-启动">Agent 或 Python 启动<a class="header-anchor" href="#agent-或-python-启动">#</a></h2>
-<p>Agent 自己调用 <code>goal</code> 时可传 <code>context_mode</code>：<code>isolated</code>（不带会话）或 <code>session</code>（带上当前会话）。不传则默认 <code>isolated</code>。Python 直接调用 <code>goal(...)</code> 同样默认 <code>isolated</code>。</p>
-<p>active Goal 显示在 composer 的 GoalChip 中。judge 提问时使用标准问题面板；问题挂着，工作继续。答到后下一轮工作会注入该回答并重置轮次预算。拒绝回答或答案为空时，Workflow 不会停止，而是自行选择最合理方案继续。</p>
-<h2 id="状态与控制">状态与控制<a class="header-anchor" href="#状态与控制">#</a></h2>
+<p>Programs 和 Python 调用默认使用隔离上下文。<code>/goal</code> 会把当前会话快照作为初始证据。除此以外，两种入口使用相同的 Working Agent 与 judge 实现。</p>
+<p>可选限制包括 <code>max_rounds</code>、<code>max_tokens</code>、<code>max_elapsed_s</code> 和 <code>max_cost_usd</code>。Goal 恢复后继续累计限制与用量。
+单个工作轮次默认限时 300 秒，Python 和 CLI 调用可以通过 <code>timeout_s</code> 覆盖。累计预算在 controller 边界检查，因此当前阶段可能先超出累计上限，再由该上限阻止后续阶段。</p>
+<h2 id="查看与控制">查看与控制<a class="header-anchor" href="#查看与控制">#</a></h2>
+<p>composer 中的 Goal 状态条会打开详情弹窗。弹窗显示目标、状态、checklist、资源用量、最近判定原因和全部待答问题，并支持编辑、暂停、继续、逐项回答、调整执行限制和终止。</p>
+<p>TUI 提供相同操作：</p>
 <pre><code class="language-text">/goal
+/goal pause
+/goal resume
+/goal edit 将综述范围收窄到知识编辑
+/goal answer 使用 2023 年之后发表的论文
+/goal answer &lt;question-id&gt; 使用 2023 年之后发表的论文
 /goal clear
 </code></pre>
-<p><code>/goal</code> 查询当前 session 关联的 Goal。<code>/goal clear</code> 将 active 或 waiting Goal 标为 cleared；Workflow 在工作轮次之间检查该状态，停止时不得覆盖它。</p>
-<p>普通 Stop 控件取消当前 Goal function run。clear 修改 Goal 状态，Stop 取消 execution boundary，两者含义不同。</p>
-<h2 id="终态">终态<a class="header-anchor" href="#终态">#</a></h2>
+<p>编辑会创建新的目标 revision，并暂停 Goal，等待显式继续。旧 revision 的未答问题保留为 <code>superseded</code> 审计记录，不再阻塞新 revision。答案会在被消费前持久化，因此 worker 重启不会丢失答案。不指定问题 ID 时回答最早的待答问题；指定 ID 可以回答队列中的其他问题。</p>
+<h2 id="等待与重启恢复">等待与重启恢复<a class="header-anchor" href="#等待与重启恢复">#</a></h2>
+<p>问题采用异步处理。某部分必需工作依赖无法安全确认的信息时，judge 会记录问题。如果仍有独立工作，Goal 会继续执行这些工作，问题保留在 Goal 弹窗中。只有所有剩余工作都依赖答案时，Goal 才进入 <code>waiting_user</code>。Goal 不会猜测或执行依赖未答问题的事项。</p>
+<p>多个问题可以累积。可以在 Goal 弹窗或通过 <code>/goal answer</code> 逐项回答。向正在执行的 Goal 提交答案时，controller 会在下一个边界消费答案，不会启动第二个 execution。等待中的 Goal 收到任意新答案后恢复，完成因此能够执行的工作；其他问题继续保持待答。用户主动暂停的 Goal 不会因收到答案自动恢复。Goal 问题不会替换或禁用普通聊天输入框。</p>
+<p>有人值守时，judge 可以针对影响目标方向的歧义、缺失访问权限或明确审批记录问题，但普通实现选择仍由 agent 自主完成。无人值守时，问题不会打断执行；Goal 会先完成全部安全且不依赖答案的工作，然后在必要时等待。composer 的“无人值守”控制项为当前 session 选择模式；页面重新连接后会把该选择重新同步给 worker。</p>
+<p>如果 worker 在 Goal 完善、工作或判定期间重启，持久化状态会变为 <code>paused_recoverable</code>。Goal 弹窗仍显示目标、checklist、用量、checkpoint 和原因。使用“继续”或 <code>/goal resume</code> 从该状态启动新的 execution。</p>
+<p>恢复时会向工作 agent 和 judge 重新提供当前 revision 已确认的答案，以及有长度上限的历史工作证据。编辑目标后创建新 revision；旧决定保留在历史记录中，但不会自动用于新目标。</p>
+<p>同一主机、共享同一 session store 的 worker 使用独占 Goal controller 锁。第二个 controller 在调用模型前被拒绝，启动中的 worker 不会修改其他 worker 正在执行的 Goal。controller 退出或进程崩溃后，由操作系统释放锁。这不提供跨主机或网络文件系统的分布式 ownership。</p>
+<p><code>waiting_external</code> 同样停止工作轮次，但目前没有实现外部事件自动唤醒。外部依赖发生变化后需要显式继续。</p>
+<h2 id="状态">状态<a class="header-anchor" href="#状态">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -159,34 +172,59 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </thead>
 <tbody>
 <tr>
-<td><code>achieved</code></td>
-<td>judge 接受条件，并且 checklist 全部完成。</td>
-</tr>
-<tr>
-<td><code>capped</code></td>
-<td>达到轮次上限（<code>goal.max_turns</code>，默认 150；config 里配 0 或负数表示无限）。</td>
-</tr>
-<tr>
-<td><code>error</code></td>
-<td>连续 judge 失败、checklist 停滞或连续零工具轮导致终止。</td>
+<td><code>refining</code>、<code>active</code>、<code>running</code>、<code>evaluating</code></td>
+<td>Goal 正在执行。</td>
 </tr>
 <tr>
 <td><code>waiting_user</code></td>
-<td>judge 提问，正在等待回答。</td>
+<td>Goal 需要用户回答。</td>
 </tr>
 <tr>
-<td><code>cleared</code></td>
-<td>当前 session 清除了 Goal。</td>
+<td><code>waiting_external</code></td>
+<td>外部依赖变化后才能继续。</td>
+</tr>
+<tr>
+<td><code>paused</code>、<code>paused_recoverable</code></td>
+<td>用户暂停，或 worker 重启后可恢复。</td>
+</tr>
+<tr>
+<td><code>blocked</code></td>
+<td>依赖或权限阻止进展，发生变化后可以恢复。</td>
+</tr>
+<tr>
+<td><code>impossible</code></td>
+<td>当前目标与约束无法同时满足。</td>
+</tr>
+<tr>
+<td><code>stalled</code></td>
+<td>连续多轮没有被接受的进展。</td>
+</tr>
+<tr>
+<td><code>budget_exhausted</code></td>
+<td>达到轮次、token、时间或成本限制。</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>execution 或连续 judge 判定失败。</td>
+</tr>
+<tr>
+<td><code>achieved</code></td>
+<td>judge 接受结果与 checklist。</td>
+</tr>
+<tr>
+<td><code>cancelled</code></td>
+<td>用户终止 Goal。</td>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-03</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/wiki-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Wiki Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-workflow.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-programming Workflows</span></a></div></article></main>
+<p>执行时间限制只统计 controller 的 active time；处于 <code>waiting_user</code>、<code>waiting_external</code>、<code>paused</code> 或 <code>paused_recoverable</code> 的时间不计入执行预算。token 与成本使用 active-run cursor 增量核算，因此 Goal 等待期间同一 session 的其他操作不会计入 Goal。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/wiki-agent.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Wiki Agent</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-workflow.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-programming Workflows</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#自己启动">自己启动</a>
-<a class="" href="#agent-或-python-启动">Agent 或 Python 启动</a>
-<a class="" href="#状态与控制">状态与控制</a>
-<a class="" href="#终态">终态</a>
+<a class="" href="#启动-goal">启动 Goal</a>
+<a class="" href="#查看与控制">查看与控制</a>
+<a class="" href="#等待与重启恢复">等待与重启恢复</a>
+<a class="" href="#状态">状态</a>
 </div></aside>
 </div>
 
