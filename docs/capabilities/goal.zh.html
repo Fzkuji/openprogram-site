@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788517301" data-alt-lang-url="/docs/capabilities/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788535688" data-alt-lang-url="/docs/capabilities/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Goal Workflow · OpenProgram Docs</title>
-<meta name="description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
+<meta name="description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 工作 Agent">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/goal.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/goal.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/goal.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/goal.zh.html">
 <meta property="og:title" content="Goal Workflow · OpenProgram Docs">
-<meta property="og:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
+<meta property="og:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 工作 Agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Goal Workflow · OpenProgram Docs">
-<meta name="twitter:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 启动 Goal # 打开 Programs → Workflow → goal →">
+<meta name="twitter:description" content="Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。 工作 Agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -135,18 +135,44 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="会话目标">Session goals</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Goal Workflow</span></nav><h1 id="goal-workflow">Goal Workflow<a class="header-anchor" href="#goal-workflow">#</a></h1>
 <p>Goal 会反复运行 Working Agent，并由独立 completion judge 根据现有证据判定。目标、进度、资源用量和最近 checkpoint 保存在所属 session 中，因此重新加载页面不会删除 Goal。</p>
+<p>工作 Agent 在已有权限内修改产物、执行验证命令。判定和目标整理阶段只获得文件读取与检索工具，不获得 shell 或产物编辑工具。缺少验证命令结果时，判定要求工作 Agent 补充执行，不自行修改产物使检查通过。这是工具能力限制，不表示检索没有缓存写入或网络请求。</p>
 <h2 id="启动-goal">启动 Goal<a class="header-anchor" href="#启动-goal">#</a></h2>
 <p>打开 <strong>Programs → Workflow → goal → Use</strong>，或输入：</p>
 <pre><code class="language-text">/goal 所有单元测试通过，并且 README 说明了新参数
 </code></pre>
 <p>Programs 和 Python 调用默认使用隔离上下文。<code>/goal</code> 会把当前会话快照作为初始证据。除此以外，两种入口使用相同的 Working Agent 与 judge 实现。</p>
 <p>可选限制包括 <code>max_rounds</code>、<code>max_tokens</code>、<code>max_elapsed_s</code> 和 <code>max_cost_usd</code>。Goal 恢复后继续累计限制与用量。
-单个工作轮次默认限时 300 秒，Python 和 CLI 调用可以通过 <code>timeout_s</code> 覆盖。累计预算在 controller 边界检查，因此当前阶段可能先超出累计上限，再由该上限阻止后续阶段。</p>
+创建表单默认只显示目标正文；展开“高级参数”可设置预算、角色与上下文模式。直接输入 <code>goal(...)</code> 时，显式参数会原样传入执行；内部恢复字段不在此处开放编辑。</p>
+<p>单个工作轮次默认限时 300 秒，Python 和 CLI 调用可以通过 <code>timeout_s</code> 覆盖。累计预算在 controller 边界检查，因此当前阶段可能先超出累计上限，再由该上限阻止后续阶段。</p>
+<p>Python 调用可用 <code>model</code>、<code>effort</code> 选择工作角色，用 <code>judge_model</code>、<code>judge_effort</code>、<code>judge_timeout_s</code> 选择判定角色。未指定判定模型时使用已配置的 <code>goal.judge_model</code>，否则使用已解析的工作模型。带 provider 的名称接受 <code>provider:model</code> 或 <code>provider/model</code>。Goal 保存两个角色的实际模型身份、认证路由、推理设置和超时，不保存凭证。恢复时沿用保存值，不随当前会话默认设置改变。角色不可用时，目标进入可恢复暂停且不开始工作；重试保留原选择，不自动换 provider。旧 Goal 没有角色配置时，在首次恢复时解析并标注迁移。自定义 callable Runtime 必须由 Python 调用者再次提供，不会被还原为托管 provider。</p>
+<p>详情弹窗和 <code>/goal</code> 状态显示保存的工作、判定角色设置。</p>
+<p>目标暂停或等待时，可展开“配置 Agent”，修改工作和判定角色的 provider、模型、推理强度及超时。Provider 是已配置的认证路由，不是凭证。保存不改变目标、证据、问题与累计用量；恢复时验证模型。模型不可用时，可修正选择后再次恢复。执行中的目标需要先暂停才能修改角色。</p>
+<p>TUI 使用相同设置，不需要打开浏览器。</p>
+<p>使用 <code>openprogram --resume &lt;session-id&gt;</code> 重新打开已有会话及其保存的 Goal。
+发行包包含终端界面；仍需 Node.js，但不需要源码目录或运行 npm 安装。</p>
+<pre><code class="language-text">/goal help
+/goal role work openai_codex gpt-5.4 effort=high timeout_s=300
+/goal role judge openai_codex gpt-5.4 effort=medium timeout_s=180
+/goal budget max_turns=10 max_tokens=10000 max_elapsed_s=3600 max_cost_usd=5
+</code></pre>
+<p>请使用已配置的 provider 和模型名称；示例不会自动选择模型。预算设为零表示移除该上限。<code>/goal</code> 显示已解析或等待验证的角色配置，并明确标注未知成本。</p>
 <h2 id="查看与控制">查看与控制<a class="header-anchor" href="#查看与控制">#</a></h2>
 <p>composer 中的 Goal 状态条会打开详情弹窗。弹窗显示目标、状态、checklist、资源用量、最近判定原因和全部待答问题，并支持编辑、暂停、继续、逐项回答、调整执行限制和终止。</p>
+<p>已达成、已取消和不可完成的 Goal 在其停止请求已确认后不再占用输入区，原始目标与输出仍可在对应执行记录中查看。暂停、等待和可恢复失败的目标保留详情入口，页面重载后仍可查看和继续。</p>
+<p>暂停、编辑和终止先保存目标变更，再请求取消对应执行。取消投递失败不会撤销已保存的变更，界面会报告停止尚未确认。“重试停止”或 <code>/goal stop</code> 只重试原执行的取消命令，不创建新 Goal，也不重置用量。Web 弹窗和 TUI 分别显示执行状态未知、正在停止或执行已停止，并在相关执行事件、重新连接时刷新；弹窗还支持“刷新状态”。已取消但停止尚未确认的目标继续保留操作入口。旧执行及其全部后代结束前不能恢复；新建替代 Goal 也会在初始化工作和用量前检查已保存的停止请求。没有执行记录的纯脚本 Goal 在后续 Goal 边界协作停止，界面不能确认其物理执行状态。</p>
+<p>进度更新不会覆盖未保存的正文和限制。其他客户端修改相同内容时，弹窗保留本地草稿并提供明确的“采用最新”操作；请求携带所显示目标的身份与版本，保存失败也保留草稿。继续前需要保存或放弃修改，包括回答问题后恢复工作。关闭再打开同一目标会保留草稿；切换会话时，编辑器重置为该会话已保存的目标。成本未知时显示“未知”，不显示零美元。</p>
+<p>目标完成时，已打开的编辑器保持打开，避免丢弃未保存的正文；输入区的目标按钮仍会消失。
+终止操作在同一弹窗内要求确认，保留已保存的工作与历史记录。Escape 会先退出终止确认，再关闭弹窗。</p>
+<p>展开执行记录可以检查 LLM 回复。执行树显示已保存的提示词预览和实际输出；空回复显示“无文本输出”。复制结果包含回复，也兼容使用旧回复字段的记录。</p>
+<p>TUI 在输入框上方显示当前 Goal 的状态、阶段、目标摘要、检查项进度和待答数量。
+该区域只读，不替换输入框，也不要求立即回答。使用 <code>/goal</code> 查看完整详情和操作。
+目标结束后该区域隐藏，执行结果仍保留在会话历史中。</p>
+<p>进入会话或重新连接时，TUI 读取已保存的 Goal，并按版本顺序应用实时更新。
+离线时保留最后确认的快照并标注离线；刷新失败会明确显示，不会清除目标或自动继续执行。</p>
 <p>TUI 提供相同操作：</p>
 <pre><code class="language-text">/goal
 /goal pause
+/goal stop
 /goal resume
 /goal edit 将综述范围收窄到知识编辑
 /goal answer 使用 2023 年之后发表的论文
@@ -155,6 +181,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>编辑会创建新的目标 revision，并暂停 Goal，等待显式继续。旧 revision 的未答问题保留为 <code>superseded</code> 审计记录，不再阻塞新 revision。答案会在被消费前持久化，因此 worker 重启不会丢失答案。不指定问题 ID 时回答最早的待答问题；指定 ID 可以回答队列中的其他问题。</p>
 <h2 id="等待与重启恢复">等待与重启恢复<a class="header-anchor" href="#等待与重启恢复">#</a></h2>
+<p>Goal 暂停请求已保存，不代表当前执行已经停止。生成恢复调用和实际进入 Goal 时
+都会检查关联执行：记录不可用、执行尚未结束或仍有活动后代时，不启动新运行。
+<code>/goal</code> 将执行观察与 Goal 状态分别显示。
+旧执行仍在停止时提交的回答会保留，界面会说明未自动恢复的原因。</p>
+<p>没有执行记录的脚本调用仍使用跨进程 Goal 控制器锁。同一运行中的父执行可以在
+前一次 Goal 调用返回后顺序恢复，但不能用这一例外绕过用户暂停或编辑。</p>
+<p>存储错误不被当作目标不存在。已保存状态无法读取时，控制操作报告状态暂不可用，
+不启动或恢复工作；Goal API 返回 HTTP 503，而不是 404。终态保存失败时不发布
+完成快照或完成通知，最后一次成功保存的状态仍作为恢复依据。</p>
+<p>Goal HTTP 操作接口接受可选的 <code>expected</code> 对象，包含所读快照的 <code>goal_id</code>、<code>revision</code>、<code>run_id</code> 或 <code>version</code>。不匹配时返回冲突，不执行操作。状态提交先于取消送达，保存冲突不会取消运行。HTTP 和 <code>/goal</code> 生成的恢复描述符绑定所读快照，Workflow 在开始工作前再次校验；期间目标改变时，需要依据当前状态重新请求恢复。</p>
+<p>启动恢复在判定执行失去 owner 前，检查保存的主机、进程 ID、进程启动身份及 attempt 租约。第二个本地 controller 不修改仍存活的 owner；确认进程退出后可恢复，不必等待租约到期。尚未创建 attempt 的 admission 有 30 秒保护期限。进程身份无法确认时，在有效租约内保守保留；这不提供跨主机 owner 发现。没有进程证据的旧记录沿用既有恢复规则。</p>
 <p>问题采用异步处理。某部分必需工作依赖无法安全确认的信息时，judge 会记录问题。如果仍有独立工作，Goal 会继续执行这些工作，问题保留在 Goal 弹窗中。只有所有剩余工作都依赖答案时，Goal 才进入 <code>waiting_user</code>。Goal 不会猜测或执行依赖未答问题的事项。</p>
 <p>多个问题可以累积。可以在 Goal 弹窗或通过 <code>/goal answer</code> 逐项回答。向正在执行的 Goal 提交答案时，controller 会在下一个边界消费答案，不会启动第二个 execution。等待中的 Goal 收到任意新答案后恢复，完成因此能够执行的工作；其他问题继续保持待答。用户主动暂停的 Goal 不会因收到答案自动恢复。Goal 问题不会替换或禁用普通聊天输入框。</p>
 <p>有人值守时，judge 可以针对影响目标方向的歧义、缺失访问权限或明确审批记录问题，但普通实现选择仍由 agent 自主完成。无人值守时，问题不会打断执行；Goal 会先完成全部安全且不依赖答案的工作，然后在必要时等待。composer 的“无人值守”控制项为当前 session 选择模式；页面重新连接后会把该选择重新同步给 worker。</p>

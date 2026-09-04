@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788517301" data-alt-lang-url="/docs/capabilities/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788535688" data-alt-lang-url="/docs/capabilities/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -138,6 +138,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 evaluate the available evidence. The objective, progress, resource usage, and
 latest checkpoint are stored with the session, so reloading the page does not
 remove the Goal.</p>
+<p>The working agent performs changes and runs verification commands within its
+existing permissions. The judge and specification refinement only receive
+file-reading and search tools, not a shell or artifact-editing tools. When a
+verification command is missing, the judge requests another working turn;
+it does not modify the deliverable to make its own check pass. These are tool
+capability restrictions, not a claim that retrieval has no cache or network effects.</p>
 <h2 id="start-a-goal">Start a Goal<a class="header-anchor" href="#start-a-goal">#</a></h2>
 <p>Open <strong>Programs → Workflow → goal → Use</strong>, or enter:</p>
 <pre><code class="language-text">/goal all unit tests pass and the README documents the new flag
@@ -147,18 +153,96 @@ snapshot of the current conversation as initial evidence. The working agent
 and judge otherwise use the same implementation.</p>
 <p>Optional limits are <code>max_rounds</code>, <code>max_tokens</code>, <code>max_elapsed_s</code>, and
 <code>max_cost_usd</code>. Limits and usage remain cumulative when a Goal is resumed.
+The creation form keeps the objective as its primary field. Expand <strong>Advanced</strong>
+for limits, role settings, and context mode. Explicit arguments in a typed
+<code>goal(...)</code> call are preserved; internal recovery fields are not editable here.
 The default working-turn timeout is 300 seconds; Python and CLI callers can
 override it with <code>timeout_s</code>. Cumulative budgets are checked at controller
 boundaries, so the current phase can consume resources beyond a total limit
 before that limit stops the next phase.</p>
+<p>Python callers can select the working role with <code>model</code> and <code>effort</code>, and
+the judging role with <code>judge_model</code>, <code>judge_effort</code>, and <code>judge_timeout_s</code>.
+An omitted judge model uses <code>goal.judge_model</code> if configured, otherwise the
+resolved working model. Provider-qualified names accept <code>provider:model</code> or
+<code>provider/model</code>. The Goal saves both roles' resolved model identity,
+authentication route, reasoning setting, and timeout, but never credentials.
+Resume retains these settings even if the current session defaults change.
+An unavailable role leaves the Goal recoverably paused without starting work;
+retry keeps the requested roles rather than selecting another provider.
+Legacy Goals without saved roles resolve them once on their first resume and
+show this migration in their details. Custom callable runtimes must be supplied
+again by the Python caller; they are not reconstructed as hosted providers.</p>
+<p>The details dialog and <code>/goal</code> status show the saved work and judge settings.</p>
+<p>In a paused or waiting Goal, expand <strong>Configure agents</strong> to edit the work and
+judge provider, model, reasoning effort, and timeout. Provider identifies the
+configured authentication route, not a credential. Saving keeps the objective,
+evidence, questions, and cumulative usage unchanged; the selected models are
+validated on resume. If a model is unavailable, correct the saved selection
+and resume again. Running Goals must be paused before role changes.</p>
+<p>The TUI exposes the same settings without opening a browser.</p>
+<p>Use <code>openprogram --resume &lt;session-id&gt;</code> to reopen an existing session and its
+saved Goal. Release packages include the terminal interface; Node.js is still
+required, but a source checkout and npm installation are not.</p>
+<pre><code class="language-text">/goal help
+/goal role work openai_codex gpt-5.4 effort=high timeout_s=300
+/goal role judge openai_codex gpt-5.4 effort=medium timeout_s=180
+/goal budget max_turns=10 max_tokens=10000 max_elapsed_s=3600 max_cost_usd=5
+</code></pre>
+<p>Use your configured provider and model names; these examples do not select a
+model automatically. Zero removes a budget limit. <code>/goal</code> displays resolved or
+pending role selections and reports unknown cost explicitly.</p>
 <h2 id="inspect-and-control-it">Inspect and control it<a class="header-anchor" href="#inspect-and-control-it">#</a></h2>
 <p>The Goal chip in the composer opens a detail dialog. It shows the objective,
 status, checklist, resource usage, last decision reason, and all pending
 questions. The dialog supports editing, pausing, resuming, answering individual
 questions, changing execution limits, and cancelling.</p>
+<p>Progress updates leave unsaved text and limits intact. If another client edits
+the same values, the dialog preserves your draft and offers an explicit
+“Use latest” action; it does not silently overwrite either version. Requests
+include the displayed Goal identity and version. Save failures retain the
+draft. Resume waits until edits are saved or discarded, including when an
+answer unblocks work. Closing and reopening the same Goal keeps its draft;
+switching sessions resets the editor to that session's saved Goal. Unknown
+provider cost is shown as unknown, not as a zero-dollar charge.</p>
+<p>An already-open editor remains open when the Goal completes, so completion
+does not discard unsaved text. Its composer chip still disappears.
+Ending a Goal asks for confirmation in the same dialog; saved work and history
+remain available. Escape leaves the confirmation before closing the dialog.</p>
+<p>Achieved, cancelled, and impossible Goals no longer occupy the composer once
+any requested execution stop has been confirmed.
+Their original objective and output remain available in the corresponding
+execution record. Paused, waiting, and recoverable failed Goals keep the detail
+entry so you can inspect and continue them after a reload.</p>
+<p>Expand an execution record to inspect its LLM replies. The tree shows the
+stored prompt preview and actual output; an empty reply is labelled “No text
+output”. Copy includes the reply, including records using the older reply field.</p>
+<p>The TUI displays the current Goal above the prompt: status, phase, objective
+summary, checklist progress, and pending-question count. This read-only area
+does not replace the prompt or require an immediate answer. Use <code>/goal</code> for
+full details and controls. Completed Goals leave this area; their execution
+results remain in the conversation history.</p>
+<p>On session entry and reconnection, the TUI reads the saved Goal and applies
+live updates in version order. While offline, it retains the last confirmed
+snapshot and labels it as offline. A failed refresh is shown explicitly; it
+does not clear the Goal or resume execution.</p>
+<p>Pausing, editing, and ending first save your Goal change, then request
+cancellation of its exact execution. If cancellation cannot be delivered,
+the change remains saved and the UI reports that the execution stop is not
+confirmed. <strong>Retry stop</strong>, or <code>/goal stop</code>, retries only that execution's
+existing cancellation command; it does not start another Goal or reset usage.
+The Web dialog and TUI distinguish an unknown execution state, stopping, and
+a confirmed stop. They refresh on related execution events and reconnection;
+the dialog also offers <strong>Refresh status</strong>. A cancelled Goal with an unconfirmed
+stop keeps its controls visible. Resume stays unavailable until the previous
+execution and all its descendants have ended. Starting a replacement
+Goal also checks any saved stop request before initializing work or usage.
+Script-only Goals without an execution record stop cooperatively at a Goal
+boundary; the UI cannot confirm
+their physical execution state.</p>
 <p>The same operations are available in the TUI:</p>
 <pre><code class="language-text">/goal
 /goal pause
+/goal stop
 /goal resume
 /goal edit focus the survey on knowledge editing
 /goal answer use papers published since 2023
@@ -171,7 +255,37 @@ audit records and no longer block the new revision. Answers are stored before
 they are consumed, so a worker restart cannot discard them. The short answer
 form targets the oldest pending question; include a question ID to answer
 another item in the queue.</p>
+<p>The Goal HTTP action endpoint accepts an optional <code>expected</code> object containing
+<code>goal_id</code>, <code>revision</code>, <code>run_id</code>, or <code>version</code> from the displayed snapshot.
+Mismatches return a conflict without applying the action. State commits precede
+cancellation delivery; a save conflict does not cancel the running execution.
+Resume descriptors from HTTP and <code>/goal</code> bind to the observed snapshot and are
+rechecked by the Workflow before starting work. If the Goal changes in between,
+request resume again from its current state.</p>
 <h2 id="waiting-and-restart-recovery">Waiting and restart recovery<a class="header-anchor" href="#waiting-and-restart-recovery">#</a></h2>
+<p>Saving a Goal pause request does not prove that its current execution has
+stopped. Resume checks the linked execution before returning an invocation
+and checks again at the actual Goal entry. An unavailable execution record,
+a nonterminal execution, or an active descendant prevents a new run. <code>/goal</code>
+reports the execution observation separately from the Goal status.
+If an answer is saved while the old execution is still stopping, it remains
+saved; the interface explains why automatic resume did not start.</p>
+<p>Script-only calls without an execution record still use the cross-process
+Goal controller lock. Sequential calls inside the same running parent
+execution can resume after the previous Goal call returns, but this exception
+does not bypass a user pause or edit.</p>
+<p>Storage errors are not treated as a missing Goal. If its saved state cannot
+be read, controls report that the state is unavailable and do not start or
+resume work. The Goal API returns HTTP 503, not 404. A failed final save does
+not publish a completion snapshot or completion notice; the last successfully
+saved state remains the recovery point.</p>
+<p>Startup recovery checks the recorded host, process ID, process start identity,
+and attempt lease before treating an execution as abandoned. A second local
+controller leaves a live owner alone; a confirmed exited process can be
+recovered without waiting for its lease to expire. Admission has a bounded
+30-second grace period before an attempt exists. Unknown process identity is
+treated conservatively within the valid lease; this is not cross-host owner
+discovery. Older records without process evidence retain legacy recovery.</p>
 <p>Questions are asynchronous. The judge records a question when some required
 work needs information that cannot be established safely. If independent work
 remains, the Goal keeps running that work and leaves the question in the Goal
