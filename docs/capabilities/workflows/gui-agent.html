@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788535688" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788554751" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GUI Agent · OpenProgram Docs</title>
-<meta name="description" content="Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results,">
+<meta name="description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <meta property="og:title" content="GUI Agent · OpenProgram Docs">
-<meta property="og:description" content="Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results,">
+<meta property="og:description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GUI Agent · OpenProgram Docs">
-<meta name="twitter:description" content="Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results,">
+<meta name="twitter:description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -134,54 +134,35 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>Give it a natural-language task and it operates the desktop autonomously: taking screenshots, detecting UI components, clicking, typing, and verifying results, looping until the task completes or the step limit is reached. It works on the local desktop and can also drive remote virtual machines through a VM interface. The perception layer combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching; the action layer covers mouse, keyboard, and clipboard. On the OSWorld benchmark it scores 79.8% on the Multi-Apps split (<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">results</a>).</p>
+<p>Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: <code>computer_use</code> for the local desktop, <code>browser_use</code> for an OpenProgram background Page, or <code>vm_use</code> for a configured remote virtual machine. Every capability's planner-selected arguments and full result are appended to the next model decision's context. The model ends the task by proposing a terminal result; action and time limits remain safety boundaries.</p>
+<p>Local and VM perception combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching. The action layer covers mouse, keyboard, and clipboard. Browser operations use the Page's DOM/CDP target instead of desktop coordinates.</p>
 <h2 id="availability">Availability<a class="header-anchor" href="#availability">#</a></h2>
 <p>Every supported release registers this Program and ships Playwright Chromium plus the GPA detector weight. It does not ship PyTorch, OpenCV, or EasyOCR, so desktop perception that needs those libraries is unavailable in the packaged product. Source-development checkouts can still install the harness's own dependencies. Developers can use an editable GUI harness checkout or replace the OCR/browser backend for debugging and backend work.</p>
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
-<p>The entry function is <strong><code>gui_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>harness</code>). In chat, just describe a desktop task to trigger it, e.g. &quot;Open Firefox and go to google.com&quot;.</p>
+<p>The public entry function is <strong><code>gui_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>harness</code>). Its public input is only <code>task</code>. The planner and the three <code>*_use</code> functions remain traceable child function nodes, but they are not registered as separate public tools.</p>
 <p>Run it directly from the command line:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>The Programs card asks for <code>task</code> and a <code>surface</code>. Keep <code>desktop</code> for foreground OS input, or select <code>browser</code> to operate an exact Page in OpenProgram's built-in browser. Browser actions use the Page's DOM/CDP target and do not activate its tab, raise the OpenProgram window, or move the system pointer. Ref clicks are dispatched inside the Page DOM, and screenshots use Electron's hidden-page capture, so neither operation needs to reveal the Page. GUI Agent reuses an existing Page from the OpenProgram window that submitted the message or Function form. If that window has no Page, it creates one background Page at <code>https://www.google.com/</code>, continues the same function run, and closes only that agent-created Page when the run ends. It leaves the selected tab unchanged. If no originating desktop window is available, the result is <code>infeasible</code> with a handoff instruction instead of a runtime error. If the desktop rejects cleanup, the result is also <code>infeasible</code> and tells the user to close the remaining background Page.</p>
-<p>Typing a complete registered expression such as <code>gui_agent(task=&quot;Inspect this Page&quot;, surface=&quot;browser&quot;)</code> uses the same Function dispatcher as the Programs form; it is not stored or executed as an ordinary chat message. Retry reruns that exact Function node and its stored originating window/Page identity instead of using whichever Page is selected when Retry is clicked.</p>
-<p>Run against the built-in browser Page:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Inspect and complete the visible form"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
+<p>The Programs card asks only for <code>task</code>. There is no required surface selector. On every iteration the controller reads the original task, the prior planner-selected capability arguments and full outputs, and current capability availability before choosing the next function.</p>
+<p>For a task that is naturally satisfied by the current built-in browser Page, use the same entry:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Inspect and complete the current built-in browser form without foregrounding the window"</span>
 </code></pre>
-<p>Parameters (function signature <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, surface=&quot;desktop&quot;, ...)</code>):</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>task</code></td>
-<td>What to do, in natural language</td>
-</tr>
-<tr>
-<td><code>max_steps</code></td>
-<td>Maximum number of actions. Default 150. <code>0</code> or a negative value means no cap.</td>
-</tr>
-<tr>
-<td><code>max_seconds</code></td>
-<td>Whole-process deadline for runs dispatched through OpenProgram Programs or Functions, on either surface. Default 300 seconds; a positive value overrides it, while <code>0</code> or a negative value removes the deadline. In a direct Python bridge call, the browser loop also enforces this value internally; the desktop harness has no separate internal timer.</td>
-</tr>
-<tr>
-<td><code>app_name</code></td>
-<td>Application name used for component memory, e.g. <code>firefox</code>, <code>libreoffice_calc</code>; default <code>desktop</code></td>
-</tr>
-<tr>
-<td><code>surface</code></td>
-<td><code>desktop</code> for foreground OS/VM input or <code>browser</code> for an exact built-in Page. The browser route uses the default Page backend unless a trusted caller supplies <code>backend</code>.</td>
-</tr>
-</tbody>
-</table>
-<p>Each desktop step runs observe (one screenshot + component detection + state recognition) → verify the previous step's result → plan one action → execute → build feedback for the next round. A first-step <code>done</code> decision receives a separate current-screen completion check. Feedback keeps the latest eight action outcomes; selecting the same failed action four times stops the run instead of repeating indefinitely. Previously learned UI transitions remain available, but learning is an explicit operation rather than an implicit pre-step side effect. When the agent cannot finish or a human must take over, it chooses fail, stops, and returns <code>success=false</code>; both <code>summary</code> and <code>handoff_instruction</code> preserve the handoff text.</p>
+<p>Trusted callers can also supply hidden controller settings: <code>max_steps</code> is the action safety limit (default 150); <code>max_seconds</code> is the optional wall-clock safety limit; <code>app_name</code> selects component memory; <code>backend</code> pins an existing Page backend; and <code>vm_url</code> enables <code>vm_use</code>. The old <code>surface</code> field is accepted only as a compatibility preference. It does not lock the run to one capability and is absent from the public function schema.</p>
+<p>The control sequence is:</p>
+<ol>
+<li><code>plan_next_capability</code> receives the task, current availability, and complete ordered capability history.</li>
+<li>It selects <code>computer_use</code>, <code>browser_use</code>, <code>vm_use</code>, or proposes a terminal result.</li>
+<li><code>call_capability</code> binds controller-owned runtime settings and invokes exactly the selected function.</li>
+<li>The planner-selected arguments and full function output are appended to history and therefore visible to the next decision. Controller-bound feedback is recovered from the previous output's <code>next_feedback</code>; it is not duplicated inside the next history input.</li>
+<li>A proposed terminal result is validated. Unsupported success is recorded and planning continues.</li>
+</ol>
+<p><code>computer_use</code> and <code>vm_use</code> each execute one existing Harness step: observe the current target, verify prior feedback when present, plan one action, execute it, and return the step plus next feedback. <code>browser_use</code> executes one bounded background Page sub-task and then returns control to the root loop. There is no special pre-route for screen-reading tasks.</p>
+<p>The implementation uses OpenProgram's high-level agentic programming calls. <code>plan_next_capability</code>, desktop planning, verification, and conclusion call <code>llm()</code> with the active Runtime context. The Browser Page action loop calls <code>agent()</code> with its action tool and a single bounded iteration. GUI workflow code does not call <code>Runtime.exec</code> directly. The root controller does not wrap itself in a nested <code>goal()</code> call because it already owns the capability history, terminal proposal, evidence validation, timeout, cancellation, and no-progress decisions; a second goal controller would duplicate those decisions.</p>
+<p><code>vm_use</code> requires an OSWorld-compatible HTTP endpoint. Screenshots are read from <code>GET /screenshot</code>, and input commands are sent to <code>POST /execute</code>. VM target selection is serialized within the Harness process. Whether the call succeeds or raises, the prior input target and screenshot backend are restored before another capability runs. Endpoint credentials and query values are not included in planner availability context.</p>
 <p>Desktop observations include the frontmost application and screenshot coordinate bounds. If the target application's windows are minimized or located in another macOS Space and remain unavailable after one bounded Window-menu recovery, the run stops as infeasible and asks the user to move or unminimize the window. It does not create additional windows indefinitely.</p>
-<p>Desktop coordinate input always applies to the current foreground GUI; it is not a background-window API. Use <code>surface=browser</code> when a built-in Page must be inspected or changed without bringing OpenProgram or that Page to the foreground. In a multi-window App session, the Page is created in the window that submitted the chat message or Function call. Normal completion, failure, cancellation, timeout, and forced subprocess termination all attempt exact cleanup of an automatically created Page. A rejected cleanup is never reported as success: OpenProgram preserves the Page identity for a bounded retry and returns a manual-close handoff if cleanup still cannot be confirmed.</p>
-<p>Desktop and built-in-browser runs share the same terminal fields: <code>status</code> (<code>succeeded</code>, <code>infeasible</code>, <code>failed</code>, or <code>cancelled</code>), <code>success</code>, <code>reason_code</code>, <code>summary</code>, and <code>handoff_instruction</code>. The runner, not the conclusion model, determines success. Desktop results additionally include step history and timing; browser results include backend and WebSession details.</p>
+<p>Desktop coordinate input always applies to the current foreground GUI. When the controller has an exact macOS process and window target, <code>computer_use</code> may instead use window-only capture and supported Accessibility press, text-value, or scroll actions without activating the target. A non-activating, mouse-ignoring indicator follows that window and marks the current action without moving the system pointer. Browser actions use the selected Page in the background and do not activate its tab, raise the OpenProgram window, or move the system pointer. The controller may switch between these capabilities when the recorded results require it.</p>
+<p>All runs share the same terminal fields: <code>status</code> (<code>succeeded</code>, <code>infeasible</code>, or <code>failed</code>), <code>success</code>, <code>reason_code</code>, <code>summary</code>, and <code>handoff_instruction</code>. The runner, not the conclusion model, determines success. <code>success</code> is true only for <code>succeeded</code>. Infeasible and failed results always return <code>success=false</code>; infeasible results retain the blocker, marker, and user handoff instruction. The result also contains the ordered capability history and timing.</p>
+<p><code>max_seconds</code> is enforced before each model or capability call and again after it returns. A terminal proposal that arrives after the deadline is rejected and normalized as a timeout failure. Provider cancellation is cooperative, so an in-flight provider request can return slightly after the configured wall-clock boundary; it still cannot turn that run into success.</p>
 <p>The Function card displays that task result directly: <code>Succeeded</code> for a verified result, <code>Failed</code> when the task ended without satisfying the request, and <code>Needs takeover</code> when the handoff instruction requires user action. <code>Error</code> identifies a runtime exception or an invalid GUI result contract. An internal completed worker state never changes a failed GUI result into <code>Completed</code>.</p>
 <h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
 <ul>

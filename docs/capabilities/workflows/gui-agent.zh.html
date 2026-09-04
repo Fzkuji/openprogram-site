@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788535688" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788554751" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GUI Agent · OpenProgram Docs</title>
-<meta name="description" content="给一句自然语言任务，它自主操作桌面：截图、识别界面组件、点击、输入、验证结果，循环直到任务完成或达到步数上限。适用于本机桌面，也可以通过 VM 接口操作远程虚拟机。感知层是 YOLO 组件检测（GPA-GUI-Detector）+ OCR（macOS 用 Apple Vision，Linux / Windows 用">
+<meta name="description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
 <meta property="og:title" content="GUI Agent · OpenProgram Docs">
-<meta property="og:description" content="给一句自然语言任务，它自主操作桌面：截图、识别界面组件、点击、输入、验证结果，循环直到任务完成或达到步数上限。适用于本机桌面，也可以通过 VM 接口操作远程虚拟机。感知层是 YOLO 组件检测（GPA-GUI-Detector）+ OCR（macOS 用 Apple Vision，Linux / Windows 用">
+<meta property="og:description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GUI Agent · OpenProgram Docs">
-<meta name="twitter:description" content="给一句自然语言任务，它自主操作桌面：截图、识别界面组件、点击、输入、验证结果，循环直到任务完成或达到步数上限。适用于本机桌面，也可以通过 VM 接口操作远程虚拟机。感知层是 YOLO 组件检测（GPA-GUI-Detector）+ OCR（macOS 用 Apple Vision，Linux / Windows 用">
+<meta name="twitter:description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -134,54 +134,35 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>给一句自然语言任务，它自主操作桌面：截图、识别界面组件、点击、输入、验证结果，循环直到任务完成或达到步数上限。适用于本机桌面，也可以通过 VM 接口操作远程虚拟机。感知层是 YOLO 组件检测（GPA-GUI-Detector）+ OCR（macOS 用 Apple Vision，Linux / Windows 用 EasyOCR）+ 模板匹配；动作层覆盖鼠标、键盘、剪贴板。在 OSWorld 基准的 Multi-Apps 子集上得分 79.8%（<a href="https://github.com/Fzkuji/GUI-Agent-Harness/blob/main/benchmarks/osworld/multi_apps.md">结果</a>）。</p>
+<p>给它一个自然语言任务。根控制器重复选择一个有界能力：<code>computer_use</code> 操作本机桌面，<code>browser_use</code> 操作 OpenProgram 后台 Page，<code>vm_use</code> 操作已配置的远程虚拟机。每次能力调用中由规划器选择的参数和完整结果都会追加到下一轮模型决策的上下文。模型通过提交终态结束任务；动作数和时间限制只作为安全边界。</p>
+<p>本机与 VM 感知使用 YOLO 组件检测（GPA-GUI-Detector）、OCR（macOS 用 Apple Vision，Linux / Windows 用 EasyOCR）和模板匹配。动作层覆盖鼠标、键盘和剪贴板。浏览器操作使用 Page 的 DOM/CDP target，不使用桌面坐标。</p>
 <h2 id="可用性">可用性<a class="header-anchor" href="#可用性">#</a></h2>
 <p>每个受支持的 release 都会注册该 Program，并带上 Playwright Chromium 和 GPA detector 权重。不附带 PyTorch、OpenCV 或 EasyOCR，因此依赖这些库的桌面感知在打包产品里不可用。源码开发 checkout 仍可安装 harness 自己的依赖。开发者可以使用 editable GUI harness checkout，或替换 OCR/Browser backend 进行调试和后端开发。</p>
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
-<p>入口函数名为 <strong><code>gui_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>harness</code>）注册，聊天里直接描述桌面任务即可触发，例如&quot;打开 Firefox 并访问 google.com&quot;。</p>
+<p>公开入口函数名为 <strong><code>gui_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>harness</code>）注册。公开输入只有 <code>task</code>。规划函数和三个 <code>*_use</code> 函数仍会生成可追踪的子函数节点，但不会分别注册成公开工具。</p>
 <p>命令行直接运行：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
-<p>Programs 卡片填写 <code>task</code> 和 <code>surface</code>。<code>desktop</code> 使用前台操作系统输入；<code>browser</code> 操作 OpenProgram 内置浏览器中的精确 Page。浏览器动作通过该 Page 的 DOM/CDP target 执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。ref 点击在 Page DOM 内触发，截图使用 Electron 的隐藏 Page capture，两者都不需要显示 Page。GUI Agent 会复用提交消息或 Function 表单的 OpenProgram 窗口中已有的 Page。该窗口没有 Page 时，它才会创建一个初始地址为 <code>https://www.google.com/</code> 的后台 Page，在同一次函数运行中继续执行，并在运行结束时只关闭这个由 agent 创建的 Page；当前选中的标签页保持不变。如果没有可用的来源桌面窗口，结果会是带接手说明的 <code>infeasible</code>，而不是运行时异常。如果桌面端拒绝清理，结果同样是 <code>infeasible</code>，并要求用户手动关闭残留的后台 Page。</p>
-<p>输入完整的已注册函数表达式，例如 <code>gui_agent(task=&quot;检查这个 Page&quot;, surface=&quot;browser&quot;)</code>，会使用与 Programs 表单相同的 Function dispatcher，不会作为普通聊天消息保存或执行。Retry 会重新运行该精确 Function 节点及其保存的来源窗口/Page 身份，不会改用点击 Retry 时当前选中的 Page。</p>
-<p>操作内置浏览器 Page：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"检查并完成当前可见表单"</span><span class="w"> </span>-a<span class="w"> </span><span class="nv">surface</span><span class="o">=</span>browser
+<p>Programs 卡片只填写 <code>task</code>，不要求用户选择 surface。控制器每一轮都会读取原始任务、此前由规划器选择的能力参数和完整输出，以及当前能力可用状态，再决定下一步调用。</p>
+<p>任务适合由当前内置浏览器 Page 完成时，仍使用同一个入口：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"在不置顶窗口的情况下检查并完成当前内置浏览器表单"</span>
 </code></pre>
-<p>参数（函数签名 <code>gui_agent(task, max_steps=None, app_name=&quot;desktop&quot;, surface=&quot;desktop&quot;, ...)</code>）：</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>task</code></td>
-<td>要做什么（自然语言）</td>
-</tr>
-<tr>
-<td><code>max_steps</code></td>
-<td>最大动作数。默认 150。<code>0</code> 或负数表示不封顶。</td>
-</tr>
-<tr>
-<td><code>max_seconds</code></td>
-<td>通过 OpenProgram Programs 或 Functions 调度时，它是两种 surface 共用的整个子进程截止时间。默认 300 秒；正数会覆盖默认值，<code>0</code> 或负数表示不限时。直接调用 Python bridge 时，browser 循环还会在内部执行该限制；desktop harness 没有单独的内部计时器。</td>
-</tr>
-<tr>
-<td><code>app_name</code></td>
-<td>用于组件记忆的应用名，如 <code>firefox</code>、<code>libreoffice_calc</code>，默认 <code>desktop</code></td>
-</tr>
-<tr>
-<td><code>surface</code></td>
-<td><code>desktop</code> 使用前台 OS/VM 输入，<code>browser</code> 使用精确的内置 Page。浏览器路径默认使用标准 Page backend；受信任调用方仍可显式传 <code>backend</code>。</td>
-</tr>
-</tbody>
-</table>
-<p>桌面路径每一步执行 观察（一次截图 + 组件检测 + 状态识别）→ 验证上一步结果 → 规划一个动作 → 执行 → 构造下一轮反馈。第一步直接选择 <code>done</code> 时，还要单独验证当前屏幕是否已经满足任务。反馈只保留最近八个动作结果；同一个失败动作被第四次选择时会终止，不再无限重复。已学过的界面转换仍可复用，但学习改为显式操作，不再作为主循环之前的隐式步骤。做不完或需要人接手时，agent 会选 fail 停下并返回 <code>success=false</code>；<code>summary</code> 和 <code>handoff_instruction</code> 都保留接手说明。</p>
+<p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是可选的总耗时安全上限；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。旧 <code>surface</code> 字段只作为兼容性偏好继续接受，不会把运行固定在某种能力上，也不出现在公开函数 schema 中。</p>
+<p>控制流程如下：</p>
+<ol>
+<li><code>plan_next_capability</code> 接收任务、当前可用状态和完整的有序能力调用历史。</li>
+<li>它选择 <code>computer_use</code>、<code>browser_use</code>、<code>vm_use</code>，或者提交一个终态。</li>
+<li><code>call_capability</code> 绑定由控制器管理的 runtime 设置，并只调用本轮选中的函数。</li>
+<li>规划器选择的参数和函数完整输出追加到 history，因此下一轮决策可以直接看到。控制器从上一项输出的 <code>next_feedback</code> 取得下一次调用所需的 feedback，不把它重复写进下一项 history input。</li>
+<li>提交的终态要经过校验；没有完成证据的 success 会被记录并继续规划。</li>
+</ol>
+<p><code>computer_use</code> 和 <code>vm_use</code> 每次执行一个现有 Harness step：观察当前目标、在存在前序反馈时验证结果、规划一个动作、执行，并返回完整 step 和下一轮反馈。<code>browser_use</code> 每次执行一个有界的后台 Page 子任务，然后把控制权返回根循环。屏幕读取任务不走单独的预先分流。</p>
+<p>实现统一使用 OpenProgram 的高层 agentic programming 调用。<code>plan_next_capability</code>、桌面规划、验证和结论通过当前 Runtime 上下文调用 <code>llm()</code>；浏览器 Page 动作循环通过带动作工具和单次有界迭代的 <code>agent()</code> 执行。GUI workflow 代码不直接调用 <code>Runtime.exec</code>。根控制器不再嵌套一层 <code>goal()</code>，因为能力历史、终态提交、证据验证、超时、取消和无进展判断已经由根控制器负责；再加一层 goal 控制器会重复这些判断。</p>
+<p><code>vm_use</code> 需要兼容 OSWorld 的 HTTP endpoint。截图通过 <code>GET /screenshot</code> 获取，输入命令通过 <code>POST /execute</code> 发送。Harness 进程内的 VM 目标切换会串行执行。无论调用成功还是抛错，下一种能力执行前都会恢复原来的输入目标和截图 backend。endpoint 中的凭据和 query 值不会写入规划器的可用状态上下文。</p>
 <p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
-<p>桌面坐标输入始终作用于当前前台 GUI，不是后台窗口接口。需要在不置顶 OpenProgram 或目标 Page 的情况下操作内置页面时，应使用 <code>surface=browser</code>。App 同时打开多个窗口时，自动 Page 只创建在提交该聊天消息或 Function 调用的窗口中。正常完成、失败、取消、超时以及子进程被强制终止都会尝试精确清理自动创建的 Page。清理被拒绝时不能报告成功：OpenProgram 会保留 Page 身份并执行一次有界重试；仍无法确认清理时返回手动关闭的接手说明。</p>
-<p>桌面和内置浏览器运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code>、<code>failed</code> 或 <code>cancelled</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。桌面结果还包含步骤历史和耗时；浏览器结果还包含 backend 和 WebSession 信息。</p>
+<p>桌面坐标输入始终作用于当前前台 GUI。控制器取得准确的 macOS 进程和窗口目标后，<code>computer_use</code> 也可以只截取该窗口，并通过 Accessibility 执行控件支持的按压、文本赋值或滚动动作，不激活目标。一个不激活应用、不接收鼠标事件的提示层会跟随该窗口并标记当前动作，不移动系统鼠标。浏览器动作在选中的 Page 后台执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。根据已记录的结果，控制器可以在不同能力之间切换。</p>
+<p>所有运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code> 或 <code>failed</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。只有 <code>succeeded</code> 的 <code>success</code> 为 true；infeasible 和 failed 一律返回 <code>success=false</code>。infeasible 还保留 blocker、标记和用户接手说明。结果同时包含有序能力调用历史和耗时。</p>
+<p><code>max_seconds</code> 会在每次模型或能力调用前检查，并在调用返回后再次检查。超过截止时间才返回的终态提交会被拒绝，并统一为超时失败。Provider 取消采用协作式机制，因此已经发出的 provider 请求可能略晚于配置的总耗时边界才返回，但该迟到结果不会把任务变成成功。</p>
 <p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
 <ul>
