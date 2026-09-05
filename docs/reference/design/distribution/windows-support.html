@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788617519" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788618110" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -483,7 +483,12 @@ limits Git invocation count independently of the number of changed files.</p>
 rest of the runtime. This makes state projection and recovery records portable;
 it does not establish support for the separate macOS-specific controller and
 installer pipeline, which still needs a Windows implementation and native
-end-to-end acceptance before it can be advertised as available.</p>
+end-to-end acceptance before it can be advertised as available.
+The chat prepare and retry entry points consult the controller capability in
+<code>_compat</code> before resolving turn context or creating state. When no controller
+adapter is implemented they explain the missing source-update workflow and
+point to the separate published CLI/Desktop updaters, without reserving an
+active update. Status and cancellation are not gated by this capability.</p>
 <p>Post-rollback diagnosis and isolated source repair use the same portable state
 checks. Model-provided LF edits match consistently CRLF source files while
 preserving the original line-ending convention. Duplicate matches are rejected;

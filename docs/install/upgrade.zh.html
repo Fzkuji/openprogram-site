@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788617519" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788618110" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,6 +110,11 @@ openprogram<span class="w"> </span>upgrade
 <pre><code class="language-bash">openprogram<span class="w"> </span>worker<span class="w"> </span>restart
 </code></pre>
 <h2 id="恢复对话内自更新">恢复对话内自更新<a class="header-anchor" href="#恢复对话内自更新">#</a></h2>
+<p>基于源码的对话式更新控制器目前要求 macOS。Windows 和 Linux 上的聊天准备、重试
+工具会在创建更新请求、占用活动更新位置之前明确说明这一点。这不影响已发布版本的
+升级：通过发布安装器安装的 CLI 使用 <code>openprogram upgrade</code>，Desktop 使用发布更新器。
+已有更新的状态查询和取消仍然可用；仅有 worker 服务并不代表已经具备源码更新控制器的
+构建、激活、验证和恢复流程。</p>
 <p>对话内打包离线执行。依赖基线必须与候选的 <code>uv.lock</code> 和
 <code>scripts/release/product-runtime.json</code> 完全一致；控制器使用保存 runtime 中固定版本的
 构建工具，以及既有 npm/uv/Electron-builder/node-gyp 缓存的私有副本。Electron 平台归档

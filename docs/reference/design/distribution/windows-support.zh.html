@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788617519" data-alt-lang-url="/docs/reference/design/distribution/windows-support.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788618110" data-alt-lang-url="/docs/reference/design/distribution/windows-support.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -493,7 +493,10 @@ worker，运行 <code>doctor</code>，然后停止 worker。</li>
 不可变对象，并限制输出大小；回归测试约束 Git 调用次数，避免随变更文件数
 线性启动进程。自更新日志读取沿用 Windows 继承 ACL 的约定。这只证明状态
 展示和恢复记录可移植，不代表独立的 macOS 控制器与安装流程已支持 Windows；
-后者仍需 Windows 实现及原生端到端验收。</p>
+后者仍需 Windows 实现及原生端到端验收。
+聊天准备和重试入口在解析当前 turn 或创建状态之前查询 <code>_compat</code> 中的控制器能力。
+尚无实现的适配器会明确说明缺少源码更新流程，并指向独立的 CLI/Desktop 发布更新器，
+不会占用活动更新位置。状态查询和取消不受此能力检查限制。</p>
 <p>回滚后的诊断与隔离源码修复使用同一套可移植状态检查。模型提供的 LF 编辑
 可以匹配统一使用 CRLF 的源码，并保留原文件换行格式；重复匹配仍然拒绝，
 混合换行文件要求精确匹配。候选测试的原生执行与激活仍属于上述控制器缺口。</p>
