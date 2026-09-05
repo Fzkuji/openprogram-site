@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788628709" data-alt-lang-url="/docs/interfaces/web.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788631639" data-alt-lang-url="/docs/interfaces/web.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,6 +161,9 @@ picker remains a cancellation and does not trigger the manual dialog.</p>
 </tbody>
 </table>
 <p>Opening <code>/settings</code> directly lands on <code>/settings/general</code>. Model credentials stay on <code>/settings/providers</code>; see <a href="/docs/models/README.html">configuring models</a>.</p>
+<h3 id="execution-debugger">Execution debugger<a class="header-anchor" href="#execution-debugger">#</a></h3>
+<p>Debugger shows only executions belonging to the current conversation, including completed executions. Switching conversations resets the selected execution and its inspector. Opening an execution from Running first opens its conversation.</p>
+<p>The Synced badge confirms a successful snapshot fetch, not that an execution is still running. The panel shows the fetch time, the execution’s last update, its event cursor, and persisted execution events. Missing resources, checkpoints, waits, and revision drafts appear as one compact summary. A reconciliation-required execution is blocked on an unconfirmed effect and is not ongoing generation.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop App and built-in browser</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Terminal TUI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -174,6 +177,7 @@ picker remains a cancellation and does not trigger the manual dialog.</p>
 <a class="lvl-3" href="#session-branches-and-the-dag-view">Session branches and the DAG view</a>
 <a class="lvl-3" href="#rewind">Rewind</a>
 <a class="" href="#other-pages">Other pages</a>
+<a class="lvl-3" href="#execution-debugger">Execution debugger</a>
 </div></aside>
 </div>
 
