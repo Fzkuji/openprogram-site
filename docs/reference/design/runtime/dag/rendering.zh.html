@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788554751" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -322,15 +322,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -471,7 +471,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<p><strong>滚轮分流</strong>（<code>canvas.ts</code>）：ctrl/⌘ + 滚轮缩放——浏览器把触控板捏合投递成带
+<p><strong>滚轮分流</strong>（<code>interaction/canvas.ts</code>）：ctrl/⌘ + 滚轮缩放——浏览器把触控板捏合投递成带
 <code>ctrlKey</code> 的 wheel 事件，⌘+滚轮则是显式缩放和弦——速率按捏合细密连续的
 delta 调校。鼠标滚轮按滚轮速率缩放：鼠标没有捏合。macOS 的滚动加速让它的
 <code>deltaY</code> 变成小数且不定，判据用遗留字段 <code>wheelDeltaY</code>——Chromium/WebKit 把
@@ -492,7 +492,7 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 图例弹层，由 <code>dag-view.tsx</code> portal 进输入框的 <code>#dagHudSlot</code>，跟着输入框走、
 随它长高，只在 DAG 视角显示。缩放控件是一颗胶囊里的 − · 读数 · +：−/+ 每次
 步进恰好一个滚轮格（<code>ZOOM_STEP</code>），点读数本身重置 100%——按钮没有光标可锚，
-两者都以面板中心为锚。读数由 <code>canvas.ts</code> 在每次视角变化时命令式写入——把
+两者都以面板中心为锚。读数由 <code>interaction/canvas.ts</code> 在每次视角变化时命令式写入——把
 一次手势的每个 wheel 事件走 React state 会让整棵树每秒重绘六十次。</p>
 <p>HUD 不自带任何外观。胶囊列在输入框 env-pill 规则里
 （<code>composer.module.css</code>），和旁边的 env chip 是同一条 24px 实底胶囊规则——
@@ -509,7 +509,7 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 <tbody>
 <tr>
 <td>平移 / 缩放 / fit</td>
-<td><code>apps/web/lib/runtime-bridge/dag/canvas.ts</code>（HUD 按钮走 <code>zoomStep</code> / <code>resetZoom</code>）</td>
+<td><code>apps/web/lib/runtime-bridge/dag/interaction/canvas.ts</code>（HUD 按钮走 <code>zoomStep</code> / <code>resetZoom</code>）</td>
 </tr>
 <tr>
 <td>视角状态</td>
@@ -538,7 +538,7 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 顺序——图压在输入框 <code>z-index: 5</code> 之下。反过来把 <code>#chatView</code> 压扁，只会把输入
 框拽到面板中间。</p>
 <p>画布在输入框底下一直铺到边——从输入框后面平移过去只是一个手势，fit 会把图
-居中在输入框上方的空间里（<code>canvas.ts::fitCanvas</code>），所以不需要预留 padding。</p>
+居中在输入框上方的空间里（<code>interaction/canvas.ts::fitCanvas</code>），所以不需要预留 padding。</p>
 <h3 id="分支切换在图里">分支切换在图里<a class="header-anchor" href="#分支切换在图里">#</a></h3>
 <p>画布上方没有分支条。每条分支的名字是画在图里的按钮，锚在该分支最后一个对话层
 节点下方（<code>render/badges.ts</code>，第五节）：活跃分支的标签按 lane 色描边加底色，点
@@ -1106,7 +1106,7 @@ tooltip 和检查器里。</p>
 <p><strong>单击 → 节点自己的动作</strong>。折叠/展开它的调用线程（第十二节）。没有别的——
 没有窗口和展开抢画面。右栏 Details 仍然静默填充，用户想看随时打开。</p>
 <p><strong>右键 → 同一张卡原地展开</strong>。不是第二个窗口：就是那一个卡片元素在原地加深
-（<code>tooltip.ts expandTooltip</code>）——所有字段、更长的预览、覆盖状态、上下文站
+（<code>interaction/tooltip.ts expandTooltip</code>）——所有字段、更长的预览、覆盖状态、上下文站
 位、id——动词接在卡底：checkout 到此分支 · 从此节点 fork · fork 并编辑此消
 息（仅用户轮）· 复制节点 id · 查看原始 JSON。两个状态共用一个行构建器
 （<code>renderNodeInfo</code>），不可能各说各话；覆盖行读的是节点绘制时已经戳好的 DOM
@@ -1198,7 +1198,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 <tbody>
 <tr>
 <td>无限画布（平移 / 缩放 / fit / 点阵）</td>
-<td><code>dag/canvas.ts</code> 与 <code>styles/dag/canvas.css</code> 的 <code>.history-body</code>；视角状态在 <code>dag/store/globals.ts</code>；HUD 在 <code>components/chat/dag-view.tsx</code></td>
+<td><code>dag/interaction/canvas.ts</code> 与 <code>styles/dag/canvas.css</code> 的 <code>.history-body</code>；视角状态在 <code>dag/store/globals.ts</code>；HUD 在 <code>components/chat/dag-view.tsx</code></td>
 </tr>
 <tr>
 <td>第一节 lane / tier / depth 布局</td>
@@ -1210,7 +1210,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第四节 HEAD 呼吸光晕</td>
-<td><code>render/nodes.ts</code> 戳 <code>data-head</code> 并把分支色写进 <code>color</code>；<code>dag-head-glow</code> 关键帧在 <code>styles/dag/nodes.css</code>（reduced-motion → 恒定光）；所有字形保持空心（<code>shapes.ts</code>）；HEAD 指向已归并回复时落到锚上（<code>pipeline.ts</code> 经 <code>threadModel.anchorOf</code>）</td>
+<td><code>render/nodes.ts</code> 戳 <code>data-head</code> 并把分支色写进 <code>color</code>；<code>dag-head-glow</code> 关键帧在 <code>styles/dag/nodes.css</code>（reduced-motion → 恒定光）；所有字形保持空心（<code>render/shapes.ts</code>）；HEAD 指向已归并回复时落到锚上（<code>pipeline.ts</code> 经 <code>threadModel.anchorOf</code>）</td>
 </tr>
 <tr>
 <td>第〇节/第十二节 调用线程聚合</td>
@@ -1218,7 +1218,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>规则②推论（不画占位框）</td>
-<td><code>shapes.ts</code>：无 <code>square_outline</code>；task 渲染为普通方块</td>
+<td><code>render/shapes.ts</code>：无 <code>square_outline</code>；task 渲染为普通方块</td>
 </tr>
 <tr>
 <td>第四节 状态画在描边上</td>
@@ -1230,7 +1230,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>场景 8 merge 形状与连线</td>
-<td><code>shapes.ts</code> <code>merge_dot</code>（◉）；<code>edges.ts</code> 汇入线 peer 色 2.4px 实线</td>
+<td><code>render/shapes.ts</code> <code>merge_dot</code>（◉）；<code>edges.ts</code> 汇入线 peer 色 2.4px 实线</td>
 </tr>
 <tr>
 <td>场景 8/10 attach 指针</td>
@@ -1266,7 +1266,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第九节 胶囊形状</td>
-<td><code>shapes.ts</code> 的 <code>capsule</code>（按 <code>covers_ids</code> 判定，打 <code>data-shape</code> 标让 <code>_applyShapeSize</code> 别改它的几何）</td>
+<td><code>render/shapes.ts</code> 的 <code>capsule</code>（按 <code>covers_ids</code> 判定，打 <code>data-shape</code> 标让 <code>_applyShapeSize</code> 别改它的几何）</td>
 </tr>
 <tr>
 <td>第九节 折叠 / 褶皱 / 幽灵</td>
@@ -1278,7 +1278,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第十一节 一张卡两个状态 / fork 并编辑</td>
-<td><code>dag/tooltip.ts</code>：<code>renderNodeInfo</code> 喂两个状态，<code>expandTooltip</code> 原地加深；<code>render/inspector.ts</code> 只构建动词列表（+ 原始 JSON 层），<code>render/interaction.ts</code> 接线；动作走 <code>POST /api/chat/checkout</code></td>
+<td><code>dag/interaction/tooltip.ts</code>：<code>renderNodeInfo</code> 喂两个状态，<code>expandTooltip</code> 原地加深；<code>render/inspector.ts</code> 只构建动词列表（+ 原始 JSON 层），<code>interaction/nodes.ts</code> 接线；动作走 <code>POST /api/chat/checkout</code></td>
 </tr>
 <tr>
 <td>第十一节 图例</td>
@@ -1286,7 +1286,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 <tr>
 <td>第十二节 调用线程 + agent spawn</td>
-<td><code>shapes.ts</code>（spawn → 方块）、<code>passes/thread.ts</code>（模型）、<code>layout/geometry.ts</code>（递归安放）、<code>render/edges.ts</code>（线程点线、中心连线、场景3横桥）、<code>render/nodes.ts</code>（<code>data-thread*</code>、肩上折叠数）、<code>render/interaction.ts</code>（<code>toggleThreadOpen</code>）；由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 实跑</td>
+<td><code>render/shapes.ts</code>（spawn → 方块）、<code>passes/thread.ts</code>（模型）、<code>layout/geometry.ts</code>（递归安放）、<code>render/edges.ts</code>（线程点线、中心连线、场景3横桥）、<code>render/nodes.ts</code>（<code>data-thread*</code>、肩上折叠数）、<code>interaction/nodes.ts</code>（<code>toggleThreadOpen</code>）；由 <code>apps/web/scripts/check-dag-subagent.mjs</code> 实跑</td>
 </tr>
 <tr>
 <td>第十二节 名字上线</td>
@@ -1294,7 +1294,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#图在哪中央的一个视角">图在哪：中央的一个视角</a>

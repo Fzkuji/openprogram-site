@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788554751" data-alt-lang-url="/docs/reference/design/runtime/self-update.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Source checkout upgrades · OpenProgram Docs</title>
-<meta name="description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
+<title>OpenProgram 对话内自主更新 · OpenProgram Docs</title>
+
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Source checkout upgrades"}]}</script>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"OpenProgram 对话内自主更新"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<meta property="og:title" content="Source checkout upgrades · OpenProgram Docs">
-<meta property="og:description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
+<meta property="og:title" content="OpenProgram 对话内自主更新 · OpenProgram Docs">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +21,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Source checkout upgrades · OpenProgram Docs">
-<meta name="twitter:description" content="Scope: this document defines the gated Git update path for development/source checkouts. The current design for Desktop and managed CLI/server releases is">
+<meta name="twitter:title" content="OpenProgram 对话内自主更新 · OpenProgram Docs">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -322,15 +320,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink active" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -389,126 +387,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Source checkout 升级">Source checkout upgrades</span></nav><h1 id="source-checkout-upgrades">Source checkout upgrades<a class="header-anchor" href="#source-checkout-upgrades">#</a></h1>
-<blockquote>
-<p>Scope: this document defines the gated Git update path for development/source
-checkouts. The current design for Desktop and managed CLI/server releases is
-<a href="/docs/reference/design/distribution/automatic-updates.html">Automatic updates</a>. Installation and
-packaging remain defined by
-<a href="/docs/reference/design/distribution/installation-packaging.html">Installation, packaging, release, and upgrade</a>.</p>
-</blockquote>
-<h2 id="product-boundary">Product boundary<a class="header-anchor" href="#product-boundary">#</a></h2>
-<p><code>openprogram upgrade</code> first detects the installation type and then selects one
-of two separate implementations:</p>
-<table>
-<thead>
-<tr>
-<th>Installation</th>
-<th>Meaning of <code>stable</code></th>
-<th>Upgrade path</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Managed release</td>
-<td>Latest non-draft, non-prerelease GitHub Release</td>
-<td>Verify the complete platform runtime and atomically change <code>current</code>; do not restart a running worker</td>
-</tr>
-<tr>
-<td>Source checkout</td>
-<td><code>origin/main</code></td>
-<td>Run the gated Git pipeline below and restart only after the candidate passes its cold-start probe</td>
-</tr>
-</tbody>
-</table>
-<p>An unknown installation is rejected. A source checkout never presents a commit
-on <code>main</code> as a published product release, and a managed installation never
-falls back to Git, PyPI, a wheel, or an npm package.</p>
-<h2 id="problem">Problem<a class="header-anchor" href="#problem">#</a></h2>
-<p>A source checkout is commonly installed as an editable Python project. Changes
-to that checkout therefore become the next worker's code at restart. An
-unverified <code>git pull</code> followed by <code>openprogram restart</code> can replace a working
-worker with code that does not import, build, or start.</p>
-<p>Development should happen in a separate worktree. The serving checkout stays
-unchanged until the candidate has passed its normal tests and review. The
-upgrade command then provides a second, runtime-specific gate before restart.</p>
-<h2 id="implemented-source-checkout-flow">Implemented source-checkout flow<a class="header-anchor" href="#implemented-source-checkout-flow">#</a></h2>
-<p><code>openprogram upgrade</code> executes these steps in order:</p>
-<ol>
-<li><strong>Preflight</strong> refuses a dirty checkout, resolves the configured ref, and
-requires confirmation before a downgrade.</li>
-<li><strong>Checkout</strong> fetches and fast-forwards to the target commit.</li>
-<li><strong>Dependencies</strong> runs the editable Python install or <code>npm ci</code> only when the
-corresponding dependency files changed.</li>
-<li><strong>Build</strong> rebuilds the Web export when Web sources changed.</li>
-<li><strong>Probe</strong> starts the candidate under an isolated temporary profile, waits for
-<code>/healthz</code>, and runs the applicable doctor checks.</li>
-<li><strong>Restart</strong> restarts the real worker unless <code>--no-restart</code> was requested.</li>
-<li><strong>Verify</strong> polls <code>/healthz</code> and requires the new Git SHA.</li>
-</ol>
-<p>Everything before restart leaves the running worker unchanged. A verify failure
-returns <code>verify-failed</code>; in normal text output it also prints the exact manual
-checkout/restart recovery command. Automatic rollback and chat-sentinel
-reporting are not implemented.</p>
-<h2 id="commands-and-channels">Commands and channels<a class="header-anchor" href="#commands-and-channels">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status
-openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
-openprogram<span class="w"> </span>upgrade
-</code></pre>
-<p>For source checkouts, the built-in <code>stable</code> channel intentionally resolves to
-<code>origin/main</code>; this is a development-channel name within the source path only.
-Managed releases interpret <code>stable</code> as the latest published GitHub Release.
-<code>--channel</code> persists a source checkout's selected ref, while managed releases
-accept only <code>stable</code>.</p>
-<p><code>openprogram update</code> remains a compatibility alias for <code>openprogram upgrade</code>.
-The complete command, flag, failure, and manual recovery reference is
-<a href="/docs/server/upgrading.html">Server upgrading</a>.</p>
-<h2 id="failure-semantics">Failure semantics<a class="header-anchor" href="#failure-semantics">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Failure</th>
-<th>Outcome</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dirty checkout or unresolved ref</td>
-<td>Stop before checkout</td>
-</tr>
-<tr>
-<td>Dependency, build, doctor, or cold-start probe failure</td>
-<td>Stop before restart; the existing worker continues</td>
-</tr>
-<tr>
-<td>Restart failure</td>
-<td>Return a structured non-zero result</td>
-</tr>
-<tr>
-<td>Restarted service reports the wrong SHA</td>
-<td>Return <code>verify-failed</code>; normal text output also prints the previous-SHA recovery command</td>
-</tr>
-</tbody>
-</table>
-<p>Progress is recorded in <code>~/.openprogram/upgrade-state.json</code>. Without an
-explicit <code>--channel</code>, <code>--dry-run</code> does not change the checkout, worker, or
-upgrade state. Supplying <code>--channel</code> still persists that source-channel choice.
-<code>--json</code> emits one machine-readable JSON document on every exit path.</p>
-<h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<p>The source checkout gate, status/dry-run modes, persisted channel, isolated
-probe, restart, SHA verification, structured failures, and manual recovery
-instruction are implemented in <code>apps/cli/python/openprogram_cli/_impl/commands/upgrade.py</code>. Automatic
-rollback remains explicitly out of scope for the current implementation.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Agentic Workflow — 设计总览</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/tool-toggle-management.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tool toggles and toolset management</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#product-boundary">Product boundary</a>
-<a class="" href="#problem">Problem</a>
-<a class="" href="#implemented-source-checkout-flow">Implemented source-checkout flow</a>
-<a class="" href="#commands-and-channels">Commands and channels</a>
-<a class="" href="#failure-semantics">Failure semantics</a>
-<a class="" href="#implementation-status">Implementation status</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">OpenProgram 对话内自主更新</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/self-update.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programming-workflow-ui.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Programs</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/ssrf-protection.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Runtime outbound URL and SSRF protection</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

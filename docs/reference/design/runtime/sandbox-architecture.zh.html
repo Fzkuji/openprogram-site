@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788554751" data-alt-lang-url="/docs/reference/design/runtime/self-update.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/design/runtime/sandbox-architecture.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Source checkout 升级 · OpenProgram Docs</title>
-<meta name="description" content="范围：本文定义开发/source checkout 的 Git 门禁更新路径。Desktop 与 managed CLI/server release 的当前设计见 正式版本自动更新 ， 安装和打包合同仍由 安装、打包、发布与升级 定义。 产品边界 # openprogram upgrade">
-<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/self-update.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Source checkout 升级"}]}</script>
+<title>执行权限与沙箱 · OpenProgram Docs</title>
+
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html">
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"执行权限与沙箱"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
-<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-update.zh.html">
-<meta property="og:title" content="Source checkout 升级 · OpenProgram Docs">
-<meta property="og:description" content="范围：本文定义开发/source checkout 的 Git 门禁更新路径。Desktop 与 managed CLI/server release 的当前设计见 正式版本自动更新 ， 安装和打包合同仍由 安装、打包、发布与升级 定义。 产品边界 # openprogram upgrade">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html">
+<meta property="og:title" content="执行权限与沙箱 · OpenProgram Docs">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Source checkout 升级 · OpenProgram Docs">
-<meta name="twitter:description" content="范围：本文定义开发/source checkout 的 Git 门禁更新路径。Desktop 与 managed CLI/server release 的当前设计见 正式版本自动更新 ， 安装和打包合同仍由 安装、打包、发布与升级 定义。 产品边界 # openprogram upgrade">
+<meta name="twitter:title" content="执行权限与沙箱 · OpenProgram Docs">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -322,15 +322,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink active" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink active" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -389,116 +389,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Source checkout 升级">Source checkout upgrades</span></nav><h1 id="source-checkout-升级">Source checkout 升级<a class="header-anchor" href="#source-checkout-升级">#</a></h1>
-<blockquote>
-<p>范围：本文定义开发/source checkout 的 Git 门禁更新路径。Desktop 与 managed
-CLI/server release 的当前设计见<a href="/docs/reference/design/distribution/automatic-updates.html">正式版本自动更新</a>，
-安装和打包合同仍由<a href="/docs/reference/design/distribution/installation-packaging.html">安装、打包、发布与升级</a>
-定义。</p>
-</blockquote>
-<h2 id="产品边界">产品边界<a class="header-anchor" href="#产品边界">#</a></h2>
-<p><code>openprogram upgrade</code> 先检测安装类型，再选择两个相互独立的实现之一：</p>
-<table>
-<thead>
-<tr>
-<th>安装类型</th>
-<th><code>stable</code> 的含义</th>
-<th>升级路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Managed release</td>
-<td>最新 non-draft、non-prerelease GitHub Release</td>
-<td>验证完整平台 runtime 后原子切换 <code>current</code>；不重启运行中的 worker</td>
-</tr>
-<tr>
-<td>Source checkout</td>
-<td><code>origin/main</code></td>
-<td>执行下述 Git 门禁流程；候选 cold-start probe 通过后才重启</td>
-</tr>
-</tbody>
-</table>
-<p>未知安装类型会被拒绝。source checkout 不把 <code>main</code> commit 描述成已发布产品版本；
-managed installation 不回退到 Git、PyPI、wheel 或 npm package。</p>
-<h2 id="问题">问题<a class="header-anchor" href="#问题">#</a></h2>
-<p>source checkout 通常以 editable Python project 安装，因此该 checkout 的改动会在
-下次 worker 重启时成为运行代码。未经验证的 <code>git pull</code> 再执行
-<code>openprogram restart</code>，可能用无法 import、build 或启动的代码替换可用 worker。</p>
-<p>开发应在独立 worktree 中进行。服务 checkout 在候选完成常规测试和复核前保持不变；
-upgrade 命令在重启前再执行一次面向 runtime 的门禁。</p>
-<h2 id="已实现的-source-checkout-流程">已实现的 source-checkout 流程<a class="header-anchor" href="#已实现的-source-checkout-流程">#</a></h2>
-<p><code>openprogram upgrade</code> 依次执行：</p>
-<ol>
-<li><strong>Preflight</strong>：拒绝 dirty checkout，解析配置的 ref，降级前要求确认。</li>
-<li><strong>Checkout</strong>：fetch 并 fast-forward 到目标 commit。</li>
-<li><strong>Dependencies</strong>：只有相关依赖文件变化时才执行 editable Python install 或
-<code>npm ci</code>。</li>
-<li><strong>Build</strong>：Web source 变化时重新构建 Web export。</li>
-<li><strong>Probe</strong>：在隔离的临时 profile 下启动候选，等待 <code>/healthz</code>，并运行适用的
-doctor checks。</li>
-<li><strong>Restart</strong>：除非传入 <code>--no-restart</code>，否则重启真实 worker。</li>
-<li><strong>Verify</strong>：轮询 <code>/healthz</code>，要求其报告新的 Git SHA。</li>
-</ol>
-<p>restart 之前的失败不改变运行中的 worker。verify 失败返回 <code>verify-failed</code>；普通文本
-输出还会打印精确的手动 checkout/restart 恢复命令。自动回滚与 chat sentinel
-报告尚未实现。</p>
-<h2 id="命令与-channel">命令与 channel<a class="header-anchor" href="#命令与-channel">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>status
-openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
-openprogram<span class="w"> </span>upgrade
-</code></pre>
-<p>对于 source checkout，内置 <code>stable</code> 明确解析为 <code>origin/main</code>；该名称只在 source
-路径中表示开发 channel。managed release 中的 <code>stable</code> 表示最新已发布 GitHub
-Release。<code>--channel</code> 持久化 source checkout 选择的 ref；managed release 只接受
-<code>stable</code>。</p>
-<p><code>openprogram update</code> 保留为 <code>openprogram upgrade</code> 的兼容别名。完整的命令、参数、
-失败原因和手动恢复说明见<a href="/docs/server/upgrading.zh.html">服务器升级</a>。</p>
-<h2 id="失败语义">失败语义<a class="header-anchor" href="#失败语义">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>失败</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>dirty checkout 或 ref 无法解析</td>
-<td>checkout 前停止</td>
-</tr>
-<tr>
-<td>dependency、build、doctor 或 cold-start probe 失败</td>
-<td>restart 前停止；现有 worker 继续运行</td>
-</tr>
-<tr>
-<td>restart 失败</td>
-<td>返回结构化非零结果</td>
-</tr>
-<tr>
-<td>重启后的服务报告错误 SHA</td>
-<td>返回 <code>verify-failed</code>；普通文本输出还会打印 previous-SHA 恢复命令</td>
-</tr>
-</tbody>
-</table>
-<p>进度记录在 <code>~/.openprogram/upgrade-state.json</code>。未显式传入 <code>--channel</code> 时，
-<code>--dry-run</code> 不修改 checkout、worker 或 upgrade state；同时传入 <code>--channel</code> 仍会
-持久化该 source-channel 选择。<code>--json</code> 在所有退出路径只输出一个可解析 JSON
-document。</p>
-<h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
-<p>source checkout gate、status/dry-run、持久化 channel、隔离 probe、restart、SHA
-验证、结构化失败和手动恢复指令均已在 <code>apps/cli/python/openprogram_cli/_impl/commands/upgrade.py</code> 中实现。
-自动回滚仍明确不属于当前实现范围。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Agentic Workflow — 设计总览</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/tool-toggle-management.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Tool toggles and toolset management</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#产品边界">产品边界</a>
-<a class="" href="#问题">问题</a>
-<a class="" href="#已实现的-source-checkout-流程">已实现的 source-checkout 流程</a>
-<a class="" href="#命令与-channel">命令与 channel</a>
-<a class="" href="#失败语义">失败语义</a>
-<a class="" href="#实现状态">实现状态</a>
-</div></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时">Runtime</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="执行权限与沙箱">Execution authority and sandbox</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/sandbox-architecture.zh.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Workflow 发现、创建与自动执行设计</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/permission-model.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Execution authority, permission, and sandbox</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788554751" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -322,15 +322,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -480,7 +480,7 @@ the user drives directly.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Wheel triage</strong> (<code>canvas.ts</code>): ctrl/⌘ + wheel zooms — browsers deliver a
+<p><strong>Wheel triage</strong> (<code>interaction/canvas.ts</code>): ctrl/⌘ + wheel zooms — browsers deliver a
 trackpad pinch as a wheel event with <code>ctrlKey</code> set, and ⌘+wheel is the
 explicit zoom chord — at a rate tuned for a pinch's small continuous deltas.
 A mouse wheel zooms at wheel rate — a mouse has no pinch. macOS scroll
@@ -513,7 +513,7 @@ it sits and however tall it grows, rendered only while the DAG perspective is
 showing. The zoom cluster is one pill holding − · readout · +: the buttons
 step by exactly one wheel notch (<code>ZOOM_STEP</code>), and clicking the readout
 resets to 100% — both anchored on the pane's centre, since a button has no
-cursor to anchor on. The readout is written imperatively by <code>canvas.ts</code> on
+cursor to anchor on. The readout is written imperatively by <code>interaction/canvas.ts</code> on
 every view change, because routing a gesture's every wheel event through
 React state would repaint the tree sixty times a second.</p>
 <p>The HUD draws no chrome of its own. The chips are listed in the composer's
@@ -533,7 +533,7 @@ cluster's segments, the legend's upward anchoring and rows).</p>
 <tbody>
 <tr>
 <td>Pan / zoom / fit</td>
-<td><code>apps/web/lib/runtime-bridge/dag/canvas.ts</code> (<code>zoomStep</code> / <code>resetZoom</code> for the HUD buttons)</td>
+<td><code>apps/web/lib/runtime-bridge/dag/interaction/canvas.ts</code> (<code>zoomStep</code> / <code>resetZoom</code> for the HUD buttons)</td>
 </tr>
 <tr>
 <td>View state</td>
@@ -567,7 +567,7 @@ order does the rest — the graph sits under the composer's <code>z-index: 5</co
 <code>#chatView</code> instead would drag the input box up the pane.</p>
 <p>The canvas runs edge to edge under the composer — panning past it is one
 gesture, and the fit centres the graph in the strip above it
-(<code>canvas.ts::fitCanvas</code>), so nothing needs a reserved padding band.</p>
+(<code>interaction/canvas.ts::fitCanvas</code>), so nothing needs a reserved padding band.</p>
 <h3 id="branch-switching-lives-in-the-graph">Branch switching lives in the graph<a class="header-anchor" href="#branch-switching-lives-in-the-graph">#</a></h3>
 <p>There is no branch strip above the canvas. Each branch's name is a button drawn
 in the graph itself, anchored below the branch's last conversation-layer node
@@ -987,7 +987,7 @@ historical multi-generation delegation chains remain drawable.</p>
 <h2 id="7-render-pipeline-code-map">7. Render pipeline (code map)<a class="header-anchor" href="#7-render-pipeline-code-map">#</a></h2>
 <pre><code>apps/web/lib/runtime-bridge/dag/
   pipeline.ts        orchestration: passes → layout → edges → nodes → badges → canvas
-  canvas.ts          the infinite canvas: pan / zoom / fit, and the dot lattice
+  interaction/canvas.ts  the infinite canvas: pan / zoom / fit, and the dot lattice
                      that makes the grid visible
   passes/            data transforms, applied in order:
     merge-runs.ts               merge consecutive runs of the same node
@@ -1238,7 +1238,7 @@ short hover delay, gone when the cursor leaves.</p>
 Nothing else — no window competes with the expansion. The right rail's
 Details view still fills quietly for whenever the user opens it.</p>
 <p><strong>Right-click → the SAME card expands in place.</strong> Not a second window: the
-one card element deepens where it stands (<code>tooltip.ts expandTooltip</code>) — every
+one card element deepens where it stands (<code>interaction/tooltip.ts expandTooltip</code>) — every
 field, longer previews, coverage state, context standing, id — and the verbs
 join at its bottom: checkout to this branch · fork from this node · fork and
 edit this message (user turns only) · copy node id · view raw JSON. One row
@@ -1354,7 +1354,7 @@ chain's, not the node's own flag.</p>
 <tbody>
 <tr>
 <td>Infinite canvas (pan / zoom / fit / dot lattice)</td>
-<td><code>dag/canvas.ts</code> + <code>.history-body</code> in <code>styles/dag/canvas.css</code>; view state in <code>dag/store/globals.ts</code>; HUD in <code>components/chat/dag-view.tsx</code></td>
+<td><code>dag/interaction/canvas.ts</code> + <code>.history-body</code> in <code>styles/dag/canvas.css</code>; view state in <code>dag/store/globals.ts</code>; HUD in <code>components/chat/dag-view.tsx</code></td>
 </tr>
 <tr>
 <td>§1 lane / tier / depth layout</td>
@@ -1366,7 +1366,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§4 HEAD breathing glow</td>
-<td><code>render/nodes.ts</code> stamps <code>data-head</code> + the branch colour as <code>color</code>; <code>dag-head-glow</code> keyframes in <code>styles/dag/nodes.css</code> (reduced-motion → steady glow); every glyph stays hollow (<code>shapes.ts</code>); HEAD pointing at a merged reply re-seats on its anchor (<code>pipeline.ts</code> via <code>threadModel.anchorOf</code>)</td>
+<td><code>render/nodes.ts</code> stamps <code>data-head</code> + the branch colour as <code>color</code>; <code>dag-head-glow</code> keyframes in <code>styles/dag/nodes.css</code> (reduced-motion → steady glow); every glyph stays hollow (<code>render/shapes.ts</code>); HEAD pointing at a merged reply re-seats on its anchor (<code>pipeline.ts</code> via <code>threadModel.anchorOf</code>)</td>
 </tr>
 <tr>
 <td>§0/§12 call-thread aggregation</td>
@@ -1374,7 +1374,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>Rule ② corollary (no placeholder box)</td>
-<td><code>shapes.ts</code>: no <code>square_outline</code>; task renders as a plain square</td>
+<td><code>render/shapes.ts</code>: no <code>square_outline</code>; task renders as a plain square</td>
 </tr>
 <tr>
 <td>§4 status on the stroke</td>
@@ -1386,7 +1386,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>Scene 8 merge shape and lines</td>
-<td><code>shapes.ts</code> <code>merge_dot</code> (◉); <code>edges.ts</code> merge-in line peer-colored 2.4px solid</td>
+<td><code>render/shapes.ts</code> <code>merge_dot</code> (◉); <code>edges.ts</code> merge-in line peer-colored 2.4px solid</td>
 </tr>
 <tr>
 <td>Scenes 8/10 attach pointer</td>
@@ -1422,7 +1422,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§9 capsule shape</td>
-<td><code>shapes.ts</code> <code>capsule</code> (keyed on <code>covers_ids</code>, tagged <code>data-shape</code> so <code>_applyShapeSize</code> leaves its geometry alone)</td>
+<td><code>render/shapes.ts</code> <code>capsule</code> (keyed on <code>covers_ids</code>, tagged <code>data-shape</code> so <code>_applyShapeSize</code> leaves its geometry alone)</td>
 </tr>
 <tr>
 <td>§9 fold + pleats + ghosts</td>
@@ -1434,7 +1434,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§11 one card, two states / fork &amp; edit</td>
-<td><code>dag/tooltip.ts</code>: <code>renderNodeInfo</code> feeds both states, <code>expandTooltip</code> deepens the card in place; <code>render/inspector.ts</code> builds only the verb list (+ raw JSON layer), wired in <code>render/interaction.ts</code>; the actions go through <code>POST /api/chat/checkout</code></td>
+<td><code>dag/interaction/tooltip.ts</code>: <code>renderNodeInfo</code> feeds both states, <code>expandTooltip</code> deepens the card in place; <code>render/inspector.ts</code> builds only the verb list (+ raw JSON layer), wired in <code>interaction/nodes.ts</code>; the actions go through <code>POST /api/chat/checkout</code></td>
 </tr>
 <tr>
 <td>§11 legend</td>
@@ -1442,7 +1442,7 @@ chain's, not the node's own flag.</p>
 </tr>
 <tr>
 <td>§12 call thread + agent spawn</td>
-<td><code>shapes.ts</code> (spawn → square), <code>passes/thread.ts</code> (model), <code>layout/geometry.ts</code> (recursive placement), <code>render/edges.ts</code> (dotted thread line, centre-to-centre chain edges, scene-3 bridge), <code>render/nodes.ts</code> (<code>data-thread*</code>, shoulder count), <code>render/interaction.ts</code> (<code>toggleThreadOpen</code>); executed by <code>apps/web/scripts/check-dag-subagent.mjs</code></td>
+<td><code>render/shapes.ts</code> (spawn → square), <code>passes/thread.ts</code> (model), <code>layout/geometry.ts</code> (recursive placement), <code>render/edges.ts</code> (dotted thread line, centre-to-centre chain edges, scene-3 bridge), <code>render/nodes.ts</code> (<code>data-thread*</code>, shoulder count), <code>interaction/nodes.ts</code> (<code>toggleThreadOpen</code>); executed by <code>apps/web/scripts/check-dag-subagent.mjs</code></td>
 </tr>
 <tr>
 <td>§12 the name on the wire</td>
@@ -1450,7 +1450,7 @@ chain's, not the node's own flag.</p>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/branch-collaboration.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Branch Collaboration (Communication · Service · Merge)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/dag-live.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">DAG 实时布局（真算法）</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#where-the-graph-lives-a-center-perspective">Where the graph lives: a center perspective</a>

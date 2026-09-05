@@ -39,6 +39,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/lsp.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/permissions.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/permissions.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/plugins.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/plugins.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/security-review.html</loc></url>
@@ -135,6 +137,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/restart.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/scheduler-worker.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/secrets.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/self-update.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/sessions.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/setup.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/skills.html</loc></url>
@@ -398,6 +401,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/permission-model.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/programs-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html</loc></url>
@@ -405,7 +409,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/comparison.html</loc></url>

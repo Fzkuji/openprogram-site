@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788554751" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -322,15 +322,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -690,12 +690,15 @@ dangling head would make the branch walk unreachable and render an empty
 session.</li>
 <li><strong>get_branch(session_id, head_id)</strong>: walks the predecessor chain from head to
 its terminus and returns the linear history of that branch.</li>
-<li><strong>list_branches(session_id)</strong>: enumerates branch tips (conversation nodes
-with no conversation child). The &quot;main&quot; tip is found by walking from the
-earliest conversation root down the primary-child path — matching the lane-0
-trunk the user visually identifies as main. Spawn roots never appear among
-predecessor children (their predecessor is None), so no special-casing is
-needed. Branch names live in the session meta under <code>branches: {head_id: name}</code>.</li>
+<li><strong>list_branches(session_id)</strong>: enumerates leaves in the conversation
+predecessor graph. Conversation nodes include user and LLM turns plus
+top-level Program actions whose caller is empty or <code>ROOT</code>. A node with any
+such successor is an ancestor, not another branch tip. Internal execution
+children, runtime/attach rows, and context rows do not continue the
+conversation and therefore do not remove their owner's tip. Parallel
+top-level Programs sharing one predecessor remain separate leaves. There is
+no special main-tip fallback: merged and non-conversation nodes stay excluded.
+Branch names live in session meta under <code>branches: {head_id: name}</code>.</li>
 </ul>
 <h2 id="6-context-rendering">6. Context Rendering<a class="header-anchor" href="#6-context-rendering">#</a></h2>
 <p>All context is retrieved from the graph through <code>render_context</code>. A single
@@ -871,7 +874,7 @@ spawn_branch, list_branches</li>
 <li><a href="/docs/reference/design/runtime/dag/rendering.html"><code>rendering.md</code></a> — visual rendering spec (authoritative
 for drawing)</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">DAG 持久化失败可观察性</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/external-program-run-node.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">外部 Program 运行节点 · DAG 与聊天窗口设计</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">DAG 持久化失败可观察性</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/dag/external-program-run-node.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">外部 Program 运行节点 · DAG 与聊天窗口设计</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-overview-and-motivation">1. Overview and Motivation</a>

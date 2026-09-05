@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788554751" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -322,15 +322,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
+<a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="Source checkout 升级" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Source checkout upgrades</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html">Workflow Control Primitives — 控制流原语设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html">Workflow 发现、创建与自动执行设计</a>
-<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html">OpenProgram 执行权限与沙箱设计</a>
+<a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="执行权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Execution authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
@@ -433,7 +433,7 @@ disabled / title 也随当前形态变。</li>
 本设计让它退役，改成一种 mode。</p>
 <p>函数调用有两种前端输入形式。选择一个已注册函数会打开 <code>FunctionForm</code>；在 idle
 composer 中输入完整且精确的表达式，例如
-<code>gui_agent(task=&quot;Verify the title&quot;, surface=&quot;browser&quot;, max_steps=3)</code>，则不打开表单，
+<code>gui_agent(task=&quot;查看当前内置浏览器页面标题，但不要修改页面&quot;)</code>，则不打开表单，
 直接调用同一个函数。只有去除首尾空白后的全部输入恰好是一个已注册的
 <code>name(parameter=literal, ...)</code> 调用时，才识别为函数表达式。两种输入都会经过同一套
 参数归一化和 schema 校验，再交给同一个 <code>FunctionInvocation</code> dispatcher。包含
@@ -564,7 +564,7 @@ approval）→ FIFO 排队，一次一个。答完前一个，自动呈现下一
 若此刻是用户主动 mode（fn-form），清掉它再显示队首。实现简单，无栈、无快照。</p>
 <h2 id="后端审批合流到-questionregistry">后端：审批合流到 QuestionRegistry<a class="header-anchor" href="#后端审批合流到-questionregistry">#</a></h2>
 <p>为了让&quot;审批&quot;也走同一条事件路径 → 落到同一个 composer 承接点，后端把
-<code>_approval.py</code> 合流到 <code>QuestionRegistry</code>（user-input-requests.md 点 6）：</p>
+<code>permissions/approval.py</code> 合流到 <code>QuestionRegistry</code>（user-input-requests.md 点 6）：</p>
 <ul>
 <li><code>await_user_approval</code> 不再用独立的 <code>ApprovalRegistry</code> + 自定义
 <code>approval_request</code> 信封，而是注册一个 <code>kind=&quot;approval&quot;</code> 的 PendingQuestion
@@ -581,7 +581,7 @@ approval）→ FIFO 排队，一次一个。答完前一个，自动呈现下一
 <h2 id="退役已完成">退役（已完成）<a class="header-anchor" href="#退役已完成">#</a></h2>
 <ul>
 <li><code>apps/web/components/ui/question-prompt.tsx</code> 浮窗 + app-shell 挂载 → 已删。</li>
-<li><code>_approval.py</code> 的 <code>ApprovalRegistry</code> / <code>approval_request</code> 信封 → 已删；
+<li><code>permissions/approval.py</code> 的 <code>ApprovalRegistry</code> / <code>approval_request</code> 信封 → 已删；
 <code>approval_registry()</code> 返回统一 QuestionRegistry。</li>
 </ul>
 <h2 id="落地顺序每步独立验证全部完成">落地顺序（每步独立验证，全部完成）<a class="header-anchor" href="#落地顺序每步独立验证全部完成">#</a></h2>
@@ -618,7 +618,7 @@ token 高亮（第一版从简）。</li>
 <li>事件层（统一事件流，这是它在前端的对齐落点）：
 <a href="/docs/reference/design/proactive/event-reference.html">../proactive/event-reference.html</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一句话">一句话</a>
