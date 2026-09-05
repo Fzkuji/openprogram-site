@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788607581" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788608396" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -517,7 +517,9 @@ points, verifies the runtime capability manifest, and completes a worker cold
 start in isolated state. Only then does it atomically replace the active
 PowerShell launcher. Releases stay in versioned directories, and the previous
 launcher is retained; a failed installation never changes the active launcher.
-No installer step edits ACLs.</p>
+No installer step edits ACLs. PowerShell build helpers restore the caller's
+workspace, toolchain, Python download, and browser-cache environment settings
+when their scoped build steps finish, including failure paths.</p>
 <p>Managed upgrades select the Windows ZIP and tagged PowerShell installer
 through the compatibility seam. <code>doctor</code> reports long-path registry state and
 Defender real-time scanning/exclusion state as non-blocking advice. These
