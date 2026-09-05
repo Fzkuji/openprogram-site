@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609517" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609623" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -532,7 +532,13 @@ matches the desktop package. Failed publication restores the previous payload;
 if restoration also fails, its backup is retained with an explicit recovery path.
 Cleanup failure preserves the published runtime and reports both the retained
 staging path and the underlying error; the publication lock is still released.
-This prepares packaging inputs only and does not replace the installed App.</p>
+This prepares packaging inputs only and does not replace the installed App.
+The shared <code>verify-release-version.py --installed-app</code> preflight accepts the
+Windows installation directory or its <code>OpenProgram.exe</code>. It reads PE product
+version metadata without launching the shell, then requires agreement with the
+runtime manifest and package metadata from the embedded isolated Python.
+Windows' zero fourth version component is normalized; nonzero revisions are
+not silently discarded. This read-only gate does not itself implement refresh.</p>
 <p>The tag workflow builds Windows x86_64 and arm64 Electron applications and
 assisted, per-user NSIS installers. It stages the exact complete W2 runtime through the
 formal PowerShell release installer before packaging, then smoke-tests the
