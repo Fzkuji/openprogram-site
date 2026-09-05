@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788631639" data-alt-lang-url="/docs/capabilities/permissions.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788650969" data-alt-lang-url="/docs/capabilities/permissions.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -171,7 +171,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>已有会话的选择会发送到后端，获得确认后才显示为有效模式。新模式从下一次工具审批检查开始生效，并出现在后续模型请求的运行时说明中。已经获得执行授权的调用保留该次授权。切换到计划模式会阻止尚未获准的写入。</p>
 <p>普通审批如果不再需要，会通过 execution 的持久化等待自动处理并恢复任务。显式 ask、强制审批、用户问题、表单及 Sandbox 升级不会因为切换模式而自动回答。重复回答、取消、超时和恢复不得重复执行已完成调用。</p>
 <p>修改只影响当前会话。其他窗口接收已确认的模式，旧版本修改会被拒绝，不能覆盖新选择。断线或失败的修改保持未确认；重新连接后检查当前模式再重试。尚未发送的草稿将选择保存在本地，并在首条消息中传入。</p>
-<p>有效默认值按会话 override、项目默认、逐次确认的顺序解析。后台任务和外部渠道保留各自身份及非交互限制；本地会话切到 Bypass 不会赋予它们 owner 权限。</p>
+<p>有效默认值按会话 override、项目默认、逐次确认的顺序解析。经过身份验证的 owner Agent 创建子 Agent 时，子 Agent 继承父 Agent 当时有效的权限模式和显式规则。例如，使用 Bypass 的父 Agent 创建的子 Agent 可以执行无需普通审批的命令。子 Agent 保留自己的身份和非交互限制；显式 ask 规则和强制审批仍会阻止需要审批者的操作。后续模式变化不会改写已经接纳的子 Agent。独立定时任务和外部渠道不会从本地会话获得 owner 权限或 Bypass。</p>
 <h2 id="理解工具拒绝">理解工具拒绝<a class="header-anchor" href="#理解工具拒绝">#</a></h2>
 <p>Windows 路径规则可使用正斜杠避免转义歧义，例如
 <code>read(C:/Users/me/project/**)</code>。盘符路径中的普通反斜杠会保留；规则语法仍用

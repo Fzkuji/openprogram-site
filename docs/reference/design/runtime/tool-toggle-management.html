@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788631639" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788650969" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -578,7 +578,7 @@ is what made the resident cost grow with the tool count.</p>
 <li><strong>Resident</strong> — full JSON Schema in the provider's tools array, every turn.</li>
 <li><strong>Deferred</strong> — one bare <code>name</code> line in the system prompt's catalog. The
 model loads the schema on demand by calling <code>tool_search</code>, after which it
-is resident from the next turn to the end of the session.</li>
+is included in the next provider request in the current turn.</li>
 </ul>
 <p>The catalog carries names only, not descriptions. A name is enough for the
 model to recognise a candidate and ask for it, and it keeps the whole
@@ -649,43 +649,27 @@ else, so deferring it would be a deadlock. This is asserted twice: the
 <code>RESIDENT_TOOLS</code> union and an explicit guard in <code>apply_default_deferral</code>.</p>
 <p>Effect: the default resident array drops from ~7.9k to ~4.7k tokens per turn,
 a ~41% cut, with no tool becoming unavailable.</p>
-<h3 id="74-the-tools-array-has-turn-granularity">7.4 The tools array has turn granularity<a class="header-anchor" href="#74-the-tools-array-has-turn-granularity">#</a></h3>
-<p>The tools array is the <strong>root of the cached prefix</strong> for both Anthropic and
-OpenAI — the cache breakpoint sits on the last tool entry, so everything
-after the array (system prompt, memory, the entire history) is cached behind
-it. Change the array and every one of those tokens is re-read at full price.</p>
-<p>Therefore the array is <strong>frozen at the turn boundary</strong>. <code>freeze_turn_tools</code>
-runs once per turn in the agent loop's outer loop and pins the set of
-deferred tools eligible for the array; <code>split_tools_for_dispatch</code> reads that
-frozen set instead of the live loaded set. A <code>tool_search</code> call in the middle
-of a turn adds to the loaded set but cannot grow the array — the array, and
-the prefix rooted on it, stay byte-identical for every provider call of that
-turn. The next <code>freeze_turn_tools</code> promotes whatever accumulated.</p>
-<p>Without the freeze, one <code>tool_search</code> invalidated the prefix for the whole
-remainder of the turn — and a turn is exactly when tool loading happens, so
-the invalidation landed at the worst possible moment. Measured over two days
-of real traffic this accounted for 53% of input tokens missing the cache.</p>
-<p><strong>Availability does not wait for the array.</strong> Two paths make a tool loaded
-mid-turn callable in that same turn:</p>
-<ol>
-<li><code>tool_search</code> returns the loaded tools' <strong>full schemas</strong> in its result
-text, in the same <code>{&quot;name&quot;, &quot;description&quot;, &quot;parameters&quot;}</code> shape as an
-array entry, with an explicit note that they can be called immediately.
-The model constructs the call from that text.</li>
-<li>Dispatch resolves by name against the <strong>complete tool list</strong>, not the
-provider array (<code>agent_loop._execute_tool_calls</code>). A call for a tool that
-is loaded but not yet in the array executes normally.</li>
-</ol>
-<p>So the freeze changes when a tool is <em>advertised in the array</em>, never
-whether it can be <em>used</em>. The cost of the promotion — one prefix rewrite —
-is paid once per tool per session, at a turn boundary where a fresh user
-message has already changed the tail anyway.</p>
-<p>This is also why the defer list targets tools that are rarely used rather
-than tools that are merely large: a tool loaded in most sessions would trade
-a fixed saving for a recurring cache miss.</p>
-<p>Callers that build a provider array outside any turn (budget accounting,
-<code>breakdown</code>, tests) call <code>release_turn_tools()</code> to fall back to the live
-loaded set.</p>
+<h3 id="74-explicit-discovery-updates-the-next-request">7.4 Explicit discovery updates the next request<a class="header-anchor" href="#74-explicit-discovery-updates-the-next-request">#</a></h3>
+<p><code>freeze_turn_tools</code> captures initial deferred membership at each turn boundary.
+<code>tool_search</code> explicitly promotes allowed names into both the loaded set and
+that turn's shared membership set. The next provider request includes those
+tools' real schemas. Returning a schema as tool-result text alone is insufficient
+for providers that only permit tools present in the request array.</p>
+<p>The membership sets are mutated in place: tool workers inherit ContextVar
+values, and replacing a worker's value would not update the provider coroutine.
+Promotion uses the turn's resolved, permission-wrapped tools, not a new registry
+lookup for execution. Unrelated registry changes do not replace the immutable
+runtime contract. Without explicit discovery, the array remains stable; discovery
+may change the provider's cached prefix to make the requested tool available.</p>
+<p>Each durable safe point records <code>loaded_deferred_tools</code> in the checkpoint.
+Names must belong to the checkpoint's resolved tool contract. Continuation first
+validates the unchanged contract, then restores those names before its next
+provider request, without replaying completed searches. Older checkpoints without
+this optional field restore an empty set; no tool-result text is interpreted as
+authorization or loading state. Provider dispatch also records its current
+resident/deferred classification for the context inspector.</p>
+<p>Callers assembling tools outside a turn use <code>release_turn_tools()</code> to read the
+live loaded set.</p>
 <h3 id="75-the-catalog-is-an-assembler-component">7.5 The catalog is an assembler component<a class="header-anchor" href="#75-the-catalog-is-an-assembler-component">#</a></h3>
 <p>The catalog is not hand-appended by the dispatcher. It is a registered
 context component (<code>deferred_catalog</code>, L1 order 25, in <code>context/components.py</code>)
@@ -718,10 +702,12 @@ fresh session, nor in <code>RESIDENT_TOOLS</code></li>
 <li><code>tool_search</code> moves a deferred tool into the provider array and out of the
 catalog</li>
 <li><code>tool_search</code> is never deferred; <code>apply_default_deferral</code> is idempotent</li>
-<li>within a turn the provider array and the catalog are unchanged by
-<code>tool_search</code>; the loaded tool joins the array at the next turn boundary</li>
-<li><code>tool_search</code> returns the full parameter schema, and a tool loaded but not
-yet in the array still resolves for dispatch</li>
+<li>within a turn, explicit <code>tool_search</code> discovery adds the tool to the next
+provider array and removes it from the deferred catalog</li>
+<li><code>tool_search</code> returns the full parameter schema; execution still resolves
+against the original permission-wrapped tools</li>
+<li>checkpoint continuation restores recorded discoveries after validating
+the unchanged runtime contract</li>
 </ul>
 <hr />
 <h2 id="8-known-boundaries">8. Known boundaries<a class="header-anchor" href="#8-known-boundaries">#</a></h2>
@@ -799,7 +785,7 @@ yet in the array still resolves for dispatch</li>
 <a class="lvl-3" href="#71-the-two-states-of-an-available-tool">7.1 The two states of an available tool</a>
 <a class="lvl-3" href="#72-the-split">7.2 The split</a>
 <a class="lvl-3" href="#73-which-tools-are-deferred">7.3 Which tools are deferred</a>
-<a class="lvl-3" href="#74-the-tools-array-has-turn-granularity">7.4 The tools array has turn granularity</a>
+<a class="lvl-3" href="#74-explicit-discovery-updates-the-next-request">7.4 Explicit discovery updates the next request</a>
 <a class="lvl-3" href="#75-the-catalog-is-an-assembler-component">7.5 The catalog is an assembler component</a>
 <a class="lvl-3" href="#76-properties-that-should-hold">7.6 Properties that should hold</a>
 <a class="" href="#8-known-boundaries">8. Known boundaries</a>

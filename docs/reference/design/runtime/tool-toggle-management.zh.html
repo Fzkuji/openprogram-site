@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788631639" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788650969" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -579,7 +579,7 @@ dict-override 分支（<code>_model_tools.py:397-421</code>）除 <code>enabled/
 <ul>
 <li><strong>常驻（resident）</strong>——完整 JSON Schema 进 provider 的 tools 数组，每轮都带。</li>
 <li><strong>延迟（deferred）</strong>——在系统提示的目录里只占一行<strong>裸工具名</strong>。模型需要时调
-<code>tool_search</code> 加载 schema，此后从下一轮起到会话结束它都是常驻的。</li>
+<code>tool_search</code> 加载 schema，随后本轮的下一次 provider 请求就包含该工具。</li>
 </ul>
 <p>目录只发名字、不发描述。名字足够让模型认出候选并点名索取，同时无论 defer 多少个
 工具，整个目录都压在两百来 token。</p>
@@ -643,32 +643,20 @@ image 等冷门工具。它们本来就不在默认集，defer 不损失什么�
 <p><code>tool_search</code> 自身永不 defer——它是加载其它一切的唯一入口，defer 它会死锁。这一点有
 双重保险：<code>RESIDENT_TOOLS</code> 的并集，以及 <code>apply_default_deferral</code> 里的显式 guard。</p>
 <p>效果：默认常驻数组从每轮 ~7.9k 降到 ~4.7k token，约减 41%，且没有任何工具变得不可用。</p>
-<h3 id="74-工具数组以轮为粒度">7.4 工具数组以&quot;轮&quot;为粒度<a class="header-anchor" href="#74-工具数组以轮为粒度">#</a></h3>
-<p>工具数组是 Anthropic 和 OpenAI <strong>两家缓存前缀的根</strong>——缓存断点打在最后一个工具条目
-上，因此数组之后的一切（系统提示、记忆、整条历史）都缓存在它后面。数组一变，这些
-token 全部按原价重读。</p>
-<p>所以数组<strong>在轮边界定格</strong>。<code>freeze_turn_tools</code> 在 agent loop 外层循环每轮跑一次，钉住
-本轮有资格进数组的 defer 工具集合；<code>split_tools_for_dispatch</code> 读这个冻结集合，而不是
-实时的已加载集合。轮内途中的 <code>tool_search</code> 会写入已加载集合，但撑不大数组——数组以及
-扎根其上的前缀，在本轮每一次 provider 调用中都逐字节相同。下一次 <code>freeze_turn_tools</code>
-再把这期间攒下的工具一并放行。</p>
-<p>不冻结时，一次 <code>tool_search</code> 就让本轮剩余全部调用的前缀作废——而工具加载恰恰就发生在
-轮内，这个作废落在最糟的时点。按两天真实流量实测，53% 的输入 token 未命中缓存源于此。</p>
-<p><strong>可用性不等数组</strong>。两条路径保证轮内加载的工具当轮即可调用：</p>
-<ol>
-<li><code>tool_search</code> 在结果文本里直接返回<strong>完整 schema</strong>，形状与数组条目一致
-（<code>{&quot;name&quot;, &quot;description&quot;, &quot;parameters&quot;}</code>），并明确写明可以立即调用。模型据此文本
-构造调用。</li>
-<li>派发按名字在<strong>完整工具列表</strong>里解析，而不是在 provider 数组里
-（<code>agent_loop._execute_tool_calls</code>）。已加载但尚未进数组的工具，调用照常执行。</li>
-</ol>
-<p>所以冻结改变的只是工具<strong>何时在数组里被公示</strong>，从不影响它<strong>能否被使用</strong>。晋升的代价
-——一次前缀重写——每工具每会话只付一次，且落在轮边界上，那里本来就有新的用户消息改
-写了尾部。</p>
-<p>这也是 defer 名单挑&quot;少用&quot;而非单纯挑&quot;大&quot;的原因：一个多数会话都会用到的工具，defer 等
-于拿固定节省换反复的缓存未命中。</p>
-<p>在任何一轮之外构造 provider 数组的调用方（预算计量、<code>breakdown</code>、测试）用
-<code>release_turn_tools()</code> 退回到实时已加载集合。</p>
+<h3 id="74-显式发现更新下一次请求">7.4 显式发现更新下一次请求<a class="header-anchor" href="#74-显式发现更新下一次请求">#</a></h3>
+<p><code>freeze_turn_tools</code> 在轮开始时记录延迟工具的初始成员集合。<code>tool_search</code>
+将明确选择且允许的名称同时加入已加载集合和本轮共享集合。下一次 provider 请求
+携带这些工具的真实 schema。仅在工具结果文本中返回 schema，无法满足只允许调用
+请求 tools 数组中工具的 provider。</p>
+<p>集合必须原地修改：工具线程继承 ContextVar 的值，在工具线程替换整个值不会更新
+provider 协程。实际执行始终使用本轮已解析且带权限 wrapper 的工具；注册表的无关
+变化不会替换不可变 runtime contract。没有显式发现时数组保持稳定；发现新工具时
+允许改变缓存前缀，以确保该工具实际可用。</p>
+<p>每个持久化安全点将 <code>loaded_deferred_tools</code> 写入 checkpoint，名称必须属于其中的
+工具合同。恢复先验证合同没有变化，再恢复名称，不重放已经完成的搜索。
+旧 checkpoint 缺少该可选字段时恢复空集合，不从工具结果文本推断权限或加载状态。
+每次 provider 派发也记录当前常驻／延迟分类，供上下文检查器使用。</p>
+<p>在轮之外装配工具的调用方使用 <code>release_turn_tools()</code> 读取实时已加载集合。</p>
 <h3 id="75-目录是装配器组件">7.5 目录是装配器组件<a class="header-anchor" href="#75-目录是装配器组件">#</a></h3>
 <p>目录不由 dispatcher 手工拼接。它是注册的上下文组件（<code>deferred_catalog</code>，L1 order 25，
 在 <code>context/components.py</code>），由 <code>_build_deferred_catalog</code> 构建，所以引擎计入预算的
@@ -691,8 +679,9 @@ token 全部按原价重读。</p>
 <li>它们全都出现在目录里，以及装配后的系统提示里</li>
 <li><code>tool_search</code> 能把延迟工具移入 provider 数组、移出目录</li>
 <li><code>tool_search</code> 永不被 defer；<code>apply_default_deferral</code> 幂等</li>
-<li>轮内 <code>tool_search</code> 不改变 provider 数组和目录；加载的工具在下一个轮边界进数组</li>
-<li><code>tool_search</code> 返回完整参数 schema；已加载但未进数组的工具仍能被派发解析</li>
+<li>轮内显式 <code>tool_search</code> 将工具加入下一次 provider 数组，并从延迟目录移除</li>
+<li><code>tool_search</code> 返回完整参数 schema；执行仍使用原有带权限 wrapper 的工具</li>
+<li>checkpoint 恢复验证 runtime contract 未变，再恢复已记录的发现集合</li>
 </ul>
 <hr />
 <h2 id="8-已知边界">8. 已知边界<a class="header-anchor" href="#8-已知边界">#</a></h2>
@@ -781,7 +770,7 @@ tool_use↔tool_result 配对 → provider 400）。</li>
 <a class="lvl-3" href="#71-可用工具的两种形态">7.1 可用工具的两种形态</a>
 <a class="lvl-3" href="#72-切分逻辑">7.2 切分逻辑</a>
 <a class="lvl-3" href="#73-哪些工具被-defer">7.3 哪些工具被 defer</a>
-<a class="lvl-3" href="#74-工具数组以轮为粒度">7.4 工具数组以"轮"为粒度</a>
+<a class="lvl-3" href="#74-显式发现更新下一次请求">7.4 显式发现更新下一次请求</a>
 <a class="lvl-3" href="#75-目录是装配器组件">7.5 目录是装配器组件</a>
 <a class="lvl-3" href="#76-应当成立的性质">7.6 应当成立的性质</a>
 <a class="" href="#8-已知边界">8. 已知边界</a>
