@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609623" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788610072" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -331,6 +331,8 @@ App 原本打开时，激活与回退都使用该 ID 重新打开；原本关闭
 <p>激活前，OpenProgram 还在本用户的 <code>~/Library/LaunchAgents/</code> 中发布
 <code>ai.openprogram.self-update.recovery.UPDATE_ID.plist</code>。它在之后每次用户登录时运行一次，
 不依赖 App；没有常驻进程或周期重试，写入文件也不会立即启动另一个控制进程。
+新恢复任务使用 launchd 的 <code>Standard</code> 进程类型，运行环境完整性读取不再按可延后的后台工作调度。
+已保存的 <code>Background</code> 登录项保留原始绑定并继续受支持，恢复时不改写其调度策略。
 恢复不在用户登录或磁盘解锁之前执行。当前登录会话中 App 和控制进程都停止时，
 显式运行保存的脚本。已结束的更新在同一状态锁内验证保存的运行环境，并仅清理内容仍一致的本次登录文件，
 清理时不再重复计算整个运行环境的哈希。恢复过程在运行环境验证和恢复 controller 前，将进度写入 <code>bootstrap.log</code>。保存的 runtime、

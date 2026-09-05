@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609623" data-alt-lang-url="/docs/install/upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788610072" data-alt-lang-url="/docs/install/upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -432,7 +432,11 @@ and deadlines, without approving a new update or recreating a verifier Job.</p>
 <code>ai.openprogram.self-update.recovery.UPDATE_ID.plist</code> under <code>~/Library/LaunchAgents/</code>.
 It runs once per subsequent user login, independently of the App. There is no
 resident process or periodic retry, and writing the file does not start another
-controller immediately. Recovery does not run before login or disk unlock. If
+controller immediately. New recovery jobs use launchd's <code>Standard</code> process class
+so runtime integrity reads are not classified as discretionary background work.
+Previously saved <code>Background</code> entries retain their exact bindings and remain
+supported; recovery does not rewrite their scheduling policy. Recovery does not
+run before login or disk unlock. If
 both the App and controller stop in the current login session, use the saved script
 explicitly. Completed updates validate the saved runtime and remove only their
 unchanged login file within the same state lock, without hashing the entire runtime
