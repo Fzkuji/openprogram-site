@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788615906" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788616423" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -513,6 +513,11 @@ closed store does not restart background timers if a legacy caller reuses it;
 those writes are synchronous. Failed writes remain dirty and retain the
 process-exit retry. This avoids lingering writers and file handles during
 Windows teardown without weakening the stored-data consistency checks.</p>
+<p>Push and pull-request checks supersede older runs for the same workflow and
+branch or pull request, so stale revisions do not monopolize native Windows
+runners. Explicit installation acceptance and scheduled smoke runs use unique
+run groups and are not cancelled by later pushes. Both native architectures
+remain in every Windows matrix.</p>
 <p>The Windows CI surface has two parts:</p>
 <ul>
 <li>the core job covers compatibility seams, checkpoint history, backup/restore,
