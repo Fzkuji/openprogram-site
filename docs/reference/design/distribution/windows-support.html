@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788612832" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788612939" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -566,8 +566,10 @@ release asset for the running x64 or arm64 architecture. It validates release me
 requires valid Authenticode before opening the installer. A failed validation
 deletes the candidate. Installation remains a visible user-confirmed handoff;
 the running application is not silently replaced.</p>
-<p>Windows CI installs Desktop dependencies including the native PTY module and
-runs the same Desktop contract suite. The suite covers ConPTY command
+<p>Windows x64 and arm64 CI installs Desktop and Web dependencies including the
+native PTY module and runs the Desktop contracts and Web unit tests. Web test
+fixtures select an explicit browser locale and normalize source-checkout line
+endings where assertions depend on source text. The Desktop suite covers ConPTY command
 selection, browser import, cross-window tab transactions, packaged worker
 bootstrap, release selection, checksum failure, and signature failure.</p>
 <h2 id="w4-implementation">W4 implementation<a class="header-anchor" href="#w4-implementation">#</a></h2>
