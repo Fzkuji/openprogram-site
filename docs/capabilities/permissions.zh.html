@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788606688" data-alt-lang-url="/docs/capabilities/permissions.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788607404" data-alt-lang-url="/docs/capabilities/permissions.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -173,6 +173,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>修改只影响当前会话。其他窗口接收已确认的模式，旧版本修改会被拒绝，不能覆盖新选择。断线或失败的修改保持未确认；重新连接后检查当前模式再重试。尚未发送的草稿将选择保存在本地，并在首条消息中传入。</p>
 <p>有效默认值按会话 override、项目默认、逐次确认的顺序解析。后台任务和外部渠道保留各自身份及非交互限制；本地会话切到 Bypass 不会赋予它们 owner 权限。</p>
 <h2 id="理解工具拒绝">理解工具拒绝<a class="header-anchor" href="#理解工具拒绝">#</a></h2>
+<p>Windows 路径规则可使用正斜杠避免转义歧义，例如
+<code>read(C:/Users/me/project/**)</code>。盘符路径中的普通反斜杠会保留；规则语法仍用
+<code>\\</code>、<code>\(</code>、<code>\)</code> 转义自身的特殊字符。写入 JSON 配置时，还需遵守 JSON 的反斜杠转义规则。</p>
 <p>工具结果会区分 Authority、权限规则、计划模式、Auto 分类和 Sandbox 拒绝。<code>AUTHORITY_TIER_MISSING</code> 表示执行请求缺少认证权限级别，Bypass 不能解决。新的认证聊天提交会携带完整身份；缺少身份的旧 admission 必须通过认证界面重新提交。</p>
 <p>Sandbox 位于输入框 Plus 菜单，与审批模式独立。修改 Sandbox 影响后续 turn。Bypass 保持当前沙箱限制，普通工具审批不能用于沙箱升级。如果拒绝不能创建独立升级等待，需要用户显式修改相关设置后发起新调用。</p>
 <p>参见<a href="/docs/capabilities/tools.zh.html">工具</a>、<a href="/docs/interfaces/web.zh.html">Web</a>、<a href="/docs/interfaces/tui.zh.html">终端</a>和<a href="/docs/reference/design/runtime/permission-model.zh.html">工程合同</a>。</p>
