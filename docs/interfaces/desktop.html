@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788606216" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788606688" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,6 +82,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The macOS and Windows Desktop Apps present OpenProgram as a multi-pane workspace. Each pane can hold Files, a chat, the built-in Browser, or a Terminal, and panes can be split or moved between app windows without changing the underlying session or browser tab.</p>
 <p>On macOS, install the architecture-matched DMG and copy <code>OpenProgram.app</code> to <code>/Applications</code>; the current macOS channel is unsigned and may require <strong>System Settings → Privacy &amp; Security → Open Anyway</strong>. On Windows, install only the signed <code>win-x64.exe</code> or <code>win-arm64.exe</code> attached to a published <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a>. If a release has no signed Windows EXE, use the CLI/server and browser UI for that version. The complete steps are in <a href="/docs/install/install.html">Installation</a>.</p>
 <p>Terminal panes use the login shell on macOS and Windows PowerShell through ConPTY on Windows. Packaged apps on both platforms start the worker from their embedded managed Python and do not depend on a system Python or Node.js.</p>
+<p>When running Desktop from source on Linux, terminal panes use an installed absolute <code>SHELL</code> path, then fall back to <code>/bin/bash</code> or <code>/bin/sh</code>. They do not require zsh. If no shell is available, the terminal reports the missing prerequisite before starting a process.</p>
 <h2 id="opening-the-browser">Opening the Browser<a class="header-anchor" href="#opening-the-browser">#</a></h2>
 <p>Create a pane and select <strong>Browser</strong>, or open a new browser tab from the app tab bar. The Browser home shows the same browser chrome used by loaded webpages:</p>
 <ul>
