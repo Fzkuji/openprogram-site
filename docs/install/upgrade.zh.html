@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609000" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609239" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -335,7 +335,9 @@ App 原本打开时，激活与回退都使用该 ID 重新打开；原本关闭
 显式运行保存的脚本。更新结束后仅清理内容仍一致的本次登录文件；保存的 runtime、
 脚本和证据继续保留。可信恢复文件缺失或损坏时需人工处理，不从未验证的 App 重建。</p>
 <h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
-<p>在 source checkout 中，同一命令执行开发升级流程，而不是 release installer。它验证 Git 目标，仅在相关源文件变化时更新依赖与构建产物，probe 新 checkout，并且只在 probe 成功后重启 worker：</p>
+<p>本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 <code>scripts/refresh-local-app.sh</code>。脚本重新构建 wheel 与 Desktop 资源，更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。</p>
+<p>复制后的 Node 可执行文件必须能够脱离原安装目录运行。脚本会在修改 App 之前检查这一点。如果 PATH 中的 Node 依赖相邻动态库，运行刷新脚本时将 <code>OPENPROGRAM_NODE_BIN</code> 设为独立 Node 可执行文件的路径。</p>
+<p>在 source checkout 中，<code>openprogram upgrade</code> 执行开发升级流程，而不是 release installer。它验证 Git 目标，仅在相关源文件变化时更新依赖与构建产物，probe 新 checkout，并且只在 probe 成功后重启 worker：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>--check
 openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
 openprogram<span class="w"> </span>upgrade

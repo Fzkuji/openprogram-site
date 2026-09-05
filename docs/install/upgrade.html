@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609000" data-alt-lang-url="/docs/install/upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609239" data-alt-lang-url="/docs/install/upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -438,7 +438,9 @@ explicitly. Completed updates remove only their unchanged login file; the saved
 runtime, script and evidence remain. Missing or damaged trusted recovery files
 require manual intervention rather than reconstruction from an unverified App.</p>
 <h2 id="development-checkout">Development checkout<a class="header-anchor" href="#development-checkout">#</a></h2>
-<p>In a source checkout, the same command uses the development pipeline instead of the release installer. It validates a Git target, updates dependencies and built assets when their source files changed, probes the new checkout, and restarts the worker only after the probe succeeds:</p>
+<p>For the locally installed macOS App, run <code>scripts/refresh-local-app.sh</code> from the current checkout after committing a change. The script rebuilds the wheel and Desktop assets, updates both the PATH and embedded Python installations, and refreshes bundled Node and Ink resources. It probes the complete embedded runtime before regenerating its capability manifest and restarting the default worker. This also upgrades older App runtime manifests when a newly required capability is introduced; a failed probe stops the refresh instead of declaring the capability verified.</p>
+<p>The copied Node executable must work outside its original installation. The script checks this before modifying the App. If your PATH selects a Node build that needs adjacent libraries, set <code>OPENPROGRAM_NODE_BIN</code> to a standalone Node executable when running the refresh script.</p>
+<p>In a source checkout, <code>openprogram upgrade</code> uses the development pipeline instead of the release installer. It validates a Git target, updates dependencies and built assets when their source files changed, probes the new checkout, and restarts the worker only after the probe succeeds:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>upgrade<span class="w"> </span>--check
 openprogram<span class="w"> </span>upgrade<span class="w"> </span>--dry-run
 openprogram<span class="w"> </span>upgrade

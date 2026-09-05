@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609000" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609239" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="消息流式">消息流式<a class="header-anchor" href="#消息流式">#</a></h3>
 <p>回复通过 WebSocket 流式到达：发送后立即出现占位回复，text、thinking、工具调用等块按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
 <h3 id="停止与重新连接">停止与重新连接<a class="header-anchor" href="#停止与重新连接">#</a></h3>
-<p>点击输入框中的 <strong>Cancel execution</strong> 停止当前执行。刷新或重新打开会话时，会恢复正在执行的任务及其停止控制。没有新输出不代表执行已经结束；系统不会仅因一段时间没有输出就移除运行状态。已经结束的执行不会因为残留的线程注册继续显示为运行中。</p>
+<p>点击输入框中的 <strong>Cancel execution</strong> 停止当前执行。刷新或重新打开会话时，会恢复正在执行的任务及其停止控制，包括审批等待后恢复的执行。没有新输出不代表执行已经结束；系统不会仅因一段时间没有输出就移除运行状态。已经结束的执行不会因为残留的线程注册继续显示为运行中。</p>
+<p>本地 shell 命令会先结束其进程组，再报告取消。恢复执行的会话会将原助手消息持久化为已取消，并将会话恢复为空闲，刷新后仍保持停止状态。</p>
 <h3 id="thinking-折叠">thinking 折叠<a class="header-anchor" href="#thinking-折叠">#</a></h3>
 <p>模型的思考过程渲染为可折叠块，默认收起，流式期间只显示最新一行，点击展开完整内容。</p>
 <h3 id="函数调用时间线">函数调用时间线<a class="header-anchor" href="#函数调用时间线">#</a></h3>

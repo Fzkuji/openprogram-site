@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609000" data-alt-lang-url="/docs/interfaces/web.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788609239" data-alt-lang-url="/docs/interfaces/web.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="message-streaming">Message streaming<a class="header-anchor" href="#message-streaming">#</a></h3>
 <p>Replies stream in over WebSocket: a placeholder reply appears immediately after sending, and text, thinking, and tool-call blocks render incrementally in arrival order. When several agents write into one session, each assistant message carries the producing agent's avatar and name.</p>
 <h3 id="stopping-and-reconnecting">Stopping and reconnecting<a class="header-anchor" href="#stopping-and-reconnecting">#</a></h3>
-<p>Use <strong>Cancel execution</strong> in the composer to stop the current execution. Refreshing or reopening a session restores the active execution and its cancellation controls. An execution can remain active while no new output arrives; silence alone does not end it. Completed executions do not remain active because of an obsolete worker registration.</p>
+<p>Use <strong>Cancel execution</strong> in the composer to stop the current execution. Refreshing or reopening a session restores the active execution and its cancellation controls, including executions resumed after an approval wait. An execution can remain active while no new output arrives; silence alone does not end it. Completed executions do not remain active because of an obsolete worker registration.</p>
+<p>Local shell commands stop their process group before reporting cancellation. Resumed conversations persist the original assistant as cancelled and return the session to idle, so reloading preserves the stopped state.</p>
 <h3 id="collapsible-thinking">Collapsible thinking<a class="header-anchor" href="#collapsible-thinking">#</a></h3>
 <p>The model's thinking process renders as a collapsible block, collapsed by default. While streaming, only the latest line shows; click to expand the full content.</p>
 <h3 id="function-call-timeline">Function-call timeline<a class="header-anchor" href="#function-call-timeline">#</a></h3>
