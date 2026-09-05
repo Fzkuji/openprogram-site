@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609239" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788609517" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -332,7 +332,8 @@ App 原本打开时，激活与回退都使用该 ID 重新打开；原本关闭
 <code>ai.openprogram.self-update.recovery.UPDATE_ID.plist</code>。它在之后每次用户登录时运行一次，
 不依赖 App；没有常驻进程或周期重试，写入文件也不会立即启动另一个控制进程。
 恢复不在用户登录或磁盘解锁之前执行。当前登录会话中 App 和控制进程都停止时，
-显式运行保存的脚本。更新结束后仅清理内容仍一致的本次登录文件；保存的 runtime、
+显式运行保存的脚本。已结束的更新在同一状态锁内验证保存的运行环境，并仅清理内容仍一致的本次登录文件，
+清理时不再重复计算整个运行环境的哈希。恢复过程在运行环境验证和恢复 controller 前，将进度写入 <code>bootstrap.log</code>。保存的 runtime、
 脚本和证据继续保留。可信恢复文件缺失或损坏时需人工处理，不从未验证的 App 重建。</p>
 <h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
 <p>本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 <code>scripts/refresh-local-app.sh</code>。脚本重新构建 wheel 与 Desktop 资源，更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。</p>
