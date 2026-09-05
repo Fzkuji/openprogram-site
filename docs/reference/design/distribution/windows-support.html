@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788605879" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788606216" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -476,6 +476,11 @@ rest of the runtime. This makes state projection and recovery records portable;
 it does not establish support for the separate macOS-specific controller and
 installer pipeline, which still needs a Windows implementation and native
 end-to-end acceptance before it can be advertised as available.</p>
+<p>Post-rollback diagnosis and isolated source repair use the same portable state
+checks. Model-provided LF edits match consistently CRLF source files while
+preserving the original line-ending convention. Duplicate matches are rejected;
+mixed-line-ending files require exact text. Native candidate test execution and
+activation remain part of the controller gap described above.</p>
 <p>Local shell tools use Git Bash when it is installed and otherwise fall back to
 the Windows PowerShell included with the operating system; they never depend on
 <code>cmd.exe</code> parsing Bash-oriented commands. Background shell and process-tree

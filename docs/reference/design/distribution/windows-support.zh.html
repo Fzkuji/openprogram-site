@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788605879" data-alt-lang-url="/docs/reference/design/distribution/windows-support.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788606216" data-alt-lang-url="/docs/reference/design/distribution/windows-support.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -475,6 +475,9 @@ worker，运行 <code>doctor</code>，然后停止 worker。</li>
 线性启动进程。自更新日志读取沿用 Windows 继承 ACL 的约定。这只证明状态
 展示和恢复记录可移植，不代表独立的 macOS 控制器与安装流程已支持 Windows；
 后者仍需 Windows 实现及原生端到端验收。</p>
+<p>回滚后的诊断与隔离源码修复使用同一套可移植状态检查。模型提供的 LF 编辑
+可以匹配统一使用 CRLF 的源码，并保留原文件换行格式；重复匹配仍然拒绝，
+混合换行文件要求精确匹配。候选测试的原生执行与激活仍属于上述控制器缺口。</p>
 <h2 id="w2-实现">W2 实现<a class="header-anchor" href="#w2-实现">#</a></h2>
 <p>正式 Release matrix 在原生 Windows runner 上构建完整 Windows x86_64 与 arm64
 product runtime，发布确定性的 <code>OpenProgram-&lt;version&gt;-runtime-windows-&lt;arch&gt;.zip</code>
