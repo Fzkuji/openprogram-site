@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788607404" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788607581" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -523,6 +523,12 @@ through the compatibility seam. <code>doctor</code> reports long-path registry s
 Defender real-time scanning/exclusion state as non-blocking advice. These
 queries are read-only and do not enable long paths or change Defender.</p>
 <h2 id="w3-implementation">W3 implementation<a class="header-anchor" href="#w3-implementation">#</a></h2>
+<p>Desktop runtime preparation builds or installs into a unique staging directory
+inside the checkout's build directory. An exclusive lock serializes publication.
+The previous payload is kept until the replacement is ready and its version
+matches the desktop package. Failed publication restores the previous payload;
+if restoration also fails, its backup is retained with an explicit recovery path.
+This prepares packaging inputs only and does not replace the installed App.</p>
 <p>The tag workflow builds Windows x86_64 and arm64 Electron applications and
 assisted, per-user NSIS installers. It stages the exact complete W2 runtime through the
 formal PowerShell release installer before packaging, then smoke-tests the
