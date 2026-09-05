@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -256,9 +256,8 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>list<span cla
 （在 chat 中，或 <code>openprogram programs run &lt;fn&gt; -a key=value</code>）。</p>
 <h2 id="平台说明">平台说明<a class="header-anchor" href="#平台说明">#</a></h2>
 <ul>
-<li><strong>受支持的 release host 是 macOS 和 Linux。</strong> Windows 没有受支持的
-release installer 或 native package；Windows 用户可以用浏览器连接运行在
-受支持远程主机上的 OpenProgram。</li>
+<li><strong>受支持的 CLI/server release 主机包括 macOS、Linux 和 Windows x86_64/arm64。</strong>
+Windows Desktop 同时支持两种架构；Windows 沙箱命令执行使用可选的 WSL2 与 bubblewrap。</li>
 <li><strong>这些 Program 命令需要可变环境。</strong> source-development checkout 可以使用；
 CLI release 仅在对应 release notes 明确支持 Program mutation 时使用。
 packaged desktop 在 Program 拥有隔离的外部环境前会拒绝这些修改命令。</li>
@@ -300,8 +299,8 @@ harness 可能只实现 macOS / Linux 后端）。
 <td>运行一次<code>openprogram programs install &lt;Git来源&gt;</code>完成校验与登记；安装器不会修改链接目标。</td>
 </tr>
 <tr>
-<td>Windows source checkout 无法安装或运行 harness</td>
-<td>Windows release 安装和兼容性不受支持。改用受支持的 macOS/Linux 主机，并检查 harness README 中的平台要求。</td>
+<td>harness 在 Windows 上无法安装或运行</td>
+<td>检查 harness README 与 dependency marker。OpenProgram CLI/server 受支持，但单个 harness 仍可能只提供 macOS/Linux backend。</td>
 </tr>
 </tbody>
 </table>

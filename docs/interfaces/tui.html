@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/interfaces/tui.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/interfaces/tui.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,10 +85,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="entering-and-exiting">Entering and exiting<a class="header-anchor" href="#entering-and-exiting">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>tui<span class="w">      </span><span class="c1"># straight into the terminal chat (alias: openprogram chat)</span>
 openprogram<span class="w">          </span><span class="c1"># bare invocation first asks: terminal UI or web UI</span>
+openprogram<span class="w"> </span>tui<span class="w"> </span>--no-alt-screen<span class="w">  </span><span class="c1"># inline mode; keep terminal scrollback</span>
+openprogram<span class="w"> </span>tui<span class="w"> </span>--screen-reader<span class="w">  </span><span class="c1"># inline mode without mouse tracking</span>
 </code></pre>
-<p>The release CLI always has the Python terminal interface. Source-development installations can additionally build the Node.js Ink interface on macOS and Linux. Both connect to the same local worker over WebSocket and share sessions with the Web UI. Windows release installation is not supported.</p>
+<p>The release CLI includes a self-contained Node.js Ink interface on Windows, macOS, and Linux. It uses the terminal's actual raw-input capability rather than an operating-system allowlist: Windows Terminal, PowerShell under ConPTY, and modern integrated terminals get the full-screen interface. A terminal without usable raw input falls back to the built-in Python Rich interface with an explicit message. Both implementations connect to the same local worker over WebSocket and share sessions with the Web UI.</p>
+<p>The full-screen interface requires both stdin and stdout to be terminals. Redirected or piped invocations skip Ink before it writes any ANSI frames and use the line-oriented fallback; use <code>openprogram --print &quot;...&quot;</code> for automation. The alternate screen preserves the shell's main-screen contents and restores them on exit. Cursor movement and deletion operate on complete Unicode grapheme clusters, so emoji, combining characters, and CJK input are not split while editing.</p>
+<p><code>/copy</code> uses <code>wl-copy</code> in Wayland sessions, <code>xclip</code> or <code>xsel</code> in X11 sessions, and <code>clip.exe</code> under WSL. Over SSH it avoids the remote graphical clipboard and uses OSC 52, including tmux passthrough and its paste buffer when available. Native clipboard helpers have a bounded timeout, so a stale display cannot freeze the TUI.</p>
+<p>On Windows, Windows Terminal is recommended. Git Bash running in MinTTY may use the Rich fallback; running PowerShell inside Windows Terminal gets the full interface. The release carries its own Node.js executable, so users do not need to install Node.js for the TUI.</p>
 <p>Exit: <code>/quit</code>, or press <code>Ctrl-C</code> twice quickly while idle.</p>
-<p>To resume a past session: use <code>/resume</code> inside the TUI to pick one; session ids are listed by <code>openprogram sessions list</code>. (The <code>openprogram --resume &lt;id&gt;</code> flag currently takes effect only for <code>--print</code> one-shots, not when launching the interactive TUI.)</p>
+<p>To resume a past session: use <code>/resume</code> inside the TUI to pick one, or launch <code>openprogram --resume &lt;id&gt;</code> directly. Session ids are listed by <code>openprogram sessions list</code>.</p>
+<p>With <code>--profile &lt;name&gt;</code>, startup diagnostics are written under that profile's state directory (<code>~/.openprogram-&lt;name&gt;/logs/ink-startup.log</code>) rather than the default profile.</p>
 <h2 id="keys">Keys<a class="header-anchor" href="#keys">#</a></h2>
 <table>
 <thead>
@@ -101,6 +107,10 @@ openprogram<span class="w">          </span><span class="c1"># bare invocation f
 <tr>
 <td><code>Enter</code></td>
 <td>Send</td>
+</tr>
+<tr>
+<td><code>?</code> on an empty prompt</td>
+<td>Open the keyboard shortcut reference</td>
 </tr>
 <tr>
 <td><code>Alt+Enter</code></td>
@@ -129,6 +139,14 @@ openprogram<span class="w">          </span><span class="c1"># bare invocation f
 <tr>
 <td><code>→</code> (at end of line) or <code>Ctrl+E</code></td>
 <td>Accept the autocomplete suggestion</td>
+</tr>
+<tr>
+<td><code>Ctrl+A</code> / <code>Ctrl+E</code></td>
+<td>Move to the beginning / end of the input when no suggestion is being accepted</td>
+</tr>
+<tr>
+<td><code>Ctrl+W</code></td>
+<td>Delete the previous word</td>
 </tr>
 <tr>
 <td><code>Ctrl+R</code></td>
@@ -163,8 +181,8 @@ openprogram<span class="w">          </span><span class="c1"># bare invocation f
 </thead>
 <tbody>
 <tr>
-<td><code>/help</code></td>
-<td>Command list</td>
+<td><code>/help</code>, <code>/keybindings</code></td>
+<td>Command list and keyboard shortcut reference</td>
 </tr>
 <tr>
 <td><code>/model</code>, <code>/fetch-models</code></td>
@@ -200,7 +218,7 @@ openprogram<span class="w">          </span><span class="c1"># bare invocation f
 </tr>
 <tr>
 <td><code>/mcp</code>, <code>/tools</code>, <code>/memory</code></td>
-<td>Same data as the corresponding Web UI pages</td>
+<td>Inspect and manage the same data as the corresponding Web UI pages</td>
 </tr>
 <tr>
 <td><code>/cost</code></td>

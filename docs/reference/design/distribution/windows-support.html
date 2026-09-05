@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/reference/design/distribution/windows-support.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Windows support · OpenProgram Docs</title>
-<meta name="description" content="Scope plan for bringing OpenProgram to Windows. The 2026-08-12 scope decision in feature-matrix.html marks Windows deferred / do-not-plan across">
+<meta name="description" content="Windows support is delivered in independently useful levels. The native CLI/server, browser UI, release installer, and signed Desktop distribution are">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/distribution/windows-support.html">
-
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/distribution/windows-support.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/distribution/windows-support.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/distribution/windows-support.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Windows support"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/distribution/windows-support.html">
 <meta property="og:title" content="Windows support · OpenProgram Docs">
-<meta property="og:description" content="Scope plan for bringing OpenProgram to Windows. The 2026-08-12 scope decision in feature-matrix.html marks Windows deferred / do-not-plan across">
+<meta property="og:description" content="Windows support is delivered in independently useful levels. The native CLI/server, browser UI, release installer, and signed Desktop distribution are">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -22,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Windows support · OpenProgram Docs">
-<meta name="twitter:description" content="Scope plan for bringing OpenProgram to Windows. The 2026-08-12 scope decision in feature-matrix.html marks Windows deferred / do-not-plan across">
+<meta name="twitter:description" content="Windows support is delivered in independently useful levels. The native CLI/server, browser UI, release installer, and signed Desktop distribution are">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -187,7 +189,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
 <a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本自动更新</a>
 <a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
-<a class="navlink active" href="/docs/reference/design/distribution/windows-support.html">Windows support</a>
+<a class="navlink active" href="/docs/reference/design/distribution/windows-support.html" data-title-zh="Windows 支持" data-href-en="/docs/reference/design/distribution/windows-support.html" data-href-zh="/docs/reference/design/distribution/windows-support.zh.html">Windows support</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
@@ -387,207 +389,220 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Distribution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Windows support</span></nav><h1 id="windows-support">Windows support<a class="header-anchor" href="#windows-support">#</a></h1>
-<p>Scope plan for bringing OpenProgram to Windows. The 2026-08-12 scope
-decision in <a href="/docs/reference/design/feature-matrix.html">feature-matrix.html</a> marks Windows
-<code>deferred / do-not-plan</code> across implementation, testing, packaging, and
-compatibility; this document is the plan that supersedes ad-hoc effort
-whenever that decision is revisited. Until then it also serves as the
-triage guide for community-contributed Windows patches.</p>
-<p>Rationale recorded for the original deferral: Windows support opens four
-fronts at once (porting, a second CI test matrix, packaging + signing,
-and sandbox semantics that have no cheap Windows equivalent), while the
-current user base runs macOS/Linux and Windows users can already reach a
-remote worker from a browser. Deferral is a sequencing decision, not a
-rejection.</p>
-<h2 id="product-decision-what-windows-support-means">Product decision: what &quot;Windows support&quot; means<a class="header-anchor" href="#product-decision-what-windows-support-means">#</a></h2>
-<p>Support arrives in tiers, each independently shippable and each a
-meaningful product on its own. Later tiers are strictly optional.</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Distribution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Windows 支持">Windows support</span></nav><h1 id="windows-support">Windows support<a class="header-anchor" href="#windows-support">#</a></h1>
+<p>Windows support is delivered in independently useful levels. The native
+CLI/server, browser UI, release installer, and signed Desktop distribution are
+implemented as separate layers. Windows sandboxing is an optional WSL2
+delegation layer and does not make the native CLI depend on WSL.</p>
+<h2 id="support-levels">Support levels<a class="header-anchor" href="#support-levels">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>Tier</th>
-<th>Deliverable</th>
-<th>Explicitly out of scope at this tier</th>
+<th>Level</th>
+<th>Contract</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>W0</td>
-<td>Community patches accepted, known gaps documented, hard failures degrade to clear errors</td>
-<td>Any support commitment</td>
+<td>Community fixes are accepted, known gaps are documented, and unsupported entry points fail with an explicit message. No Windows support is promised.</td>
 </tr>
 <tr>
 <td>W1</td>
-<td>CLI/server runs natively on Windows; UI via browser at <code>localhost:18100</code>; Windows CI green</td>
-<td>Sandbox, integrated PTY terminal, MCP token file, Desktop app</td>
+<td>The native CLI and server run on Windows, the full Ink terminal UI and browser UI are available, MCP token management is functional, and the Windows CI contracts pass. Terminals without raw input fall back to Rich. Sandbox execution and Desktop are outside this level.</td>
 </tr>
 <tr>
 <td>W2</td>
-<td>Windows release artifact + PowerShell installer; <code>openprogram doctor</code> Windows-aware</td>
-<td>Desktop app, sandbox</td>
+<td>Windows release archives, a PowerShell release installer, and Windows-specific <code>doctor</code> checks are supported. Doctor covers long-path configuration and gives an advisory Defender exclusion hint without changing Defender settings.</td>
 </tr>
 <tr>
 <td>W3</td>
-<td>Electron Desktop build, signing, auto-update</td>
-<td>Sandbox parity</td>
+<td>The Electron Desktop application is distributed with signing and automatic updates. Unsigned builds are not a supported release channel because SmartScreen makes them unsuitable for ordinary users.</td>
 </tr>
 <tr>
 <td>W4</td>
-<td>Sandbox story (AppContainer / Job Objects / WSL2 delegation — separate design)</td>
-<td>—</td>
+<td>Local command isolation delegates to bubblewrap inside an installed WSL2 distribution. <code>auto</code> capability detection keeps native Windows usable when that optional backend is absent. AppContainer and Job Objects are not presented as equivalent filesystem and network isolation.</td>
 </tr>
 </tbody>
 </table>
-<p>The recommended long-term resting point is <strong>W2</strong>: native CLI/server +
-browser UI. W3/W4 only if Windows demand proves out. This mirrors the
-Linux posture (no desktop artifact, CLI + browser is the supported path).</p>
-<h2 id="ground-rules-for-all-tiers">Ground rules for all tiers<a class="header-anchor" href="#ground-rules-for-all-tiers">#</a></h2>
-<p>These keep the port maintainable instead of a fork-in-place:</p>
-<ol>
-<li><strong>One compatibility seam.</strong> Platform branches live in
-<code>openprogram/_compat.py</code> (or a sibling module), never inline at call
-sites. The existing <code>fcntl</code>/<code>kill_process_tree</code> shims are the
-pattern: call sites stay POSIX-shaped, the shim owns the divergence.
-Inline <code>os.name == &quot;nt&quot;</code> checks are allowed only where behaviour is
-<em>dropped</em> (e.g. directory fsync) rather than <em>replaced</em>.</li>
-<li><strong>Capability detection over platform detection</strong> where the API
-supports it: <code>os.supports_dir_fd</code>, <code>hasattr(os, &quot;O_NOFOLLOW&quot;)</code> — the
-way <code>sandbox/recoverable_delete.py</code> already does it. <code>sys.platform</code>
-checks are for genuinely OS-specific facilities (msvcrt, taskkill,
-ConPTY).</li>
-<li><strong>Degrade loudly, never crash.</strong> A feature that cannot work on
-Windows raises a clear, single-line &quot;not supported on this platform&quot;
-error at its entry point (the <code>mcp/server/auth.py</code> pattern), or is
-hidden from the UI. Silent <code>NotImplementedError</code> from deep inside a
-dir_fd call is a bug regardless of tier.</li>
-<li><strong>No security downgrades by omission.</strong> Where a POSIX guarantee has
-no Windows equivalent (0o600 modes, O_NOFOLLOW symlink races,
-directory fsync durability), the replacement is chosen consciously
-and the gap is documented in the code comment at the seam — not
-discovered later.</li>
-<li><strong>CI is the definition of done.</strong> A tier is not reached until its
-scope is green in the Windows CI job. Patches without a covering
-test that fails on regression do not close a gap.</li>
-</ol>
-<h2 id="w1-work-breakdown-native-cliserver">W1 work breakdown: native CLI/server<a class="header-anchor" href="#w1-work-breakdown-native-cliserver">#</a></h2>
-<h3 id="w11-posix-seam-completion-small-partly-done">W1.1 POSIX seam completion (small, partly done)<a class="header-anchor" href="#w11-posix-seam-completion-small-partly-done">#</a></h3>
-<p>Already fixed (issue #33 and follow-ups): fsync-on-readonly-handle,
-bare <code>import fcntl</code> call sites, directory-fsync guards. Remaining:</p>
+<p>W2 remains the supported fallback for machines that do not install Desktop.
+W3 is the current Desktop distribution target. W4 is optional and independently
+deployable.</p>
+<h2 id="engineering-rules">Engineering rules<a class="header-anchor" href="#engineering-rules">#</a></h2>
+<p>Platform-specific behavior lives in <code>openprogram/_compat.py</code> or a platform
+adapter selected by that seam. Product modules use capability detection where
+possible. Unsupported functionality fails at its entry point instead of
+raising a late <code>NotImplementedError</code>. A weaker replacement for a POSIX safety
+property is an explicit, documented decision. A platform fix is incomplete
+until its Windows CI contract covers it.</p>
+<p>POSIX <code>0600</code> and <code>0700</code> modes are not Windows requirements. Windows W1 uses the
+ACL inherited from the user's profile and does not remove ACL inheritance or
+rewrite access entries. Atomic file replacement and process-safe file locking
+remain functional requirements because they prevent partial or lost writes;
+they are not permission-hardening policy.</p>
+<h2 id="w1-implementation">W1 implementation<a class="header-anchor" href="#w1-implementation">#</a></h2>
+<p>The source-development installer creates an isolated checkout <code>.venv</code>, installs
+the npm lockfile, builds the browser and Ink terminal interfaces, installs the
+selected Python extras, and exposes a stable <code>openprogram.cmd</code> launcher on the
+user <code>PATH</code>. <code>-Minimal</code> installs only the Python CLI/server path.</p>
+<p>Ink startup is capability-based on every operating system. Windows Terminal
+and ConPTY preserve the inherited stdin console handle and run the full-screen
+TUI. MinTTY and other terminals that cannot enter raw input fail at the UI
+boundary and restore stdio before the Rich fallback starts. ConPTY may deliver
+printable text and Enter in one read, so the input tokenizer splits control
+bytes from printable spans; bracketed paste remains one atomic input event.</p>
+<p>MCP token creation uses a unique temporary file and atomic hard-link
+publication so concurrent creators cannot overwrite one another. Reads still
+revalidate the opened regular file and its directory ancestry. Windows keeps
+the profile's inherited ACL and intentionally does not emulate POSIX ownership
+or <code>0600</code> mode bits.</p>
+<p>Windows process inspection uses PowerShell CIM rather than WMIC. Persistent
+workers use a least-privilege per-user Task Scheduler task. Checkpoint history,
+Undo/Reapply, review diffs, backup creation, and transactional restore select a
+path-based fallback when CPython does not expose descriptor-relative directory
+operations. The fallback rejects symlinks and junction/reparse traversal,
+revalidates parent identity, and uses binary and atomic file operations.</p>
+<p>Process liveness and creation-time identity use read-only native Windows
+queries. Signal zero is never used on Windows; it is not a portable existence
+probe. File-operation journals use the shared cross-process lock adapter.
+Forward apply and rollback keep distinct guard files so Windows rename rules
+cannot turn a recoverable failure into a stranded transaction.</p>
+<p>Project-file queries use directory capabilities from the compatibility seam.
+Workspace review reads Git tree/index metadata and immutable objects in bounded
+batches, rather than starting Git for each changed file. The regression contract
+limits Git invocation count independently of the number of changed files.</p>
+<p>Self-update journal reads follow the same inherited-ACL Windows contract as the
+rest of the runtime. This makes state projection and recovery records portable;
+it does not establish support for the separate macOS-specific controller and
+installer pipeline, which still needs a Windows implementation and native
+end-to-end acceptance before it can be advertised as available.</p>
+<p>Local shell tools use Git Bash when it is installed and otherwise fall back to
+the Windows PowerShell included with the operating system; they never depend on
+<code>cmd.exe</code> parsing Bash-oriented commands. Background shell and process-tree
+cleanup helpers use no-window process creation so Desktop agent runs do not
+flash console windows. The tool contract describes the active surface as a host
+shell and directs portable file work to the dedicated file/search tools or
+Python rather than assuming Unix coreutils are installed.</p>
+<p>Program discovery uses direct distribution metadata lookups for the catalogued
+applications. It does not rebuild Python's complete import-to-distribution map
+for every Program or every WebSocket connection; that full filesystem walk is
+especially expensive in the complete Windows runtime and would delay session
+and page data after every hard refresh.</p>
+<p>The Windows CI surface has two parts:</p>
 <ul>
-<li><code>openprogram/store/snapshot/checkpoint/store.py</code> — the rewind/restore
-apply path (<code>_open_verified_parent</code>, <code>_apply_state</code>,
-<code>_restore_changed_guard</code>) is built on <code>dir_fd</code> + <code>O_NOFOLLOW</code> +
-<code>os.link</code>. Two acceptable resolutions, in preference order:
-a stat-revalidated plain-path fallback behind the existing
-<code>supports_dir_fd</code>-style capability constant; or a loud
-&quot;checkpoint rewind is not supported on this platform&quot; error at
-<code>plan_history_operation</code>/<code>plan_rewind_operation</code> entry. Choose one;
-do not leave the deep NotImplementedError.</li>
-<li><code>openprogram/mcp/server/auth.py</code> — <code>create_token</code> requires
-<code>dir_fd</code> + <code>os.link</code> and refuses on Windows today. W1 keeps the
-refusal but surfaces it in <code>openprogram doctor</code> so MCP-server users
-learn the limitation up front. A Windows implementation (CreateFile
-with <code>FILE_FLAG_OPEN_REPARSE_POINT</code>, or accepting the weaker
-guarantee) is W2 material.</li>
-<li>Audit for <code>os.replace</code>/unlink over open handles. Windows locks open
-files; the git-backed session store and every atomic-write path can
-hit <code>PermissionError</code> under concurrent readers. Add one shared
-retry-with-backoff helper to the compat seam and route atomic
-replaces through it.</li>
-<li>Path semantics sweep: <code>pathlib</code> everywhere (already dominant), no
-hardcoded <code>/</code>; enable long-path awareness in the installer
-(<code>LongPathsEnabled</code> note in docs) rather than trying to stay under
-MAX_PATH.</li>
+<li>the core job covers compatibility seams, checkpoint history, backup/restore,
+upgrade behavior, the installer contract, and the Task Scheduler adapter;</li>
+<li>the installation smoke job performs a complete PowerShell installation,
+checks the isolated environment and Web build, starts the worker, runs
+<code>doctor</code>, and stops the worker.</li>
 </ul>
-<h3 id="w12-subprocess-process-tree-correctness">W1.2 Subprocess &amp; process-tree correctness<a class="header-anchor" href="#w12-subprocess-process-tree-correctness">#</a></h3>
-<p><code>start_new_session</code>, <code>os.killpg</code>, <code>signal.SIGKILL</code> usages are already
-branched (<code>agent/exec.py</code>, <code>worker/lifecycle.py</code>, <code>_compat.py</code>). W1
-verifies each branch with a Windows test, and moves any remaining
-inline branch into the compat seam. Worker start/stop/restart cycling
-(<code>openprogram worker …</code>) is the acceptance test: 100 restart cycles
-without orphaned processes.</p>
-<h3 id="w13-windows-ci-the-core-investment">W1.3 Windows CI (the core investment)<a class="header-anchor" href="#w13-windows-ci-the-core-investment">#</a></h3>
-<ul>
-<li>GitHub Actions <code>windows-latest</code> job running <code>tests/unit</code> first.
-Known baseline from issue #33: ~29 failures. Burn the list down;
-every fix lands with the test that covers it.</li>
-<li>Marker policy: <code>@pytest.mark.posix_only</code> for tests of genuinely
-POSIX-only behaviour (sandbox, PTY, dir_fd hardening) — skipped on
-Windows with a reason, not xfailed. Everything unmarked must pass.</li>
-<li>Component tests (<code>tests/component</code>) join the job once unit is green.</li>
-<li>The job is required for merge from the moment it is green, so it
-can never rot back to red.</li>
-</ul>
-<h3 id="w14-explicit-w1-exclusions-wired-as-such">W1.4 Explicit W1 exclusions, wired as such<a class="header-anchor" href="#w14-explicit-w1-exclusions-wired-as-such">#</a></h3>
-<ul>
-<li>Sandbox: <code>sandbox/__init__.py</code> already reports &quot;needs
-sandbox-exec/bubblewrap&quot;; add the Windows message (&quot;sandboxing is
-not available on Windows; permission prompts still apply&quot;) and make
-sure permission UI copy stays truthful there.</li>
-<li>Integrated PTY terminal: feature-flag off on Windows (the UI hides
-the terminal); ConPTY is W3+ work, tracked separately.</li>
-<li><code>install.ps1</code> (exists for source checkouts) becomes the supported
-dev-env path and gets a smoke test in CI.</li>
-</ul>
-<h2 id="w2-work-breakdown-release-artifact">W2 work breakdown: release artifact<a class="header-anchor" href="#w2-work-breakdown-release-artifact">#</a></h2>
-<ul>
-<li>Runtime archive for Windows x64: managed CPython embeddable build,
-wheels, prebuilt Web UI, Playwright Chromium (<code>playwright install</code>
-supports Windows natively), OCR/model data. Mirror the existing
-macOS/Linux archive layout under
-<code>~/.openprogram/runtime/cli/releases/&lt;version&gt;</code> (<code>%LOCALAPPDATA%</code>
-equivalent decided here: keep <code>~/.openprogram</code> = <code>%USERPROFILE%\.openprogram</code>
-for one config story).</li>
-<li>PowerShell installer with SHA-256 + capability-manifest verification,
-matching the bash installer's gates.</li>
-<li><code>openprogram doctor</code>: git presence, long-path support, Defender
-exclusion hint for the state dir (checkpoint/session write patterns
-trip real-time scanning), ConPTY availability report.</li>
-<li>Update <code>docs/install/install.md</code> support matrix from &quot;Deferred&quot; to
-the tier actually shipped.</li>
-</ul>
-<h2 id="w3w4-sketches-do-not-start-without-a-separate-design-pass">W3/W4 sketches (do not start without a separate design pass)<a class="header-anchor" href="#w3w4-sketches-do-not-start-without-a-separate-design-pass">#</a></h2>
-<ul>
-<li><strong>W3 Desktop</strong>: electron-builder NSIS target, code-signing cert
-(EV or standard + reputation ramp; unsigned Windows installers are
-effectively unshippable past SmartScreen), auto-update channel,
-window-state/lifecycle code review for Windows conventions.</li>
-<li><strong>W4 Sandbox</strong>: no lightweight seatbelt/bwrap equivalent exists.
-Candidate directions, each with real costs: AppContainer profiles
-(deep Win32 work), Job Objects + restricted tokens (weaker
-guarantees), or delegating &quot;sandboxed&quot; runs to WSL2 (strong but
-requires WSL). This is a design problem first; any implementation
-before that design is wasted.</li>
-</ul>
-<h2 id="sequencing-and-parallelism">Sequencing and parallelism<a class="header-anchor" href="#sequencing-and-parallelism">#</a></h2>
-<p>W1.1 / W1.2 / W1.3 can run in parallel by different people; W1.3's CI
-job should land <em>first</em> (red is fine) so every seam fix is measured
-against it. W2 starts only after W1 is fully green. Community patches
-are triaged against this document: anything advancing W1 is welcome;
-anything reaching for W3/W4 early is parked with a pointer here.</p>
+<h2 id="w2-implementation">W2 implementation<a class="header-anchor" href="#w2-implementation">#</a></h2>
+<p>The formal Release matrix builds complete Windows x86_64 and arm64 product
+runtimes on native Windows runners and publishes deterministic
+<code>OpenProgram-&lt;version&gt;-runtime-windows-&lt;arch&gt;.zip</code> archives plus SHA-256 files. The
+ZIP has one <code>runtime/</code> root and contains managed CPython, a platform Node.js
+executable, a self-contained Ink bundle, prebuilt Web and docs assets,
+providers, channels, Programs, Playwright Chromium, and model data. The runtime
+verifier executes an Ink startup probe and records <code>tui.ink</code> only after it
+succeeds.</p>
+<p>The public <code>install.ps1</code> bootstrap resolves a stable release and downloads the
+PowerShell installer from that immutable tag. The installer validates the
+checksum and every ZIP entry before extraction, rejects links and reparse
+points, verifies the runtime capability manifest, and completes a worker cold
+start in isolated state. Only then does it atomically replace the active
+PowerShell launcher. Releases stay in versioned directories, and the previous
+launcher is retained; a failed installation never changes the active launcher.
+No installer step edits ACLs.</p>
+<p>Managed upgrades select the Windows ZIP and tagged PowerShell installer
+through the compatibility seam. <code>doctor</code> reports long-path registry state and
+Defender real-time scanning/exclusion state as non-blocking advice. These
+queries are read-only and do not enable long paths or change Defender.</p>
+<h2 id="w3-implementation">W3 implementation<a class="header-anchor" href="#w3-implementation">#</a></h2>
+<p>The tag workflow builds Windows x86_64 and arm64 Electron applications and
+assisted, per-user NSIS installers. It stages the exact complete W2 runtime through the
+formal PowerShell release installer before packaging, then smoke-tests the
+embedded runtime, worker health endpoint, Web chat route, and immutable Program
+boundary from <code>win-unpacked</code>. Both <code>OpenProgram.exe</code> and the installer must have
+a valid Authenticode signature. Missing signing credentials or an invalid
+signature fails the release job; unsigned Windows builds are local development
+artifacts, not publishable releases.</p>
+<p>Packaged Desktop starts the worker with its embedded managed Python. The native
+Terminal selects Windows PowerShell, falling back to <code>COMSPEC</code>, and asks
+<code>node-pty</code> for ConPTY. Browser-profile import discovers Chrome, Edge, Brave, and
+Chromium under their normal Windows installation and local-app-data locations.
+Windows Desktop state inherits the user's existing ACL; no packaging, import,
+or update path rewrites it.</p>
+<p>The Desktop updater selects the exact <code>OpenProgram-&lt;version&gt;-win-&lt;arch&gt;.exe</code>
+release asset for the running x64 or arm64 architecture. It validates release metadata, byte count, and SHA-256, then
+requires valid Authenticode before opening the installer. A failed validation
+deletes the candidate. Installation remains a visible user-confirmed handoff;
+the running application is not silently replaced.</p>
+<p>Windows CI installs Desktop dependencies including the native PTY module and
+runs the same Desktop contract suite. The suite covers ConPTY command
+selection, browser import, cross-window tab transactions, packaged worker
+bootstrap, release selection, checksum failure, and signature failure.</p>
+<h2 id="w4-implementation">W4 implementation<a class="header-anchor" href="#w4-implementation">#</a></h2>
+<p>The Windows command sandbox delegates to the default WSL2 distribution and
+runs the command through bubblewrap. The compatibility seam discovers a real
+WSL2 distribution, verifies Bash and bubblewrap, probes that a namespace can be
+created, and translates Windows paths with that distribution's <code>wslpath</code>.
+Bubblewrap then supplies the same main boundaries used on Linux: a read-only
+root, explicitly writable workspace roots, read and write deny paths, isolated
+PID/IPC/UTS namespaces, a private temporary directory, and a network namespace
+unless the effective policy permits network access.</p>
+<p>The default <code>sandbox.mode</code> is <code>auto</code>. On macOS and Linux it enables the native
+backend when available. On Windows it enables WSL2 delegation only after the
+capability probe succeeds; otherwise commands remain native and unsandboxed so
+an optional backend cannot make the CLI unusable. Choosing
+<code>workspace-write</code> explicitly remains fail-closed and reports the missing WSL2
+or bubblewrap prerequisite at the execution entry point. No probe or sandbox
+setup changes Windows ACLs, ownership, file modes, Defender, or WSL settings.</p>
+<p>AppContainer is not selected because making a useful existing workspace
+visible would require application-specific capability and ACL work. Job
+Objects remain useful for future CPU, memory, and process-count limits, but do
+not provide the filesystem and network boundary required by the current
+sandbox contract. Native AppContainer isolation and resource quotas therefore
+remain separate future work rather than incomplete parts of W4.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
-<ul>
-<li>Done: fcntl compat seam and its call sites; fsync handle semantics;
-directory-fsync guards; process-tree kill branches (issue #33 era).</li>
-<li>In progress: checkpoint store dir_fd resolution (fallback vs loud
-error decision pending review).</li>
-<li>Not started: Windows CI job; open-handle replace/unlink retry seam;
-path sweep; doctor Windows checks; everything in W2+.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W0</td>
+<td>Implemented as the baseline compatibility contract.</td>
+</tr>
+<tr>
+<td>W1</td>
+<td>Implementation is present and locally validated; the repository Windows jobs are the merge gate.</td>
+</tr>
+<tr>
+<td>W2</td>
+<td>Implemented; the Windows Release build and installer jobs are the publication gate.</td>
+</tr>
+<tr>
+<td>W3</td>
+<td>Implemented and locally validated; configured signing credentials and the Windows Desktop release job are the publication gate.</td>
+</tr>
+<tr>
+<td>W4</td>
+<td>Implemented through optional WSL2 and bubblewrap delegation; native AppContainer isolation and resource quotas remain future work.</td>
+</tr>
+</tbody>
+</table>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/distribution/implementation-plan.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Installation and distribution implementation plan</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Extension Gating</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#product-decision-what-windows-support-means">Product decision: what "Windows support" means</a>
-<a class="" href="#ground-rules-for-all-tiers">Ground rules for all tiers</a>
-<a class="" href="#w1-work-breakdown-native-cliserver">W1 work breakdown: native CLI/server</a>
-<a class="lvl-3" href="#w11-posix-seam-completion-small-partly-done">W1.1 POSIX seam completion (small, partly done)</a>
-<a class="lvl-3" href="#w12-subprocess-process-tree-correctness">W1.2 Subprocess &amp; process-tree correctness</a>
-<a class="lvl-3" href="#w13-windows-ci-the-core-investment">W1.3 Windows CI (the core investment)</a>
-<a class="lvl-3" href="#w14-explicit-w1-exclusions-wired-as-such">W1.4 Explicit W1 exclusions, wired as such</a>
-<a class="" href="#w2-work-breakdown-release-artifact">W2 work breakdown: release artifact</a>
-<a class="" href="#w3w4-sketches-do-not-start-without-a-separate-design-pass">W3/W4 sketches (do not start without a separate design pass)</a>
-<a class="" href="#sequencing-and-parallelism">Sequencing and parallelism</a>
+<a class="" href="#support-levels">Support levels</a>
+<a class="" href="#engineering-rules">Engineering rules</a>
+<a class="" href="#w1-implementation">W1 implementation</a>
+<a class="" href="#w2-implementation">W2 implementation</a>
+<a class="" href="#w3-implementation">W3 implementation</a>
+<a class="" href="#w4-implementation">W4 implementation</a>
 <a class="" href="#implementation-status">Implementation status</a>
 </div></aside>
 </div>

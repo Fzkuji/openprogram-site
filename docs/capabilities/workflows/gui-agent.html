@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,7 +169,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <ul>
 <li>Product runtimes do not install PyTorch or EasyOCR.</li>
 <li>The release capability probe rejects an artifact if the detector model is missing.</li>
-<li>Supported product platforms are macOS and Linux.</li>
+<li>Program registration is included on macOS, Linux, and Windows x86_64
+runtimes; individual desktop backends still follow the harness's platform
+and dependency support.</li>
 <li>The runtime needs a working directory configured before running. Workflow records are stored under the OpenProgram state directory (<code>gui_harness/workflows/</code>), not in the source tree.</li>
 </ul>
 <p>Source and README: <code>openprogram/programs/applications/gui_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>

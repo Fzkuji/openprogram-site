@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/reference/cli.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/reference/cli.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -171,6 +171,14 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <td><code>--resume SESSION_ID</code></td>
 <td>Resume a session; find ids with <code>openprogram sessions list</code> or the Web UI sidebar</td>
 </tr>
+<tr>
+<td><code>--no-alt-screen</code></td>
+<td>Render the TUI inline and preserve terminal scrollback</td>
+</tr>
+<tr>
+<td><code>--screen-reader</code></td>
+<td>Use the inline assistive-technology mode without mouse tracking</td>
+</tr>
 </tbody>
 </table>
 <h2 id="chat-and-running">Chat and running<a class="header-anchor" href="#chat-and-running">#</a></h2>
@@ -190,8 +198,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>openprogram tui</code> (alias <code>chat</code>)</td>
-<td>Launch the terminal UI directly, skipping the surface prompt (Ink or Python terminal UI on supported macOS/Linux installs; Rich remains available only to unsupported Windows source checkouts)</td>
-<td><code>--print</code>, <code>--resume</code> also work after the verb</td>
+<td>Launch the Ink terminal UI directly on Windows, macOS, or Linux; terminals without raw input fall back to Rich</td>
+<td><code>--print</code>, <code>--resume</code>, <code>--no-alt-screen</code>, and <code>--screen-reader</code> also work after the verb</td>
 </tr>
 <tr>
 <td><code>openprogram web</code></td>

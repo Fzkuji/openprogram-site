@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,7 +169,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <ul>
 <li>产品 runtime 不安装 PyTorch 或 EasyOCR。</li>
 <li>detector 模型缺失时，release capability probe 会拒绝该 artifact。</li>
-<li>受支持的产品平台是 macOS 和 Linux。</li>
+<li>macOS、Linux 和 Windows x86_64 runtime 都会注册该 Program；具体桌面 backend
+仍取决于 harness 自身的平台与依赖支持。</li>
 <li>运行前需要 runtime 配置好工作目录。工作流记录写入 OpenProgram 状态目录下的 <code>gui_harness/workflows/</code>，不再写入源码目录。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>

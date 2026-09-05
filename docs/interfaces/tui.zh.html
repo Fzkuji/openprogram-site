@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/interfaces/tui.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/interfaces/tui.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,10 +85,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="进入与退出">进入与退出<a class="header-anchor" href="#进入与退出">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>tui<span class="w">      </span><span class="c1"># 直接进入终端聊天（别名：openprogram chat）</span>
 openprogram<span class="w">          </span><span class="c1"># 裸命令会先询问：进终端 UI 还是 Web UI</span>
+openprogram<span class="w"> </span>tui<span class="w"> </span>--no-alt-screen<span class="w">  </span><span class="c1"># 行内模式，保留终端滚屏</span>
+openprogram<span class="w"> </span>tui<span class="w"> </span>--screen-reader<span class="w">  </span><span class="c1"># 无鼠标追踪的行内无障碍模式</span>
 </code></pre>
-<p>release CLI 始终包含 Python 终端界面。macOS 和 Linux 的 source development 安装还可以构建 Node.js Ink 界面。两者都通过 WebSocket 连接同一个本地 worker，并与 Web UI 共用会话。Windows release 安装不受支持。</p>
+<p>Windows、macOS 和 Linux 的 release CLI 都自带独立的 Node.js Ink 界面。启动时检测终端实际是否支持 raw input，而不是按操作系统一刀切：Windows Terminal、ConPTY 下的 PowerShell 和现代 IDE 集成终端会进入完整全屏界面；终端无法提供 raw input 时，会给出明确提示并回退到内置 Python Rich 界面。两种实现都通过 WebSocket 连接同一个本地 worker，并与 Web UI 共用会话。</p>
+<p>全屏界面要求 stdin 和 stdout 都连接终端。重定向或管道调用会在写出任何 ANSI frame 前跳过 Ink，进入行式 fallback；自动化调用请使用 <code>openprogram --print &quot;...&quot;</code>。Alternate screen 不再清除 shell 主屏内容，退出时会原样恢复。光标移动和删除以完整 Unicode grapheme cluster 为单位，因此编辑 emoji、组合字符和中日韩文字时不会把字符拆开。</p>
+<p><code>/copy</code> 在 Wayland 会话使用 <code>wl-copy</code>，在 X11 会话使用 <code>xclip</code> 或 <code>xsel</code>，在 WSL 中使用 <code>clip.exe</code>。通过 SSH 使用时不会误写远端图形剪贴板，而改用 OSC 52；在 tmux 中还会使用 passthrough 与 paste buffer。原生剪贴板命令带有超时，失效的 display 不会卡死 TUI。</p>
+<p>Windows 推荐使用 Windows Terminal。运行在 MinTTY 中的 Git Bash 可能回退到 Rich；Windows Terminal 内的 PowerShell 可使用完整界面。Release 已携带 Node.js executable，用户不需要为 TUI 另装 Node.js。</p>
 <p>退出：<code>/quit</code>，或空闲时快速按两次 <code>Ctrl-C</code>。</p>
-<p>续聊历史会话：TUI 内用 <code>/resume</code> 挑选；会话 id 可用 <code>openprogram sessions list</code> 查。（<code>openprogram --resume &lt;id&gt;</code> 参数目前只对 <code>--print</code> 单发生效，启动交互式 TUI 时不生效。）</p>
+<p>续聊历史会话：TUI 内用 <code>/resume</code> 挑选，也可以直接运行 <code>openprogram --resume &lt;id&gt;</code>。会话 id 可用 <code>openprogram sessions list</code> 查。</p>
+<p>使用 <code>--profile &lt;名称&gt;</code> 时，启动诊断写入该 profile 的状态目录（<code>~/.openprogram-&lt;名称&gt;/logs/ink-startup.log</code>），不会混入默认 profile。</p>
 <h2 id="按键">按键<a class="header-anchor" href="#按键">#</a></h2>
 <table>
 <thead>
@@ -101,6 +107,10 @@ openprogram<span class="w">          </span><span class="c1"># 裸命令会先�
 <tr>
 <td><code>Enter</code></td>
 <td>发送</td>
+</tr>
+<tr>
+<td>空输入时按 <code>?</code></td>
+<td>打开键盘快捷键参考</td>
 </tr>
 <tr>
 <td><code>Alt+Enter</code></td>
@@ -129,6 +139,14 @@ openprogram<span class="w">          </span><span class="c1"># 裸命令会先�
 <tr>
 <td><code>→</code>（行尾）或 <code>Ctrl+E</code></td>
 <td>接受自动补全建议</td>
+</tr>
+<tr>
+<td><code>Ctrl+A</code> / <code>Ctrl+E</code></td>
+<td>没有待接受建议时移到输入开头 / 结尾</td>
+</tr>
+<tr>
+<td><code>Ctrl+W</code></td>
+<td>删除前一个单词</td>
 </tr>
 <tr>
 <td><code>Ctrl+R</code></td>
@@ -163,8 +181,8 @@ openprogram<span class="w">          </span><span class="c1"># 裸命令会先�
 </thead>
 <tbody>
 <tr>
-<td><code>/help</code></td>
-<td>命令列表</td>
+<td><code>/help</code>、<code>/keybindings</code></td>
+<td>命令列表与键盘快捷键参考</td>
 </tr>
 <tr>
 <td><code>/model</code>、<code>/fetch-models</code></td>
@@ -200,7 +218,7 @@ openprogram<span class="w">          </span><span class="c1"># 裸命令会先�
 </tr>
 <tr>
 <td><code>/mcp</code>、<code>/tools</code>、<code>/memory</code></td>
-<td>与 Web UI 对应页面同源的数据</td>
+<td>查看和管理与 Web UI 对应页面同源的数据</td>
 </tr>
 <tr>
 <td><code>/cost</code></td>

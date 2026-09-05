@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/server/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/server/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,7 +115,17 @@ openprogram<span class="w"> </span>logs<span class="w"> </span>path<span class="
 <pre><code class="language-bash">openprogram<span class="w"> </span>worker<span class="w"> </span>install<span class="w">      </span><span class="c1"># install as a system service</span>
 openprogram<span class="w"> </span>worker<span class="w"> </span>uninstall<span class="w">    </span><span class="c1"># remove it</span>
 </code></pre>
-<p>macOS uses launchd (<code>~/Library/LaunchAgents/ai.openprogram.worker.plist</code>); Linux uses systemd --user. Once installed, the worker starts automatically at login and restarts after a crash. <code>openprogram status</code> shows whether the service is installed.</p>
+<p>macOS uses launchd (<code>~/Library/LaunchAgents/ai.openprogram.worker.plist</code>),
+Linux uses systemd --user, and a Windows source checkout uses a least-privilege
+per-user Task Scheduler entry. Once installed, the worker starts automatically
+at login and restarts after a crash. <code>openprogram status</code> shows whether the
+service is installed.</p>
+<p>On Linux, <code>worker start</code>, <code>stop</code>, and <code>restart</code> continue to use the installed
+systemd user service instead of silently creating a detached replacement.
+<code>restart</code> also refreshes the generated unit from the active CLI runtime, so an
+immutable release upgrade does not keep launching the previous runtime.
+Each named <a href="/docs/install/profiles.html">profile</a> gets a distinct unit, so service
+commands for one profile cannot stop or replace another profile's worker.</p>
 <h2 id="related-pages">Related pages<a class="header-anchor" href="#related-pages">#</a></h2>
 <ul>
 <li><a href="/docs/server/configuration.html">Configuration and data directory</a> — what lives in <code>~/.openprogram/</code> and how to use <code>openprogram config</code></li>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/interfaces/web.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/interfaces/web.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,6 +98,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Function and tool calls within each reply turn render as an expandable execution timeline: one row per step, with arguments, output, errors, and duration for each function call. Nested calls display recursively as a context tree, and subagents are steps in the timeline too. Clicking a step opens the execution detail panel in the right sidebar. Functions run manually from the <code>/programs</code> page's Run dialog use the same timeline rendering.</p>
 <h3 id="attachments">Attachments<a class="header-anchor" href="#attachments">#</a></h3>
 <p>Drag and drop images or text files onto the input box (pasting works too); they are attached to the next message you send.</p>
+<h3 id="projects-on-headless-or-remote-linux">Projects on headless or remote Linux<a class="header-anchor" href="#projects-on-headless-or-remote-linux">#</a></h3>
+<p>Project folders and additional working directories refer to paths on the
+machine running the worker. OpenProgram normally opens that machine's native
+folder picker. If Linux has no X11 or Wayland display—for example, a server
+reached through SSH—the Web UI opens a manual server-path dialog instead.
+Enter an absolute path such as <code>/srv/projects/example</code>; the worker verifies
+that the directory exists before using it. Cancelling an available native
+picker remains a cancellation and does not trigger the manual dialog.</p>
 <h3 id="session-branches-and-the-dag-view">Session branches and the DAG view<a class="header-anchor" href="#session-branches-and-the-dag-view">#</a></h3>
 <p>Session history is stored as a DAG, not a flat list:</p>
 <ul>
@@ -161,6 +169,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="lvl-3" href="#collapsible-thinking">Collapsible thinking</a>
 <a class="lvl-3" href="#function-call-timeline">Function-call timeline</a>
 <a class="lvl-3" href="#attachments">Attachments</a>
+<a class="lvl-3" href="#projects-on-headless-or-remote-linux">Projects on headless or remote Linux</a>
 <a class="lvl-3" href="#session-branches-and-the-dag-view">Session branches and the DAG view</a>
 <a class="lvl-3" href="#rewind">Rewind</a>
 <a class="" href="#other-pages">Other pages</a>

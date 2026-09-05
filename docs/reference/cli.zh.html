@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/reference/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,6 +169,14 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <td><code>--resume SESSION_ID</code></td>
 <td>恢复会话；id 用 <code>openprogram sessions list</code> 或 Web UI 侧栏查</td>
 </tr>
+<tr>
+<td><code>--no-alt-screen</code></td>
+<td>使用行内 TUI 并保留终端滚屏</td>
+</tr>
+<tr>
+<td><code>--screen-reader</code></td>
+<td>使用不启用鼠标追踪的行内无障碍模式</td>
+</tr>
 </tbody>
 </table>
 <h2 id="聊天与运行">聊天与运行<a class="header-anchor" href="#聊天与运行">#</a></h2>
@@ -188,8 +196,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>openprogram tui</code>（别名 <code>chat</code>）</td>
-<td>直接启动终端 UI，跳过界面选择（受支持的 macOS/Linux 安装使用 Ink 或 Python 终端 UI；Rich 仅保留给不受支持的 Windows source checkout）</td>
-<td><code>--print</code>、<code>--resume</code> 在动词后同样可用</td>
+<td>在 Windows、macOS 或 Linux 直接启动 Ink 终端 UI；无法提供 raw input 的终端回退到 Rich</td>
+<td><code>--print</code>、<code>--resume</code>、<code>--no-alt-screen</code>、<code>--screen-reader</code> 在动词后同样可用</td>
 </tr>
 <tr>
 <td><code>openprogram web</code></td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -475,9 +475,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><code>sandbox.mode</code></td>
-<td><code>workspace-write</code></td>
+<td><code>auto</code></td>
 <td>live</td>
-<td><code>danger-full-access</code> runs local model-driven commands with your full user authority. <code>workspace-write</code> applies the host-native sandbox (macOS sandbox-exec, Linux bubblewrap), restricts writes to the working directory and configured roots, blocks the paths listed under Blocked read paths, and disables network. Read per command, so a change applies to the next command everywhere — including background threads and spawned subprocesses.</td>
+<td><code>auto</code> uses the sandbox when its backend is available and otherwise keeps local commands usable without one. <code>danger-full-access</code> runs local model-driven commands with your full user authority. <code>workspace-write</code> applies the host-native sandbox (macOS sandbox-exec, Linux bubblewrap, or bubblewrap delegated to the default WSL2 distribution on Windows), restricts writes to the working directory and configured roots, blocks the paths listed under Blocked read paths, and disables network. Read per command, so a change applies to the next command everywhere — including background threads and spawned subprocesses.</td>
 </tr>
 <tr>
 <td><code>sandbox.writable_roots</code></td>

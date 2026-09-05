@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -265,7 +265,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </tr>
 </tbody>
 </table>
-<p>The local sandbox is host-native: Seatbelt on macOS and bubblewrap on Linux. Windows and unsupported platforms refuse commands while the sandbox is enabled unless the owner explicitly selects the unsafe <code>sandbox.unavailable_policy=warn</code> or sets <code>sandbox.mode=danger-full-access</code>. Docker is not an automatic fallback.</p>
+<p>The local sandbox uses Seatbelt on macOS, bubblewrap on Linux, and bubblewrap delegated through the default WSL2 distribution on Windows. If that backend is unavailable, commands are refused while the sandbox is enabled unless the owner explicitly selects the unsafe <code>sandbox.unavailable_policy=warn</code> or sets <code>sandbox.mode=danger-full-access</code>. Docker is not an automatic fallback.</p>
 <h2 id="top-level-keys-in-configjson">Top-level keys in config.json<a class="header-anchor" href="#top-level-keys-in-configjson">#</a></h2>
 <p>The top-level keys actually written to <code>~/.openprogram/config.json</code> (do not edit by hand — go through <code>openprogram config set</code>, the setup wizard, or the Web UI):</p>
 <table>

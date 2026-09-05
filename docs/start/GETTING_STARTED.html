@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,7 +83,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Install the complete release runtime with its managed Python on macOS or Linux:</p>
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>The installer supplies its own Python and includes the Web UI, so Node.js is not a runtime requirement. Git is required for session and Memory history; <code>openprogram doctor</code> reports whether it is available. macOS desktop users use the DMG attached to GitHub Releases. Linux users use the complete CLI/server runtime with its Web UI or TUI; no Linux desktop package is currently published. Platform scope and development-checkout instructions are in <a href="/docs/install/install.html">Install</a>.</p>
+<p>On Windows x86_64, use PowerShell:</p>
+<pre><code class="language-powershell"><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">openprogram</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+</code></pre>
+<p>The installer supplies its own Python and includes the Web UI, so Node.js is not a runtime requirement. Git is required for session and Memory history; <code>openprogram doctor</code> reports whether it is available. macOS Desktop uses the release DMG. Windows Desktop uses a signed <code>win-x64.exe</code> only when it is attached to that published release; otherwise use the complete Windows CLI/server runtime and browser UI. Windows sandbox execution is separate. Platform scope and development-checkout instructions are in <a href="/docs/install/install.html">Install</a>.</p>
 <h2 id="step-2-first-run-connect-a-provider">Step 2: First run — connect a provider<a class="header-anchor" href="#step-2-first-run-connect-a-provider">#</a></h2>
 <pre><code class="language-bash">openprogram
 </code></pre>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/server/backup.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/server/backup.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,9 +92,9 @@ openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span clas
 </code></pre>
 <p>归档文件放在 <code>~/.openprogram/backups/</code>（命名 profile 下是
 <code>~/.openprogram-&lt;profile&gt;/backups/</code>），文件名为
-<code>&lt;profile&gt;-&lt;时间戳&gt;.tar.gz</code>，权限 <code>0600</code>，只有你自己能读。
-归档先写入唯一的 owner-only 临时文件，flush 后原子发布；POSIX 还会
-fsync 所在目录。</p>
+<code>&lt;profile&gt;-&lt;时间戳&gt;.tar.gz</code>。POSIX 主机使用 <code>0600</code> 权限；Windows source
+checkout 保留状态目录继承的 NTFS ACL，不改写 ACL 继承。归档先写入唯一的
+临时文件，flush 后原子发布；POSIX 还会 fsync 所在目录。</p>
 <h2 id="备份范围">备份范围<a class="header-anchor" href="#备份范围">#</a></h2>
 <p>范围是一份白名单，不是&quot;除了某些以外全都要&quot;。
 将来版本新增的缓存目录不会悄悄把你的归档撑大。</p>
@@ -201,7 +201,9 @@ MCP server 的 env、header、bearer token 和 OAuth client secret 字段，
 被拒绝的归档不会改动本机状态。通过校验后，每个文件都用 OpenProgram 其余
 部分共用的 owner-only 原子写入发布，并且每次发布都记录 journal：因此被崩溃
 或磁盘写满打断的恢复会被回滚，而不是停在改了一半的状态。下次执行恢复时
-会自动先做这个回滚。</p>
+会自动先做这个回滚。POSIX 使用 descriptor-relative 路径遍历；Windows 的
+Python 不提供这些 <code>dir_fd</code> 操作，因此 fallback 会在每次路径操作前验证包含
+关系，并拒绝 symlink、junction 和其他 reparse point。</p>
 <h2 id="清理">清理<a class="header-anchor" href="#清理">#</a></h2>
 <p>备份不会自动删除。堆积起来之后：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>backup<span class="w"> </span>prune<span class="w"> </span>--keep<span class="w"> </span><span class="m">5</span>

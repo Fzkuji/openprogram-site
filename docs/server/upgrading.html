@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/server/upgrading.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/server/upgrading.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,11 +119,11 @@ reason.</p>
 </tr>
 <tr>
 <td>deps</td>
-<td>Refresh the source checkout's Python environment if <code>pyproject.toml</code> changed; run root <code>npm ci</code> if <code>package-lock.json</code> changed</td>
+<td>Refresh the source checkout's Python environment if <code>pyproject.toml</code> changed; install the frontend workspaces if <code>package-lock.json</code> changed</td>
 </tr>
 <tr>
 <td>build</td>
-<td><code>npx next build</code>, only if anything under <code>web/</code> changed</td>
+<td>Rebuild <code>apps/web</code> and/or <code>apps/cli</code> when that workspace or <code>package-lock.json</code> changed</td>
 </tr>
 <tr>
 <td>probe</td>

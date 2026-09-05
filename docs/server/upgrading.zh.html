@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/server/upgrading.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/server/upgrading.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,11 +114,11 @@ openprogram<span class="w"> </span>upgrade<span class="w">                 </spa
 </tr>
 <tr>
 <td>deps</td>
-<td><code>pyproject.toml</code> 变了就刷新源码 checkout 的 Python 环境；根 <code>package-lock.json</code> 变了就在仓库根运行 <code>npm ci</code></td>
+<td><code>pyproject.toml</code> 变了就刷新源码 checkout 的 Python 环境；<code>package-lock.json</code> 变了就安装 frontend workspaces</td>
 </tr>
 <tr>
 <td>build</td>
-<td><code>npx next build</code>，仅当 <code>web/</code> 下有改动时</td>
+<td><code>apps/web</code>、<code>apps/cli</code> 或 <code>package-lock.json</code> 变更时重建对应 frontend workspace</td>
 </tr>
 <tr>
 <td>probe</td>

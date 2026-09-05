@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788598541" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788603790" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overview · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
 <link rel="canonical" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/">
 <meta property="og:title" content="Overview · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Overview · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS and Linux releases Getting Started &amp;middot;">
+<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -86,14 +86,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </p>
 <p align="center">
   <b>OpenProgram: Self-Programming AI Agent Framework</b><br/>
-  Agents create and refine their own workflows · Any LLM · macOS and Linux releases
+  Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases
 </p>
 <p align="center">
   <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
   <a href="https://github.com/Fzkuji/OpenProgram/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/Fzkuji/OpenProgram?style=flat-square&color=blue"></a>
   <a href="https://github.com/Fzkuji/OpenProgram/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square"></a>
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square"></a>
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux-lightgrey?style=flat-square">
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey?style=flat-square">
   <a href="https://github.com/Fzkuji/OpenProgram/actions/workflows/ci.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Fzkuji/OpenProgram/ci.yml?branch=main&style=flat-square&label=build"></a>
 </p>
 <p align="center">
@@ -103,7 +103,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <a href="/docs/comparisons/ai-agent-frameworks.html">Framework Comparison</a> &middot;
   <a href="/docs/reference/API.html">API Reference</a> &middot;
   <a href="/docs/capabilities/agentic-programming/philosophy.html">Philosophy</a> &middot;
-  <a href="/docs/README.zh.html">中文</a>
+  <a href="/docs/README.zh.html">Chinese</a>
 </p>
 <hr />
 <blockquote>
@@ -132,7 +132,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre>
-<p>macOS desktop: download the unsigned DMG from <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a>. Linux uses the same CLI/server runtime and the Web UI; no Linux desktop package is published. Windows native packaging is not in this release.</p>
+<p>Windows x86_64 CLI/server:</p>
+<pre><code class="language-powershell"><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">openprogram</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+</code></pre>
+<p>Desktop: macOS releases use the unsigned DMG; Windows uses a signed <code>win-x64.exe</code> when that artifact is attached to the <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Release</a>. Linux and Windows without that EXE use the complete CLI/server runtime and Web UI.</p>
 <p>Platform matrix, PATH, <code>openprogram doctor</code>, and source-checkout install: <strong><a href="/docs/install/install.html">Installation</a></strong>.</p>
 <h2 id="quick-start">Quick start<a class="header-anchor" href="#quick-start">#</a></h2>
 <p>The first <code>openprogram</code> run opens a provider setup wizard, then the terminal chat. Re-run the wizard with <code>openprogram setup</code>.</p>
@@ -156,7 +159,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>2026-04-03</strong> — 🌱 First release: <code>@agentic_function</code> and the execution DAG.</li>
 </ul>
 <h2 id="why-openprogram">Why OpenProgram?<a class="header-anchor" href="#why-openprogram">#</a></h2>
-<p>The current OpenProgram release supports macOS and Linux installations, multiple providers, and a Web interface (desktop App or <code>openprogram web</code> → http://localhost:18100). Windows native packaging is deferred for a later release decision; Windows and mobile devices can currently use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
+<p>OpenProgram supports macOS and Linux installations, native Windows x86_64 CLI/server, multiple providers, a full terminal UI, and a Web interface (Desktop App or <code>openprogram web</code> → http://localhost:18100). The Windows Desktop distribution path produces a signed per-user installer and embeds the same complete runtime; Windows sandbox execution remains separate. The Windows release includes the Ink TUI and falls back to the Python Rich interface only when the terminal cannot provide raw input. Mobile devices can use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
 <h3 id="1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems<a class="header-anchor" href="#1-dag-context-for-native-multi-agent-systems">#</a></h3>
 <p align="center">
   <picture>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/design/runtime/sandbox.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/reference/design/runtime/sandbox.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>执行身份、权限与沙箱 · OpenProgram Docs</title>
-<meta name="description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt 与 Linux">
+<meta name="description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt、Linux">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/sandbox.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html">
 <meta property="og:title" content="执行身份、权限与沙箱 · OpenProgram Docs">
-<meta property="og:description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt 与 Linux">
+<meta property="og:description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt、Linux">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="执行身份、权限与沙箱 · OpenProgram Docs">
-<meta name="twitter:description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt 与 Linux">
+<meta name="twitter:description" content="沙箱现与上游 Authority、Permission 合同一起维护在唯一权威设计中： 执行权限与沙箱设计 。 权威文档覆盖： 固定的 owner 、 paired 和 mcp_browser 权限档； permission mode、项目规则、交互审批和非交互拒绝； macOS Seatbelt、Linux">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -189,7 +189,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/distribution/installation-packaging.html">OpenProgram 安装、打包、发布与升级设计</a>
 <a class="navlink" href="/docs/reference/design/distribution/automatic-updates.html">OpenProgram 正式版本自动更新</a>
 <a class="navlink" href="/docs/reference/design/distribution/implementation-plan.html">Installation and distribution implementation plan</a>
-<a class="navlink" href="/docs/reference/design/distribution/windows-support.html">Windows support</a>
+<a class="navlink" href="/docs/reference/design/distribution/windows-support.html" data-title-zh="Windows 支持" data-href-en="/docs/reference/design/distribution/windows-support.html" data-href-zh="/docs/reference/design/distribution/windows-support.zh.html">Windows support</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="扩展门控（Extension Gating）">Extension Gating</div>
@@ -395,7 +395,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <ul>
 <li>固定的 <code>owner</code>、<code>paired</code> 和 <code>mcp_browser</code> 权限档；</li>
 <li>permission mode、项目规则、交互审批和非交互拒绝；</li>
-<li>macOS Seatbelt 与 Linux bubblewrap 执行边界；</li>
+<li>macOS Seatbelt、Linux bubblewrap 与 Windows WSL2-to-bubblewrap 执行边界；</li>
+<li><code>auto</code> 能力检测，包括 Windows 可选 WSL2 后端缺失时的原生未沙箱回退，以及显式
+选择 <code>workspace-write</code> 时的 fail-closed 行为；</li>
 <li>bypass 与 sandbox escalation 语义；</li>
 <li>请求来源、框架对照、失败行为、实现证据和已知缺口。</li>
 </ul>

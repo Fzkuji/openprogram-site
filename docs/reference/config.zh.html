@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788598541" data-alt-lang-url="/docs/reference/config.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788603790" data-alt-lang-url="/docs/reference/config.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -265,7 +265,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </tr>
 </tbody>
 </table>
-<p>本地沙箱使用宿主原生实现：macOS使用Seatbelt，Linux使用bubblewrap。Windows和其他不支持的平台在沙箱开启时默认拒绝命令；只有owner显式设置不安全的<code>sandbox.unavailable_policy=warn</code>或<code>sandbox.mode=danger-full-access</code>才会改变该行为。Docker不是自动回退后端。</p>
+<p>本地沙箱在 macOS 使用 Seatbelt，在 Linux 使用 bubblewrap，在 Windows 则把 bubblewrap 委托给默认 WSL2 发行版。该后端不可用时，沙箱开启状态下默认拒绝命令；只有 owner 显式设置不安全的 <code>sandbox.unavailable_policy=warn</code> 或 <code>sandbox.mode=danger-full-access</code> 才会改变该行为。Docker 不是自动回退后端。</p>
 <h2 id="configjson-顶层键">config.json 顶层键<a class="header-anchor" href="#configjson-顶层键">#</a></h2>
 <p>实际写入 <code>~/.openprogram/config.json</code> 的顶层键（不要手改，走 <code>openprogram config set</code> / setup 向导 / Web UI）：</p>
 <table>
