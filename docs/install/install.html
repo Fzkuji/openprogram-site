@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788612939" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788613699" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -168,6 +168,13 @@ under <code>%USERPROFILE%\.openprogram\runtime\cli\releases</code> and creates
 <code>%LOCALAPPDATA%\OpenProgram\bin\openprogram.cmd</code>. The launcher directory is
 added to the user <code>PATH</code>; open a new terminal if the current one does not see
 it yet.</p>
+<p>Release and source installers provide both <code>openprogram.ps1</code> and
+<code>openprogram.cmd</code>. They support Unicode installation paths without changing
+the system locale. PowerShell uses the script launcher to preserve literal
+arguments; CMD uses the batch launcher and its usual quoting rules. Script
+execution policy is not changed: if your policy blocks the PowerShell launcher,
+invoke <code>openprogram.cmd</code> explicitly. The batch launcher restores the original
+console code page and preserves the command's exit status.</p>
 <p>Before switching <code>current</code>, the installer verifies the architecture-matched manifest and bundled Ink TUI, then runs a worker cold-start/health check on an operating-system-assigned loopback port. Installation is serialized by a per-user lock, files are staged outside the immutable release directory, and <code>current</code> is changed atomically only after every check passes. A failed probe leaves the previous version selected. After installation, run:</p>
 <pre><code class="language-bash">~/.local/bin/openprogram<span class="w"> </span>--version
 ~/.local/bin/openprogram<span class="w"> </span>web
@@ -191,7 +198,7 @@ it yet.</p>
 <p>The Windows development installer creates an isolated <code>.venv</code>, installs the
 frontend workspaces from the npm lockfile, builds the browser UI and full Ink
 terminal UI, and installs the optional browser and Channel dependencies. It also creates
-<code>%LOCALAPPDATA%\OpenProgram\bin\openprogram.cmd</code> and adds that directory to the
+<code>openprogram.cmd</code> and <code>openprogram.ps1</code> under <code>%LOCALAPPDATA%\OpenProgram\bin</code> and adds that directory to the
 user <code>PATH</code>, so a new PowerShell can invoke <code>openprogram</code> without activating
 the checkout environment. Node.js 22 LTS is the validated version. <code>-Minimal</code>
 installs only the Python CLI/server and does not install or build frontend
