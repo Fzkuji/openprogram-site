@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788693413" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788695058" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -621,7 +621,7 @@ token 高亮（第一版从简）。</li>
 <a href="/docs/reference/design/proactive/event-reference.html">../proactive/event-reference.html</a></li>
 </ul>
 <h3 id="讨论待处理请求">讨论待处理请求<a class="header-anchor" href="#讨论待处理请求">#</a></h3>
-<p>Chat about this 只拒绝当前显示的 wait，把提示和已显示的详情写入可编辑草稿，原有会话草稿保留在其后。它不发送聊天消息，也不批准操作。普通聊天输入框恢复后自动聚焦，光标移到末尾。其他排队的决定继续保留，在它们结束后才聚焦输入框；切换会话会取消尚未执行的聚焦请求。</p>
+<p>Chat about this 提交当前 wait 的精确拒绝命令，确认 applied 后自动将一条“拒绝当前申请，希望讨论”的用户消息加入原会话的发送队列。前一次执行结束后自动发送，模型先作文字回复，随后用户再单独发送消息。这次自动回复禁用工具和网络搜索；原有草稿、附件和后续聊天设置不变。重复点击共用一个命令和一条通知。拒绝失败或尚未确认时显示错误，不发送拒绝通知。等待确认期间切换任务不会改变原会话归属。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">

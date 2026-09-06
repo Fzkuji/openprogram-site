@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788693413" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788695058" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -604,12 +604,15 @@ change behaviour.</p>
 <a href="/docs/reference/design/proactive/event-reference.html">../proactive/event-reference.html</a></li>
 </ul>
 <h3 id="discussing-a-pending-request">Discussing a pending request<a class="header-anchor" href="#discussing-a-pending-request">#</a></h3>
-<p>Chat about this declines only the displayed wait and prepares an editable draft
-from its prompt and displayed detail, followed by the existing session draft.
-It does not send a chat message or grant approval. The input receives focus and
-the caret moves to the end after ordinary chat input mounts. Other queued
-decisions remain pending; they postpone focus until the input is available.
-Switching sessions cancels the pending focus request.</p>
+<p>Chat about this submits an exact canonical wait decline and waits for its applied
+acknowledgement. It then queues a short user message saying that the request is
+rejected and discussion is needed. The existing session queue sends it when the
+prior execution becomes idle. This automatic turn disables tools and web search
+so the model replies before the user sends a separate follow-up. Drafts,
+attachments and later-turn settings remain unchanged. Duplicate clicks share one
+command and one notification. Failed or unconfirmed declines show an error and
+do not send a rejection notification. The session captured at click time owns
+both operations even if the user switches tabs while awaiting acknowledgement.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-turn-visual-spec.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
