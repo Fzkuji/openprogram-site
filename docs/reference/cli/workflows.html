@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788682654">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788691617">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,10 +161,56 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<h2 id="workflows-test"><code>workflows test</code><a class="header-anchor" href="#workflows-test">#</a></h2>
+<p>Run Workflow behavior tests in a required OS sandbox</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>directory</code></td>
+<td>Workflow package directory containing pyproject.toml</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Emit a JSON result</td>
+</tr>
+</tbody>
+</table>
+<h2 id="workflows-publish"><code>workflows publish</code><a class="header-anchor" href="#workflows-publish">#</a></h2>
+<p>Test and publish an immutable Workflow package revision</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>directory</code></td>
+<td>Workflow package directory containing pyproject.toml</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Emit a JSON result</td>
+</tr>
+<tr>
+<td><code>--replace</code></td>
+<td>Replace an existing clean Workflow package after tests pass</td>
+</tr>
+</tbody>
+</table>
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/worker.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">worker</span></a><a class="pn-link pn-next" href="/docs/reference/design/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Design Documents</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#workflows-validate">workflows validate</a>
+<a class="" href="#workflows-test">workflows test</a>
+<a class="" href="#workflows-publish">workflows publish</a>
 </div></aside>
 </div>
 

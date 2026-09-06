@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788682654" data-alt-lang-url="/docs/capabilities/workflows/authoring.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788691617" data-alt-lang-url="/docs/capabilities/workflows/authoring.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Write a Workflow package · OpenProgram Docs</title>
-<meta name="description" content="This page is the authoring contract for reusable Workflow packages created by a person or by OpenProgram&#x27;s author Agent. Both paths use the same static">
+<title>Write, test, and publish a Workflow · OpenProgram Docs</title>
+<meta name="description" content="A Workflow is a Python package with one public @agentic_function entry point. People and OpenProgram&#x27;s author Agent use the same package validator and Git">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/authoring.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/authoring.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/workflows/authoring.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Write a Workflow package"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Write, test, and publish a Workflow"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/authoring.html">
-<meta property="og:title" content="Write a Workflow package · OpenProgram Docs">
-<meta property="og:description" content="This page is the authoring contract for reusable Workflow packages created by a person or by OpenProgram&#x27;s author Agent. Both paths use the same static">
+<meta property="og:title" content="Write, test, and publish a Workflow · OpenProgram Docs">
+<meta property="og:description" content="A Workflow is a Python package with one public @agentic_function entry point. People and OpenProgram&#x27;s author Agent use the same package validator and Git">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Write a Workflow package · OpenProgram Docs">
-<meta name="twitter:description" content="This page is the authoring contract for reusable Workflow packages created by a person or by OpenProgram&#x27;s author Agent. Both paths use the same static">
+<meta name="twitter:title" content="Write, test, and publish a Workflow · OpenProgram Docs">
+<meta name="twitter:description" content="A Workflow is a Python package with one public @agentic_function entry point. People and OpenProgram&#x27;s author Agent use the same package validator and Git">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -89,7 +89,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
-<a class="navlink active" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写 Workflow package" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write a Workflow package</a>
+<a class="navlink active" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写、测试和发布 Workflow" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write, test, and publish a Workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
@@ -134,80 +134,209 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="编写 Workflow package">Write a Workflow package</span></nav><h1 id="write-a-workflow-package">Write a Workflow package<a class="header-anchor" href="#write-a-workflow-package">#</a></h1>
-<p>This page is the authoring contract for reusable Workflow packages created by a person or by OpenProgram's author Agent. Both paths use the same static validator.</p>
-<h2 id="required-layout">Required layout<a class="header-anchor" href="#required-layout">#</a></h2>
-<p>The project directory name, project name, entry-point name, and Python package name must be the same lowercase Python identifier.</p>
-<pre><code class="language-text">weekly_report/
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="编写、测试和发布 Workflow">Write, test, and publish a Workflow</span></nav><h1 id="write-test-and-publish-a-workflow">Write, test, and publish a Workflow<a class="header-anchor" href="#write-test-and-publish-a-workflow">#</a></h1>
+<p>A Workflow is a Python package with one public <code>@agentic_function</code> entry point. People and OpenProgram's author Agent use the same package validator and Git publication format. Functions compose through ordinary Python imports and calls.</p>
+<h2 id="define-the-contract-before-writing-code">Define the contract before writing code<a class="header-anchor" href="#define-the-contract-before-writing-code">#</a></h2>
+<p>Record the following in the package's <code>README.md</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Required information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>The concrete task and the evidence needed to complete it</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Meaning of <code>task</code>, required context, and invalid-input behavior</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Return type, files produced, and how success is verified</td>
+</tr>
+<tr>
+<td>Effects</td>
+<td>Model, tool, file, network, and external-submission behavior</td>
+</tr>
+<tr>
+<td>Failure and cancellation</td>
+<td>What remains after a failed or interrupted run; whether retry is safe</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Imported Workflows, required tools and services</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>Behavior checks, mocked external work, and any separate live checks</td>
+</tr>
+<tr>
+<td>Usage</td>
+<td>One reproducible invocation and the expected result</td>
+</tr>
+</tbody>
+</table>
+<p>Keep the public entry point small. Put preparation, checks, or separate stages in helpers when they have a distinct responsibility. Use <code>llm</code>, <code>agent</code>, <code>goal</code>, tools, and other Workflows directly; do not implement another dispatcher or execution engine. Handle expected invalid input explicitly and let runtime cancellation propagate.</p>
+<h2 id="package-layout-and-identity">Package layout and identity<a class="header-anchor" href="#package-layout-and-identity">#</a></h2>
+<p>The directory, project name, entry-point name, and Python package name must be the same lowercase Python identifier.</p>
+<pre><code class="language-text">project_report/
 ├── pyproject.toml
 ├── README.md
 ├── __init__.py
 ├── workflow.py
 ├── steps/
+│   ├── __init__.py
 │   └── prepare.py
 └── tests/
     └── test_workflow.py
 </code></pre>
-<p><code>goals/</code> and <code>helpers/</code> are also valid helper directories. At least one non-<code>__init__.py</code> helper module is required. Python source outside these locations is rejected.</p>
-<h2 id="metadata">Metadata<a class="header-anchor" href="#metadata">#</a></h2>
+<p><code>goals/</code> and <code>helpers/</code> are also supported. At least one non-<code>__init__.py</code> helper module is required. Python source outside the package entry, helper directories, and tests is rejected. Bytecode caches are ignored; they are not package source.</p>
+<p>Names begin with a lowercase letter and contain only lowercase letters, digits, and underscores, up to 80 characters. The summary is required and limited to 500 characters. Tags are required but may be empty, with at most 20 strings of 60 characters each.</p>
+<p><code>pyproject.toml</code>:</p>
 <pre><code class="language-toml"><span class="k">[project]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"weekly_report"</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project_report"</span>
 <span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.1.0"</span>
-<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Prepare an evidence-based weekly report."</span>
-<span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"weekly report"</span><span class="p">,</span><span class="w"> </span><span class="s2">"status update"</span><span class="p">]</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Prepare a draft report from verified project evidence."</span>
+<span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"report"</span><span class="p">,</span><span class="w"> </span><span class="s2">"evidence"</span><span class="p">]</span>
 
 <span class="k">[tool.openprogram]</span>
-<span class="n">display-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"weekly_report"</span>
+<span class="n">display-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project_report"</span>
 
 <span class="k">[project.entry-points.</span><span class="s2">"openprogram.workflows"</span><span class="k">]</span>
-<span class="n">weekly_report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"workflows.weekly_report:weekly_report"</span>
+<span class="n">project_report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"workflows.project_report:project_report"</span>
 </code></pre>
-<p>Names must begin with a lowercase letter and contain only lowercase letters, digits, and underscores. A summary is required and limited to 500 characters. The <code>keywords</code>/tags array is required but may be empty; it accepts at most 20 strings and 60 characters per entry.</p>
-<h2 id="public-entry-point">Public entry point<a class="header-anchor" href="#public-entry-point">#</a></h2>
-<p><code>workflow.py</code> must define exactly one public function whose name matches the project. It uses the existing <code>@agentic_function</code> decorator and accepts exactly one positional <code>task</code> argument.</p>
+<h2 id="implement-the-entry-point">Implement the entry point<a class="header-anchor" href="#implement-the-entry-point">#</a></h2>
+<p><code>workflow.py</code> defines exactly one public function, named after the package, with exactly one positional <code>task</code> argument:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">.steps.prepare</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepare</span>
 
 
 <span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">weekly_report</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">project_report</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">prepare</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
 </code></pre>
-<p><code>__init__.py</code> re-exports that function:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">.workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">weekly_report</span>
+<p><code>__init__.py</code> re-exports it:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">.workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"weekly_report"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"project_report"</span><span class="p">]</span>
 </code></pre>
-<h2 id="allowed-python">Allowed Python<a class="header-anchor" href="#allowed-python">#</a></h2>
-<p>Top-level package code may contain module docstrings, allowed <code>from ... import ...</code> statements, an optional <code>__all__</code>, and function definitions. Classes, ordinary <code>import x</code> statements, mutable module constants, arbitrary top-level calls, and redefining managed names such as <code>llm</code>, <code>agent</code>, or <code>goal</code> are rejected.</p>
-<p>Absolute imports are limited to:</p>
-<ul>
-<li><code>openprogram.agentic_programming</code></li>
-<li><code>openprogram.programs.workflow.*</code></li>
-<li><code>openprogram.programs.tools.*</code></li>
-<li>one <code>workflows.&lt;name&gt;</code> import at a time, with the imported function matching the package name</li>
-</ul>
-<p>Normal relative imports inside the package are allowed. <code>tests/test_workflow.py</code> may import <code>workflows.&lt;project_name&gt;</code>. Static directory validation checks only the import shape; create/revise publication resolves each Workflow dependency, rejects missing or cyclic dependencies, and pins the selected Git revision.</p>
-<h2 id="static-validation">Static validation<a class="header-anchor" href="#static-validation">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./weekly_report
-openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./weekly_report<span class="w"> </span>--json
+<p>Leave <code>steps/__init__.py</code> empty. In <code>steps/prepare.py</code>:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.goal</span><span class="w"> </span><span class="kn">import</span> <span class="n">goal</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"A report request is required"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">goal</span><span class="p">(</span>
+        <span class="s2">"Prepare a draft report using only supplied or verified evidence. "</span>
+        <span class="s2">"Do not submit it to an external service. Request: "</span> <span class="o">+</span> <span class="n">request</span><span class="p">,</span>
+        <span class="n">max_rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
 </code></pre>
-<p>The command checks the directory boundary, metadata, required files, Python syntax, top-level statements, imports, decorators, entry-point signature, helper presence, and re-export. It is read-only: it does not initialize Git, write files, import the package, or execute its tests.</p>
-<p>Python-generated <code>__pycache__</code> directories are ignored so a package remains valid after import. Other files still follow the package path contract; validation does not delete cache files.</p>
-<p>A successful JSON result includes <code>ok</code>, <code>workflow_id</code>, normalized metadata, the validated Python file list, and <code>executed_tests: false</code>. An invalid package exits with status 1 and reports <code>error_type</code> and <code>error</code>.</p>
-<h2 id="current-integration-boundary">Current integration boundary<a class="header-anchor" href="#current-integration-boundary">#</a></h2>
-<p>Static validation alone does not publish a package. OpenProgram currently publishes generated packages through <code>create_workflow</code> and explicit updates through <code>revise_workflow</code>. A manual publish command will require a forced-sandbox behavior-test gate first, so untrusted Python cannot read credentials, write outside its candidate directory, use the network, or run indefinitely.</p>
-<p>The legacy <code>entry.py</code> format is read-only compatibility for historical revisions and runs. Do not use it for new packages.</p>
+<p>The README for this example states that input describes the period, evidence and format; output is a draft string; the Goal may use configured models and tools to inspect evidence; external submission is excluded. Live provider behavior needs separate verification. A canceled or failed run is not a completed report, and retries may repeat evidence collection.</p>
+<h2 id="write-behavior-tests">Write behavior tests<a class="header-anchor" href="#write-behavior-tests">#</a></h2>
+<p>Test expected output, invalid input, and the effects the Workflow is allowed to request. Mock external work in the publication tests: network access is disabled. Do not treat a test that only checks <code>callable(entrypoint)</code> as proof of behavior.</p>
+<p>For the example, <code>tests/test_workflow.py</code> verifies the draft-only request and rejects empty input before any Goal call:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">workflows.project_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_draft_request</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">calls</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fake_goal</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">calls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"verified draft"</span>
+
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="s2">"workflows.project_report.steps.prepare.goal"</span><span class="p">,</span> <span class="n">fake_goal</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">project_report</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="s2">"  this week's verified commits  "</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"verified draft"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">calls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="s2">"this week's verified commits"</span> <span class="ow">in</span> <span class="n">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">"Do not submit"</span> <span class="ow">in</span> <span class="n">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_empty_request</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unexpected_goal</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"invalid input reached the Goal"</span><span class="p">)</span>
+
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="s2">"workflows.project_report.steps.prepare.goal"</span><span class="p">,</span> <span class="n">unexpected_goal</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">project_report</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="s2">"   "</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"empty input was accepted"</span><span class="p">)</span>
+</code></pre>
+<p><code>__wrapped__</code> is the original decorated Python function used here for isolated behavior tests. Normal users call the public function or submit its chat form. These tests do not claim to verify model quality, Runtime integration, or successful external actions.</p>
+<h2 id="allowed-imports-and-composition">Allowed imports and composition<a class="header-anchor" href="#allowed-imports-and-composition">#</a></h2>
+<p>Package top-level code permits docstrings, allowed <code>from ... import ...</code> statements, optional <code>__all__</code>, and function definitions. Classes, plain <code>import x</code>, mutable top-level constants, arbitrary top-level calls, and replacing managed names such as <code>llm</code>, <code>agent</code>, or <code>goal</code> are rejected.</p>
+<p>Absolute imports may reference <code>openprogram.agentic_programming</code>, <code>openprogram.programs.workflow.*</code>, <code>openprogram.programs.tools.*</code>, or one named Workflow:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">workflows.project_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
+</code></pre>
+<p>The live catalog resolves that public name to the same authorized callable as <code>openprogram.programs.workflow.project_report</code>. Package-internal helpers use relative imports. Publication resolves named Workflow dependencies, rejects missing or cyclic dependencies, and records exact Git revisions. Snapshot execution loads those pinned dependencies, not the latest live package. Do not encode checkout locations in import strings.</p>
+<h2 id="validate-test-and-publish">Validate, test, and publish<a class="header-anchor" href="#validate-test-and-publish">#</a></h2>
+<p>Use the same Python environment as OpenProgram. Pytest is a declared runtime dependency; behavior testing also requires an available OS sandbox. When using a source checkout, install the current project with:</p>
+<pre><code class="language-bash">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre>
+<p>Run the authoring commands against the package directory:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./project_report<span class="w"> </span>--json
+openprogram<span class="w"> </span>workflows<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./project_report<span class="w"> </span>--json
+openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span class="w"> </span>./project_report<span class="w"> </span>--json
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Observable result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validate</code></td>
+<td>Checks metadata, boundaries, syntax, imports, entry signature, re-export, helpers, and tests without importing or executing the package; returns <code>executed_tests: false</code></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Copies validated source and pinned dependencies, executes pytest in a required sandbox, and returns <code>executed_tests: true</code>, <code>sandboxed: true</code>, and test output on success; does not publish</td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td>Revalidates and retests the exact snapshot, commits it into the Workflow catalog, records the source, and returns <code>workflow_id</code> and the immutable Git <code>revision</code></td>
+</tr>
+</tbody>
+</table>
+<p>Behavior testing currently supports macOS and Linux where the OS sandbox is available. It has a 60-second process deadline, disables network and automatic pytest plugins, removes credential environment variables, protects snapshot source from writes, uses an isolated home and temporary workspace, and prevents background processes from surviving the test. macOS denies subprocess creation; Linux confines descendants to a private PID namespace. Mock external process calls in portable publication tests. It does not fall back to unsandboxed execution. Failed tests, timeout, or unavailable sandbox prevent publication.</p>
+<p>Publication does not change the authored directory. It rejects an existing destination unless replacement is explicit:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span class="w"> </span>./project_report<span class="w"> </span>--replace<span class="w"> </span>--json
+</code></pre>
+<p>Replacement also requires a clean destination Git repository. Preserve or commit deliberate edits there before replacing it. The final publication operation rechecks the destination under its lock. A prior test report is never accepted in place of testing the snapshot being published.</p>
+<p>The author Agent's <code>create_workflow</code> and <code>revise_workflow</code> remain separate generated-package entry points and run the same required sandbox tests before publication. Failed tests publish nothing; testing does not execute the user's real task. The manual commands above are the supported path for publishing files written by a person. The legacy <code>entry.py</code> format is for historical revisions and resume compatibility, not new packages.</p>
+<h2 id="portable-paths-and-installed-apps">Portable paths and installed Apps<a class="header-anchor" href="#portable-paths-and-installed-apps">#</a></h2>
+<p>Published packages live at <code>openprogram/programs/workflow/&lt;workflow_id&gt;</code> relative to the OpenProgram project. Internal source records use a scoped POSIX relative path:</p>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"programs"</span><span class="p">,</span><span class="w"> </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow/project_report"</span><span class="p">,</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow-publish"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow:project_report"</span><span class="p">}</span>
+</code></pre>
+<p>The scope resolves against <code>openprogram/programs/</code>, never the current conversation's working directory. Moving a source checkout preserves this identity. Traversal, absolute scoped paths, backslashes, external symlinks, and ambiguous catalog matches are rejected.</p>
+<p>An installed App needs one explicit source-catalog binding to find a separate checkout. This installation setting is not repeated in each package. For local framework development, run <code>scripts/refresh-local-app.sh</code> from the checkout being installed, including after moving it. This rebuilds and restarts the default installation; it is not read-only validation.</p>
+<p>Previously authorized Workflow records with obsolete checkout prefixes migrate when a structurally valid matching package exists in a known catalog. Existing external locations remain external. Migration does not authorize neighboring directories. Removing a source authorization remains effective if its directory is missing and later recreated.</p>
+<h2 id="favorites-use-and-troubleshooting">Favorites, Use, and troubleshooting<a class="header-anchor" href="#favorites-use-and-troubleshooting">#</a></h2>
+<p>Open <strong>Abilities → Programs</strong>, refresh, and select the Workflow. Favorite saves its public function name. <strong>Use</strong> opens its parameter form in chat; nothing executes until you submit that form.</p>
+<p>Programs and the sidebar share a callable catalog. Use requests a current catalog if the function is not cached, and displays a visible error when the function is unavailable or the request fails. Failed refreshes preserve the last successful catalog. Older responses cannot replace a newer catalog, and leaving the chat cancels a pending form opening.</p>
+<p>If source is visible but Use is unavailable, verify the package, publication result, and source authorization, then refresh Programs. Source visibility alone does not prove Python import succeeded. If behavior tests fail, inspect the returned output; keep live provider checks separate from sandboxed publication tests. A dirty destination must be resolved before <code>--replace</code> can succeed.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#required-layout">Required layout</a>
-<a class="" href="#metadata">Metadata</a>
-<a class="" href="#public-entry-point">Public entry point</a>
-<a class="" href="#allowed-python">Allowed Python</a>
-<a class="" href="#static-validation">Static validation</a>
-<a class="" href="#current-integration-boundary">Current integration boundary</a>
+<a class="" href="#define-the-contract-before-writing-code">Define the contract before writing code</a>
+<a class="" href="#package-layout-and-identity">Package layout and identity</a>
+<a class="" href="#implement-the-entry-point">Implement the entry point</a>
+<a class="" href="#write-behavior-tests">Write behavior tests</a>
+<a class="" href="#allowed-imports-and-composition">Allowed imports and composition</a>
+<a class="" href="#validate-test-and-publish">Validate, test, and publish</a>
+<a class="" href="#portable-paths-and-installed-apps">Portable paths and installed Apps</a>
+<a class="" href="#favorites-use-and-troubleshooting">Favorites, Use, and troubleshooting</a>
 </div></aside>
 </div>
 

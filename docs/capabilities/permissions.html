@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788682654" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788691617" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +89,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
-<a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写 Workflow package" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write a Workflow package</a>
+<a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写、测试和发布 Workflow" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write, test, and publish a Workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
@@ -167,8 +167,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <p>Bypass does not override explicit deny or ask rules, mandatory plan-exit or self-update approval, plugin restrictions, identity capabilities, or Sandbox.</p>
+<p>Approval choices appear at the bottom left of the request. Select Allow once,
+Always allow or Deny, then use Send on the right to submit. Chat about this sits
+next to Send. It declines the current request and opens an editable chat draft
+containing the request context and any text you already typed. The input receives
+focus when available. Edit the draft and send it to continue the discussion.
+On narrow windows, these controls wrap within the same bottom action area.</p>
 <h2 id="change-permissions-during-a-task">Change permissions during a task<a class="header-anchor" href="#change-permissions-during-a-task">#</a></h2>
-<p>An existing session's selection is sent to the server and confirmed before the interface displays it as effective. The change applies at the next tool approval check and is included in subsequent model requests. A tool already authorized for execution keeps that authorization. Switching into Plan mode prevents pending write calls from being authorized.</p>
+<p>An existing session's selection is sent to the server and confirmed before the interface displays it as effective. The interface sends the change immediately when it already knows the confirmed session version. Once the server confirms Bypass, subsequent ordinary tool calls do not ask for approval, even if the model is still reasoning, streaming text or generating tool arguments. This also applies to later tools in the same response. You do not need to stop generation or send another message. The new mode is included in subsequent model requests; text already being generated is not rewritten. A tool already authorized for execution keeps that authorization. Switching into Plan mode prevents pending write calls from being authorized.</p>
 <p>An ordinary approval that is no longer required is automatically resolved through the execution's durable wait and the task continues. Explicit ask rules, mandatory approvals, user questions, forms, and Sandbox escalation are not answered by changing the mode. Repeated answers, cancellation, timeout, and recovery cannot execute an already completed call again.</p>
 <p>Changes are session-specific. Other windows receive the confirmed mode; stale updates are rejected rather than overwriting a newer choice. A failed or disconnected update remains unconfirmed. Reconnect and review the current mode before retrying. An unsent draft stores its mode locally and sends it with the first message.</p>
 <p>The effective default is the session override, then the project default, then Ask permissions. A sub-agent created by an authenticated owner Agent inherits the parent’s effective permission mode and explicit rules at creation. For example, a parent using Bypass can create a sub-agent that runs ordinary commands without approval. The sub-agent keeps its own identity and non-interactive restrictions; explicit ask rules and mandatory approvals still prevent operations that require an approver. Later mode changes do not rewrite already admitted sub-agents. Independent scheduled tasks and external channels do not acquire owner permissions or Bypass from a local session.</p>

@@ -988,8 +988,8 @@
         <article class="reference-card"><span class="label choice modified">修改采用</span><h3><a href="https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html">Apple launchd agent</a></h3><p>采用用户会话内独立进程边界。首版使用 one-shot <code>launchctl submit</code>，不安装常驻 updater daemon。</p></article>
         <article class="reference-card"><span class="label choice modified">修改采用</span><h3><a href="https://www.electronjs.org/docs/latest/tutorial/updates">Electron update lifecycle</a></h3><p>采用 staged artifact、restart 和明确状态；候选来自本地 commit，不使用远端 update feed。</p></article>
         <article class="reference-card"><span class="label choice rejected">不采用</span><h3><a href="https://www.electronjs.org/docs/latest/api/auto-updater/">Electron autoUpdater</a></h3><p>macOS 自动更新要求签名并围绕发布 feed 工作；不能覆盖本地未发布 candidate、Agent 验收和当前 unsigned 开发 App 合同。</p></article>
-        <article class="reference-card"><span class="label choice">复用仓库实现</span><h3><a href="../distribution/automatic-updates.html">正式版本自动更新</a></h3><p>复用完整 artifact、manifest、runtime probe 和平台安装边界；不改变 stable Release 的发现、下载和用户安装行为。</p></article>
-        <article class="reference-card"><span class="label choice">复用仓库实现</span><h3><a href="execution/agent-worktree.html">Agent worktree</a></h3><p>复用 worktree 归属、commit、merge/discard 和 approval 语义。自主更新只读取 candidate，不自动合并用户主分支。</p></article>
+        <article class="reference-card"><span class="label choice">复用仓库实现</span><h3><a href="/docs/reference/design/distribution/automatic-updates.html">正式版本自动更新</a></h3><p>复用完整 artifact、manifest、runtime probe 和平台安装边界；不改变 stable Release 的发现、下载和用户安装行为。</p></article>
+        <article class="reference-card"><span class="label choice">复用仓库实现</span><h3><a href="/docs/reference/design/runtime/execution/agent-worktree.html">Agent worktree</a></h3><p>复用 worktree 归属、commit、merge/discard 和 approval 语义。自主更新只读取 candidate，不自动合并用户主分支。</p></article>
       </div>
     </section>
 

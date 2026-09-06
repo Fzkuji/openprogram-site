@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788682654" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788691617" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web UI · OpenProgram Docs</title>
-<meta name="description" content="工具审批行为及运行中切换请参见 工具权限模式 。 浏览器界面，覆盖 OpenProgram 的全部日常操作：聊天、管理函数与程序、配置 provider 和 MCP、查看记忆与项目。本页按路由逐个说明每个页面的用途，并详细介绍聊天页。 启动： openprogram web 浏览器打开">
+<meta name="description" content="项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/web.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/web.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/web.zh.html">
 <meta property="og:title" content="Web UI · OpenProgram Docs">
-<meta property="og:description" content="工具审批行为及运行中切换请参见 工具权限模式 。 浏览器界面，覆盖 OpenProgram 的全部日常操作：聊天、管理函数与程序、配置 provider 和 MCP、查看记忆与项目。本页按路由逐个说明每个页面的用途，并详细介绍聊天页。 启动： openprogram web 浏览器打开">
+<meta property="og:description" content="项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Web UI · OpenProgram Docs">
-<meta name="twitter:description" content="工具审批行为及运行中切换请参见 工具权限模式 。 浏览器界面，覆盖 OpenProgram 的全部日常操作：聊天、管理函数与程序、配置 provider 和 MCP、查看记忆与项目。本页按路由逐个说明每个页面的用途，并详细介绍聊天页。 启动： openprogram web 浏览器打开">
+<meta name="twitter:description" content="项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -79,6 +79,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Web UI</span></nav><h1 id="web-ui">Web UI<a class="header-anchor" href="#web-ui">#</a></h1>
+<p>项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git 仓库外的新绝对路径；未提交改动保留在原目录。移除项目保留文件、聊天及项目归属，可在项目页面恢复或重新打开文件夹。默认主目录项目不可移除。已归档聊天可通过“已归档”筛选查看；隐藏项目的聊天仍保留在日期或平铺历史中。</p>
+<p>右键项目或点击省略号，可以打开项目设置、新建聊天、置顶、编辑或移动到自定义分区。项目编辑窗口支持修改显示名称、文字图标或表情、说明和额外源文件夹。源文件夹用于尚未单独设置目录的会话；移除文件夹不会删除文件。主目录移动仍在项目设置中操作。分区菜单可重命名或移除分区；移除分区会保留其项目。</p>
+<p>项目排序与聊天排序相互独立。在侧边栏筛选菜单中，可以将项目按最近活动、最早活动、名称或手动顺序排列。新消息会自动更新项目活动时间。点击项目的置顶按钮，可以让该项目保持在未置顶项目上方。聊天可按旧到新、新到旧排列，标题也支持 A–Z 和 Z–A。拖动项目会切换为手动排序。这些显示偏好保存在本地。</p>
+<p>在侧边栏选择 <strong>分组 → 项目</strong> 后，可以拖动项目标题，将它移到另一项目的上方或下方；插入线显示目标位置。也可以聚焦项目标题后按 Alt+上方向键或 Alt+下方向键。顺序保存在当前设备，刷新后仍然保留；会话的项目归属不变。</p>
 <p>工具审批行为及运行中切换请参见<a href="/docs/capabilities/permissions.zh.html">工具权限模式</a>。</p>
 <p>浏览器界面，覆盖 OpenProgram 的全部日常操作：聊天、管理函数与程序、配置 provider 和 MCP、查看记忆与项目。本页按路由逐个说明每个页面的用途，并详细介绍聊天页。</p>
 <p>启动：</p>
@@ -90,13 +94,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>/chat</code> 是聊天主界面；<code>/s/&lt;session-id&gt;</code> 是单个会话的直达链接，切换会话不重新加载页面，WebSocket 连接保持不断。</p>
 <h3 id="消息流式">消息流式<a class="header-anchor" href="#消息流式">#</a></h3>
 <p>回复通过 WebSocket 流式到达：发送后立即出现占位回复，text、thinking、工具调用等块按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
+<h3 id="运行期间发送消息">运行期间发送消息<a class="header-anchor" href="#运行期间发送消息">#</a></h3>
+<p><strong>Queue</strong> 按顺序保存消息，前一轮完成后再开始下一轮。<strong>Steer</strong> 和队列消息的“追加到当前轮”在正在运行的 Agent 到达下一个安全点时补充指令，不取消正在执行的工具，也不修改其模型、工具或权限设置。停止执行仍是输入框中的独立操作。</p>
+<p>无法追加到当前轮时，消息保留在队列。如果无法确认投递结果，消息行继续显示，重试使用同一条命令以避免重复投递，不会自动作为新一轮再次发送。补充指令最多支持 4,096 个字符，更长的消息保留排队。未发送队列存放在当前窗口内存中，重新加载页面会丢失。附件保留在输入框中，不进入文字队列。</p>
 <h3 id="停止与重新连接">停止与重新连接<a class="header-anchor" href="#停止与重新连接">#</a></h3>
 <p>点击输入框中的 <strong>Cancel execution</strong> 停止当前执行。刷新或重新打开会话时，会恢复正在执行的任务及其停止控制，包括审批等待后恢复的执行。没有新输出不代表执行已经结束；系统不会仅因一段时间没有输出就移除运行状态。已经结束的执行不会因为残留的线程注册继续显示为运行中。</p>
 <p>本地 shell 命令会先结束其进程组，再报告取消。恢复执行的会话会将原助手消息持久化为已取消，并将会话恢复为空闲，刷新后仍保持停止状态。</p>
 <h3 id="thinking-折叠">thinking 折叠<a class="header-anchor" href="#thinking-折叠">#</a></h3>
 <p>模型的思考过程渲染为可折叠块，默认收起，流式期间只显示最新一行，点击展开完整内容。</p>
 <h3 id="函数调用时间线">函数调用时间线<a class="header-anchor" href="#函数调用时间线">#</a></h3>
-<p>每轮回复中的函数 / 工具调用渲染成一条可展开的执行时间线：每步一行，函数调用带参数、输出、错误和耗时，嵌套调用按上下文树递归展示，子 agent 也是时间线中的一步。点击某一步会在右侧栏打开执行详情面板。从 <code>/programs</code> 页 Run 对话框手动运行的函数也用同一套时间线渲染。</p>
+<p>每轮回复中的函数 / 工具调用渲染成一条可展开的执行时间线：每步一行，函数调用带参数、输出、错误和耗时，嵌套调用按上下文树递归展示，子 agent 也是时间线中的一步。点击某一步会在右侧栏打开执行详情面板。从 <code>/programs</code> 页 Run 对话框手动运行的函数也用同一套时间线渲染。回复完成后保留流式时间线；缺少有序内容块的旧记录也使用相同折叠组件，不再显示独立的工具调用表格。</p>
 <h3 id="附件">附件<a class="header-anchor" href="#附件">#</a></h3>
 <p>把图片或文本文件拖放到输入框上（粘贴同样可行），会随下一条消息一起发送。</p>
 <h3 id="无头或远程-linux-上的项目目录">无头或远程 Linux 上的项目目录<a class="header-anchor" href="#无头或远程-linux-上的项目目录">#</a></h3>
@@ -163,7 +170,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>“运行记录”合并原来的 Running 和 Debugger。它跟随当前选中的会话标签页；新标签页、尚未发送的草稿及非会话页面显示空提示，不残留上一个会话的数据。它显示当前会话的 Agent 执行、调用的子 Agent、分支及托管后台程序。程序列在启动它的执行下。子 Agent 可以使用独立执行会话；列表只纳入明确关联的执行及其后代，不会混入目标会话的其他任务。</p>
 <p>“需要处理”显示暂停任务和待确认结果。“正在进行”显示运行任务，以及仍有程序运行的已结束 Agent。“历史记录”默认折叠，保留已结束的任务层级。展开任务可查看所属子 Agent 和程序；点击名称进入详情。任务行显示缩短后的请求摘要和开始时间，并明确标注分支；较长的请求摘要可在详情中展开。程序名称显示可识别的脚本文件、Python 模块或包脚本，并保留所属执行内的编号。内联代码标记为代码片段；无法可靠识别的命令保留可执行文件名。程序详情始终保留完整原始命令。Agent 结束不会删除所属程序。刷新页面或重启本地 worker 后，托管程序的记录和输出仍保留。历史上从未记录的程序无法追溯恢复或推测归属。</p>
 <p>选择 Agent 后查看进展并使用已有执行控制。暂停、继续、单步和重试仅在执行确实支持时提供。“补充指令”和“创建分支”使用统一编辑弹窗。已发布指令保持只读；“编辑为新草稿”创建需要独立校验的修订，不改写已发布版本。需要回答的问题和授权请求优先于进展记录显示。内部 ID、修订信息、资源快照、操作计数、保存点和原始事件放在“技术详情”中。结果待确认表示执行受阻，不是持续生成。没有活动 attempt 时，输入框允许发送新消息，刷新后不会恢复取消按钮；活动面板继续保留待确认结果及其操作限制。快照读取成功也不代表 Agent 正在运行。</p>
-<p>选择程序后查看命令、工作目录、运行环境、开始与结束时间、退出码和输出。“停止程序”只控制该程序的受管进程组，包括普通后台子进程，不影响其他程序。输出有容量限制；发生截断时明确提示，程序记录仍然保留。手动刷新按钮在请求期间显示旋转状态并禁止重复点击，成功后短暂显示勾选，读取失败显示错误图标。自动轮询不会触发按钮动画。首次读取失败显示加载错误，不声称已有旧记录。未关联 Agent 的程序仍然显示，且不会同时提示没有运行记录。读取失败时保留上次记录、所选程序详情和输出，并提示状态可能过时。切换所选程序时清空旧详情；成功刷新的列表已不包含该程序时也会清空。</p>
+<p>选择程序后查看命令、工作目录、运行环境、开始与结束时间、退出码和输出。“停止程序”只控制该程序的受管进程组，包括普通后台子进程，不影响其他程序。输出有容量限制；发生截断时明确提示，程序记录仍然保留。Activity 根据执行和 Job 事件自动更新，打开面板、恢复连接或页面恢复可见时也会自动读取，没有手动刷新按钮。执行快照每 30 秒补充检查一次；托管程序尚无专用事件流，因此页面可见时每 3 秒检查程序状态和输出。首次读取失败显示加载错误，不声称已有旧记录。未关联 Agent 的程序仍然显示，且不会同时提示没有运行记录。读取失败时保留上次记录、所选程序详情和输出，并提示状态可能过时。切换所选程序时清空旧详情；成功刷新的列表已不包含该程序时也会清空。</p>
 <p>长时间运行的程序通过 <code>process</code> 工具的 <code>start</code> 操作启动，归属来自可信执行与会话上下文。独立监督进程在 worker 重启后继续保留输出和控制；普通 shell 后台子进程仍属该进程组。刻意脱离进程组的程序，或未通过框架进程管理启动的程序，不宣称已被监控。</p>
 <p>从保存点创建 Agent 分支时，在“按新指令创建分支”输入指令，然后准备、检查、确认并发布修订。创建分支后选中独立的暂停子执行，点击继续后使用已发布指令。原执行的消息和保存点不变。修改未发布指令会生成新草稿版本，旧校验和审批失效。仅补充指令的修订保留程序与运行契约；修改程序、工具、模型或输出契约仍要求独立审批。</p>
 <p>重试在保存点创建独立、暂停的 Agent 执行并保留原修订，点击继续后恢复。</p>
@@ -172,6 +179,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <div class="toc-list">
 <a class="" href="#聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）</a>
 <a class="lvl-3" href="#消息流式">消息流式</a>
+<a class="lvl-3" href="#运行期间发送消息">运行期间发送消息</a>
 <a class="lvl-3" href="#停止与重新连接">停止与重新连接</a>
 <a class="lvl-3" href="#thinking-折叠">thinking 折叠</a>
 <a class="lvl-3" href="#函数调用时间线">函数调用时间线</a>

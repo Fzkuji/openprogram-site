@@ -145,7 +145,7 @@
   <div class="note warn"><b>创建入口审计。</b>基础批次已把 runner 与同步 agent 接到 governor，但完整 gate 仍要求 WebSocket、busy-target inbox、内部重试和后续新增入口都有同一 admission 证据，并验证拒绝之前没有 branch、inbox 或广播副作用。</div>
 
   <h2 id="references">02 其他项目怎么设计：比较计数单位、拒绝时机、持久性、取消和可见性</h2>
-  <p>参考对象的数字服务于理解其计数单位和运行模型，不构成 OpenProgram 默认值依据。完整协作证据见<a href="agent-collab-comparison.html">Agent 协作实现对照</a>，现有内部设计见<a href="agent-collaboration.zh.html">agent-collaboration.zh.html</a>和<a href="execution/async-job-lifecycle.zh.html">async-job-lifecycle.zh.html</a>。</p>
+  <p>参考对象的数字服务于理解其计数单位和运行模型，不构成 OpenProgram 默认值依据。完整协作证据见<a href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent 协作实现对照</a>，现有内部设计见<a href="/docs/reference/design/runtime/agent-collaboration.zh.html">agent-collaboration.zh.html</a>和<a href="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">async-job-lifecycle.zh.html</a>。</p>
 
   <div class="table-wrap">
   <table class="wide">
@@ -540,7 +540,7 @@ Job JSON + optional fields:
     <tr><td>Usage 与 provider 记录</td><td><code>openprogram/usage/event.py</code>；<code>openprogram/usage/ledger.py</code>；<code>openprogram/usage/recorder.py</code>；<code>openprogram/providers/stream.py</code></td></tr>
     <tr><td>Deadline 与函数 timeout</td><td><code>openprogram/providers/utils/deadline.py</code>；<code>openprogram/programs/_runtime.py</code></td></tr>
     <tr><td>任务界面与协议</td><td><code>openprogram/webui/ws_actions/task.py</code>、Web branch/task cards、<code>openprogram/programs/tools/agents/agent/list_tasks/</code>、<code>task_output/</code>、<code>task_stop/</code></td></tr>
-    <tr><td>竞品与既有设计</td><td><a href="agent-collab-comparison.html">agent-collab-comparison.html</a>；<a href="agent-collaboration.zh.html">agent-collaboration.zh.html</a>；<a href="execution/async-job-lifecycle.zh.html">async-job-lifecycle.zh.html</a>；<a href="../usage-metering.zh.html">usage-metering.zh.html</a></td></tr>
+    <tr><td>竞品与既有设计</td><td><a href="/docs/reference/design/runtime/agent-collab-comparison.html">agent-collab-comparison.html</a>；<a href="/docs/reference/design/runtime/agent-collaboration.zh.html">agent-collaboration.zh.html</a>；<a href="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">async-job-lifecycle.zh.html</a>；<a href="/docs/reference/design/usage-metering.zh.html">usage-metering.zh.html</a></td></tr>
   </table>
   </div>
 

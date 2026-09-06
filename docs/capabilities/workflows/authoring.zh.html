@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788682654" data-alt-lang-url="/docs/capabilities/workflows/authoring.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788691617" data-alt-lang-url="/docs/capabilities/workflows/authoring.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>编写 Workflow package · OpenProgram Docs</title>
-<meta name="description" content="本页是可复用 Workflow package 的 authoring 合同，适用于人工编写和 OpenProgram author Agent 生成；两条路径使用同一个静态 validator。 必需目录 # 项目目录名、project name、入口函数名和 Python package name">
+<title>编写、测试和发布 Workflow · OpenProgram Docs</title>
+<meta name="description" content="Workflow 是一个 Python 包，公开一个 @agentic_function 入口。人工编写和 OpenProgram 的编写 Agent 使用同一包验证器与 Git 发布格式。函数通过普通 Python import 和调用进行组合。 编码前明确合同 # 在包的 README.md 中写明： 项目">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/authoring.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/workflows/authoring.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"编写 Workflow package"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"编写、测试和发布 Workflow"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
-<meta property="og:title" content="编写 Workflow package · OpenProgram Docs">
-<meta property="og:description" content="本页是可复用 Workflow package 的 authoring 合同，适用于人工编写和 OpenProgram author Agent 生成；两条路径使用同一个静态 validator。 必需目录 # 项目目录名、project name、入口函数名和 Python package name">
+<meta property="og:title" content="编写、测试和发布 Workflow · OpenProgram Docs">
+<meta property="og:description" content="Workflow 是一个 Python 包，公开一个 @agentic_function 入口。人工编写和 OpenProgram 的编写 Agent 使用同一包验证器与 Git 发布格式。函数通过普通 Python import 和调用进行组合。 编码前明确合同 # 在包的 README.md 中写明： 项目">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="编写 Workflow package · OpenProgram Docs">
-<meta name="twitter:description" content="本页是可复用 Workflow package 的 authoring 合同，适用于人工编写和 OpenProgram author Agent 生成；两条路径使用同一个静态 validator。 必需目录 # 项目目录名、project name、入口函数名和 Python package name">
+<meta name="twitter:title" content="编写、测试和发布 Workflow · OpenProgram Docs">
+<meta name="twitter:description" content="Workflow 是一个 Python 包，公开一个 @agentic_function 入口。人工编写和 OpenProgram 的编写 Agent 使用同一包验证器与 Git 发布格式。函数通过普通 Python import 和调用进行组合。 编码前明确合同 # 在包的 README.md 中写明： 项目">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -89,7 +89,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Workflows</div>
 <a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="Agentic Workflows" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Agentic workflows</a>
-<a class="navlink active" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写 Workflow package" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write a Workflow package</a>
+<a class="navlink active" href="/docs/capabilities/workflows/authoring.html" data-title-zh="编写、测试和发布 Workflow" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Write, test, and publish a Workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
@@ -134,80 +134,209 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="编写 Workflow package">Write a Workflow package</span></nav><h1 id="编写-workflow-package">编写 Workflow package<a class="header-anchor" href="#编写-workflow-package">#</a></h1>
-<p>本页是可复用 Workflow package 的 authoring 合同，适用于人工编写和 OpenProgram author Agent 生成；两条路径使用同一个静态 validator。</p>
-<h2 id="必需目录">必需目录<a class="header-anchor" href="#必需目录">#</a></h2>
-<p>项目目录名、project name、入口函数名和 Python package name 必须是同一个小写 Python identifier。</p>
-<pre><code class="language-text">weekly_report/
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="编写、测试和发布 Workflow">Write, test, and publish a Workflow</span></nav><h1 id="编写测试和发布-workflow">编写、测试和发布 Workflow<a class="header-anchor" href="#编写测试和发布-workflow">#</a></h1>
+<p>Workflow 是一个 Python 包，公开一个 <code>@agentic_function</code> 入口。人工编写和 OpenProgram 的编写 Agent 使用同一包验证器与 Git 发布格式。函数通过普通 Python import 和调用进行组合。</p>
+<h2 id="编码前明确合同">编码前明确合同<a class="header-anchor" href="#编码前明确合同">#</a></h2>
+<p>在包的 <code>README.md</code> 中写明：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>必需信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目的</td>
+<td>具体任务以及完成任务所需的证据</td>
+</tr>
+<tr>
+<td>输入</td>
+<td><code>task</code> 的含义、必需上下文和非法输入的处理</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>返回类型、产生的文件以及如何验证成功</td>
+</tr>
+<tr>
+<td>副作用</td>
+<td>模型、工具、文件、网络和外部提交行为</td>
+</tr>
+<tr>
+<td>失败与取消</td>
+<td>失败或中断后保留什么；重试是否安全</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td>导入的 Workflow、所需工具与服务</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>行为验证、被模拟的外部工作和独立的在线验证</td>
+</tr>
+<tr>
+<td>使用</td>
+<td>一个可复现的调用以及预期结果</td>
+</tr>
+</tbody>
+</table>
+<p>公开入口保持简短。有独立职责时，再把准备、检查或单独阶段放入辅助模块。直接调用 <code>llm</code>、<code>agent</code>、<code>goal</code>、工具和其他 Workflow，不另建分发器或执行引擎。明确处理预期的非法输入，让运行时的取消正常传播。</p>
+<h2 id="包结构与身份">包结构与身份<a class="header-anchor" href="#包结构与身份">#</a></h2>
+<p>目录、项目名、入口名和 Python 包名必须是同一个小写 Python 标识符。</p>
+<pre><code class="language-text">project_report/
 ├── pyproject.toml
 ├── README.md
 ├── __init__.py
 ├── workflow.py
 ├── steps/
+│   ├── __init__.py
 │   └── prepare.py
 └── tests/
     └── test_workflow.py
 </code></pre>
-<p>helper 也可以放在 <code>goals/</code> 或 <code>helpers/</code>。必须至少有一个不是 <code>__init__.py</code> 的 helper 模块；其他位置的 Python 源码会被拒绝。</p>
-<h2 id="metadata">Metadata<a class="header-anchor" href="#metadata">#</a></h2>
+<p>也支持 <code>goals/</code> 和 <code>helpers/</code>。至少需要一个不是 <code>__init__.py</code> 的辅助模块。包入口、辅助目录与测试之外的 Python 源码会被拒绝。字节码缓存不属于包源码，验证时会忽略。</p>
+<p>名称以小写字母开头，只包含小写字母、数字和下划线，最多 80 个字符。摘要必填，最多 500 个字符。标签字段必填但可以为空，最多 20 项，每项最多 60 个字符。</p>
+<p><code>pyproject.toml</code>：</p>
 <pre><code class="language-toml"><span class="k">[project]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"weekly_report"</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project_report"</span>
 <span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.1.0"</span>
-<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Prepare an evidence-based weekly report."</span>
-<span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"weekly report"</span><span class="p">,</span><span class="w"> </span><span class="s2">"status update"</span><span class="p">]</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Prepare a draft report from verified project evidence."</span>
+<span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"report"</span><span class="p">,</span><span class="w"> </span><span class="s2">"evidence"</span><span class="p">]</span>
 
 <span class="k">[tool.openprogram]</span>
-<span class="n">display-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"weekly_report"</span>
+<span class="n">display-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project_report"</span>
 
 <span class="k">[project.entry-points.</span><span class="s2">"openprogram.workflows"</span><span class="k">]</span>
-<span class="n">weekly_report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"workflows.weekly_report:weekly_report"</span>
+<span class="n">project_report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"workflows.project_report:project_report"</span>
 </code></pre>
-<p>名称必须以小写字母开头，只能包含小写字母、数字和下划线。summary 必填，最多 500 字符；<code>keywords</code>/tags 数组必填但可以为空，最多 20 项，每项最多 60 字符。</p>
-<h2 id="公开入口">公开入口<a class="header-anchor" href="#公开入口">#</a></h2>
-<p><code>workflow.py</code> 必须定义一个与项目同名的公开函数，使用现有 <code>@agentic_function</code> 装饰器，并且只接受一个位置参数 <code>task</code>。</p>
+<h2 id="实现公开入口">实现公开入口<a class="header-anchor" href="#实现公开入口">#</a></h2>
+<p><code>workflow.py</code> 恰好定义一个与包同名的公开函数，只接受一个位置参数 <code>task</code>：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">.steps.prepare</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepare</span>
 
 
 <span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">weekly_report</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">project_report</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">prepare</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
 </code></pre>
-<p><code>__init__.py</code> 重新导出该函数：</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">.workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">weekly_report</span>
+<p><code>__init__.py</code> 重新导出入口：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">.workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"weekly_report"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"project_report"</span><span class="p">]</span>
 </code></pre>
-<h2 id="允许的-python-结构">允许的 Python 结构<a class="header-anchor" href="#允许的-python-结构">#</a></h2>
-<p>package 顶层只能包含模块 docstring、允许的 <code>from ... import ...</code>、可选 <code>__all__</code> 和函数定义。禁止 class、普通 <code>import x</code>、可变模块常量、任意顶层调用，以及重新定义 <code>llm</code>、<code>agent</code>、<code>goal</code> 等托管名称。</p>
-<p>绝对 import 只允许：</p>
-<ul>
-<li><code>openprogram.agentic_programming</code></li>
-<li><code>openprogram.programs.workflow.*</code></li>
-<li><code>openprogram.programs.tools.*</code></li>
-<li>每次 import 一个 <code>workflows.&lt;name&gt;</code>，且导入函数与 package 同名</li>
-</ul>
-<p>package 内允许普通相对 import。<code>tests/test_workflow.py</code> 可以 import <code>workflows.&lt;project_name&gt;</code>。静态目录校验只检查 import 形状；create/revise 发布时才解析每个 Workflow 依赖、拒绝缺失或循环依赖，并固定所选 Git revision。</p>
-<h2 id="静态校验">静态校验<a class="header-anchor" href="#静态校验">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./weekly_report
-openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./weekly_report<span class="w"> </span>--json
+<p><code>steps/__init__.py</code> 保持为空。<code>steps/prepare.py</code>：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.goal</span><span class="w"> </span><span class="kn">import</span> <span class="n">goal</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"A report request is required"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">goal</span><span class="p">(</span>
+        <span class="s2">"Prepare a draft report using only supplied or verified evidence. "</span>
+        <span class="s2">"Do not submit it to an external service. Request: "</span> <span class="o">+</span> <span class="n">request</span><span class="p">,</span>
+        <span class="n">max_rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
 </code></pre>
-<p>该命令检查目录边界、metadata、必需文件、Python 语法、顶层语句、import、装饰器、入口签名、helper 和 re-export。它是只读操作：不会初始化 Git、写文件、import package 或执行测试。</p>
-<p>Python 生成的 <code>__pycache__</code> 目录会被忽略，因此 package 在 import 后仍可校验；其他文件仍遵守 package 路径合同，校验过程不会删除缓存文件。</p>
-<p>成功的 JSON 包含 <code>ok</code>、<code>workflow_id</code>、规范化 metadata、校验后的 Python 文件列表和 <code>executed_tests: false</code>。非法 package 退出码为 1，并返回 <code>error_type</code> 与 <code>error</code>。</p>
-<h2 id="当前接入边界">当前接入边界<a class="header-anchor" href="#当前接入边界">#</a></h2>
-<p>静态校验本身不会发布 package。OpenProgram 当前通过 <code>create_workflow</code> 发布生成项目，通过显式 <code>revise_workflow</code> 发布更新。人工 publish 命令必须先建立强制 sandbox 的行为测试门，防止未信任 Python 读取凭据、写出 candidate 目录、联网或无限运行。</p>
-<p>Legacy <code>entry.py</code> 只用于历史 revision 和 run 的只读兼容；新 package 不要使用该格式。</p>
+<p>这个例子的 README 应说明：输入描述时间范围、证据和格式；输出是草稿字符串；Goal 可以使用配置的模型和工具检查证据；不允许向外部提交。真实模型行为需要单独验证。取消或失败不表示报告完成，重试可能重复证据收集。</p>
+<h2 id="编写行为测试">编写行为测试<a class="header-anchor" href="#编写行为测试">#</a></h2>
+<p>验证预期输出、非法输入和允许请求的副作用。发布测试应模拟外部工作，因为沙箱禁用网络。只检查 <code>callable(entrypoint)</code> 不能证明行为正确。</p>
+<p>示例 <code>tests/test_workflow.py</code> 验证只生成草稿的要求，并确保空输入不会调用 Goal：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">workflows.project_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_draft_request</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">calls</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fake_goal</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">calls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"verified draft"</span>
+
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="s2">"workflows.project_report.steps.prepare.goal"</span><span class="p">,</span> <span class="n">fake_goal</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">project_report</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="s2">"  this week's verified commits  "</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"verified draft"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">calls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="s2">"this week's verified commits"</span> <span class="ow">in</span> <span class="n">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">"Do not submit"</span> <span class="ow">in</span> <span class="n">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_empty_request</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unexpected_goal</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"invalid input reached the Goal"</span><span class="p">)</span>
+
+    <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="s2">"workflows.project_report.steps.prepare.goal"</span><span class="p">,</span> <span class="n">unexpected_goal</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">project_report</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="s2">"   "</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"empty input was accepted"</span><span class="p">)</span>
+</code></pre>
+<p>这里的 <code>__wrapped__</code> 是装饰器保留的原始 Python 函数，用于隔离的行为测试。正常使用时调用公开函数或提交聊天表单。这些测试不证明模型质量、Runtime 集成或外部操作已经成功。</p>
+<h2 id="允许的导入与组合">允许的导入与组合<a class="header-anchor" href="#允许的导入与组合">#</a></h2>
+<p>包顶层允许文档字符串、受支持的 <code>from ... import ...</code>、可选 <code>__all__</code> 和函数定义。类、普通 <code>import x</code>、顶层可变常量、任意顶层调用以及覆盖 <code>llm</code>、<code>agent</code>、<code>goal</code> 等托管名称都会被拒绝。</p>
+<p>绝对 import 可以引用 <code>openprogram.agentic_programming</code>、<code>openprogram.programs.workflow.*</code>、<code>openprogram.programs.tools.*</code>，或者一个具名 Workflow：</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">workflows.project_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_report</span>
+</code></pre>
+<p>活动目录中的这个公开名称与 <code>openprogram.programs.workflow.project_report</code> 对应同一个已授权 callable。包内辅助模块使用相对 import。发布时解析具名 Workflow 依赖，拒绝缺失和循环依赖，并记录确切 Git revision。Snapshot 执行使用这些固定依赖，不使用最新活动包。不要把 checkout 位置写入 import 字符串。</p>
+<h2 id="验证测试和发布">验证、测试和发布<a class="header-anchor" href="#验证测试和发布">#</a></h2>
+<p>使用与 OpenProgram 相同的 Python 环境。pytest 已列为运行依赖；行为测试还需要可用的操作系统沙箱。使用源码 checkout 时，安装当前项目：</p>
+<pre><code class="language-bash">python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre>
+<p>对包目录执行：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./project_report<span class="w"> </span>--json
+openprogram<span class="w"> </span>workflows<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./project_report<span class="w"> </span>--json
+openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span class="w"> </span>./project_report<span class="w"> </span>--json
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>可观察结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validate</code></td>
+<td>检查元数据、边界、语法、import、入口签名、重新导出、辅助模块和测试；不导入或执行包，返回 <code>executed_tests: false</code></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>复制已验证源码及固定依赖，在强制沙箱中执行 pytest；成功时返回 <code>executed_tests: true</code>、<code>sandboxed: true</code> 和测试输出，不发布</td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td>重新验证并测试实际发布的 snapshot，把它提交到 Workflow 目录，登记来源，返回 <code>workflow_id</code> 和不可变 Git <code>revision</code></td>
+</tr>
+</tbody>
+</table>
+<p>行为测试目前支持具有可用操作系统沙箱的 macOS 和 Linux。进程限时 60 秒，禁用网络和 pytest 插件自动加载，清除凭证环境变量，禁止修改 snapshot 源码，使用隔离的 home 和临时工作区，并保证测试结束后没有后台进程继续运行。macOS 禁止创建子进程；Linux 将后代进程限制在私有 PID namespace 中。需要跨平台发布的测试应 mock 外部进程调用。不会退回无沙箱执行。测试失败、超时或沙箱不可用时，不发布。</p>
+<p>发布不修改原始编写目录。已有目标默认拒绝覆盖，替换必须明确指定：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span class="w"> </span>./project_report<span class="w"> </span>--replace<span class="w"> </span>--json
+</code></pre>
+<p>替换还要求目标 Git 仓库干净；先保留或提交目标中的有意修改。最终发布会在锁内再次检查目标状态。以前的测试报告不能替代对本次 snapshot 的实际测试。</p>
+<p>编写 Agent 的 <code>create_workflow</code> 和 <code>revise_workflow</code> 继续作为独立的生成式入口，发布前也执行同一强制沙箱测试。测试失败时不发布，也不会执行用户的真实任务。上述手工命令用于发布人工编写的文件。旧 <code>entry.py</code> 格式只用于历史版本和恢复兼容，新包不使用该格式。</p>
+<h2 id="相对路径与已安装-app">相对路径与已安装 App<a class="header-anchor" href="#相对路径与已安装-app">#</a></h2>
+<p>发布包相对于 OpenProgram 项目位于 <code>openprogram/programs/workflow/&lt;workflow_id&gt;</code>。项目内来源使用有明确范围的 POSIX 相对路径：</p>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"programs"</span><span class="p">,</span><span class="w"> </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow/project_report"</span><span class="p">,</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow-publish"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workflow:project_report"</span><span class="p">}</span>
+</code></pre>
+<p>范围相对于 <code>openprogram/programs/</code> 解析，不相对于当前聊天的工作目录。移动源码 checkout 不改变身份。路径越界、带范围的绝对路径、反斜杠、指向外部的符号链接以及多目录匹配歧义都会被拒绝。</p>
+<p>已安装 App 需要一次明确的源码目录绑定，才能找到另外的 checkout。这项安装设置不在每个包中重复保存。本地框架开发从本次要安装的 checkout 执行 <code>scripts/refresh-local-app.sh</code>，移动 checkout 后也一样。该命令会重建并重启默认安装，不是只读验证。</p>
+<p>对于以前已授权但 checkout 前缀失效的 Workflow，已知目录中存在结构有效的对应包时会自动迁移。仍存在的外部位置保留外部身份。迁移不会授权旁边的其他目录。撤销来源授权后，即使目录当时不存在、后来重新创建，也不会恢复授权。</p>
+<h2 id="收藏use-与排查">收藏、Use 与排查<a class="header-anchor" href="#收藏use-与排查">#</a></h2>
+<p>打开 <strong>Abilities → Programs</strong>，刷新并选择 Workflow。收藏保存公开函数名。<strong>Use</strong> 在聊天中打开参数表单，提交表单之前不执行。</p>
+<p>Programs 与侧边栏共享可调用目录。函数不在缓存中时，Use 请求当前目录；函数不可用或请求失败时显示明确错误。失败刷新保留最近一次成功目录。旧响应不能覆盖新目录，离开聊天会取消待打开的表单。</p>
+<p>如果源码可见但 Use 不可用，检查包验证、发布结果和来源授权，然后刷新 Programs。源码可见不证明 Python import 成功。行为测试失败时检查返回输出；在线模型验证与沙箱发布测试分开进行。目标仓库有未提交修改时，必须先处理，<code>--replace</code> 才能成功。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agentic workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#必需目录">必需目录</a>
-<a class="" href="#metadata">Metadata</a>
-<a class="" href="#公开入口">公开入口</a>
-<a class="" href="#允许的-python-结构">允许的 Python 结构</a>
-<a class="" href="#静态校验">静态校验</a>
-<a class="" href="#当前接入边界">当前接入边界</a>
+<a class="" href="#编码前明确合同">编码前明确合同</a>
+<a class="" href="#包结构与身份">包结构与身份</a>
+<a class="" href="#实现公开入口">实现公开入口</a>
+<a class="" href="#编写行为测试">编写行为测试</a>
+<a class="" href="#允许的导入与组合">允许的导入与组合</a>
+<a class="" href="#验证测试和发布">验证、测试和发布</a>
+<a class="" href="#相对路径与已安装-app">相对路径与已安装 App</a>
+<a class="" href="#收藏use-与排查">收藏、Use 与排查</a>
 </div></aside>
 </div>
 
