@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788695571" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788697325" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,9 +169,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Bypass does not override explicit deny or ask rules, mandatory plan-exit or self-update approval, plugin restrictions, identity capabilities, or Sandbox.</p>
 <p>Approval choices appear at the bottom left of the request. Select Allow once,
 Always allow or Deny, then use Send on the right to submit. Chat about this sits
-next to Send. It rejects the current request and automatically sends a short
-message telling the model you want to discuss it. The model replies without
-executing tools; you can then send a separate follow-up. Your draft is unchanged.
+next to Send. It opens a feedback field while keeping the original question or
+operation visible. Opening or cancelling this field sends nothing. Write your
+feedback and choose Send discussion: after the current wait is declined, your
+feedback and its original context are sent to the same conversation. The model
+replies without executing tools. Deny alone declines the operation without
+sending a discussion message. Your ordinary chat draft is unchanged.
 On narrow windows, these controls wrap within the same bottom action area.</p>
 <h2 id="change-permissions-during-a-task">Change permissions during a task<a class="header-anchor" href="#change-permissions-during-a-task">#</a></h2>
 <p>An existing session's selection is sent to the server and confirmed before the interface displays it as effective. The interface sends the change immediately when it already knows the confirmed session version. Once the server confirms Bypass, subsequent ordinary tool calls do not ask for approval, even if the model is still reasoning, streaming text or generating tool arguments. This also applies to later tools in the same response. You do not need to stop generation or send another message. The new mode is included in subsequent model requests; text already being generated is not rewritten. A tool already authorized for execution keeps that authorization. Switching into Plan mode prevents pending write calls from being authorized.</p>

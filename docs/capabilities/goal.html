@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788695571" data-alt-lang-url="/docs/capabilities/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788697325" data-alt-lang-url="/docs/capabilities/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,9 +154,12 @@ snapshot of the current conversation as initial evidence. The working agent
 and judge otherwise use the same implementation.</p>
 <p>Optional limits are <code>max_rounds</code>, <code>max_tokens</code>, <code>max_elapsed_s</code>, and
 <code>max_cost_usd</code>. Limits and usage remain cumulative when a Goal is resumed.
-The creation form keeps the objective as its primary field. Expand <strong>Advanced</strong>
-for limits, role settings, and context mode. Explicit arguments in a typed
-<code>goal(...)</code> call are preserved; internal recovery fields are not editable here.
+The creation form only asks for the task. Execution parameters have no UI
+editors. New Goals use the configured models and one tool-free model request
+to select supported reasoning effort from task complexity. Invalid responses
+or selection failures retain configured defaults; resumed Goals reuse saved
+settings. Timeouts and budgets keep their existing defaults. Python and CLI
+callers can still pass explicit overrides.
 The default working-turn timeout is 300 seconds; Python and CLI callers can
 override it with <code>timeout_s</code>. Cumulative budgets are checked at controller
 boundaries, so the current phase can consume resources beyond a total limit
@@ -174,7 +177,7 @@ Legacy Goals without saved roles resolve them once on their first resume and
 show this migration in their details. Custom callable runtimes must be supplied
 again by the Python caller; they are not reconstructed as hosted providers.</p>
 <p>The details dialog and <code>/goal</code> status show the saved work and judge settings.</p>
-<p>In a paused or waiting Goal, expand <strong>Configure agents</strong> to edit the work and
+<p>In a paused or waiting Goal, Python and CLI callers can edit the work and
 judge provider, model, reasoning effort, and timeout. Provider identifies the
 configured authentication route, not a credential. Saving keeps the objective,
 evidence, questions, and cumulative usage unchanged; the selected models are
@@ -196,8 +199,8 @@ pending role selections and reports unknown cost explicitly.</p>
 <p>The Goal chip in the composer opens a detail dialog. It shows the objective,
 status, checklist, resource usage, last decision reason, and all pending
 questions. The dialog supports editing, pausing, resuming, answering individual
-questions, changing execution limits, and cancelling.</p>
-<p>Progress updates leave unsaved text and limits intact. If another client edits
+questions and cancelling.</p>
+<p>Progress updates leave unsaved task text intact. If another client edits
 the same values, the dialog preserves your draft and offers an explicit
 “Use latest” action; it does not silently overwrite either version. Requests
 include the displayed Goal identity and version. Save failures retain the

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788695571" data-alt-lang-url="/docs/capabilities/goal.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788697325" data-alt-lang-url="/docs/capabilities/goal.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,11 +143,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>Programs 和 Python 调用默认使用隔离上下文。<code>/goal</code> 会把当前会话快照作为初始证据。除此以外，两种入口使用相同的 Working Agent 与 judge 实现。</p>
 <p>可选限制包括 <code>max_rounds</code>、<code>max_tokens</code>、<code>max_elapsed_s</code> 和 <code>max_cost_usd</code>。Goal 恢复后继续累计限制与用量。
-创建表单默认只显示目标正文；展开“高级参数”可设置预算、角色与上下文模式。直接输入 <code>goal(...)</code> 时，显式参数会原样传入执行；内部恢复字段不在此处开放编辑。</p>
+创建表单只填写任务，不提供高级参数或角色、预算编辑入口。新 Goal 沿用已配置模型，由一次无工具模型请求根据任务难度选择模型支持的推理强度；响应无效或选择失败时沿用默认值。恢复任务沿用保存的设置，超时和预算保留现有默认值。Python 和 CLI 调用仍支持显式覆盖。</p>
 <p>单个工作轮次默认限时 300 秒，Python 和 CLI 调用可以通过 <code>timeout_s</code> 覆盖。累计预算在 controller 边界检查，因此当前阶段可能先超出累计上限，再由该上限阻止后续阶段。</p>
 <p>Python 调用可用 <code>model</code>、<code>effort</code> 选择工作角色，用 <code>judge_model</code>、<code>judge_effort</code>、<code>judge_timeout_s</code> 选择判定角色。未指定判定模型时使用已配置的 <code>goal.judge_model</code>，否则使用已解析的工作模型。带 provider 的名称接受 <code>provider:model</code> 或 <code>provider/model</code>。Goal 保存两个角色的实际模型身份、认证路由、推理设置和超时，不保存凭证。恢复时沿用保存值，不随当前会话默认设置改变。角色不可用时，目标进入可恢复暂停且不开始工作；重试保留原选择，不自动换 provider。旧 Goal 没有角色配置时，在首次恢复时解析并标注迁移。自定义 callable Runtime 必须由 Python 调用者再次提供，不会被还原为托管 provider。</p>
 <p>详情弹窗和 <code>/goal</code> 状态显示保存的工作、判定角色设置。</p>
-<p>目标暂停或等待时，可展开“配置 Agent”，修改工作和判定角色的 provider、模型、推理强度及超时。Provider 是已配置的认证路由，不是凭证。保存不改变目标、证据、问题与累计用量；恢复时验证模型。模型不可用时，可修正选择后再次恢复。执行中的目标需要先暂停才能修改角色。</p>
+<p>目标暂停或等待时，Python 和 CLI 调用可修改工作和判定角色的 provider、模型、推理强度及超时。Provider 是已配置的认证路由，不是凭证。保存不改变目标、证据、问题与累计用量；恢复时验证模型。模型不可用时，可修正选择后再次恢复。执行中的目标需要先暂停才能修改角色。</p>
 <p>TUI 使用相同设置，不需要打开浏览器。</p>
 <p>使用 <code>openprogram --resume &lt;session-id&gt;</code> 重新打开已有会话及其保存的 Goal。
 发行包包含终端界面；仍需 Node.js，但不需要源码目录或运行 npm 安装。</p>
@@ -158,7 +158,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>请使用已配置的 provider 和模型名称；示例不会自动选择模型。预算设为零表示移除该上限。<code>/goal</code> 显示已解析或等待验证的角色配置，并明确标注未知成本。</p>
 <h2 id="查看与控制">查看与控制<a class="header-anchor" href="#查看与控制">#</a></h2>
-<p>composer 中的 Goal 状态条会打开详情弹窗。弹窗显示目标、状态、checklist、资源用量、最近判定原因和全部待答问题，并支持编辑、暂停、继续、逐项回答、调整执行限制和终止。</p>
+<p>composer 中的 Goal 状态条会打开详情弹窗。弹窗显示目标、状态、checklist、资源用量、最近判定原因和全部待答问题，并支持编辑、暂停、继续、逐项回答和终止。</p>
 <p>已达成、已取消和不可完成的 Goal 在其停止请求已确认后不再占用输入区，原始目标与输出仍可在对应执行记录中查看。暂停、等待和可恢复失败的目标保留详情入口，页面重载后仍可查看和继续。</p>
 <p>暂停、编辑和终止先保存目标变更，再请求取消对应执行。取消投递失败不会撤销已保存的变更，界面会报告停止尚未确认。“重试停止”或 <code>/goal stop</code> 只重试原执行的取消命令，不创建新 Goal，也不重置用量。Web 弹窗和 TUI 分别显示执行状态未知、正在停止或执行已停止，并在相关执行事件、重新连接时刷新；弹窗还支持“刷新状态”。已取消但停止尚未确认的目标继续保留操作入口。旧执行及其全部后代结束前不能恢复；新建替代 Goal 也会在初始化工作和用量前检查已保存的停止请求。没有执行记录的纯脚本 Goal 在后续 Goal 边界协作停止，界面不能确认其物理执行状态。</p>
 <p>进度更新不会覆盖未保存的正文和限制。其他客户端修改相同内容时，弹窗保留本地草稿并提供明确的“采用最新”操作；请求携带所显示目标的身份与版本，保存失败也保留草稿。继续前需要保存或放弃修改，包括回答问题后恢复工作。关闭再打开同一目标会保留草稿；切换会话时，编辑器重置为该会话已保存的目标。成本未知时显示“未知”，不显示零美元。</p>
