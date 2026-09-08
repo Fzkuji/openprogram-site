@@ -210,7 +210,8 @@
       <div class="meta"><span class="pill"><span class="dot"></span>当前基线已实现</span><span class="pill">桌面 App</span><span class="pill">独立浏览器 profile</span><span class="pill">Browser chrome 已对齐</span><span class="pill">popup 激活 · 网页右键菜单已实现</span></div>
       <details class="mobile-toc">
         <summary>本页目录</summary>
-        <nav aria-label="移动端页内导航"><a href="#decisions">产品决策</a><a href="#toolbar">工具栏与菜单</a><a href="#surfaces">可见状态</a><a href="#references">参考行为</a><a href="#architecture">架构与数据流</a><a href="#boundaries">信任边界</a><a href="#acceptance">验收与状态</a></nav>
+        <nav aria-label="移动端页内导航"><a href="#decisions">产品决策</a><a href="#toolbar">工具栏与菜单</a><a href="#surfaces">可见状态</a><a href="#references">参考行为</a><a href="#architecture">架构与数据流</a><a href="#boundaries">信任边界</a><a href="#session-pages">会话网页</a>
+          <a href="#acceptance">验收与状态</a></nav>
       </details>
     </header>
 
@@ -449,6 +450,8 @@
       </div>
     </section>
 
+    <section class="section" id="session-pages"><h2>会话资源中的网页</h2><p>网页按会话归类，默认收进右侧可折叠的会话资源面板。入口与资源类型的完整设计见 <a href="/docs/reference/design/ui/session-resources.html">Session resources</a>。网页记录继续保留真实会话归属与固定状态，手动网页及显式分屏保留顶部位置。</p></section>
+
     <section class="section" id="acceptance">
       <div class="section-head"><span class="section-no">07</span><h2>验收与实现状态</h2></div>
       <p class="section-intro">每项验收都对应一个外部可观察结果。设计状态和实现证据分列，不以文档存在本身证明功能完成。</p>
@@ -488,7 +491,8 @@
 
   <aside class="rail" aria-label="页内导航">
     <div class="rail-title">On this page</div>
-    <nav><a href="#decisions">产品决策</a><a href="#toolbar">工具栏与菜单</a><a href="#surfaces">可见状态</a><a href="#references">参考行为</a><a href="#architecture">架构与数据流</a><a href="#boundaries">信任边界</a><a href="#acceptance">验收与状态</a></nav>
+    <nav><a href="#decisions">产品决策</a><a href="#toolbar">工具栏与菜单</a><a href="#surfaces">可见状态</a><a href="#references">参考行为</a><a href="#architecture">架构与数据流</a><a href="#boundaries">信任边界</a><a href="#session-pages">会话网页</a>
+          <a href="#acceptance">验收与状态</a></nav>
   </aside>
 </div>
 <script>

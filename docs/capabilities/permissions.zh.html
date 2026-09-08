@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788707617" data-alt-lang-url="/docs/capabilities/permissions.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788865847" data-alt-lang-url="/docs/capabilities/permissions.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -167,14 +167,19 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <p>Bypass 不覆盖显式 deny 或 ask 规则、计划退出或自更新的强制审批、插件限制、身份权限上限以及 Sandbox。</p>
-<p>审批选项位于请求底部左侧。选择允许一次、总是允许或拒绝，再点击右侧发送才提交。
-Chat about this 位于发送旁。点击后在原问题或操作内容下打开反馈输入框，打开或取消都不会提交操作。填写反馈并点击“发送讨论”后，才结束当前等待，把你的反馈和原内容发送到同一会话，让模型先作文字回复。单独选择 Deny 只拒绝操作，不发送讨论消息。普通聊天草稿保持不变。
-窗口较窄时，这些控件在同一个底部操作区内换行。</p>
+<p>工具审批只显示当前操作，以及“同意”和“拒绝”。点击即提交，服务端确认后才关闭；结果未确认时可重试同一答复。长期规则仍可在 History 的项目设置中管理。</p>
+<p>人工工具审批默认没有时间限制。等待时保存执行进度并释放当前执行实例，重新打开 App 后恢复待审批请求。恢复使用本轮已保存的上下文，之后的记忆或日期更新不会使审批失效。工具、权限和工作目录仍会重新检查。如果执行无法恢复，对话会明确说明待执行的操作尚未运行。取消任务会撤销审批。以前已过期的请求不会重新生效，也不能批准新的操作。</p>
+<p><code>edit</code>、<code>write</code> 和 <code>apply_patch</code> 会保存审批时的文件状态，在执行前和写入前检查。文件已删除时不利用旧审批重新创建；内容变化时，需要先读取当前内容再提出新操作。界面只显示当前待批准内容，不显示变更历史。任意命令不能完整声明涉及的文件，所以这项文件检查不覆盖任意命令的所有副作用。</p>
+<p>普通提问保留答题控件和 Chat about this 讨论入口；工具审批不提供讨论输入框。</p>
 <h2 id="任务运行中修改权限">任务运行中修改权限<a class="header-anchor" href="#任务运行中修改权限">#</a></h2>
 <p>已有会话的选择会发送到后端，获得确认后才显示为有效模式。界面已知后端确认版本时，选择后立即发送修改。后端确认 Bypass 后，后续普通工具调用不再要求审批，即使模型仍在推理、输出文字或生成工具参数；同一条回复中的后续工具也使用新模式。无需停止生成或再发一条消息。新模式会出现在后续模型请求的运行时说明中，已经在生成的文字不会被改写。已经获得执行授权的调用保留该次授权。切换到计划模式会阻止尚未获准的写入。</p>
 <p>普通审批如果不再需要，会通过 execution 的持久化等待自动处理并恢复任务。显式 ask、强制审批、用户问题、表单及 Sandbox 升级不会因为切换模式而自动回答。重复回答、取消、超时和恢复不得重复执行已完成调用。</p>
 <p>修改只影响当前会话。其他窗口接收已确认的模式，旧版本修改会被拒绝，不能覆盖新选择。断线或失败的修改保持未确认；重新连接后检查当前模式再重试。尚未发送的草稿将选择保存在本地，并在首条消息中传入。</p>
 <p>有效默认值按会话 override、项目默认、逐次确认的顺序解析。经过身份验证的 owner Agent 创建子 Agent 时，子 Agent 继承父 Agent 当时有效的权限模式和显式规则。例如，使用 Bypass 的父 Agent 创建的子 Agent 可以执行无需普通审批的命令。子 Agent 保留自己的身份和非交互限制；显式 ask 规则和强制审批仍会阻止需要审批者的操作。后续模式变化不会改写已经接纳的子 Agent。独立定时任务和外部渠道不会从本地会话获得 owner 权限或 Bypass。</p>
+<h2 id="在-history-中管理项目规则">在 History 中管理项目规则<a class="header-anchor" href="#在-history-中管理项目规则">#</a></h2>
+<p>打开 History → Projects，选择项目，再进入 Settings → Permission Rules。三个列表分别显示该项目的拒绝、询问和允许规则。使用 <code>ToolName</code> 或 <code>ToolName(pattern)</code> 语法添加规则；删除已有规则即可撤销它。修改规则时，先删除旧条目，再添加替代条目。拒绝优先于询问，询问优先于允许。项目列表为空时，会话和全局规则仍可能影响结果。</p>
+<p>界面收到匹配当前项目的服务端确认后才清空已提交的规则。保存失败或结果未确认时保留输入并显示状态；成功修改会同步到该项目其他已打开的视图。经过认证的交互式 owner 会话在下一次操作时读取最新规则，包括当前 turn 运行期间的修改。已经获准的操作保留该次授权；已有审批等待仍需单独答复。已经接纳的子 Agent 保留创建时的策略。</p>
+<p>同意和拒绝只答复当前请求，不创建项目规则。删除项目规则影响后续授权，不会改变已经执行的操作历史。</p>
 <h2 id="理解工具拒绝">理解工具拒绝<a class="header-anchor" href="#理解工具拒绝">#</a></h2>
 <p>Windows 路径规则可使用正斜杠避免转义歧义，例如
 <code>read(C:/Users/me/project/**)</code>。盘符路径中的普通反斜杠会保留；规则语法仍用
@@ -182,10 +187,11 @@ Chat about this 位于发送旁。点击后在原问题或操作内容下打开�
 <p>工具结果会区分 Authority、权限规则、计划模式、Auto 分类和 Sandbox 拒绝。<code>AUTHORITY_TIER_MISSING</code> 表示执行请求缺少认证权限级别，Bypass 不能解决。新的认证聊天提交会携带完整身份；缺少身份的旧 admission 必须通过认证界面重新提交。</p>
 <p>Sandbox 位于输入框 Plus 菜单，与审批模式独立。修改 Sandbox 影响后续 turn。Bypass 保持当前沙箱限制，普通工具审批不能用于沙箱升级。如果拒绝不能创建独立升级等待，需要用户显式修改相关设置后发起新调用。</p>
 <p>参见<a href="/docs/capabilities/tools.zh.html">工具</a>、<a href="/docs/interfaces/web.zh.html">Web</a>、<a href="/docs/interfaces/tui.zh.html">终端</a>和<a href="/docs/reference/design/runtime/permission-model.zh.html">工程合同</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Commit, push, PR</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-08</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Commit, push, PR</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#任务运行中修改权限">任务运行中修改权限</a>
+<a class="" href="#在-history-中管理项目规则">在 History 中管理项目规则</a>
 <a class="" href="#理解工具拒绝">理解工具拒绝</a>
 </div></aside>
 </div>

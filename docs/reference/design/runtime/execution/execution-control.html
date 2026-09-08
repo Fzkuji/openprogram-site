@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788707617">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788865847" data-alt-lang-url="/docs/reference/design/runtime/execution/execution-control.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>统一运行控制：暂停、继续、单步、调整与取消 · OpenProgram Docs</title>
-
+<title>Conversation activity and execution control · OpenProgram Docs</title>
+<meta name="description" content="Activity does not show an error during initial loading, reconnecting, or cursor resynchronization. A failure notice requires a confirmed request failure owned">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html">
-
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"统一运行控制：暂停、继续、单步、调整与取消"}]}</script>
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/execution/execution-control.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Conversation activity and execution control"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html">
-<meta property="og:title" content="统一运行控制：暂停、继续、单步、调整与取消 · OpenProgram Docs">
-<meta property="og:description" content="">
+<meta property="og:title" content="Conversation activity and execution control · OpenProgram Docs">
+<meta property="og:description" content="Activity does not show an error during initial loading, reconnecting, or cursor resynchronization. A failure notice requires a confirmed request failure owned">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -21,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="统一运行控制：暂停、继续、单步、调整与取消 · OpenProgram Docs">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Conversation activity and execution control · OpenProgram Docs">
+<meta name="twitter:description" content="Activity does not show an error during initial loading, reconnecting, or cursor resynchronization. A failure notice requires a confirmed request failure owned">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -100,7 +102,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">Composer interaction layout</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="GUI Agent 核心工程设计" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent execution design</a>
+<a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="GUI Agent：完整电脑操作设计" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent: complete computer-use design</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · Queue and steering</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
@@ -111,6 +113,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="界面 · 浏览器与标签页">UI · Browser and tabs</div>
 <a class="navlink" href="/docs/reference/design/ui/browser-extensions.html">浏览器扩展支持决策</a>
 <a class="navlink" href="/docs/reference/design/ui/built-in-browser.html">OpenProgram 内置浏览器设计</a>
+<a class="navlink" href="/docs/reference/design/ui/session-resources.html">Session resources</a>
 <a class="navlink" href="/docs/reference/design/ui/center-tabs-and-split-layout.html">网页标签的呈现位置 — center · split · 会话 PiP</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.viz.html">OpenProgram 远程 Web 访问设计 (viz)</a>
 <a class="navlink" href="/docs/reference/design/ui/remote-web-access.html" data-title-zh="远程 Web 访问——单一所有者的自托管控制" data-href-en="/docs/reference/design/ui/remote-web-access.html" data-href-zh="/docs/reference/design/ui/remote-web-access.zh.html">Remote Web Access — Owner-Only, Self-Hosted Control</a>
@@ -128,9 +131,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="界面 · 工作区与侧栏">UI · Workspace and sidebar</div>
 <a class="navlink" href="/docs/reference/design/ui/integrated-terminal.html">OpenProgram 内置终端与 Claude Code</a>
 <a class="navlink" href="/docs/reference/design/ui/project-order.html">Sidebar project order</a>
+<a class="navlink" href="/docs/reference/design/ui/file-type-icons.html">Shared file type icons</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html">OpenProgram 浏览器式界面原型 v3</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace.html" data-title-zh="项目工作区 —— 文件、多 Tab 与多会话" data-href-en="/docs/reference/design/ui/project-workspace.html" data-href-zh="/docs/reference/design/ui/project-workspace.zh.html">Project workspace — files, tabs, and multi-session</a>
-<a class="navlink" href="/docs/reference/design/ui/right-sidebar-files.html">OpenProgram 右侧文件树层级设计</a>
+<a class="navlink" href="/docs/reference/design/ui/right-sidebar-files.html">OpenProgram 文件树与基础文件管理设计</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-mock.html">左侧栏层级设计 mock</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebars-resizing.html">左右侧栏宽度与收起状态</a>
 </div>
@@ -316,6 +320,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
+<a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html">Chat settings and web search</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
@@ -333,6 +338,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
+<a class="navlink" href="/docs/reference/design/runtime/system-access.html">System access</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-architecture.html">Agent协作：工具面</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent协作：八家实现对照</a>
 </div>
@@ -355,7 +361,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
-<a class="navlink active" href="/docs/reference/design/runtime/execution/execution-control.html">统一运行控制：暂停、继续、单步、调整与取消</a>
+<a class="navlink active" href="/docs/reference/design/runtime/execution/execution-control.html" data-title-zh="会话分支与运行控制" data-href-en="/docs/reference/design/runtime/execution/execution-control.html" data-href-zh="/docs/reference/design/runtime/execution/execution-control.zh.html">Conversation activity and execution control</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
@@ -388,7 +394,312 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Execution">Runtime · Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">统一运行控制：暂停、继续、单步、调整与取消</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/execution/execution-control.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Recursion Guard for Agentic Functions</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Execution">Runtime · Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="会话分支与运行控制">Conversation activity and execution control</span></nav><div class="viz-fragment" id="viz-frag-reference-design-runtime-execution-execution-control"><h1 id="top">Conversation activity and execution control</h1>
+<p>Activity does not show an error during initial loading, reconnecting, or cursor resynchronization. A failure notice requires a confirmed request failure owned by the current conversation; changing conversations cannot display the previous conversation’s error. Actual failed reads retain saved records and automatic retries.</p>
+
+
+<p class="quick-intro">What is counted, what needs your attention, and what happens when you pause or stop a task.</p>
+
+<p class="summary-rule"><strong>Activity counts conversation branches.</strong> Sending another message on the same branch does not add another History item.</p>
+
+<p>Branch details use a short branch heading and an execution count. The request appears only in its execution row. Declined waits are labelled Declined, and open waits are labelled Waiting for your response. Declining does not execute the pending operation. The durable checkpoint preserves the previously displayed text, reasoning blocks, and tool calls; the terminal projection publishes a session reload after saving the outcome.</p>
+<p>Opening an existing execution store does not renumber historical events. Sequence backfill belongs to the migration that adds the sequence column; function subprocess startup must not hold a history-wide write transaction. Standalone function progress frames address the existing code node when there is no assistant caller, so the transcript receives internal steps before completion. Function completion releases foreground occupancy before optional model-generated session naming.</p>
+<section id="resumed-turn-identity"><p>Recovery considers a resolved wait only while its checkpoint is still the execution’s current checkpoint. Outcomes from earlier questions cannot resume, fail or cancel a newer wait. Repeated recovery is idempotent. Regression coverage includes an answered first wait followed by an open or answered second wait. Implementation status: specification and quality reviews pass; controlled recovery tests cover sequential waits and repeated startup recovery.</p><h2>Resuming the same turn</h2><p>A resumed Agent run restores the same session, turn, reply, runtime and tool bindings as the initial entry, and releases them on completion, suspension or error. Browser page capabilities remain bound to the original owner; resuming never accepts another owner’s token. A browser rejection is an explicit tool error with its original reason preserved. Exhausting the configured iteration limit ends the run as unsuccessful, not Completed, while retaining its text and operation history.</p><p>Pending approval is shown near its owning assistant message only when the authoritative execution update identifies that message in the same session. The composer remains the decision surface. Reconnecting or restoring pending questions requests the existing canonical execution replay; message ownership comes from the snapshot display metadata, with compatibility for older input envelopes. Missing ownership evidence never attaches another run’s decision to a message.</p><p>Acceptance covers a suspended and resumed public Agent entry, fresh browser discovery followed by observation with the returned token, binding cleanup on error, foreign-owner rejection, iteration exhaustion, and approval isolation between messages and sessions. Implementation status: specification and quality reviews pass. Controlled regression coverage verifies resumed browser capability ownership, explicit browser errors, binding release, iteration exhaustion as Failed, and message-scoped approval display. Default-App acceptance remains a separate release check.</p></section>
+<section id="reading-guide">
+<span id="identity"></span>
+
+<h2>1. Three things to distinguish</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Object</th><th scope="col">Meaning</th><th scope="col">Where it appears</th></tr>
+</thead>
+<tbody>
+<tr><td>Conversation branch</td><td>One path through a conversation. A real fork creates another path.</td><td>One counted Activity row.</td></tr>
+
+<tr><td>Execution</td><td>One task run: for example, producing a reply to a message.</td><td>Inside branch details. Its ID identifies the exact target of a control command.</td></tr>
+
+<tr><td>Managed process</td><td>A command started by a tool, such as a script.</td><td>Attached to the execution that started it, with its own output and stop control.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+
+<section id="activity-conversation-branches">
+<span id="activity"></span>
+
+<span id="unified-activity"></span>
+
+<h2>2. How branches are counted</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Example</th><th scope="col">Count</th><th scope="col">Details</th></tr>
+</thead>
+<tbody>
+<tr><td>Send a message, then say “continue”.</td><td>1</td><td>Both executions stay in the same branch.</td></tr>
+
+<tr><td>Create an alternative reply from an earlier point.</td><td>2</td><td>The original and the new branch each have a row.</td></tr>
+
+<tr><td>A later execution on the same branch fails.</td><td>1</td><td>The failure is retained in details; it does not create a branch.</td></tr>
+
+<tr><td>Two branches share earlier messages.</td><td>2</td><td>Shared earlier executions may appear in both details. They do not add rows.</td></tr>
+</tbody>
+</table>
+</div>
+<p>History counts ended branches. The other sections list branches that still need attention or contain active work.</p></section>
+
+
+<section id="provider-terminal-activity">
+<span id="state"></span>
+
+<span id="state-note"></span>
+
+<h2>3. Which status should I see?</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Situation</th><th scope="col">Section</th><th scope="col">Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td>An approval, question, pause, or unresolved tool result needs action.</td><td>Needs attention</td><td>Open details to see the actual request. A new message does not dismiss it.</td></tr>
+
+<tr><td>An execution, child task, or owned process is running.</td><td>In progress</td><td>An Agent finishing its reply does not mean its background process has stopped.</td></tr>
+
+<tr><td>The branch has ended, with no active work or actionable request.</td><td>History</td><td>Failures and outputs remain available in details.</td></tr>
+
+<tr><td>The owner ended; only the model response record is missing. No active wait or pending non-cancel control remains.</td><td>History</td><td>Shown as “Ended · response record incomplete”. An old Cancel request does not make this actionable. Cancel is available only if a child task is still active. This does not claim success.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Ordinary branch status comes from its newest execution. Real waits, active descendants and owned processes are also checked. Missing records are never used to guess a new branch.</p></section>
+
+
+<section id="commands">
+<span id="protocol"></span>
+
+<span id="decision"></span>
+
+<span id="scope"></span>
+
+<h2>4. What each control does</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Control</th><th scope="col">Result</th><th scope="col">Boundary</th></tr>
+</thead>
+<tbody>
+<tr><td>Pause</td><td>Request a stop at the next safe point.</td><td>The current action may finish first. It does not freeze an arbitrary line of code.</td></tr>
+
+<tr><td>Continue</td><td>Resume the same execution from saved progress.</td><td>Available only when its saved state and capability permit it.</td></tr>
+
+<tr><td>Step</td><td>Run one declared step, then pause again.</td><td>A step is a tool action or another declared boundary, not a source-code line.</td></tr>
+
+<tr><td>Steer</td><td>Add instructions for work that has not run yet.</td><td>Already completed work stays unchanged.</td></tr>
+
+<tr><td>Cancel</td><td>End the selected execution and its execution descendants.</td><td>Cannot undo external actions already completed. A managed process also has its own control.</td></tr>
+
+<tr><td>Fork / Retry</td><td>Create an independent child execution from an allowed saved point.</td><td>The original history stays. Agent chat children start paused and need Continue; other execution types follow their scheduler.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The UI offers only controls supported by that execution. A visible “accepted” response means the request was saved; “applied” means it took effect.</p></section>
+
+
+<section id="checkpoint">
+<span id="recovery-design"></span>
+
+<span id="safe-point"></span>
+
+<span id="effects"></span>
+
+<span id="recovery"></span>
+
+<span id="foreground-reconnect"></span>
+
+<h2>5. What survives a restart?</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Record</th><th scope="col">Plain meaning</th><th scope="col">Why it matters</th></tr>
+</thead>
+<tbody>
+<tr><td>Checkpoint</td><td>Saved progress at a declared stopping point.</td><td>Continue starts here; it does not restore a frozen thread.</td></tr>
+
+<tr><td>Effect receipt</td><td>Whether a model or tool request finished and what was confirmed.</td><td>Confirmed work is not blindly repeated. An uncertain external action must be checked first.</td></tr>
+
+<tr><td>Attempt ownership</td><td>Which worker may currently update this execution.</td><td>An old worker cannot overwrite a replacement worker’s state.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+
+<span id="record"></span>
+
+<span id="security"></span>
+
+<span id="revision"></span>
+
+<span id="revision-draft"></span>
+
+<span id="driver"></span>
+
+<span id="cancel"></span>
+
+<span id="owners"></span>
+
+<span id="agent-public-cutover"></span>
+
+<span id="agent-safe-point"></span>
+
+<span id="job-durable-control"></span>
+
+<span id="job-snapshot"></span>
+
+<span id="surface"></span>
+
+<details id="engineering">
+<summary>Engineering reference: identifiers and safety rules</summary>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Identifier</th><th scope="col">Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>session_id</code></td><td>Conversation scope and authorization; never a control target.</td></tr>
+
+<tr><td><code>run_id</code></td><td>Groups related original, fork and retry executions.</td></tr>
+
+<tr><td><code>execution_id</code></td><td>Exact control target. Pause/Continue keep it; a fork or retry creates another.</td></tr>
+
+<tr><td><code>attempt_id</code></td><td>One activation of a worker; resuming can create a new attempt.</td></tr>
+
+<tr><td><code>revision_id</code></td><td>An immutable version of the program and its contract.</td></tr>
+
+<tr><td><code>command_id</code> + <code>expected_version</code></td><td>Prevent duplicate actions and reject stale commands.</td></tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>All transports use one command service. It saves the command before the owner applies it. UI state does not authorize an operation.</li>
+
+<li>Cancellation takes precedence over pause, step/continue and steering. Only the current owner can publish progress or a final state.</li>
+
+<li>Known model errors and aborts get response records. Unknown tool outcomes remain unresolved; the History label does not clear them.</li>
+
+<li>Forks validate the saved point, immutable revision and permission. Changes to program, model or tool contracts retain independent review requirements.</li>
+
+<li>Agent and background Job work share the same execution owner. For Jobs, job_id equals execution_id. Resource allocation stays separate from execution state.</li>
+
+<li>Branch membership comes from the existing conversation graph and message IDs. Compaction retains earlier associations. The current stored project location is read before loading a session.</li>
+
+<li>Reads and controls are restricted to the authorized conversation. Reconnect uses saved versions and event positions; it does not create a duplicate task.</li>
+
+<li>Managed processes retain identity, ownership and bounded output. Restart recovery checks the supervisor; a saved PID alone is not permission to send a signal.</li>
+</ul>
+</details>
+
+
+<section id="status">
+<span id="verification"></span>
+
+<span id="current"></span>
+
+<span id="cutover"></span>
+
+<span id="acceptance"></span>
+
+<h2>6. Implementation and verification</h2>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Area</th><th scope="col">Recorded implementation</th><th scope="col">Acceptance check</th></tr>
+</thead>
+<tbody>
+<tr><td>Branch counts</td><td>One row per real conversation branch; executions remain in details.</td><td>One linear conversation → History 1. A conversation with three tips → History 3.</td></tr>
+
+<tr><td>Attention</td><td>Provider-only missing response records are distinguished from real waits and uncertain tool effects.</td><td>A real approval remains visible; an ended model request alone does not request confirmation.</td></tr>
+
+<tr><td>Execution controls</td><td>Shared commands, checkpoints and revision controls are integrated; capabilities differ by execution.</td><td>Test only the controls the selected execution advertises. Forced-tool, spawn and merge paths retain restrictions.</td></tr>
+
+<tr><td>Processes and recovery</td><td>Default macOS App checks cover process ownership, separate stop, output retention and refresh.</td><td>These checks do not establish Windows or Linux runtime results.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Limits: no arbitrary thread-stack restoration, automatic undo, or reconstruction of process records that were never saved. Runtime calls that ask questions inside an ordinary function still need a declared interaction boundary. Separate accounting for waiting deadlines and Job budgets is not yet connected to resource management.</p>
+<ul>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/execution/activity_branches.py">Branch membership implementation</a></li>
+
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/tests/component/webui/test_activity_branches.py">Branch membership regression tests</a></li>
+
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/apps/web/tests/activity-branch-panel.test.mjs">Activity panel regression tests</a></li>
+
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/execution">Execution protocol and persistence source</a></li>
+</ul>
+</section>
+
+
+<span id="references"></span>
+
+<span id="related"></span>
+
+<details id="reference">
+<summary>References and related designs</summary>
+<div class="doc-table">
+<table>
+<thead>
+<tr><th scope="col">Reference</th><th scope="col">Idea used</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://microsoft.github.io/debug-adapter-protocol/">Debug Adapter Protocol</a></td><td>Separate observation from control; advertise supported controls.</td></tr>
+
+<tr><td><a href="https://github.com/temporalio/documentation/blob/main/docs/encyclopedia/workflow/workflow-execution/workflow-execution.mdx">Temporal Workflow Execution</a></td><td>Persist execution state.</td></tr>
+
+<tr><td><a href="https://github.com/temporalio/documentation/blob/main/docs/encyclopedia/workflow/workflow-pause.mdx">Temporal Workflow Pause</a></td><td>Pausing does not undo work already started.</td></tr>
+
+<tr><td><a href="https://docs.langchain.com/oss/python/langgraph/persistence">LangGraph persistence</a></td><td>Save progress at checkpoints.</td></tr>
+
+<tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph interrupts</a></td><td>Wait for input and resume at a defined boundary.</td></tr>
+
+<tr><td><a href="https://docs.langchain.com/oss/python/langgraph/use-time-travel">LangGraph time travel</a></td><td>Keep original history when creating alternatives.</td></tr>
+
+<tr><td><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Kubernetes Pod lifecycle</a></td><td>Request termination, then confirm owner shutdown.</td></tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><a href="/docs/reference/design/runtime/execution/async-job-lifecycle.html">Background Job lifecycle</a></li>
+
+<li><a href="/docs/reference/design/runtime/dag/overview.html">Conversation graph</a></li>
+
+<li><a href="/docs/reference/design/runtime/agent-resource-governance.html">Resource allocation</a></li>
+
+<li><a href="/docs/reference/design/runtime/operations/user-input-requests.html">Questions and approvals</a></li>
+
+<li><a href="/docs/reference/design/error-handling.html">Error handling</a></li>
+</ul>
+</details>
+
+
+<span id="state-title"></span>
+
+<span id="state-desc"></span>
+
+<span id="arrow"></span>
+
+<span id="control-arrow"></span>
+
+<span id="arch-title"></span>
+
+<span id="arch-desc"></span>
+
+<span id="arch-arrow"></span>
+
+<style>#viz-frag-reference-design-runtime-execution-execution-control .quick-intro {font-size:1.1rem;line-height:1.6}#viz-frag-reference-design-runtime-execution-execution-control .summary-rule {padding:12px 16px;border-left:3px solid currentColor;margin:18px 0}#viz-frag-reference-design-runtime-execution-execution-control .doc-table {overflow-x:auto;margin:14px 0 26px}#viz-frag-reference-design-runtime-execution-execution-control table {width:100%;border-collapse:collapse}#viz-frag-reference-design-runtime-execution-execution-control th, #viz-frag-reference-design-runtime-execution-execution-control td {text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid var(--border,#8884);line-height:1.55}#viz-frag-reference-design-runtime-execution-execution-control th {font-weight:600}#viz-frag-reference-design-runtime-execution-execution-control td:first-child {min-width:110px}#viz-frag-reference-design-runtime-execution-execution-control h2 {margin-top:32px}#viz-frag-reference-design-runtime-execution-execution-control details {margin:18px 0;border:1px solid var(--border,#8884);border-radius:6px;padding:12px 16px}#viz-frag-reference-design-runtime-execution-execution-control summary {cursor:pointer;font-weight:600}#viz-frag-reference-design-runtime-execution-execution-control li {margin:7px 0}#viz-frag-reference-design-runtime-execution-execution-control code {overflow-wrap:anywhere}#viz-frag-reference-design-runtime-execution-execution-control section {scroll-margin-top:100px}#viz-frag-reference-design-runtime-execution-execution-control :focus-visible {outline:2px solid currentColor;outline-offset:4px}@media(max-width:600px){#viz-frag-reference-design-runtime-execution-execution-control th, #viz-frag-reference-design-runtime-execution-execution-control td {padding:8px;font-size:.9rem}#viz-frag-reference-design-runtime-execution-execution-control td:first-child {min-width:85px}}
+</style>
+</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-08</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Recursion Guard for Agentic Functions</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 

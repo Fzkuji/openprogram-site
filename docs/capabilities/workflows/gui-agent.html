@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788707617" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788865847" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GUI Agent · OpenProgram Docs</title>
-<meta name="description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
+<meta name="description" content="Give it one natural-language task. Without an explicit browser selection, its root controller repeatedly chooses one bounded capability: computer_use for the">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <meta property="og:title" content="GUI Agent · OpenProgram Docs">
-<meta property="og:description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
+<meta property="og:description" content="Give it one natural-language task. Without an explicit browser selection, its root controller repeatedly chooses one bounded capability: computer_use for the">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GUI Agent · OpenProgram Docs">
-<meta name="twitter:description" content="Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: computer_use for the local desktop, browser_use for an">
+<meta name="twitter:description" content="Give it one natural-language task. Without an explicit browser selection, its root controller repeatedly chooses one bounded capability: computer_use for the">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -135,7 +135,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>Give it one natural-language task. Its root controller repeatedly chooses one bounded capability: <code>computer_use</code> for the local desktop, <code>browser_use</code> for an OpenProgram background Page, or <code>vm_use</code> for a configured remote virtual machine. Every capability's planner-selected arguments and full result are appended to the next model decision's context. The model ends the task by proposing a terminal result; action and time limits remain safety boundaries.</p>
+<p>Give it one natural-language task. Without an explicit browser selection, its root controller repeatedly chooses one bounded capability: <code>computer_use</code> for the local desktop, <code>browser_use</code> for an OpenProgram background Page, or <code>vm_use</code> for a configured remote virtual machine. Every capability's planner-selected arguments and full result are appended to the next model decision's context. The model ends the task by proposing a terminal result; action and time limits remain safety boundaries.</p>
 <p>Local and VM perception combines YOLO component detection (GPA-GUI-Detector), OCR (Apple Vision on macOS, EasyOCR on Linux / Windows), and template matching. The action layer covers mouse, keyboard, and clipboard. Browser operations use the Page's DOM/CDP target instead of desktop coordinates.</p>
 <h2 id="availability">Availability<a class="header-anchor" href="#availability">#</a></h2>
 <p>Every supported release registers this Program and ships Playwright Chromium plus the GPA detector weight. It does not ship PyTorch, OpenCV, or EasyOCR, so desktop perception that needs those libraries is unavailable in the packaged product. Source-development checkouts can still install the harness's own dependencies. Developers can use an editable GUI harness checkout or replace the OCR/browser backend for debugging and backend work.</p>
@@ -148,8 +148,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>For a task that is naturally satisfied by the current built-in browser Page, use the same entry:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Inspect and complete the current built-in browser form without foregrounding the window"</span>
 </code></pre>
-<p>Trusted callers can also supply hidden controller settings: <code>max_steps</code> is the action safety limit (default 150); <code>max_seconds</code> is the optional wall-clock safety limit; <code>app_name</code> selects component memory; <code>backend</code> pins an existing Page backend; and <code>vm_url</code> enables <code>vm_use</code>. The old <code>surface</code> field is accepted only as a compatibility preference. It does not lock the run to one capability and is absent from the public function schema.</p>
-<p>The control sequence is:</p>
+<p>Trusted callers can also supply hidden controller settings: <code>max_steps</code> is the action safety limit (default 150); <code>max_seconds</code> is the optional wall-clock safety limit; <code>app_name</code> selects component memory; <code>backend</code> pins an existing Page backend; and <code>vm_url</code> enables <code>vm_use</code>. <code>surface=&quot;browser&quot;</code>, or a <code>backend</code> without another surface, selects the standard browser Agent path described below. Other surface settings remain compatibility preferences. These settings are absent from the public function schema.</p>
+<h2 id="explicit-browser-execution">Explicit browser execution<a class="header-anchor" href="#explicit-browser-execution">#</a></h2>
+<p>Inside an active macOS Runtime execution, trusted callers can select <code>surface=&quot;browser&quot;</code>. This path uses one standard <code>agent()</code> loop with the persistent, isolated <code>gui_exec</code> Python tool. It lists context-authorized Pages, acquires single-use Page capabilities, and exposes opaque handles. It does not open a new Page automatically or run the legacy capability planner. The default backend is <code>open_claude_chrome</code>; explicit MCP backends without operation guards return <code>infeasible</code> rather than silently selecting another backend.</p>
+<p><code>max_steps</code> limits Agent iterations on this path. Each Python call is separately bounded to 30 seconds and 100 broker operations. <code>allow_general=false</code> exposes only the GUI tool; <code>true</code> also makes standard tools available subject to inherited permissions and deny rules, excluding recursive <code>gui_agent</code>. Python state persists for this invocation; screenshot bytes are returned as normal Agent image content. Missing execution identity or unsupported process isolation fails closed.</p>
+<p>The model proposes a final browser assertion. The host checks it against the owned Page and current frame after the Agent returns. Success requires that assertion to pass and no unresolved primitive effects from this invocation. The result includes the verification effect and assertion evidence; a model-selected assertion does not prove every aspect of an arbitrary task. Script completion alone cannot report success. Handles are revoked before Page leases are released, and cleanup errors prevent a successful result. Cleanup may still wait for an already-running browser operation; bounded in-flight cancellation and default-App acceptance remain unverified.</p>
+<h2 id="browser-resources-and-human-control">Browser resources and human control<a class="header-anchor" href="#browser-resources-and-human-control">#</a></h2>
+<p>In the desktop App, Agent-opened Pages remain in the background. Open <strong>Resources</strong> in the right sidebar to see the current conversation's Pages grouped by branch, including Pages used by its child agents. Continuing a branch keeps its resource group. Distinct Pages stay distinct even when they have the same URL; pages without established branch ownership appear under <strong>Unassigned</strong>.</p>
+<p>Select a resource to inspect its image preview in chat. <strong>Follow</strong> selects the Page most recently operated on by that branch; selecting a resource manually keeps that selection while the Agent works elsewhere and does not steal tab focus. <strong>Hide</strong> stops preview capture and keeps the Page available. <strong>Expand</strong> enlarges the image preview. <strong>Open page</strong> opens the existing Page as an ordinary top tab and hides the chat preview. Returning to the conversation restores the preview unless it was hidden. These controls keep their selection per conversation and branch.</p>
+<p>A webpage tab and its preview never display together. The actual webpage remains usable in its own tab. There is no dimming mask. Its toolbar identifies the current controller and provides <strong>Take over</strong>, <strong>Resume</strong>, <strong>Show actions</strong>, and <strong>Operation history</strong>. The chat preview uses a single compact chrome row; Idle has no enabled Take over. Action markers are brief and do not intercept input; history contains operation types and results rather than the text entered into a webpage.</p>
+<p>Using the real webpage requests yielding: clicking, typing, scrolling, and navigating close later Agent input admission and request execution pause. Merely focusing the page or inspecting its preview does not pause execution. An action already dispatched can still finish. <strong>Yielding</strong> means stopping is pending; <strong>Paused</strong> requires execution acknowledgement and reconciliation. <strong>Stop unconfirmed</strong> means the App has not confirmed stopping, and the webpage remains usable. Resuming is explicit and requires a fresh observation and current permission.</p>
+<p>Closing a Page affects every branch reference to that same Page. An active Page first requests stopping; it stays available until stopping is confirmed. Closing is separate from hiding the preview. Disconnection or an unavailable target shows the last image as stale. Saved resource metadata does not restore an Agent input lease or recreate a closed Page.</p>
+<p>These browser controls operate on exact OpenProgram Pages. Native application windows, the shared host desktop, and VM displays retain their own capability and input-scope restrictions described below.</p>
+<h2 id="automatic-capability-execution">Automatic capability execution<a class="header-anchor" href="#automatic-capability-execution">#</a></h2>
+<p>The following sequence applies when no explicit browser path is selected:</p>
 <ol>
 <li><code>plan_next_capability</code> receives the task, current availability, and complete ordered capability history.</li>
 <li>It selects <code>computer_use</code>, <code>browser_use</code>, <code>vm_use</code>, or proposes a terminal result.</li>
@@ -162,7 +174,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>vm_use</code> requires an OSWorld-compatible HTTP endpoint. Screenshots are read from <code>GET /screenshot</code>, and input commands are sent to <code>POST /execute</code>. VM target selection is serialized within the Harness process. Whether the call succeeds or raises, the prior input target and screenshot backend are restored before another capability runs. Endpoint credentials and query values are not included in planner availability context.</p>
 <p>Desktop observations include the frontmost application and screenshot coordinate bounds. If the target application's windows are minimized or located in another macOS Space and remain unavailable after one bounded Window-menu recovery, the run stops as infeasible and asks the user to move or unminimize the window. It does not create additional windows indefinitely.</p>
 <p>Desktop coordinate input always applies to the current foreground GUI. When the controller has an exact macOS process and window target, <code>computer_use</code> may instead use window-only capture and supported Accessibility press, text-value, or scroll actions without activating the target. A non-activating, mouse-ignoring indicator follows that window and marks the current action without moving the system pointer. Browser actions use the selected Page in the background and do not activate its tab, raise the OpenProgram window, or move the system pointer. The controller may switch between these capabilities when the recorded results require it.</p>
-<p>All runs share the same terminal fields: <code>status</code> (<code>succeeded</code>, <code>infeasible</code>, or <code>failed</code>), <code>success</code>, <code>reason_code</code>, <code>summary</code>, and <code>handoff_instruction</code>. The runner, not the conclusion model, determines success. <code>success</code> is true only for <code>succeeded</code>. Infeasible and failed results always return <code>success=false</code>; infeasible results retain the blocker, marker, and user handoff instruction. The result also contains the ordered capability history and timing.</p>
+<p>All runs share the same terminal fields: <code>status</code> (<code>succeeded</code>, <code>infeasible</code>, or <code>failed</code>), <code>success</code>, <code>reason_code</code>, <code>summary</code>, and <code>handoff_instruction</code>. The runner, not the conclusion model, determines success. <code>success</code> is true only for <code>succeeded</code>. Infeasible and failed results always return <code>success=false</code>; infeasible results retain the blocker, marker, and user handoff instruction. The automatic capability path also contains its ordered capability history and timing.</p>
 <p><code>max_seconds</code> is enforced before each model or capability call and again after it returns. A terminal proposal that arrives after the deadline is rejected and normalized as a timeout failure. Provider cancellation is cooperative, so an in-flight provider request can return slightly after the configured wall-clock boundary; it still cannot turn that run into success.</p>
 <p>The Function card displays that task result directly: <code>Succeeded</code> for a verified result, <code>Failed</code> when the task ended without satisfying the request, and <code>Needs takeover</code> when the handoff instruction requires user action. <code>Error</code> identifies a runtime exception or an invalid GUI result contract. An internal completed worker state never changes a failed GUI result into <code>Completed</code>.</p>
 <h2 id="dependency-notes">Dependency notes<a class="header-anchor" href="#dependency-notes">#</a></h2>
@@ -176,12 +188,43 @@ and dependency support.</li>
 </ul>
 <p>Source and README: <code>openprogram/programs/applications/gui_harness/</code>, upstream repository <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>.</p>
 <p>Browser Workflow forms expose only the task and optional target URL. Action limits, timeout and backend remain internal settings with defaults; no Advanced section is shown. Explicit programmatic calls retain their supported overrides.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<h2 id="system-access-diagnostics">System access diagnostics<a class="header-anchor" href="#system-access-diagnostics">#</a></h2>
+<p>System settings shows live optional desktop access on the execution computer.
+Opening this page or running <code>openprogram doctor</code> does not request permission.
+The TUI <code>/doctor</code> command and <code>GET /api/system/access</code> expose the same checks.
+Missing optional desktop access does not prevent ordinary chat or upgrades.</p>
+<p>On macOS, managed installations run the worker and its Python children through
+<strong>OpenProgram</strong>, an embedded application with the OpenProgram icon and
+a stable bundle identifier. This is the name to look for in System Settings;
+the installer does not grant its permissions. Screen recording and Accessibility
+are checked separately for the executing process. In local System settings, <strong>Set up access</strong> explicitly requests
+only a missing permission; an existing grant is left untouched. Complete the
+system confirmation, then return to the page for automatic verification.
+Remote clients must arrange authorization on the execution computer. A grant
+for another application is not evidence that the worker is authorized.</p>
+<p>Linux headless sessions and unsupported Wayland desktop capture are reported
+separately from missing dependencies. An X11 display alone does not prove access.
+Windows desktop access depends on the active session and target; ordinary
+applications cannot assume access to secure desktops or elevated targets.
+Neither platform is instructed to disable security or run the entire application
+as administrator. Native Linux and Windows desktop acceptance remains unverified.</p>
+<p>The current macOS development build is not production-signed. Permission
+persistence across signed release upgrades, first-run capability onboarding,
+and automatic task recovery after authorization remain unverified. System
+access setup never retries a declined operation.</p>
+<h3 id="system-authorization">System authorization<a class="header-anchor" href="#system-authorization">#</a></h3>
+<p>Local desktop tasks request missing system access through the native authorization flow. The task row only shows a brief status and an Open System Settings text action, without a separate permission card, form, or Continue button. The active waiting task rechecks access and continues once after authorization takes effect. Viewing history never executes a task automatically. Navigating away stops automatic continuation. System access does not replace operation approval.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-08</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#availability">Availability</a>
 <a class="" href="#usage">Usage</a>
+<a class="" href="#explicit-browser-execution">Explicit browser execution</a>
+<a class="" href="#browser-resources-and-human-control">Browser resources and human control</a>
+<a class="" href="#automatic-capability-execution">Automatic capability execution</a>
 <a class="" href="#dependency-notes">Dependency notes</a>
+<a class="" href="#system-access-diagnostics">System access diagnostics</a>
+<a class="lvl-3" href="#system-authorization">System authorization</a>
 </div></aside>
 </div>
 

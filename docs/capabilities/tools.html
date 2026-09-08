@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788707617" data-alt-lang-url="/docs/capabilities/tools.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788865847" data-alt-lang-url="/docs/capabilities/tools.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -253,7 +253,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<p><code>web_search</code> backends and keys (DuckDuckGo and arXiv are key-free and work out of the box):</p>
+<p><code>web_search</code> backends and keys (arXiv is key-free; DuckDuckGo also requires its optional package):</p>
 <table>
 <thead>
 <tr>
@@ -324,6 +324,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<p>The chat Web Search switch controls whether <code>web_search</code> is available for that message. Turning it off excludes the tool even in automatic tool mode. When enabled, the search schema is available immediately, including when Tools is off. Turning it on still respects the Agent's disabled tools and permissions. Tool profile choices belong to each conversation and survive tab changes and refreshes.</p>
+<p>Search keys take effect on subsequent calls without restarting. An unavailable saved default falls back to another available provider; an explicitly named unavailable provider reports an error. Jina search requires <code>JINA_API_KEY</code>.</p>
+<p><code>combine=&quot;race&quot;</code> returns the first nonempty successful response. <code>combine=&quot;rrf&quot;</code> retains results completed before the deadline. Total failure is reported as an error, distinct from a successful empty search. Already running requests finish under their transport timeouts.</p>
 <h2 id="images-and-pdf">Images and PDF<a class="header-anchor" href="#images-and-pdf">#</a></h2>
 <table>
 <thead>
@@ -469,7 +472,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/mcp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP</span></a><a class="pn-link pn-next" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Language server tools</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-08</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/mcp.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP</span></a><a class="pn-link pn-next" href="/docs/capabilities/lsp.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Language server tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#files-and-code">Files and code</a>

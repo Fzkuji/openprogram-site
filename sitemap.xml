@@ -356,6 +356,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/chat-search-settings.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-layout-spec.html</loc></url>
@@ -378,6 +379,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/execution-control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal-framework-implementation-comparison.html</loc></url>
@@ -428,6 +430,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/store-lock-scope.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/ssrf-protection.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/system-access.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
@@ -456,6 +459,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-local-attachment-paths.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-responsive-controls.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/fn-form-compact-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.zh.html</loc></url>
@@ -478,6 +482,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-resources.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebars-resizing.html</loc></url>

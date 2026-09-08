@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788707617" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788865847" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GUI Agent · OpenProgram Docs</title>
-<meta name="description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
+<meta name="description" content="给它一个自然语言任务。未显式选择浏览器路径时，根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html">
 <meta property="og:title" content="GUI Agent · OpenProgram Docs">
-<meta property="og:description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
+<meta property="og:description" content="给它一个自然语言任务。未显式选择浏览器路径时，根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GUI Agent · OpenProgram Docs">
-<meta name="twitter:description" content="给它一个自然语言任务。根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
+<meta name="twitter:description" content="给它一个自然语言任务。未显式选择浏览器路径时，根控制器重复选择一个有界能力： computer_use 操作本机桌面， browser_use 操作 OpenProgram 后台 Page， vm_use">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -135,7 +135,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
-<p>给它一个自然语言任务。根控制器重复选择一个有界能力：<code>computer_use</code> 操作本机桌面，<code>browser_use</code> 操作 OpenProgram 后台 Page，<code>vm_use</code> 操作已配置的远程虚拟机。每次能力调用中由规划器选择的参数和完整结果都会追加到下一轮模型决策的上下文。模型通过提交终态结束任务；动作数和时间限制只作为安全边界。</p>
+<p>给它一个自然语言任务。未显式选择浏览器路径时，根控制器重复选择一个有界能力：<code>computer_use</code> 操作本机桌面，<code>browser_use</code> 操作 OpenProgram 后台 Page，<code>vm_use</code> 操作已配置的远程虚拟机。每次能力调用中由规划器选择的参数和完整结果都会追加到下一轮模型决策的上下文。模型通过提交终态结束任务；动作数和时间限制只作为安全边界。</p>
 <p>本机与 VM 感知使用 YOLO 组件检测（GPA-GUI-Detector）、OCR（macOS 用 Apple Vision，Linux / Windows 用 EasyOCR）和模板匹配。动作层覆盖鼠标、键盘和剪贴板。浏览器操作使用 Page 的 DOM/CDP target，不使用桌面坐标。</p>
 <h2 id="可用性">可用性<a class="header-anchor" href="#可用性">#</a></h2>
 <p>每个受支持的 release 都会注册该 Program，并带上 Playwright Chromium 和 GPA detector 权重。不附带 PyTorch、OpenCV 或 EasyOCR，因此依赖这些库的桌面感知在打包产品里不可用。源码开发 checkout 仍可安装 harness 自己的依赖。开发者可以使用 editable GUI harness checkout，或替换 OCR/Browser backend 进行调试和后端开发。</p>
@@ -148,8 +148,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>任务适合由当前内置浏览器 Page 完成时，仍使用同一个入口：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"在不置顶窗口的情况下检查并完成当前内置浏览器表单"</span>
 </code></pre>
-<p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是可选的总耗时安全上限；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。旧 <code>surface</code> 字段只作为兼容性偏好继续接受，不会把运行固定在某种能力上，也不出现在公开函数 schema 中。</p>
-<p>控制流程如下：</p>
+<p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是可选的总耗时安全上限；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。<code>surface=&quot;browser&quot;</code>，或未指定其他 surface 时设置 <code>backend</code>，会选择下文的标准浏览器 Agent 路径。其他 surface 设置仍为兼容性偏好。这些设置不出现在公开函数 schema 中。</p>
+<h2 id="显式浏览器执行">显式浏览器执行<a class="header-anchor" href="#显式浏览器执行">#</a></h2>
+<p>在有效的 macOS Runtime 执行中，受信任调用方可以选择 <code>surface=&quot;browser&quot;</code>。该路径使用一个标准 <code>agent()</code> 循环和持久、隔离的 <code>gui_exec</code> Python 工具，列出上下文授权的 Page，获取一次性 Page 权限并返回不透明句柄。它不会自动创建 Page，也不调用旧能力规划器。默认 backend 为 <code>open_claude_chrome</code>；不支持操作校验的显式 MCP backend 返回 <code>infeasible</code>，不会静默选择其他 backend。</p>
+<p>此路径的 <code>max_steps</code> 限制 Agent 迭代次数。每次 Python 调用另有 30 秒和 100 次 broker 操作上限。<code>allow_general=false</code> 只提供 GUI 工具；设为 <code>true</code> 时还会提供标准工具，但仍受继承权限与拒绝规则约束，并排除递归 <code>gui_agent</code>。Python 状态在本次调用中持续保留，截图字节作为正常 Agent 图片内容返回。缺少执行身份或不支持进程隔离时拒绝执行。</p>
+<p>模型提出最终浏览器断言，Agent 返回后由宿主对所属 Page 的当前观察状态检查。只有断言成立且本次调用不存在未确定的原语副作用，才报告成功。结果包含验证 effect 和断言证据；模型选择的断言不等于任意任务所有要求都已得到证明。脚本完成不能单独报告成功。清理会先撤销句柄，再释放 Page 租约；清理错误会阻止成功结果。清理仍可能等待正在执行的浏览器操作；执行中取消的时间上限和默认 App 验收尚未验证。</p>
+<h2 id="浏览器资源与人类接管">浏览器资源与人类接管<a class="header-anchor" href="#浏览器资源与人类接管">#</a></h2>
+<p>在桌面 App 中，Agent 打开的网页保留在后台。右侧栏的 <strong>Resources</strong> 按分支列出当前会话的网页，包括子 Agent 使用的网页。继续同一分支时保持原有资源分组。即使 URL 相同，不同 Page 也保持独立；无法确定分支归属的网页显示在“未归属”中。</p>
+<p>单击资源在聊天中查看它的图像预览。“跟随”显示该分支最近实际操作的网页；手动选择资源后，即使 Agent 操作其他网页，也保持当前选择，且不抢占标签焦点。“隐藏”停止预览截图并保留网页，“展开”放大图像预览，“打开页面”把原来的 Page 显示为普通顶部标签并隐藏聊天预览。返回会话后，除非已经隐藏，否则恢复预览。这些选择按会话和分支保存。</p>
+<p>网页标签与其预览不得同时显示。真实网页在自己的标签中保持可用，不会变暗或被遮罩阻挡。工具栏显示当前操作者，并提供“接管”“恢复”“显示操作”和“操作记录”。聊天预览使用单行紧凑控件栏；空闲时不提供可点的接管。操作位置提示短暂显示，不拦截输入；记录显示操作类型和结果，不保存网页中输入的完整文字。</p>
+<p>在真实网页中点击、输入、滚动或导航会请求让出控制：停止接纳后续 Agent 输入，并请求暂停执行。仅聚焦页面或查看预览不会暂停。已经发送的动作仍可能完成。“正在让出”表示停止尚未确认；“已暂停”需要执行确认及状态核对。“停止未确认”表示 App 尚未确认停止，真实网页仍然可以正常使用。恢复需要明确操作，并重新观察页面、检查当前权限。</p>
+<p>关闭网页会影响所有引用同一 Page 的分支。正在使用的网页先请求停止，在确认停止前继续保留。关闭网页与隐藏预览是不同操作。连接中断或目标不可用时，最后一张图像会标注为旧画面。已保存的资源描述不会恢复 Agent 输入租约，也不会重新创建已关闭的 Page。</p>
+<p>这些浏览器控制针对 OpenProgram 中的确切 Page。原生软件窗口、共享宿主桌面及虚拟机显示仍分别受到下文所述能力与输入范围限制。</p>
+<h2 id="自动能力执行">自动能力执行<a class="header-anchor" href="#自动能力执行">#</a></h2>
+<p>未显式选择浏览器路径时，采用以下流程：</p>
 <ol>
 <li><code>plan_next_capability</code> 接收任务、当前可用状态和完整的有序能力调用历史。</li>
 <li>它选择 <code>computer_use</code>、<code>browser_use</code>、<code>vm_use</code>，或者提交一个终态。</li>
@@ -162,7 +174,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>vm_use</code> 需要兼容 OSWorld 的 HTTP endpoint。截图通过 <code>GET /screenshot</code> 获取，输入命令通过 <code>POST /execute</code> 发送。Harness 进程内的 VM 目标切换会串行执行。无论调用成功还是抛错，下一种能力执行前都会恢复原来的输入目标和截图 backend。endpoint 中的凭据和 query 值不会写入规划器的可用状态上下文。</p>
 <p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
 <p>桌面坐标输入始终作用于当前前台 GUI。控制器取得准确的 macOS 进程和窗口目标后，<code>computer_use</code> 也可以只截取该窗口，并通过 Accessibility 执行控件支持的按压、文本赋值或滚动动作，不激活目标。一个不激活应用、不接收鼠标事件的提示层会跟随该窗口并标记当前动作，不移动系统鼠标。浏览器动作在选中的 Page 后台执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。根据已记录的结果，控制器可以在不同能力之间切换。</p>
-<p>所有运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code> 或 <code>failed</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。只有 <code>succeeded</code> 的 <code>success</code> 为 true；infeasible 和 failed 一律返回 <code>success=false</code>。infeasible 还保留 blocker、标记和用户接手说明。结果同时包含有序能力调用历史和耗时。</p>
+<p>所有运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code> 或 <code>failed</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。只有 <code>succeeded</code> 的 <code>success</code> 为 true；infeasible 和 failed 一律返回 <code>success=false</code>。infeasible 还保留 blocker、标记和用户接手说明。自动能力路径还包含有序能力调用历史和耗时。</p>
 <p><code>max_seconds</code> 会在每次模型或能力调用前检查，并在调用返回后再次检查。超过截止时间才返回的终态提交会被拒绝，并统一为超时失败。Provider 取消采用协作式机制，因此已经发出的 provider 请求可能略晚于配置的总耗时边界才返回，但该迟到结果不会把任务变成成功。</p>
 <p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
@@ -175,12 +187,35 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
 <p>Browser Workflow 表单只显示任务和可选目标 URL。动作上限、超时与 backend 使用内部默认设置，不显示 Advanced。显式程序调用仍可使用受支持的覆盖值。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-06</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
+<h2 id="系统权限检查">系统权限检查<a class="header-anchor" href="#系统权限检查">#</a></h2>
+<p>系统设置显示执行电脑上的可选桌面权限。打开页面或运行 <code>openprogram doctor</code>
+不会申请权限。TUI 的 <code>/doctor</code> 和 <code>GET /api/system/access</code> 使用同一套检查。
+未开放可选桌面权限不会阻止普通对话或升级。</p>
+<p>macOS 托管安装通过内置的 <strong>OpenProgram</strong> 应用运行后台和 Python 子进程，
+使用 OpenProgram 图标和稳定的应用标识。系统设置中应查找这个名称；安装程序不会
+替用户授权。录屏和辅助功能权限分别按实际执行进程检查。本机系统设置中的“设置权限”
+只会在用户点击后申请缺少的权限，已有授权保持不变。在系统中确认后返回页面，
+页面自动重新检查。远程客户端需要在执行电脑上完成授权；其他应用的授权不能
+证明 worker 已获得授权。</p>
+<p>Linux 无图形桌面和暂不支持的 Wayland 桌面捕获会与缺少依赖分别报告。
+仅存在 X11 显示配置不能证明具有访问权限。Windows 的桌面访问取决于当前会话
+和目标程序，普通程序不能假定可以访问系统安全桌面或高权限目标。不会要求用户
+关闭安全限制或将整个程序改为管理员运行。Linux、Windows 原生桌面验收尚未完成。</p>
+<p>当前 macOS 开发构建没有正式生产签名。正式签名版本升级后的授权保持、首次使用
+功能引导、授权后自动恢复任务尚未验证。设置系统权限不会重新执行已拒绝的操作。</p>
+<h3 id="系统授权">系统授权<a class="header-anchor" href="#系统授权">#</a></h3>
+<p>本机桌面任务缺少系统权限时，直接请求系统授权。任务原位置只显示简短状态及“打开系统设置”文字入口，不显示额外权限卡片、输入框或继续按钮。当前等待任务在授权生效后自动重新检查并继续一次；浏览历史记录不会自动执行。切换会话或关闭页面后停止自动继续。系统授权不会替代工具操作审批。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-08</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#可用性">可用性</a>
 <a class="" href="#怎么用">怎么用</a>
+<a class="" href="#显式浏览器执行">显式浏览器执行</a>
+<a class="" href="#浏览器资源与人类接管">浏览器资源与人类接管</a>
+<a class="" href="#自动能力执行">自动能力执行</a>
 <a class="" href="#依赖注意">依赖注意</a>
+<a class="" href="#系统权限检查">系统权限检查</a>
+<a class="lvl-3" href="#系统授权">系统授权</a>
 </div></aside>
 </div>
 
