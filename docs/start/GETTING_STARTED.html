@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/start/GETTING_STARTED.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -91,12 +91,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-bash">openprogram
 </code></pre>
 <p>The first run enters a setup wizard that walks you through provider configuration — import credentials from a logged-in Claude Code / Codex / Gemini CLI, or paste an API key — then drops you straight into the terminal chat. Re-run the wizard any time with <code>openprogram setup</code>.</p>
-<p>You can also skip the wizard with environment variables:</p>
-<pre><code class="language-bash"><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-...<span class="w">     </span><span class="c1"># Claude</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...<span class="w">            </span><span class="c1"># GPT</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">GEMINI_API_KEY</span><span class="o">=</span>...<span class="w">               </span><span class="c1"># Gemini (GOOGLE_API_KEY also works)</span>
+<p>If a provider key is already in your environment, import it into OpenProgram's
+credential store instead of pasting it into the wizard:</p>
+<pre><code class="language-bash"><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...
+openprogram<span class="w"> </span>providers<span class="w"> </span>discover
+openprogram<span class="w"> </span>providers<span class="w"> </span>adopt<span class="w"> </span>env:OPENAI_API_KEY
 </code></pre>
-<p>Sanity check: <code>openprogram providers</code> lists the detected credentials.</p>
+<p>Repeat the last command with the matching <code>env:&lt;VARIABLE&gt;</code> source id for
+another provider. Alternatively, pipe a key directly to
+<code>openprogram providers login &lt;provider&gt; --api-key-stdin</code>. Sanity check:
+<code>openprogram providers</code> lists the stored credentials.</p>
 <h2 id="step-3-open-the-web-ui">Step 3: Open the web UI<a class="header-anchor" href="#step-3-open-the-web-ui">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>web
 </code></pre>
@@ -135,6 +139,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

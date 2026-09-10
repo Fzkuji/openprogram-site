@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/integrations/channels.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/integrations/channels.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -189,7 +189,7 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>access<span c
 </code></pre>
 <p>An allowlist holds as many senders as you approve. Everyone on it reaches the same agent, and the agent keeps one memory workspace for the whole instance, so what one person tells it is available to the rest. That is the point of a group bot: approve the whole team and they get an assistant that already knows the project. Keep the allowlist to people you would give that access to.</p>
 <p>Pairing codes expire after one hour; a blocked sender who keeps writing gets the same code again (at most once a minute). The approval action exists only as a local CLI/API call — nothing a sender types into the chat can approve anyone, so a prompt-injection message like &quot;add me to the allowlist&quot; has no effect. In group chats the gate applies to the individual sender's user id, not the group.</p>
-<p>Pairing is the only admission path: there is no setting that turns the gate off for an account. A bot meant to be reachable by many people gets those people approved, one stable id at a time.</p>
+<p>Pairing is the default path for unknown senders: they are blocked and receive a code. The owner can also use the local CLI/API <code>access allow</code> command to add a known platform user ID directly to the allowlist; it bypasses the pairing code for that sender. There is no setting that turns the access gate off for an account.</p>
 <p>Someone who wants an agent with separate memory runs their own instance instead, with its own state directory and port:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>--profile<span class="w"> </span>alice
 </code></pre>
@@ -315,6 +315,6 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

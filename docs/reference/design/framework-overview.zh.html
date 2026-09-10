@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788951416" data-alt-lang-url="/docs/reference/design/framework-overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789010449" data-alt-lang-url="/docs/reference/design/framework-overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>框架总览：一次对话从输入到产出 · OpenProgram Docs</title>
-<meta name="description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。所有 file:line 指向当前代码。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
+<meta name="description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。文件和符号引用指向当前代码；易漂移的行号不作为依据。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/framework-overview.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/framework-overview.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/framework-overview.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/framework-overview.zh.html">
 <meta property="og:title" content="框架总览：一次对话从输入到产出 · OpenProgram Docs">
-<meta property="og:description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。所有 file:line 指向当前代码。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
+<meta property="og:description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。文件和符号引用指向当前代码；易漂移的行号不作为依据。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="框架总览：一次对话从输入到产出 · OpenProgram Docs">
-<meta name="twitter:description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。所有 file:line 指向当前代码。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
+<meta name="twitter:description" content="本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG， 在一次对话的时间轴上如何咬合。文件和符号引用指向当前代码；易漂移的行号不作为依据。 已设计但尚未落地的部分集中在末尾「已知边界」。 贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。 dispatcher、agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -67,7 +67,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
            placeholder="Filter docs…" autocomplete="off" spellcheck="false">
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/reference/design/README.html" data-title-zh="设计文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design Documents</a>
+<a class="navlink" href="/docs/reference/design/README.html" data-title-zh="设计与实现文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design and implementation documents</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
@@ -93,8 +93,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</div>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.viz.html">OpenProgram · 附件处理设计 (viz)</a>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件处理设计（Web 聊天）" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment Handling Design (Web Chat)</a>
+<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="五项附件功能与已选方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Five attachment features and selected options</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -140,15 +139,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation navigation</a>
+<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
+<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation</a>
+<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档 HTML 展示与编写规范" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation HTML rendering and authoring</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html">Community discoverability design</a>
-<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="设计文档站（统一文档网页）" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Design Docs Site (Unified Documentation Website)</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html">IndexNow deployment discovery</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-implementation.html">IndexNow implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
-<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation status and handoff</a>
-<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
-<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html">Site discoverability and performance design</a>
 <a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
@@ -274,11 +273,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Providers</div>
 <a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
 <a class="navlink" href="/docs/reference/design/providers/custom-openai-compatible-provider.html">Custom OpenAI-Compatible Provider</a>
+<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">Error and timeout mechanism</a>
 <a class="navlink" href="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
 <a class="navlink" href="/docs/reference/design/providers/json-schema-structured-output.html">OpenProgram · JSON Schema Structured Output 设计</a>
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html">OpenProgram · Provider metadata 加载诊断</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html">OpenProgram · Provider 请求录制与严格离线回放 (viz)</a>
-<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
 <a class="navlink" href="/docs/reference/design/providers/network-proxy.html">Outbound network proxy</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="请求录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replaying provider calls</a>
 <a class="navlink" href="/docs/reference/design/providers/request-build.html" data-title-zh="请求构建:Context → 各 provider 参数" data-href-en="/docs/reference/design/providers/request-build.html" data-href-zh="/docs/reference/design/providers/request-build.zh.html">Request building: Context → per-provider parameters</a>
@@ -357,7 +356,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/dispatcher-split.html" data-title-zh="`agent/dispatcher` —— 按职责划分的包" data-href-en="/docs/reference/design/runtime/execution/dispatcher-split.html" data-href-zh="/docs/reference/design/runtime/execution/dispatcher-split.zh.html">`agent/dispatcher` — a responsibility-scoped package</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic self-recursion guard (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
@@ -366,11 +365,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">Branch naming (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
-<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">分支自动命名设计 (viz)</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
@@ -397,17 +396,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="框架总览：一次对话从输入到产出">Framework Overview — One Conversation from Input to Output</span></nav><h1 id="框架总览一次对话从输入到产出">框架总览：一次对话从输入到产出<a class="header-anchor" href="#框架总览一次对话从输入到产出">#</a></h1>
 <blockquote>
 <p>本文把整个框架串起来：单轮/多轮上下文、事件层、agent 运行、协作、DAG，
-在一次对话的时间轴上如何咬合。所有 <code>file:line</code> 指向当前代码。
+在一次对话的时间轴上如何咬合。文件和符号引用指向当前代码；易漂移的行号不作为依据。
 已设计但尚未落地的部分集中在末尾「已知边界」。</p>
 </blockquote>
-<p><strong>贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。</strong> dispatcher、agent loop、工具执行、存储、协作彼此不直接调用对方的 UI/广播逻辑，而是 <code>emit</code> 一个事件，谁关心谁订阅（<code>events/bus.py:141</code> <code>emit</code> / <code>:159</code> <code>subscribe</code>）。事件层有两条 lane：<strong>异步旁观</strong>（<code>EventBus</code>，谁也拦不住正在发生的事）和<strong>同步问询</strong>（<code>tool_gate</code>，全框架唯一能拦住工具执行的点）。</p>
+<p><strong>贯穿全文的一句话：整个框架靠一个进程级事件总线把各子系统解耦相连。</strong> dispatcher、agent loop、工具执行、存储、协作彼此不直接调用对方的 UI/广播逻辑，而是 <code>emit</code> 一个事件，谁关心谁订阅（<code>openprogram/events/bus.py</code> 的 <code>EventBus.emit</code> / <code>EventBus.subscribe</code>）。事件层有两条 lane：<strong>异步旁观</strong>（<code>EventBus</code>，谁也拦不住正在发生的事）和<strong>同步问询</strong>（<code>tool_gate</code>，全框架唯一能拦住工具执行的点）。</p>
 <hr />
 <h2 id="第一部分一次对话的生命周期主线">第一部分　一次对话的生命周期（主线）<a class="header-anchor" href="#第一部分一次对话的生命周期主线">#</a></h2>
 <p>以「用户输入一句话」为起点，真实数据流如下。每步标注：发生在哪、emit 什么事件、单轮 vs 多轮差异、分支（branch）如何体现。</p>
 <h3 id="数据流时间轴">数据流（时间轴）<a class="header-anchor" href="#数据流时间轴">#</a></h3>
 <pre><code>用户输入一句话
    │
-   ▼  [入口] process_user_turn(req)              dispatcher/__init__.py:97（同步，内部起 asyncio loop 跑到完）
+   ▼  [入口] process_user_turn(req)              `openprogram/agent/dispatcher/__init__.py` 的 `process_user_turn`（同步，内部起 asyncio loop 跑到完）
    │
    ├─▶ 1. session 建立/加载                       :175 get_session / :177 create_session
    │
@@ -426,7 +425,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
    │       assistant_msg_id = user_msg_id+&quot;_reply&quot; :164
    │       写 assistant 占位行 + set_head           :460；status=&quot;running&quot; :464
    │
-   ├─▶ 5. ★ 调模型前：上下文引擎先跑一遍 ★          _run_loop_blocking :754
+   ├─▶ 5. ★ 调模型前：上下文引擎先跑一遍 ★          `openprogram/agent/dispatcher/loop_runner.py` 的 `run_loop_blocking`
    │       a. ContextEngine.prepare(...)           :885  ← DAG 历史渲染成 LLM messages（TurnPrep）
    │       b. should_auto_compact(prep)?           :896
    │            是 → snip（免费删最老 turn）不够 → compact（LLM 压缩）→ 重新 prepare（:907/:941/:976）
@@ -447,7 +446,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
    └─▶ emit chat_response(:735) → 返回 TurnResult(:739)
 </code></pre>
 <h3 id="入口dispatcher">入口：dispatcher<a class="header-anchor" href="#入口dispatcher">#</a></h3>
-<p><code>process_user_turn(req, *, on_event, cancel_event)</code> 是全框架<strong>唯一</strong>对话入口（<code>dispatcher/__init__.py:97</code>）。它是<strong>同步</strong>的，便于 channel worker 线程直接调用，内部自起 asyncio loop 跑 <code>agent_loop</code> 到完。返回 <code>TurnResult</code>（<code>dispatcher/types.py:102</code>）。</p>
+<p><code>process_user_turn(req, *, on_event, cancel_event)</code> 是全框架<strong>唯一</strong>对话入口（<code>openprogram/agent/dispatcher/__init__.py</code> 的 <code>process_user_turn</code>）。它是<strong>同步</strong>的，便于 channel worker 线程直接调用，内部自起 asyncio loop 跑 <code>agent_loop</code> 到完。返回 <code>TurnResult</code>（<code>dispatcher/types.py:102</code>）。</p>
 <h3 id="turn_id-绑-contextvar框架解耦的另一根脊柱">turn_id 绑 ContextVar——框架解耦的另一根脊柱<a class="header-anchor" href="#turn_id-绑-contextvar框架解耦的另一根脊柱">#</a></h3>
 <p><code>_current_turn_id.set(assistant_msg_id)</code>（<code>:379</code>）是关键：ContextVar 沿 asyncio task 传播，turn 内<strong>任何</strong>协程（工具执行、<code>@agentic_function</code>、<code>send_message</code>）都读得到同一 turn id，从而把文件备份、子分支父锚点都归到正确的 assistant 消息上。同时绑 <code>_store</code>（<code>:435</code>）让深层 runtime 写同一 SQLite DAG，无需层层透传。<code>finally</code> 块成功/异常/提前 return 都会 <code>reset</code>。</p>
 <h3 id="上下文组装单轮-多轮-分支">上下文组装：单轮 / 多轮 / 分支<a class="header-anchor" href="#上下文组装单轮-多轮-分支">#</a></h3>
@@ -487,7 +486,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>分支怎么&quot;写&quot;出来</strong>（上面讲的是怎么&quot;读&quot;）：fork 的写入侧 = 给 user 节点指一个非 active-tail 的 caller（存储层 <code>set_head</code> 改 UI 指针），或 <code>send_message</code> 起新根（见 §⑤）。读=三种 get_branch，写=换 head 指针 / 新建根。</p>
 </blockquote>
 <h3 id="调模型前上下文引擎先跑一遍每轮自动压缩主路径">★ 调模型前：上下文引擎先跑一遍（每轮自动压缩主路径）★<a class="header-anchor" href="#调模型前上下文引擎先跑一遍每轮自动压缩主路径">#</a></h3>
-<p>这是最容易被忽略、但每个 turn 都发生的一层。step 5 的实体是 <code>_run_loop_blocking</code>（<code>dispatcher/__init__.py:754</code>），它在进 <code>agent_loop</code> <strong>之前</strong>：</p>
+<p>这是最容易被忽略、但每个 turn 都发生的一层。step 5 的实体是 <code>_run_loop_blocking</code>（<code>openprogram/agent/dispatcher/loop_runner.py</code> 的 <code>run_loop_blocking</code>），它在进 <code>agent_loop</code> <strong>之前</strong>：</p>
 <ol>
 <li><code>ContextEngine.prepare(agent, session, history, model, tools)</code>（<code>:885</code> → <code>engine.py:194</code>）：把 DAG 历史<strong>渲染成 LLM 输入</strong> messages（默认走 DAG 渲染 <code>_build_messages_from_dag</code> <code>engine.py:558</code>；config <code>context.render=&quot;legacy&quot;</code> 回退到 commit-chain）。返回 <code>TurnPrep</code>（<code>context/types.py:102</code>）。</li>
 <li><code>should_auto_compact(prep)</code>（<code>:896</code>）为真时——<strong>这是上下文超预算时真正触发的链路</strong>：先 <code>snip</code>（免费删最老 turn），不够再 <code>_ctx_engine.compact(...)</code>（LLM 压缩），然后<strong>重新 prepare</strong>（三段重试 <code>:907</code>/<code>:941</code>/<code>:976</code>）。</li>
@@ -508,11 +507,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ol>
 <p>硬上限 <code>MAX_INNER_ITERATIONS = 50</code>（<code>:226</code>），防无限「再调一个工具」。</p>
 <h3 id="工具执行toolbefore-拦截">工具执行：tool.before 拦截<a class="header-anchor" href="#工具执行toolbefore-拦截">#</a></h3>
-<p><code>_execute_tool_calls</code>（<code>agent_loop.py:654</code>）对每个 tool call：</p>
+<p><code>_execute_tool_calls</code>（<code>openprogram/agent/agent_loop.py</code> 的 <code>_execute_tool_calls</code>）对每个 tool call：</p>
 <ol>
 <li>push <code>AgentEventToolStart</code>（<code>:675</code>）+ 插件 hook <code>TOOL_BEFORE_USE</code>（<code>:686</code>，best-effort）。</li>
 <li><strong>事件层 tool.before</strong>：<code>make_event(&quot;tool.before&quot;,...)</code> + <code>emit</code>（<code>:695</code>）——一份事件，异步旁观和同步问询共用。</li>
-<li><strong>同步 gate</strong>：<code>decide_tool_gate(before_ev)</code>（<code>:701</code>）。<strong>全框架唯一能拦住工具执行的点</strong>（<code>events/tool_gate.py:53</code>）：任一 gate 返回 deny 即拦（理由合并），gate 抛错按 allow（fail-open）。被拦 <code>raise ToolGateDenied</code>（<code>:708</code>），deny 理由作为 error tool result 回模型。<strong>对 subagent 也生效</strong>——gate 在 <code>permission_mode</code> approval 包装之外，<code>bypass</code> 关不掉它（<code>events/tool_gate.py:14–15</code>）。</li>
+<li><strong>同步 gate</strong>：<code>decide_tool_gate(before_ev)</code>（<code>:701</code>）。<strong>全框架唯一能拦住工具执行的点</strong>（<code>openprogram/events/tool_gate.py</code> 的 <code>decide_tool_gate</code>）：任一 gate 返回 deny 即拦（理由合并），gate 抛错按 allow（fail-open）。被拦 <code>raise ToolGateDenied</code>（<code>:708</code>），deny 理由作为 error tool result 回模型。<strong>对 subagent 也生效</strong>——gate 在 <code>permission_mode</code> approval 包装之外，<code>bypass</code> 关不掉它（<code>events/tool_gate.py:14–15</code>）。</li>
 <li><code>tool.execute(...)</code>（<code>:731</code>），前后做 cwd 快照 + 文件 checkpoint。</li>
 <li>push <code>AgentEventToolEnd</code>（<code>:758/:766</code>）+ emit <code>tool.after</code>（<code>:772</code>）。</li>
 <li>组 <code>ToolResultMessage</code> 回灌（<code>:792</code>）。每次工具后检查 steering（<code>:806</code>），命中则跳过剩余工具、回灌 steering。</li>
@@ -523,7 +522,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>成功路径：<code>persist_assistant_message</code>（<code>:676</code>，<code>dispatcher/persistence.py:31</code>）写 assistant 消息 → <code>finalize_turn</code>（<code>:711</code>，<code>dispatcher/finalize.py:175</code>）。<strong>finalize 里 context 子系统做三件事</strong>：① head/token 更新 ② <strong>ContextCommit 回填</strong>（<code>finalize.py:283</code>，把这轮压缩决策固化成不可变 per-turn commit）③ <strong><code>after_turn</code></strong>（<code>finalize.py:308</code> → <code>engine.py:437</code>，<strong>这里才发 <code>context.compaction_recommended</code></strong>：usage 回灌 + 按预算算 pct）。随后 git <code>commit_turn</code>（<code>finalize.py:356</code>）+ 项目自动提交（<code>:369</code>）。</li>
 </ul>
 <h3 id="dag-更新贯穿全程不是单独一步">DAG 更新——贯穿全程，不是单独一步<a class="header-anchor" href="#dag-更新贯穿全程不是单独一步">#</a></h3>
-<p>user 节点（<code>:298</code>）、assistant 占位、每个工具结果、<code>@agentic_function</code> 内部节点，都通过 <code>_store</code> ContextVar 落入同一 <code>SessionNodeWriter</code>，turn 末 <code>commit_turn</code>（<code>session_store.py:504</code>）把整棵工作树作为一次 turn 提交——append-only、无可变&quot;当前态&quot;镜像文件，两个 agent 并发写不会撞同一文件。</p>
+<p>user 节点（<code>:298</code>）、assistant 占位、每个工具结果、<code>@agentic_function</code> 内部节点，都通过 <code>_store</code> ContextVar 落入同一 <code>SessionNodeWriter</code>，turn 末 <code>commit_turn</code>（<code>openprogram/store/session/session_store.py</code> 的 <code>commit_turn</code>）把整棵工作树作为一次 turn 提交——append-only、无可变&quot;当前态&quot;镜像文件，两个 agent 并发写不会撞同一文件。</p>
 <hr />
 <h2 id="第二部分分层参考查细节">第二部分　分层参考（查细节）<a class="header-anchor" href="#第二部分分层参考查细节">#</a></h2>
 <h3 id="事件全表核心子系统靠它解耦相连">事件全表（核心：子系统靠它解耦相连）<a class="header-anchor" href="#事件全表核心子系统靠它解耦相连">#</a></h3>
@@ -532,7 +531,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <thead>
 <tr>
 <th>事件 type</th>
-<th>谁发（file:line）</th>
+<th>谁发（文件和符号）</th>
 <th>谁收</th>
 <th>备注</th>
 </tr>
@@ -635,9 +634,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>列表与可用更新</td>
 </tr>
 <tr>
-<td><code>ws.frame</code>（<code>events/bus.py:115</code>）</td>
+<td><code>ws.frame</code>（<code>openprogram/events/bus.py</code>）</td>
 <td>外部源 <code>emit_ws_frame</code>（<code>:118</code>）</td>
-<td><code>webui/server.py:1192</code>（原样广播）</td>
+<td><code>openprogram/webui/server.py</code>（原样广播）</td>
 <td>透传信封：外部源不直连 webui <code>_broadcast</code></td>
 </tr>
 </tbody>
@@ -719,7 +718,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <hr />
 <h2 id="主线锚点速查">主线锚点速查<a class="header-anchor" href="#主线锚点速查">#</a></h2>
-<p>dispatcher 入口 <code>dispatcher/__init__.py:97</code>；turn_id 绑定 <code>:379</code>；历史/分支解析 <code>:186–198</code>；user 节点写入 <code>:298</code>；<strong>调模型前 prepare/auto-compact</strong> <code>_run_loop_blocking :885/:896/:1074</code>；finalize <code>:711</code>/<code>dispatcher/finalize.py:175</code>（ContextCommit 回填 <code>:283</code>、after_turn <code>:308</code>→<code>engine.py:437</code>）。事件总线 <code>events/bus.py:141/159/241</code>；tool.before 拦截 <code>agent_loop.py:695/:701</code> + <code>events/tool_gate.py:53</code>。上下文 <code>engine.py:194</code> + 两条压缩路径（auto-compact <code>_run_loop_blocking:896</code> / microcompact <code>microcompact.py:76</code>）。agent loop <code>agent_loop.py:114/205/654</code>；子 agent <code>sub_agent_run.py:41</code>。协作 <code>send_message.py:186/393</code>，深度上限 <code>:35</code>。</p>
+<p>dispatcher 入口 <code>openprogram/agent/dispatcher/__init__.py</code> 的 <code>process_user_turn</code>；turn_id 绑定 <code>:379</code>；历史/分支解析 <code>:186–198</code>；user 节点写入 <code>:298</code>；<strong>调模型前 prepare/auto-compact</strong> <code>_run_loop_blocking :885/:896/:1074</code>；finalize <code>:711</code>/<code>dispatcher/finalize.py:175</code>（ContextCommit 回填 <code>:283</code>、after_turn <code>:308</code>→<code>engine.py:437</code>）。事件总线 <code>events/bus.py:141/159/241</code>；tool.before 拦截 <code>agent_loop.py:695/:701</code> + <code>openprogram/events/tool_gate.py</code> 的 <code>decide_tool_gate</code>。上下文 <code>engine.py:194</code> + 两条压缩路径（auto-compact <code>openprogram/agent/dispatcher/loop_runner.py</code> 的 <code>run_loop_blocking</code> / <code>microcompact.py</code>）。agent loop <code>agent_loop.py:114/205/654</code>；子 agent <code>sub_agent_run.py:41</code>。协作 <code>send_message.py:186/393</code>，深度上限 <code>:35</code>。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-09</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/usage-metering.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Usage Metering Subsystem Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/framework-comparison.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">整框架对标：我们和十二家放在一起看</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -752,6 +751,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

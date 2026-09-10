@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788951416" data-alt-lang-url="/docs/reference/design/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789010449" data-alt-lang-url="/docs/reference/design/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>设计文档 · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram 当前的设计笔记，按子系统分组，与 openprogram/ 下的代码布局保持一致。先读本索引，再读你需要的那篇文档。 每个子目录汇集某一领域的设计。在同一分组内，定义 当前 实现的文档排在最前；其余是支撑性的笔记 / 调研，不应覆盖前者。 context/ — context">
+<title>设计与实现文档 · OpenProgram Docs</title>
+<meta name="description" content="本目录按子系统维护当前设计、实现位置和未完成边界。代码由 openprogram/ 和 apps/ 共同承担，不能仅按核心包目录查找实现。 阅读入口 # 目的 文档 查找子系统设计与实现状态 实现文档导航 理解目录所有权和兼容入口 仓库结构设计 及 实现说明 理解完整执行过程 框架概览 查找测试层级和验证要求">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/README.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/README.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/README.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/README.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"设计文档"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"设计与实现文档"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/README.zh.html">
-<meta property="og:title" content="设计文档 · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram 当前的设计笔记，按子系统分组，与 openprogram/ 下的代码布局保持一致。先读本索引，再读你需要的那篇文档。 每个子目录汇集某一领域的设计。在同一分组内，定义 当前 实现的文档排在最前；其余是支撑性的笔记 / 调研，不应覆盖前者。 context/ — context">
+<meta property="og:title" content="设计与实现文档 · OpenProgram Docs">
+<meta property="og:description" content="本目录按子系统维护当前设计、实现位置和未完成边界。代码由 openprogram/ 和 apps/ 共同承担，不能仅按核心包目录查找实现。 阅读入口 # 目的 文档 查找子系统设计与实现状态 实现文档导航 理解目录所有权和兼容入口 仓库结构设计 及 实现说明 理解完整执行过程 框架概览 查找测试层级和验证要求">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="设计文档 · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram 当前的设计笔记，按子系统分组，与 openprogram/ 下的代码布局保持一致。先读本索引，再读你需要的那篇文档。 每个子目录汇集某一领域的设计。在同一分组内，定义 当前 实现的文档排在最前；其余是支撑性的笔记 / 调研，不应覆盖前者。 context/ — context">
+<meta name="twitter:title" content="设计与实现文档 · OpenProgram Docs">
+<meta name="twitter:description" content="本目录按子系统维护当前设计、实现位置和未完成边界。代码由 openprogram/ 和 apps/ 共同承担，不能仅按核心包目录查找实现。 阅读入口 # 目的 文档 查找子系统设计与实现状态 实现文档导航 理解目录所有权和兼容入口 仓库结构设计 及 实现说明 理解完整执行过程 框架概览 查找测试层级和验证要求">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -67,7 +67,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
            placeholder="Filter docs…" autocomplete="off" spellcheck="false">
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink active" href="/docs/reference/design/README.html" data-title-zh="设计文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design Documents</a>
+<a class="navlink active" href="/docs/reference/design/README.html" data-title-zh="设计与实现文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design and implementation documents</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
@@ -93,8 +93,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</div>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.viz.html">OpenProgram · 附件处理设计 (viz)</a>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件处理设计（Web 聊天）" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment Handling Design (Web Chat)</a>
+<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="五项附件功能与已选方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Five attachment features and selected options</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -140,15 +139,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation navigation</a>
+<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
+<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation</a>
+<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档 HTML 展示与编写规范" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation HTML rendering and authoring</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html">Community discoverability design</a>
-<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="设计文档站（统一文档网页）" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Design Docs Site (Unified Documentation Website)</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html">IndexNow deployment discovery</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-implementation.html">IndexNow implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
-<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation status and handoff</a>
-<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
-<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html">Site discoverability and performance design</a>
 <a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
@@ -274,11 +273,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Providers</div>
 <a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
 <a class="navlink" href="/docs/reference/design/providers/custom-openai-compatible-provider.html">Custom OpenAI-Compatible Provider</a>
+<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">Error and timeout mechanism</a>
 <a class="navlink" href="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
 <a class="navlink" href="/docs/reference/design/providers/json-schema-structured-output.html">OpenProgram · JSON Schema Structured Output 设计</a>
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html">OpenProgram · Provider metadata 加载诊断</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html">OpenProgram · Provider 请求录制与严格离线回放 (viz)</a>
-<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
 <a class="navlink" href="/docs/reference/design/providers/network-proxy.html">Outbound network proxy</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="请求录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replaying provider calls</a>
 <a class="navlink" href="/docs/reference/design/providers/request-build.html" data-title-zh="请求构建:Context → 各 provider 参数" data-href-en="/docs/reference/design/providers/request-build.html" data-href-zh="/docs/reference/design/providers/request-build.zh.html">Request building: Context → per-provider parameters</a>
@@ -357,7 +356,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/dispatcher-split.html" data-title-zh="`agent/dispatcher` —— 按职责划分的包" data-href-en="/docs/reference/design/runtime/execution/dispatcher-split.html" data-href-zh="/docs/reference/design/runtime/execution/dispatcher-split.zh.html">`agent/dispatcher` — a responsibility-scoped package</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic self-recursion guard (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
@@ -366,11 +365,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">Branch naming (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
-<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">分支自动命名设计 (viz)</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
@@ -394,9 +393,40 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="设计文档">Design Documents</span></nav><h1 id="设计文档">设计文档<a class="header-anchor" href="#设计文档">#</a></h1>
-<p>OpenProgram 当前的设计笔记，按子系统分组，与 <code>openprogram/</code> 下的代码布局保持一致。先读本索引，再读你需要的那篇文档。</p>
-<p>每个子目录汇集某一领域的设计。在同一分组内，定义<em>当前</em>实现的文档排在最前；其余是支撑性的笔记 / 调研，不应覆盖前者。</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="设计与实现文档">Design and implementation documents</span></nav><h1 id="设计与实现文档">设计与实现文档<a class="header-anchor" href="#设计与实现文档">#</a></h1>
+<p>本目录按子系统维护当前设计、实现位置和未完成边界。代码由 <code>openprogram/</code> 和 <code>apps/</code> 共同承担，不能仅按核心包目录查找实现。</p>
+<h2 id="阅读入口">阅读入口<a class="header-anchor" href="#阅读入口">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>目的</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找子系统设计与实现状态</td>
+<td><a href="/docs/reference/design/implementation-status.html">实现文档导航</a></td>
+</tr>
+<tr>
+<td>理解目录所有权和兼容入口</td>
+<td><a href="/docs/reference/design/repository-structure.html">仓库结构设计</a>及<a href="/docs/reference/design/repository-structure-implementation.html">实现说明</a></td>
+</tr>
+<tr>
+<td>理解完整执行过程</td>
+<td><a href="/docs/reference/design/framework-overview.zh.html">框架概览</a></td>
+</tr>
+<tr>
+<td>查找测试层级和验证要求</td>
+<td><a href="/docs/reference/design/testing/test-system.html">测试系统</a></td>
+</tr>
+<tr>
+<td>编写和验收 HTML 实现文档</td>
+<td><a href="/docs/reference/design/docs-site.zh.html">HTML 展示与编写规范</a></td>
+</tr>
+</tbody>
+</table>
+<p>设计正文描述行为和约束；文末“实现状态”集中列出已实现、部分实现、未实现与范围外事项。源码存在、测试通过、发布完成和本地 App 验收是不同状态。索引仅负责导航，不重复维护功能完成率。</p>
 <h2 id="context-context-引擎commit工具老化">context/ — context 引擎、commit、工具老化<a class="header-anchor" href="#context-context-引擎commit工具老化">#</a></h2>
 <table>
 <thead>
@@ -469,11 +499,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <tbody>
 <tr>
 <td><a href="/docs/reference/design/proactive/event-layer.html"><code>proactive/event-layer.md</code></a></td>
-<td>统一 Event 模型 + 框架定位 + 框架图 + 事件边界与演进（<strong>已落地：A/B 类事件全在发，gate 可拦</strong>，<a href="/docs/reference/design/proactive/event-layer.html">可视化</a>）</td>
+<td>统一 Event 模型 + 框架定位 + 框架图 + 事件边界与演进（<a href="/docs/reference/design/proactive/event-layer.viz.html">可视化</a>）</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/design/proactive/framework-evolution.html"><code>proactive/framework-evolution.md</code></a></td>
-<td>框架演进：现状 → 目标 → 五步迁移（步 1·2·3 ✅，<a href="/docs/reference/design/proactive/framework-evolution.html">可视化</a>）</td>
+<td>框架演进：现状 → 目标 → 五步迁移（<a href="/docs/reference/design/proactive/framework-evolution.viz.html">可视化</a>）</td>
 </tr>
 </tbody>
 </table>
@@ -579,11 +609,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><a href="/docs/reference/design/runtime/execution/agentic-self-recursion.html"><code>runtime/execution/agentic-self-recursion.md</code></a></td>
-<td>Agentic 自递归（<a href="/docs/reference/design/runtime/execution/agentic-self-recursion.html">已渲染</a>）</td>
+<td>Agentic 自递归（<a href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">已渲染</a>）</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/design/runtime/operations/branch-naming.html"><code>runtime/operations/branch-naming.md</code></a></td>
-<td>分支命名（<a href="/docs/reference/design/runtime/operations/branch-naming.html">已渲染</a>）</td>
+<td>分支命名（<a href="/docs/reference/design/runtime/operations/branch-naming.viz.html">已渲染</a>）</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/design/runtime/session/README.html"><code>runtime/session/README.md</code></a></td>
@@ -830,8 +860,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>指示点</td>
 </tr>
 <tr>
-<td><a href="/docs/reference/design/ui/attachment-handling.html"><code>ui/attachment-handling.md</code></a></td>
-<td>附件处理（<a href="/docs/reference/design/ui/attachment-handling.html">已渲染</a>）</td>
+<td><a href="/docs/reference/design/ui/attachment-handling.zh.html"><code>ui/attachment-handling.zh.html</code></a></td>
+<td>完整附件设计、框架对比与实施契约</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/design/ui/composer-interaction-modes.html"><code>ui/composer-interaction-modes.md</code></a></td>
@@ -907,7 +937,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>功能清单对标：同样十二家改按功能清单扫，160 项一张大表，只有别人有的、只有我们有的（图解）</td>
 </tr>
 <tr>
-<td><a href="/docs/reference/design/docs-site.zh.html"><code>docs-site.md</code></a></td>
+<td><a href="/docs/reference/design/docs-site.zh.html"><code>docs-site.html</code></a></td>
 <td>文档站本身（构建、导航、双语路由）</td>
 </tr>
 <tr>
@@ -915,8 +945,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td>仓库边界、超长文件拆分规则与文档信息架构</td>
 </tr>
 <tr>
-<td><a href="/docs/reference/design/repository-structure-implementation.html"><code>repository-structure-implementation.md</code></a></td>
-<td>仓库结构设计的实施台账</td>
+<td><a href="/docs/reference/design/repository-structure-implementation.html"><code>repository-structure-implementation.html</code></a></td>
+<td>仓库结构的代码位置、兼容边界和验证方法</td>
 </tr>
 </tbody>
 </table>
@@ -958,7 +988,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<h2 id="plans-带日期的实施计划">plans/ — 带日期的实施计划<a class="header-anchor" href="#plans-带日期的实施计划">#</a></h2>
+<h2 id="plans-配套实施计划">plans/ — 配套实施计划<a class="header-anchor" href="#plans-配套实施计划">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -973,7 +1003,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><a href="/docs/reference/design/plans/cache-control-passthrough.html"><code>plans/cache-control-passthrough.md</code></a></td>
-<td>Anthropic <code>cache_control</code> 逐块透传（已落地）</td>
+<td>Anthropic <code>cache_control</code> 逐块透传</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/design/plans/2026-07-08-credential-connection-unification.html"><code>plans/2026-07-08-credential-connection-unification.md</code></a></td>
@@ -981,31 +1011,23 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<h2 id="已删除的文档">已删除的文档<a class="header-anchor" href="#已删除的文档">#</a></h2>
-<p>不存在 <code>archive/</code> 目录：被取代的文档是直接删除的，需要时从 git 历史找回。</p>
-<p>历史上删除过：</p>
-<ul>
-<li><code>model-catalog-dynamic.md</code> / <code>model-catalog-per-provider.md</code> — 迭代草稿，被 <code>models.md</code> 取代</li>
-<li><code>claude-code-meridian-profile.md</code> — Meridian proxy 已砍，纯历史</li>
-<li><code>*-references.md</code> — 调研快照/原始研究笔记（slash-commands / tui-upgrade / user-input-requests）</li>
-</ul>
 <h2 id="todo-doc-code-gapsmd">TODO-doc-code-gaps.md<a class="header-anchor" href="#todo-doc-code-gapsmd">#</a></h2>
 <p><a href="/docs/reference/design/TODO-doc-code-gaps.html"><code>TODO-doc-code-gaps.md</code></a> — 文档与代码不一致的待修项，按优先级排列。修完一条删一条。</p>
 <h2 id="约定">约定<a class="header-anchor" href="#约定">#</a></h2>
 <ul>
-<li>每个子系统一个子目录，与 <code>openprogram/</code> 对应。新设计文档放进匹配的分组，
-而不是扁平的根目录。当某个主题增长到超过几个文件时，新建一个分组。</li>
-<li>每个分组先列<em>当前</em>的来源；支撑性笔记随后。</li>
-<li>API 参考归在 <code>docs/api/</code> 下；设计依据归在这里。</li>
-<li>函数 authoring 规则以 <code>../agentic-programming/writing-functions/function-metadata.md</code> 为
-准——较短的文件链接到它，而不是重复其内容。</li>
-<li>装饰器字段为 <code>render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M}</code> ——
-<code>callers</code> 按 seq 限制帧前节点数，<code>subcalls</code> 按 seq 限制帧内节点数。
-代码和文档都仅使用这两个名字。</li>
+<li>每个主题维护一份当前设计，相关实现说明链接到它，不复制设计正文。</li>
+<li>正文使用现在时；历史提交、日期和逐轮评审记录通过 Git 查询。</li>
+<li>实现说明依次说明入口、代码所有权、数据与状态变化、失败处理、兼容边界、验证方法，文末集中列出实现状态。</li>
+<li>所有页面统一以 HTML 展示；需要图示、状态与证据结构的实现文档优先维护为原生 HTML。简短用法可以保留 Markdown 源码。</li>
+<li>默认 <code>.md</code> / <code>.html</code> 为全英文，<code>.zh.md</code> / <code>.zh.html</code> 为中文对照；先更新英文，再同步中文。</li>
+<li>API 文档位于 <code>docs/reference/api/</code>；产品用法放在对应产品 Tab。</li>
+<li>站内使用相对文档链接；仓库源码使用 GitHub 链接。</li>
+<li>修改后先构建站点，再运行 <code>python -m scripts.docs_site.checklinks</code>。</li>
 </ul>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-09</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/workflows.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">workflows</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agent Goal 功能实现对比与 OpenProgram 设计参考</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#阅读入口">阅读入口</a>
 <a class="" href="#context-context-引擎commit工具老化">context/ — context 引擎、commit、工具老化</a>
 <a class="" href="#memory-记忆系统实体-抽象">memory/ — 记忆系统（实体 + 抽象）</a>
 <a class="" href="#proactive-事件层-主动性事件驱动">proactive/ — 事件层 + 主动性（事件驱动）</a>
@@ -1020,8 +1042,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#横切关注点">横切关注点</a>
 <a class="" href="#research-调研">research/ — 调研</a>
 <a class="" href="#distribution-安装打包与更新">distribution/ — 安装、打包与更新</a>
-<a class="" href="#plans-带日期的实施计划">plans/ — 带日期的实施计划</a>
-<a class="" href="#已删除的文档">已删除的文档</a>
+<a class="" href="#plans-配套实施计划">plans/ — 配套实施计划</a>
 <a class="" href="#todo-doc-code-gapsmd">TODO-doc-code-gaps.md</a>
 <a class="" href="#约定">约定</a>
 </div></aside>
@@ -1034,6 +1055,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

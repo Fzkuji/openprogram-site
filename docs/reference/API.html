@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/reference/API.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/reference/API.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -174,11 +174,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="writing-functions">Writing Functions<a class="header-anchor" href="#writing-functions">#</a></h2>
 <p>There are no meta functions like <code>create()</code> / <code>fix()</code> — writing, modifying, and validating an <code>@agentic_function</code> is done directly with ordinary file-editing tools. The <a href="/docs/reference/api/agentic-function.html">agentic function API</a> defines the decorator and authoring contract.</p>
 <h2 id="imports">Imports<a class="header-anchor" href="#imports">#</a></h2>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span><span class="p">,</span> <span class="n">Runtime</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">decision</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 </code></pre>
-<p>Only <code>agentic_function</code> is re-exported as a top-level <code>openprogram</code> symbol; <code>Runtime</code>, <code>create_runtime</code>, and the rest must be imported by their full paths.</p>
+<p><code>agentic_function</code>, <code>Runtime</code>, <code>Session</code>, and <code>decision</code> are re-exported from
+the top-level <code>openprogram</code> package. Provider helpers such as <code>create_runtime</code>
+are imported from their full paths.</p>
 <h2 id="quick-example">Quick Example<a class="header-anchor" href="#quick-example">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
@@ -214,6 +215,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

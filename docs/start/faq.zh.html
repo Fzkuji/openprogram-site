@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788951416" data-alt-lang-url="/docs/start/faq.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789010449" data-alt-lang-url="/docs/start/faq.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -91,7 +91,11 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>discover<spa
 openprogram<span class="w"> </span>providers<span class="w"> </span>doctor<span class="w">     </span><span class="c1"># 诊断凭据：过期、刷新、冷却、冲突</span>
 openprogram<span class="w"> </span>setup<span class="w">                </span><span class="c1"># 重新走一遍配置向导</span>
 </code></pre>
-<p>也可以直接设置环境变量（<code>ANTHROPIC_API_KEY</code> / <code>OPENAI_API_KEY</code> / <code>GEMINI_API_KEY</code>）后重启服务。</p>
+<p>Provider API key 从 OpenProgram 的凭据库读取。如果 key 已经在环境变量里，先运行
+<code>openprogram providers discover</code>，再用
+<code>openprogram providers adopt env:&lt;变量名&gt;</code> 收编对应的 source。也可以用
+<code>openprogram providers login &lt;provider&gt; --api-key-stdin</code> 从 stdin 导入 key。
+只重启服务不会自动导入 shell 环境变量中的 key。</p>
 <h2 id="我的数据存在哪里">我的数据存在哪里？<a class="header-anchor" href="#我的数据存在哪里">#</a></h2>
 <p>默认全部在 <code>~/.openprogram/</code> 下：<code>config.json</code>（配置）、<code>sessions/</code>（会话）、<code>logs/</code>（日志）、<code>memory/</code>（记忆）、<code>usage.db</code>（token 用量）。使用 <code>--profile &lt;name&gt;</code> 时改存 <code>~/.openprogram-&lt;name&gt;/</code>。</p>
 <h2 id="怎么更新到最新版本">怎么更新到最新版本？<a class="header-anchor" href="#怎么更新到最新版本">#</a></h2>
@@ -156,6 +160,6 @@ openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session_i
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

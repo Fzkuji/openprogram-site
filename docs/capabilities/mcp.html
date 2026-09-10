@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -78,6 +78,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="纯 Python" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Pure Python</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a>
 </div>
 <div class="nav-sec">
@@ -128,10 +129,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming AI Agents</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="指南 · 编写函数">Guide · Writing functions</div>
-<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">MCP</span></nav><h1 id="mcp">MCP<a class="header-anchor" href="#mcp">#</a></h1>
@@ -143,11 +140,23 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>show<span class="w
 </code></pre>
 <p><code>mcp add</code> options: <code>--env KEY=VALUE</code> (inject an environment variable into the subprocess, repeatable), <code>--timeout</code> (startup and per-call timeout in seconds), <code>--disabled</code> (write the config without starting the server). The <code>name</code> becomes the prefix (<code>&lt;name&gt;__&lt;tool&gt;</code>) for all of that server's tools.</p>
 <p>All subcommands:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>add<span class="w"> </span><span class="p">|</span><span class="w"> </span>rm<span class="w"> </span><span class="p">|</span><span class="w"> </span>restart<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>disable<span class="w"> </span><span class="p">|</span><span class="w"> </span>edit<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">test</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create<span class="w">       </span><span class="c1"># create a token for the local stdio MCP server</span>
+openprogram<span class="w"> </span>mcp<span class="w"> </span>serve<span class="w">              </span><span class="c1"># serve the authenticated MCP server over stdio</span>
+openprogram<span class="w"> </span>mcp<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>add<span class="w"> </span><span class="p">|</span><span class="w"> </span>rm<span class="w"> </span><span class="p">|</span><span class="w"> </span>restart<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>disable<span class="w"> </span><span class="p">|</span><span class="w"> </span>edit<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">test</span>
 </code></pre>
+<p><code>token create</code> prints the newly created token as one raw line; it does not set the
+shell environment. Run it once, copy that line, and bind it to the serving
+process before <code>serve</code>:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">"&lt;paste the token printed above&gt;"</span>
+openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
+</code></pre>
+<p>If the token already exists, reuse the token you saved instead of running
+<code>token create</code> again. <code>serve</code> rejects a missing or mismatched
+<code>OPENPROGRAM_MCP_TOKEN</code>.</p>
 <ul>
 <li><code>rm</code> stops the server and deletes its config; <code>enable</code> / <code>disable</code> toggle it (disable keeps the config).</li>
-<li><code>edit</code> opens the config file in <code>$EDITOR</code> — HTTP / SSE servers are currently added this way (<code>add</code> only covers stdio).</li>
+<li><code>edit</code> is retained only as a compatibility command and reports that raw config editing was removed because it exposed stored secrets. Use <code>add</code> / <code>rm</code> or the MCP settings page; <code>add</code> covers stdio servers.</li>
 <li><code>test</code> spins the server up with a throwaway config and confirms it returns a tool list, without writing anything to disk.</li>
 </ul>
 <p>The management commands talk to the resident OpenProgram background worker; if it is not running, start it with <code>openprogram worker start</code> (check with <code>openprogram status</code>).</p>
@@ -219,6 +228,6 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>show<span class="w
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

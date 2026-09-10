@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/interfaces/web.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/interfaces/web.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web UI · OpenProgram Docs</title>
-<meta name="description" content="The project menu also reveals its folder in the system file manager, creates a permanent Git worktree, archives its chats, or removes its sidebar entry.">
+<meta name="description" content="Selecting a conversation reuses the active session tab, including when another tab already shows that conversation. If a webpage is active, a new session tab">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/web.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/web.html">
 <meta property="og:title" content="Web UI · OpenProgram Docs">
-<meta property="og:description" content="The project menu also reveals its folder in the system file manager, creates a permanent Git worktree, archives its chats, or removes its sidebar entry.">
+<meta property="og:description" content="Selecting a conversation reuses the active session tab, including when another tab already shows that conversation. If a webpage is active, a new session tab">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Web UI · OpenProgram Docs">
-<meta name="twitter:description" content="The project menu also reveals its folder in the system file manager, creates a permanent Git worktree, archives its chats, or removes its sidebar entry.">
+<meta name="twitter:description" content="Selecting a conversation reuses the active session tab, including when another tab already shows that conversation. If a webpage is active, a new session tab">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -79,6 +79,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Web UI</span></nav><h1 id="web-ui">Web UI<a class="header-anchor" href="#web-ui">#</a></h1>
+<p>Selecting a conversation reuses the active session tab, including when another tab already shows that conversation. If a webpage is active, a new session tab opens. Back and Forward at the far left of the tab strip navigate each session tab’s own history. Opening a different conversation after going back replaces the forward history. History survives reloads; drafts retain their input when revisited, and deleted conversations are removed from history. Webpage navigation remains in the webpage controls.</p>
 <p>The project menu also reveals its folder in the system file manager, creates a permanent Git worktree, archives its chats, or removes its sidebar entry. Worktrees use a new branch from the current commit and a new absolute folder outside the source Git checkout; uncommitted changes stay in the original folder. Removing a project preserves files, chats, and project ownership. Restore it from the Projects page or reopen its folder. The default home project cannot be removed. Archived chats remain available through the Archived filter; hidden project chats remain in date/flat history.</p>
 <p>Right-click a project or use its ellipsis menu to open its settings, start a chat, pin it, edit it, or assign it to a custom section. The shared project editor changes its display name, text icon or emoji, description, and additional source folders. Source folders default into chats that have no explicit folder configuration; removing a folder does not delete files. Main-folder relocation remains in project settings. Section menus rename or remove sections; removing a section keeps its projects.</p>
 <p>Project order and chat order are independent. Use the sidebar filter menu to sort projects by newest activity, oldest activity, name, or manual order. New messages update the project activity time automatically. Pin a project using its pin button to keep it above unpinned projects. Chat direction selects oldest-first or newest-first; title sorting also supports A–Z and Z–A. Dragging switches project order to manual. These view preferences are saved locally.</p>
@@ -105,7 +106,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="function-call-timeline">Function-call timeline<a class="header-anchor" href="#function-call-timeline">#</a></h3>
 <p>Function and tool calls within each reply turn render as an expandable execution timeline: one row per step, with arguments, output, errors, and duration for each function call. Nested calls display recursively as a context tree, and subagents are steps in the timeline too. Clicking a step opens the execution detail panel in the right sidebar. Functions run manually from the <code>/programs</code> page's Run dialog use the same timeline rendering. Completed replies retain their streamed timeline; older records without ordered blocks use the same collapsible components instead of a separate tool-call table.</p>
 <h3 id="attachments">Attachments<a class="header-anchor" href="#attachments">#</a></h3>
-<p>Drag and drop images or text files onto the input box (pasting works too); they are attached to the next message you send.</p>
+<p>Paste a screenshot, drop files, or choose files from the composer menu. Images and files share a compact row in the order added. Each item shows its name, format and size; click it for a preview or details, or use × to remove it.</p>
+<p>Images go directly to a model that supports image input, and an original copy is saved with the chat. The app accepts originals up to 32 MiB and proportionally reduces oversized send versions to at most 5 MiB. It rejects unsupported models instead of silently omitting the image.</p>
+<p>In the desktop app, text, code, data, PDF and Office files reference their original paths. The assistant reads them with tools when needed; their contents are not automatically added to the prompt. Dropping a folder includes only its immediate listing, capped at 200 entries or 8 KiB. Nested folders are not scanned. Files selected in a browser without a native path are saved by the backend and referenced from there.</p>
+<p>Draft attachments stay with their chat across reloads once reading finishes. Sending clears only the submitted items after the backend acknowledges the message. Read errors or rejected sends keep the draft and attachments for correction. If the connection drops before confirmation, the app does not automatically resend the message.</p>
 <h3 id="projects-on-headless-or-remote-linux">Projects on headless or remote Linux<a class="header-anchor" href="#projects-on-headless-or-remote-linux">#</a></h3>
 <p>Project folders and additional working directories refer to paths on the
 machine running the worker. OpenProgram normally opens that machine's native
@@ -206,6 +210,6 @@ picker remains a cancellation and does not trigger the manual dialog.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

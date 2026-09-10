@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416" data-alt-lang-url="/docs/reference/cli.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449" data-alt-lang-url="/docs/reference/cli.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -204,7 +204,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tr>
 <td><code>openprogram web</code></td>
 <td>Start the service and open the browser UI (<code>http://localhost:18100</code>)</td>
-<td><code>--port</code> (default: stored pref, then 18100), <code>--web-port</code> (legacy alias for the same single port), <code>--no-browser</code></td>
+<td><code>--web-port</code> (this run only; default: stored pref, then 18100), <code>--no-browser</code></td>
 </tr>
 </tbody>
 </table>
@@ -293,7 +293,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tr>
 <td><code>ports</code></td>
 <td>View / persist the single Web UI port</td>
-<td><code>--frontend PORT</code> (default 18100), <code>--backend PORT</code> (legacy alias for <code>--frontend</code>; the ports are merged)</td>
+<td><code>--port PORT</code> (default 18100)</td>
 </tr>
 <tr>
 <td><code>completion</code></td>
@@ -314,7 +314,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>login &lt;provider&gt;</code></td>
-<td>Log in to a provider; <code>--api-key</code> / <code>--api-key-stdin</code> supply the key non-interactively, <code>--profile</code> selects the credential profile, <code>--method</code> forces a specific login method</td>
+<td>Log in to a provider; <code>--api-key</code> / <code>--api-key-stdin</code> supply the key non-interactively, <code>--account</code> selects the account, <code>--method</code> forces a specific login method</td>
 </tr>
 <tr>
 <td><code>logout</code></td>
@@ -322,7 +322,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>list</code></td>
-<td>List credential pools by profile</td>
+<td>List credential pools by account</td>
 </tr>
 <tr>
 <td><code>available</code> (aliases <code>search</code>, <code>catalog</code>)</td>
@@ -334,7 +334,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>use</code></td>
-<td>Set which account (profile) a provider uses</td>
+<td>Set which account a provider uses</td>
 </tr>
 <tr>
 <td><code>discover</code> / <code>adopt</code></td>
@@ -353,8 +353,8 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <td>List provider short-name aliases</td>
 </tr>
 <tr>
-<td><code>profiles</code></td>
-<td>Credential profile management (<code>list</code> / <code>create</code> / <code>delete</code>)</td>
+<td><code>accounts</code></td>
+<td>Account management (<code>list</code> / <code>create</code> / <code>delete</code>)</td>
 </tr>
 <tr>
 <td><code>migrate</code></td>
@@ -372,6 +372,14 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>token create</code></td>
+<td>Create and print a token for the authenticated local stdio MCP server</td>
+</tr>
+<tr>
+<td><code>serve</code></td>
+<td>Serve the authenticated MCP server over local stdio</td>
+</tr>
 <tr>
 <td><code>list</code></td>
 <td>List every configured MCP server and its status</td>
@@ -394,7 +402,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>edit</code></td>
-<td>Edit <code>mcp_servers.json</code> directly with <code>$EDITOR</code></td>
+<td>Compatibility command that reports raw config editing was removed; use <code>add</code> / <code>rm</code> or the MCP settings page</td>
 </tr>
 <tr>
 <td><code>test</code></td>
@@ -402,6 +410,15 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 </tbody>
 </table>
+<p><code>token create</code> prints the raw token on one line but does not set
+<code>OPENPROGRAM_MCP_TOKEN</code>. Run it once, copy the printed line, and set the
+variable before <code>serve</code>:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">"&lt;paste the token printed above&gt;"</span>
+openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
+</code></pre>
+<p>If a token already exists, reuse the token you previously saved. <code>serve</code>
+requires an exact <code>OPENPROGRAM_MCP_TOKEN</code> match.</p>
 <h3 id="browser-browser-tools">browser — browser tools<a class="header-anchor" href="#browser-browser-tools">#</a></h3>
 <table>
 <thead>
@@ -607,7 +624,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 </tr>
 <tr>
 <td><code>access</code></td>
-<td>Who reaches the agent: <code>list</code>, <code>approve &lt;code&gt;</code>, <code>allow &lt;user_id&gt;</code>, <code>revoke &lt;user_id&gt;</code>, <code>policy pairing|open</code>. An account takes any number of approved senders (<a href="/docs/integrations/channels.html#who-can-talk-to-your-bot">Chat Channels</a>)</td>
+<td>Who reaches the agent: <code>list</code>, <code>approve &lt;code&gt;</code>, <code>allow &lt;user_id&gt;</code>, <code>revoke &lt;user_id&gt;</code>. Unknown senders follow the default pairing flow; the owner can use <code>allow &lt;user_id&gt;</code> to add a known platform user ID directly to the allowlist (<a href="/docs/integrations/channels.html#who-can-talk-to-your-bot">Chat Channels</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -623,23 +640,23 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <tbody>
 <tr>
 <td><code>status</code></td>
-<td>Owner view of workspace path/revision, file and relation counts, writer health, and commitment counts/records</td>
+<td>Show workspace contents, revision, writer health, and pending turns</td>
 </tr>
 <tr>
-<td><code>recall</code></td>
-<td>Search the wiki + recent journal, print raw snippets; <code>--days N</code> limits the journal window (default 30)</td>
+<td><code>recall QUERY...</code></td>
+<td>Search memory and print matching paragraphs</td>
 </tr>
 <tr>
-<td><code>show</code> / <code>edit</code></td>
-<td>Print / edit a wiki page with <code>$EDITOR</code></td>
+<td><code>show PATH</code> / <code>edit PATH</code></td>
+<td>Print / edit one memory file with <code>$EDITOR</code></td>
 </tr>
 <tr>
 <td><code>sleep</code></td>
-<td>Run a sleep consolidation pass now (light → deep → REM); <code>--phase light|deep|rem</code> runs one phase only</td>
+<td>Reorganise topic files now; <code>--model MODEL</code> selects the organising model</td>
 </tr>
 <tr>
-<td><code>reflections</code></td>
-<td>Print the latest entries of <code>wiki/reflections.md</code></td>
+<td><code>backfill</code></td>
+<td>Write trusted source records that no topic cites; <code>--model MODEL</code> selects the writer</td>
 </tr>
 <tr>
 <td><code>export</code></td>
@@ -719,6 +736,6 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1788951416" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789010449" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -78,6 +78,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="纯 Python" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Pure Python</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a>
 </div>
 <div class="nav-sec">
@@ -128,10 +129,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="指南">Guide</div>
 <a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming AI Agents</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="指南 · 编写函数">Guide · Writing functions</div>
-<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="@agentic_function" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">@agentic_function</a>
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">GUI Agent</span></nav><h1 id="gui-agent">GUI Agent<a class="header-anchor" href="#gui-agent">#</a></h1>
@@ -205,8 +202,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>当前 macOS 开发构建没有正式生产签名。正式签名版本升级后的授权保持、首次使用
 功能引导、授权后自动恢复任务尚未验证。设置系统权限不会重新执行已拒绝的操作。</p>
 <h3 id="系统授权">系统授权<a class="header-anchor" href="#系统授权">#</a></h3>
-<p>本机桌面任务缺少系统权限时，在操作前暂停。OpenProgram 直接请求缺少的系统权限，必要时打开对应的系统设置页面。会话只显示简短等待状态及“打开系统设置”文字入口，不显示权限表单或继续按钮。</p>
+<p>本机桌面任务缺少系统权限时，在操作前暂停。OpenProgram 直接请求缺少的系统权限，必要时打开对应的系统设置页面。会话显示简短的暂停等待状态及“打开系统设置”文字入口；暂停的运行卡不显示权限表单、继续按钮、空结果、重试或修改操作。真正失败和取消的运行保留各自的终态。</p>
 <p>后台保存等待中的任务，通过新启动的 OpenProgram 进程检查权限，使用与桌面任务相同的程序，避免沿用系统设置改变前保存的检查结果。检查本身不会申请权限。权限可用后，同一个任务继续一次。关闭页面不会停止检查；如果需要重启应用，启动后会再次检查保存的任务。取消任务后不会恢复。检查失败时保留等待状态，不会当作已经授权。查看旧会话本身不会启动操作或重新弹出系统授权。系统授权不会替代工具操作审批。</p>
+<p>本地临时签名的 macOS 版本更新后，旧录屏授权可能失效，而系统开关仍显示开启。OpenProgram 会记录已安装应用成功取得录屏权限时的身份。如果之后应用身份改变且录屏检查失败，下一次本机授权操作会先更新 OpenProgram 自己的旧录屏登记，再进入系统授权流程。每个变化后的身份最多处理一次；状态检查和重连不会重置权限。使用稳定 Developer ID 签名的发行版沿用正常系统授权流程。</p>
+<p>切换会话时，同一个等待任务的重复消息不会再次打开系统授权。你仍可主动打开系统设置。</p>
+<h3 id="macos-自动化权限错误">macOS 自动化权限错误<a class="header-anchor" href="#macos-自动化权限错误">#</a></h3>
+<p>部分桌面命令会向 System Events 或目标应用发送 Apple Events。macOS 按目标应用分别控制“自动化”权限；录屏和辅助功能授权不代表已取得自动化权限。操作报告自动化权限拒绝时，请在执行任务的 Mac 上打开“系统设置 → 隐私与安全性 → 自动化”，检查发起请求的应用对错误中所列目标的授权。失败的操作仍保持失败；修改系统设置不会批准或重复执行该操作。其他原生命令失败会保留实际错误，不会显示为成功。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-09</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -218,6 +219,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#依赖注意">依赖注意</a>
 <a class="" href="#系统权限检查">系统权限检查</a>
 <a class="lvl-3" href="#系统授权">系统授权</a>
+<a class="lvl-3" href="#macos-自动化权限错误">macOS 自动化权限错误</a>
 </div></aside>
 </div>
 
@@ -228,6 +230,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>

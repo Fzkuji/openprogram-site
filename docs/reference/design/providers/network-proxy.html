@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1788951416">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789010449">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Outbound network proxy · OpenProgram Docs</title>
-<meta name="description" content="Every httpx client in the process resolves proxies with the same semantics — httpx&#x27;s own env semantics — and the hardened clients receive them via mounts= so">
+<meta name="description" content="Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security policy. Managed clients are">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Outbound network proxy"}]}</script>
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
 <meta property="og:title" content="Outbound network proxy · OpenProgram Docs">
-<meta property="og:description" content="Every httpx client in the process resolves proxies with the same semantics — httpx&#x27;s own env semantics — and the hardened clients receive them via mounts= so">
+<meta property="og:description" content="Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security policy. Managed clients are">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Outbound network proxy · OpenProgram Docs">
-<meta name="twitter:description" content="Every httpx client in the process resolves proxies with the same semantics — httpx&#x27;s own env semantics — and the hardened clients receive them via mounts= so">
+<meta name="twitter:description" content="Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security policy. Managed clients are">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -32,7 +32,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=7ee9ca0d">
+<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
 
@@ -65,7 +65,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
            placeholder="Filter docs…" autocomplete="off" spellcheck="false">
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/reference/design/README.html" data-title-zh="设计文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design Documents</a>
+<a class="navlink" href="/docs/reference/design/README.html" data-title-zh="设计与实现文档" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design and implementation documents</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
@@ -91,8 +91,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</div>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.viz.html">OpenProgram · 附件处理设计 (viz)</a>
-<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件处理设计（Web 聊天）" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment Handling Design (Web Chat)</a>
+<a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="五项附件功能与已选方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Five attachment features and selected options</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
@@ -138,15 +137,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
+<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation navigation</a>
+<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
+<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation</a>
+<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档 HTML 展示与编写规范" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation HTML rendering and authoring</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html">Community discoverability design</a>
-<a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="设计文档站（统一文档网页）" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Design Docs Site (Unified Documentation Website)</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="Error Handling — 纪律与门禁" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error Handling — Discipline and Gate</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html">IndexNow deployment discovery</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-implementation.html">IndexNow implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/TODO-doc-code-gaps.html" data-title-zh="设计文档与代码不对齐的待修项" data-href-en="/docs/reference/design/TODO-doc-code-gaps.html" data-href-zh="/docs/reference/design/TODO-doc-code-gaps.zh.html">Open Items Where Design Docs Are Out of Sync With Code</a>
-<a class="navlink" href="/docs/reference/design/implementation-status.html">OpenProgram implementation status and handoff</a>
-<a class="navlink" href="/docs/reference/design/repository-structure.html">Repository structure</a>
-<a class="navlink" href="/docs/reference/design/repository-structure-implementation.html">Repository structure implementation ledger</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html">Site discoverability and performance design</a>
 <a class="navlink" href="/docs/reference/design/TODO-improvements.html">TODO：待讨论的改进项</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="Usage Metering 子系统设计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage Metering Subsystem Design</a>
@@ -272,11 +271,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title">Providers</div>
 <a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="Providers" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
 <a class="navlink" href="/docs/reference/design/providers/custom-openai-compatible-provider.html">Custom OpenAI-Compatible Provider</a>
+<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">Error and timeout mechanism</a>
 <a class="navlink" href="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-title-zh="模型清单与百炼 provider" data-href-en="/docs/reference/design/providers/PROBLEM-models-and-bailian.html" data-href-zh="/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html">Model list and the Bailian provider</a>
 <a class="navlink" href="/docs/reference/design/providers/json-schema-structured-output.html">OpenProgram · JSON Schema Structured Output 设计</a>
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html">OpenProgram · Provider metadata 加载诊断</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html">OpenProgram · Provider 请求录制与严格离线回放 (viz)</a>
-<a class="navlink" href="/docs/reference/design/providers/error-and-timeout-mechanism.html">OpenProgram · 报错与超时机制（现状）</a>
 <a class="navlink active" href="/docs/reference/design/providers/network-proxy.html">Outbound network proxy</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="请求录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replaying provider calls</a>
 <a class="navlink" href="/docs/reference/design/providers/request-build.html" data-title-zh="请求构建:Context → 各 provider 参数" data-href-en="/docs/reference/design/providers/request-build.html" data-href-zh="/docs/reference/design/providers/request-build.zh.html">Request building: Context → per-provider parameters</a>
@@ -355,7 +354,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/execution/dispatcher-split.html" data-title-zh="`agent/dispatcher` —— 按职责划分的包" data-href-en="/docs/reference/design/runtime/execution/dispatcher-split.html" data-href-zh="/docs/reference/design/runtime/execution/dispatcher-split.zh.html">`agent/dispatcher` — a responsibility-scoped package</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="Agent 调用流程（权威设计）" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Agent Call Flow (Authoritative Design)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="Agent Worktree 工具" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Agent Worktree Tool</a>
-<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic 函数防自递归机制 — 设计文档 (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html">Agentic self-recursion guard (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="Async Task 生命周期" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async Task Lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/next-step-decision.html" data-title-zh="Next-step decision making(decision.make / exec(choices=))" data-href-en="/docs/reference/design/runtime/execution/next-step-decision.html" data-href-zh="/docs/reference/design/runtime/execution/next-step-decision.zh.html">Next-step decision making(decision.make / exec(choices=))</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="Agentic 函数防自递归机制" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Self-Recursion Guard for Agentic Functions</a>
@@ -364,11 +363,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">Branch naming (viz)</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
-<a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">分支自动命名设计 (viz)</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
@@ -393,14 +392,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg">Providers</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Outbound network proxy</span></nav><h1 id="outbound-network-proxy">Outbound network proxy<a class="header-anchor" href="#outbound-network-proxy">#</a></h1>
-<p>Every httpx client in the process resolves proxies with the same semantics —
-httpx's own env semantics — and the hardened clients receive them via <code>mounts=</code>
-so that hardening and proxying compose. Product-facing documentation lives in
+<p>Provider HTTP traffic has two separate concerns: httpx environment-proxy
+diagnostics, and the managed client's outbound security policy. Managed
+clients are built through <code>openprogram.security.safe_http</code>; they do not consume
+the mount map from <code>http_proxy.py</code>. An enforcing proxy is part of
+<code>OutboundSecurityConfig.policy_proxy</code>, so URL policy and proxy routing are
+evaluated together. Product-facing documentation lives in
 <code>docs/server/configuration.md</code>.</p>
 <h2 id="1-why-one-resolver">1. Why one resolver<a class="header-anchor" href="#1-why-one-resolver">#</a></h2>
-<p>The failure this prevents is a process with two different proxy semantics
-depending on which code path a request happens to take. Three outbound paths
-coexist, and if each resolves proxies on its own they disagree:</p>
+<p>The implementation keeps the following outbound paths distinct:</p>
 <table>
 <thead>
 <tr>
@@ -411,9 +411,9 @@ coexist, and if each resolves proxies on its own they disagree:</p>
 </thead>
 <tbody>
 <tr>
-<td>Hardened client (<code>providers/utils/http_client.py</code>)</td>
-<td>anthropic, openai_codex, google_gemini_cli streaming</td>
-<td>Only <code>HTTPS_PROXY</code>/<code>HTTP_PROXY</code> (uppercase) read by a hand-written resolver. <code>ALL_PROXY</code> ignored, <strong><code>NO_PROXY</code> ignored</strong> (no bypass list), lowercase vars ignored — because the client always receives an explicit <code>transport=</code>, so httpx skips its own env handling (<code>allow_env_proxies = trust_env and transport is None</code>).</td>
+<td>Managed client (<code>providers/utils/http_client.py</code>)</td>
+<td>provider SDK and streaming paths</td>
+<td>Uses <code>safe_http</code> with a consumer-specific URL policy. A policy proxy is explicit in <code>OutboundSecurityConfig.policy_proxy</code>; the client does not activate <code>get_proxy_mounts()</code> or unmanaged proxy environment state.</td>
 </tr>
 <tr>
 <td>SDK / ad-hoc raw httpx</td>
@@ -427,13 +427,11 @@ coexist, and if each resolves proxies on its own they disagree:</p>
 </tr>
 </tbody>
 </table>
-<p>The consequences of that divergence are concrete: the same provider behaves
-differently between &quot;test provider&quot; (raw httpx), actual chat (SDK), and the
-Anthropic path (hardened); a user with a proxy plus a <code>NO_PROXY</code> whitelist —
-say a mainland-direct API endpoint — has that whitelist silently ignored on the
-hardened path; and the connection hardening (TCP keepalive, force-IPv4,
-generous streaming timeouts) covers only the hand-written providers while the
-openai SDK builds a fresh default client per call.</p>
+<p>The managed path deliberately has stronger URL and credential policy than a
+plain httpx client. A provider request therefore must not silently inherit an
+unmanaged process proxy: callers either use the managed security configuration
+or use a deliberately scoped plain client whose httpx environment semantics are
+documented at that call site.</p>
 <p>A socks proxy makes the divergence visible immediately: a shell with
 <code>ALL_PROXY=socks5://127.0.0.1:7891</code> crashes every API-routed provider with
 &quot;Using SOCKS proxy, but the 'socksio' package is not installed&quot; while
@@ -458,55 +456,52 @@ managed-proxy lifecycle (validation, TLS options, active-state tracking).</li>
 <li>Provider HTTP helpers all route through these helpers; the SSRF guard
 (<code>fetch-guard.ts</code>) composes with the same <code>matchesNoProxy</code>.</li>
 </ul>
-<p>The direction is the same one taken here — a single resolver with standard env
-semantics plus a first-party override. OpenClaw goes further with proxy
+<p>OpenProgram borrows the useful diagnostic property that standard environment
+variables have one documented interpretation, while its managed provider path
+adds a separate policy-proxy boundary. OpenClaw goes further with proxy
 lifecycle validation and SSRF gating, which this design does not need.</p>
 <h2 id="3-resolution-order">3. Resolution order<a class="header-anchor" href="#3-resolution-order">#</a></h2>
 <ol>
-<li><code>OPENPROGRAM_PROXY_URL</code> — explicit first-party override. When set, all
-traffic goes through it (any scheme httpx supports: <code>http://</code>,
-<code>https://</code>, <code>socks5://</code>). <code>NO_PROXY</code> bypasses are still honoured.</li>
+<li><code>OPENPROGRAM_PROXY_URL</code> — explicit first-party override used by the
+diagnostic helper and callers that deliberately use the environment proxy
+map. It is not an implicit override for managed clients.</li>
 <li>Standard environment variables, parsed by httpx's own
 <code>get_environment_proxies()</code>: <code>http_proxy</code>/<code>HTTP_PROXY</code>,
 <code>https_proxy</code>/<code>HTTPS_PROXY</code>, <code>all_proxy</code>/<code>ALL_PROXY</code>,
 <code>no_proxy</code>/<code>NO_PROXY</code>. Using httpx's parser rather than a reimplementation
-guarantees the hardened path and every plain <code>httpx.AsyncClient()</code> in
-the process agree byte-for-byte — the exact property whose absence causes
-the divergence in §1. Note this delegates to urllib's <code>getproxies()</code>, so on
+gives diagnostic callers the same parsing behavior as httpx. Note this
+delegates to urllib's <code>getproxies()</code>, so on
 macOS/Windows the OS-level proxy settings apply when no env vars are
 set — same as any Python process.</li>
-<li>Built-in loopback bypass: <code>localhost</code> / <code>127.0.0.1</code> / <code>[::1]</code> never go
-through a proxy, <code>NO_PROXY</code> or not. Local services (the worker, a
-localhost ollama, a local OpenAI-compatible endpoint) break behind
-forward proxies like Clash, which refuse loopback CONNECTs — a failure
-mode that presents as a spurious 502.</li>
+<li>Managed provider clients do not use this environment resolution as an
+implicit security-policy override. If a managed request must use a proxy,
+declare it in <code>OutboundSecurityConfig.policy_proxy</code>; the policy layer then
+validates the proxy and target relationship before opening the connection.</li>
 </ol>
 <h2 id="4-mechanics">4. Mechanics<a class="header-anchor" href="#4-mechanics">#</a></h2>
 <ul>
-<li><code>providers/utils/http_proxy.py</code> exposes <code>get_proxy_mounts()</code> returning
-the httpx mount map (<code>pattern -&gt; proxy URL or None-for-bypass</code>), with the
-<code>OPENPROGRAM_PROXY_URL</code> override folded in. Its single consumer is
-<code>http_client.py</code>.</li>
-<li><code>providers/utils/http_client.py::build_async_client</code> builds one
-hardened <code>AsyncHTTPTransport</code> per mount entry (same socket options /
-IPv4 / keepalive as the default transport, plus <code>proxy=</code>), passes them
-as <code>mounts=</code>, and keeps the hardened no-proxy transport as the default.
-<code>trust_env</code> stays default-True so TLS env vars (<code>SSL_CERT_FILE</code>, …)
-keep working; httpx skips its own env-proxy pass because an explicit
-<code>transport=</code> is present.</li>
-<li>The openai SDK paths (<code>openai_completions.py</code>, <code>openai_responses.py</code>)
-pass <code>http_client=get_shared_async_client(&quot;openai-sdk&quot;)</code> — SDK
-requests get the same proxy semantics AND the keepalive/IPv4 hardening,
-and reuse one connection pool per event loop instead of a fresh client
-per call. The SDK does not close externally-supplied clients; lifecycle
-stays with <code>aclose_current_loop_clients()</code>.</li>
+<li><code>providers/utils/http_proxy.py</code> exposes <code>get_proxy_mounts()</code> as a diagnostic
+helper for the environment proxy map and the <code>OPENPROGRAM_PROXY_URL</code>
+override. Managed provider clients do not consume this map; the rescue
+command uses it to report configured proxy state.</li>
+<li><code>providers/utils/http_client.py::build_async_client</code> delegates to
+<code>safe_async_client</code> or <code>configured_safe_async_client</code>. The managed client
+applies the registered consumer's URL policy, bounded timeouts, and socket
+hardening. When a policy proxy is configured, <code>safe_http</code> creates the
+decision-aware proxy transport and strips proxy credentials from requests
+before dispatch.</li>
+<li>The OpenAI, Anthropic, and Google SDK consumers are registered in
+<code>openprogram/security/safe_http.py</code> with an injected-transport disposition.
+Their shared-client lifecycle remains explicit; it is not implemented by
+passing <code>mounts=</code> from <code>http_proxy.py</code>.</li>
 <li>One-shot raw httpx clients (OAuth flows, token refresh, marketplace,
 model listing) are plain <code>httpx.AsyncClient()</code>s on purpose:
 their env semantics are already identical by construction, and they
 don't need streaming hardening. <code>OPENPROGRAM_PROXY_URL</code> does not apply
 to them, which is an accepted limit rather than an oversight.</li>
-<li><code>socksio</code> is a hard dependency (<code>httpx[socks]</code>) so a socks <code>ALL_PROXY</code>
-never kills client construction.</li>
+<li>A plain httpx caller that opts into SOCKS environment handling must provide
+the corresponding <code>httpx[socks]</code> dependency; managed clients do not infer
+that dependency from an ambient <code>ALL_PROXY</code>.</li>
 <li><code>openprogram rescue</code> carries a proxy probe: it reports the resolved proxy
 configuration and fails with an exact fix when a socks proxy is
 configured but socksio is missing.</li>
@@ -531,17 +526,20 @@ a hosted gateway.</li>
 <h2 id="6-invariants">6. Invariants<a class="header-anchor" href="#6-invariants">#</a></h2>
 <ol>
 <li>Any new provider HTTP code MUST get its client from
-<code>build_async_client</code> / <code>get_shared_async_client</code> — never construct
-<code>httpx.AsyncClient</code> with hand-rolled proxy kwargs.</li>
-<li>Never pass <code>proxy=</code> or <code>proxies=</code> directly; proxy selection lives in
-<code>get_proxy_mounts()</code> only.</li>
-<li><code>get_proxy_mounts()</code> uses httpx's parser. If httpx ever privatises or
-moves <code>get_environment_proxies</code>, mirror its semantics — do not invent
-new ones, since divergent semantics is the problem described in §1.</li>
-<li><code>tests/component/security/test_http_proxy.py</code> pins the resolution rules (override
-precedence, NO_PROXY bypass, per-URL transport selection).</li>
+<code>build_async_client</code> / <code>get_shared_async_client</code> and a registered
+<code>safe_http</code> consumer; never construct a managed client with hand-rolled
+proxy kwargs.</li>
+<li>Never use <code>get_proxy_mounts()</code> as a substitute for
+<code>OutboundSecurityConfig.policy_proxy</code> on a managed request.</li>
+<li><code>get_proxy_mounts()</code> remains an environment-resolution diagnostic. If
+httpx moves <code>get_environment_proxies</code>, keep this helper's diagnostic output
+aligned with httpx rather than treating it as the managed transport
+contract.</li>
+<li><code>tests/component/security/test_http_proxy.py</code> pins both the diagnostic
+resolution rules and the fact that unmanaged environment proxies do not
+activate a managed provider client.</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-09</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/error-and-timeout-mechanism.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · 报错与超时机制（现状）</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/record-replay.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Recording and replaying provider calls</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-09</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/record-replay.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Provider 请求录制与严格离线回放 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/record-replay.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Recording and replaying provider calls</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-why-one-resolver">1. Why one resolver</a>
@@ -560,6 +558,6 @@ precedence, NO_PROXY bypass, per-URL transport selection).</li>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=7ee9ca0d"></script>
+<script src="/docs/assets/site.js?v=c382c0c8"></script>
 </body>
 </html>
