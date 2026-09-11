@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789023435" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,7 +154,7 @@ to work, while Alpine and other musl systems are not release targets. The host
 needs <code>curl</code>, <code>tar</code>, a SHA-256 utility, Git, and the standard shared libraries
 used by Chromium. The installer reports a failed browser/runtime probe before
 changing the active version. A system Python, Node.js, or npm is not required.</p>
-<p>On Windows, run the PowerShell bootstrap:</p>
+<p>On Windows, select a release that includes a Windows runtime ZIP and checksum, then run the PowerShell bootstrap. If no published release includes these assets, use the <a href="#development-checkout">source-development installation</a> below. Source and CI support do not imply that Windows release artifacts have been published:</p>
 <pre><code class="language-powershell"><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">openprogram</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
 </code></pre>
 <p>To select a specific immutable release:</p>
@@ -221,7 +221,7 @@ recommended for ordinary users and does not define the <code>stable</code> chann
 <li>User data is removed only by an explicit purge of <code>~/.openprogram</code> after backup.</li>
 </ul>
 <p>See <a href="/docs/install/upgrade.html">Upgrading</a> for version changes and <a href="/docs/install/profiles.html">Profiles</a> for isolated state directories.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Upgrading</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Upgrading</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#supported-installation-matrix">Supported installation matrix</a>

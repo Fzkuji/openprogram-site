@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789023435" data-alt-lang-url="/docs/reference/design/providers/models/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773" data-alt-lang-url="/docs/reference/design/providers/models/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -391,6 +391,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/windows-ci.html">Windows CI completion</a>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
@@ -563,7 +564,12 @@ point</strong>: it collapses each fetcher's disparate keys (<code>context_length
 <code>context_window</code> / <code>contextWindow</code>, …) into one entry dict, then layers
 models.dev on top. Downstream only ever sees the normalised row — never the
 source differences.</p>
-<p>Results live in memory only (a short-TTL cache is fine); closing the page discards them. Browsing is unavailable offline — <strong>discovering new models requires the network by definition</strong>; that is a fact, not a defect.</p>
+<p>Ordinary provider results use the short in-memory browse cache. Account-scoped
+subscription catalogues also keep an atomic last-known-good copy under the
+profile state directory. A failed request can therefore show the last good
+rows as stale data without treating them as a successful authoritative refresh.
+An empty result or an unconfigured provider preserves saved model selections;
+only a non-empty current official catalogue can retire subscription models.</p>
 <h3 id="42-enable-copy-the-spec-into-config">4.2 Enable (copy the spec into config)<a class="header-anchor" href="#42-enable-copy-the-spec-into-config">#</a></h3>
 <p>The user checks a model in the browse list:</p>
 <pre><code>enable_model(provider_id, row)
@@ -573,10 +579,19 @@ source differences.</p>
   → ENABLED_MODELS reloads
 </code></pre>
 <ul>
-<li><strong>Disable</strong> = delete the row from config.</li>
+<li><strong>Disable</strong> = delete the row from config. Subscription providers also record
+an id tombstone so an automatic refresh does not re-enable it.</li>
 <li><strong>Refresh</strong> = re-run browse for enabled models and overwrite their specs (handles spec drift over time; touches only what the user actually uses).</li>
 <li><strong>Manually adding a model</strong> (one the provider doesn't list) = the user fills in a row in the same form — it writes to the same list; the old <code>custom_models</code> concept dissolves.</li>
-<li><strong>Dynamic registration for subscription providers</strong> (e.g. claude-code auto-adds 3 models after login) = the program performs an enable on the user's behalf, writing to the same list.</li>
+<li><strong>Subscription catalogues</strong> = after login, at worker startup when stale, on
+the six-hour background cadence, and on manual Refresh, read the account's
+official model table. New ids are enabled automatically, changed capability
+rows are refreshed, removed ids retire, and explicit disables stay disabled.
+Adding a future Codex or Grok model does not require a source-code list edit.
+When the persisted enabled rows actually change, the worker broadcasts a
+<code>provider_models_changed</code> invalidation hint. Connected web and desktop
+clients then re-read the provider and enabled-model endpoints; reconnecting
+clients invalidate the same queries to cover events missed while offline.</li>
 </ul>
 <h2 id="5-how-the-backend-uses-it">5. How the backend uses it<a class="header-anchor" href="#5-how-the-backend-uses-it">#</a></h2>
 <pre><code class="language-python"><span class="c1"># openprogram/providers/enabled_models.py</span>
@@ -639,7 +654,7 @@ source differences.</p>
 <li><strong>Verification granularity</strong>: multi-wire providers need one exec per <code>(api, base_url, headers, compat)</code> combination.</li>
 <li><code>tests/unit/providers/test_provider_wire_invariants.py</code> and <code>tests/unit/providers/test_model_fetch_routing.py</code> stay green.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/models/fast-tier.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fast tier — detection, storage, and wires</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking / Effort Subsystem Design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/models/fast-tier.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fast tier — detection, storage, and wires</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking / Effort Subsystem Design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-architecture-in-one-sentence">1. Architecture in one sentence</a>

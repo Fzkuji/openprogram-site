@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789023435" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789095773" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -391,6 +391,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/windows-ci.html">Windows CI completion</a>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
@@ -449,7 +450,7 @@ models 端点尚未验证，因此保持手写；确认有端点后按 codex 的
 账户跑不了的 id、给出 API 平台的 context 数字，而 fast 只能靠 id 前缀猜
 （<code>gpt-5.4-mini</code> 会被误判）。官方端点这三样都权威。</p>
 <h2 id="3-存储先读官方-落-config-之后读文件">3. 存储：先读官方 → 落 config → 之后读文件<a class="header-anchor" href="#3-存储先读官方-落-config-之后读文件">#</a></h2>
-<p>codex 的原则：<strong>信息全从官网实时拿，不手写任何模型清单</strong>。</p>
+<p>codex 的原则：<strong>优先读取官方实时目录，其次读取 OpenProgram 的 last-known-good 目录，最后读取官方 CLI 本地缓存</strong>。</p>
 <table>
 <thead>
 <tr>
@@ -460,14 +461,19 @@ models 端点尚未验证，因此保持手写；确认有端点后按 codex 的
 </thead>
 <tbody>
 <tr>
-<td>codex 官方端点</td>
+<td>codex 官方端点与 CLI 缓存</td>
 <td><code>openprogram/providers/openai_codex/list_models.py</code></td>
-<td>远端；<code>_browse_models</code> 10 分钟内存缓存，<strong>无磁盘缓存</strong></td>
+<td>优先实时端点；<code>~/.codex/models_cache.json</code> 仅作 stale 展示兜底</td>
+</tr>
+<tr>
+<td>OpenProgram 订阅目录</td>
+<td><code>providers/subscription_catalog.py</code></td>
+<td>原子写入 last-known-good；登录后及后台周期刷新</td>
 </tr>
 <tr>
 <td>config spec 行（含 <code>fast</code>/<code>thinking_levels</code>/<code>context</code>）</td>
-<td>用户启用某模型时，<code>fetch_and_normalize</code> 归一化后的整行写进 <code>~/.openprogram/config.json</code>；Fetch 按钮（<code>fetch_models_remote</code>）用新端点数据 heal 已启用行</td>
-<td>配置文件（这就是&quot;存文件&quot;这一环）</td>
+<td>官方刷新成功后自动新增、更新和淘汰账户模型，同时尊重用户关闭 tombstone</td>
+<td>配置文件</td>
 </tr>
 <tr>
 <td><code>Model.fast</code> 字段</td>
@@ -486,9 +492,8 @@ models 端点尚未验证，因此保持手写；确认有端点后按 codex 的
 </tr>
 </tbody>
 </table>
-<p>数据流：<strong>官方端点 → 归一化 → config.json → 注册表 → supports_fast /
-dispatch</strong>。断网 / 没登录时端点返回 error、保留已存 config 行不覆盖——反正没
-token 也 dispatch 不了这些模型，token-less 浏览拿不到列表不算回归。</p>
+<p>数据流：<strong>官方端点 → 归一化 → last-known-good 缓存 + config.json → 注册表 →
+supports_fast / dispatch</strong>。CLI 缓存可以让离线浏览继续显示，但它会同时携带错误标记，因此不会像新鲜目录一样增删已配置模型。</p>
 <h2 id="4-事件流任何切换自适应无需刷新">4. 事件流：任何切换自适应，无需刷新<a class="header-anchor" href="#4-事件流任何切换自适应无需刷新">#</a></h2>
 <pre><code>连接建立 / 会话切换 / 模型切换 / 每轮消息 ack+结束
   → 前端 loadAgentSettings()（lib/runtime-bridge/providers.ts）
@@ -543,7 +548,7 @@ apps/web/components/chat/composer/index.tsx             开关显隐 + 发送门
 重拉端点即可；换判定逻辑 → 只动 <code>listing.py::supports_fast</code>；claude-code 加/去
 fast → 动 <code>default_fast</code> 的 Opus 部分；其他 provider 想要 fast → models.dev
 认识它就自动生效。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-fast-是什么">1. Fast 是什么</a>

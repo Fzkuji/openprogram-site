@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789023435" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -391,6 +391,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/windows-ci.html">Windows CI completion</a>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
@@ -459,8 +460,8 @@ catalogue rather than the subscription front-door: it lists un-runnable ids,
 reports the wrong context window, and can only reconstruct a fast flag from an
 id-prefix guess.</p>
 <h2 id="3-storage-read-official-write-config-read-the-file-thereafter">3. Storage: read official → write config → read the file thereafter<a class="header-anchor" href="#3-storage-read-official-write-config-read-the-file-thereafter">#</a></h2>
-<p>Codex principle: <strong>all info comes live from the vendor, no hand-kept model
-list.</strong></p>
+<p>Codex principle: <strong>prefer the vendor's live catalogue, then OpenProgram's
+last-known-good catalogue, then the local official CLI cache.</strong></p>
 <table>
 <thead>
 <tr>
@@ -471,14 +472,19 @@ list.</strong></p>
 </thead>
 <tbody>
 <tr>
-<td>Codex official endpoint</td>
+<td>Codex official endpoint and CLI cache</td>
 <td><code>openprogram/providers/openai_codex/list_models.py</code></td>
-<td>remote; 10-min in-memory browse cache, <strong>no disk cache</strong></td>
+<td>live endpoint first; <code>~/.codex/models_cache.json</code> is a stale display fallback</td>
+</tr>
+<tr>
+<td>OpenProgram subscription catalogue</td>
+<td><code>providers/subscription_catalog.py</code></td>
+<td>atomic last-known-good copy; refreshed after login and periodically</td>
 </tr>
 <tr>
 <td>config spec row (with <code>fast</code>/<code>thinking_levels</code>/<code>context</code>)</td>
-<td>on enable, <code>fetch_and_normalize</code>'s normalised row is written to <code>~/.openprogram/config.json</code>; the Fetch button (<code>fetch_models_remote</code>) heals enabled rows with fresh endpoint data</td>
-<td>config file (this is the &quot;write to a file&quot; step)</td>
+<td>successful official refreshes automatically add, update, and retire account models while honoring disable tombstones</td>
+<td>config file</td>
 </tr>
 <tr>
 <td><code>Model.fast</code> field</td>
@@ -497,11 +503,10 @@ list.</strong></p>
 </tr>
 </tbody>
 </table>
-<p>Flow: <strong>official endpoint → normalise → config.json → registry →
-supports_fast / dispatch</strong>. Offline / not signed in → the endpoint returns an
-error and the saved config rows are kept, not blanked — you can't dispatch
-these models without a token anyway, so a token-less browse losing the list
-isn't a regression.</p>
+<p>Flow: <strong>official endpoint → normalise → last-known-good cache + config.json →
+registry → supports_fast / dispatch</strong>. CLI cache rows can keep the browser
+useful offline, but their accompanying error prevents them from deleting or
+adding configured models as if they were fresh.</p>
 <h2 id="4-event-flow-adapts-to-any-switch-no-page-reload">4. Event flow: adapts to any switch, no page reload<a class="header-anchor" href="#4-event-flow-adapts-to-any-switch-no-page-reload">#</a></h2>
 <pre><code>connect / session switch / model switch / every turn ack+settle
   → frontend loadAgentSettings()  (lib/runtime-bridge/providers.ts)
@@ -556,7 +561,7 @@ apps/web/components/chat/composer/index.tsx             toggle visibility + send
 needs nothing but a Fetch; change detection logic → touch only
 <code>listing.py::supports_fast</code>; claude-code add/remove fast → the Opus part of
 <code>default_fast</code>; another provider wanting fast → works once models.dev knows it.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-what-fast-is">1. What Fast is</a>

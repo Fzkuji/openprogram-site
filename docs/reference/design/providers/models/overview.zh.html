@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789023435" data-alt-lang-url="/docs/reference/design/providers/models/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789095773" data-alt-lang-url="/docs/reference/design/providers/models/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -391,6 +391,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/windows-ci.html">Windows CI completion</a>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
@@ -550,7 +551,7 @@ Thinking effort 的参数细节见 <a href="/docs/reference/design/providers/mod
 </table>
 <p><strong>约定加载</strong>：接口偏离标准的 provider 在自己目录放一个 <code>list_models.py</code>，导出 <code>fetch(provider_id, timeout)</code>；分派器 <code>_load_fetcher</code> 按目录名 <code>__import__</code> 找它——和 <code>probe_thinking.probe()</code> 完全一套机制，新增 provider 零中心改动。接口标准的 provider 不放这个文件，走通用 <code>openai_compat</code>。<strong>有没有这个文件 = 这个 provider 接口是否偏离标准</strong>，是个自然的、按需的判据。</p>
 <p>无论哪种源，<code>fetch_and_normalize</code> 是<strong>唯一的归一化收口</strong>：它把 fetcher 千差万别的 key（<code>context_length</code>/<code>context_window</code>/<code>contextWindow</code> 等）统一成一份 entry dict，再叠 models.dev 补全。下游只看归一化后的统一行，看不到源的差异。</p>
-<p>结果只进内存（可带一个短 TTL 缓存避免反复请求），关掉页面就没了。断网时浏览不可用——<strong>发现新模型本来就需要网络</strong>，这不是缺陷是事实。</p>
+<p>普通 provider 的结果只进短 TTL 内存缓存。账户级订阅目录还会在 profile 状态目录保存一份原子写入的 last-known-good 缓存。联网失败时可以把上次成功结果标为 stale 后展示，但不会把它当成一次成功的权威刷新。返回空列表或供应商尚未配置凭据时，保留已有模型选择；只有当前官方接口返回非空目录时才移除目录中不再存在的订阅模型。</p>
 <h3 id="42-启用复制规格进-config">4.2 启用（复制规格进 config）<a class="header-anchor" href="#42-启用复制规格进-config">#</a></h3>
 <p>用户在浏览列表里勾选一个模型：</p>
 <pre><code>enable_model(provider_id, row)
@@ -560,10 +561,11 @@ Thinking effort 的参数细节见 <a href="/docs/reference/design/providers/mod
   → ENABLED_MODELS 重载
 </code></pre>
 <ul>
-<li><strong>取消启用</strong> = 从 config 删除该行。</li>
+<li><strong>取消启用</strong> = 从 config 删除该行；订阅 provider 还记录 id tombstone，自动刷新不会把它重新启用。</li>
 <li><strong>Refresh</strong> = 对已启用模型重新执行浏览 + 覆写规格（治「规格随时间变旧」，且只刷新用户在用的）。</li>
 <li><strong>手工添加模型</strong>（provider 没列出的）= 用户在同一张表单里手填一行——和「启用」写的是同一个列表，原 <code>custom_models</code> 概念消失。</li>
-<li><strong>订阅 provider 的动态注册</strong>（如 claude-code 登录后自动出现 3 个模型）= 程序代替用户执行一次 enable，写的还是同一个列表。</li>
+<li><strong>订阅目录自动同步</strong> = 登录后、worker 启动时目录过期、每六小时后台周期以及手动 Refresh 都读取账户官方模型表。新 id 自动启用，能力变化自动更新，官方删除的 id 退出，用户明确关闭的 id 保持关闭。以后 Codex 或 Grok 增加模型无需再改源码名单。
+只有持久化的启用行确实发生变化时，worker 才广播 <code>provider_models_changed</code> 失效通知。已连接的网页和桌面客户端收到后重新读取 provider 与启用模型接口；客户端重连时也会使相同查询失效，以补偿离线期间漏掉的通知。</li>
 </ul>
 <h2 id="5-后端怎么用">5. 后端怎么用<a class="header-anchor" href="#5-后端怎么用">#</a></h2>
 <pre><code class="language-python"><span class="c1"># openprogram/providers/enabled_models.py</span>
@@ -626,7 +628,7 @@ Thinking effort 的参数细节见 <a href="/docs/reference/design/providers/mod
 <li><strong>验证粒度</strong>：多 wire provider 按每个 <code>(api, base_url, headers, compat)</code> 组合各 exec 一个模型。</li>
 <li><code>tests/unit/providers/test_provider_wire_invariants.py</code> 与 <code>tests/unit/providers/test_model_fetch_routing.py</code> 保持绿色。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/models/fast-tier.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fast tier — detection, storage, and wires</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking / Effort Subsystem Design</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/models/fast-tier.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Fast tier — detection, storage, and wires</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/thinking-effort.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Thinking / Effort Subsystem Design</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-一句话架构">1. 一句话架构</a>

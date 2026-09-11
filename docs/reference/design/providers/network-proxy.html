@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789023435">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -389,6 +389,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Testing</div>
+<a class="navlink" href="/docs/reference/design/testing/windows-ci.html">Windows CI completion</a>
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
@@ -418,7 +419,7 @@ evaluated together. Product-facing documentation lives in
 </tr>
 <tr>
 <td>SDK / ad-hoc raw httpx</td>
-<td>OpenAI-compat chat (openai SDK inside <code>openai_completions</code> / <code>openai_responses</code>), OAuth flows, token refresh, model listing, &quot;test provider&quot; button</td>
+<td>OpenAI-compat chat (openai SDK inside <code>openai_completions</code> / <code>openai_responses</code>), OAuth flows, token refresh, &quot;test provider&quot; button</td>
 <td>Full httpx env semantics: lowercase beats uppercase, <code>ALL_PROXY</code> honoured, <code>NO_PROXY</code> honoured.</td>
 </tr>
 <tr>
@@ -495,11 +496,14 @@ before dispatch.</li>
 <code>openprogram/security/safe_http.py</code> with an injected-transport disposition.
 Their shared-client lifecycle remains explicit; it is not implemented by
 passing <code>mounts=</code> from <code>http_proxy.py</code>.</li>
-<li>One-shot raw httpx clients (OAuth flows, token refresh, marketplace,
-model listing) are plain <code>httpx.AsyncClient()</code>s on purpose:
+<li>One-shot raw httpx clients (OAuth flows, token refresh, marketplace) are
+plain <code>httpx.AsyncClient()</code>s on purpose:
 their env semantics are already identical by construction, and they
 don't need streaming hardening. <code>OPENPROGRAM_PROXY_URL</code> does not apply
 to them, which is an accepted limit rather than an oversight.</li>
+<li>Subscription model listing uses <code>safe_client(&quot;provider.fixed_api&quot;)</code>. It
+therefore follows <code>OutboundSecurityConfig.policy_proxy</code> and deliberately
+ignores ambient environment and OS proxy settings.</li>
 <li>A plain httpx caller that opts into SOCKS environment handling must provide
 the corresponding <code>httpx[socks]</code> dependency; managed clients do not infer
 that dependency from an ambient <code>ALL_PROXY</code>.</li>
@@ -540,7 +544,7 @@ contract.</li>
 resolution rules and the fact that unmanaged environment proxies do not
 activate a managed provider client.</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/record-replay.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Provider 请求录制与严格离线回放 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/record-replay.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Recording and replaying provider calls</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/record-replay.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Provider 请求录制与严格离线回放 (viz)</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/record-replay.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Recording and replaying provider calls</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-why-one-resolver">1. Why one resolver</a>
