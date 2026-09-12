@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789222910">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -325,6 +325,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
+<a class="navlink" href="/docs/reference/design/runtime/report-suite.html">Report Workflow 使用样例与实现规划</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
@@ -589,11 +590,12 @@ copied frontend are absent after installation.</li>
 <li>Release acceptance used CI package/runtime smoke and read-only release metadata checks. It did not install, replace, activate, or restart the user's current <code>/Applications/OpenProgram.app</code>, so foreground updater UI, long-running scheduling, and sleep/resume behavior remain explicitly unverified.</li>
 <li>The browser release scope includes the built-in Browser, profile import, bookmarks/history, and Agent-bound WebTab control. Chrome/Edge extension installation is intentionally excluded and documented in the authoritative built-in browser design and product FAQ.</li>
 </ul>
-<h3 id="current-v081-release-acceptance">Current v0.8.1 release acceptance<a class="header-anchor" href="#current-v081-release-acceptance">#</a></h3>
+<h3 id="current-v082-release-acceptance">Current v0.8.2 release acceptance<a class="header-anchor" href="#current-v082-release-acceptance">#</a></h3>
 <ul>
-<li>Tag <code>v0.8.1</code> resolves to <code>3288758691a568b2975efb0abb60c28145907fbc</code>; release run <code>32684756787</code> completed successfully.</li>
-<li>The stable <a href="https://github.com/Fzkuji/OpenProgram/releases/tag/v0.8.1">OpenProgram 0.8.1 Release</a> is non-draft and non-prerelease, GitHub <code>latest</code> resolves to <code>v0.8.1</code>, and the release contains 17 uploaded assets.</li>
-<li>The v0.8.1 product manifest defines the current 11-capability boundary, and GUI installs with <code>--no-deps</code>. The immutable v0.8.1 verifier rejects PyTorch, torchvision, sentence-transformers, triton, and NVIDIA/CUDA distributions while verifying Playwright Chromium, the GPA detector, Research PDF support, and all three first-party Program registrations; it does not explicitly reject OpenCV or EasyOCR. The current-source verifier adds those explicit exclusions and distribution-name normalization.</li>
+<li>The release candidate integrates conversation-bound browser previews, bounded history paging and stack-safe long-session graph layout.</li>
+<li>Source, lockfile, Desktop and installer versions agree. Independent specification and quality reviews, the full combined verification, packaged-runtime smoke, and default-App long-history replay pass.</li>
+<li>Publication requires successful native runtime, Desktop and CLI installer jobs, followed by release manifest and asset verification.</li>
+<li>Runtime capability verification and checksum requirements remain unchanged. Windows Desktop publication requires configured signing credentials.</li>
 </ul>
 <h2 id="short-public-installer-batch">Short public installer batch<a class="header-anchor" href="#short-public-installer-batch">#</a></h2>
 <ul>
@@ -834,7 +836,7 @@ git status --short
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/distribution/automatic-updates.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 正式版本自动更新</span></a><a class="pn-link pn-next" href="/docs/reference/design/distribution/windows-support.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Windows support</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/distribution/automatic-updates.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram 正式版本自动更新</span></a><a class="pn-link pn-next" href="/docs/reference/design/distribution/windows-support.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Windows support</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#remove-python-package-product-installation">Remove Python-package product installation</a>
@@ -844,7 +846,7 @@ git status --short
 <a class="lvl-3" href="#native-release-result-and-v062-correction">Native release result and v0.6.2 correction</a>
 <a class="lvl-3" href="#v066-formal-release-acceptance">v0.6.6 formal release acceptance</a>
 <a class="lvl-3" href="#v070-browser-focused-release-acceptance">v0.7.0 browser-focused release acceptance</a>
-<a class="lvl-3" href="#current-v081-release-acceptance">Current v0.8.1 release acceptance</a>
+<a class="lvl-3" href="#current-v082-release-acceptance">Current v0.8.2 release acceptance</a>
 <a class="" href="#short-public-installer-batch">Short public installer batch</a>
 <a class="" href="#unified-complete-product-batch">Unified complete-product batch</a>
 <a class="lvl-3" href="#current-batch-files">Current-batch files</a>

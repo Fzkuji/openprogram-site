@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789095773" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789222910" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-worktree.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -327,6 +327,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html">OpenProgram · Programs</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html">OpenProgram 对话内自主更新</a>
+<a class="navlink" href="/docs/reference/design/runtime/report-suite.html">Report Workflow 使用样例与实现规划</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
@@ -1126,7 +1127,7 @@ restarts (after restart, list_worktrees probes, and ones still active are marked
 </table>
 <p>The design is neither entirely absent nor fully accepted. The implemented manager, persistence, tools, context bridge, and WebSocket actions should be maintained as current behavior. The UI chip, full file-tool boundary matrix, automatic cancellation policy, and complete integration tests remain explicit gaps.</p>
 <p>The following design boundaries remain unchanged: remote push, cherry-pick/rebase, conflict-resolution UI, cross-repository worktrees, discard backups, namespace isolation, and automatic cleanup after session close.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-11</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agent-call-flow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agent Call Flow (Authoritative Design)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agentic self-recursion guard (viz)</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agent-call-flow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Agent Call Flow (Authoritative Design)</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Agentic self-recursion guard (viz)</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#part-1-design-dimensions">Part 1. Design Dimensions</a>
