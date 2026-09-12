@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789224966" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -199,12 +199,17 @@ JSON configuration additionally requires JSON's normal backslash escaping.</p>
 <p>A tool result identifies whether the refusal came from authority, a permission rule, Plan mode, Auto classification, or Sandbox. <code>AUTHORITY_TIER_MISSING</code> means the execution request lacks an authenticated authority tier. It is not resolved by Bypass. New authenticated chat submissions carry that identity; old admitted executions missing identity must be resubmitted through an authenticated interface.</p>
 <p>Sandbox is configured separately in the composer Plus menu. Changing Sandbox affects subsequent turns. Bypass keeps the current sandbox restrictions, and an ordinary tool approval never authorizes a sandbox escalation. When a sandbox denial cannot open a separate escalation wait, change the relevant settings explicitly and submit a new call.</p>
 <p>See <a href="/docs/capabilities/tools.html">tools</a>, <a href="/docs/interfaces/web.html">Web</a>, <a href="/docs/interfaces/tui.html">terminal</a>, and the <a href="/docs/reference/design/runtime/permission-model.html">engineering contract</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Commit, push, PR</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
+<h2 id="macos-asks-for-access-again-after-an-update">macOS asks for access again after an update<a class="header-anchor" href="#macos-asks-for-access-again-after-an-update">#</a></h2>
+<p>File-folder access, Photos, screen recording, and Accessibility are macOS permissions. Bypass controls tool approval and cannot grant these permissions. A system prompt names OpenProgram because macOS attributes the managed backend to the containing application.</p>
+<p>Local App refresh, local package installation, and conversational self-update reuse a private signing identity stored under <code>~/Library/Application Support/OpenProgram/local-signing</code>. This keeps subsequent local builds under the same certificate identity instead of changing it with every build. Keep this directory when cleaning build artifacts; it contains the local signing keychain. Missing or damaged signing state stops the build rather than silently creating a replacement identity.</p>
+<p>The first migration from an older ad hoc build may require consent again in macOS. It does not automatically reset existing grants or accept system dialogs. Local signing is for this computer's development builds; publicly distributed apps still need Developer ID signing and notarization.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Commit, push, PR</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Self-Programming AI Agents</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#change-permissions-during-a-task">Change permissions during a task</a>
 <a class="" href="#manage-project-rules-in-history">Manage project rules in History</a>
 <a class="" href="#understand-a-refusal">Understand a refusal</a>
+<a class="" href="#macos-asks-for-access-again-after-an-update">macOS asks for access again after an update</a>
 </div></aside>
 </div>
 

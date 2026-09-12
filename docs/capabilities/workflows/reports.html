@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789224966" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -191,7 +191,13 @@ can detect unsupported claims but are not a guarantee of factual correctness.</p
 <p>For a group request, provide <code>source</code> (<code>wechat</code> or explicitly <code>supplied</code>), <code>group</code>,
 <code>week</code>, and the ordered <code>members</code> array. Supplied material additionally identifies
 its <code>member</code>. WeChat collection requires an accessible, verified group interface;
-if search or message metadata is unavailable, the Workflow returns a waiting state.
+versions without accessible message rows can use bounded window OCR. Captured
+pages and their original OCR rows are saved as local source evidence. Unknown
+authors, uncertain dates, clipped messages, and low-confidence boundaries remain
+unverified. If native search focus cannot be proved, open the requested group
+and resume; the Workflow still performs collection and summarization. A window
+that does not permit capture returns <code>WINDOW_CAPTURE_UNAVAILABLE</code>. No screen or
+WeChat settings are changed.
 The coordinator requests noninteractive waiting, allowing other reports to finish.</p>
 <p>Natural language can select a report type. Clearly identified single-audience
 requests use code routing; mixed supplied content uses bounded model extraction
@@ -219,7 +225,7 @@ payloads contain private report content and should remain local.</p>
 Its intended reporting window is Friday afternoon in <code>Asia/Shanghai</code>. It does not
 create a recurring schedule or send to the leader. An exact execution time and
 material source must be configured separately before enabling a scheduled run.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-12</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#prepare-several-reports">Prepare several reports</a>
