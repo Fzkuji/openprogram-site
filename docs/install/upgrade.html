@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/install/upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/install/upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,6 +119,25 @@ published-version upgrades: use <code>openprogram upgrade</code> for a release-i
 CLI, or the Desktop release updater. Existing update status and cancellation
 remain available; a worker service alone does not provide the source-update
 controller's build, activation, verification and recovery workflow.</p>
+<p>During an approved update, ordinary queued Jobs retain their identities and
+wait for maintenance to end. Running executions that support durable pause
+stop at their next checkpoint. The update waits for active attempts and
+resource claims to finish before replacing the App. After a verified commit or
+rollback, the worker resumes only executions paused by that update. Tasks
+already paused by the user or waiting for input stay paused. A task without a
+safe pause must finish before the update deadline; otherwise activation is
+aborted. Existing checkpoint validation still rejects changed tool contracts
+instead of replaying an old operation against a different implementation. When
+that validation rejects an update-owned continuation, the worker preserves the
+old checkpoint and creates one fresh planning Job from the original task and
+history, retaining its tool selection and permission rules. Unresolved side
+effects or a user cancellation prevent automatic replanning.</p>
+<p>Newly prepared updates also save an original-session follow-up with a stable
+Job identity. Once maintenance and any automatic repair sequence finish, it
+uses the original conversation and update evidence to continue checking the
+requested behavior. This is a new background turn and does not grant approval
+for another installation. Older update records do not receive retroactive
+follow-ups. Installation success and task continuation are separate outcomes.</p>
 <p>Conversational packaging is offline. Its dependency base must have exactly the
 candidate's <code>uv.lock</code> and <code>scripts/release/product-runtime.json</code>; the controller
 uses the saved runtime's pinned build tools and private copies of existing
@@ -224,8 +243,7 @@ not apply to other windows. It does not revoke already running requests. The
 native adapter marks the main renderer's HTTP requests; the backend rejects
 marked requests, including authentication bootstrap and stale markers. During
 the check, that window's existing WebSocket accepts only observation replies,
-cancellation of the exact verifier Job, and the exact approved test-object
-operations described below, not ordinary application commands.</p>
+cancellation of the exact verifier Job, not ordinary application commands.</p>
 <p>To capture the conversation after an approved scroll, add <code>interaction</code>:</p>
 <pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"scroll-history"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"ui:main"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">"interaction"</span><span class="p">:{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"scroll"</span><span class="p">,</span><span class="nt">"delta_y"</span><span class="p">:</span><span class="mi">-400</span><span class="p">}}</span>
 </code></pre>
@@ -257,32 +275,7 @@ requested perspective visible; the check reports failure, not successful cleanup
 Both candidate and rollback packages require UI protocol 3, which additionally
 binds the compiled perspective support. Protocols 1 and 2 keep their previous
 capture and scroll capabilities; they cannot accept perspective checks.</p>
-<p>To verify the real rename dialog without changing any actual session title,
-approve a temporary test object and both its change and cleanup:</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"rename-control"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"ui:main"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">"interaction"</span><span class="p">:{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"test_object"</span><span class="p">,</span><span class="nt">"object_id"</span><span class="p">:</span><span class="s2">"rename-fixture"</span><span class="p">,</span><span class="nt">"action"</span><span class="p">:</span><span class="s2">"rename"</span><span class="p">,</span><span class="nt">"initial_title"</span><span class="p">:</span><span class="s2">"Before verification"</span><span class="p">,</span><span class="nt">"title"</span><span class="p">:</span><span class="s2">"Approved rename"</span><span class="p">,</span><span class="nt">"cleanup"</span><span class="p">:</span><span class="s2">"restore-and-remove"</span><span class="p">}}</span>
-</code></pre>
-<p><code>object_id</code> is a 1–64 character identifier using letters, digits, <code>_</code> and <code>-</code>,
-starting with a letter or digit. It identifies only this check's isolated object,
-not an existing session or path. The initial and new titles must be different,
-nonempty, trimmed strings of at most 120 characters without control characters.
-The object is scoped to the update, attempt, check and one-use operation nonce.
-It exists only in the active backend check's memory; it is never saved as user data.</p>
-<p>The adapter opens an instance of the actual rename dialog in the original main
-conversation, enters exactly the approved text and presses Save. The backend
-accepts only that exact object/value/operation from the bound socket and live Job.
-After acknowledgement, the adapter captures the image and accessibility tree,
-then presses Cancel to request the approved restoration. A successful result
-requires backend state transitions from initial to renamed to restored, the
-original title restored, and the owned dialog closed. The temporary object is
-removed when the check ends, including cancellation, timeout or worker exit.
-Interruption never permits a successful receipt; cleanup closes only this owned
-test dialog and does not rename a real conversation or restore over user input.</p>
-<p>Both packages require UI protocol 4, binding the native adapter, backend handler,
-fixture bridge and actual compiled rename control. Older protocols gain no new
-permissions. This check proves the bounded dialog operation against its temporary
-backend object; it does not prove persistent renaming of a real session or authorize
-other data changes. Missing objects, wrong input, unavailable controls, stale Jobs,
-failed backend acknowledgement or incomplete cleanup are inconclusive.</p>
+<p>Temporary test-object rename dialogs are not supported. New verification plans and legacy execution requests using <code>test_object</code> are rejected before requesting UI interaction. Existing protocol 4 packages remain readable for rollback compatibility; new packages advertise only supported capture, scroll and perspective capabilities.</p>
 <p>The screenshot supports only assertions about the captured state; interactions
 that were not observed remain inconclusive. HTTP responses, including <code>/chat</code>
 HTML, do not prove rendered App behavior. Other side-effect operations are not
@@ -361,21 +354,7 @@ error rather than an empty history. Running reports <code>self_update_error</cod
 update snapshot is unavailable. The projection excludes credentials, raw logs
 and configuration; repair summaries include status and the new candidate SHA
 when present. It does not replace the separate CLI recovery inspection output.</p>
-<p>The conversation shows persisted self-update history grouped by update sequence
-and attempt; <strong>Load older updates</strong> reads another page. Running uses the same
-status card. Its compact summary shows the attempt and current phase; expand it for versions, evidence and actions. Expanded fields use aligned label–value rows; full identifiers, changed files and verification timestamps are grouped under Details and evidence. The view reuses the execution trace disclosure and message action components without overriding their styles. Target revision and last verified runtime are separate: an unknown
-runtime stays <strong>Unknown</strong>, and a prior verification is not a live connection check.
-Expand <strong>Details and evidence</strong> to inspect assertions and load authenticated
-evidence as plain text. When status cannot be read, the view retains its last
-snapshot with an explicit stale warning and last-sync time, then retries.</p>
-<p>The message action buttons open the same parameter editor as <strong>Edit and re-run</strong>.
-<strong>Edit retry request</strong> accepts a complete new candidate commit SHA. Cancellation
-and stop-iteration actions use that editor too. <strong>Prepare request</strong> only appends
-the request to the original conversation's unsent draft and preserves existing text.
-Send the draft in that conversation to request the tool operation. These buttons
-do not install, cancel or approve anything themselves, and normal tool authority
-and mandatory approvals still apply. The card changes only after the controller
-reports the new state.</p>
+<p>Conversations display ordinary messages and tool results. They do not mount update history, update controls, evidence viewers or recovery notices, and do not poll update-history APIs. Explicit status tools and the authenticated APIs remain available.</p>
 <p><code>candidate_ready</code> means the new commit and all configured tests passed validation;
 <code>awaiting_tests</code> means no required tests were configured. Missing/failed tests or
 source drift produce <code>failed</code>; cancellation and expiry produce <code>cancelled</code> and
@@ -417,8 +396,8 @@ remain the source of that conclusion.</p>
 request. It resolves only the original session through owner authentication and
 acknowledges it after the transcript loads in the main window. An expired request,
 a deleted session or an authentication failure leaves normal startup available
-and shows a recovery reason. Changing pages stops automatic relocation; the
-dismissible notice retains an original-session link when that identity is valid.
+without adding a recovery notice. Changing pages stops automatic relocation;
+recovery reasons remain internal status.
 Neither recovery nor its loading confirmation starts another verification Job or
 proves the update succeeded. The controller now persists the recovery intent before
 activation and binds the opaque update ID to the installer transaction. If the App

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/capabilities/installing-harnesses.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Harness · OpenProgram Docs</title>
-<meta name="description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Program package 与受支持的 runtime 资产。GUI package 不包含">
+<meta name="description" content="程序包显示在 能力 → Programs → Packages 。Tools 和 Workflows 是可调用能力，软件 Applications 由独立页面管理。新克隆使用 programs/packages/ ；已经登记在 programs/applications/">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
 <meta property="og:title" content="Harness · OpenProgram Docs">
-<meta property="og:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Program package 与受支持的 runtime 资产。GUI package 不包含">
+<meta property="og:description" content="程序包显示在 能力 → Programs → Packages 。Tools 和 Workflows 是可调用能力，软件 Applications 由独立页面管理。新克隆使用 programs/packages/ ；已经登记在 programs/applications/">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harness · OpenProgram Docs">
-<meta name="twitter:description" content="harness （一个 agentic program ）是一个自包含的、由 agentic function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki 三项第一方 Program package 与受支持的 runtime 资产。GUI package 不包含">
+<meta name="twitter:description" content="程序包显示在 能力 → Programs → Packages 。Tools 和 Workflows 是可调用能力，软件 Applications 由独立页面管理。新克隆使用 programs/packages/ ；已经登记在 programs/applications/">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -133,6 +138,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harness">Harness<a class="header-anchor" href="#harness">#</a></h1>
+<p>程序包显示在 <strong>能力 → Programs → Packages</strong>。Tools 和 Workflows 是可调用能力，软件 Applications 由独立页面管理。新克隆使用 <code>programs/packages/</code>；已经登记在 <code>programs/applications/</code> 的源码保留原位置和调用名，升级、卸载使用登记位置。分类改名不会重新下载或移动源码。</p>
 <p><strong>harness</strong>（一个 <em>agentic program</em>）是一个自包含的、由 agentic
 function 组成的 git 仓库。每个受支持的 release 已经包含 GUI、Research、Wiki
 三项第一方 Program package 与受支持的 runtime 资产。GUI package 不包含
@@ -165,7 +171,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>对于第三方 Program 或开发者 source overlay，该命令执行四个步骤：</p>
 <ol>
 <li><strong>浅克隆（shallow-clone）</strong> 仓库到
-<code>openprogram/programs/applications/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
+<code>openprogram/programs/packages/&lt;Repo-Name&gt;/</code>——一个真实、可编辑的
 目录（不是 site-packages）。该克隆被 OpenProgram 加入 git-ignore，
 因此它始终是一份独立的检出（checkout），你可以 <code>git pull</code>
 或就地编辑。</li>
@@ -225,19 +231,20 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 及其契约状态；<code>openprogram programs uninstall &lt;Harness-Name&gt;</code> 按克隆目录名移除其中一个。</p>
 <details>
 <summary>手动等价方式（镜像 / 无法访问 GitHub）</summary>
-<p><code>&lt;APPLICATIONS&gt;</code> 是 OpenProgram 登记的外部 Program 文件夹：</p>
-<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),'programs','applications'))"</span>
+<p><code>&lt;PACKAGES&gt;</code> 是新程序包的安装目录。请使用管理可修改 CLI 的 Python 环境运行：</p>
+<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from openprogram.programs._programs import packages_dir; print(packages_dir())"</span>
 </code></pre>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span>/path/to/Harness-Name
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/Harness-Name
 <span class="c1"># 重启 OpenProgram</span>
 </code></pre>
-<p>自动发现会拾取 <code>&lt;APPLICATIONS&gt;</code> 中任何已登记且满足契约的目录——这就是安装命令
+<p>自动发现会拾取 <code>&lt;PACKAGES&gt;</code> 中任何已登记且满足契约的目录——这就是安装命令
 所自动化的全部内容。</p>
 </details>
 <h2 id="开发者配置开发你正在编写的-harness">开发者配置（开发你正在编写的 harness）<a class="header-anchor" href="#开发者配置开发你正在编写的-harness">#</a></h2>
 <p>把你的工作检出做成 symlink，而不是克隆一份副本：</p>
-<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">"&lt;APPLICATIONS&gt;/Harness-Checkout"</span>
+<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">"&lt;PACKAGES&gt;/Harness-Checkout"</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/your/Harness-Checkout
 </code></pre>
 <p>编辑会在下次重启时生效；<code>programs install</code> 会拒绝覆盖该链接，
 而 <code>programs uninstall &lt;name&gt;</code> 只会移除该链接。（Windows 注意：
@@ -259,7 +266,7 @@ Windows Desktop 同时支持两种架构；Windows 沙箱命令执行使用可�
 <li><strong>这些 Program 命令需要可变环境。</strong> source-development checkout 可以使用；
 CLI release 仅在对应 release notes 明确支持 Program mutation 时使用。
 packaged desktop 在 Program 拥有隔离的外部环境前会拒绝这些修改命令。</li>
-<li><strong>受支持的可变环境无需 symlink</strong>——安装器默认会把真实 checkout 登记到 <code>&lt;APPLICATIONS&gt;</code>。</li>
+<li><strong>受支持的可变环境无需 symlink</strong>——安装器默认会把真实 checkout 登记到 <code>&lt;PACKAGES&gt;</code>。</li>
 <li><strong>harness 在自身代码中仍可以是平台相关的</strong>（例如，桌面 GUI
 harness 可能只实现 macOS / Linux 后端）。
 在受支持主机上能否安装、每个函数能否运行，取决于 harness 声明的依赖和

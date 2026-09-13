@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Harnesses · OpenProgram Docs</title>
-<meta name="description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
+<meta name="description" content="Program packages appear under Abilities → Programs → Packages . Tools and Workflows are their callable capabilities; software Applications have a separate">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/installing-harnesses.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/installing-harnesses.html">
 <meta property="og:title" content="Harnesses · OpenProgram Docs">
-<meta property="og:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
+<meta property="og:description" content="Program packages appear under Abilities → Programs → Packages . Tools and Workflows are their callable capabilities; software Applications have a separate">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Harnesses · OpenProgram Docs">
-<meta name="twitter:description" content="A harness (an agentic program ) is a self-contained git repo of agentic functions. Every supported release already contains the GUI, Research, and Wiki">
+<meta name="twitter:description" content="Program packages appear under Abilities → Programs → Packages . Tools and Workflows are their callable capabilities; software Applications have a separate">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -133,6 +138,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展">Extending</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Harness">Harnesses</span></nav><h1 id="harnesses">Harnesses<a class="header-anchor" href="#harnesses">#</a></h1>
+<p>Program packages appear under <strong>Abilities → Programs → Packages</strong>. Tools and Workflows are their callable capabilities; software Applications have a separate management page. New clones use <code>programs/packages/</code>. Previously registered <code>programs/applications/</code> checkouts retain their locations and call names; upgrading or removing them uses their recorded locations. No source is downloaded or moved just to rename its category.</p>
 <p>A <strong>harness</strong> (an <em>agentic program</em>) is a self-contained git repo of
 agentic functions. Every supported release already contains the GUI, Research,
 and Wiki first-party Program packages and their supported runtime assets.
@@ -167,7 +173,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 <p>For a third-party Program or developer source overlay, the command performs four steps:</p>
 <ol>
 <li><strong>Shallow-clone</strong> the repo into
-<code>openprogram/programs/applications/&lt;Repo-Name&gt;/</code> — a real, editable
+<code>openprogram/programs/packages/&lt;Repo-Name&gt;/</code> — a real, editable
 directory (not site-packages). The clone is git-ignored by
 OpenProgram, so it stays an independent checkout you can <code>git pull</code>
 or edit in place.</li>
@@ -229,19 +235,20 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>install<span 
 with their contract status; <code>openprogram programs uninstall &lt;Harness-Name&gt;</code> removes one by its clone-dir name.</p>
 <details>
 <summary>Manual equivalent (mirror / no GitHub access)</summary>
-<p><code>&lt;APPLICATIONS&gt;</code> is OpenProgram's owner-recorded external Program folder:</p>
-<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import openprogram,os;print(os.path.join(os.path.dirname(openprogram.__file__),'programs','applications'))"</span>
+<p><code>&lt;PACKAGES&gt;</code> is the destination for newly installed Program packages. Run this with the Python environment that owns the mutable CLI:</p>
+<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from openprogram.programs._programs import packages_dir; print(packages_dir())"</span>
 </code></pre>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span>/path/to/Harness-Name
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/Harness-Name
 <span class="c1"># restart OpenProgram</span>
 </code></pre>
-<p>Auto-discovery picks up any recorded directory in <code>&lt;APPLICATIONS&gt;</code> that satisfies the
+<p>Auto-discovery picks up any recorded directory in <code>&lt;PACKAGES&gt;</code> that satisfies the
 contract — that's all the install command automates.</p>
 </details>
 <h2 id="developer-setup-work-on-a-harness-youre-writing">Developer setup (work on a harness you're writing)<a class="header-anchor" href="#developer-setup-work-on-a-harness-youre-writing">#</a></h2>
 <p>Symlink your working checkout instead of cloning a copy:</p>
-<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">"&lt;APPLICATIONS&gt;/Harness-Checkout"</span>
+<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">"&lt;PACKAGES&gt;/Harness-Checkout"</span>
+openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/your/Harness-Checkout
 </code></pre>
 <p>Edits take effect on the next restart; <code>programs install</code> will refuse to
 overwrite the link, and <code>programs uninstall &lt;name&gt;</code> removes only the
@@ -268,7 +275,7 @@ release notes explicitly support Program mutation. Packaged desktop builds
 refuse the mutation commands until Programs have isolated external
 environments.</li>
 <li><strong>No symlinks are required</strong> in a supported mutable environment: the
-installer records a real checkout under <code>&lt;APPLICATIONS&gt;</code> by default.</li>
+installer records a real checkout under <code>&lt;PACKAGES&gt;</code> by default.</li>
 <li><strong>A harness can still be platform-specific in its own code</strong> (e.g. a
 desktop-GUI harness may only implement macOS / Linux backends).
 Whether installation and every function run on a supported host depends on

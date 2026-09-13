@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web UI · OpenProgram Docs</title>
-<meta name="description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。">
+<meta name="description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。 在 Files">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/web.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/web.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/web.zh.html">
 <meta property="og:title" content="Web UI · OpenProgram Docs">
-<meta property="og:description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。">
+<meta property="og:description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。 在 Files">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Web UI · OpenProgram Docs">
-<meta name="twitter:description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。">
+<meta name="twitter:description" content="选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。 在 Files">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -80,6 +80,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Web UI</span></nav><h1 id="web-ui">Web UI<a class="header-anchor" href="#web-ui">#</a></h1>
 <p>选择会话会复用当前会话标签，即使其他标签已显示目标会话。当前为网页时会新建会话标签。标签栏最左侧的后退、前进按钮使用每个会话标签独立的历史；后退后选择其他会话会替换前进历史。历史在重新加载后保留，返回草稿时恢复输入，已删除会话会从历史中移除。网页导航仍使用网页控件。</p>
+<p>在 Files 或文件标签页中，后退和前进会依次返回当前项目中浏览过的文件夹与文件。返回 Files 时恢复文件夹展开状态和滚动位置；后退后打开新位置会替换原有前进记录。当前窗口最多保留 100 个位置，与文档版本 History 分开。目录列表快照失效时，重新读取已加载范围期间保留已有文件行。</p>
 <p>项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git 仓库外的新绝对路径；未提交改动保留在原目录。移除项目保留文件、聊天及项目归属，可在项目页面恢复或重新打开文件夹。默认主目录项目不可移除。已归档聊天可通过“已归档”筛选查看；隐藏项目的聊天仍保留在日期或平铺历史中。</p>
 <p>右键项目或点击省略号，可以打开项目设置、新建聊天、置顶、编辑或移动到自定义分区。项目编辑窗口支持修改显示名称、文字图标或表情、说明和额外源文件夹。源文件夹用于尚未单独设置目录的会话；移除文件夹不会删除文件。主目录移动仍在项目设置中操作。分区菜单可重命名或移除分区；移除分区会保留其项目。</p>
 <p>项目排序与聊天排序相互独立。在侧边栏筛选菜单中，可以将项目按最近活动、最早活动、名称或手动顺序排列。新消息会自动更新项目活动时间。点击项目的置顶按钮，可以让该项目保持在未置顶项目上方。聊天可按旧到新、新到旧排列，标题也支持 A–Z 和 Z–A。拖动项目会切换为手动排序。这些显示偏好保存在本地。</p>
@@ -91,10 +92,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </code></pre>
 <p>浏览器打开 <code>http://localhost:18100</code>。页面是由本地 FastAPI worker 直接提供的静态导出——<code>/api</code>、<code>/ws</code> 和 UI 都在同一个端口（默认 18100）。数据全部来自 worker，会话与终端 TUI、CLI 单发共用，见<a href="/docs/interfaces/README.html">界面总览</a>。改端口用 <code>openprogram ports --port</code>。</p>
 <p><img src="../images/chat_hero.png" alt="聊天页" /></p>
+<h3 id="文件操作">文件操作<a class="header-anchor" href="#文件操作">#</a></h3>
+<p>复制和剪切会记录来源项目，只能在来源项目内粘贴。切回来源项目后可继续粘贴。刷新文件列表会重新执行当前文件搜索。</p>
+<p>删除文件或文件夹会将其移入 OpenProgram 的可恢复存储。运行 <code>openprogram trash list</code> 查找记录，再运行 <code>openprogram trash restore &lt;entry_id&gt;</code> 恢复。恢复操作不会覆盖已存在的路径。删除或重命名符号链接只操作链接本身，不操作它指向的目标。</p>
+<p>文本文件存在未保存修改时，删除前会询问保存、导出或丢弃。导出会启动浏览器下载，并继续保留本地草稿，因为浏览器不会确认下载完成。恢复文件后重新打开，可恢复保留的草稿。</p>
 <h2 id="聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）<a class="header-anchor" href="#聊天页chats">#</a></h2>
 <p><code>/chat</code> 是聊天主界面；<code>/s/&lt;session-id&gt;</code> 是单个会话的直达链接，切换会话不重新加载页面，WebSocket 连接保持不断。</p>
 <h3 id="消息流式">消息流式<a class="header-anchor" href="#消息流式">#</a></h3>
-<p>回复通过 WebSocket 流式到达：发送后立即出现占位回复，text、thinking、工具调用等块按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
+<p>消息写入连接后，文字立即显示在对话中，本次提交的输入框文字随即清空。服务端确认接收前，消息保留待确认状态；确认后更新同一条消息。随后显示回复占位，text、thinking、工具调用等块通过 WebSocket 按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
 <h3 id="运行期间发送消息">运行期间发送消息<a class="header-anchor" href="#运行期间发送消息">#</a></h3>
 <p><strong>Queue</strong> 按顺序保存消息，前一轮完成后再开始下一轮。<strong>Steer</strong> 和队列消息的“追加到当前轮”在正在运行的 Agent 到达下一个安全点时补充指令，不取消正在执行的工具，也不修改其模型、工具或权限设置。停止执行仍是输入框中的独立操作。</p>
 <p>无法追加到当前轮时，消息保留在队列。如果无法确认投递结果，消息行继续显示，重试使用同一条命令以避免重复投递，不会自动作为新一轮再次发送。补充指令最多支持 4,096 个字符，更长的消息保留排队。未发送队列存放在当前窗口内存中，重新加载页面会丢失。附件保留在输入框中，不进入文字队列。</p>
@@ -183,9 +188,12 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>Files 顶部依次为路径行、操作行和按需展开的搜索行。点击路径分段可以在项目树中定位对应目录。操作行提供搜索、新建文件、新建文件夹、刷新、排序与显示、查看详细信息。每个目录可以按名称、修改时间、大小或类型排列，选择升降序、文件夹优先，以及是否显示隐藏项和 Git 忽略项。设置按项目保存在本地，侧边栏和中央 Files 共用。搜索仍按相关度排列。</p>
 <p>工具栏和文件右键菜单均可打开详细信息，查看路径、文件字节数、时间和只读权限。可见文件夹通过有限队列统计大小。目录行显示完整统计或缓存估值，<code>≥</code> 表示部分结果；详情提供统计时间、跳过条目数以及继续、取消、重新计算。统计累计文件逻辑字节数，包含隐藏文件，跳过符号链接、受限目录和不可读条目。结果是在一段时间内取得的样本，不是原子快照或磁盘分配量，缓存可能过期。近期完整统计参与大小排序；计算完成后刷新可以重新排列，未知大小和部分统计排在同组末尾。</p>
 <p>路径使用较大字号，最右侧按钮复制完整绝对路径。刷新保留选中路径、展开目录和已加载分页范围。普通文件行显示可读大小（包括空文件），悬停大小可查看准确字节数。</p>
+<p>侧边栏只显示有未归档对话的项目。空项目仍可在项目选择器和项目管理界面找到。</p>
+<p>对话历史存放在 OpenProgram 状态目录中，按稳定的项目 ID 分组，不写进工作文件夹。文件夹被重命名或磁盘重新挂上时，若平台能核对原生目录身份，就会更新位置。复制品、以及占用原路径的另一个文件夹，都不会自动继承原来的对话。工作文件夹缺失时仍可阅读历史，并保留“定位文件夹”；该项目的新任务要等到目录再次有效才会启动。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop App and built-in browser</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Terminal TUI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="lvl-3" href="#文件操作">文件操作</a>
 <a class="" href="#聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）</a>
 <a class="lvl-3" href="#消息流式">消息流式</a>
 <a class="lvl-3" href="#运行期间发送消息">运行期间发送消息</a>

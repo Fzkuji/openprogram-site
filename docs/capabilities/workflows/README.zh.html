@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/capabilities/workflows/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -183,6 +188,13 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <p>任何满足目录契约（<code>&lt;package&gt;/agentics/__init__.py</code> 暴露 <code>AGENTIC_FUNCTIONS</code>）的仓库都能被同一条 <code>programs install</code> 命令安装。契约、最小模板和发布流程见<a href="/docs/capabilities/installing-harnesses.html">安装与编写 Harness</a>。</p>
 <p>Harness 契约与单个 Workflow 包不同。包合同、完整测试示例、相对路径以及 <code>workflows validate/test/publish</code> 命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写、测试和发布 Workflow</a>。生成式 <code>create_workflow</code> 和 <code>revise_workflow</code> 也使用同一强制行为测试要求。</p>
 <p>Workflow 表单只询问任务信息，不要求配置执行设置。文本润色在同一次模型请求中根据文本判断风格，不强制用户选择。浏览器 backend 和会话标识保留为内部参数。文档页码和输出位置属于可选的任务要求。显式 Python 调用仍支持受支持的覆盖值。</p>
+<h2 id="周报">周报<a class="header-anchor" href="#周报">#</a></h2>
+<p>如果 Workflow 目录已安装 <code>weekly_report</code>，可以直接提供周报内容或修改要求。例如：“提交本周周报：……”；“只修改本周周报的下周计划，其他字段不变”；“只查看本周提交记录”；“不要提交，把草稿写到 reports/weekly_report.md”。</p>
+<p>它先读取配置的飞书表单，核对姓名和年份、周次。没有记录时新建提交一次；已有可编辑记录时，从提交历史打开并保存。部分修改保留未指定的字段。明确要求草稿或只读检查时不会提交。检查结果不明确、登录失败或记录无法唯一确认时停止；达到提交次数上限不等于已有记录不能编辑。</p>
+<p>只有观察到新的成功提示并核对保存内容后才报告完成。写入结果不明确时直接说明，不自动重试。浏览器原有授权要求保持不变。流程使用有次数与时间限制的浏览器步骤，不使用 <code>goal()</code> 循环，也不编造进展、指标或论文名称。</p>
+<h3 id="组长周报草稿">组长周报草稿<a class="header-anchor" href="#组长周报草稿">#</a></h3>
+<p><code>group_weekly_report(task)</code> 根据你提供的材料生成本地草稿，不读取或发送微信消息。JSON 输入包含 <code>mode</code>（<code>inspect</code>、<code>summary</code> 或 <code>reminder</code>）、<code>week</code>（<code>YYYY-Www</code>）、<code>group</code>、按顺序排列的 <code>members</code> 和 <code>materials</code>。每条材料包含 <code>id</code>、<code>member</code>、<code>week</code> 和 <code>text</code>；可用 <code>kind: &quot;claim&quot;</code> 区分成员自述与已提供的周报材料。自然语言由模型解析，缺少范围时返回待补充信息。</p>
+<p>结构化输入的核对由代码完成，不调用模型。汇总按成员限制模型上下文，核验来源引用并保留不确定项。本地文件保存到 <code>reports/group-weekly/&lt;week&gt;/&lt;unique-run&gt;/</code>（或 <code>output_dir</code>）。未找到材料不等于未提交。请核对草稿后自行发送。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Write, test, and publish a Workflow</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -190,6 +202,8 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <a class="" href="#管理命令">管理命令</a>
 <a class="" href="#用哪种方式触发">用哪种方式触发</a>
 <a class="" href="#编写你自己的">编写你自己的</a>
+<a class="" href="#周报">周报</a>
+<a class="lvl-3" href="#组长周报草稿">组长周报草稿</a>
 </div></aside>
 </div>
 

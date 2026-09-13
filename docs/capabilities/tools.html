@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/tools.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/capabilities/tools.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -192,6 +197,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<h3 id="document-versions">Document versions<a class="header-anchor" href="#document-versions">#</a></h3>
+<p>For Word, PowerPoint, PDF, images, and other binary files, the model can generate a separate temporary result and publish it with <code>write(file_path=&quot;/absolute/final.docx&quot;, source_path=&quot;/absolute/staged.docx&quot;)</code>. <code>source_path</code> and text <code>content</code> are mutually exclusive. The source must be a regular local file of at most 64 MiB. Existing targets must first be read; binary reads return metadata and establish the same freshness check as text reads.</p>
+<p>Publishing during a conversation records complete before/after bytes in that turn's file history. The record survives reopening the conversation and restarting the application. Undo and reapply use these saved versions and refuse to overwrite conflicting later changes. New files can also be undone. This does not require a Git repository in the project folder.</p>
+<p>A failed later history commit preserves the previously published version. If a write is interrupted before its result is recorded, file history reports that the result is unconfirmed and blocks exact recovery; it does not assume the operation succeeded or that no file changed. Corrupt history blocks further recorded writes instead of replacing the history with an empty record. After a failed initial attempt, reread the current file before retrying. Versions are retained with the turn and follow its existing history retention policy. New local document generators use the same <code>source_path</code> publication interface; they do not need a separate version store.</p>
+<p>Binary versions preserve formatting and embedded media, but the current Review pane does not compare document layout or show Word tracked changes. Ordinary shell commands that overwrite the final file directly are not recorded as exact turn mutations. Previously unrecorded versions cannot be reconstructed from a file card or command output; scripts should write a separate result and use <code>write</code> to publish it.</p>
+<p>Project files open in Preview. For supported UTF-8 text files, choose Edit to change the file; changes save automatically, and Ctrl/Cmd+S can flush immediately. Switching Preview and Edit preserves the editor's undo history. History shows retained before/after versions and can restore a selected version. If a save fails or the disk file changes elsewhere, the draft remains available for retry, export, or explicit discard. Closing a file waits for its pending changes; a failed save keeps the tab open. Chat attachments use the same preview window in read-only mode.</p>
+<p>Manual changes made through the project file editor also retain before/after bytes, independently of conversation history. Each successful write is published immediately. Consecutive changes from the same editor are grouped for at most five minutes; closing a group or detecting an intervening external change starts another version. Restoring a retained version creates a new history entry and checks the current file revision before overwriting it. Project-owned history remains readable while a project's disk is disconnected; writing and restoring require an available project location. It follows the registered project when its location changes. The document API accepts bounded binary content up to 64 MiB; this does not by itself provide an editor for every binary format.</p>
+<p>PDF preview provides page navigation, zoom and text search; searches cover the first 500 pages and state that limit for longer documents. PSD preview shows the saved composite and layer names for 8-bit RGB files, and TIFF preview shows the first page. These decoders accept at most 64 MiB and bound the rendered image size. Common images open in preview by default; audio and video use browser playback controls, with codec support depending on the browser. Damaged or unsupported files retain an original-file download. Previewing a retained history version uses its retained bytes. Decoder assets are local and load only when the corresponding format is opened. These preview modes do not edit PDF, PSD, TIFF, audio or video files.</p>
+<p>Office editing requires the locally installed, verified editor resource pack. If the pack is missing or invalid, the editor remains unavailable; opening a file does not download it. The local Office host is not available through remote application access. Release preparation now builds and verifies the pinned local resource pack, including fonts, licenses and source materials. Installation selects a complete version atomically and preserves the previous version on failure. Source workers and the App use the same prepared resource identity. The file window supports Preview and Edit for DOCX, PPTX, XLSX, ODT, ODP and ODS. Preview is the default. Edit waits for the native editor to become writable; changes then save automatically. Switching Preview, tabs, split layouts or History retains the current editor and its native undo history. Closing waits for pending input and publication; a failed write retains the document for retry. History previews are read-only and restoring a version creates a new retained version. Legacy DOC, PPT and XLS files can be explicitly converted to a new DOCX, PPTX or XLSX path; the original is preserved and an existing destination is rejected. Attachments remain read-only, and the original-file download remains available when the editor cannot load. These windows do not provide semantic Office redlines.</p>
+<p>Static PNG, JPEG and WebP files support Edit with crop, rotation, drawing, shapes and text. Changes save automatically through the document history controller; switching Preview, History, tabs or routes preserves native undo/redo. Failed publication keeps the editable draft available for retry, and closing waits for export. Convert to PNG creates a separate file and rejects an existing destination. Animated PNG/WebP and 16-bit PNG remain read-only. Editing accepts at most 64 MiB, 16 million pixels and 16,384 pixels per side; unsupported or damaged input retains the original download. Image editing exports rendered pixels and does not promise preservation of embedded metadata. Attachments and historical previews remain read-only.</p>
+<p>The same History view combines manual edits and confirmed model file changes for the project-relative file. Model entries read the retained before/after bytes from the original session checkpoint; they do not copy the session into a second archive. Restoring one version changes only this file and creates a new manual history entry after checking the current revision. Archived sessions retain their file history; permanently deleting a session makes its model versions unavailable. Manual history remains independent. Older session history is indexed in bounded batches: Continue loading history advances the next batch, and incomplete or unverifiable history is labeled explicitly. Legacy paths are included only when their project ownership can be established. Moving a project does not change the identity of newly recorded file history; offline versions remain readable, while restoration requires an available project location.</p>
 <h2 id="execution">Execution<a class="header-anchor" href="#execution">#</a></h2>
 <table>
 <thead>
@@ -474,6 +490,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#files-and-code">Files and code</a>
+<a class="lvl-3" href="#document-versions">Document versions</a>
 <a class="" href="#execution">Execution</a>
 <a class="" href="#web">Web</a>
 <a class="" href="#images-and-pdf">Images and PDF</a>

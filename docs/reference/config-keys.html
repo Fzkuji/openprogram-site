@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,6 +98,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
 <a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
 <a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/apps.html">apps</a>
 <a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
 <a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
 <a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
@@ -140,6 +141,31 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="CLI 与配置">CLI and configuration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Config keys</span></nav><!-- GENERATED FILE — do not edit. Rebuilt by scripts/docs_site/generate_reference.py from openprogram/config_schema.py. -->
 <h1 id="config-keys">Config keys<a class="header-anchor" href="#config-keys">#</a></h1>
 <p>Every user-editable setting, from the single schema that the <code>setup</code> CLI, <code>openprogram config</code>, the TUI settings screen, and the web Settings pages all render from. <code>apply</code> says when a change takes effect: <code>live</code> = immediately, <code>next_start</code> = on the next worker/web start.</p>
+<h2 id="execution">Execution<a class="header-anchor" href="#execution">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Apply</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>execution.code_change_policy</code></td>
+<td><code>keep_original</code></td>
+<td>live</td>
+<td>Durable functions keep their original code by default. use_latest resumes with current code and saved step results. Incompatible progress requires explicit recovery. An individual Continue command can override this choice.</td>
+</tr>
+<tr>
+<td><code>execution.auto_resume_window_seconds</code></td>
+<td><code>7200</code></td>
+<td>live</td>
+<td>Automatically continue restart-owned checkpoints within this interval after interruption. Default: two hours. Zero disables automatic restart. Existing deadlines never extend; user pauses, cancellation and unconfirmed external operations require explicit recovery.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="ports">Ports<a class="header-anchor" href="#ports">#</a></h2>
 <table>
 <thead>
@@ -570,6 +596,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/output-styles.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Output styles</span></a><a class="pn-link pn-next" href="/docs/reference/provider-registry.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Provider registry</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#execution">Execution</a>
 <a class="" href="#ports">Ports</a>
 <a class="" href="#mcp-server">MCP server</a>
 <a class="" href="#security">Security</a>

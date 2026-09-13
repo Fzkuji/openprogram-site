@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -166,6 +171,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
+<h2 id="根据已有记录整理腾讯汇报">根据已有记录整理腾讯汇报<a class="header-anchor" href="#根据已有记录整理腾讯汇报">#</a></h2>
+<p>在 Abilities 中选择 <code>tencent_weekly_report</code>，输入“整理本周腾讯周报”。Workflow 按
+Asia/Shanghai 确定当前 ISO 周次，先复用当前工作目录 <code>reports</code> 下的本周腾讯原始材料，
+再考虑其他周报和有明确日期的 OpenProgram memory。显式材料优先；其他周次、只有年月
+的模糊日期、未受信任记忆和明确的测试记录不作为本周成果。其他受众的材料需选择原文
+片段并核验引用，不会直接当作腾讯工作。检索有数量和大小限制，来源不可访问或信息不足
+时仍需明确处理。可用 <code>report_roots</code> 指定最多五个来源目录。</p>
+<p>腾讯与总入口 <code>report</code> 成功后直接返回正文，来源、字数及模型调用信息保存在本地稿件文件。
+程序组合时，在 JSON 任务中指定 <code>&quot;result_format&quot;: &quot;structured&quot;</code>，即可获得状态、文件路径和
+恢复参数；总入口内部使用此模式。生成和核验采用低推理强度、每次最多 180 秒的执行时限，
+恢复不重置重试预算，模型失败不会输出成功稿件。</p>
 <h2 id="准备多份报告">准备多份报告<a class="header-anchor" href="#准备多份报告">#</a></h2>
 <p>在 Abilities 中选择 <code>report</code>，将下面 JSON 作为字符串填入 <code>task</code>：</p>
 <pre><code class="language-json"><span class="p">{</span>
@@ -188,7 +204,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>自然语言可选择报告类型。明确的单一类型使用代码路由，混合材料使用有界模型提取，
 并验证来源片段保持原文。类型不清楚时要求明确受众。</p>
 <h2 id="继续未完成项">继续未完成项<a class="header-anchor" href="#继续未完成项">#</a></h2>
-<p>总入口为每项返回状态及 <code>resume_task</code>。将恢复对象重新作为 <code>task</code>，可增加按报告区分的补充信息：</p>
+<p>结构化模式下，总入口为每项返回状态及 <code>resume_task</code>。将恢复对象重新作为 <code>task</code>，可增加按报告区分的补充信息：</p>
 <pre><code class="language-json"><span class="p">{</span>
 <span class="w">  </span><span class="nt">"resume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/absolute/path/to/checkpoint.json"</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"updates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -207,6 +223,7 @@ Workflow 本身不创建定时任务，也不发送给 leader；启用定时运�
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#根据已有记录整理腾讯汇报">根据已有记录整理腾讯汇报</a>
 <a class="" href="#准备多份报告">准备多份报告</a>
 <a class="" href="#继续未完成项">继续未完成项</a>
 <a class="" href="#腾讯周五下午汇总">腾讯周五下午汇总</a>

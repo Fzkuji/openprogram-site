@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink active" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -184,7 +189,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 仍取决于 harness 自身的平台与依赖支持。</li>
 <li>运行前需要 runtime 配置好工作目录。工作流记录写入 OpenProgram 状态目录下的 <code>gui_harness/workflows/</code>，不再写入源码目录。</li>
 </ul>
-<p>源码与 README：<code>openprogram/programs/applications/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
+<p>源码与 README：<code>openprogram/programs/packages/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
 <p>Browser Workflow 表单只显示任务和可选目标 URL。动作上限、超时与 backend 使用内部默认设置，不显示 Advanced。显式程序调用仍可使用受支持的覆盖值。</p>
 <h2 id="系统权限检查">系统权限检查<a class="header-anchor" href="#系统权限检查">#</a></h2>
 <p>系统设置显示执行电脑上的可选桌面权限。打开页面或运行 <code>openprogram doctor</code>

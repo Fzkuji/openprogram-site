@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -169,6 +174,23 @@ unavailable controls return a recoverable state instead of a completed report.</
 </tr>
 </tbody>
 </table>
+<h2 id="prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records<a class="header-anchor" href="#prepare-a-tencent-report-from-existing-records">#</a></h2>
+<p>Select <code>tencent_weekly_report</code> in Abilities and enter <code>Prepare this week's Tencent report</code>. The Workflow uses the current ISO week in Asia/Shanghai. It first reuses
+original current-week Tencent evidence in the workspace's <code>reports</code> directory,
+then considers other report sources and dated OpenProgram memory. Explicit
+materials take precedence. Records from other weeks, uncertain month/year-only
+dates, untrusted memory and explicit test records are excluded. Other audiences
+require source selection with exact quotes; they are not automatically treated
+as Tencent work. Discovery is bounded, so unavailable or insufficient sources
+still require clarification. Optional <code>report_roots</code> selects up to five source
+directories.</p>
+<p>Successful Tencent and <code>report</code> calls return the report body directly. Sources,
+character count and model-call information remain in local draft files. For
+programmatic composition, pass <code>&quot;result_format&quot;: &quot;structured&quot;</code> in the JSON task;
+this returns the status, artifact paths and recovery object. The coordinator
+uses this mode internally. Generation and verification use low reasoning effort,
+a 180-second per-call limit and preserved retry budgets. Model failures do not
+produce a success draft.</p>
 <h2 id="prepare-several-reports">Prepare several reports<a class="header-anchor" href="#prepare-several-reports">#</a></h2>
 <p>Select <code>report</code> in Abilities and supply a JSON string as <code>task</code>:</p>
 <pre><code class="language-json"><span class="p">{</span>
@@ -203,7 +225,7 @@ The coordinator requests noninteractive waiting, allowing other reports to finis
 requests use code routing; mixed supplied content uses bounded model extraction
 with verbatim source validation. Ambiguous requests ask for the intended audience.</p>
 <h2 id="continue-incomplete-work">Continue incomplete work<a class="header-anchor" href="#continue-incomplete-work">#</a></h2>
-<p>The coordinator returns a status for every child and a <code>resume_task</code> object. Pass
+<p>In structured mode, the coordinator returns a status for every child and a <code>resume_task</code> object. Pass
 that object back as the next <code>task</code>, optionally adding audience-specific updates:</p>
 <pre><code class="language-json"><span class="p">{</span>
 <span class="w">  </span><span class="nt">"resume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/absolute/path/to/checkpoint.json"</span><span class="p">,</span>
@@ -228,6 +250,7 @@ material source must be configured separately before enabling a scheduled run.</
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
+<a class="" href="#prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records</a>
 <a class="" href="#prepare-several-reports">Prepare several reports</a>
 <a class="" href="#continue-incomplete-work">Continue incomplete work</a>
 <a class="" href="#friday-afternoon-tencent-report">Friday afternoon Tencent report</a>

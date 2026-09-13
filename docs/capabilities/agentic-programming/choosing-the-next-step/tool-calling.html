@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -176,7 +181,7 @@ function. It is forwarded to the provider, which maps it onto its own
 protocol shape (OpenAI, Anthropic, Gemini, and Bedrock are covered).
 <code>parallel_tool_calls=False</code> forbids several picks in one round where the
 provider supports the knob. <code>max_iterations</code> caps the loop's rounds — the
-effective cap is <code>min(50, max_iterations)</code>, floored at 1 (see
+effective cap is <code>max(1, max_iterations)</code> when the caller sets one; chat turns have no cap (see
 <a href="#termination">Termination</a>). For a forced, structured decision <em>ending</em>
 (rather than per-round control), <code>exec(choices=...)</code> remains the richer
 tool — see <a href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">next-step decision</a>.</p>
@@ -227,8 +232,8 @@ the user messages take priority.</p>
 <p>The inner picking loop stops on any of:</p>
 <pre><code>model picked no function (pure text)   normal finish; the text is the result
 stop_reason = error / aborted          error / cancel finish
-inner_iterations &gt; 50                  hard cap MAX_INNER_ITERATIONS against idle spinning;
-                                       treated as a normal finish, returns what exists
+inner_iterations &gt; max_iterations      only when the caller set a cap (runtime.exec default 20);
+                                       chat turns have no hard cap
 </code></pre>
 <p>One continuation condition is easy to miss: the inner <code>while</code> also runs on
 <code>pending_messages</code>, so queued user (steering) messages keep the loop alive

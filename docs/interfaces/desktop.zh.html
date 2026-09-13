@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>桌面 App 与内置浏览器 · OpenProgram Docs</title>
-<meta name="description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 macOS 从 GitHub">
+<meta name="description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/desktop.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/desktop.zh.html">
 <meta property="og:title" content="桌面 App 与内置浏览器 · OpenProgram Docs">
-<meta property="og:description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 macOS 从 GitHub">
+<meta property="og:description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="桌面 App 与内置浏览器 · OpenProgram Docs">
-<meta name="twitter:description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。 macOS 从 GitHub">
+<meta name="twitter:description" content="macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -80,9 +80,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="桌面 App 与内置浏览器">Desktop App and built-in browser</span></nav><h1 id="桌面-app-与内置浏览器">桌面 App 与内置浏览器<a class="header-anchor" href="#桌面-app-与内置浏览器">#</a></h1>
 <p>macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。</p>
+<p>关闭最后一个标签后，标签栏和中间内容区域都保持为空，不会自动创建标签或显示默认入口。点击顶部加号可打开新标签。</p>
+<p>后退和前进按钮也包含初始新标签页。从初始页打开应用或内置页面后，可以后退回到初始页，再前进回到原页面，始终使用同一个标签。后退后选择其他页面会替换原来的前进记录。</p>
 <p>macOS 从 <a href="https://github.com/Fzkuji/OpenProgram/releases">GitHub Releases</a> 下载对应架构的 DMG，把 <code>OpenProgram.app</code> 复制到 <code>/Applications</code>；当前 macOS 渠道未签名，首次启动可能需要进入“系统设置 → 隐私与安全性 → 仍要打开”。Windows 只安装已发布 release 附带的带签名 <code>win-x64.exe</code> 或 <code>win-arm64.exe</code>；某个版本没有带签名 Windows EXE 时，使用该版本的 CLI/server 与浏览器 UI。完整步骤见<a href="/docs/install/install.zh.html">安装</a>。</p>
 <p>Terminal Pane 在 macOS 使用 login shell，在 Windows 通过 ConPTY 使用 Windows PowerShell。两个平台的封装 App 都从内置 managed Python 启动 worker，不依赖系统 Python 或 Node.js。</p>
 <p>在 Linux 从源码运行 Desktop 时，终端优先使用已安装且为绝对路径的 <code>SHELL</code>，否则依次回退到 <code>/bin/bash</code>、<code>/bin/sh</code>，不要求安装 zsh。若没有可用 shell，终端会在启动进程前明确提示缺失项。</p>
+<p>同一窗口内，再次打开会话会切换到已有聊天标签。目标尚未打开时，复用当前聊天标签，或在网页旁打开聊天标签。前进、后退的目标若已在其他标签打开，也切换到已有标签。恢复窗口时清理同一会话的重复聊天标签，不删除消息或草稿；标题相同的不同会话仍分别保留。</p>
 <h2 id="打开-browser">打开 Browser<a class="header-anchor" href="#打开-browser">#</a></h2>
 <p>新建 Pane 后选择 <strong>Browser</strong>，或从应用 tab 栏新建浏览器 tab。Browser home 与已加载网页使用同一套浏览器控件：</p>
 <ul>
@@ -134,14 +137,24 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>持续维护的工程规范见<a href="/docs/reference/design/ui/built-in-browser.html">内置浏览器设计</a>与 <a href="/docs/reference/design/integrations/web-use.html">Web Use / Computer Use 边界</a>。</p>
 <h2 id="会话资源">会话资源<a class="header-anchor" href="#会话资源">#</a></h2>
 <p>点击右侧栏的 <strong>资源</strong>，打开 <strong>会话资源</strong>。通过侧栏折叠按钮收起或展开面板。面板仅显示当前会话所属的资源，没有搜索框。切换会话会更新所列资源。面板列出完整的软件或环境对象：网页、VM／桌面关联，以及集成明确登记的容器或远程环境。代码执行、命令、脚本、后台进程和输出属于 Activity；文件与终端视图不列入 Resources。没有归属记录的视图和新建草稿会话不显示会话资源；打开已有归属的资源时保留其会话上下文。</p>
-<p>有会话归属的 Agent 网页默认不占顶部标签，固定或显式分屏时保留在顶部；没有归属记录的旧网页保留在顶部。点击网页可打开原有视图；网页支持固定和关闭。折叠面板或分组不会停止资源。选择资源后，资源面板继续显示在视图右侧。</p>
+<p>有会话归属的 Agent 网页默认不占顶部标签，固定或显式分屏时保留在顶部；没有归属记录的旧网页保留在顶部。点击网页可打开原有视图；网页支持固定和关闭。折叠面板或分组不会停止资源。选择资源后，资源面板继续显示在视图右侧。关闭网页后，活动列表立即移除该项，并处理关闭请求；如果未确认关闭，该项会重新显示。</p>
 <p>Docker 与 SSH 命令保留在代码执行／Activity 流程中，执行命令不等于创建软件资源。GUI Harness 记录配置的桌面或 VM 关联；其他集成必须登记实际软件或环境对象及其身份，不能用命令、镜像名或进程代替。点击环境资源可查看目标和状态。</p>
 <p>其他集成可以在可信运行时会话内使用 <code>openprogram.session_resources.resource_use(kind, title, target)</code> 上报完整的软件或环境对象。上下文自动记录真实会话，退出后释放使用记录。系统不会从任意 shell 命令文本推断资源；资源 URL 会去掉凭据、查询参数与片段。</p>
+<h2 id="重启后继续运行中的会话">重启后继续运行中的会话<a class="header-anchor" href="#重启后继续运行中的会话">#</a></h2>
+<p>worker 在配置的自动继续期限内重启后（默认两小时），原来正在运行的会话会使用正常执行时已经记录的输入和结果，在原会话中自动继续，不需要单独保存，也不增加重启提示。手动暂停、取消和已完成的任务保持停止。已经确认完成的工具操作不会重复执行；外部操作的结果仍不明确时，需要先核对结果。界面重新连接时保留已有聊天内容。</p>
+<p>会话显示正常消息和工具结果，包括你要求执行的软件更新结果。聊天中不另设软件更新历史、更新操作按钮或更新恢复提示，打开会话也不会启动软件更新历史轮询。</p>
 <h2 id="重启与保留的浏览器页面">重启与保留的浏览器页面<a class="header-anchor" href="#重启与保留的浏览器页面">#</a></h2>
 <p>Desktop App 或 worker 进程重启后，你尚未关闭的网页会在后台自动恢复。应用保留同一保留 tab、会话与分支分组，以及最后确认的地址和标题。它在该保留 tab 后创建新的活页面；上一进程的句柄不再有效。不会为同一保留 tab 再开一份副本，不会重新打开你已关闭的网页，也不会显示你已隐藏的预览。紧凑画中画、纵向 Files / Activity / Resources 侧栏以及分组资源行保持原样。文案跟随 App 语言设置。</p>
 <p>网页正在回来时，资源行留在原分支，显示 <strong>正在恢复网页…</strong>。恢复失败时同一行显示 <strong>网页恢复失败</strong>。新的活页面之后需要重新连接时，显示 <strong>需要重新连接</strong>。这些行不会进入通用的不可用分组。只有你明确关闭的网页出现在 <strong>已关闭的网页</strong>。恢复网页不会启动或继续 Agent。空闲页面仍可直接操作。新任务仍按常规重新观察页面并检查权限。恢复会重新加载最后确认的 URL，并使用 Desktop <code>webtabs</code> 分区里已有的站点存储；上一进程中未保存的 DOM 与表单不会恢复。没有保留 tab 描述的旧资源记录不会自动重建，该行留在原分组并显示 <strong>网页恢复失败</strong>。这一有界重启行为已在默认 App 中实现。</p>
 <p>每个预览都绑定实际会话，即使在同一个聊天标签内切换会话也不会改变归属。切换会话时隐藏原预览，并恢复当前会话自己的预览。仅保留在会话中的网页对其他 Agent 不可见、不可操作。点击 <strong>打开页面</strong> 将同一个网页显示为独立标签页，其他会话可以发现它，并在当前 Agent 释放排他控制后接管。打开标签页不会转移原会话的预览归属。</p>
+<h2 id="网页操作与暂停">网页操作与暂停<a class="header-anchor" href="#网页操作与暂停">#</a></h2>
+<p>你可以随时点击、滚动、输入、切换或关闭内置网页，这些操作不会暂停 Agent。Agent 也可以操作 OpenProgram 自己的网页。只有聊天输入框旁的任务暂停按钮控制执行。</p>
+<p>关闭任务所需的网页后，Agent 重新获取页面；页面确实已关闭时按最后已知地址重新打开，并读取当前状态后继续。旧点击或提交不会自动重放。登录状态及未保存内容无法恢复时，Agent 会说明具体情况。</p>
 <p>会话历史先加载最近一页。点击消息列表上方的“加载更早消息”读取旧记录，不会覆盖正在输出的新内容。历史分页保持在同一会话分支内。重新连接会加载最近一页，不改变已保存的历史或模型上下文。</p>
+<h2 id="重启后继续执行">重启后继续执行<a class="header-anchor" href="#重启后继续执行">#</a></h2>
+<p>关闭会话标签页或 App 窗口后，由 worker 管理的任务继续运行。如果 worker 本身停止，可恢复的 Agent 任务会使用模型调用和工具执行完成时保存的 checkpoint。重启后，因关闭而暂停、或从安全 checkpoint 恢复的中断任务，在两小时内自动继续。期限持久化保存，再次重启不会延长期限。超时后任务保持暂停，可以手动继续。</p>
+<p><code>execution.auto_resume_window_seconds</code> 默认 <code>7200</code>，设置为 <code>0</code> 可禁用自动恢复。明确停止或取消、手动暂停、尚未回答的审批不会自动继续。外部操作结果无法确认时，需要先核对结果。恢复保留原任务身份、权限和资源准入要求，并要求运行契约兼容。恢复对象是持久化 checkpoint，不包括任意进程内存或外部应用尚未保存的状态。</p>
+<p>自更新后的继续执行、运行契约变化后的重新规划和原会话唤醒也使用此设置，从已结束更新最后记录的活动时刻计算。持续运行的更新不会被这一恢复计时器停止。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -152,7 +165,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#agent-访问分屏-browser-pane">Agent 访问分屏 Browser Pane</a>
 <a class="" href="#浏览器扩展">浏览器扩展</a>
 <a class="" href="#会话资源">会话资源</a>
+<a class="" href="#重启后继续运行中的会话">重启后继续运行中的会话</a>
 <a class="" href="#重启与保留的浏览器页面">重启与保留的浏览器页面</a>
+<a class="" href="#网页操作与暂停">网页操作与暂停</a>
+<a class="" href="#重启后继续执行">重启后继续执行</a>
 </div></aside>
 </div>
 

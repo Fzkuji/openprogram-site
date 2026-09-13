@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/reference/api/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/reference/api/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,6 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
 <a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
 <a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/apps.html">apps</a>
 <a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
 <a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
 <a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
@@ -343,6 +344,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>退出函数</strong>:回填同一个 <code>code</code> 节点的 <code>output</code> / <code>status</code>。</li>
 </ul>
 <p><code>expose=&quot;hidden&quot;</code> 时不写任何节点。standalone 运行(没安装 DAG store)时记录全部 no-op,函数照常执行。</p>
+<h2 id="可恢复步骤与代码版本">可恢复步骤与代码版本<a class="header-anchor" href="#可恢复步骤与代码版本">#</a></h2>
+<p>为同步编排函数声明 <code>@agentic_function(resumable=True)</code>，将外部操作放入 <code>step(&quot;稳定名称&quot;, 操作函数, *args, **kwargs)</code>。步骤输入和结果必须可保存为 JSON；继续执行时，已完成步骤直接返回保存的结果，不再调用操作函数。重复名称按出现次数区分，已执行步骤的顺序和输入必须保持兼容。</p>
+<p>嵌套编排使用 <code>workflow(&quot;名称&quot;, 函数, *args, **kwargs)</code>。并行编排使用 <code>parallel({&quot;分支名&quot;: (函数, args, kwargs)})</code>；各分支独立保存进度，所有分支停止后才释放任务所有权。</p>
+<p>设置项 <code>execution.code_change_policy</code> 默认是 <code>keep_original</code>，继续使用保存的原函数和 Python 辅助函数源码；<code>use_latest</code> 保留已完成步骤的结果，并用当前代码执行后续兼容步骤。任务的“继续”操作可以覆盖此设置。A 已采用 B 后，再更新到 C 时选择保留原代码，会继续 B；尚未通过已有进度兼容性检查的候选版本不会取代已采用版本。新代码需要转换局部状态时，应在剩余步骤之前通过纯编排代码转换已保存的 JSON。已记录步骤被删除、重排、输入不兼容或固定依赖不可用时，任务保持暂停。权限和工具参数约定仍然需要通过兼容性检查。</p>
+<p>手动调用恢复原执行记录；聊天调用将最终结果交给原来的待完成工具调用。重启导致的中断沿用两小时自动继续期限。主动暂停、取消、未回答的授权请求以及结果不确定的外部操作不会自动重试。</p>
+<p>此功能在显式步骤处恢复，不保存任意 Python 调用栈。步骤外的外部调用和状态修改、异步编排、生成器、活动句柄及非 JSON 结果不支持此恢复约定。外部操作已经开始、但结果尚未保存时进程退出，必须先核对操作结果。函数运行界面显示是否声明可恢复步骤，普通函数中断后需要重新运行。</p>
+<p>步骤之间不得依赖可变的 Python 全局变量、闭包或默认参数。需要持续保存的状态应通过步骤的 JSON 输入和结果传递，进程内变量修改不能作为恢复依据。</p>
+<p>步骤依赖需要在模块级导入；辅助函数内部导入、动态导入 API 和动态生成代码会在执行步骤前被拒绝。Python 辅助函数源码递归保存。模块和类对象目前仅支持固定的标准库身份，第三方及用户包对象会被拒绝，因为只保存包初始化文件无法确定完整实现。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -353,6 +362,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="" href="#runtime-注入">Runtime 注入</a>
 <a class="" href="#自省与安全">自省与安全</a>
 <a class="" href="#记录到-dag">记录到 DAG</a>
+<a class="" href="#可恢复步骤与代码版本">可恢复步骤与代码版本</a>
 </div></aside>
 </div>
 

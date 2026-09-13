@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,6 +100,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/cli/README.html">openprogram</a>
 <a class="navlink" href="/docs/reference/cli/acp.html">acp</a>
 <a class="navlink" href="/docs/reference/cli/agents.html">agents</a>
+<a class="navlink" href="/docs/reference/cli/apps.html">apps</a>
 <a class="navlink" href="/docs/reference/cli/backup.html">backup</a>
 <a class="navlink" href="/docs/reference/cli/browser.html">browser</a>
 <a class="navlink" href="/docs/reference/cli/channels.html">channels</a>
@@ -320,7 +321,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>max_iterations</code></td>
 <td><code>int</code></td>
 <td><code>20</code></td>
-<td>工具循环轮数上限(一轮 = 一次模型调用 + 其工具执行)。生效值为 <code>max(1, min(50, max_iterations))</code>,50 是 <code>agent_loop.py</code> 的硬上限</td>
+<td>工具循环轮数上限(一轮 = 一次模型调用 + 其工具执行)。生效值为 <code>max(1, max_iterations)</code>。聊天轮次不设上限。这个默认 20 只作用于 <code>runtime.exec</code></td>
 </tr>
 <tr>
 <td><code>choices</code></td>

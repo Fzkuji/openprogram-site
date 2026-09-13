@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -183,6 +188,13 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <p>Any repository that follows the directory contract (<code>&lt;package&gt;/agentics/__init__.py</code> exposing <code>AGENTIC_FUNCTIONS</code>) can be installed with the same <code>programs install</code> command. See <a href="/docs/capabilities/installing-harnesses.html">Installing and writing harnesses</a> for the contract, a minimal template, and the publishing flow.</p>
 <p>That harness contract is different from a single self-programming Workflow package. For the package contract, a complete tested example, relative paths, and the <code>workflows validate/test/publish</code> commands, see <a href="/docs/capabilities/workflows/authoring.html">Write, test, and publish a Workflow</a>. Generated <code>create_workflow</code> and <code>revise_workflow</code> packages use the same required behavior-test gate.</p>
 <p>Workflow forms ask for task information, not execution settings. Text polishing infers its style from the text in the same model request; it does not require a style selection. Browser backend and session handles remain internal. Document page ranges and output destinations are optional task requirements. Explicit Python callers retain supported overrides.</p>
+<h2 id="weekly-reports">Weekly reports<a class="header-anchor" href="#weekly-reports">#</a></h2>
+<p>If <code>weekly_report</code> is installed in your Workflow catalog, call it with the report text or the change you want. For example, ask it to submit this week's report, update only next week's plan, inspect the existing record, or prepare a local draft at a named path.</p>
+<p>It reads the configured Feishu form and matches the name and year/week before writing. A missing record is submitted once; an existing editable record is opened from the submission history and saved. Partial updates preserve untouched fields. Explicit draft and read-only requests do not submit. Unknown inspection results, login failures and ambiguous records stop the operation. A submission cap does not by itself rule out editing an existing record.</p>
+<p>Success requires a fresh page confirmation and persisted values. If a write result is uncertain, the Workflow reports it without automatically retrying. Ordinary browser authorization remains required. It uses bounded browser steps rather than a <code>goal()</code> loop, and does not invent progress, metrics or paper titles.</p>
+<h3 id="group-weekly-report-drafts">Group weekly report drafts<a class="header-anchor" href="#group-weekly-report-drafts">#</a></h3>
+<p><code>group_weekly_report(task)</code> prepares local drafts from material you provide. It does not read or send WeChat messages. Use a JSON request with <code>mode</code> (<code>inspect</code>, <code>summary</code>, or <code>reminder</code>), <code>week</code> (<code>YYYY-Www</code>), <code>group</code>, ordered <code>members</code>, and <code>materials</code>. Each material has <code>id</code>, <code>member</code>, <code>week</code>, and <code>text</code>; optional <code>kind: &quot;claim&quot;</code> distinguishes a member's statement from supplied report content. Natural-language input is parsed by the model; missing scope is returned for clarification.</p>
+<p>Inspection uses code without model calls for structured inputs. Summaries use bounded per-member model contexts, checked source references and explicit uncertainty. Local files are saved under <code>reports/group-weekly/&lt;week&gt;/&lt;unique-run&gt;/</code> (or <code>output_dir</code>). Missing material is not proof of non-submission. Review the draft and send it yourself.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Write, test, and publish a Workflow</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -190,6 +202,8 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <a class="" href="#management-commands">Management commands</a>
 <a class="" href="#how-to-trigger-them">How to trigger them</a>
 <a class="" href="#writing-your-own">Writing your own</a>
+<a class="" href="#weekly-reports">Weekly reports</a>
+<a class="lvl-3" href="#group-weekly-report-drafts">Group weekly report drafts</a>
 </div></aside>
 </div>
 

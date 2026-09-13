@@ -25,6 +25,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-workflow.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-workflow.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/applications.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/applications.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/distill.html</loc></url>
@@ -39,6 +41,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/lsp.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/memory.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/memory.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/permissions.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/permissions.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/plugins.html</loc></url>
@@ -116,6 +120,7 @@
   <url><loc>https://openprogram.io/docs/reference/cli/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/acp.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/agents.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/apps.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/backup.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/browser.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/channels.html</loc></url>
@@ -259,6 +264,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-adoption.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-comparison.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-editor.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/memory-settings-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.zh.html</loc></url>
@@ -358,6 +364,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/application-runtime.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/chat-search-settings.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html</loc></url>
@@ -387,6 +394,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal-framework-implementation-comparison.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/group-weekly-report.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.viz.html</loc></url>
@@ -439,6 +447,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-runtime-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/scheduler/scheduler-memory.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-discoverability-performance.html</loc></url>
@@ -478,6 +487,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/programs-explorer-template.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/programs-source-categories.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/project-location.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/project-location.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-order.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace-prototype.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.html</loc></url>

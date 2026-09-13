@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789230245" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789284338" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <div class="nav-tree"><div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="概览">Overview</div>
 <a class="navlink" href="/docs/capabilities/README.html" data-title-zh="概览" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/capabilities/applications.html" data-title-zh="从新标签页打开应用" data-href-en="/docs/capabilities/applications.html" data-href-zh="/docs/capabilities/applications.zh.html">Open applications from the new tab page</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title">Agentic Programming</div>
@@ -95,6 +96,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="GUI Agent" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="Research Agent" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="Wiki Agent" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a>
+</div>
+<div class="nav-sec">
+<div class="nav-sec-title" data-title-zh="记忆">Memory</div>
+<a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="查看和编辑 Memory" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Read and edit Memory</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
@@ -164,7 +169,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <code>&quot;auto&quot;</code>（默认：由模型决定）、<code>&quot;required&quot;</code>（必须挑选一个函数）、
 <code>&quot;none&quot;</code>（仅文本），或 <code>{&quot;type&quot;: &quot;function&quot;, &quot;name&quot;: &quot;X&quot;}</code> 强制某个函数。它会被转发给 provider，由后者映射到自身的协议形态（已覆盖 OpenAI、Anthropic、Gemini 和 Bedrock）。
 在 provider 支持该开关的情况下，<code>parallel_tool_calls=False</code> 禁止在一轮内进行多次挑选。<code>max_iterations</code> 限制循环的轮数——实际上限是
-<code>min(50, max_iterations)</code>，下限为 1（见
+<code>max(1, max_iterations)</code>（调用方设置时）；聊天轮次不设上限（见
 <a href="#termination">终止</a>）。对于一次强制的、结构化的决策<em>结尾</em>（而非逐轮控制），<code>exec(choices=...)</code> 仍是更丰富的工具——见 <a href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">下一步决策</a>。</p>
 <h2 id="循环主体_run_loop">循环主体：<code>_run_loop</code><a class="header-anchor" href="#循环主体_run_loop">#</a></h2>
 <p><code>_run_loop</code> 有一个内层 <code>while has_more_tool_calls or pending_messages</code>；每一轮：</p>
@@ -204,8 +209,8 @@ success                               → result content wrapped in a ToolResult
 <p>内层挑选循环在以下任一情况下停止：</p>
 <pre><code>model picked no function (pure text)   normal finish; the text is the result
 stop_reason = error / aborted          error / cancel finish
-inner_iterations &gt; 50                  hard cap MAX_INNER_ITERATIONS against idle spinning;
-                                       treated as a normal finish, returns what exists
+inner_iterations &gt; max_iterations      only when the caller set a cap (runtime.exec default 20);
+                                       chat turns have no hard cap
 </code></pre>
 <p>有一个容易忽略的延续条件：内层 <code>while</code> 也会因
 <code>pending_messages</code> 而继续运行，所以即便在一次纯文本回复之后，排队的用户（steering）消息仍会让循环存活。</p>

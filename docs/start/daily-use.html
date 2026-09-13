@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789230245" data-alt-lang-url="/docs/start/daily-use.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789284338" data-alt-lang-url="/docs/start/daily-use.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,7 +84,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><code>openprogram</code> — terminal chat interface (TUI).</li>
 <li><code>openprogram web</code> — browser interface, http://localhost:18100.</li>
 </ul>
-<p>Session data lives in <code>~/.openprogram/sessions/</code>, and the terminal and the web see the same history: a session started in the terminal shows up in the web sidebar, and vice versa.</p>
+<p>Session data lives under <code>~/.openprogram/sessions/</code> (bound projects are grouped as <code>sessions/projects/&lt;project-id&gt;/&lt;session-id&gt;/</code>). The terminal and the web see the same history: a session started in the terminal shows up in the web sidebar, and vice versa. Working folders hold project files, not conversation repositories.</p>
 <p>One-off questions don't need an interface:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"Summarise this error message for me: ..."</span>
 </code></pre>
