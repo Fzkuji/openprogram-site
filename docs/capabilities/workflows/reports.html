@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789296314" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789319620" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prepare weekly reports · OpenProgram Docs</title>
-<meta name="description" content="The report suite consists of three independently versioned Workflow packages and one coordinating report package. They must be installed in the Programs">
+<meta name="description" content="The report suite consists of three independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/reports.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <meta property="og:title" content="Prepare weekly reports · OpenProgram Docs">
-<meta property="og:description" content="The report suite consists of three independently versioned Workflow packages and one coordinating report package. They must be installed in the Programs">
+<meta property="og:description" content="The report suite consists of three independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Prepare weekly reports · OpenProgram Docs">
-<meta name="twitter:description" content="The report suite consists of three independently versioned Workflow packages and one coordinating report package. They must be installed in the Programs">
+<meta name="twitter:description" content="The report suite consists of three independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -139,8 +139,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="准备每周报告">Prepare weekly reports</span></nav><h1 id="prepare-weekly-reports">Prepare weekly reports<a class="header-anchor" href="#prepare-weekly-reports">#</a></h1>
 <p>The report suite consists of three independently versioned Workflow packages and
-one coordinating <code>report</code> package. They must be installed in the Programs catalog;
-this source checkout alone does not install them. The suite supports independent execution and composition through the <code>report</code> entry.
+one coordinating <code>weekly_report</code> package. They must be installed in the Programs catalog;
+this source checkout alone does not install them. The suite supports independent execution and composition through the <code>weekly_report</code> entry.
 Native WeChat collection depends on accessible search and conversation controls;
 unavailable controls return a recoverable state instead of a completed report.</p>
 <table>
@@ -153,9 +153,9 @@ unavailable controls return a recoverable state instead of a completed report.</
 </thead>
 <tbody>
 <tr>
-<td><code>weekly_report(task)</code></td>
+<td><code>personal_weekly_report(task)</code></td>
 <td>Personal report drafts and explicit Feishu inspection or record updates</td>
-<td>Only explicit standalone submission/update requests may write to Feishu</td>
+<td>Only explicit submission/update requests may write to Feishu</td>
 </tr>
 <tr>
 <td><code>group_weekly_report(task)</code></td>
@@ -168,14 +168,14 @@ unavailable controls return a recoverable state instead of a completed report.</
 <td>Local draft only</td>
 </tr>
 <tr>
-<td><code>report(task)</code></td>
-<td>Route one or several report requests and retain separate results</td>
-<td>Prepares drafts; does not inherit permission to submit a personal report</td>
+<td><code>weekly_report(task)</code></td>
+<td>An agent selects the requested report Workflows and forwards the complete request</td>
+<td>Preserves the requested operation; child write restrictions apply</td>
 </tr>
 </tbody>
 </table>
 <h2 id="prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records<a class="header-anchor" href="#prepare-a-tencent-report-from-existing-records">#</a></h2>
-<p>Select <code>tencent_weekly_report</code> in Abilities and enter <code>Prepare this week's Tencent report</code>. The Workflow uses the current ISO week in Asia/Shanghai. It first reuses
+<p>Select <code>tencent_weekly_report</code> in Abilities and enter <code>Prepare this week's Tencent weekly_report</code>. The Workflow uses the current ISO week in Asia/Shanghai. It first reuses
 original current-week Tencent evidence in the workspace's <code>reports</code> directory,
 then considers other report sources and dated OpenProgram memory. Explicit
 materials take precedence. Records from other weeks, uncertain month/year-only
@@ -184,15 +184,14 @@ require source selection with exact quotes; they are not automatically treated
 as Tencent work. Discovery is bounded, so unavailable or insufficient sources
 still require clarification. Optional <code>report_roots</code> selects up to five source
 directories.</p>
-<p>Successful Tencent and <code>report</code> calls return the report body directly. Sources,
+<p>Successful Tencent and <code>weekly_report</code> calls return the report body directly. Sources,
 character count and model-call information remain in local draft files. For
 programmatic composition, pass <code>&quot;result_format&quot;: &quot;structured&quot;</code> in the JSON task;
-this returns the status, artifact paths and recovery object. The coordinator
-uses this mode internally. Generation and verification use low reasoning effort,
+this returns the status, artifact paths and recovery object. The router forwards explicitly supplied child options unchanged. Generation and verification use low reasoning effort,
 a 180-second per-call limit and preserved retry budgets. Model failures do not
 produce a success draft.</p>
 <h2 id="prepare-several-reports">Prepare several reports<a class="header-anchor" href="#prepare-several-reports">#</a></h2>
-<p>Select <code>report</code> in Abilities and supply a JSON string as <code>task</code>:</p>
+<p>Select <code>weekly_report</code> in Abilities and supply a JSON string as <code>task</code>:</p>
 <pre><code class="language-json"><span class="p">{</span>
 <span class="w">  </span><span class="nt">"requests"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"personal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -210,7 +209,12 @@ produce a success draft.</p>
 matching ISO weeks and unique source IDs. Insufficient evidence returns a request
 for input or review instead of inventing progress. Model-assisted semantic checks
 can detect unsupported claims but are not a guarantee of factual correctness.</p>
-<p>For a group request, provide <code>source</code> (<code>wechat</code> or explicitly <code>supplied</code>), <code>group</code>,
+<p>For a natural-language group request, a read-only agent first looks for missing
+source-group identity and ordered members in memory and saved local meeting
+records. It preserves explicit user scope and asks for clarification when sources
+do not establish one group and roster. This step cannot send messages, write
+files, operate WeChat, or call another report.</p>
+<p>For a structured group request, provide <code>source</code> (<code>wechat</code> or explicitly <code>supplied</code>), <code>group</code>,
 <code>week</code>, and the ordered <code>members</code> array. Supplied material additionally identifies
 its <code>member</code>. WeChat collection requires an accessible, verified group interface;
 versions without accessible message rows can use bounded window OCR. Captured
@@ -220,25 +224,26 @@ unverified. If native search focus cannot be proved, open the requested group
 and resume; the Workflow still performs collection and summarization. A window
 that does not permit capture returns <code>WINDOW_CAPTURE_UNAVAILABLE</code>. No screen or
 WeChat settings are changed.
-The coordinator requests noninteractive waiting, allowing other reports to finish.</p>
-<p>Natural language can select a report type. Clearly identified single-audience
-requests use code routing; mixed supplied content uses bounded model extraction
-with verbatim source validation. Ambiguous requests ask for the intended audience.</p>
+Each child retains its own interaction and recovery behavior. Group request
+parsing uses schema-validated model output, permits prompt fallback for providers
+without verified native schema support, and uses the Runtime's existing bounded
+repair retry. Exhausted model-format failures return <code>WAITING_MODEL</code> with the
+original request for resumption, rather than claiming that user input is missing.
+Routing, group request parsing, and personal report model calls inherit the
+Runtime timeout (<code>OPENPROGRAM_EXEC_TIMEOUT_S</code>); they impose no separate 90-second
+limit. External record updates are not automatically repeated after an uncertain
+failure.</p>
+<p>Natural-language requests are interpreted by a routing agent. It selects one,
+two, or all three destinations according to meaning and negation, then code
+passes the entire original request unchanged to each selected Workflow. It does
+not split on punctuation, extract materials, force drafts, or assign a common
+week. Unclear destinations require clarification. Single results are returned
+verbatim; multiple results are labeled by audience.</p>
 <h2 id="continue-incomplete-work">Continue incomplete work<a class="header-anchor" href="#continue-incomplete-work">#</a></h2>
-<p>In structured mode, the coordinator returns a status for every child and a <code>resume_task</code> object. Pass
-that object back as the next <code>task</code>, optionally adding audience-specific updates:</p>
-<pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">"resume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/absolute/path/to/checkpoint.json"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"updates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"tencent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"materials"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"t2"</span><span class="p">,</span><span class="w"> </span><span class="nt">"week"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-W37"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Additional verified Tencent progress."</span><span class="p">}]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<p>Completed children are not rerun. Updates cannot silently replace completed or
-uncertain results. A crashed child marked <code>IN_PROGRESS</code> is not automatically
-repeated; inspect its outcome before starting another request.</p>
+<p>The router owns no shared checkpoint. Continue through the relevant child using
+that child's recovery instructions. Old coordinator resume payloads are rejected
+with guidance to use the child entry. Explicit <code>requests</code> JSON addresses children
+directly and preserves their options without routing-model inference.</p>
 <p>Local delivery failures retain prepared content for retry. Tencent model failures
 retain generation and verification budgets across resumes. Checkpoints and retry
 payloads contain private report content and should remain local.</p>
@@ -247,13 +252,19 @@ payloads contain private report content and should remain local.</p>
 Its intended reporting window is Friday afternoon in <code>Asia/Shanghai</code>. It does not
 create a recurring schedule or send to the leader. An exact execution time and
 material source must be configured separately before enabling a scheduled run.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<h2 id="source-organization">Source organization<a class="header-anchor" href="#source-organization">#</a></h2>
+<p>The four independent report Workflow packages are grouped under <code>openprogram/programs/workflow/weekly_report/</code>: <code>personal_weekly_report</code> (personal), <code>group_weekly_report</code> (group), <code>tencent_weekly_report</code> (Tencent), and <code>weekly_report</code> (routing). Shared internal helpers live in <code>workflow/_reports/</code>. The coordinator is named <code>weekly_report</code>; the personal entry is <code>personal_weekly_report</code>. Configured output paths are unchanged. A category directory organizes sources; it is not an additional Workflow.</p>
+<p>Personal field generation uses a read-only Agent to retrieve the requested week from memory and local notes. A JSON Schema validates complete fields or sparse edits, with prompt fallback and the existing format-repair attempt before any write. An unresolved model failure retains the original request; an uncertain remote write is not retried.</p>
+<p>Structured Agents count normal tool rounds against <code>max_iterations</code>, not the failed-request allowance. A completed tool round preserves the remaining retry allowance; format repairs and failed requests still share it. Reaching the iteration limit stops execution without replaying completed tools.</p>
+<p>Read-only memory search, grep, get and browse use the normal safe-tool policy; explicit deny/ask rules and <code>memory.read</code> authority still apply. Personal operation selection and evidence verification, plus every Tencent JSON-producing stage, declare output schemas and reuse Runtime format repair. A format failure returns model-recovery state rather than requesting missing user input. Tencent request interpretation inherits the deployment timeout.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records</a>
 <a class="" href="#prepare-several-reports">Prepare several reports</a>
 <a class="" href="#continue-incomplete-work">Continue incomplete work</a>
 <a class="" href="#friday-afternoon-tencent-report">Friday afternoon Tencent report</a>
+<a class="" href="#source-organization">Source organization</a>
 </div></aside>
 </div>
 
