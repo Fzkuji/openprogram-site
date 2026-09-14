@@ -399,6 +399,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/chat-progress-recovery.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/edge-field-rename.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/edge-field-rename.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/file-management.html</loc></url>
@@ -469,6 +470,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/center-tabs-and-split-layout.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-attachments.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-turn-visual-spec.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-fast-control.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-local-attachment-paths.html</loc></url>
@@ -500,6 +502,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/session-resources.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-tab-identity.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebars-resizing.html</loc></url>

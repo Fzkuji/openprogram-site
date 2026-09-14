@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789329212" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789356172" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,6 +85,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
 <a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="桌面窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Desktop window state</a>
+<a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html">Conversation tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="桌面窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Desktop window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
@@ -100,6 +101,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-fast-control.html">Composer speed control</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">Composer interaction layout</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="GUI Agent：完整电脑操作设计" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent: complete computer-use design</a>
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
@@ -374,6 +376,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">Branch naming (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html">Chat progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
@@ -408,7 +411,7 @@ detection rules. Sibling doc: <a href="/docs/reference/design/providers/models/t
 (the same &quot;model capability → UI toggle&quot; declarative pattern; the structure
 is deliberately aligned).</p>
 <h2 id="1-what-fast-is">1. What Fast is<a class="header-anchor" href="#1-what-fast-is">#</a></h2>
-<p>The &quot;Fast&quot; toggle in the composer's + menu. When on, the request carries the
+<p>The gauge button in the composer's thinking-effort panel. When on, the request carries the
 vendor's high-speed knob:</p>
 <table>
 <thead>
@@ -431,27 +434,23 @@ vendor's high-speed knob:</p>
 </tr>
 </tbody>
 </table>
-<p>No other model family (Gemini / DeepSeek / Qwen / Llama / MiniMax…) has a
-fast tier at all.</p>
-<h2 id="2-detection-supports_fastprovider-model-three-branches">2. Detection: <code>supports_fast(provider, model)</code> — three branches<a class="header-anchor" href="#2-detection-supports_fastprovider-model-three-branches">#</a></h2>
-<p>Entry point: <code>apps/server/openprogram_server/_webui/_model_listing/listing.py</code>. Strips the
-wire-format <code>&quot;provider:&quot;</code> prefix first (the runtime records the current
-model as <code>openai-codex:gpt-5.5</code>).</p>
-<ol>
-<li><strong>openai-codex → reads the persisted <code>Model.fast</code></strong>. This field is not
-hand-written: it comes from the official codex models endpoint (§2.1),
-written into config alongside the spec at Fetch time, so detection is just
-<code>get_model(&quot;openai-codex&quot;, id).fast</code>. Tiers with no fast mode (such as
-<code>gpt-5.4-mini</code>) resolve False exactly, which an id-prefix guess cannot do.</li>
-<li><strong>claude-code → hand-written table</strong> <code>enabled_models.default_fast</code>: id
-contains <code>opus-4-6/4-7/4-8</code> (hyphen or dot) → True. Its subscription
-endpoint is unverified, so this stays hand-written until an endpoint-backed
-source like codex's is confirmed to exist.</li>
-<li><strong>Everything else → models.dev, automatic</strong>: a mode with <code>service_tier == &quot;priority&quot;</code> or <code>id == &quot;fast&quot;</code> → True; none, or unknown provider → False.</li>
-</ol>
-<p>Private gateways (such as frontier-intelligence) are not special-cased —
-unknown to the catalogue means no fast button. The config override (§3) covers
-them.</p>
+<p>Absence from this table does not prove that a provider lacks a fast tier.
+xAI documents Priority Processing for its official API; the Grok subscription
+route is a separate, unverified endpoint. The UI and route-aware
+behavior are specified in <a href="/docs/reference/design/ui/composer-fast-control.html">Composer speed control</a>.
+Implementation verification is tracked in the linked design status.</p>
+<h2 id="2-route-capability">2. Route capability<a class="header-anchor" href="#2-route-capability">#</a></h2>
+<p><code>providers.fast.fast_capability</code> is shared by the agent-settings projection and
+turn dispatch. <code>supports_fast</code> is its boolean compatibility projection. Explicit
+configuration false disables support. Codex uses the account catalogue; explicit
+route true can declare support; Claude retains its existing declaration. Official
+xAI API Grok 4.6 has a provider-and-endpoint-scoped declaration. The separate
+Grok subscription endpoint remains unknown. Other routes retain catalogue lookup.</p>
+<p>The thinking panel replaces its help icon with the supplied GaugeIcon. Activation
+adds no border or background; the needle remains advanced. The preference is
+stored per session and provider/model. Standard explicitly overrides agent defaults.
+The user-facing contract and prototype live in
+<a href="/docs/reference/design/ui/composer-fast-control.html">Composer speed control</a>.</p>
 <h3 id="21-codexs-official-source">2.1 Codex's official source<a class="header-anchor" href="#21-codexs-official-source">#</a></h3>
 <p><code>GET https://chatgpt.com/backend-api/codex/models?client_version=&lt;ver&gt;</code> — the
 same account-level endpoint the official <code>codex</code> CLI hits on startup —
@@ -520,11 +519,12 @@ adding configured models as if they were fresh.</p>
       → GET /api/agent_settings       (apps/server/openprogram_server/_webui/routes/execution/runtime.py)
       chat.fast = supports_fast(session's provider, model)   ← recomputed
   → zustand agentSettings.chat.fast
-  → composer re-renders: shows/hides the Fast menu item and chip
+  → composer re-renders: enables or explains the gauge control
 </code></pre>
 <p>Send-side double gate: the composer only attaches
-<code>service_tier: &quot;priority&quot;</code> when <code>fastEnabled &amp;&amp; fastSupported</code> — a stale
-per-session fast setting never leaks to an unsupported model.</p>
+<code>service_tier: &quot;priority&quot;</code> when <code>fastEnabled &amp;&amp; fastSupported</code>; otherwise it
+sends <code>default</code>. Dispatch revalidates the actual model. A stale preference never
+enables priority on an unsupported route.</p>
 <h2 id="5-wire-side-request-builders">5. Wire side (request builders)<a class="header-anchor" href="#5-wire-side-request-builders">#</a></h2>
 <table>
 <thead>
@@ -568,16 +568,23 @@ apps/web/components/chat/composer/index.tsx             toggle visibility + send
 needs nothing but a Fetch; change detection logic → touch only
 <code>listing.py::supports_fast</code>; claude-code add/remove fast → the Opus part of
 <code>default_fast</code>; another provider wanting fast → works once models.dev knows it.</p>
+<h2 id="response-evidence">Response evidence<a class="header-anchor" href="#response-evidence">#</a></h2>
+<p>Completions and Responses retain requested and actual tier separately in Usage.
+Per-call tier evidence is accumulated as a list, saved with the assistant message,
+and rendered in the existing usage footer, including after reload. Missing tier
+metadata is unconfirmed. xAI reported cost takes precedence over catalogue cost;
+no speed ratio is inferred from a requested tier.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-what-fast-is">1. What Fast is</a>
-<a class="" href="#2-detection-supports_fastprovider-model-three-branches">2. Detection: supports_fast(provider, model) — three branches</a>
+<a class="" href="#2-route-capability">2. Route capability</a>
 <a class="lvl-3" href="#21-codexs-official-source">2.1 Codex's official source</a>
 <a class="" href="#3-storage-read-official-write-config-read-the-file-thereafter">3. Storage: read official → write config → read the file thereafter</a>
 <a class="" href="#4-event-flow-adapts-to-any-switch-no-page-reload">4. Event flow: adapts to any switch, no page reload</a>
 <a class="" href="#5-wire-side-request-builders">5. Wire side (request builders)</a>
 <a class="" href="#6-file-map">6. File map</a>
+<a class="" href="#response-evidence">Response evidence</a>
 </div></aside>
 </div>
 

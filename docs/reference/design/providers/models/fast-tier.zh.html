@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789329212" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789356172" data-alt-lang-url="/docs/reference/design/providers/models/fast-tier.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fast（高速）档 — 判定、存储与线路 · OpenProgram Docs</title>
-<meta name="description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 聊天输入框 + 菜单里的&quot;高速&quot;开关。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实 GPT">
+<meta name="description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 思考强度弹窗右上角的仪表按钮控制高速模式。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/models/fast-tier.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/providers/models/fast-tier.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/providers/models/fast-tier.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/providers/models/fast-tier.zh.html">
 <meta property="og:title" content="Fast（高速）档 — 判定、存储与线路 · OpenProgram Docs">
-<meta property="og:description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 聊天输入框 + 菜单里的&quot;高速&quot;开关。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实 GPT">
+<meta property="og:description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 思考强度弹窗右上角的仪表按钮控制高速模式。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Fast（高速）档 — 判定、存储与线路 · OpenProgram Docs">
-<meta name="twitter:description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 聊天输入框 + 菜单里的&quot;高速&quot;开关。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实 GPT">
+<meta name="twitter:description" content="本文记录 fast 功能的代码摆放、数据来源与判定规则。姊妹文档： thinking-effort.md （同为&quot;模型能力 → UI 开关&quot;的声明式 子系统，结构刻意对齐）。 1. Fast 是什么 # 思考强度弹窗右上角的仪表按钮控制高速模式。开了之后，请求按厂商协议带上高速档参数： 家族 线上形态 计费事实">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -85,6 +85,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html">OpenProgram 主题系统</a>
 <a class="navlink" href="/docs/reference/design/ui/unification-work.html">UI Unification Work</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="桌面窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Desktop window state</a>
+<a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html">Conversation tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="桌面窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Desktop window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="Web 样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Web style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html">Interaction feedback — the 0ms rule</a>
@@ -100,6 +101,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-fast-control.html">Composer speed control</a>
 <a class="navlink" href="/docs/reference/design/ui/fn-form-compact-mock.html">Composer interaction layout</a>
 <a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="GUI Agent：完整电脑操作设计" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent: complete computer-use design</a>
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
@@ -374,6 +376,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="nav-sec-title" data-title-zh="运行时 · Operations">Runtime · Operations</div>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支自动命名 — 设计" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Automatic Branch Naming — Design</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html">Branch naming (viz)</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html">Chat progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
@@ -407,7 +410,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a href="/docs/reference/design/providers/models/thinking-effort.html"><code>thinking-effort.md</code></a>（同为&quot;模型能力 → UI 开关&quot;的声明式
 子系统，结构刻意对齐）。</p>
 <h2 id="1-fast-是什么">1. Fast 是什么<a class="header-anchor" href="#1-fast-是什么">#</a></h2>
-<p>聊天输入框 + 菜单里的&quot;高速&quot;开关。开了之后，请求按厂商协议带上高速档参数：</p>
+<p>思考强度弹窗右上角的仪表按钮控制高速模式。开了之后，请求按厂商协议带上高速档参数：</p>
 <table>
 <thead>
 <tr>
@@ -429,22 +432,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 </tbody>
 </table>
-<p>其他所有模型（Gemini / DeepSeek / Qwen / Llama / MiniMax …）没有 fast 概念。</p>
-<h2 id="2-判定supports_fastprovider-model-三支">2. 判定：<code>supports_fast(provider, model)</code> 三支<a class="header-anchor" href="#2-判定supports_fastprovider-model-三支">#</a></h2>
-<p>入口：<code>apps/server/openprogram_server/_webui/_model_listing/listing.py</code>。判定前先剥
-<code>&quot;provider:&quot;</code> 线格式前缀（运行时把当前模型记成 <code>openai-codex:gpt-5.5</code>）。</p>
-<ol>
-<li><strong>openai-codex → 读注册表落盘的 <code>Model.fast</code></strong>。这个字段不是手写的，
-来自官方 codex models 端点（见 §2.1），Fetch 时随 spec 一起写进 config，
-判定时 <code>get_model(&quot;openai-codex&quot;, id).fast</code> 直接读文件。<code>gpt-5.4-mini</code>
-这类没有 fast 档的会精确判 False，这是按 id 前缀猜做不到的。</li>
-<li><strong>claude-code → 手写声明表</strong> <code>enabled_models.default_fast(model_id)</code>：
-id 含 <code>opus-4-6/4-7/4-8</code>（连字符或点号写法）→ True。订阅端是否有可拉的
-models 端点尚未验证，因此保持手写；确认有端点后按 codex 的方式改为端点落盘。</li>
-<li><strong>其余 provider → models.dev 全自动</strong>：该模型有 <code>service_tier == &quot;priority&quot;</code> 或 <code>id == &quot;fast&quot;</code> 的档 → True；没有、或目录不认识 → False。</li>
-</ol>
-<p>私有网关（如 frontier-intelligence）不特判 —— 目录不认识就没有 fast 按钮。
-需要例外时用 config 显式覆盖（§3）。</p>
+<p>未列入表格不代表厂商没有高速档。xAI 官方 API 已有 Priority Processing；Grok 订阅线路是另一条尚未验证的接口。界面及按线路判定的扩展见 <a href="/docs/reference/design/ui/composer-fast-control.html">Composer 速度控件设计</a>，实现验证状态见设计页。</p>
+<h2 id="2-按线路判定">2. 按线路判定<a class="header-anchor" href="#2-按线路判定">#</a></h2>
+<p><code>providers.fast.fast_capability</code> 由 agent settings 与请求分发共同使用，
+<code>supports_fast</code> 保留为布尔兼容投影。配置显式 false 禁用；Codex 使用账号目录；
+线路显式 true 可声明支持；Claude 保留已有声明。官方 xAI API 的 Grok 4.6
+按 provider 和 endpoint 确认支持，独立的 Grok 订阅接口保持未知，其他线路保留目录查询。</p>
+<p>思考弹窗里的帮助图标改为用户提供的 GaugeIcon。开启不加边框或背景，指针保持
+转动后的状态。设置按会话及 provider/model 保存，标准档覆盖 agent 默认值。
+详细交互见 <a href="/docs/reference/design/ui/composer-fast-control.html">Composer 速度控件设计</a>。</p>
 <h3 id="21-codex-的官方数据源">2.1 codex 的官方数据源<a class="header-anchor" href="#21-codex-的官方数据源">#</a></h3>
 <p><code>GET https://chatgpt.com/backend-api/codex/models?client_version=&lt;ver&gt;</code>
 （官方 <code>codex</code> CLI 启动时拉的同一个账户级端点），用订阅 OAuth bearer +
@@ -552,19 +548,25 @@ apps/web/lib/session-store/types.ts                     AgentBadgeInfo.fast 类�
 apps/web/components/chat/composer/index.tsx             开关显隐 + 发送门控
 </code></pre>
 <p>改动指南：codex 的 fast/thinking 全自动，加/去模型什么都不用做——点 Fetch
-重拉端点即可；换判定逻辑 → 只动 <code>listing.py::supports_fast</code>；claude-code 加/去
-fast → 动 <code>default_fast</code> 的 Opus 部分；其他 provider 想要 fast → models.dev
-认识它就自动生效。</p>
+重拉端点即可；判定逻辑由 <code>providers.fast.fast_capability</code> 统一维护；claude-code 加/去
+fast → 动 <code>default_fast</code> 的 Opus 部分；其他 provider 使用已确认的线路配置或目录能力，不按模型名推定支持。</p>
+<h2 id="响应证据">响应证据<a class="header-anchor" href="#响应证据">#</a></h2>
+<p>Completions 与 Responses 在 Usage 中分别保留请求档位和实际返回档位。
+每次调用的证据按列表累计，随 assistant 消息保存，普通聊天用量区域在重新读取后
+仍能显示实际高速、实际标准和未确认的调用数量。Anthropic 已发送高速请求但没有
+返回速度证据时标为未确认。xAI 返回的实际费用优先于目录估价；缺少高速价格证据
+时记为未知，不直接使用标准档估价。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/auth/unified-auth-storage.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-contained auth storage</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/models/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Model Catalog and Provider Configuration</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-fast-是什么">1. Fast 是什么</a>
-<a class="" href="#2-判定supports_fastprovider-model-三支">2. 判定：supports_fast(provider, model) 三支</a>
+<a class="" href="#2-按线路判定">2. 按线路判定</a>
 <a class="lvl-3" href="#21-codex-的官方数据源">2.1 codex 的官方数据源</a>
 <a class="" href="#3-存储先读官方-落-config-之后读文件">3. 存储：先读官方 → 落 config → 之后读文件</a>
 <a class="" href="#4-事件流任何切换自适应无需刷新">4. 事件流：任何切换自适应，无需刷新</a>
 <a class="" href="#5-线路侧请求构建器">5. 线路侧（请求构建器）</a>
 <a class="" href="#6-文件地图">6. 文件地图</a>
+<a class="" href="#响应证据">响应证据</a>
 </div></aside>
 </div>
 
