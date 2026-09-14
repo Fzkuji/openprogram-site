@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789378557" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789381539" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Desktop App and built-in browser · OpenProgram Docs</title>
-<meta name="description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation restores pages only inside the selected tab; switching tabs">
+<meta name="description" content="Local App refresh preserves permissions of unpacked native dependencies and restores execute permission on the node-pty terminal helper when an earlier refresh">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/desktop.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/desktop.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/desktop.html">
 <meta property="og:title" content="Desktop App and built-in browser · OpenProgram Docs">
-<meta property="og:description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation restores pages only inside the selected tab; switching tabs">
+<meta property="og:description" content="Local App refresh preserves permissions of unpacked native dependencies and restores execute permission on the node-pty terminal helper when an earlier refresh">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Desktop App and built-in browser · OpenProgram Docs">
-<meta name="twitter:description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation restores pages only inside the selected tab; switching tabs">
+<meta name="twitter:description" content="Local App refresh preserves permissions of unpacked native dependencies and restores execute permission on the node-pty terminal helper when an earlier refresh">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -79,6 +79,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="桌面 App 与内置浏览器">Desktop App and built-in browser</span></nav><h1 id="desktop-app-and-built-in-browser">Desktop App and built-in browser<a class="header-anchor" href="#desktop-app-and-built-in-browser">#</a></h1>
+<p>Local App refresh preserves permissions of unpacked native dependencies and restores execute permission on the node-pty terminal helper when an earlier refresh removed it.</p>
 <p>Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation restores pages only inside the selected tab; switching tabs adds no history. Opening the same destination from another launcher preserves both tabs independently. Choosing a new destination after Back replaces only that tab’s forward history. History is saved with the tab. Browser controls handle navigation between webpage URLs.</p>
 <p>The macOS and Windows Desktop Apps present OpenProgram as a multi-pane workspace. Each pane can hold Files, a chat, the built-in Browser, or a Terminal, and panes can be split or moved between app windows without changing the underlying session or browser tab.</p>
 <p>Closing the last tab leaves both the tab bar and center content area empty. No tab or launcher is created automatically. Use the plus button to open a new tab.</p>
@@ -150,7 +151,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="browser-interaction-and-pause">Browser interaction and pause<a class="header-anchor" href="#browser-interaction-and-pause">#</a></h2>
 <p>You may click, scroll, type, navigate, or close built-in pages while an Agent works. These actions do not pause the Agent. Agents may also operate OpenProgram's own web interface. Use the task pause control next to the conversation composer to pause execution.</p>
 <p>When a task page disappears, the Agent reacquires the page or reopens its last known address if it has closed, then reads its current state. Previous clicks and submissions are not replayed automatically. Lost authentication or unsaved content is reported when it cannot be restored.</p>
-<p>Conversation history loads the latest page first. Use <strong>Load earlier messages</strong> above the transcript to retrieve older pages without losing new streamed output. Pages follow the same conversation branch. Reconnecting reloads the recent page; stored history and model context are unchanged.</p>
+<p>Conversation history loads the latest page first. Scrolling retrieves nearby messages automatically in either direction while keeping your reading position and new streamed output. No loading button is needed; failed requests retry automatically. Distant pages leave the memory cache and are retrieved again when you return. Reopening a conversation restores the visible message when it still exists on the selected branch. Jump to latest retrieves the latest page directly. The DAG is loaded when you open its view; ordinary Chat does not calculate its drawing coordinates. Rendered Markdown uses a bounded cache, so previously viewed long content does not accumulate without limit. Stored history and model context are unchanged.</p>
+<p>The main conversation and split panes each provide Jump to latest while newer messages remain outside the loaded window. A failed jump keeps the control available for retry. Scrolling, clicking inside the transcript, or pressing a key there cancels a pending jump or saved-position restoration; late replies do not replace the window you are reading. Closing a pane saves its final reading position. Reconnecting resumes automatic history loading without waiting for an old retry delay.</p>
 <h2 id="continuing-after-a-restart">Continuing after a restart<a class="header-anchor" href="#continuing-after-a-restart">#</a></h2>
 <p>Closing a conversation tab or the App window leaves worker-owned tasks running. If the worker itself stops, resumable Agent tasks save checkpoints at completed provider and tool boundaries. On restart, tasks paused by shutdown or recovered from a safe abandoned checkpoint automatically continue within two hours. The deadline is persisted; another restart does not extend it. After expiry, the task stays paused and can be continued manually.</p>
 <p>The setting <code>execution.auto_resume_window_seconds</code> defaults to <code>7200</code>; <code>0</code> disables automatic restart continuation. Explicit Stop/Cancel, manual pauses, and unanswered approvals do not automatically continue. An operation whose external result is unknown requires reconciliation. Continuation preserves the original task identity, permissions, and resource admission, and requires a compatible runtime contract. This restores durable checkpoints, not arbitrary process memory or unsaved external application state.</p>
