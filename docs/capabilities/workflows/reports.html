@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789403728" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789406206" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -103,7 +103,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="会话目标">Session goals</div>
-<a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="Goal Workflow" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Goal Workflow</a>
+<a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="聊天 Goal" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Goals in chat</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div>
@@ -257,7 +257,7 @@ material source must be configured separately before enabling a scheduled run.</
 <p>Personal field generation uses a read-only Agent to retrieve the requested week from memory and local notes. A JSON Schema validates complete fields or sparse edits, with prompt fallback and the existing format-repair attempt before any write. An unresolved model failure retains the original request; an uncertain remote write is not retried.</p>
 <p>Structured Agents count normal tool rounds against <code>max_iterations</code>, not the failed-request allowance. A completed tool round preserves the remaining retry allowance; format repairs and failed requests still share it. Reaching the iteration limit stops execution without replaying completed tools.</p>
 <p>Read-only memory search, grep, get and browse use the normal safe-tool policy; explicit deny/ask rules and <code>memory.read</code> authority still apply. Personal operation selection and evidence verification, plus every Tencent JSON-producing stage, declare output schemas and reuse Runtime format repair. A format failure returns model-recovery state rather than requesting missing user input. Tencent request interpretation inherits the deployment timeout.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records</a>

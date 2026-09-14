@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789403728" data-alt-lang-url="/docs/reference/design/context/compaction.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789406206" data-alt-lang-url="/docs/reference/design/context/compaction.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -642,7 +642,11 @@ memory prefetch）——每处偏离都是数据，不是隐藏状态。</li>
 <code>tests/unit/dag/test_graph_builder_covers.py</code>、
 <code>tests/integration/dag/test_dag_mutation_scenarios.py</code>。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
+<h2 id="同一条用户消息内压缩">同一条用户消息内压缩<a class="header-anchor" href="#同一条用户消息内压缩">#</a></h2>
+<p>未指定输出上限时，请求使用模型输出能力、默认输出预留量（16,384 token）及上下文窗口四分之一的最小值；输入计量和 provider 发送使用同一上限。显式上限保持不变，保护内容超预算时拒绝发送，不静默缩减请求的输出量。</p>
+<p>每次 AgentLoop 请求前都会检查转换后的消息、实际工具、系统提示、输出上限与安全余量。聊天工具续调和函数内部的 <code>llm()</code> / <code>agent()</code> 都使用此入口。需要时摘要已完整返回的工具组中的纯文本结果，不必等待下一条用户消息；用户消息、调用参数、结果 ID、错误状态和多模态内容保持不变。</p>
+<p>处理仅作用于当前请求，原始执行消息和 DAG 保留，不创建持久化的会话摘要节点。缓存限于一次调用，按原始结果内容和模型配置匹配。摘要请求单独计量输入与输出，每次构建最多 32 次摘要调用、总计 60 秒，不递归进入 AgentLoop。token 为本地估算，不保证与 provider 计量一致或语义完全等价；必要内容仍无法容纳时，不发送已知超预算请求。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#一模型滚动摘要永远只有一份现役">一、模型：滚动摘要，永远只有一份现役</a>
@@ -654,6 +658,7 @@ memory prefetch）——每处偏离都是数据，不是隐藏状态。</li>
 <a class="" href="#七扩展点">七、扩展点</a>
 <a class="" href="#八不变量及其测试">八、不变量及其测试</a>
 <a class="" href="#实现状态">实现状态</a>
+<a class="" href="#同一条用户消息内压缩">同一条用户消息内压缩</a>
 </div></aside>
 </div>
 

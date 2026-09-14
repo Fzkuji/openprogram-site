@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789403728" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789406206" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -703,7 +703,23 @@ writes rows through <code>db.append_message</code>.</li>
 <code>tests/unit/dag/test_graph_builder_covers.py</code>,
 <code>tests/integration/dag/test_dag_mutation_scenarios.py</code>.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
+<h2 id="compaction-inside-one-user-message">Compaction inside one user message<a class="header-anchor" href="#compaction-inside-one-user-message">#</a></h2>
+<p>When no output cap is specified, the request uses the smallest of the model's output capability, the standard output reserve (16,384 tokens), and one quarter of its context window. The same resolved cap is used for input budgeting and provider dispatch. Explicit caps remain unchanged; an oversized protected request is rejected rather than silently reducing the requested output.</p>
+<p>Before every AgentLoop provider request, including chat tool continuations and
+function-local <code>llm()</code> / <code>agent()</code> calls, the runtime budgets the converted
+messages, actual tools, system prompt, output cap, and a safety margin. When
+needed, it summarizes text-only results of fully completed tool groups without
+waiting for another user message. User messages, tool arguments, result IDs,
+error flags, and multimodal content remain unchanged.</p>
+<p>This is a request-local transformation. Original execution messages and the
+DAG remain intact; it does not create a durable conversation-summary node.
+An invocation-local cache matches original result content and model settings.
+Summary calls have their own input/output budgets, at most 32 requests per
+preparation and a 60-second deadline, and bypass AgentLoop to avoid recursive
+compaction. Token counts are local estimates, not a guarantee of provider
+accounting or semantic equivalence. If required content cannot fit, the runtime
+does not dispatch a request it estimates to be over budget.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/overview.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Context — The Context Layer</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Context Composition — Registry-Based Three Layers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-the-model-a-rolling-summary-exactly-one-active">1. The model: a rolling summary, exactly one active</a>
@@ -715,6 +731,7 @@ writes rows through <code>db.append_message</code>.</li>
 <a class="" href="#7-extension-points">7. Extension points</a>
 <a class="" href="#8-invariants-and-their-tests">8. Invariants and their tests</a>
 <a class="" href="#implementation-status">Implementation status</a>
+<a class="" href="#compaction-inside-one-user-message">Compaction inside one user message</a>
 </div></aside>
 </div>
 

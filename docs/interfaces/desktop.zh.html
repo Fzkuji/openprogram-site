@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789403728" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789406206" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -158,7 +158,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>关闭会话标签页或 App 窗口后，由 worker 管理的任务继续运行。如果 worker 本身停止，可恢复的 Agent 任务会使用模型调用和工具执行完成时保存的 checkpoint。重启后，因关闭而暂停、或从安全 checkpoint 恢复的中断任务，在两小时内自动继续。期限持久化保存，再次重启不会延长期限。超时后任务保持暂停，可以手动继续。</p>
 <p><code>execution.auto_resume_window_seconds</code> 默认 <code>7200</code>，设置为 <code>0</code> 可禁用自动恢复。明确停止或取消、手动暂停、尚未回答的审批不会自动继续。外部操作结果无法确认时，需要先核对结果。恢复保留原任务身份、权限和资源准入要求，并要求运行契约兼容。恢复对象是持久化 checkpoint，不包括任意进程内存或外部应用尚未保存的状态。</p>
 <p>自更新后的继续执行、运行契约变化后的重新规划和原会话唤醒也使用此设置，从已结束更新最后记录的活动时刻计算。持续运行的更新不会被这一恢复计时器停止。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-14</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-15</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#打开-browser">打开 Browser</a>
